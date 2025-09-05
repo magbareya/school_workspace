@@ -1,0 +1,89 @@
+<style>
+/* ---- RTL ONLY for Markdown render (Lab + classic) ---- */
+.jp-RenderedHTMLCommon,
+.jp-RenderedHTMLCommon *:not(code):not(pre),
+div.text_cell_render,
+div.text_cell_render *:not(code):not(pre),
+div.rendered_html,
+div.rendered_html *:not(code):not(pre) {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+  font-family: "Amiri", "Scheherazade", "Arial", sans-serif !important;
+}
+
+/* Place bullets on the right for lists */
+.jp-RenderedHTMLCommon ul, .jp-RenderedHTMLCommon ol,
+div.text_cell_render ul, div.text_cell_render ol,
+div.rendered_html ul, div.rendered_html ol {
+  padding-right: 1.2em !important;
+  padding-left: 0 !important;
+}
+
+/* ---- KEEP CODE LTR (inputs & outputs) ---- */
+
+/* JupyterLab areas */
+.jp-CodeCell, .jp-InputArea, .jp-InputPrompt,
+.jp-OutputArea, .jp-RenderedText, .jp-OutputArea pre, .jp-OutputArea code,
+.jp-Cell .jp-Editor {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+  font-family: monospace !important;
+}
+
+/* Classic Notebook areas */
+div.code_cell, div.input, div.output_area pre, div.output_subarea pre,
+pre, code, .rendered_html code {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+  font-family: monospace !important;
+}
+
+/* Inline code inside Markdown should stay LTR */
+.jp-RenderedHTMLCommon code,
+div.text_cell_render code,
+div.rendered_html code {
+  direction: ltr !important;
+  unicode-bidi: embed !important;
+}
+
+.ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+@page {
+  size: A4;
+  margin: 2cm 2cm 2.5cm 2cm; /* bottom margin big enough for footer */
+}
+@page {
+  @bottom-left {
+    content: "مدرسة التسامح الشاملة - أم الفحم";
+    font-size: 10pt;
+    font-family: Amiri !important;
+    direction: rtl;
+    border-top: 2px solid black; /* line above footer */
+    padding-top: 2px; /* spacing between line and text */
+    border-color: green;
+  }
+  @bottom-right {
+    content: "الأستاذ محمود اغبارية";
+    font-size: 10pt;
+    font-family: Amiri !important;
+    direction: rtl;
+    border-top: 2px solid black; /* line above footer */
+    padding-top: 2px; /* spacing between line and text */
+    border-color: green;
+  }
+  @bottom-center {
+    content: counter(page);
+    font-size: 10pt;
+    border-top: 2px solid black; /* line above footer */
+    padding-top: 2px; /* spacing between line and text */
+    border-color: green;
+  }
+}
+
+</style>
