@@ -39,6 +39,8 @@ out/%.pdf: %.md
 	@mkdir -p $(dir $@)
 	pandoc $< \
 		--pdf-engine=xelatex \
+		--number-sections \
+		--toc --toc-depth=2 \
 		-V papersize:A4 \
 		-V geometry:margin=2.5cm \
 		-V mainfont="Amiri" \
