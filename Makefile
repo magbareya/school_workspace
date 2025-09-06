@@ -25,6 +25,7 @@ out/%.pdf: %.ipynb
 	jupyter nbconvert $< \
 		--to webpdf \
 		--template lab \
+		--embed-images \
 		--HTMLExporter.sanitize_html=False \
 		--HTMLExporter.embed_mathjax=True \
 		--TemplateExporter.exclude_input_prompt=True \
@@ -49,6 +50,7 @@ out/%_printable.pdf: %.ipynb
 	jupyter nbconvert $< \
 		--to webpdf \
 		--template lab \
+		--embed-images \
 		--HTMLExporter.exclude_input=True \
 		--HTMLExporter.exclude_output=True \
 		--HTMLExporter.sanitize_html=False \
