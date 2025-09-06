@@ -2,20 +2,22 @@ SHELL := /bin/bash
 
 # Find all ipynb and md files recursively
 NB := $(shell find . -name "*.ipynb")
-MD := $(shell find . -name "*.md")
+MD := $(shell find . -name "*.md" ! -iname "README.md")
 
 # Map input paths (./X.ipynb → out/X.pdf)
-PDFS := $(patsubst ./%.ipynb,out/%.pdf,$(NB)) \
-        $(patsubst ./%.md,out/%.pdf,$(MD))
+PDFS := $(patsubst ./%.ipynb,out/%.pdf,$(NB))
+MDS  := $(patsubst ./%.md,out/%.pdf,$(MD))
 
 PRINTABLES := $(patsubst ./%.ipynb,out/%_printable.pdf,$(NB))
 CSFILES := $(patsubst ./%.ipynb,out/%.cs,$(NB))
 
-all: pdf printable cs
+all: pdf printable cs md
 
 pdf: $(PDFS)
 
 printable: $(PRINTABLES)
+
+md: $(MDS)
 
 cs: $(CSFILES)
 
@@ -40,8 +42,7 @@ out/%.pdf: %.md
 		-V papersize:A4 \
 		-V geometry:margin=2.5cm \
 		-V mainfont="Amiri" \
-		-V footer-right="الأستاذ محمود اغبارية" \
-		-V footer-left="مدرسة التسامح الشاملة" \
+		-V lang=ar \
 		-V footer-center="\thepage" \
 		-o $@
 
