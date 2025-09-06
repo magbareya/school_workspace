@@ -40,8 +40,9 @@ out/%.pdf: %.md
 		-V papersize:A4 \
 		-V geometry:margin=2.5cm \
 		-V mainfont="Amiri" \
-		-V footer-center="الأستاذ محمود اغبارية  - مدرسة التسامح الشاملة" \
-		-V footer-right="\thepage" \
+		-V footer-right="الأستاذ محمود اغبارية" \
+		-V footer-left="مدرسة التسامح الشاملة" \
+		-V footer-center="\thepage" \
 		-o $@
 
 # Jupyter notebooks → printable pdf (only markdown cells)
