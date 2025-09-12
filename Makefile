@@ -29,7 +29,6 @@ out/%.pdf: %.ipynb
 		--template lab \
 		--embed-images \
 		--HTMLExporter.sanitize_html=False \
-		--HTMLExporter.embed_mathjax=True \
 		--TemplateExporter.exclude_input_prompt=True \
 		--output-dir $(dir $@) \
 		--output $(basename $(notdir $<))
