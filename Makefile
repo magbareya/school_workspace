@@ -2,12 +2,15 @@ SHELL := /bin/bash
 
 .NOTPARALLEL:
 .SUFFIXES:
-.PHONY: all pdf printable cs md tex clean soft-clean
+.PHONY: all
 
 # Find all ipynb and md files recursively
-NB := $(shell find . -name "*.ipynb")
-MD := $(shell find . -name "*.md" ! -iname "README.md")
-TEX := $(shell find . -name "*.tex")
+NB  := $(shell find . -path ./scripts -prune -o -name "*.ipynb" -print)
+MD  := $(shell find . -path ./scripts -prune -o -name "*.md" ! -iname "README.md" -print)
+TEX := $(shell find . -path ./scripts -prune -o -name "*.tex" -print)
+
+# to skip several folders, use this command
+# NB  := $(shell find . \( -path ./scripts -o -path ./scripts2 \) -prune -o -name "*.ipynb" -print)
 
 # Map input paths (./X.ipynb → out/X.pdf)
 IPYNB := $(patsubst ./%.ipynb,out/%.pdf,$(NB))
@@ -21,15 +24,15 @@ all: pdf printable cs md tex soft-clean
 
 pdf: ipynb md tex soft-clean
 
-ipynb: $(IPYNB)
+ipynb: $(IPYNB) soft-clean
 
-printable: $(PRINTABLES)
+printable: $(PRINTABLES) soft-clean
 
-md: $(MDS)
+md: $(MDS) soft-clean
 
-cs: $(CSFILES)
+cs: $(CSFILES) soft-clean
 
-tex: $(TEXS)
+tex: $(TEXS) soft-clean
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: %.ipynb
@@ -90,10 +93,9 @@ soft-clean:
 	# remove empty files
 	find out -type f -empty -delete
 	# remove .log and .aux files
-	find out -type f \( -name "*.log" -o -name "*.aux" \) -delete
+	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
 	# remove _printable.pdf if same size as main pdf
-	for f in out/**/*_printable.pdf; do \
-	  [ -f "$$f" ] || continue; \
+	find out -type f -name '*_printable.pdf' | while read -r f; do \
 	  orig="$${f%_printable.pdf}.pdf"; \
 	  [ -f "$$orig" ] || continue; \
 	  size_orig=$$(stat -c %s "$$orig"); \
@@ -103,3 +105,4 @@ soft-clean:
 	    rm -f "$$f"; \
 	  fi; \
 	done
+
