@@ -10,7 +10,7 @@ MD := $(shell find . -name "*.md" ! -iname "README.md")
 TEX := $(shell find . -name "*.tex")
 
 # Map input paths (./X.ipynb → out/X.pdf)
-PDFS := $(patsubst ./%.ipynb,out/%.pdf,$(NB))
+IPYNB := $(patsubst ./%.ipynb,out/%.pdf,$(NB))
 MDS  := $(patsubst ./%.md,out/%.pdf,$(MD))
 TEXS  := $(patsubst ./%.tex,out/%.pdf,$(TEX))
 
@@ -19,7 +19,9 @@ CSFILES := $(patsubst ./%.ipynb,out/%.cs,$(NB))
 
 all: pdf printable cs md tex soft-clean
 
-pdf: $(PDFS)
+pdf: ipynb md tex soft-clean
+
+ipynb: $(IPYNB)
 
 printable: $(PRINTABLES)
 
@@ -81,7 +83,7 @@ out/%.cs: %.ipynb
 # Static pattern rules (different source types → same out/%.pdf)
 
 # ipynb → pdf
-$(PDFS): out/%.pdf : %.ipynb
+$(IPYNB): out/%.pdf : %.ipynb
 	@mkdir -p $(dir $@)
 	jupyter nbconvert $< \
 		--to webpdf \
