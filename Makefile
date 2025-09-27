@@ -80,6 +80,8 @@ $(MDS): out/%.pdf : %.md
 $(TEXS): out/%.pdf : %.tex
 	@mkdir -p $(dir $@)
 	xelatex -output-directory=$(dir $@) $<
+# 	run twice for TOC
+	xelatex -output-directory=$(dir $@) $<
 
 clean:
 	rm -rf out

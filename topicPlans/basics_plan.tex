@@ -1,0 +1,200 @@
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{geometry}
+
+\pagestyle{fancy}
+
+\setmainlanguage{arabic}
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+
+\lstset{
+  language=[Sharp]C,
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black}
+}
+
+\newif\ifwithcode
+
+\geometry{a4paper, margin=2.5cm}
+
+\fancyhf{} % clear default
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{مدرسة التسامح الشاملة}
+  \fancyhead[R]{الأستاذ محمود اغبارية}
+  \fancyfoot[C]{\thepage}
+}
+\title{قائمة مواد أساسيات علوم الحاسوب بلغة C\# حسب خطة وزارة المعارف}
+\fancyhead[L]{مدرسة التسامح الشاملة}
+\fancyhead[R]{الأستاذ محمود اغبارية}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+\maketitle
+\renewcommand{\contentsname}{جدول المحتويات}
+\tableofcontents
+\clearpage
+
+\section{المقدمة ومصطلحات أساسية}
+
+\subsection{مقدمة عن الخوارزميات والبرمجة}
+
+انظر عرض "مقدمة" الذي أعددته.
+
+بعده نبدأ بالبرمجة.
+
+\begin{itemize}
+\item البدء خطوة بخطوة إلى أن ينشئ الطالب مشروعًا جديدًا في Visual Studio
+\item التعريف بمبنى المشروع العام
+\item التعريف بمبنى الملف $\mathtt{Program.cs}$ العام
+\end{itemize}
+
+\subsection{كتابة إلى الشاشة، وقراءة من المستخدم}
+
+\begin{itemize}
+    \item نشرح بأقل الممكن طريقة طباعة متغير على الشاشة أو أي نص
+    \item نشرح بأقل الممكن طريقة استقبال عدد من المستخدم
+\end{itemize}
+
+\section{المتغيرات}
+
+\begin{enumerate}
+    \item  المتغيرات: تعريفها وإعطاؤها قيمة (الاسم والنوع لا يتغيران، القيمة تتغير)
+    \item  الأنواع الأساسية للمتغيرات،
+    \item  \textit{قوانين أسماء المتغيرات المسموحة}
+    \item  \textbf{أهمية اختيار اسم معبّر للمتغير}
+    \item  خاصة: $\mathtt{int}$ و $\mathtt{double}$ ومجالات قيم كل نوع (القيم بالبرمجة محدودة وليس كما في العالم غير محدودة)
+    \item  العمليات الحسابية على المتغيرات:
+    \begin{itemize}
+        \item جمع
+        \item طرح
+        \item ضرب
+        \item قسمة
+        \item باقي
+        \item ترتيب العمليات الحسابية (مع أقواس وبدون)
+    \end{itemize}
+    \item  تحويل بين الأنواع  $\mathtt{int}$ و $\mathtt{double}$:
+    \item تحويل صريح
+    \item تحويل ضمني (عند قسمة $\mathtt{int}$ على $\mathtt{double}$ مثلا)
+    \item  تعريف المتغير وإعطاؤه قيمة في نفس السطر أو في سطرين مختلفين.
+    \item  إعطاء قيمة للمتغير هو نسخ وليس نقل للقيمة
+\end{enumerate}
+
+\section{مقدمة قصيرة عن الفئات}
+
+\subsection{الفئات}
+\begin{itemize}
+    \item تعريف المصطلحات: فئة، كائن، خاصية، عملية
+    \item قراءة ملف فئة وفهمه
+    \item إنشاء كائن من فئة معينة
+    \item استدعاء عمليات فئة معينة
+\end{itemize}
+
+
+\subsection{استدعاء عمليات}
+
+استدعاء عمليات $\mathtt{static}$ من فئة خارجية: $\mathtt{ClassName.MethodName()}$ بأقل تفصيل ممكن (التعامل مع $\mathtt{Math}$ كمجموعة عمليات كتبها شخص آخر ونحن نستدعيها.)
+
+\subsection{عمليات الفئة $\mathtt{Math}$}
+\begin{itemize}
+    \item $\mathtt{Math.Abs}$
+    \item $\mathtt{Math.Max}$
+    \item $\mathtt{Math.Min}$
+    \item $\mathtt{Math.Pow}$
+    \item $\mathtt{Math.Round}$
+    \item $\mathtt{Math.Sqrt}$
+\end{itemize}
+
+\subsection{الفئة $\mathtt{Random}$ واستخداماتها}
+
+//TODO
+
+\subsection{قراءة ملف فئة وفهمه}
+\begin{itemize}
+    \item قراء ملف فئة وفهمه
+    \item قراءة برنامج يستخدم هذه الفئة وفهمه
+    \item تغيير هذا البرنامج للحصول على النتيجة المطلوبة
+\end{itemize}
+
+\subsection{التعامل مع متغير النص $\mathtt{String}$}
+
+\begin{itemize}
+    \item ربط نصين ببعضهما
+    \item تنسيق النص مع متغيرات $\mathtt{\$}$
+    \item $\mathtt{int.Parse(Console.ReadLine());}$
+    \item $\mathtt{double.Parse(Console.ReadLine());}$
+    \item \textbf{موضوع $\mathtt{String}$ ليس مطلوبًا لأول وحدتين، المطلوب فقط التعامل الأساسي معه لأجل الطباعة واستقبال المتغيرات}
+\end{itemize}
+
+\subsection{العمليات الخارجية}
+
+
+\begin{itemize}
+    \item مثال يبين أهمية تقسيم البرنامج إلى عمليات صغيرة:
+    \begin{itemize}
+        \item وجود الأخطاء أسرع
+        \item فحص الكود (testing) أسهل
+        \item يمنع من تكرار الكود، ويمكننا من إعادة استخدامه
+        \item أسهل للقراءة
+        \item حل المشكلة يصبح أسهل
+    \end{itemize}
+    \item مبنى تعريف العملية واستدعاؤها:
+    \begin{itemize}
+        \item ختم العملية
+        \item القيمة المرجعة
+        \item جسم العملية (بين أقواس  مجعّدة)
+    \end{itemize}
+    \item تعريف عمليات خاصة ($\mathtt{private}$):
+    \begin{itemize}
+        \item لا تستقبل متغيرات ولا ترجع قيمة (تحسب شيئا وتطبعه مثلا)
+        \item استقبال متغيرات في العملية الخارجية
+        \item إرجاع قيمة في العملية الخارجية
+        \item استعداء العمليات مع قيمة المتغير \textenglish{\texttt{Call by value}}، توضيح لا علاقة بين $\mathtt{x}$ في $\mathtt{Main}$ و $\mathtt{x}$ في العملية الخارجية
+        \item نحن نجري العمليات على \textbf{قيمة} المتغير وليس على المتغير نفسه.
+    \end{itemize}
+    \item تمرين الطالب على ترتيب برنامج وتقسيمه لعمليات صغيرة
+    \item شرح دمج القيمة المرجعة من العملية في تعبير رياضي:
+    \begin{itemize}
+        \item مثال لتعبير حسابي أحد حدوده قيمة مرجعة من عملية
+        \item مثال لاستدعاء عملية وأحد البرامترات هو تعبير حسابي
+        \item مثال لاستدعاء عملية وأحد البرامترات هو القيمة المرجعة من عملية أخرى (inline)
+    \end{itemize}
+\end{itemize}
+
+\subsection{جدول المتابعة}
+
+\begin{itemize}
+    \item الجدول يحتوي على عمود لكل متغير نريد متابعته.
+    \item يحتوي أيضًا على عمود للمخرجات
+    \item يحتوي على عمود للشروط (عندما نتعلمها)
+    \item إذا كان أحد المتغيرات هو كائن، فالعمود الخاص به يشير إلى ما يبيّن قيم خصائصه.
+\end{itemize}
+
+\subsection{معالجة أخطاء الكتابة، التشغيل، أخطاء منطقية}
+
+برأيي هذا حسب الحاجة، ربما نكون قد غطيناه خلال العمل السابق.
+
+\section{الشرط}
+
+\section{الحلقات}
+
+\section{مباني معطيات بسيطة}
+
+\section{كائنات وفئات}
+
+\end{document}
