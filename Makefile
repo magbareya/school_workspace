@@ -26,19 +26,19 @@ CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 # Targets
 # -----------------------
 
-all: pdf printable cs md tex
+all: pdf printable
 
 pdf: ipynb md tex
 
-ipynb: $(IPYNB)
+printable: $(PRINTABLE_NB) $(PRINTABLE_TEX) cs
 
-printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
+ipynb: $(IPYNB)
 
 md: $(MDS)
 
-cs: $(CSFILES)
-
 tex: $(TEXS)
+
+cs: $(CSFILES)
 
 # -----------------------
 # Rules
@@ -104,8 +104,6 @@ out/%_printable.pdf: src/%.tex
 	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
 	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
 
-
-
 # -----------------------
 # Cleaning
 # -----------------------
@@ -113,12 +111,9 @@ out/%_printable.pdf: src/%.tex
 clean:
 	rm -rf out
 
-soft-clean:
-	# remove empty files
+sclean:
 	find out -type f -empty -delete
-	# remove .log, .aux, .toc files
 	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
-	# remove _printable.pdf if same size as main pdf
 	find out -type f -name '*_printable.pdf' | while read -r f; do \
 	  orig="$${f%_printable.pdf}.pdf"; \
 	  [ -f "$$orig" ] || continue; \
