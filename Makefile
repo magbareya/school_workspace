@@ -1,7 +1,5 @@
 SHELL := /bin/bash
 
-.NOTPARALLEL:
-.SUFFIXES:
 .PHONY: all
 
 # Find all ipynb and md files recursively
