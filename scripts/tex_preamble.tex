@@ -1,0 +1,100 @@
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{pifont}
+\newfontfamily\emoji{Segoe UI Emoji}
+
+\pagestyle{fancy}
+
+\setmainlanguage{arabic}
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+\lstset{
+  language=[Sharp]C,
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black}
+}
+
+\newif\ifwithcode
+
+\geometry{a4paper, margin=2.5cm}
+
+\fancyhf{} % clear default
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{مدرسة التسامح الشاملة}
+  \fancyhead[R]{الأستاذ محمود اغبارية}
+  \fancyfoot[C]{\thepage}
+}
+
+\fancyhead[L]{مدرسة التسامح الشاملة}
+\fancyhead[R]{الأستاذ محمود اغبارية}
+\fancyfoot[C]{\thepage}
+\author{الأستاذ محمود اغبارية}
+\date{\today}
+
+\setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
+
+% ----- Box Styles -----
+\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
+
+\newtcolorbox{definition}[1][]{colback=blue!5!white, colframe=blue!75!black,
+  title={\emoji📘} تعريف: #1}
+
+\newtcolorbox{exercise}[1][]{colback=green!5!white, colframe=green!50!black,
+  title= {\emoji🧩} تمرين: #1}
+
+\newtcolorbox{example}[1][]{colback=yellow!5!white, colframe=orange!90!black,
+  title= {\emoji📝} مثال: #1}
+
+\newtcolorbox{note}[1][]{colback=gray!10!white, colframe=black,
+  title= {\emoji✨} ملاحظة: #1}
+
+\newtcolorbox{warning}[1][]{colback=red!5!white, colframe=red!75!black,
+  title= {\emoji⚠️} تحذير: #1}
+
+
+% ----------------------
+
+
+% \begin{document}
+
+% \maketitle
+
+% % \clearpage  % start TOC on a new page
+% % \renewcommand{\contentsname}{جدول المحتويات}
+% % \tableofcontents
+% % \clearpage
+
+% \part*{part 1} % the * prevents numbering
+% \section*{مقدمة}
+% \subsection*{مثال رياضي}
+% \subsubsection*{مثال فرعي}
+% \paragraph*{ paragraph 1}
+% \subparagraph*{sub paragraph 1}
+
+% \ifwithcode
+% \begin{english}
+% \begin{lstlisting}
+% // C# Example
+% \end{lstlisting}
+% \end{english}
+% \fi
+
+% % \includegraphics[width=0.2\textwidth]{../../../images/DFAs/ex1_q1.png}
+
+% \end{document}

@@ -1,54 +1,8 @@
 \documentclass[12pt]{article}
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{geometry}
-\usepackage{bidi}
-
-\pagestyle{fancy}
-
-\setmainlanguage{arabic}
-\setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\input{../../../scripts/tex_preamble.tex}
 
 
-\lstset{
-  language=[Sharp]C,
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  frame=single,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue},
-  stringstyle=\color{red},
-  commentstyle=\color{green!50!black}
-}
-
-\newif\ifwithcode
-
-\geometry{a4paper, margin=2.5cm}
-
-\fancyhf{} % clear default
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyhead[L]{مدرسة التسامح الشاملة}
-  \fancyhead[R]{الأستاذ محمود اغبارية}
-  \fancyfoot[C]{\thepage}
-}
 \title{موديلات حسابية}
-\fancyhead[L]{مدرسة التسامح الشاملة}
-\fancyhead[R]{الأستاذ محمود اغبارية}
-\fancyfoot[C]{\thepage}
-\author{الأستاذ محمود اغبارية}
-\date{العام الدراسي 2025-2026}
-
-% \setcounter{tocdepth}{2} % only section and subsection in TOC
 
 \begin{document}
 
@@ -283,7 +237,7 @@ $$S5 = \{ x \in S1 | x\%2=0 \}$$
 \end{itemize}
 
 \textbf{انتبه:} الكلمات أعلاه ليست أرقامًا، لا نقول إن الكلمة $w_1$ هي صفر، بل هي كلمة مكونة من ثلاثة رموز كلها صفر. \\
-نستحدم الرمز $|w|$ للتعبير عن عدد الرموز في الكلمة $w$. \\
+نستحدم الرمز $|w|$ للتعبير عن عدد الرموز في الكلمة $w$.
 مثلًا، في الكلمات أعلاه:
 \begin{itemize}
     \item $|w_1| = 3$
@@ -295,7 +249,6 @@ $$S5 = \{ x \in S1 | x\%2=0 \}$$
 الكلمة قد تكون فارغة، أي لا يوجد فيها أي رموز. \\
 نرمز للكلمة فارغة بالحرف $\epsilon$ (إبسيلون). \\
 حسب التعريف في النقطة السابقة: $|\epsilon| = 0$ لأنّ عدد الرموز في الكلمة الفارغة هو 0.
-
 
 \subsubsection{اللغة}
 
@@ -349,5 +302,8 @@ $L_1 = \{0, 1, 01, 10\}$ معرفة فوق الأبجدية $\Sigma = \{0, 1\}$.
     \end{itemize}
 
 \end{enumerate}
+
+
+
 
 \end{document}

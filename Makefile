@@ -2,21 +2,23 @@ SHELL := /bin/bash
 
 .PHONY: all
 
-# Find all ipynb and md files recursively
-NB  := $(shell find . -path ./scripts -prune -o -name "*.ipynb" -print)
-MD  := $(shell find . -path ./scripts -prune -o -name "*.md" ! -iname "README.md" -print)
-TEX := $(shell find . -path ./scripts -prune -o -name "*.tex" -print)
+# Find all ipynb, md, tex under src
+NB  := $(shell find src -name "*.ipynb")
+MD  := $(shell find src -name "*.md")
+TEX := $(shell find src -name "*.tex")
 
-# to skip several folders, use this command
-# NB  := $(shell find . \( -path ./scripts -o -path ./scripts2 \) -prune -o -name "*.ipynb" -print)
+# Remove the leading src/ so that out/... mirrors structure inside src
+NB_REL  := $(patsubst src/%,%,$(NB))
+MD_REL  := $(patsubst src/%,%,$(MD))
+TEX_REL := $(patsubst src/%,%,$(TEX))
 
-# Map input paths (./X.ipynb → out/X.pdf)
-IPYNB := $(patsubst ./%.ipynb,out/%.pdf,$(NB))
-MDS  := $(patsubst ./%.md,out/%.pdf,$(MD))
-TEXS  := $(patsubst ./%.tex,out/%.pdf,$(TEX))
+# Map input paths to outputs
+IPYNB := $(patsubst %.ipynb,out/%.pdf,$(NB_REL))
+MDS   := $(patsubst %.md,out/%.pdf,$(MD_REL))
+TEXS  := $(patsubst %.tex,out/%.pdf,$(TEX_REL))
 
-PRINTABLES := $(patsubst ./%.ipynb,out/%_printable.pdf,$(NB))
-CSFILES := $(patsubst ./%.ipynb,out/%.cs,$(NB))
+PRINTABLES := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
+CSFILES    := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
 all: pdf printable cs md tex soft-clean
 
@@ -33,7 +35,7 @@ cs: $(CSFILES) soft-clean
 tex: $(TEXS) soft-clean
 
 # Jupyter notebooks → printable pdf (only markdown cells)
-out/%_printable.pdf: %.ipynb
+out/%_printable.pdf: src/%.ipynb
 	@mkdir -p $(dir $@)
 	jupyter nbconvert $< \
 		--to webpdf \
@@ -47,12 +49,12 @@ out/%_printable.pdf: %.ipynb
 		--output $(basename $(notdir $<))_printable
 
 # Jupyter notebooks → C# source file (only code cells)
-out/%.cs: %.ipynb
+out/%.cs: src/%.ipynb
 	@mkdir -p $(dir $@)
 	python scripts/export_cs.py $< $@
 
 # ipynb → pdf
-$(IPYNB): out/%.pdf : %.ipynb
+out/%.pdf: src/%.ipynb
 	@mkdir -p $(dir $@)
 	jupyter nbconvert $< \
 		--to webpdf \
@@ -64,7 +66,7 @@ $(IPYNB): out/%.pdf : %.ipynb
 		--output $(basename $(notdir $<))
 
 # md → pdf
-$(MDS): out/%.pdf : %.md
+out/%.pdf: src/%.md
 	@mkdir -p $(dir $@)
 	pandoc $< \
 		--pdf-engine=xelatex \
@@ -78,10 +80,10 @@ $(MDS): out/%.pdf : %.md
 		-o $@
 
 # tex → pdf
-$(TEXS): out/%.pdf : %.tex
+out/%.pdf: src/%.tex
 	@mkdir -p $(dir $@)
 	xelatex -output-directory=$(dir $@) $<
-# 	run twice for TOC
+	# run twice for TOC
 	xelatex -output-directory=$(dir $@) $<
 
 clean:
@@ -103,4 +105,3 @@ soft-clean:
 	    rm -f "$$f"; \
 	  fi; \
 	done
-
