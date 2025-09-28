@@ -31,6 +31,10 @@
 }
 
 \newif\ifwithcode
+\ifdefined\setwithcode
+  \setwithcode
+\fi
+
 
 \geometry{a4paper, margin=2.5cm}
 
@@ -45,7 +49,6 @@
 \fancyhead[L]{مدرسة التسامح الشاملة}
 \fancyhead[R]{الأستاذ محمود اغبارية}
 \fancyfoot[C]{\thepage}
-\author{الأستاذ محمود اغبارية}
 \date{\today}
 
 \setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC

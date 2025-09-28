@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: all
+.PHONY: all pdf printable ipynb md cs tex clean soft-clean
 
 # Find all ipynb, md, tex under src
 NB  := $(shell find src -name "*.ipynb")
@@ -17,22 +17,32 @@ IPYNB := $(patsubst %.ipynb,out/%.pdf,$(NB_REL))
 MDS   := $(patsubst %.md,out/%.pdf,$(MD_REL))
 TEXS  := $(patsubst %.tex,out/%.pdf,$(TEX_REL))
 
-PRINTABLES := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
-CSFILES    := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
+PRINTABLE_NB  := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
+PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_REL))
 
-all: pdf printable cs md tex soft-clean
+CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
-pdf: ipynb md tex soft-clean
+# -----------------------
+# Targets
+# -----------------------
 
-ipynb: $(IPYNB) soft-clean
+all: pdf printable cs md tex
 
-printable: $(PRINTABLES) soft-clean
+pdf: ipynb md tex
 
-md: $(MDS) soft-clean
+ipynb: $(IPYNB)
 
-cs: $(CSFILES) soft-clean
+printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
 
-tex: $(TEXS) soft-clean
+md: $(MDS)
+
+cs: $(CSFILES)
+
+tex: $(TEXS)
+
+# -----------------------
+# Rules
+# -----------------------
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: src/%.ipynb
@@ -79,12 +89,26 @@ out/%.pdf: src/%.md
 		-V footer-center="\thepage" \
 		-o $@
 
-# tex → pdf
+# tex → pdf with code
 out/%.pdf: src/%.tex
+	@echo "Building regular PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) $<
-	# run twice for TOC
-	xelatex -output-directory=$(dir $@) $<
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodetrue} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodetrue} \input{$<}"
+
+
+# tex → printable pdf without code
+out/%_printable.pdf: src/%.tex
+	@echo "Building printable PDF for $< -> $@"
+	@mkdir -p $(dir $@)
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
+
+
+
+# -----------------------
+# Cleaning
+# -----------------------
 
 clean:
 	rm -rf out
@@ -92,7 +116,7 @@ clean:
 soft-clean:
 	# remove empty files
 	find out -type f -empty -delete
-	# remove .log and .aux files
+	# remove .log, .aux, .toc files
 	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
 	# remove _printable.pdf if same size as main pdf
 	find out -type f -name '*_printable.pdf' | while read -r f; do \
