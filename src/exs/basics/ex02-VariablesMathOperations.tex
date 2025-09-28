@@ -1,0 +1,148 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة 2 للصف العاشر 10}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}
+    تأكد من استخدام نوع المتغير الصحيح، $\mathtt{int}$ للمتغيرات التي لا تكون إلا عددًا صحيحًا، و $\mathtt{double}$ للمتغيرات التي قد تكون أعدادًا عشرية.
+\end{note}
+
+\begin{enumerate}
+
+\item
+اكتب برنامجًا يستقبل من المستخدم الميزانية لمشروع ما. \\
+ثم يستقبل من المستخدم 3 مصروفات للمشروع. \\
+بعد كل مرة يدخل فيها المستخدم مصروفًا، اطبع له الميزانية المتبقية. \\
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter the budget:
+1000
+Enter expense 1:
+200
+Remaining budget: 800
+Enter expense 2:
+150
+Remaining budget: 650
+Enter expense 3:
+50
+Remaining budget: 600
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\clearpage
+\item
+اكتب برنامجًا يستقبل من المستخدم السعر الأولي لمنتج ما. \\
+ثم يستقبل من المستخدم 3 تخفيضات على هذا المنتج بالنسبة المئوية. \\
+بعد كل مرة يدخل فيها المستخدم تخفيضًا، اطبع له السعر الجديد للمنتج. \\
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter the initial price:
+500
+Enter discount 1 (%):
+20
+Price after discount:400
+Enter discount 2 (%):
+10
+Price after discount: 360
+Enter discount 3 (%):
+5
+Price after discount: 342
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\clearpage
+\item
+اكتب برنامجًا يبدأ بالحساب من 3600 ثانية (أي ساعة واحدة)، ثم يستقبل من المستخدم عدد الثواني التي مرت. \\
+يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت المتبقي بالثواني. \\
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter seconds passed:
+600
+Remaining time (seconds): 3000
+Enter seconds passed:
+300
+Remaining time (seconds): 2700
+Enter seconds passed:
+1200
+Remaining time (seconds): 1500
+Enter seconds passed:
+500
+Remaining time (seconds): 1000
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\clearpage
+\item
+نفس السؤال السابق، لكن المستخدم يُدخل الوقت الذي مضى بالثواني، وأنت تطبع له الوقت المتبقي بالدقائق. \\
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter seconds passed:
+600
+Remaining time (minutes): 50
+Enter seconds passed:
+300
+Remaining time (minutes): 45
+Enter seconds passed:
+1200
+Remaining time (minutes): 25
+Enter seconds passed:
+500
+Remaining time (minutes): 16
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\clearpage
+\item
+اكتب برنامجًا يستقبل من المستخدم الوقت الحالي (الساعة، ثم الدقائق، ثم الثواني). \\
+ثم يستقبل من المستخدم عدد الثواني التي مضت، يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت الحالي (الساعة، الدقائق، الثواني). \\
+\begin{note}
+تأكد من أن البرنامج يتعامل مع تغير الساعة والدقائق عند الحاجة.
+\end{note}
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter hour:
+10
+Enter minutes:
+30
+Enter seconds:
+0
+Enter seconds passed:
+3600
+Current time: 11:30:00
+Enter seconds passed:
+4500
+Current time: 12:45:00
+Enter seconds passed:
+7200
+Current time: 14:45:00
+Enter seconds passed:
+500
+Current time: 14:53:20
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\end{enumerate}
+
+\vspace{3cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
