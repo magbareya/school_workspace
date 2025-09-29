@@ -1,6 +1,10 @@
 SHELL := /bin/bash
 
-.PHONY: all pdf printable ipynb md cs tex clean soft-clean
+.PHONY: all pdf printable sols ipynb md cs tex clean sclean
+
+# -----------------------
+# Sources
+# -----------------------
 
 # Find all ipynb, md, tex under src
 NB  := $(shell find src -name "*.ipynb")
@@ -20,24 +24,23 @@ TEXS  := $(patsubst %.tex,out/%.pdf,$(TEX_REL))
 PRINTABLE_NB  := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
 PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_REL))
 
+SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_REL))
+
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
 # -----------------------
 # Targets
 # -----------------------
 
-all: pdf printable
+all: pdf printable sols
 
 pdf: ipynb md tex
-
-printable: $(PRINTABLE_NB) $(PRINTABLE_TEX) cs
+printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
+sols: $(SOLS_TEX)        # <-- new target
 
 ipynb: $(IPYNB)
-
 md: $(MDS)
-
 tex: $(TEXS)
-
 cs: $(CSFILES)
 
 # -----------------------
@@ -93,16 +96,22 @@ out/%.pdf: src/%.md
 out/%.pdf: src/%.tex
 	@echo "Building regular PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodetrue} \input{$<}"
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodetrue} \input{$<}"
-
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
 
 # tex → printable pdf without code
 out/%_printable.pdf: src/%.tex
 	@echo "Building printable PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setwithcode{\withcodefalse} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
+
+# tex → sols pdf (detailed + withsols)
+out/%_sols.pdf: src/%.tex
+	@echo "Building solutions PDF for $< -> $@"
+	@mkdir -p $(dir $@)
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
+	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
 
 # -----------------------
 # Cleaning
@@ -114,13 +123,16 @@ clean:
 sclean:
 	find out -type f -empty -delete
 	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
-	find out -type f -name '*_printable.pdf' | while read -r f; do \
-	  orig="$${f%_printable.pdf}.pdf"; \
-	  [ -f "$$orig" ] || continue; \
-	  size_orig=$$(stat -c %s "$$orig"); \
-	  size_print=$$(stat -c %s "$$f"); \
-	  if [ "$$size_orig" -eq "$$size_print" ]; then \
-	    echo "Removing duplicate $$f"; \
-	    rm -f "$$f"; \
-	  fi; \
+	for suffix in _printable _sols; do \
+	  find out -type f -name "*$${suffix}.pdf" | while read -r f; do \
+	    orig="$${f%$${suffix}.pdf}.pdf"; \
+	    if [ -f "$$orig" ]; then \
+	      size_orig=$$(stat -c %s "$$orig"); \
+	      size_alt=$$(stat -c %s "$$f"); \
+	      if [ "$$size_orig" -eq "$$size_alt" ]; then \
+	        echo "Removing duplicate $$f"; \
+	        rm -f "$$f"; \
+	      fi; \
+	    fi; \
+	  done; \
 	done

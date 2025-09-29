@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة بيتية 1 للصف العاشر 10}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{warning}
+تأكد أن الكود الذي تسلمه يعمل - شغّله وافحصه قبل التسليم.
+\end{warning}
+
+\begin{note}
+    تأكد من استخدام نوع المتغير الصحيح، $\mathtt{int}$ للمتغيرات التي لا تكون إلا عددًا صحيحًا، و $\mathtt{double}$ للمتغيرات التي قد تكون أعدادًا عشرية.
+\end{note}
+
+\begin{enumerate}
+
+\vspace{1cm}
+\item
+اكتب برنامجًا يستقبل من المستخدم سنة ميلاده، ويطبع له كم سيكون عمره في عام 2030.
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+What is your birth year?
+2005
+In 2030, you will be 25 years old.
+\end{lstlisting}
+\end{english}
+\end{example}
+
+\vspace{1cm}
+\item
+اكتب برنامجًا يستقبل من المستخدم سعر سلعة معيّنة، ثم يضيف لها الضريبة المضافة، بقدر $18\%$. \\
+في النهاية اطبع للمستخدم السعر النهائي للسلعة مع الضريبة.
+
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter the price:
+30
+Price after adding tax is: 35.4
+\end{lstlisting}
+\end{english}
+لأنّ $30 + 0.18 \cdot 30 = 35.4$
+\end{example}
+
+\clearpage
+\item
+اكتب برنامجًا يستقبل من المستخدم الراتب \textbf{الشهري} لعامل ما. \\
+ثم يستقبل منه قيمة الضريبة \textbf{السنوية} التي يجب دفعها. \\
+ثم يستقبل من المستخدم \textbf{النسبة المئوية} للعلاوة السنوية التي حصل عليها العامل. \\
+في النهاية اطبع له الراتب السنوي بعد خصم الضريبة وإضافة العلاوة
+\begin{example}
+\begin{english}
+\begin{lstlisting}
+Enter your monthly salary:
+10000
+Enter the annual tax:
+20000
+Enter the annual bonus percentage (%):
+5
+Your annual salary after tax and bonus is: 113400
+\end{lstlisting}
+\end{english}
+لأنّ الراتب السنوي قبل الضريبة والعلاوة هو $10000 \cdot 12 = 120000$ \\
+وبعد خصم الضريبة يصبح $120000 - 20000 = 100000$ \\
+وبعد إضافة العلاوة يصبح $100000 + 0.05 \cdot 100000 = 105000$.
+\end{example}
+
+\end{enumerate}
+
+\vspace{3cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

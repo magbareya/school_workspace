@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{وظيفة 2 للصف العاشر 10}
+\title{ورقة تمرن 2 للصف العاشر 10}
 
 \begin{document}
 
@@ -18,7 +18,7 @@
 اكتب برنامجًا يستقبل من المستخدم الميزانية لمشروع ما. \\
 ثم يستقبل من المستخدم 3 مصروفات للمشروع. \\
 بعد كل مرة يدخل فيها المستخدم مصروفًا، اطبع له الميزانية المتبقية. \\
-\ifwithcode
+\ifdetailed
 \begin{example}
 \begin{english}
 \begin{lstlisting}
@@ -36,6 +36,37 @@ Remaining budget: 600
 \end{lstlisting}
 \end{english}
 \end{example}
+
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    int budget;
+    int expenses;
+    Console.Write("Please enter the budget:");
+    budget = int.Parse(Console.ReadLine());
+    Console.WriteLine("Please enter the first expense:");
+    expenses = int.Parse(Console.ReadLine());
+    budget = budget - expenses;
+    Console.WriteLine(budget);
+
+    Console.WriteLine("Please enter the second expense:");
+    expenses = int.Parse(Console.ReadLine());
+    budget = budget - expenses;
+    Console.WriteLine(budget);
+
+    Console.WriteLine("Please enter the third expense:");
+    expenses = int.Parse(Console.ReadLine());
+    budget = budget - expenses;
+    Console.WriteLine(budget);
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+
 \clearpage
 \fi
 
@@ -43,7 +74,7 @@ Remaining budget: 600
 اكتب برنامجًا يستقبل من المستخدم السعر الأولي لمنتج ما. \\
 ثم يستقبل من المستخدم 3 تخفيضات على هذا المنتج بالنسبة المئوية. \\
 بعد كل مرة يدخل فيها المستخدم تخفيضًا، اطبع له السعر الجديد للمنتج. \\
-\ifwithcode
+\ifdetailed
 \begin{example}
 \begin{english}
 \begin{lstlisting}
@@ -61,13 +92,44 @@ Price after discount: 342
 \end{lstlisting}
 \end{english}
 \end{example}
+
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    double price;
+    int discount;
+    Console.WriteLine("Please enter the initial price:");
+    price = double.Parse(Console.ReadLine());
+    Console.WriteLine("Please enter the first discount (%):");
+    discount = int.Parse(Console.ReadLine());
+    price = price * (100 - discount) / 100;
+    Console.WriteLine("The new price = " + price);
+
+    Console.WriteLine("Please enter the second discount (%):");
+    discount = int.Parse(Console.ReadLine());
+    price = price * (100 - discount) / 100;
+    Console.WriteLine("The new price = " + price);
+
+    Console.WriteLine("Please enter the third discount (%):");
+    discount = int.Parse(Console.ReadLine());
+    price = price * (100 - discount) / 100;
+    Console.WriteLine("The final price = " + price);
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+
 \clearpage
 \fi
 
 \item
 اكتب برنامجًا يبدأ بالحساب من 3600 ثانية (أي ساعة واحدة)، ثم يستقبل من المستخدم عدد الثواني التي مرت. \\
 يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت المتبقي بالثواني. \\
-\ifwithcode
+\ifdetailed
 \begin{example}
 \begin{english}
 \begin{lstlisting}
@@ -86,12 +148,46 @@ Remaining time (seconds): 1000
 \end{lstlisting}
 \end{english}
 \end{example}
+
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    int time = 3600;
+    int passedTime;
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time}");
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+
 \clearpage
 \fi
 
 \item
 نفس السؤال السابق، لكن المستخدم يُدخل الوقت الذي مضى بالثواني، وأنت تطبع له الوقت المتبقي بالدقائق. \\
-\ifwithcode
+\ifdetailed
 \begin{example}
 \begin{english}
 \begin{lstlisting}
@@ -110,41 +206,96 @@ Remaining time (minutes): 16
 \end{lstlisting}
 \end{english}
 \end{example}
+
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    int time = 3600;
+    int passedTime;
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time / 60}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time / 60}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time / 60}");
+
+    Console.WriteLine("Enter seconds passed:");
+    passedTime = int.Parse(Console.ReadLine());
+    time = time - passedTime;
+    Console.WriteLine($"Remaining time (seconds): {time / 60}");
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+
 \clearpage
 \fi
 
-\item
-اكتب برنامجًا يستقبل من المستخدم الوقت الحالي (الساعة، ثم الدقائق، ثم الثواني). \\
-ثم يستقبل من المستخدم عدد الثواني التي مضت، يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت الحالي (الساعة، الدقائق، الثواني). \\
-\begin{note}
-تأكد من أن البرنامج يتعامل مع تغير الساعة والدقائق عند الحاجة.
-\end{note}
-\ifwithcode
-\begin{example}
-\begin{english}
-\begin{lstlisting}
-Enter hour:
-10
-Enter minutes:
-30
-Enter seconds:
-0
-Enter seconds passed:
-3600
-Current time: 11:30:00
-Enter seconds passed:
-4500
-Current time: 12:45:00
-Enter seconds passed:
-7200
-Current time: 14:45:00
-Enter seconds passed:
-500
-Current time: 14:53:20
-\end{lstlisting}
-\end{english}
-\end{example}
-\fi
+% \item
+% اكتب برنامجًا يستقبل من المستخدم الوقت الحالي (الساعة، ثم الدقائق، ثم الثواني). \\
+% ثم يستقبل من المستخدم عدد الثواني التي مضت، يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت الحالي (الساعة، الدقائق، الثواني). \\
+% \begin{note}
+% تأكد من أن البرنامج يتعامل مع تغير الساعة والدقائق عند الحاجة.
+% \end{note}
+% \ifdetailed
+% \begin{example}
+% \begin{english}
+% \begin{lstlisting}
+% Enter hour:
+% 10
+% Enter minutes:
+% 30
+% Enter seconds:
+% 0
+% Enter seconds passed:
+% 3600
+% Current time: 11:30:00
+% Enter seconds passed:
+% 4500
+% Current time: 12:45:00
+% Enter seconds passed:
+% 7200
+% Current time: 14:45:00
+% Enter seconds passed:
+% 500
+% Current time: 14:53:20
+% \end{lstlisting}
+% \end{english}
+% \end{example}
+% \fi
+% \ifwithsols
+% \begin{solution}
+% \begin{english}
+% \begin{lstlisting}
+% private static void Main(string[] args)
+% {
+%     int h, m, s, passedSeconds;
+%     h = int.Parse(Console.ReadLine());
+%     m = int.Parse(Console.ReadLine());
+%     s = int.Parse(Console.ReadLine());
+%     passedSeconds = int.Parse(Console.ReadLine());
+
+%     h = (h + (m + (s + passedSeconds)/60) / 60) % 24;
+%     m = (m + (s + passedSeconds) / 60) % 60;
+%     s = (s + passedSeconds) % 60;
+%     Console.WriteLine($"{h}:{m}:{s}");
+% }
+% \end{lstlisting}
+% \end{english}
+% \end{solution}
+% \fi
 
 \end{enumerate}
 
