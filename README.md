@@ -6,14 +6,18 @@
 
 `make`
 
-### Only PDF with code + markdown
+### Only PDF files
 
 `make pdf`
 
-### Only printable PDF (markdown only)
+### Only priting-friendly PDF (it removes long code and solutions)
 
 `make printable`
 
-### Only .cs scripts
+### PDFs with solutions to the exercises and homeworks
 
-`make cs`
+`make sols`
+
+### clean duplicated and unneeded files
+
+`make sclean`

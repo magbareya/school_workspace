@@ -123,16 +123,4 @@ clean:
 sclean:
 	find out -type f -empty -delete
 	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
-	for suffix in _printable _sols; do \
-	  find out -type f -name "*$${suffix}.pdf" | while read -r f; do \
-	    orig="$${f%$${suffix}.pdf}.pdf"; \
-	    if [ -f "$$orig" ]; then \
-	      size_orig=$$(stat -c %s "$$orig"); \
-	      size_alt=$$(stat -c %s "$$f"); \
-	      if [ "$$size_orig" -eq "$$size_alt" ]; then \
-	        echo "Removing duplicate $$f"; \
-	        rm -f "$$f"; \
-	      fi; \
-	    fi; \
-	  done; \
-	done
+	python scripts/sclean.py out
