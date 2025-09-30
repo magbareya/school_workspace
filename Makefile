@@ -122,5 +122,5 @@ clean:
 
 sclean:
 	find out -type f -empty -delete
-	find out -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" \) -delete
+	find . -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" -o -name "*.fls" -o -name "*.fdb_latexmk" \) -delete
 	python scripts/sclean.py out
