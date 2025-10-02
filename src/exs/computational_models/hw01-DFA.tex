@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة 1 للصف 11-10 - موديلات حسابية}
+
+\begin{document}
+
+\maketitle
+
+\textbf{1. السؤال الأول:} نعرّف اللغات التالية:
+\begin{align*}
+    L_1 &= \{a^n b^n \mid n \geq 1\} \\
+    L_2 &= \{a^n b^m \mid n,m \geq 1\} \\
+    L_3 &= \{a^n b^m \mid n,m \geq 0\}
+\end{align*}
+
+لكل واحد من الادّعاءات التالية اكتب هل هو صحيح أم لا.
+\begin{enumerate}
+\item $L_1 \subseteq L_2$
+\item $L_2 \subseteq L_3$
+\item $L_3 \subseteq L_1$
+\item $\epsilon \in L_1$
+\item $\epsilon \in L_2$
+\item $\epsilon \in L_3$
+\item $aa \in L_1$
+\item $aa \in L_2$
+\item $aa \in L_3$
+\item $b \in L_3$
+\item $ba \in L_2$
+\item $abb \in L_1$
+\item $abb \in L_2$
+\item $abb \in L_3$
+\end{enumerate}
+
+\ifwithsols
+\clearpage
+\begin{solution}
+\begin{enumerate}
+\item صحيح
+\item صحيح
+\item خطأ
+\item خطأ
+\item خطأ
+\item صحيح
+\item خطأ
+\item خطأ
+\item صحيح
+\item صحيح
+\item خطأ
+\item خطأ
+\item صحيح
+\item صحيح
+\end{enumerate}
+\end{solution}
+\fi
+
+\clearpage
+\textbf{2. السؤال الثاني:} أي اللغات التالية مساوية للغة $L = {a^* \cdot a \cdot a^*}$ ؟ \\
+اختر جميع الإجابات الصحيحة (هناك أكثر من إجابة صحيحة)
+
+\begin{enumerate}
+    \item $L_1 = {a^*}$
+    \item $L_2 = {a^* \cdot a}$
+    \item $L_3 = {a \cdot a^*}$
+    \item $L_4 = {a^+}$
+    \item $L_5 = {a \cdot a^+}$
+    \item $L_6 = \{a^n \mid n \geq 0\}$
+    \item $L_7 = \{a^n \mid n > 0\}$
+\end{enumerate}
+
+
+\ifwithsols
+\begin{solution}
+    اللغة $L$ هي لغة كل الكلمات المكونة من الحرف $a$ فقط، بحيث يظهر الحرف $a$ مرة واحدة على الأقل.
+    \begin{enumerate}
+        \item غير مساوية، لأنّ $\epsilon \in L1$ ولكن $\epsilon \notin L$
+        \item مساوية
+        \item مساوية
+        \item مساوية
+        \item غير مساوية، لأنّ $a \notin L5$ بينما $a \in L$
+        \item غير مساوية، لأنّ $\epsilon \in L6$ ولكن $\epsilon \notin L$
+        \item مساوية
+    \end{enumerate}
+\end{solution}
+\clearpage
+\fi
+
+\textbf{3. السؤال الثالث:} أمامكم ست لغات فوق الأبجدية $\Sigma = \{0,1\}$:
+\begin{align*}
+    L_1 &= \emptyset \\
+    L_2 &= \Sigma^* \\
+    L_3 &= \{\epsilon\} \\
+    L_4 &= \{0110\} \\
+    L_5 &= \{\epsilon, 110, 00\} \\
+    L_6 &= \{1, 0110, 110, 01\}
+\end{align*}
+
+اكتبوا اللغة التي تنتج من كل واحدة من العمليات التالية:
+
+\begin{enumerate}
+    \item $L_1 \cap L_2$
+    \item $L_1 \cup L_2$
+    \item $L_1 \cup L_3$
+    \item $L_2 \cup L_3$
+    \item $L_5 \cap L_6$
+    \item $L_5 \cup L_6$
+    \item $L_3 \cdot L_4$
+    \item $L_4 \cdot L_5$
+    \item $L_1 \cdot L_6$
+\end{enumerate}
+
+\ifwithsols
+\begin{solution}
+    \begin{enumerate}
+        \item
+        $L_1 \cap L_2 = \emptyset$
+
+        \item
+        $L_1 \cup L_2 = \Sigma^*$
+
+        \item
+        $L_1 \cup L_3 = \{\epsilon\}$
+
+        \item
+        $L_2 \cup L_3 = \Sigma^*$
+
+        \item
+        $L_5 \cap L_6 = \{110\}$
+
+        \item
+        $L_5 \cup L_6 = \{\epsilon, 110, 00, 1, 0110, 01\}$
+
+        \item
+        $L_3 \cdot L_4 = \{0110\}$
+
+        \item
+        $L_4 \cdot L_5 = \{0110, 0110110, 011000\}$
+
+        \item
+        $L_1 \cdot L_6 = \emptyset$
+    \end{enumerate}
+\end{solution}
+\fi
+
+\vspace{1.5cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

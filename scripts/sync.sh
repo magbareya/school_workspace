@@ -1,1 +1,1 @@
-cp -r -f out/* "C:\Users\magbareya\OneDrive\ملفاتي\مدرسة ثانوية\fromWorkspace"
+scp -r out/* "C:\Users\magbareya\OneDrive\ملفاتي\مدرسة ثانوية\fromWorkspace"
