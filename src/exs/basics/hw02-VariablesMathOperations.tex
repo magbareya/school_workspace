@@ -1,0 +1,293 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة بيتية 2 للصف العاشر 10}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=1em]
+
+    \subsection*{العمليات الحسابية الأساسية}
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم القيمة \texttt{5}؟
+    \begin{english}
+        \begin{lstlisting}
+int x = int.Parse(Console.ReadLine());
+Console.WriteLine(x + 3);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $8$
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{4} ثم \texttt{2}؟
+    \begin{english}
+        \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+Console.WriteLine(a * b);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $8$
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{7} ثم \texttt{3}؟
+    \begin{english}
+        \begin{lstlisting}
+int x = int.Parse(Console.ReadLine());
+int y = int.Parse(Console.ReadLine());
+Console.WriteLine(x / y);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $2$ \\ انتبه أنّ النتيجة ستكون من نوع \texttt{int} وليس \texttt{double} لأنّ كل المتغيرات هي من نوع \texttt{int}.
+    \end{solution}
+    \fi
+
+    \ifwithsols
+    \clearpage
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{2.5} ثم \texttt{4}؟
+    \begin{english}
+        \begin{lstlisting}
+double x = double.Parse(Console.ReadLine());
+int y = int.Parse(Console.ReadLine());
+Console.WriteLine(x + y);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $9.2$
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم:
+    \begin{enumerate}[label=\Roman*.]
+        \item \texttt{8} ثم \texttt{3} ؟
+        \item \texttt{3} ثم \texttt{8} ؟
+        \item \texttt{3} ثم \texttt{9} ؟
+        \item \texttt{21} ثم \texttt{6} ؟
+    \end{enumerate}
+    \begin{english}
+        \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+Console.WriteLine(a % b);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        \begin{enumerate}[label=\Roman*.]
+        \item $2$
+        \item $3$
+        \item $0$
+        \item $3$
+    \end{enumerate}
+    \end{solution}
+    \fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \clearpage
+    \subsection*{ترتيب العمليات الحسابية}
+
+    \item
+    ما هو مخرج الكود التالي؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int x = 2 + 3 * 4;
+Console.WriteLine(x);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $2 + 3 \cdot 4 \rightarrow 2 + 12 \rightarrow 14$ \\
+        الإجابة النهائية ستكون $14$.
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int y = (2 + 3) * 4;
+Console.WriteLine(y);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $(2 + 3) \cdot 4 \rightarrow 5 \cdot 4 \rightarrow 20$ \\
+        الإجابة النهائية ستكون $20$.
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int a = 20 - 8 / 2;
+Console.WriteLine(a);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $20 - 8 / 2 \rightarrow 20 - 4 \rightarrow 16$ \\
+        الإجابة النهائية ستكون $16$.
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int b = (20 - 8) / 2;
+Console.WriteLine(b);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $(20 - 8) / 2 \rightarrow 12 / 2 \rightarrow 6$ \\
+        الإجابة النهائية ستكون $6$.
+    \end{solution}
+    \fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifwithsols
+    \clearpage
+    \fi
+    \subsection*{تحويل بين \texttt{int} و \texttt{double}}
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{7}؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int d = n / 4;
+Console.WriteLine(d);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $1$ \\
+        انتبه أنّ النتيجة ستكون فقط القسم الصحيح من نتيجة قسمة $7/4$ لأنّ كل المتغيرات هي من نوع \texttt{int}.
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{7}؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+double d = n / 4;
+Console.WriteLine(d);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $1$ \\
+        النتيجة ستكون فقط القسم الصحيح من نتيجة قسمة $7/4$ لأنّ كل المتغيرات هي من نوع \texttt{int}. \\
+        (صحيح أنّنا سنحفظ النتيجة في متغير من نوع \texttt{double} لكن الجهة اليمنى لا تتأثر بهذا الأمر، فستبقى النتيجة عددًا صحيحًا.)
+    \end{solution}
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{7}؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+double d = (double)n / 4;
+Console.WriteLine(d);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $1.75$ \\
+        النتيجة هنا ستكون من نوع \texttt{double} لأنّنا أضفنا \texttt{(double)} إلى بداية التعبير الحسابي، وبالتالي فالنتيجة ستكون كاملة وليس القسم الصحيح فطق.
+    \end{solution}
+    \fi
+
+    \ifwithsols
+    \clearpage
+    \fi
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{7}؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+double d = n / 4.0;
+Console.WriteLine(d);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        $1.75$ \\
+        تذكّر أنّه يكفي أن يكون هناك متغير أو عدد واحد على الأقل من نوع \texttt{double} لتكون النتيجة من نوع \texttt{double}. \\
+        عندما نكتب الرقم $4.0$ فإنّه سيكون من نوع \texttt{double} لأنّنا أضفنا له الفاصلة. \\
+        أي أنّ $4.0$ هو من نوع \texttt{double}، بينما $4$ هو من نوع \texttt{int}.
+    \end{solution}
+    \fi
+
+    \subsection*{استخدام القسمة والباقي}
+
+    \item
+    ما هو مخرج الكود التالي إذا أدخل المستخدم \texttt{456314}؟ اشرح باختصار!
+    \begin{english}
+        \begin{lstlisting}
+int x = int.Parse(Console.ReadLine());
+int d1 = x % 10;
+x = x / 10;
+int d2 = x % 10;
+x = x / 10;
+x = x * 100;
+x = x + (d1 * 10 + d2);
+Console.WriteLine(x);
+        \end{lstlisting}
+    \end{english}
+    \ifwithsols
+    \begin{solution}
+        المخرج سيكون $456341$. \\
+        الجدول التالي هو جدول متابعة، يُظهر لك قيمة كل متغير في كل سطر من أسطر الكود.
+        \begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{السطر} & $x$ & $d1$ & $d2$ \\
+\hline
+1 & 456314 &   &   \\
+\hline
+2 & 456314 & 4 &   \\
+\hline
+3 & 45631 & 4 &   \\
+\hline
+4 & 45631 & 4 & 1 \\
+\hline
+5 & 4563 & 4 & 1 \\
+\hline
+6 & 456300 & 4 & 1 \\
+\hline
+7 & 456300 + (40+1) = 456341 & 4 & 1 \\
+\hline
+8 & 456341 & 4 & 1 \\
+\hline
+\end{tabular}
+
+    \end{solution}
+    \fi
+
+
+\end{enumerate}
+
+\end{document}

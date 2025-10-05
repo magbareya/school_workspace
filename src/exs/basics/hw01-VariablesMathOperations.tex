@@ -31,7 +31,26 @@ In 2030, you will be 25 years old.
 \end{english}
 \end{example}
 
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    Console.WriteLine("What is your birth year?");
+    int birthYear = int.Parse(Console.ReadLine());
+    Console.WriteLine($"In 2030, you will be {2030 - birthYear} years old.");
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+
+\clearpage
+
+\else
 \vspace{1cm}
+\fi
+
 \item
 اكتب برنامجًا يستقبل من المستخدم سعر سلعة معيّنة، ثم يضيف لها الضريبة المضافة، بقدر $18\%$. \\
 في النهاية اطبع للمستخدم السعر النهائي للسلعة مع الضريبة.
@@ -47,7 +66,24 @@ Price after adding tax is: 35.4
 لأنّ $30 + 0.18 \cdot 30 = 35.4$
 \end{example}
 
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Enter the price:");
+    double price = double.Parse(Console.ReadLine());
+    Console.WriteLine($"Price after adding tax is: {price + price * 0.18}");
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+
+\fi
+
 \clearpage
+
 \item
 اكتب برنامجًا يستقبل من المستخدم الراتب \textbf{الشهري} لعامل ما. \\
 ثم يستقبل منه قيمة الضريبة \textbf{السنوية} التي يجب دفعها. \\
@@ -69,6 +105,29 @@ Your annual salary after tax and bonus is: 105000
 وبعد خصم الضريبة يصبح $120000 - 20000 = 100000$ \\
 وبعد إضافة العلاوة يصبح $100000 + 5\% \cdot 100000 = 105000$.
 \end{example}
+
+\ifwithsols
+\begin{solution}
+\begin{english}
+\begin{lstlisting}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Enter your monthly salary:");
+    double salary = double.Parse(Console.ReadLine());
+    salary = salary * 12;
+    Console.WriteLine("Enter the annual tax:");
+    double tax = double.Parse(Console.ReadLine());
+    salary = salary - tax;
+    Console.WriteLine("Enter the annual bonus percentage (%):");
+    double bonus = double.Parse(Console.ReadLine());
+    salary = salary + salary * bonus / 100;
+    Console.WriteLine($"Your annual salary after tax and bonus is: {salary}");
+}
+\end{lstlisting}
+\end{english}
+\end{solution}
+
+\fi
 
 \end{enumerate}
 
