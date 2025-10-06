@@ -1,0 +1,255 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 3 للصف العاشر 10 \texttt{Math Library}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+
+\begin{enumerate}[itemsep=3em]
+
+    \item
+    اكتب برنامجا يستقبل من المستخدم رقمين، ثم يطبع تربيع الرقم الصغير وجذر الرقم الكبير.
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter 2 numbers:
+4
+9
+The sqrt of the max = 3
+The square of the min = 16
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int n1 = int.Parse(Console.ReadLine());
+int n2 = int.Parse(Console.ReadLine());
+int max = Math.Max(n1, n2);
+int min = Math.Min(n1, n2);
+Console.WriteLine("The sqrt of the max = " + Math.Sqrt(max));
+Console.WriteLine("The square of the min = " + Math.Pow(min, 2));
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \clearpage
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ عددين صحيحين من المستخدم، ويطبع الفرق المطلق بينهما (الفرق بينهما بالقيمة المطلقة).
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter 2 numbers:
+5
+12
+The absolute difference = 7
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int diff = Math.Abs(a - b);
+Console.WriteLine("The absolute difference = " + diff);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ إحداثيات نقطتين في المستوى (أي يقرأ 4 أرقام) $(x_1, y_1)$ و $(x_2, y_2)$،
+    ثم يحسب المسافة بينهما باستخدام:
+    $$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter x1, y1, x2, y2:
+0
+0
+3
+4
+Distance = 5
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int x1 = int.Parse(Console.ReadLine());
+int y1 = int.Parse(Console.ReadLine());
+int x2 = int.Parse(Console.ReadLine());
+int y2 = int.Parse(Console.ReadLine());
+double diffx = Math.Pow(x2 - x1, 2);
+double diffy = Math.Pow(y2 - y1, 2);
+double d = Math.Sqrt(diffx + diffy);
+Console.WriteLine("Distance = " + d);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+    \clearpage
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ ثلاثة أعداد من المستخدم، ويطبع الأكبر بينها.
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter 3 numbers:
+5
+12
+7
+The maximum = 12
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int max = Math.Max(a, Math.Max(b, c));
+Console.WriteLine("The maximum = " + max);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ أربعة أعداد من المستخدم ويطبع الأصغر بينها.
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter 4 numbers:
+8
+3
+15
+6
+The minimum = 3
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int d = int.Parse(Console.ReadLine());
+int min = Math.Min(Math.Min(a, b), Math.Min(c, d));
+Console.WriteLine("The minimum = " + min);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \clearpage
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يستقبل ثلاثة أعداد، ويطبع الفرق الأكبر بين رقمين من بين الثلاثة.
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter 3 numbers:
+10
+3
+20
+The largest difference = 17
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int max = Math.Max(a, Math.Max(b, c));
+int min = Math.Min(a, Math.Min(b, c));
+int diff = Math.Abs(max - min);
+Console.WriteLine("The largest difference = " + diff);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا عشريًا من المستخدم (مثلاً 12.34567) ويقرّبه إلى منزلتين عشريتين فقط.
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter a decimal number:
+12.34567
+Rounded to 2 decimals = 12.35
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+double n = double.Parse(Console.ReadLine());
+n = n * 100;
+double rounded = Math.Round(n);
+rounded = rounded / 100;
+Console.WriteLine("Rounded to 2 decimals = " + rounded);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+    \clearpage
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا صحيحًا موجبًا من المستخدم، ثم يحسب أكبر عدد صحيح $n$ بحيث:
+    $$ n^2 \leq \text{العدد} $$
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter a positive integer:
+20
+The largest n with n^2 <= number is 4
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int num = int.Parse(Console.ReadLine());
+int n = (int) Math.Sqrt(num);
+Console.WriteLine("The largest n with n^2 <= number is " + n);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+\fi
+\end{enumerate}
+
+\end{document}

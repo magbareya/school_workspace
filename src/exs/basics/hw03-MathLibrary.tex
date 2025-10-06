@@ -1,0 +1,182 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة بيتية 3 للصف العاشر 10}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+    \item
+    اكتب برنامجًا يقرأ طول ضلع مكعب، ثم يحسب ويطبع حجمه.
+    \[
+    V = s^3
+    \]
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+    Please enter the side length of the cube:
+    4
+    The volume = 64
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+double side = double.Parse(Console.ReadLine());
+double volume = Math.Pow(side, 3);
+Console.WriteLine("The volume = " + volume);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ طولي ضلعي القائمة في مثلث قائم الزاوية $(a, b)$، ثم يحسب ويطبع طول الوتر $c$ باستخدام نظرية فيثاغورس:
+    \[
+        c = \sqrt{a^2 + b^2}
+    \]
+    \ifdetailed
+    \begin{example}
+        \begin{english}
+    \begin{lstlisting}
+        Please enter the lengths of the two legs:
+        3
+        4
+        The hypotenuse = 5
+    \end{lstlisting}
+\end{english}
+\end{example}
+\ifwithsols
+\begin{solution}
+    \begin{english}
+        \begin{lstlisting}
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
+Console.WriteLine("The hypotenuse = " + c);
+        \end{lstlisting}
+    \end{english}
+\end{solution}
+\fi
+\clearpage
+\fi
+    \item
+    اكتب برنامجًا يقرأ إحداثيات نقطتين في الفضاء $(x_1,y_1,z_1)$ و $(x_2,y_2,z_2)$، ثم يحسب المسافة بينهما:
+    \[
+    d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
+    \]
+    \ifdetailed
+    \begin{example}
+    \begin{english}
+    \begin{lstlisting}
+Please enter x1, y1, z1, x2, y2, z2:
+0
+0
+0
+3
+4
+12
+Distance = 13
+    \end{lstlisting}
+    \end{english}
+    \end{example}
+    \ifwithsols
+    \begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+int x1 = int.Parse(Console.ReadLine());
+int y1 = int.Parse(Console.ReadLine());
+int z1 = int.Parse(Console.ReadLine());
+int x2 = int.Parse(Console.ReadLine());
+int y2 = int.Parse(Console.ReadLine());
+int z2 = int.Parse(Console.ReadLine());
+double d = Math.Sqrt(Math.Pow(x2 - x1, 2) +
+                     Math.Pow(y2 - y1, 2) +
+                     Math.Pow(z2 - z1, 2));
+Console.WriteLine("Distance = " + d);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \clearpage
+    \fi
+    \fi
+
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم معاملات معادلة تربيعية:
+    \[
+        ax^2 + bx + c = 0
+        \]
+        واطبع له الحلول باستخدام الدستور:
+        \[
+            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+            \]
+            \ifdetailed
+            \begin{example}
+                \begin{english}
+                    \begin{lstlisting}
+Please enter a, b, c:
+1
+-3
+2
+The solutions are: x1 = 2, x2 = 1
+\end{lstlisting}
+\end{english}
+\end{example}
+\ifwithsols
+\begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+double c = double.Parse(Console.ReadLine());
+
+double delta = Math.Pow(b, 2) - 4 * a * c;
+double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
+            \end{lstlisting}
+        \end{english}
+    \end{solution}
+    \fi
+    \fi
+
+% \item
+% اكتب برنامجًا يقرأ رقمًا، وحدًا أدنى، وحدًا أعلى. يجب على البرنامج طباعة الرقم بحيث يكون محصورًا ضمن هذا النطاق (إذا كان أكبر من الحد الأعلى، اطبع الحد الأعلى، وإذا كان أصغر من الحد الأدنى، اطبع الحد الأدنى).
+% \ifdetailed
+% \begin{example}
+%     \begin{english}
+%         \begin{lstlisting}
+%             Please enter a number, a min value, and a max value:
+%             150
+%             0
+%             100
+%             The clamped value is: 100
+%         \end{lstlisting}
+%     \end{english}
+% \end{example}
+% \ifwithsols
+% \begin{solution}
+%     \begin{english}
+%         \begin{lstlisting}
+% int num = int.Parse(Console.ReadLine());
+% int min = int.Parse(Console.ReadLine());
+% int max = int.Parse(Console.ReadLine());
+% int clamped = Math.Max(min, Math.Min(num, max));
+% Console.WriteLine("The clamped value is: " + clamped);
+%         \end{lstlisting}
+%     \end{english}
+% \end{solution}
+% \fi
+% \fi
+
+\end{enumerate}
+
+\end{document}
