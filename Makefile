@@ -120,7 +120,10 @@ out/%_sols.pdf: src/%.tex
 clean:
 	rm -rf out
 
+CLEAN_EXTS := log aux toc fls fdb_latexmk out
 sclean:
 	find out -type f -empty -delete
-	find . -type f \( -name "*.log" -o -name "*.aux" -o -name "*.toc" -o -name "*.fls" -o -name "*.fdb_latexmk" \) -delete
+	@for ext in $(CLEAN_EXTS); do \
+		find . -type f -name "*.$$ext" -delete; \
+	done
 	python scripts/sclean.py out
