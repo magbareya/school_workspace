@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{وظيفة بيتية 3 للصف العاشر 10}
+\title{وظيفة بيتية 3 للصف العاشر 10 - $\mathtt{Math\ Library}$}
 
 \begin{document}
 
@@ -34,6 +34,7 @@ Console.WriteLine("The volume = " + volume);
     \end{lstlisting}
     \end{english}
     \end{solution}
+    \clearpage
     \fi
     \fi
 
@@ -67,61 +68,64 @@ Console.WriteLine("The hypotenuse = " + c);
 \fi
 \clearpage
 \fi
-    \item
-    اكتب برنامجًا يقرأ إحداثيات نقطتين في الفضاء $(x_1,y_1,z_1)$ و $(x_2,y_2,z_2)$، ثم يحسب المسافة بينهما:
-    \[
-    d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
-    \]
-    \ifdetailed
-    \begin{example}
-    \begin{english}
-    \begin{lstlisting}
-Please enter x1, y1, z1, x2, y2, z2:
-0
-0
-0
-3
-4
-12
-Distance = 13
-    \end{lstlisting}
-    \end{english}
-    \end{example}
-    \ifwithsols
-    \begin{solution}
-    \begin{english}
-    \begin{lstlisting}
-int x1 = int.Parse(Console.ReadLine());
-int y1 = int.Parse(Console.ReadLine());
-int z1 = int.Parse(Console.ReadLine());
-int x2 = int.Parse(Console.ReadLine());
-int y2 = int.Parse(Console.ReadLine());
-int z2 = int.Parse(Console.ReadLine());
-double d = Math.Sqrt(Math.Pow(x2 - x1, 2) +
-                     Math.Pow(y2 - y1, 2) +
-                     Math.Pow(z2 - z1, 2));
-Console.WriteLine("Distance = " + d);
-    \end{lstlisting}
-    \end{english}
-    \end{solution}
-    \clearpage
-    \fi
-    \fi
+
+
+%     \item
+%     اكتب برنامجًا يقرأ إحداثيات نقطتين في الفضاء $(x_1,y_1,z_1)$ و $(x_2,y_2,z_2)$، ثم يحسب المسافة بينهما:
+%     \[
+%     d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
+%     \]
+%     \ifdetailed
+%     \begin{example}
+%     \begin{english}
+%     \begin{lstlisting}
+% Please enter x1, y1, z1, x2, y2, z2:
+% 0
+% 0
+% 0
+% 3
+% 4
+% 12
+% Distance = 13
+%     \end{lstlisting}
+%     \end{english}
+%     \end{example}
+%     \ifwithsols
+%     \begin{solution}
+%     \begin{english}
+%     \begin{lstlisting}
+% int x1 = int.Parse(Console.ReadLine());
+% int y1 = int.Parse(Console.ReadLine());
+% int z1 = int.Parse(Console.ReadLine());
+% int x2 = int.Parse(Console.ReadLine());
+% int y2 = int.Parse(Console.ReadLine());
+% int z2 = int.Parse(Console.ReadLine());
+% double d = Math.Sqrt(Math.Pow(x2 - x1, 2) +
+%                      Math.Pow(y2 - y1, 2) +
+%                      Math.Pow(z2 - z1, 2));
+% Console.WriteLine("Distance = " + d);
+%     \end{lstlisting}
+%     \end{english}
+%     \end{solution}
+%     \clearpage
+%     \fi
+%     \fi
 
 
     \item
     اكتب برنامجًا يستقبل من المستخدم معاملات معادلة تربيعية:
     \[
         ax^2 + bx + c = 0
-        \]
-        واطبع له الحلول باستخدام الدستور:
-        \[
-            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-            \]
-            \ifdetailed
-            \begin{example}
-                \begin{english}
-                    \begin{lstlisting}
+    \]
+    واطبع له الحلول باستخدام الدستور:
+    \[
+        x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+    \]
+    (\textbf{ملاحظة} افترض أنّ للمعادلة حلّين، وما تحت الجذر موجب.)
+    \ifdetailed
+    \begin{example}
+        \begin{english}
+            \begin{lstlisting}
 Please enter a, b, c:
 1
 -3

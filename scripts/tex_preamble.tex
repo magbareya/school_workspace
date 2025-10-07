@@ -1,4 +1,5 @@
 \usepackage{fontspec}
+\usepackage[a4paper,margin=2.5cm,includefoot]{geometry}
 \usepackage{polyglossia}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -6,11 +7,11 @@
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{listings}
-\usepackage{geometry}
 \usepackage{tcolorbox}
 \usepackage{pifont}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage[bottom]{footmisc}
 
 \newfontfamily\emoji{Segoe UI Emoji}
 
@@ -71,26 +72,90 @@
 % ----- Box Styles -----
 \tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
 
-\newtcolorbox{definition}[1][]{colback=blue!5!white, colframe=blue!75!black,
-  title={\emoji📘} تعريف: #1}
+\newtcolorbox{definition}[1][]{%
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={{\emoji📘} تعريف%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{exercise}[1][]{colback=green!5!white, colframe=green!50!black,
-  title= {\emoji🧩} تمرين: #1}
+\newtcolorbox{exercise}[1][]{%
+  colback=green!5!white,
+  colframe=green!50!black,
+  title={{\emoji🧩} تمرين%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{example}[1][]{colback=yellow!5!white, colframe=orange!90!black,
-  title= {\emoji📝} مثال: #1}
+\newtcolorbox{example}[1][]{%
+  colback=yellow!5!white,
+  colframe=orange!90!black,
+  title={{\emoji📝} مثال%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{note}[1][]{colback=gray!10!white, colframe=black,
-  title= {\emoji✨} ملاحظة: #1}
+\newtcolorbox{note}[1][]{%
+  colback=gray!10!white,
+  colframe=black,
+  title={{\emoji✨} ملاحظة%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{attention}[1][]{colback=gray!10!white, colframe=black,
-  title= {\emoji✨} تنبيه: #1}
+\newtcolorbox{attention}[1][]{%
+  colback=gray!10!white,
+  colframe=black,
+  title={{\emoji🔔} تنبيه%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{warning}[1][]{colback=red!5!white, colframe=red!75!black,
-  title= {\emoji⚠️} ملاحظة هامة: #1}
+\newtcolorbox{warning}[1][]{%
+  colback=red!5!white,
+  colframe=red!75!black,
+  title={{\emoji⚡} ملاحظة هامة%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
 
-\newtcolorbox{solution}[1][]{colback=green!5!white, colframe=green!60!black,
-  title={\emoji✅} حل: #1}
+\newtcolorbox{solution}[1][]{%
+  colback=green!5!white,
+  colframe=green!60!black,
+  title={{\emoji✅} حل%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
+
 
 % ----------------------
 

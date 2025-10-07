@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{ورقة تمرن 3 للصف العاشر 10 \texttt{Math Library}}
+\title{ورقة تمرن 3 للصف العاشر 10 $\mathtt{Math\ Library}$}
 
 \begin{document}
 
@@ -56,7 +56,7 @@ The absolute difference = 7
     \end{english}
     \end{example}
     \ifwithsols
-    \begin{solution}
+    \begin{solution}[1]
     \begin{english}
     \begin{lstlisting}
 int a = int.Parse(Console.ReadLine());
@@ -66,7 +66,19 @@ Console.WriteLine("The absolute difference = " + diff);
     \end{lstlisting}
     \end{english}
     \end{solution}
+    \begin{solution}[2]
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int max = Math.Max(a, b);
+int min = Math.Min(a, b);
+Console.WriteLine("The absolute difference = " + (max - min));
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
     \fi
+    \clearpage
 \fi
 
     \item
@@ -101,8 +113,8 @@ Console.WriteLine("Distance = " + d);
     \end{lstlisting}
     \end{english}
     \end{solution}
-    \fi
     \clearpage
+    \fi
 \fi
 
     \item
@@ -126,7 +138,8 @@ The maximum = 12
 int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 int c = int.Parse(Console.ReadLine());
-int max = Math.Max(a, Math.Max(b, c));
+int max = Math.Max(a, b);
+max = Math.Max(max, c);
 Console.WriteLine("The maximum = " + max);
     \end{lstlisting}
     \end{english}
@@ -157,13 +170,15 @@ int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 int c = int.Parse(Console.ReadLine());
 int d = int.Parse(Console.ReadLine());
-int min = Math.Min(Math.Min(a, b), Math.Min(c, d));
+int min1 = Math.Min(a, b);
+int min2 = Math.Min(c, d);
+int min = Math.Min(min1, min2);
 Console.WriteLine("The minimum = " + min);
     \end{lstlisting}
     \end{english}
     \end{solution}
-    \clearpage
     \fi
+    \clearpage
 \fi
 
     \item
@@ -181,7 +196,7 @@ The largest difference = 17
     \end{english}
     \end{example}
     \ifwithsols
-    \begin{solution}
+    \begin{solution}[1]
     \begin{english}
     \begin{lstlisting}
 int a = int.Parse(Console.ReadLine());
@@ -189,11 +204,26 @@ int b = int.Parse(Console.ReadLine());
 int c = int.Parse(Console.ReadLine());
 int max = Math.Max(a, Math.Max(b, c));
 int min = Math.Min(a, Math.Min(b, c));
-int diff = Math.Abs(max - min);
+int diff = max - min;
 Console.WriteLine("The largest difference = " + diff);
     \end{lstlisting}
     \end{english}
     \end{solution}
+    \begin{solution}[2]
+    \begin{english}
+    \begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int diff1 = Math.Abs(a-b);
+int diff2 = Math.Abs(a-c);
+int diff3 = Math.Abs(b-c);
+int maxDiff = Math.Max(diff1, Math.Max(diff2, diff3));
+Console.WriteLine("The largest difference = " + maxDiff);
+    \end{lstlisting}
+    \end{english}
+    \end{solution}
+    \clearpage
     \fi
 \fi
 
@@ -222,7 +252,6 @@ Console.WriteLine("Rounded to 2 decimals = " + rounded);
     \end{english}
     \end{solution}
     \fi
-    \clearpage
     \fi
 
     \item
