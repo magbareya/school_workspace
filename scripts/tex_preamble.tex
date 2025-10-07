@@ -10,6 +10,7 @@
 \usepackage{tcolorbox}
 \usepackage{pifont}
 \usepackage{enumitem}
+\usepackage{titlesec}
 
 \newfontfamily\emoji{Segoe UI Emoji}
 
@@ -42,6 +43,13 @@
   \setwithsols
 \fi
 
+\newcommand{\sectionbreak}{\clearpage}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{*4}{*1}
+\let\oldsection\section
+\renewcommand{\section}{\clearpage\oldsection}
 
 \geometry{a4paper, margin=2.5cm}
 

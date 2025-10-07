@@ -1,51 +1,15 @@
 \documentclass[12pt]{article}
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{geometry}
 
-\pagestyle{fancy}
+\input{../../scripts/tex_preamble.tex}
 
-\setmainlanguage{arabic}
-\setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
-
-
-\lstset{
-  language=[Sharp]C,
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  frame=single,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue},
-  stringstyle=\color{red},
-  commentstyle=\color{green!50!black}
-}
-
-\newif\ifdetailed
-
-\geometry{a4paper, margin=2.5cm}
-
-\fancyhf{} % clear default
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyhead[L]{مدرسة التسامح الشاملة}
-  \fancyhead[R]{الأستاذ محمود اغبارية}
-  \fancyfoot[C]{\thepage}
-}
 \title{قائمة مواد أساسيات علوم الحاسوب بلغة C\# حسب خطة وزارة المعارف}
-\fancyhead[L]{مدرسة التسامح الشاملة}
-\fancyhead[R]{الأستاذ محمود اغبارية}
-\fancyfoot[C]{\thepage}
 
 \begin{document}
+
 \maketitle
+\thispagestyle{fancy}
+
+
 \renewcommand{\contentsname}{جدول المحتويات}
 \tableofcontents
 \clearpage
@@ -190,6 +154,51 @@
 برأيي هذا حسب الحاجة، ربما نكون قد غطيناه خلال العمل السابق.
 
 \section{الشرط}
+
+\subsection{نوع المتغيرات \texttt{bool}}
+\begin{itemize}
+    \item نوع \texttt{bool}، يأخذ فقط قيمتان: \texttt{true} و \texttt{false}
+    \item عمليات مقارنة التي يكون إجابتها \texttt{true} أو \texttt{false}:
+        \begin{itemize}
+            \item \texttt{==}
+            \item \texttt{!=}
+            \item \texttt{>}
+            \item \texttt{<}
+            \item \texttt{>=}
+            \item \texttt{<=}
+        \end{itemize}
+        \item إشكالية استخدام العمليات \texttt{==} و \texttt{!=} مع الأعداد العشرية.
+        \item العمليات المنطقية (الجبر البولياني)
+        \begin{enumerate}
+            \item \texttt{not (!)}
+            \item \texttt{and (\&\&)}
+            \item \texttt{or (||)}
+        \end{enumerate}
+        \item عرض جدول الحقيقة لهذه العمليات
+        \item ترتيب العمليات البوليانية (نفس ترتيب ذكرها أعلاه، إلا إذا وجدت الأقواس فلها الأولويّة)
+\end{itemize}
+
+\subsection{تنفيذ مشروط \texttt{if-statement}}
+\begin{itemize}
+    \item تنفيذ مشروط باستخدام \texttt{if}
+    \item تنفيذ مشروط باستخدام \texttt{if..else}
+    \footnote{برأيي الشخصي، الأفضل عرض \texttt{if..else} بصورتها الكاملة في البداية (مع أقواس مجعدة)
+     ثم نذكر للطلاب أنّه إذا كان \texttt{else} فارغًا يمكن حذفه.
+     وفي النهاية نذكر أنّه إذا كان داخل الـ \texttt{if} أو الـ \texttt{else} أمر واحد فيمكن حذف الأقواس المجعدة}
+     \item استخدام \texttt{if} لفحص قانونية المدخلات
+     \item على الطالب أن يكون قادرًا على كتابة جمل شرطية متداخلة - على الأقل 3 جمل (\texttt{3-level nested if})
+     \item على الطالب أن يفهم أنّه يمكن كتابة تعابير بوليانية داخل الـ \texttt{if} مباشرة، ولا حاجة لتعريف متغير بولياني دائمًا
+\end{itemize}
+
+\subsection{أمور إضافية}
+\begin{itemize}
+    \item توثيق الكود \texttt{code documentation} - بما أنّنا بدأنا كتابة كود غير بدهي، فهذه فرصة جيدة
+    لتعليم الطلاب أن يكتبوا ملاحظات تشرح باختصار ما هو هدف الكود / السطر الذي كتبوه
+    \item جدول المتابعة: متابعة كل شرط موجود في الكود وإظهاره في الجدول.
+    \item على الطالب أن يتمكن من تحويل وصف كلامي لمشكلة ما إلى كود يشمل شروطًا لحل المشكلة.
+    \item على الطالب أن يكون قادرًا على فهم كود يحتوي على شروط وعلى فحص لقانونية المدخلات.
+    \item الخطة من الوزارة لم تذكر بشكل مباشر أوامر الشرط المتسلسلة (\texttt{if..else if..else if..else})
+\end{itemize}
 
 \section{الحلقات}
 
