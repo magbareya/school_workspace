@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{وظيفة بيتية 3 للصف العاشر 10 - $\mathtt{Math\ Library}$}
+\title{وظيفة بيتية 3 للصف العاشر 10 - $\mathtt{Math\ Library\ if-else}$}
 
 \begin{document}
 
@@ -181,6 +181,92 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
 % \fi
 % \fi
 
+\end{enumerate}
+
+\section*{أسئلة عن الجمل الشرطية \texttt{if}}
+
+\begin{enumerate}
+    \item اكتب برنامجًا يستقبل من المستخدم علامته ويطبع له إن كان ناجحًا أو لا. \\
+    علامة النّجاح هي 55 فما فوق.
+    \ifdetailed
+    \begin{example}[1]
+        \begin{english}
+            \begin{lstlisting}
+Please enter a your grade:
+89
+You succeeded.
+\end{lstlisting}
+\end{english}
+\end{example}
+    \begin{example}[2]
+        \begin{english}
+            \begin{lstlisting}
+Please enter a your grade:
+54
+You failed.
+\end{lstlisting}
+\end{english}
+\end{example}
+\ifwithsols
+\begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+Console.WriteLine("Please enter you grade:");
+int grade = int.Parse(Console.ReadLine());
+if (grade >= 55)
+{
+    Console.WriteLine("You succeeded");
+}
+else
+{
+    Console.WriteLine("You failed");
+}
+    \end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+\fi
+    \item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا. \\
+    إذا كان العدد زوجيًّا، فعلى البرنامج أن يطبع نصف العدد. \\
+    وإذا كان العدد فرديًّا فعلى البرنامج أن يطبع ضعف العدد
+    \ifdetailed
+    \begin{example}[1]
+        \begin{english}
+            \begin{lstlisting}
+Please enter a number:
+6
+Result is 3
+\end{lstlisting}
+\end{english}
+\end{example}
+    \begin{example}[2]
+        \begin{english}
+            \begin{lstlisting}
+Please enter a number:
+5
+Result is 10
+\end{lstlisting}
+\end{english}
+\end{example}
+\ifwithsols
+\begin{solution}
+    \begin{english}
+    \begin{lstlisting}
+Console.WriteLine("Please enter a number:");
+int a = int.Parse(Console.ReadLine());
+if (a % 2 == 0)
+{
+    Console.WriteLine("Result is " + (a/2));
+}
+else
+{
+    Console.WriteLine("Result is " + (a*2));
+}
+    \end{lstlisting}
+\end{english}
+\end{solution}
+\fi
+\fi
 \end{enumerate}
 
 \end{document}

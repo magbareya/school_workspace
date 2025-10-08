@@ -11,46 +11,132 @@
 
 حدد لغة كل أوتومات من التالية:
 
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
 \begin{enumerate}
+\fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q1.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = a \cdot \{a,b\}^* \]
+لغة كل الكلمات التي تبدأ بالحرف $a$.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q2.png}\\
+\ifwithsols
+\begin{solution}
+    \[ L = \{a,b\}^* \cdot b \]
+    لغة كل الكلمات التي تنتهي بالحرف $b$.
+\end{solution}
+\clearpage
+\fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q3.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = b^* \cdot a \cdot a^* \cdot b \cdot \{a, b \}^* = b^* \cdot a^+ \cdot b \cdot \{a,b\}^* \]
+لغة كل الكلمات التي تحتوي على الحرف $a$ ثم يظهر على الأقل $b$ واحد بعده.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.5\textwidth]{../../../images/DFAs/ex1_q4.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = \{a, b\}^2 = \{ w \in \{a,b\}^* \mid |w|=2 \} \]
+كل الكلمات التي طولها بالضبط 2.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.25\textwidth]{../../../images/DFAs/ex1_q5.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = \{ w \in \{a,b\}^* \mid |w| \% 2 = 0 \} \]
+كل الكلمات التي طولها زوجي. \\
+\textbf{انتبه}: $\epsilon \in L$ لأنّ $|\epsilon|=0$ وهو زوجي، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.25\textwidth]{../../../images/DFAs/ex1_q6.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = \{ w \in \{a,b\}^* \mid |w| \% 2 = 1 \} \]
+كل الكلمات التي طولها فردي.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q7.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = a^* \]
+كل الكلمات التي لا تحتوي على $b$. \\
+\textbf{انتبه}: $\epsilon \in L$ لأنّ $\epsilon = a^0$ لا يحتوي على $b$، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.1\textwidth]{../../../images/DFAs/ex1_q8.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = \emptyset \]
+هذا الأوتومات لا يقبل أي كلمة.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q9.png}\\
+\ifwithsols
+\begin{solution}
+\[ L = 0^* \cdot 1 \cdot \{0, 1\}^* \]
+كل الكلمات التي تحتوي على $1$ على الأقل.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.1\textwidth]{../../../images/DFAs/ex1_q10.png}
+\ifwithsols
+\begin{solution}
+\[ L = \{a, b\}^* \]
+هذا الأوتومات يقبل كل الكلمات.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q11.png}
+\ifwithsols
+\begin{solution}
+\[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) \% 2 = 1 \} \]
+كل الكلمات التي يظهر فيها الحرف $1$ عدد مرات فردي.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q12.png}
+\ifwithsols
+\begin{solution}
+\[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) \leq 1 \} \]
+كل الكلمات التي يظهر فيها الحرف $1$ مرة واحدة على الأكثر. \\
+\textbf{انتبه}: $\epsilon \in L$ لأنّ $\epsilon$ لا يحتوي على $1$، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
+\end{solution}
+\fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q13.png}
+\ifwithsols
+\begin{solution}
+\[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) = 1 \} \]
+كل الكلمات التي يظهر فيها الحرف $1$ مرة واحدة بالضبط.
+\end{solution}
+\fi
 
 \end{enumerate}
 
@@ -58,20 +144,53 @@
 \section{أكمل الناقص في الأتومات}
 أكمل الناقص في الأوتوماتات التالية بحيث تقبل اللغة الموضحة.
 
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
 \begin{enumerate}
+\fi
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b, c\}$ التي فيها (عدد الـ $a$ + عدد الـ $b$) هو عدد فردي. \\
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b, c\}$ التي فيها (عدد الـ $a$ + عدد الـ $b$) هو عدد فردي.
+\[ L = \left\{ w \in \{a, b, c\} \mid (\#_a(w) + \#_b(w)) \% 2 = 1 \right\} \]
+\begin{center}
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1.png}
+\end{center}
+\ifwithsols
+\begin{solution}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1_sol.png}
+    \end{center}
+\end{solution}
+\fi
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1, 2\}$ التي مجموع الخانات فيها هو عدد فردي. \\
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1, 2\}$ التي مجموع الخانات فيها هو عدد فردي.
+\begin{center}
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1.png}
+\end{center}
+\ifwithsols
+\begin{solution}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q2_sol.png}
+    \end{center}
+\end{solution}
+\clearpage
+\fi
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ بالحرف $a$ وتنتهي بالحرف $b$. \\
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ بالحرف $a$ وتنتهي بالحرف $b$.
+\[ L = a \cdot \{a, b\}^* \cdot b \]
+\begin{center}
 \includegraphics[width=0.5\textwidth]{../../../images/DFAs/ex1_p2_q3.png}
-
+\end{center}
+\ifwithsols
+\begin{solution}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q3_sol.png}
+    \end{center}
+\end{solution}
+\fi
 
 \end{enumerate}
 
@@ -79,18 +198,18 @@
 \clearpage
 \section{بناء أوتومات من اللغة}
 
-لكل لغة من اللغات التالية، ابنِ أوتوماتًا يقبل هذه اللغة.
+لكل لغة من اللغات التالية، ابنِ أوتوماتًا يقبل هذه اللغة، واكتب تعبيرًا رياضيًّا يصف اللغة.
 
 \begin{enumerate}
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي تحتوي على $'1'$ واحدة على الأقل.
-
-\item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ حيث كل $'0'$ تتبعها مباشرة $'1'$.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي تحتوي على $1$ واحدة على الأقل.
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي لها عدد زوجي من الأصفار.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ حيث كل $0$ تتبعها مباشرة $1$.
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ وتنتهي بنفس الحرف.
@@ -99,58 +218,50 @@
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي طولها يقبل القسمة على 3.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b, c\}$ التي لا تحتوي على السلسلة الفرعية $'ac'$.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b, c\}$ التي لا تحتوي على السلسلة الفرعية $ac$.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لها عدد فردي من الحرف $'a'$ وعدد فردي من الحرف $'b'$.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لها عدد فردي من الحرف $a$ وعدد فردي من الحرف $b$.
 
 \item
-\textbf{اللغة:} اللغة التي تحتوي على السلسلة "baba" فقط.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على عدد زوجي من $a$ أو عدد زوجي من $b$.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لا تنتهي بـ $'ab'$.
+\textbf{اللغة:} اللغة التي تحتوي على السلسلة $baba$ فقط.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي من الصورة $m,n>0, \{a^mb^n\}$ \\
-أي الكلمات التي تبدأ بالحرف $a$ بحيث يظهر مرة أو أكثر، ثم بعد ذلك يظهر الحرف $b$ مرة أو أكثر، ولا يظهر الحرف $a$ بعد ظهور الحرف $b$.
-مثلًا:
-\begin{itemize}
-\item $ab , aab, aaabbb, aaaabbbb$ كلها كلمات مقبولة.
-\item $a$ غير مقبولة، لأنه لا يوجد $b$ بعد $a$
-\item $b$ غير مقبولة، لأنه لا يوجد $a$ في البداية
-\item $aabba$ غير مقبولة، لأنه يوجد $a$ بعد $b$
-\end{itemize}
-
-\item %%% START OF ADDED QUESTIONS %%%
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة الفرعية $'aba'$.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لا تنتهي بـ $ab$.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي فيها عدد الـ $'a'$ يقبل القسمة على 3.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي من الصورة $m,n>0, \{a^mb^n\}$
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لا تحتوي على $'aa'$ (أي لا يوجد حرفان $'a'$ متتاليان).
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة الفرعية $aba$.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي فيها عدد الـ $a$ يقبل القسمة على 3.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي لا تحتوي على $aa$ (أي لا يوجد حرفان $a$ متتاليان).
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي هي من الصورة $(ab)^n$ حيث $n \ge 1$. \\
 (مثل: $ab, abab, ababab, \dots$)
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ ذات الطول الزوجي والتي تنتهي بالحرف $'a'$.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ ذات الطول الزوجي والتي تنتهي بالحرف $a$.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي لها عدد زوجي من الأصفار ($'0'$) وعدد فردي من الواحدات ($'1'$).
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي لها عدد زوجي من $0$ وعدد فردي من $1$.
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1, 2\}$ التي مجموع خاناتها يقبل القسمة على 3.
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على حرفي $'b'$ على الأقل.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على حرف $b$ مرّتين على الأقل (ليس بالضرورة متتاليتين).
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ بـ $'a'$ ولا تحتوي على السلسلة الفرعية $'bb'$.
-
-\item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على عدد زوجي من `'a'` أو عدد زوجي من `'b'`.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ بـ $a$ ولا تحتوي على السلسلة الفرعية $bb$.
 
 \end{enumerate}
 

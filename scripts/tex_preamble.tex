@@ -12,6 +12,7 @@
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage[bottom]{footmisc}
+\usepackage{titling}
 
 \newfontfamily\emoji{Segoe UI Emoji}
 
@@ -43,6 +44,19 @@
 \ifdefined\setwithsols
   \setwithsols
 \fi
+
+% redefine spaces after titles
+\makeatletter
+\renewcommand{\@maketitle}{%
+  \begin{center}
+    {\huge \bfseries \@title \par}%
+    \vskip 0.2em % space between title and author
+    {\large \@author \par}%
+    \vskip 0.2em % space between author and date
+    {\normalsize \@date \par}%
+  \end{center}
+}
+\makeatother
 
 \fancyhf{} % clear default
 \fancypagestyle{plain}{
@@ -111,8 +125,8 @@
 }
 
 \newtcolorbox{attention}[1][]{%
-  colback=gray!10!white,
-  colframe=black,
+  colback=magenta!10!white,
+  colframe=magenta!80!black,
   title={{\emoji🔔} تنبيه%
     \ifx\\#1\\%
     \else
@@ -138,6 +152,18 @@
   colback=green!5!white,
   colframe=green!60!black,
   title={{\emoji✅} حل%
+    \ifx\\#1\\%
+    \else
+      ~#1
+    \fi
+    :
+  }%
+}
+
+\newtcolorbox{symbolbox}[1][]{%
+  colback=purple!5!white,
+  colframe=purple!70!black,
+  title={{\emoji🔣} رمز%
     \ifx\\#1\\%
     \else
       ~#1
