@@ -23,25 +23,25 @@
 اكتب برنامجًا يستقبل من المستخدم سنة ميلاده، ويطبع له كم سيكون عمره في عام 2030.
 \begin{example}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{text}
 What is your birth year?
 2005
 In 2030, you will be 25 years old.
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
 
 \ifwithsols
 \begin{solution}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{csharp}
 private static void Main(string[] args)
 {
     Console.WriteLine("What is your birth year?");
     int birthYear = int.Parse(Console.ReadLine());
     Console.WriteLine($"In 2030, you will be {2030 - birthYear} years old.");
 }
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{solution}
 
@@ -57,11 +57,11 @@ private static void Main(string[] args)
 
 \begin{example}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{text}
 Enter the price:
 30
 Price after adding tax is: 35.4
-\end{lstlisting}
+\end{minted}
 \end{english}
 لأنّ $30 + 0.18 \cdot 30 = 35.4$
 \end{example}
@@ -69,14 +69,14 @@ Price after adding tax is: 35.4
 \ifwithsols
 \begin{solution}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{csharp}
 private static void Main(string[] args)
 {
     Console.WriteLine("Enter the price:");
     double price = double.Parse(Console.ReadLine());
     Console.WriteLine($"Price after adding tax is: {price + price * 0.18}");
 }
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{solution}
 
@@ -91,7 +91,7 @@ private static void Main(string[] args)
 في النهاية اطبع له الراتب السنوي بعد خصم الضريبة وإضافة العلاوة
 \begin{example}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{text}
 Enter your monthly salary:
 10000
 Enter the annual tax:
@@ -99,7 +99,7 @@ Enter the annual tax:
 Enter the annual bonus percentage (%):
 5
 Your annual salary after tax and bonus is: 105000
-\end{lstlisting}
+\end{minted}
 \end{english}
 لأنّ الراتب السنوي قبل الضريبة والعلاوة هو $10000 \cdot 12 = 120000$ \\
 وبعد خصم الضريبة يصبح $120000 - 20000 = 100000$ \\
@@ -109,7 +109,7 @@ Your annual salary after tax and bonus is: 105000
 \ifwithsols
 \begin{solution}
 \begin{english}
-\begin{lstlisting}
+\begin{minted}{csharp}
 private static void Main(string[] args)
 {
     Console.WriteLine("Enter your monthly salary:");
@@ -123,7 +123,7 @@ private static void Main(string[] args)
     salary = salary + salary * bonus / 100;
     Console.WriteLine($"Your annual salary after tax and bonus is: {salary}");
 }
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{solution}
 

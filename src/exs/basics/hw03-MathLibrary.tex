@@ -17,21 +17,21 @@
     \ifdetailed
     \begin{example}
     \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
     Please enter the side length of the cube:
     4
     The volume = 64
-    \end{lstlisting}
+    \end{minted}
     \end{english}
     \end{example}
     \ifwithsols
     \begin{solution}
     \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
 double side = double.Parse(Console.ReadLine());
 double volume = Math.Pow(side, 3);
 Console.WriteLine("The volume = " + volume);
-    \end{lstlisting}
+    \end{minted}
     \end{english}
     \end{solution}
     \clearpage
@@ -46,23 +46,23 @@ Console.WriteLine("The volume = " + volume);
     \ifdetailed
     \begin{example}
         \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
         Please enter the lengths of the two legs:
         3
         4
         The hypotenuse = 5
-    \end{lstlisting}
+    \end{minted}
 \end{english}
 \end{example}
 \ifwithsols
 \begin{solution}
     \begin{english}
-        \begin{lstlisting}
+        \begin{minted}{csharp}
 double a = double.Parse(Console.ReadLine());
 double b = double.Parse(Console.ReadLine());
 double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
 Console.WriteLine("The hypotenuse = " + c);
-        \end{lstlisting}
+        \end{minted}
     \end{english}
 \end{solution}
 \fi
@@ -78,7 +78,7 @@ Console.WriteLine("The hypotenuse = " + c);
 %     \ifdetailed
 %     \begin{example}
 %     \begin{english}
-%     \begin{lstlisting}
+%     \begin{minted}{csharp}
 % Please enter x1, y1, z1, x2, y2, z2:
 % 0
 % 0
@@ -87,13 +87,13 @@ Console.WriteLine("The hypotenuse = " + c);
 % 4
 % 12
 % Distance = 13
-%     \end{lstlisting}
+%     \end{minted}
 %     \end{english}
 %     \end{example}
 %     \ifwithsols
 %     \begin{solution}
 %     \begin{english}
-%     \begin{lstlisting}
+%     \begin{minted}{csharp}
 % int x1 = int.Parse(Console.ReadLine());
 % int y1 = int.Parse(Console.ReadLine());
 % int z1 = int.Parse(Console.ReadLine());
@@ -104,7 +104,7 @@ Console.WriteLine("The hypotenuse = " + c);
 %                      Math.Pow(y2 - y1, 2) +
 %                      Math.Pow(z2 - z1, 2));
 % Console.WriteLine("Distance = " + d);
-%     \end{lstlisting}
+%     \end{minted}
 %     \end{english}
 %     \end{solution}
 %     \clearpage
@@ -125,19 +125,19 @@ Console.WriteLine("The hypotenuse = " + c);
     \ifdetailed
     \begin{example}
         \begin{english}
-            \begin{lstlisting}
+            \begin{minted}{csharp}
 Please enter a, b, c:
 1
 -3
 2
 The solutions are: x1 = 2, x2 = 1
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
 \ifwithsols
 \begin{solution}
     \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
 double a = double.Parse(Console.ReadLine());
 double b = double.Parse(Console.ReadLine());
 double c = double.Parse(Console.ReadLine());
@@ -146,7 +146,7 @@ double delta = Math.Pow(b, 2) - 4 * a * c;
 double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
 double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
 Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
-            \end{lstlisting}
+            \end{minted}
         \end{english}
     \end{solution}
     \fi
@@ -157,25 +157,25 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
 % \ifdetailed
 % \begin{example}
 %     \begin{english}
-%         \begin{lstlisting}
+%         \begin{minted}{csharp}
 %             Please enter a number, a min value, and a max value:
 %             150
 %             0
 %             100
 %             The clamped value is: 100
-%         \end{lstlisting}
+%         \end{minted}
 %     \end{english}
 % \end{example}
 % \ifwithsols
 % \begin{solution}
 %     \begin{english}
-%         \begin{lstlisting}
+%         \begin{minted}{csharp}
 % int num = int.Parse(Console.ReadLine());
 % int min = int.Parse(Console.ReadLine());
 % int max = int.Parse(Console.ReadLine());
 % int clamped = Math.Max(min, Math.Min(num, max));
 % Console.WriteLine("The clamped value is: " + clamped);
-%         \end{lstlisting}
+%         \end{minted}
 %     \end{english}
 % \end{solution}
 % \fi
@@ -183,6 +183,7 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
 
 \end{enumerate}
 
+\clearpage
 \section*{أسئلة عن الجمل الشرطية \texttt{if}}
 
 \begin{enumerate}
@@ -191,26 +192,26 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
     \ifdetailed
     \begin{example}[1]
         \begin{english}
-            \begin{lstlisting}
+            \begin{minted}{csharp}
 Please enter a your grade:
 89
 You succeeded.
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
     \begin{example}[2]
         \begin{english}
-            \begin{lstlisting}
+            \begin{minted}{csharp}
 Please enter a your grade:
 54
 You failed.
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
 \ifwithsols
 \begin{solution}
     \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
 Console.WriteLine("Please enter you grade:");
 int grade = int.Parse(Console.ReadLine());
 if (grade >= 55)
@@ -221,37 +222,39 @@ else
 {
     Console.WriteLine("You failed");
 }
-    \end{lstlisting}
+    \end{minted}
 \end{english}
 \end{solution}
 \fi
 \fi
+
+\clearpage
     \item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا. \\
     إذا كان العدد زوجيًّا، فعلى البرنامج أن يطبع نصف العدد. \\
     وإذا كان العدد فرديًّا فعلى البرنامج أن يطبع ضعف العدد
     \ifdetailed
     \begin{example}[1]
         \begin{english}
-            \begin{lstlisting}
+            \begin{minted}{csharp}
 Please enter a number:
 6
 Result is 3
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
     \begin{example}[2]
         \begin{english}
-            \begin{lstlisting}
+            \begin{minted}{csharp}
 Please enter a number:
 5
 Result is 10
-\end{lstlisting}
+\end{minted}
 \end{english}
 \end{example}
 \ifwithsols
 \begin{solution}
     \begin{english}
-    \begin{lstlisting}
+    \begin{minted}{csharp}
 Console.WriteLine("Please enter a number:");
 int a = int.Parse(Console.ReadLine());
 if (a % 2 == 0)
@@ -262,7 +265,7 @@ else
 {
     Console.WriteLine("Result is " + (a*2));
 }
-    \end{lstlisting}
+    \end{minted}
 \end{english}
 \end{solution}
 \fi

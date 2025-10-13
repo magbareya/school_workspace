@@ -28,6 +28,9 @@ SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_REL))
 
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
+export TEXMF_OUTPUT_DIRECTORY=.
+
+
 # -----------------------
 # Targets
 # -----------------------
@@ -96,22 +99,22 @@ out/%.pdf: src/%.md
 out/%.pdf: src/%.tex
 	@echo "Building regular PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \input{$<}"
 
 # tex → printable pdf without code
 out/%_printable.pdf: src/%.tex
 	@echo "Building printable PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedfalse} \def\setwithsols{\withsolsfalse} \input{$<}"
 
 # tex → sols pdf (detailed + withsols)
 out/%_sols.pdf: src/%.tex
 	@echo "Building solutions PDF for $< -> $@"
 	@mkdir -p $(dir $@)
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
-	xelatex -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
 
 # -----------------------
 # Cleaning
@@ -120,10 +123,11 @@ out/%_sols.pdf: src/%.tex
 clean:
 	rm -rf out
 
-CLEAN_EXTS := log aux toc fls fdb_latexmk out
+CLEAN_EXTS := log aux toc fls fdb_latexmk out minted
 sclean:
 	find out -type f -empty -delete
 	@for ext in $(CLEAN_EXTS); do \
 		find . -type f -name "*.$$ext" -delete; \
 	done
+	find out -type d -name "_minted" -exec rm -rf {} +
 	python scripts/sclean.py out
