@@ -1,3 +1,4 @@
+% Full article preamble (duplicated, no common file)
 \usepackage{fontspec}
 \usepackage[a4paper,margin=2.5cm,includefoot]{geometry}
 \usepackage{polyglossia}
@@ -12,8 +13,8 @@
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage[bottom]{footmisc}
-\usepackage{minted}
 \usepackage{titling}
+\usepackage{minted}
 \usepackage{etoolbox}
 
 \newfontfamily\emoji{Segoe UI Emoji}
@@ -47,6 +48,25 @@
   \setwithsols
 \fi
 
+% unified tcolorboxes for articles
+\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
+\newtcolorbox{boxDef}[1][]{colback=blue!5!white,colframe=blue!75!black,
+  title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExercise}[1][]{colback=cyan!5!white,colframe=cyan!70!black,
+  title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExample}[1][]{colback=yellow!5!white,colframe=orange!90!black,
+  title={{\emoji📝} مثال\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxNote}[1][]{colback=gray!10!white,colframe=black,
+  title={{\emoji✨} ملاحظة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxAttention}[1][]{colback=magenta!10!white,colframe=magenta!80!black,
+  title={{\emoji🔔} تنبيه\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxWarning}[1][]{colback=red!5!white,colframe=red!75!black,
+  title={{\emoji⚡} ملاحظة هامة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSolution}[1][]{colback=green!5!white,colframe=green!60!black,
+  title={{\emoji✅} حل\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSymbol}[1][]{colback=purple!5!white,colframe=purple!70!black,
+  title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
+
 % redefine spaces after titles
 \makeatletter
 \renewcommand{\@maketitle}{%
@@ -75,105 +95,6 @@
 
 \setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
 
-% ----- Box Styles -----
-\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
-
-\newtcolorbox{definition}[1][]{%
-  colback=blue!5!white,
-  colframe=blue!75!black,
-  title={{\emoji📘} تعريف%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{exercise}[1][]{%
-  colback=green!5!white,
-  colframe=green!50!black,
-  title={{\emoji🧩} تمرين%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{example}[1][]{%
-  colback=yellow!5!white,
-  colframe=orange!90!black,
-  title={{\emoji📝} مثال%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{note}[1][]{%
-  colback=gray!10!white,
-  colframe=black,
-  title={{\emoji✨} ملاحظة%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{attention}[1][]{%
-  colback=magenta!10!white,
-  colframe=magenta!80!black,
-  title={{\emoji🔔} تنبيه%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{warning}[1][]{%
-  colback=red!5!white,
-  colframe=red!75!black,
-  title={{\emoji⚡} ملاحظة هامة%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{solution}[1][]{%
-  colback=green!5!white,
-  colframe=green!60!black,
-  title={{\emoji✅} حل%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
-\newtcolorbox{symbolbox}[1][]{%
-  colback=purple!5!white,
-  colframe=purple!70!black,
-  title={{\emoji🔣} رمز%
-    \ifx\\#1\\%
-    \else
-      ~#1
-    \fi
-    :
-  }%
-}
-
 
 % ----------------------
 
@@ -199,6 +120,15 @@
 % \begin{minted}{csharp}
 % // C# Example
 % \end{minted}
+% \end{english}
+% \fi
+
+% OLD WAY
+% \ifdetailed
+% \begin{english}
+% \begin{lstlisting}
+% // C# Example
+% \end{lstlisting}
 % \end{english}
 % \fi
 

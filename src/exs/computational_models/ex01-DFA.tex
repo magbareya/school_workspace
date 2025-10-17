@@ -20,122 +20,122 @@
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q1.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = a \cdot \{a,b\}^* \]
 لغة كل الكلمات التي تبدأ بالحرف $a$.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q2.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \[ L = \{a,b\}^* \cdot b \]
     لغة كل الكلمات التي تنتهي بالحرف $b$.
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q3.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = b^* \cdot a \cdot a^* \cdot b \cdot \{a, b \}^* = b^* \cdot a^+ \cdot b \cdot \{a,b\}^* \]
 لغة كل الكلمات التي تحتوي على الحرف $a$ ثم يظهر على الأقل $b$ واحد بعده.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.5\textwidth]{../../../images/DFAs/ex1_q4.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{a, b\}^2 = \{ w \in \{a,b\}^* \mid |w|=2 \} \]
 كل الكلمات التي طولها بالضبط 2.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.25\textwidth]{../../../images/DFAs/ex1_q5.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{ w \in \{a,b\}^* \mid |w| \% 2 = 0 \} \]
 كل الكلمات التي طولها زوجي. \\
 \textbf{انتبه}: $\epsilon \in L$ لأنّ $|\epsilon|=0$ وهو زوجي، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.25\textwidth]{../../../images/DFAs/ex1_q6.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{ w \in \{a,b\}^* \mid |w| \% 2 = 1 \} \]
 كل الكلمات التي طولها فردي.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q7.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = a^* \]
 كل الكلمات التي لا تحتوي على $b$. \\
 \textbf{انتبه}: $\epsilon \in L$ لأنّ $\epsilon = a^0$ لا يحتوي على $b$، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.1\textwidth]{../../../images/DFAs/ex1_q8.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \emptyset \]
 هذا الأوتومات لا يقبل أي كلمة.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q9.png}\\
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = 0^* \cdot 1 \cdot \{0, 1\}^* \]
 كل الكلمات التي تحتوي على $1$ على الأقل.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.1\textwidth]{../../../images/DFAs/ex1_q10.png}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{a, b\}^* \]
 هذا الأوتومات يقبل كل الكلمات.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.3\textwidth]{../../../images/DFAs/ex1_q11.png}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) \% 2 = 1 \} \]
 كل الكلمات التي يظهر فيها الحرف $1$ عدد مرات فردي.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q12.png}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) \leq 1 \} \]
 كل الكلمات التي يظهر فيها الحرف $1$ مرة واحدة على الأكثر. \\
 \textbf{انتبه}: $\epsilon \in L$ لأنّ $\epsilon$ لا يحتوي على $1$، وهذا يناسب الأوتومات حيث إنّ $q_0$ حالة قابلة.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_q13.png}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \[ L = \{ w \in \{0, 1\}^* \mid \#_1(w) = 1 \} \]
 كل الكلمات التي يظهر فيها الحرف $1$ مرة واحدة بالضبط.
-\end{solution}
+\end{boxSolution}
 \fi
 
 \end{enumerate}
@@ -157,11 +157,11 @@
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1.png}
 \end{center}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{center}
         \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1_sol.png}
     \end{center}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \item
@@ -170,11 +170,11 @@
 \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q1.png}
 \end{center}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{center}
         \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q2_sol.png}
     \end{center}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -185,11 +185,11 @@
 \includegraphics[width=0.5\textwidth]{../../../images/DFAs/ex1_p2_q3.png}
 \end{center}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{center}
         \includegraphics[width=0.4\textwidth]{../../../images/DFAs/ex1_p2_q3_sol.png}
     \end{center}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \end{enumerate}

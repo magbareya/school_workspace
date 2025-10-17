@@ -15,7 +15,7 @@
     V = s^3
     \]
     \ifdetailed
-    \begin{example}
+    \begin{boxExample}
     \begin{english}
     \begin{minted}{csharp}
     Please enter the side length of the cube:
@@ -23,9 +23,9 @@
     The volume = 64
     \end{minted}
     \end{english}
-    \end{example}
+    \end{boxExample}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
 double side = double.Parse(Console.ReadLine());
@@ -33,7 +33,7 @@ double volume = Math.Pow(side, 3);
 Console.WriteLine("The volume = " + volume);
     \end{minted}
     \end{english}
-    \end{solution}
+    \end{boxSolution}
     \clearpage
     \fi
     \fi
@@ -44,7 +44,7 @@ Console.WriteLine("The volume = " + volume);
         c = \sqrt{a^2 + b^2}
     \]
     \ifdetailed
-    \begin{example}
+    \begin{boxExample}
         \begin{english}
     \begin{minted}{csharp}
         Please enter the lengths of the two legs:
@@ -53,9 +53,9 @@ Console.WriteLine("The volume = " + volume);
         The hypotenuse = 5
     \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{english}
         \begin{minted}{csharp}
 double a = double.Parse(Console.ReadLine());
@@ -64,7 +64,7 @@ double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
 Console.WriteLine("The hypotenuse = " + c);
         \end{minted}
     \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 \clearpage
 \fi
@@ -76,7 +76,7 @@ Console.WriteLine("The hypotenuse = " + c);
 %     d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
 %     \]
 %     \ifdetailed
-%     \begin{example}
+%     \begin{boxExample}
 %     \begin{english}
 %     \begin{minted}{csharp}
 % Please enter x1, y1, z1, x2, y2, z2:
@@ -89,9 +89,9 @@ Console.WriteLine("The hypotenuse = " + c);
 % Distance = 13
 %     \end{minted}
 %     \end{english}
-%     \end{example}
+%     \end{boxExample}
 %     \ifwithsols
-%     \begin{solution}
+%     \begin{boxSolution}
 %     \begin{english}
 %     \begin{minted}{csharp}
 % int x1 = int.Parse(Console.ReadLine());
@@ -106,7 +106,7 @@ Console.WriteLine("The hypotenuse = " + c);
 % Console.WriteLine("Distance = " + d);
 %     \end{minted}
 %     \end{english}
-%     \end{solution}
+%     \end{boxSolution}
 %     \clearpage
 %     \fi
 %     \fi
@@ -123,7 +123,7 @@ Console.WriteLine("The hypotenuse = " + c);
     \]
     (\textbf{ملاحظة} افترض أنّ للمعادلة حلّين، وما تحت الجذر موجب.)
     \ifdetailed
-    \begin{example}
+    \begin{boxExample}
         \begin{english}
             \begin{minted}{csharp}
 Please enter a, b, c:
@@ -133,9 +133,9 @@ Please enter a, b, c:
 The solutions are: x1 = 2, x2 = 1
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
 double a = double.Parse(Console.ReadLine());
@@ -148,14 +148,14 @@ double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
 Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
             \end{minted}
         \end{english}
-    \end{solution}
+    \end{boxSolution}
     \fi
     \fi
 
 % \item
 % اكتب برنامجًا يقرأ رقمًا، وحدًا أدنى، وحدًا أعلى. يجب على البرنامج طباعة الرقم بحيث يكون محصورًا ضمن هذا النطاق (إذا كان أكبر من الحد الأعلى، اطبع الحد الأعلى، وإذا كان أصغر من الحد الأدنى، اطبع الحد الأدنى).
 % \ifdetailed
-% \begin{example}
+% \begin{boxExample}
 %     \begin{english}
 %         \begin{minted}{csharp}
 %             Please enter a number, a min value, and a max value:
@@ -165,9 +165,9 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
 %             The clamped value is: 100
 %         \end{minted}
 %     \end{english}
-% \end{example}
+% \end{boxExample}
 % \ifwithsols
-% \begin{solution}
+% \begin{boxSolution}
 %     \begin{english}
 %         \begin{minted}{csharp}
 % int num = int.Parse(Console.ReadLine());
@@ -177,7 +177,7 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
 % Console.WriteLine("The clamped value is: " + clamped);
 %         \end{minted}
 %     \end{english}
-% \end{solution}
+% \end{boxSolution}
 % \fi
 % \fi
 
@@ -190,7 +190,7 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
     \item اكتب برنامجًا يستقبل من المستخدم علامته ويطبع له إن كان ناجحًا أو لا. \\
     علامة النّجاح هي 55 فما فوق.
     \ifdetailed
-    \begin{example}[1]
+    \begin{boxExample}[1]
         \begin{english}
             \begin{minted}{csharp}
 Please enter a your grade:
@@ -198,8 +198,8 @@ Please enter a your grade:
 You succeeded.
 \end{minted}
 \end{english}
-\end{example}
-    \begin{example}[2]
+\end{boxExample}
+    \begin{boxExample}[2]
         \begin{english}
             \begin{minted}{csharp}
 Please enter a your grade:
@@ -207,9 +207,9 @@ Please enter a your grade:
 You failed.
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
 Console.WriteLine("Please enter you grade:");
@@ -224,7 +224,7 @@ else
 }
     \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 \fi
 
@@ -233,7 +233,7 @@ else
     إذا كان العدد زوجيًّا، فعلى البرنامج أن يطبع نصف العدد. \\
     وإذا كان العدد فرديًّا فعلى البرنامج أن يطبع ضعف العدد
     \ifdetailed
-    \begin{example}[1]
+    \begin{boxExample}[1]
         \begin{english}
             \begin{minted}{csharp}
 Please enter a number:
@@ -241,8 +241,8 @@ Please enter a number:
 Result is 3
 \end{minted}
 \end{english}
-\end{example}
-    \begin{example}[2]
+\end{boxExample}
+    \begin{boxExample}[2]
         \begin{english}
             \begin{minted}{csharp}
 Please enter a number:
@@ -250,9 +250,9 @@ Please enter a number:
 Result is 10
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
 Console.WriteLine("Please enter a number:");
@@ -267,7 +267,7 @@ else
 }
     \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 \fi
 \end{enumerate}

@@ -8,20 +8,20 @@
 \maketitle
 \thispagestyle{fancy}
 
-\begin{warning}
+\begin{boxWarning}
 تأكد أن الكود الذي تسلمه يعمل - شغّله وافحصه قبل التسليم.
-\end{warning}
+\end{boxWarning}
 
-\begin{note}
+\begin{boxNote}
     تأكد من استخدام نوع المتغير الصحيح، $\mathtt{int}$ للمتغيرات التي لا تكون إلا عددًا صحيحًا، و $\mathtt{double}$ للمتغيرات التي قد تكون أعدادًا عشرية.
-\end{note}
+\end{boxNote}
 
 \begin{enumerate}
 
 \vspace{1cm}
 \item
 اكتب برنامجًا يستقبل من المستخدم سنة ميلاده، ويطبع له كم سيكون عمره في عام 2030.
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 What is your birth year?
@@ -29,10 +29,10 @@ What is your birth year?
 In 2030, you will be 25 years old.
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -43,7 +43,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 
 \clearpage
 
@@ -55,7 +55,7 @@ private static void Main(string[] args)
 اكتب برنامجًا يستقبل من المستخدم سعر سلعة معيّنة، ثم يضيف لها الضريبة المضافة، بقدر $18\%$. \\
 في النهاية اطبع للمستخدم السعر النهائي للسلعة مع الضريبة.
 
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter the price:
@@ -64,10 +64,10 @@ Price after adding tax is: 35.4
 \end{minted}
 \end{english}
 لأنّ $30 + 0.18 \cdot 30 = 35.4$
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -78,7 +78,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 
 \fi
 
@@ -89,7 +89,7 @@ private static void Main(string[] args)
 ثم يستقبل منه قيمة الضريبة \textbf{السنوية} التي يجب دفعها. \\
 ثم يستقبل من المستخدم \textbf{النسبة المئوية} للعلاوة السنوية التي حصل عليها العامل. \\
 في النهاية اطبع له الراتب السنوي بعد خصم الضريبة وإضافة العلاوة
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter your monthly salary:
@@ -104,10 +104,10 @@ Your annual salary after tax and bonus is: 105000
 لأنّ الراتب السنوي قبل الضريبة والعلاوة هو $10000 \cdot 12 = 120000$ \\
 وبعد خصم الضريبة يصبح $120000 - 20000 = 100000$ \\
 وبعد إضافة العلاوة يصبح $100000 + 5\% \cdot 100000 = 105000$.
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -125,7 +125,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 
 \fi
 

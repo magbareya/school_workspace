@@ -8,9 +8,9 @@
 \maketitle
 \thispagestyle{fancy}
 
-\begin{note}
+\begin{boxNote}
     تأكد من استخدام نوع المتغير الصحيح، $\mathtt{int}$ للمتغيرات التي لا تكون إلا عددًا صحيحًا، و $\mathtt{double}$ للمتغيرات التي قد تكون أعدادًا عشرية.
-\end{note}
+\end{boxNote}
 
 \begin{enumerate}
 
@@ -19,7 +19,7 @@
 ثم يستقبل من المستخدم 3 مصروفات للمشروع. \\
 بعد كل مرة يدخل فيها المستخدم مصروفًا، اطبع له الميزانية المتبقية. \\
 \ifdetailed
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter the budget:
@@ -35,10 +35,10 @@ Enter expense 3:
 Remaining budget: 600
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -64,7 +64,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \clearpage
@@ -75,7 +75,7 @@ private static void Main(string[] args)
 ثم يستقبل من المستخدم 3 تخفيضات على هذا المنتج بالنسبة المئوية. \\
 بعد كل مرة يدخل فيها المستخدم تخفيضًا، اطبع له السعر الجديد للمنتج. \\
 \ifdetailed
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter the initial price:
@@ -91,10 +91,10 @@ Enter discount 3 (%):
 Price after discount: 342
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -120,7 +120,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \clearpage
@@ -130,7 +130,7 @@ private static void Main(string[] args)
 اكتب برنامجًا يبدأ بالحساب من 3600 ثانية (أي ساعة واحدة)، ثم يستقبل من المستخدم عدد الثواني التي مرت. \\
 يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت المتبقي بالثواني. \\
 \ifdetailed
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter seconds passed:
@@ -147,10 +147,10 @@ Enter seconds passed:
 Remaining time (seconds): 1000
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -179,7 +179,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \clearpage
@@ -188,7 +188,7 @@ private static void Main(string[] args)
 \item
 نفس السؤال السابق، لكن المستخدم يُدخل الوقت الذي مضى بالثواني، وأنت تطبع له الوقت المتبقي بالدقائق. \\
 \ifdetailed
-\begin{example}
+\begin{boxExample}
 \begin{english}
 \begin{minted}{text}
 Enter seconds passed:
@@ -205,10 +205,10 @@ Enter seconds passed:
 Remaining time (minutes): 16
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -237,7 +237,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \fi
 
 \clearpage
@@ -246,11 +246,11 @@ private static void Main(string[] args)
 % \item
 % اكتب برنامجًا يستقبل من المستخدم الوقت الحالي (الساعة، ثم الدقائق، ثم الثواني). \\
 % ثم يستقبل من المستخدم عدد الثواني التي مضت، يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت الحالي (الساعة، الدقائق، الثواني). \\
-% \begin{note}
+% \begin{boxNote}
 % تأكد من أن البرنامج يتعامل مع تغير الساعة والدقائق عند الحاجة.
-% \end{note}
+% \end{boxNote}
 % \ifdetailed
-% \begin{example}
+% \begin{boxExample}
 % \begin{english}
 % \begin{minted}{csharp}
 % Enter hour:
@@ -273,10 +273,10 @@ private static void Main(string[] args)
 % Current time: 14:53:20
 % \end{minted}
 % \end{english}
-% \end{example}
+% \end{boxExample}
 % \fi
 % \ifwithsols
-% \begin{solution}
+% \begin{boxSolution}
 % \begin{english}
 % \begin{minted}{csharp}
 % private static void Main(string[] args)
@@ -294,7 +294,7 @@ private static void Main(string[] args)
 % }
 % \end{minted}
 % \end{english}
-% \end{solution}
+% \end{boxSolution}
 % \fi
 
 \end{enumerate}

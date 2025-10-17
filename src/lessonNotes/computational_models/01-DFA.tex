@@ -213,12 +213,12 @@ $$S2 = \{ x \in S1 | x\%2=0 \}$$
 
 \subsubsection{الأبجدية}
 
-\begin{definition}
+\begin{boxDef}
     \paragraph{الأبجدية} هي مجموعة نهائية وغير فارغة من الرموز (الرموز يمكن أن تكون أي رموز: أرقام، أحرف، علامات ترقيم...).
-\end{definition}
-\begin{symbolbox}
+\end{boxDef}
+\begin{boxSymbol}
     عادة نرمز للأبجدية بالحرف $\Sigma$ (سيجما).
-\end{symbolbox}
+\end{boxSymbol}
 
 مثلًا:
 \begin{itemize}
@@ -230,9 +230,9 @@ $$S2 = \{ x \in S1 | x\%2=0 \}$$
 
 \subsubsection{الكلمة}
 
-\begin{definition}
+\begin{boxDef}
     \paragraph{الكلمة} هي تسلسل من الرموز من أبجدية معينة.
-\end{definition}
+\end{boxDef}
 
 مثلًا، بالنسبة للأبجدية $\Sigma = \{0, 1\}$ فإن السلاسل التالية هي كلمات مكونة من هذه الأبجدية:
 \begin{itemize}
@@ -242,13 +242,13 @@ $$S2 = \{ x \in S1 | x\%2=0 \}$$
     \item $w_4 = 01011$
 \end{itemize}
 
-\begin{attention}
+\begin{boxAttention}
     الكلمات أعلاه ليست أرقامًا، لا نقول إن الكلمة $w_1$ هي صفر، بل هي كلمة مكونة من ثلاثة رموز كلها صفر.
-\end{attention}
+\end{boxAttention}
 
-\begin{symbolbox}
+\begin{boxSymbol}
     نستحدم الرمز $|w|$ للتعبير عن عدد الرموز في الكلمة $w$.
-\end{symbolbox}
+\end{boxSymbol}
 مثلًا، في الكلمات أعلاه:
 \begin{itemize}
     \item $|w_1| = 3$
@@ -257,15 +257,15 @@ $$S2 = \{ x \in S1 | x\%2=0 \}$$
     \item $|w_4| = 5$
 \end{itemize}
 
-\begin{symbolbox}
+\begin{boxSymbol}
     الكلمة قد تكون فارغة، أي لا يوجد فيها أي رموز. \\
     نرمز للكلمة فارغة بالحرف $\epsilon$ (إبسيلون).
-\end{symbolbox}
+\end{boxSymbol}
 حسب التعريف في النقطة السابقة: $|\epsilon| = 0$ لأنّ عدد الرموز في الكلمة الفارغة هو 0.
 
-\begin{symbolbox}
+\begin{boxSymbol}
     نستعمل الرمز $\#_a(w)$ للتعبير عن عدد المرات التي يظهر فيها الحرف $a$ في الكلمة $w$.
-\end{symbolbox}
+\end{boxSymbol}
 مثلًا، في الكلمات أعلاه:
 \begin{itemize}
     \item $\#_1(w_0) = 0$ و $\#_0(w_0) = 3$
@@ -274,9 +274,9 @@ $$S2 = \{ x \in S1 | x\%2=0 \}$$
     \item $\#_1(w_3) = 3$ و $\#_0(w_3) = 2$
 \end{itemize}
 
-\begin{symbolbox}
+\begin{boxSymbol}
     نستعمل الرمز $R(w)$ أو $w^R$ للتعبير عن الكلمة المعكوسة من $w$. (أي نقرأ $w$ من اليمين إلى اليسار)
-\end{symbolbox}
+\end{boxSymbol}
 مثلًا، في الكلمات أعلاه:
 \begin{itemize}
     \item $R(w^1) = w^R_1 = 000$
@@ -394,10 +394,10 @@ $L_1 = \{0, 1, 01, 10\}$ معرفة فوق الأبجدية $\Sigma = \{0, 1\}$.
         \item $a, b, ab, aab, abb, aaabbb$ كلها كلمات موجودة في اللغة.
         \item $ba, aba, baa, bab, aaba$ كلها كلمات غير موجودة في اللغة.
     \end{itemize}
-    \begin{note}
+    \begin{boxNote}
     يمكن التعبير عن اللغة السابقة أيضًا بالشكل التالي:
     $L = \{a^* b^* \}$
-    \end{note}
+    \end{boxNote}
 
     \item $L = \{a^m b^n | m,n > 0 \}$ \\
     هي مجموعة كل الكلمات التي تبدأ بالحرف $a$ بحيث يظهر مرة أو أكثر، ثم بعد ذلك يظهر الحرف $b$ مرة أو أكثر، ولا يظهر الحرف $a$ بعد ظهور الحرف $b$. \\
@@ -407,10 +407,10 @@ $L_1 = \{0, 1, 01, 10\}$ معرفة فوق الأبجدية $\Sigma = \{0, 1\}$.
         \item $ab, aab, abb, aaabbb$ كلها كلمات موجودة في اللغة.
         \item $a, b, aa, bb, ba, aba, baa, bab, aaba$ كلها كلمات غير موجودة في اللغة.
     \end{itemize}
-    \begin{note}
+    \begin{boxNote}
     يمكن التعبير عن اللغة السابقة أيضًا بالشكل التالي:
     $L = \{a^+ b^+ \}$
-    \end{note}
+    \end{boxNote}
 
     \item $L = \{w \in \Sigma^* | w \text{ يحتوي على عدد زوجي من } a's \}$ \\
     هي مجموعة كل الكلمات التي تحتوي على عدد زوجي من الحرف $a$ (بما في ذلك 0). \\
@@ -430,7 +430,7 @@ $L_1 = \{0, 1, 01, 10\}$ معرفة فوق الأبجدية $\Sigma = \{0, 1\}$.
 
 \end{itemize}
 
-\begin{attention}
+\begin{boxAttention}
     \begin{itemize}
         \item $\{\epsilon\}$ هي مجموعة مكونة من عنصر واحد فقط، هو الكلمة الخالية.
         \item $|\{\epsilon\}| = 1$ لأنّ عدد العناصر في المجموعة التي تحتوي على الكلمة الفارغة هو 1 (الكلمة الفارغة).
@@ -438,6 +438,6 @@ $L_1 = \{0, 1, 01, 10\}$ معرفة فوق الأبجدية $\Sigma = \{0, 1\}$.
         \item $\epsilon \notin \emptyset$ لأنّ المجموعة الخالية لا تحتوي على أي عنصر.
         \item $\{\epsilon\} \neq \emptyset$.
     \end{itemize}
-\end{attention}
+\end{boxAttention}
 
 \end{document}

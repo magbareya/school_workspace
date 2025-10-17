@@ -21,9 +21,9 @@ Console.WriteLine(x + 3);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $8$
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -36,9 +36,9 @@ Console.WriteLine(a * b);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $8$
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -51,9 +51,9 @@ Console.WriteLine(x / y);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $2$ \\ انتبه أنّ النتيجة ستكون من نوع \texttt{int} وليس \texttt{double} لأنّ كل المتغيرات هي من نوع \texttt{int}.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \ifwithsols
@@ -70,9 +70,9 @@ Console.WriteLine(x + y);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $9.2$
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -91,14 +91,14 @@ Console.WriteLine(a % b);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         \begin{enumerate}[label=\Roman*.]
         \item $2$
         \item $3$
         \item $0$
         \item $3$
     \end{enumerate}
-    \end{solution}
+    \end{boxSolution}
     \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,10 +114,10 @@ Console.WriteLine(x);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $2 + 3 \cdot 4 \rightarrow 2 + 12 \rightarrow 14$ \\
         الإجابة النهائية ستكون $14$.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -129,10 +129,10 @@ Console.WriteLine(y);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $(2 + 3) \cdot 4 \rightarrow 5 \cdot 4 \rightarrow 20$ \\
         الإجابة النهائية ستكون $20$.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -144,10 +144,10 @@ Console.WriteLine(a);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $20 - 8 / 2 \rightarrow 20 - 4 \rightarrow 16$ \\
         الإجابة النهائية ستكون $16$.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -159,10 +159,10 @@ Console.WriteLine(b);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $(20 - 8) / 2 \rightarrow 12 / 2 \rightarrow 6$ \\
         الإجابة النهائية ستكون $6$.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,10 +181,10 @@ Console.WriteLine(d);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $1$ \\
         انتبه أنّ النتيجة ستكون فقط القسم الصحيح من نتيجة قسمة $7/4$ لأنّ كل المتغيرات هي من نوع \texttt{int}.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -197,11 +197,11 @@ Console.WriteLine(d);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $1$ \\
         النتيجة ستكون فقط القسم الصحيح من نتيجة قسمة $7/4$ لأنّ كل المتغيرات هي من نوع \texttt{int}. \\
         (صحيح أنّنا سنحفظ النتيجة في متغير من نوع \texttt{double} لكن الجهة اليمنى لا تتأثر بهذا الأمر، فستبقى النتيجة عددًا صحيحًا.)
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \item
@@ -214,10 +214,10 @@ Console.WriteLine(d);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $1.75$ \\
         النتيجة هنا ستكون من نوع \texttt{double} لأنّنا أضفنا \texttt{(double)} إلى بداية التعبير الحسابي، وبالتالي فالنتيجة ستكون كاملة وليس القسم الصحيح فطق.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \ifwithsols
@@ -234,12 +234,12 @@ Console.WriteLine(d);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         $1.75$ \\
         تذكّر أنّه يكفي أن يكون هناك متغير أو عدد واحد على الأقل من نوع \texttt{double} لتكون النتيجة من نوع \texttt{double}. \\
         عندما نكتب الرقم $4.0$ فإنّه سيكون من نوع \texttt{double} لأنّنا أضفنا له الفاصلة. \\
         أي أنّ $4.0$ هو من نوع \texttt{double}، بينما $4$ هو من نوع \texttt{int}.
-    \end{solution}
+    \end{boxSolution}
     \fi
 
     \subsection*{استخدام القسمة والباقي}
@@ -259,7 +259,7 @@ Console.WriteLine(x);
         \end{minted}
     \end{english}
     \ifwithsols
-    \begin{solution}
+    \begin{boxSolution}
         المخرج سيكون $456341$. \\
         الجدول التالي هو جدول متابعة، يُظهر لك قيمة كل متغير في كل سطر من أسطر الكود.
         \begin{tabular}{|l|c|c|c|}
@@ -284,7 +284,7 @@ Console.WriteLine(x);
 \hline
 \end{tabular}
 
-    \end{solution}
+    \end{boxSolution}
     \fi
 
 

@@ -67,7 +67,7 @@ out/%_printable.pdf: src/%.ipynb
 # Jupyter notebooks → C# source file (only code cells)
 out/%.cs: src/%.ipynb
 	@mkdir -p $(dir $@)
-	python scripts/export_cs.py $< $@
+	python3 scripts/export_cs.py $< $@
 
 # ipynb → pdf
 out/%.pdf: src/%.ipynb
@@ -122,12 +122,14 @@ out/%_sols.pdf: src/%.tex
 
 clean:
 	rm -rf out
+	find . -type d -name "_minted*" -exec rm -rf {} +
 
-CLEAN_EXTS := log aux toc fls fdb_latexmk out minted
+
+CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav
 sclean:
 	find out -type f -empty -delete
 	@for ext in $(CLEAN_EXTS); do \
 		find . -type f -name "*.$$ext" -delete; \
 	done
-	find out -type d -name "_minted" -exec rm -rf {} +
-	python scripts/sclean.py out
+	find . -type d -name "_minted*" -exec rm -rf {} +
+	python3 scripts/sclean.py out

@@ -22,7 +22,7 @@
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة حرارة، ويطبع له "\textbf{الجو حار}" إذا كانت درجة الحرارة أكثر من 30 درجة.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
@@ -30,19 +30,19 @@ Enter temperature:
 It's hot
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
-\begin{example}[2]
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
 25
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -56,7 +56,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -64,7 +64,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{الرقم الأول أكبر}" إذا كان الرقم الأول أكبر من الثاني، و"\textbf{الرقم الثاني أكبر}" إذا كان الرقم الثاني أكبر من الأول.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -74,8 +74,8 @@ Enter second number:
 The first number is larger
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -85,10 +85,10 @@ Enter second number:
 The second number is larger
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -108,7 +108,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -117,7 +117,7 @@ private static void Main(string[] args)
 اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{لهما نفس الإشارة}" إذا كان كلاهما موجبَين أو كلاهما سالبين، و"\textbf{إشارتان مختلفتان}" إذا كان أحدهما موجبًا والآخر سالبًا.
 (افترض أنّ الرقمين ليسا صفرًا.)
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -127,8 +127,8 @@ Enter second number:
 Different signs
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -138,10 +138,10 @@ Enter second number:
 Same sign
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -163,7 +163,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -181,7 +181,7 @@ private static void Main(string[] args)
 % \item \texttt{C} إذا كانت العلامة أقل من 70
 % \end{itemize}
 % \ifdetailed
-% \begin{example}[1]
+% \begin{boxExample}[1]
 % \begin{english}
 % \begin{minted}{csharp}
 % Enter your grade:
@@ -189,8 +189,8 @@ private static void Main(string[] args)
 % A+
 % \end{minted}
 % \end{english}
-% \end{example}
-% \begin{example}[2]
+% \end{boxExample}
+% \begin{boxExample}[2]
 % \begin{english}
 % \begin{minted}{csharp}
 % Enter your grade:
@@ -198,8 +198,8 @@ private static void Main(string[] args)
 % B+
 % \end{minted}
 % \end{english}
-% \end{example}
-% \begin{example}[3]
+% \end{boxExample}
+% \begin{boxExample}[3]
 % \begin{english}
 % \begin{minted}{csharp}
 % Enter your grade:
@@ -207,10 +207,10 @@ private static void Main(string[] args)
 % C
 % \end{minted}
 % \end{english}
-% \end{example}
+% \end{boxExample}
 
 % \ifwithsols
-% \begin{solution}
+% \begin{boxSolution}
 % \begin{english}
 % \begin{minted}{csharp}
 % private static void Main(string[] args)
@@ -248,7 +248,7 @@ private static void Main(string[] args)
 % }
 % \end{minted}
 % \end{english}
-% \end{solution}
+% \end{boxSolution}
 % \clearpage
 % \fi
 % \fi
@@ -256,7 +256,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم عمر شخص ودرجة حرارة، ويطبع له "\textbf{يمكنك الخروج}" إذا كان عمره 18 أو أكثر ودرجة الحرارة أقل من 35.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter your age:
@@ -266,8 +266,8 @@ Enter temperature:
 You can go out
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter your age:
@@ -276,10 +276,10 @@ Enter temperature:
 30
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -296,7 +296,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -304,7 +304,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{الرقمان موجبان}" إذا كان كلاهما أكبر من صفر.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -314,8 +314,8 @@ Enter second number:
 Both numbers are positive
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -324,10 +324,10 @@ Enter second number:
 7
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -344,7 +344,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -352,7 +352,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة حرارة، ويطبع له "\textbf{الجو غير مناسب}" إذا كانت درجة الحرارة أقل من 10 أو أكثر من 40.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
@@ -360,18 +360,18 @@ Enter temperature:
 Weather is not suitable
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
 25
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -386,7 +386,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -394,7 +394,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم نوع اليوم (1 للعمل، 2 للعطلة) ودرجة الحرارة، ويطبع له "\textbf{يوم ممتع}" إذا كان يوم عطلة أو درجة الحرارة بين 20 و 25.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter day type (1=Work, 2=Holiday):
@@ -404,8 +404,8 @@ Enter temperature:
 Enjoyable day
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter day type (1=Work, 2=Holiday):
@@ -415,10 +415,10 @@ Enter temperature:
 Enjoyable day
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -435,7 +435,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -443,7 +443,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم رقم، ويطبع له "\textbf{الرقم ليس صفر}" إذا كان الرقم لا يساوي صفر.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter a number:
@@ -451,18 +451,18 @@ Enter a number:
 The number is not zero
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter a number:
 0
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -477,7 +477,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -485,7 +485,7 @@ private static void Main(string[] args)
 \item
 اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{الرقمان غير متساويين}" إذا كان الرقم الأول لا يساوي الثاني.
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -495,8 +495,8 @@ Enter second number:
 The numbers are not equal
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter first number:
@@ -505,10 +505,10 @@ Enter second number:
 7
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -525,7 +525,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -539,7 +539,7 @@ private static void Main(string[] args)
 \item إذا كان كلب وعمره أقل من 12 شهر: "\textbf{كلب صغير}"
 \end{itemize}
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter animal type (1=Cat, 1=Dog):
@@ -549,8 +549,8 @@ Enter age in months:
 Adult cat
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter animal type (1=Cat, 2=Dog):
@@ -560,10 +560,10 @@ Enter age in months:
 Young dog
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -598,7 +598,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
@@ -615,7 +615,7 @@ private static void Main(string[] args)
 \item إذا كانت درجة الحرارة أقل من أو تساوي المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{درجة الحرارة أقل من أو تساوي المعدّل في [اسم الفصل]}"
 \end{itemize}
 \ifdetailed
-\begin{example}[1]
+\begin{boxExample}[1]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
@@ -625,8 +625,8 @@ Enter season (1=Winter, 2=Summer):
 The temperature is higher than the average in Winter
 \end{minted}
 \end{english}
-\end{example}
-\begin{example}[2]
+\end{boxExample}
+\begin{boxExample}[2]
 \begin{english}
 \begin{minted}{text}
 Enter temperature:
@@ -636,10 +636,10 @@ Enter season (1=Winter, 2=Summer):
 The temperature is lower than or equal to the average in Summer
 \end{minted}
 \end{english}
-\end{example}
+\end{boxExample}
 
 \ifwithsols
-\begin{solution}
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 private static void Main(string[] args)
@@ -674,7 +674,7 @@ private static void Main(string[] args)
 }
 \end{minted}
 \end{english}
-\end{solution}
+\end{boxSolution}
 \clearpage
 \fi
 \fi
