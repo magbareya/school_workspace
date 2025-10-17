@@ -1,0 +1,183 @@
+\documentclass[12pt]{beamer}
+\input{../../../scripts/beamer_preamble.tex}
+\usetheme{Madrid}
+
+\title{مراجعة قبل الامتحان – لغة C\#}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{الطباعة والإدخال في الكونسول}
+\textbf{سؤال:}
+اكتب برنامجًا يطلب من المستخدم اسمه ثم يطبع رسالة ترحيب.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+Console.Write("اكتب اسمك: ");
+string name = Console.ReadLine();
+Console.WriteLine("أهلاً بك يا " + name + "!");
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}{الطباعة والإدخال في الكونسول}
+\textbf{سؤال:}
+ما الفرق بين \texttt{Write()} و \texttt{WriteLine()}؟
+
+\pause
+\textbf{الحل:}
+\texttt{Write()} لا تنتقل إلى سطر جديد بعد الطباعة،
+أما \texttt{WriteLine()} فتنتقل إلى سطر جديد تلقائيًا.
+\end{frame}
+
+%-----------------------------------
+\begin{frame}{القسمة وباقي القسمة}
+\textbf{سؤال:}
+احسب ناتج كل من:
+\begin{itemize}
+  \item \texttt{7 / 2}
+  \item \texttt{7 / 2.0}
+  \item \texttt{7 \% 2}
+\end{itemize}
+
+\pause
+\textbf{الحل:}
+\begin{itemize}
+  \item \texttt{7 / 2} $\rightarrow$ الناتج 3
+  \item \texttt{7 / 2.0} $\rightarrow$ الناتج 3.5
+  \item \texttt{7 \% 2} $\rightarrow$ الناتج 1
+\end{itemize}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{القسمة وباقي القسمة}
+\textbf{سؤال:}
+حوّل السطر التالي ليعطي نتيجة عشريّة:
+\begin{lstlisting}[language={[Sharp]C}]
+int result = 5 / 2;
+\end{lstlisting}
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+double result = 5 / 2.0;  // أو (double)5 / 2
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{مكتبة Math}
+\textbf{سؤال:}
+اكتب برنامجًا يطلب رقمين ويطبع الأكبر بينهما.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+Console.Write("أدخل العدد الأول: ");
+int a = int.Parse(Console.ReadLine());
+Console.Write("أدخل العدد الثاني: ");
+int b = int.Parse(Console.ReadLine());
+Console.WriteLine("الأكبر هو: " + Math.Max(a, b));
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{مكتبة Math}
+\textbf{سؤال:}
+احسب الجذر التربيعي والتقريب لأقرب عدد صحيح للعدد 7.6.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+Console.WriteLine(Math.Sqrt(7.6));   // 2.757...
+Console.WriteLine(Math.Round(7.6));  // 8
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{جملة if-else}
+\textbf{سؤال:}
+اكتب برنامجًا يطلب عمر المستخدم، وإذا كان أقل من 18 يطبع "قاصر"، وإلا يطبع "بالغ".
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+Console.Write("أدخل عمرك: ");
+int age = int.Parse(Console.ReadLine());
+
+if (age < 18)
+    Console.WriteLine("قاصر");
+else
+    Console.WriteLine("بالغ");
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}{جملة if-else}
+\textbf{سؤال:}
+ما الفرق بين كتابة الأقواس \{\} وعدم كتابتها في جملة \texttt{if}؟
+
+\pause
+\textbf{الحل:}
+إذا كانت الجملة تحتوي على تعليمة واحدة فقط يمكن حذف الأقواس،
+لكن يُفضّل دائمًا كتابتها لتجنّب الأخطاء المستقبلية.
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{جملة if-else مع عمليات منطقية}
+\textbf{سؤال:}
+اكتب برنامجًا يطلب رقمًا ويطبع "موجب وصغير" إذا كان أكبر من 0 وأصغر من 10.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+Console.Write("أدخل رقمًا: ");
+int x = int.Parse(Console.ReadLine());
+
+if (x > 0 && x < 10)
+    Console.WriteLine("موجب وصغير");
+else
+    Console.WriteLine("الشرط غير محقق");
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{عمليات منطقية}
+\textbf{سؤال:}
+اكتب شرطًا يتحقق إذا كان الرقم سالبًا أو أكبر من 100.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+if (x < 0 || x > 100)
+    Console.WriteLine("خارج النطاق");
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}[fragile]{عمليات منطقية}
+\textbf{سؤال:}
+اكتب شرطًا يطبع "صفر" فقط إذا كان الرقم ليس موجبًا وليس سالبًا.
+
+\pause
+\textbf{الحل:}
+\begin{lstlisting}[language={[Sharp]C}]
+if (!(x > 0) && !(x < 0))
+    Console.WriteLine("صفر");
+\end{lstlisting}
+\end{frame}
+
+%-----------------------------------
+\begin{frame}
+\centering
+بالتوفيق في الامتحان 🌟\\
+راجِع الأمثلة وجرّب تنفيذها بنفسك!
+\end{frame}
+
+\end{document}
