@@ -1,0 +1,208 @@
+\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{اختبار شهري للصف 10-10}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\textbf{أجب عن جميع الأسئلة}
+
+\begin{enumerate}[itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل عددين ويطبع \textenglish{"Consecutive"} إذا كانا متتاليين، و \textenglish{"Not Consecutive"} إذا لم يكونا متتاليين.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+if (Math.Abs(a - b) == 1)
+    Console.WriteLine("Consecutive");
+else
+    Console.WriteLine("Not Consecutive");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل عددًا صحيحا موجبًا، على البرنامج أن يطبع الرّقم الزوجي التالي لهذا الرقم.\\
+\textbf{مثال}: إذا استقبل العدد 5، على البرنامج أن يطبع 6. وإذا استقبل 6 على البرنامج أن يطبع 8.
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+int nextEven;
+if (x % 2 == 0)
+    nextEven = x + 2;
+else
+    nextEven = x + 1;
+Console.WriteLine(nextEven);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+int nextEven = x + 2 - (x % 2);
+Console.WriteLine(nextEven);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل عددين صحيحين وموجبين، العدد الأول مؤلف من منزلتين والعدد الثاني مؤلف من منزلة واحدة. \\
+على البرنامج أن يطبع \textenglish{Yes} إذا كان العدد الثاني هو إحدى منازل العدد الأول.
+
+\textbf{مثال}: إذا كان العدد الأول 35، والعدد الثاني 3 فعلى البرنامج أن يطبع \textenglish{Yes}. \\
+إذا كان العدد الأول 35، والعدد الثاني 7 فعلى البرنامج أن يطبع \textenglish{No}. \\
+
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());  // two digits
+int d = int.Parse(Console.ReadLine());  // one digit
+int tens = n / 10;
+int ones = n % 10;
+if (d == tens || d == ones)
+    Console.WriteLine("Yes");
+else
+    Console.WriteLine("No");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item
+تتبع مقطع الكود التالي ثم املأ الجدول الذي بعده:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int a = n / 1000;
+int b = n % 100;
+int result = a * 100 + b;
+Console.WriteLine(result);
+\end{minted}
+\end{english}
+\end{boxCode}
+
+
+
+\begin{enumerate}
+    \item
+    \textbf{املأ الجدول التالي:} لكل واحدة من قيم $n$، اكتب ماذا تكون قيمة $a, b$ وما هي القيمة التي يطبعها البرنامج:
+\begin{center}
+% \begin{tabular}{|c|c|c|c|c|}
+
+\begin{tabular}{|C{2cm}|C{3cm}|C{3cm}|C{3cm}|C{3cm}|}
+\hline
+\large{\textbf{$n$}} & \large{\textbf{$a$}} & \large{\textbf{$b$}} & \large{\textenglish{\textbf{result}}} \\
+\hline
+7654 &  &  &  \\
+\hline
+32154 &  &  &  \\
+\hline
+8111 &  &  &  \\
+\hline
+354 &  &  &  \\
+\hline
+1 &  &  &  \\
+\hline
+\end{tabular}
+\end{center}
+
+\item
+أعط قيمة لـ $n$ تجعل البرنامج يطبع $111$.
+
+\item
+ما هي وظيفة البرنامج أعلاه؟ (أجب بسطر واحد)
+\end{enumerate}
+
+
+\clearpage
+\item
+كل مثلث في المستوى يجب أن يحقق قانون بناء المثلث وهو أنّ مجموع كل ضلعين أكبر من الثالث. \\
+ أي إذا كانت أضلاعه $a, b, c$ فإنّه يجب أن يحقق كل الشروط التالية:
+\[ a + b > c  \qquad a + c > b  \qquad b + c > a \]
+
+\textbf{اكتب برنامجًا} يفحص إذا كانت هذه الأطوال تحقق قانون بناء المثلث أم لا (لا حاجة لاستقبال الأطوال من المستخدم). \\
+إذا كانت تحقق قانون بناء المثلث فعلى البرنامج أن يطبع \textenglish{"Legal"}.
+وإلا فإنّه يطبع \textenglish{"Not Legal"}.
+
+\textbf{مثال}: الأطوال $3, 4, 5$ تحقق قانون بناء المثلث، لأنّ $3 + 4 > 5$ و $3 + 5 > 4$ و $4 + 5 > 3$. ففي هذه الحالة على البرنامج أن يطبع \textenglish{"Legal"}. \\
+أمّا الأطوال $3, 4, 9$ لا تحقق قانون بناء المثلث، لأنّ $3 + 4 < 9$، ففي هذه الحالة على البرنامج أن يطبع \textenglish{"Not Legal"}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+if ((a + b > c) && (a + c > b) && (b + c > a))
+    Console.WriteLine("Legal");
+else
+    Console.WriteLine("Not Legal");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+معطاة الدالة التالية:
+\[ f(x) = \frac{x^5 - 3}{\sqrt{25 - x^2}} \]
+
+اكتب برنامجًا يستقبل قيمة $x$ من المستخدم ويطبع قيمة $f(x)$. \\
+لكن علينا الانتباه لمجال تعريف الدالة، لذلك:
+\begin{itemize}
+    \item إذا كان $x = 5$ على البرنامج أن يطبع \textenglish{"Invalid: division by 0"}.
+    \item إذا كان $x$ أكبر من $5$ أو أصغر من $-5$ على البرنامج أن يطبع \textenglish{"Invalid: Negative square root"}.
+    \item في باقي الحالات (أي إذا كان $x$ بين $5$ و $-5$) ، على البرنامج أن يطبع قيمة $f(x)$.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+if (x == 5)
+    {
+        Console.WriteLine("Invalid: division by 0");
+    }
+else if (x > 5 || x < -5)
+    {
+        Console.WriteLine("Invalid: Negative square root");
+    }
+else
+    {
+        double fx = (Math.Pow(x,5) - 3) / Math.Sqrt(25 - Math.Pow(x,2));
+        Console.WriteLine(fx);
+    }
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{3cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
