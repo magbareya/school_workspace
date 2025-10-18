@@ -542,58 +542,6 @@ else
 \end{boxSolution}
 \fi
 
-
-\item
-اكتب برنامجًا يستقبل عدد الكيلوواط المستهلكة (عددًا صحيحًا موجبًا)، ويحسب الكلفة حسب التعرفة التالية:
-
-\begin{itemize}
-  \item حتى 100 كيلوواط: الكلفة $0.5$ شيكل لكل كيلوواط.
-  \item من 101 إلى 200 كيلوواط: الكلفة $0.7$ شيكل لكل كيلوواط.
-  \item أكثر من 200 كيلوواط: الكلفة 1 شيكل لكل كيلوواط.
-\end{itemize}
-
-على البرنامج أن يطبع المبلغ الإجمالي المستحق.
-مثال: إذا كان المدخل 150 كيلوواط، فالمبلغ الإجمالي هو $100 \cdot 0.5 + 50 \cdot 0.7 = 85$ شيكل.
-
-\ifwithsols
-\begin{boxSolution}
-تسعير تراكمي بالشرائح كما في المثال.
-\begin{english}
-\begin{minted}{csharp}
-int kwh = int.Parse(Console.ReadLine());
-double cost;
-if (kwh <= 100)
-    cost = kwh * 0.5;
-else if (kwh <= 200)
-    cost = 100 * 0.5 + (kwh - 100) * 0.7;
-else
-    cost = 100 * 0.5 + 100 * 0.7 + (kwh - 200) * 1.0;
-Console.WriteLine(cost);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\ifwithsols
-\begin{boxSolution}
-حسب المثال المعطى، التسعير يعتمد على الشريحة الكاملة (وليس تراكميًا):
-\begin{english}
-\begin{minted}{csharp}
-int kwh = int.Parse(Console.ReadLine());
-double cost;
-if (kwh <= 100)
-    cost = kwh * 0.5;
-else if (kwh <= 200)
-    cost = 100 * 0.5 + (kwh - 100) * 0.7;
-else
-    cost = 100 * 0.5 + 100 * 0.7 + (kwh - 200) * 1.0;
-Console.WriteLine(cost);
-\end{minted}
-\end{english}
-لمدخل \textenglish{150}: \(100\times 0.5 + 50\times 0.7 = 85\).
-\end{boxSolution}
-\fi
-
 \item
 اكتب برنامجًا يستقبل عمر الزائر (عددًا صحيحًا موجبًا)، ويحسب ثمن تذكرة الدخول حسب الفئات التالية:
 

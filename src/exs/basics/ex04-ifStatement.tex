@@ -14,10 +14,6 @@
 \begin{enumerate}
 \fi
 
-\item الدستور كاملًا
-\item ترتيب 3 ارقام من الكبير للصغير
-\item هل الرقم مكون من منزلة، أو منزلتين أو أكثر.
-\item if-else\_if-else
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة حرارة، ويطبع له "\textbf{الجو حار}" إذا كانت درجة الحرارة أكثر من 30 درجة.
@@ -109,8 +105,8 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 \fi
 
 \item
@@ -144,21 +140,160 @@ Same sign
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+
+int product = num1 * num2;
+if (product > 0)
+{
+    Console.WriteLine("Same sign");
+}
+else
+{
+    Console.WriteLine("Different signs");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+\fi
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحا، ويطبع له رسالة مناسبة عن العدد: هل الرقم مكون من منزلة، أو منزلتين، أو أكثر.
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter number:
+1234
+The number is made of more than 2 digits.
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter number:
+12
+The number is made of 2 digits
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[3]
+\begin{english}
+\begin{minted}{text}
+Enter number:
+1
+The number is made of one digit
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
 private static void Main(string[] args)
 {
-    Console.WriteLine("Enter first number:");
-    int num1 = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter second number:");
-    int num2 = int.Parse(Console.ReadLine());
-
-    int product = num1 * num2;
-    if (product > 0)
+    Console.WriteLine("Enter number:");
+    int num = int.Parse(Console.ReadLine());
+    if (n < 10)
     {
-        Console.WriteLine("Same sign");
+        Console.WriteLine("One digit");
+    }
+    else if (n < 100)
+    {
+        Console.WriteLine("Two digits");
     }
     else
     {
-        Console.WriteLine("Different signs");
+        Console.WriteLine("Many digits");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم علامة طالب، ويطبع له التقدير المناسب حسب العلامة:
+\begin{itemize}
+\item \texttt{A+} إذا كانت العلامة 95 أو أكثر
+\item \texttt{A} إذا كانت العلامة 90-94
+\item \texttt{A-} إذا كانت العلامة 85-89
+\item \texttt{B+} إذا كانت العلامة 80-84
+\item \texttt{B} إذا كانت العلامة 75-79
+\item \texttt{B-} إذا كانت العلامة 70-74
+\item \texttt{C} إذا كانت العلامة أقل من 70
+\end{itemize}%
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{csharp}
+Enter your grade:
+97
+A+
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{csharp}
+Enter your grade:
+82
+B+
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[3]
+\begin{english}
+\begin{minted}{csharp}
+Enter your grade:
+65
+C
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Enter your grade:");
+    int grade = int.Parse(Console.ReadLine());
+    if (grade >= 95)
+    {
+        Console.WriteLine("A+");
+    }
+    else if (grade >= 90)
+    {
+        Console.WriteLine("A");
+    }
+    else if (grade >= 85)
+    {
+        Console.WriteLine("A-");
+    }
+    else if (grade >= 80)
+    {
+        Console.WriteLine("B+");
+    }
+    else if (grade >= 75)
+    {
+        Console.WriteLine("B");
+    }
+    else if (grade >= 70)
+    {
+        Console.WriteLine("B-");
+    }
+    else
+    {
+        Console.WriteLine("C");
     }
 }
 \end{minted}
@@ -168,90 +303,59 @@ private static void Main(string[] args)
 \fi
 \fi
 
+\item اكتب برنامجًا يستقبل من المستخدم 3 أعداد صحيحة، ويطبعها مرتّبة من الصغير إلى الكبير.
 
-% \item
-% اكتب برنامجًا يستقبل من المستخدم علامة طالب، ويطبع له التقدير المناسب حسب العلامة:
-% \begin{itemize}
-% \item \texttt{A+} إذا كانت العلامة 95 أو أكثر
-% \item \texttt{A} إذا كانت العلامة 90-94
-% \item \texttt{A-} إذا كانت العلامة 85-89
-% \item \texttt{B+} إذا كانت العلامة 80-84
-% \item \texttt{B} إذا كانت العلامة 75-79
-% \item \texttt{B-} إذا كانت العلامة 70-74
-% \item \texttt{C} إذا كانت العلامة أقل من 70
-% \end{itemize}
-% \ifdetailed
-% \begin{boxExample}[1]
-% \begin{english}
-% \begin{minted}{csharp}
-% Enter your grade:
-% 97
-% A+
-% \end{minted}
-% \end{english}
-% \end{boxExample}
-% \begin{boxExample}[2]
-% \begin{english}
-% \begin{minted}{csharp}
-% Enter your grade:
-% 82
-% B+
-% \end{minted}
-% \end{english}
-% \end{boxExample}
-% \begin{boxExample}[3]
-% \begin{english}
-% \begin{minted}{csharp}
-% Enter your grade:
-% 65
-% C
-% \end{minted}
-% \end{english}
-% \end{boxExample}
-
-% \ifwithsols
-% \begin{boxSolution}
-% \begin{english}
-% \begin{minted}{csharp}
-% private static void Main(string[] args)
-% {
-%     Console.WriteLine("Enter your grade:");
-%     int grade = int.Parse(Console.ReadLine());
-%     if (grade >= 95)
-%     {
-%         Console.WriteLine("A+");
-%     }
-%     else if (grade >= 90)
-%     {
-%         Console.WriteLine("A");
-%     }
-%     else if (grade >= 85)
-%     {
-%         Console.WriteLine("A-");
-%     }
-%     else if (grade >= 80)
-%     {
-%         Console.WriteLine("B+");
-%     }
-%     else if (grade >= 75)
-%     {
-%         Console.WriteLine("B");
-%     }
-%     else if (grade >= 70)
-%     {
-%         Console.WriteLine("B-");
-%     }
-%     else
-%     {
-%         Console.WriteLine("C");
-%     }
-% }
-% \end{minted}
-% \end{english}
-% \end{boxSolution}
-% \clearpage
-% \fi
-% \fi
+\ifdetailed
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Enter three numbers:");
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    if(a > b && a > c)
+    {
+        if (b > c)
+        {
+        Console.WriteLine(c + "<" + b + "<" + a);
+        }
+        else
+        {
+            Console.WriteLine(b + "<" + c + "<" + a);
+        }
+    }
+    else if(b > a && b > c)
+    {
+        if (a > c)
+        {
+        Console.WriteLine(c + "<" + a + "<" + b);
+        }
+        else
+        {
+            Console.WriteLine(a + "<" + c + "<" + b);
+        }
+    }
+    else // c > a && c > b
+    {
+        if (a > b)
+        {
+        Console.WriteLine(b + "<" + a + "<" + c);
+        }
+        else
+        {
+            Console.WriteLine(a + "<" + b + "<" + c);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم عمر شخص ودرجة حرارة، ويطبع له "\textbf{يمكنك الخروج}" إذا كان عمره 18 أو أكثر ودرجة الحرارة أقل من 35.
@@ -345,8 +449,8 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 \fi
 
 \item
@@ -436,8 +540,8 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 \fi
 
 \item
@@ -526,8 +630,8 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 \fi
 
 \item
@@ -537,7 +641,7 @@ private static void Main(string[] args)
 \item إذا كان قط وعمره أقل من 12 شهر: "\textbf{قط صغير}"
 \item إذا كان كلب وعمره 12 شهر أو أكثر: "\textbf{كلب بالغ}"
 \item إذا كان كلب وعمره أقل من 12 شهر: "\textbf{كلب صغير}"
-\end{itemize}
+\end{itemize}%
 \ifdetailed
 \begin{boxExample}[1]
 \begin{english}
@@ -599,8 +703,8 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 \fi
 
 \item
@@ -608,12 +712,12 @@ private static void Main(string[] args)
 \begin{itemize}
 \item متوسط درجة الحرارة في الشتاء: 15 درجة
 \item متوسط درجة الحرارة في الصيف: 30 درجة
-\end{itemize}
+\end{itemize}%
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة والفصل (1 للشتاء، 2 للصيف)، ويطبع له رسالة مناسبة:
 \begin{itemize}
-\item إذا كانت درجة الحرارة أعلى من المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{درجة الحرارة أعلى من المعدّل في [اسم الفصل]}"
-\item إذا كانت درجة الحرارة أقل من أو تساوي المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{درجة الحرارة أقل من أو تساوي المعدّل في [اسم الفصل]}"
-\end{itemize}
+\item إذا كانت درجة الحرارة أعلى من المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{حار [اسم الفصل]}"
+\item إذا كانت درجة الحرارة أقل من أو تساوي المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{برد [اسم الفصل]}"
+\end{itemize}%
 \ifdetailed
 \begin{boxExample}[1]
 \begin{english}
@@ -622,7 +726,7 @@ Enter temperature:
 20
 Enter season (1=Winter, 2=Summer):
 1
-The temperature is higher than the average in Winter
+Hot Winter
 \end{minted}
 \end{english}
 \end{boxExample}
@@ -633,7 +737,7 @@ Enter temperature:
 25
 Enter season (1=Winter, 2=Summer):
 2
-The temperature is lower than or equal to the average in Summer
+Cold Summer
 \end{minted}
 \end{english}
 \end{boxExample}
@@ -653,24 +757,78 @@ private static void Main(string[] args)
     {
         if (temperature > 15)
         {
-            Console.WriteLine("The temperature is higher than the average in Winter");
+            Console.WriteLine("Hot Winter");
         }
         else
         {
-            Console.WriteLine("The temperature is lower than or equal to the average in Winter");
+            Console.WriteLine("Cold Winter");
         }
     }
     else
     {
         if (temperature > 30)
         {
-            Console.WriteLine("The temperature is higher than the average in Summer");
+            Console.WriteLine("Hot Summer");
         }
         else
         {
-            Console.WriteLine("The temperature is lower than or equal to the average in Summer");
+            Console.WriteLine("Cold Summer");
         }
     }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+\fi
+
+\item
+عند حل معادلة تربيعية من الصورة $ax^2 + bx + c = 0$
+نرمز لـ $\Delta = b^2 - 4ac$ عندها:
+\begin{itemize}
+    \item إذا كان $\Delta < 0$ فعندها لا يوجد حلول للمعادلة.
+    \item إذا كان $\Delta = 0$ فعندها يوجد حلّ واحد وهو:
+    \( x = \frac{-b}{2a} \)
+    \item إذا كان $\Delta > 0$ فعندها يوجد حلّان، وهما:
+    \[ x_1 = \frac{-b + \sqrt{b^2 - 4ac}}{2a} \qquad x_2 = \frac{-b - \sqrt{b^2 - 4ac}}{2a} \]
+\end{itemize}%
+
+ اكتب برنامجًا يستقبل معاملات المعادلة التربيعية $a,b,c$ ويحسب حلول المعادلة ويطبعها مع رسالة مناسبة.
+
+ \ifdetailed
+ \begin{boxExample}[1]
+ عند استقبال المعاملات: $1, -5, 6$ يطبع: \\ "\textenglish{Two solutions: x1 = 2, x2 = 3}"
+ \end{boxExample}
+ \begin{boxExample}[2]
+ عند استقبال المعاملات: $1, 2, 1$ يطبع: \\ "\textenglish{One solution: x = -1}"
+ \end{boxExample}
+ \begin{boxExample}[3]
+ عند استقبال المعاملات: $1, 0, 1$ يطبع: \\ "\textenglish{No solution}"
+ \end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+double c = double.Parse(Console.ReadLine());
+double delta = Math.Pow(b, 2) - 4 * a * c;
+if (delta < 0)
+{
+    Console.WriteLine("No solution");
+}
+else if (delta == 0)
+{
+    double x = -b / (2 * a);
+    Console.WriteLine("One solution: x = " + x);
+}
+else
+{
+    double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+    double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+    Console.WriteLine($"Two solutions: x1 = {x1}, x2 = {x2});
 }
 \end{minted}
 \end{english}
@@ -679,9 +837,45 @@ private static void Main(string[] args)
 \fi
 \fi
 
-\end{enumerate}
 
-\vspace{3cm}
+\item
+اكتب برنامجًا يستقبل عدد الكيلوواط المستهلكة (عددًا صحيحًا موجبًا)، ويحسب الكلفة حسب التعرفة التالية:
+
+\begin{itemize}
+  \item حتى 100 كيلوواط: الكلفة $0.5$ شيكل لكل كيلوواط.
+  \item من 101 إلى 200 كيلوواط: الكلفة $0.7$ شيكل لكل كيلوواط.
+  \item أكثر من 200 كيلوواط: الكلفة 1 شيكل لكل كيلوواط.
+\end{itemize}
+
+على البرنامج أن يطبع المبلغ الإجمالي المستحق.
+\ifdetailed
+ \begin{boxExample}[1]
+ إذا كان المدخل 150 كيلوواط، فالمبلغ الإجمالي هو \\
+$100 \cdot 0.5 + 50 \cdot 0.7 = 85$ شيكل.
+ \end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int kwh = int.Parse(Console.ReadLine());
+double cost;
+if (kwh <= 100)
+    cost = kwh * 0.5;
+else if (kwh <= 200)
+    cost = 100 * 0.5 + (kwh - 100) * 0.7;
+else
+    cost = 100 * 0.5 + 100 * 0.7 + (kwh - 200) * 1.0;
+Console.WriteLine(cost);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\fi
+
+\end{enumerate}%
+
+\vspace{1cm}
 \begin{flushleft}
 أرجو لكم وقتًا ممتعًا.
 
