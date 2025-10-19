@@ -1,4 +1,4 @@
-\documentclass[12pt, twoside]{article}
+﻿\documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
 \title{ورقة تمرن 4 للصف العاشر 10 $\mathtt{if\ Statement}$}
@@ -41,15 +41,13 @@ Enter temperature:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+if (temperature > 30)
 {
-    Console.WriteLine("Enter temperature:");
-    int temperature = int.Parse(Console.ReadLine());
-    if (temperature > 30)
-    {
-        Console.WriteLine("It's hot");
-    }
+    Console.WriteLine("It's hot");
 }
+
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -87,20 +85,17 @@ The second number is larger
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+if (num1 > num2)
 {
-    Console.WriteLine("Enter first number:");
-    int num1 = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter second number:");
-    int num2 = int.Parse(Console.ReadLine());
-    if (num1 > num2)
-    {
-        Console.WriteLine("The first number is larger");
-    }
-    else
-    {
-        Console.WriteLine("The second number is larger");
-    }
+    Console.WriteLine("The first number is larger");
+}
+else
+{
+    Console.WriteLine("The second number is larger");
 }
 \end{minted}
 \end{english}
@@ -195,22 +190,19 @@ The number is made of one digit
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
+Console.WriteLine("Enter number:");
+int num = int.Parse(Console.ReadLine());
+if (n < 10)
 {
-    Console.WriteLine("Enter number:");
-    int num = int.Parse(Console.ReadLine());
-    if (n < 10)
-    {
-        Console.WriteLine("One digit");
-    }
-    else if (n < 100)
-    {
-        Console.WriteLine("Two digits");
-    }
-    else
-    {
-        Console.WriteLine("Many digits");
-    }
+    Console.WriteLine("One digit");
+}
+else if (n < 100)
+{
+    Console.WriteLine("Two digits");
+}
+else
+{
+    Console.WriteLine("Many digits");
 }
 \end{minted}
 \end{english}
@@ -263,38 +255,35 @@ C
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
+Console.WriteLine("Enter your grade:");
+int grade = int.Parse(Console.ReadLine());
+if (grade >= 95)
 {
-    Console.WriteLine("Enter your grade:");
-    int grade = int.Parse(Console.ReadLine());
-    if (grade >= 95)
-    {
-        Console.WriteLine("A+");
-    }
-    else if (grade >= 90)
-    {
-        Console.WriteLine("A");
-    }
-    else if (grade >= 85)
-    {
-        Console.WriteLine("A-");
-    }
-    else if (grade >= 80)
-    {
-        Console.WriteLine("B+");
-    }
-    else if (grade >= 75)
-    {
-        Console.WriteLine("B");
-    }
-    else if (grade >= 70)
-    {
-        Console.WriteLine("B-");
-    }
-    else
-    {
-        Console.WriteLine("C");
-    }
+    Console.WriteLine("A+");
+}
+else if (grade >= 90)
+{
+    Console.WriteLine("A");
+}
+else if (grade >= 85)
+{
+    Console.WriteLine("A-");
+}
+else if (grade >= 80)
+{
+    Console.WriteLine("B+");
+}
+else if (grade >= 75)
+{
+    Console.WriteLine("B");
+}
+else if (grade >= 70)
+{
+    Console.WriteLine("B-");
+}
+else
+{
+    Console.WriteLine("C");
 }
 \end{minted}
 \end{english}
@@ -310,44 +299,40 @@ private static void Main(string[] args)
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+if(a > b && a > c)
 {
-    Console.WriteLine("Enter three numbers:");
-    int a = int.Parse(Console.ReadLine());
-    int b = int.Parse(Console.ReadLine());
-    int c = int.Parse(Console.ReadLine());
-    if(a > b && a > c)
+    if (b > c)
     {
-        if (b > c)
-        {
         Console.WriteLine(c + "<" + b + "<" + a);
-        }
-        else
-        {
-            Console.WriteLine(b + "<" + c + "<" + a);
-        }
     }
-    else if(b > a && b > c)
+    else
     {
-        if (a > c)
-        {
-        Console.WriteLine(c + "<" + a + "<" + b);
-        }
-        else
-        {
-            Console.WriteLine(a + "<" + c + "<" + b);
-        }
+        Console.WriteLine(b + "<" + c + "<" + a);
     }
-    else // c > a && c > b
+}
+else if(b > a && b > c)
+{
+    if (a > c)
     {
-        if (a > b)
-        {
-        Console.WriteLine(b + "<" + a + "<" + c);
-        }
-        else
-        {
-            Console.WriteLine(a + "<" + b + "<" + c);
-        }
+    	Console.WriteLine(c + "<" + a + "<" + b);
+    }
+    else
+    {
+        Console.WriteLine(a + "<" + c + "<" + b);
+    }
+}
+else // c > a && c > b
+{
+    if (a > b)
+    {
+    	Console.WriteLine(b + "<" + a + "<" + c);
+    }
+    else
+    {
+        Console.WriteLine(a + "<" + b + "<" + c);
     }
 }
 \end{minted}
@@ -386,17 +371,14 @@ Enter temperature:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter your age:");
-    int age = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter temperature:");
-    int temperature = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter your age:");
+int age = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
 
-    if (age >= 18 && temperature < 35)
-    {
-        Console.WriteLine("You can go out");
-    }
+if (age >= 18 && temperature < 35)
+{
+    Console.WriteLine("You can go out");
 }
 \end{minted}
 \end{english}
@@ -434,17 +416,14 @@ Enter second number:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter first number:");
-    int num1 = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter second number:");
-    int num2 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
 
-    if (num1 > 0 && num2 > 0)
-    {
-        Console.WriteLine("Both numbers are positive");
-    }
+if (num1 > 0 && num2 > 0)
+{
+    Console.WriteLine("Both numbers are positive");
 }
 \end{minted}
 \end{english}
@@ -478,15 +457,12 @@ Enter temperature:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter temperature:");
-    int temperature = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
 
-    if (temperature < 10 || temperature > 40)
-    {
-        Console.WriteLine("Weather is not suitable");
-    }
+if (temperature < 10 || temperature > 40)
+{
+    Console.WriteLine("Weather is not suitable");
 }
 \end{minted}
 \end{english}
@@ -525,17 +501,14 @@ Enjoyable day
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter day type (1=Work, 2=Holiday):");
-    int dayType = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter temperature:");
-    int temperature = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter day type (1=Work, 2=Holiday):");
+int dayType = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
 
-    if (dayType == 2 || (temperature >= 20 && temperature <= 25))
-    {
-        Console.WriteLine("Enjoyable day");
-    }
+if (dayType == 2 || (temperature >= 20 && temperature <= 25))
+{
+    Console.WriteLine("Enjoyable day");
 }
 \end{minted}
 \end{english}
@@ -569,15 +542,12 @@ Enter a number:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter a number:");
-    int number = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter a number:");
+int number = int.Parse(Console.ReadLine());
 
-    if (!(number == 0))
-    {
-        Console.WriteLine("The number is not zero");
-    }
+if (number != 0)
+{
+    Console.WriteLine("The number is not zero");
 }
 \end{minted}
 \end{english}
@@ -615,17 +585,14 @@ Enter second number:
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter first number:");
-    int num1 = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter second number:");
-    int num2 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
 
-    if (!(num1 == num2))
-    {
-        Console.WriteLine("The numbers are not equal");
-    }
+if (num1 != num2)
+{
+    Console.WriteLine("The numbers are not equal");
 }
 \end{minted}
 \end{english}
@@ -670,34 +637,31 @@ Young dog
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter animal type (1=Cat, 2=Dog):");
-    int animalType = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter age in months:");
-    int age = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter animal type (1=Cat, 2=Dog):");
+int animalType = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter age in months:");
+int age = int.Parse(Console.ReadLine());
 
-    if (animalType == 1)
+if (animalType == 1)
+{
+    if (age >= 12)
     {
-        if (age >= 12)
-        {
-            Console.WriteLine("Adult cat");
-        }
-        else
-        {
-            Console.WriteLine("Young cat");
-        }
+        Console.WriteLine("Adult cat");
     }
     else
     {
-        if (age >= 12)
-        {
-            Console.WriteLine("Adult dog");
-        }
-        else
-        {
-            Console.WriteLine("Young dog");
-        }
+        Console.WriteLine("Young cat");
+    }
+}
+else
+{
+    if (age >= 12)
+    {
+        Console.WriteLine("Adult dog");
+    }
+    else
+    {
+        Console.WriteLine("Young dog");
     }
 }
 \end{minted}
@@ -746,34 +710,31 @@ Cold Summer
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter temperature:");
-    int temperature = int.Parse(Console.ReadLine());
-    Console.WriteLine("Enter season (1=Winter, 2=Summer):");
-    int season = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter season (1=Winter, 2=Summer):");
+int season = int.Parse(Console.ReadLine());
 
-    if (season == 1)
+if (season == 1)
+{
+    if (temperature > 15)
     {
-        if (temperature > 15)
-        {
-            Console.WriteLine("Hot Winter");
-        }
-        else
-        {
-            Console.WriteLine("Cold Winter");
-        }
+        Console.WriteLine("Hot Winter");
     }
     else
     {
-        if (temperature > 30)
-        {
-            Console.WriteLine("Hot Summer");
-        }
-        else
-        {
-            Console.WriteLine("Cold Summer");
-        }
+        Console.WriteLine("Cold Winter");
+    }
+}
+else
+{
+    if (temperature > 30)
+    {
+        Console.WriteLine("Hot Summer");
+    }
+    else
+    {
+        Console.WriteLine("Cold Summer");
     }
 }
 \end{minted}

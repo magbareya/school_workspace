@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+﻿\documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
 \title{وظيفة بيتية 1 للصف العاشر 10}
@@ -35,12 +35,9 @@ In 2030, you will be 25 years old.
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("What is your birth year?");
-    int birthYear = int.Parse(Console.ReadLine());
-    Console.WriteLine($"In 2030, you will be {2030 - birthYear} years old.");
-}
+Console.WriteLine("What is your birth year?");
+int birthYear = int.Parse(Console.ReadLine());
+Console.WriteLine($"In 2030, you will be {2030 - birthYear} years old.");
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -70,12 +67,9 @@ Price after adding tax is: 35.4
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter the price:");
-    double price = double.Parse(Console.ReadLine());
-    Console.WriteLine($"Price after adding tax is: {price + price * 0.18}");
-}
+Console.WriteLine("Enter the price:");
+double price = double.Parse(Console.ReadLine());
+Console.WriteLine($"Price after adding tax is: {price + price * 0.18}");
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -110,19 +104,16 @@ Your annual salary after tax and bonus is: 105000
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-private static void Main(string[] args)
-{
-    Console.WriteLine("Enter your monthly salary:");
-    double salary = double.Parse(Console.ReadLine());
-    salary = salary * 12;
-    Console.WriteLine("Enter the annual tax:");
-    double tax = double.Parse(Console.ReadLine());
-    salary = salary - tax;
-    Console.WriteLine("Enter the annual bonus percentage (%):");
-    double bonus = double.Parse(Console.ReadLine());
-    salary = salary + salary * bonus / 100;
-    Console.WriteLine($"Your annual salary after tax and bonus is: {salary}");
-}
+Console.WriteLine("Enter your monthly salary:");
+double salary = double.Parse(Console.ReadLine());
+salary = salary * 12;
+Console.WriteLine("Enter the annual tax:");
+double tax = double.Parse(Console.ReadLine());
+salary = salary - tax;
+Console.WriteLine("Enter the annual bonus percentage (%):");
+double bonus = double.Parse(Console.ReadLine());
+salary = salary + salary * bonus / 100;
+Console.WriteLine($"Your annual salary after tax and bonus is: {salary}");
 \end{minted}
 \end{english}
 \end{boxSolution}

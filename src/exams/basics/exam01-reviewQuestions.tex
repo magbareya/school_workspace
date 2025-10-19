@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+﻿\documentclass[12pt]{article}
 \input{../../../scripts/tex_preamble.tex}
 
 \begin{document}
@@ -11,7 +11,7 @@
 \begin{enumerate}[itemsep=2em]
 
 \item
-	اكتب مقطع برنامج يستقبل ثلاثة أعداد صحيحة، على البرنامج أن يحسب ويطبع معدل هذه العلامات.\\
+       اكتب مقطع برنامج يستقبل ثلاثة أعداد صحيحة، على البرنامج أن يحسب ويطبع معدل هذه العلامات.\\
      \begin{boxExample}
      إذا كانت الأعداد الثلاثة هي 7, 15, 6 فالمعدل هو 9.333.
      \end{boxExample}
@@ -29,10 +29,11 @@ Console.WriteLine($"Average = {avg}");
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item
-	اكتب مقطع برنامج يستقبل طول وعرض مستطيل ما، على البرنامج أن يحسب ويطبع مساحة ومحيط المستطيل. \\
+          اكتب مقطع برنامج يستقبل طول وعرض مستطيل ما، على البرنامج أن يحسب ويطبع مساحة ومحيط المستطيل. \\
     \begin{boxExample}
     إذا كان الطول يساوي 6 والعرض يساوي 4 فالمساحة هي $6 \cdot 4 = 24$، والمحيط هو $ (6 + 4) \cdot 2 = 20$.
     \end{boxExample}
@@ -56,18 +57,18 @@ Console.WriteLine($"Perimeter = {perimeter}");
 \fi
 
 \item
-	حدّد صح أو خطأ مع الشرح لكل أمر من الأوامر التالية:
+       حدّد صح أو خطأ مع الشرح لكل أمر من الأوامر التالية:
 \begin{english}
     \begin{enumerate}
-	\item \texttt{int x = 7.0;}     \underline{\hspace{7cm}}
-	\item \texttt{double y = 2.0, c = 4;}   \underline{\hspace{7cm}}
-	\item \texttt{string s1 = hi friends;}  \underline{\hspace{7cm}}
-	\item \texttt{int x1 = 11;}  \underline{\hspace{7cm}}
-    \item \texttt{double num = x1 – 4;}   \underline{\hspace{7cm}}
-	\item \texttt{double h = 3.17;}  \underline{\hspace{7cm}}
-    \item \texttt{int f = h;}  \underline{\hspace{7cm}}
-	\item \texttt{char ch1 = 'L';}  \underline{\hspace{7cm}}
-	\item \texttt{char ch2 = '?2s';}   \underline{\hspace{7cm}}
+    \item \textenglish{int x = 7.0;}     \underline{\hspace{7cm}}
+    \item \textenglish{double y = 2.0, c = 4;}   \underline{\hspace{7cm}}
+    \item \textenglish{string s1 = hi friends;}  \underline{\hspace{7cm}}
+    \item \textenglish{int x1 = 11;}  \underline{\hspace{7cm}}
+    \item \textenglish{double num = x1 - 4;}   \underline{\hspace{7cm}}
+    \item \textenglish{double h = 3.17;}  \underline{\hspace{7cm}}
+    \item \textenglish{int f = h;}  \underline{\hspace{7cm}}
+    \item \textenglish{char ch1 = 'L';}  \underline{\hspace{7cm}}
+    \item \textenglish{char ch2 = '?2s';}   \underline{\hspace{7cm}}
 
 \end{enumerate}
 \end{english}
@@ -75,22 +76,22 @@ Console.WriteLine($"Perimeter = {perimeter}");
 \ifwithsols
 \begin{boxSolution}
 \begin{itemize}
-  \item \texttt{int x = 7.0;} خطأ — \texttt{7.0} عدد عشري لا يمكن إسناده إلى \texttt{int} دون تحويل صريح.
-  \item \texttt{double y = 2.0, c = 4;} صحيح — كلاهما من النوع \texttt{double} (\texttt{4} يُحوَّل إلى \texttt{4.0}).
-  \item \texttt{string s1 = hi friends;} خطأ — يجب إحاطة النص بعلامتي اقتباس: \texttt{"hi friends"}.
-  \item \texttt{int x1 = 11;} صحيح.
-  \item \texttt{double num = x1 – 4;} صحيح إذا كان الرمز ناقص عادي \texttt{-} (أحيانًا يُكتب خطأً كشرطة طويلة). النتيجة \texttt{double}.
-  \item \texttt{double h = 3.17;} صحيح.
-  \item \texttt{int f = h;} خطأ — لا يمكن إسناد \texttt{double} إلى \texttt{int} دون تحويل صريح.
-  \item \texttt{char ch1 = 'L';} صحيح.
-  \item \texttt{char ch2 = '?2s';} خطأ — الحرف الواحد فقط داخل \texttt{'}\,\texttt{'}. يجب استخدام \texttt{"?2s"} كسلسلة.
+  \item \textenglish{int x = 7.0;} خطأ — \textenglish{7.0} عدد عشري لا يمكن إسناده إلى \textenglish{int} دون تحويل صريح.
+  \item \textenglish{double y = 2.0, c = 4;} صحيح — كلاهما من النوع \textenglish{double} (\textenglish{4} يُحوَّل إلى \textenglish{4.0}).
+  \item \textenglish{string s1 = hi friends;} خطأ — يجب إحاطة النص بعلامتي اقتباس: \textenglish{"hi friends"}.
+  \item \textenglish{int x1 = 11;} صحيح.
+  \item \textenglish{double num = x1 - 4;} صحيح.
+  \item \textenglish{double h = 3.17;} صحيح.
+  \item \textenglish{int f = h;} خطأ — لا يمكن إسناد \textenglish{double} إلى \textenglish{int} دون تحويل صريح.
+  \item \textenglish{char ch1 = 'L';} صحيح.
+  \item \textenglish{char ch2 = '?2s';} خطأ — الحرف الواحد فقط داخل \textenglish{'}\,\textenglish{'}. \textenglish{"?2s"} هو من نمط \textenglish{string}.
 \end{itemize}
 \end{boxSolution}
 \fi
 
 \clearpage
 \item
-	اكتب مقطع برنامج يستقبل كمُدخل عددين صحيحين، على البرنامج أن يحسب ويطبع حاصل جمع وحاصل طرح وحاصل ضرب وحاصل قسمة وحاصل باقي قسمة العددين، كل نتيجة بسطر مختلف كما في المثال أدناه.
+    اكتب مقطع برنامج يستقبل كمُدخل عددين صحيحين، على البرنامج أن يحسب ويطبع حاصل جمع وحاصل طرح وحاصل ضرب وحاصل قسمة وحاصل باقي قسمة العددين، كل نتيجة بسطر مختلف كما في المثال أدناه.
 \begin{boxExample}
     إذا كان العددان هما 2, 9 البرنامج يطبع بالشكل التالي:
     \begin{align*}
@@ -122,8 +123,9 @@ Console.WriteLine($"{a} % {b} = {a % b}");
 \fi
 
 \item
-	معطى البرنامج التالي:
-\begin{english}
+    معطى البرنامج التالي:
+\begin{boxCode}
+    \begin{english}
 \begin{minted}{csharp}
 public class Program
 {
@@ -141,6 +143,7 @@ public class Program
 }
 \end{minted}
 \end{english}
+\end{boxCode}
 \begin{enumerate}
     \item ماذا سيطبع البرنامج إذا أدخلنا إليه القيم \(x = 3\) و \(y = 2\)?
     \item ما هي وظيفة البرنامج أعلاه؟
@@ -180,10 +183,11 @@ Console.WriteLine($"Total income = {income} NIS");
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
     \item
-	في محل لبيع الأجهزة الكهربائية يُدفع مبلغ الشراء بالطريقة التالية: \\
+    في محل لبيع الأجهزة الكهربائية يُدفع مبلغ الشراء بالطريقة التالية: \\
      نصف المبلغ نقدي والنصف الآخر يتم تقسيمه على خمسة أقساط. \\
       اكتب مقطع برنامج يستقبل الثمن الكلي للأجهزة الكهربائية التي اشتراها زبون ما، على البرنامج أن يحسب ويطبع المبلغ المدفوع نقدا وقيمة القسط الواحد.  \\
     \begin{boxExample}
@@ -207,7 +211,7 @@ Console.WriteLine($"Each installment = {installment}");
 \fi
 
     \item
-	اكتب مقطع برنامج يستقبل علامة الفصل الأول وعلامة الفصل الثاني وعلامة الفصل الثالث بموضوع علم الحاسوب، على البرنامج أن يحسب ويطبع معدل العلامات بالطريقة التالية:
+    اكتب مقطع برنامج يستقبل علامة الفصل الأول وعلامة الفصل الثاني وعلامة الفصل الثالث بموضوع علم الحاسوب، على البرنامج أن يحسب ويطبع معدل العلامات بالطريقة التالية:
      \%30 من علامة الفصل الأول، \%25 من علامة الفصل الثاني و \%45 من علامة الفصل الثالث. \\
      \begin{boxExample}
         إذا كانت علامة الفصل الأول 82 وعلامة الفصل الثاني 77 وعلامة الفصل الثالث 92, فالمعدل يكون: $0.3 \cdot 82 + 0.25 \cdot 77 + 0.45 \cdot 92 = 85.25$.
@@ -228,10 +232,11 @@ Console.WriteLine($"Weighted average = {avg}");
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
      \item
-	يمكن حساب مساحة مثلث أضلاعه a, b, c حسب القانون التالي:
+    يمكن حساب مساحة مثلث أضلاعه a, b, c حسب القانون التالي:
     $$S_\Delta = \sqrt{p (p-a) (p-b) (p-c)}$$
     بحيث أنّ: $p=\frac{a+b+c}{2}$ \\
 اكتب مقطع برنامج يستقبل كمدخل ثلاثة أضلاع مثلث ما، على البرنامج أن يطبع مساحته حسب القانون أعلاه.
@@ -256,7 +261,7 @@ Console.WriteLine($"Area = {area}");
 \fi
 
 \item
-	اكتب مقطع برنامج يستقبل عددًا رباعي المنزلة، على البرنامج أن يطبع حاصل جمع أول خانة مع آخر خانة. \\
+    اكتب مقطع برنامج يستقبل عددًا رباعي المنزلة، على البرنامج أن يطبع حاصل جمع أول خانة مع آخر خانة. \\
     \begin{boxExample}
         بالنسبة للعدد 6321 يطبع: $6 + 1 = 7$.
     \end{boxExample}
@@ -276,7 +281,7 @@ Console.WriteLine($"{first} + {last} = {first + last}");
 \fi
 
     \item
-	اكتب مقطع برنامج يستقبل عددين صحيحين وموجبين ثنائيا المنزلة، على البرنامج أن يطبع حاصل ضرب خانة الآحاد من العدد الأول بخانة العشرات من العدد الثاني. \\
+    اكتب مقطع برنامج يستقبل عددين صحيحين وموجبين ثنائيا المنزلة، على البرنامج أن يطبع حاصل ضرب خانة الآحاد من العدد الأول بخانة العشرات من العدد الثاني. \\
     \begin{boxExample}
         إذا كان العدد الأول 24، والعدد الثاني 87، فعلى البرنامج أن يطبع 32، لأنّ $4 \cdot 8 = 32$.
     \end{boxExample}
@@ -298,7 +303,7 @@ Console.WriteLine(onesFirst * tensSecond);
 \fi
 
 \item
-	اكتب مقطع برنامج يستقبل عددين ثلاثيي المنزلة، على البرنامج أن يطبع حاصل جمع تكعيب خانة العشرات بالعدد الاول مع تكعيب خانة العشرات بالعدد الثاني. \\
+    اكتب مقطع برنامج يستقبل عددين ثلاثيي المنزلة، على البرنامج أن يطبع حاصل جمع تكعيب خانة العشرات بالعدد الاول مع تكعيب خانة العشرات بالعدد الثاني. \\
     \begin{boxExample}
     بالنسبة للعددين 176 و 420 البرنامج يطبع: $7^3 + 2^3 = 351$.
     \end{boxExample}
@@ -320,7 +325,7 @@ Console.WriteLine(sum);
 \fi
 
     \item
-	اكتب مقطع برنامج يستقبل عددًا رباعي المنزلة، على البرنامج أن يقسّم العدد الى عددين ثنائيي المنزلة: عدد مؤلف من خانتي الآحاد والعشرات وعدد مؤلف من خانتي المئات والآلاف. \\
+    اكتب مقطع برنامج يستقبل عددًا رباعي المنزلة، على البرنامج أن يقسّم العدد الى عددين ثنائيي المنزلة: عدد مؤلف من خانتي الآحاد والعشرات وعدد مؤلف من خانتي المئات والآلاف. \\
     البرنامج يطبع حاصل طرح العدد الصغير من العدد الكبير. \\
     \begin{boxExample}
         بالنسبة للعدد 6781 العددان هما 81 و 67 والبرنامج يطبع: $81 - 67 = 14$.
@@ -344,7 +349,7 @@ Console.WriteLine(big - small);
 
 \clearpage
     \item
-	في مصنع لإنتاج حبات الشوكولاتة يعبئون كل 30 حبة بعلبة. \\
+    في مصنع لإنتاج حبات الشوكولاتة يعبئون كل 30 حبة بعلبة. \\
     اكتب مقطع برنامج يستقبل عدد حبات الشوكولاتة التي أنتجها المصنع في أحد الايام، على البرنامج أن يطبع عدد العُلب التي ملأها المصنع ذلك اليوم، وأيضًا يطبع عدد حبّات الشوكولاتة التي بقيت ولم تكفِ لملء علبة إضافية. \\
     \begin{boxExample}
         بالنسبة لـ 3070 حبة، فإنّ المصنع ملأ 102 عُلب كاملة، وبقيت 10 حبّات لم تُملأ لأنّها لم تكفِ لعلبة إضافية.
