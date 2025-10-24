@@ -1,0 +1,290 @@
+﻿\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 5 للصف العاشر 10 - عمليات خارجية}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
+\begin{enumerate}
+\fi
+
+
+
+\begin{boxAttention}
+عندما يٌطلب "عملية خارجية \textbf{تستقبل}" يجب ان يكون المستخدم يدخل قيمة للمتغير. أي عليك استعمال \texttt{Console.ReadLine()}. \\
+
+
+أما عندما يُطلب منك "عملية خارجية \textbf{تتلقى}" فهذا يعني أنّها تتلقى المطلوب كبارمترات.
+\end{boxAttention}
+
+\item اكتب عملية خارجية \textbf{تستقبل} اسم المستخدم \textbf{وتطبع} اسمه.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintNameReceive()
+{
+    string name = Console.ReadLine();
+    Console.WriteLine(name);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تستقبل} اسم المستخدم \textbf{وتعيد} اسمه.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static string ReadNameReturn()
+{
+    string name = Console.ReadLine();
+    return name;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} عددا صحيحًا \textbf{وتطبع} تربيعه
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintSquare(int n)
+{
+    int sq = n * n;
+    Console.WriteLine(sq);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} عددا صحيحًا \textbf{وتعيد} تربيعه
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int GetSquare(int n)
+{
+    return n * n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} معدلهما
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double AverageTwo(double a, double b)
+{
+    return (a + b) / 2.0;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double GetAverage(double a, double b)
+{
+    return (a + b) / 2.0;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} معدلهما
+\item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} \textenglish{true} إذا كانا متساويين.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreEqual(double a, double b)
+{
+    return a == b;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} عددين صحيحين \textbf{وتعيد} \textenglish{true} إذا كان العدد الأول يقسم على الثاني بدون باقٍ.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool Divides(int a, int b)
+{
+    if (a == 0) return false;
+    return (b % a) == 0;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} ثلاثة أعداد صحيحة \textbf{وتعيد} العدد الأكبر بين الثلاثة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int MaxOfThree(int a, int b, int c)
+{
+    return Math.Max(a, Math.Max(b, c));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية خارجية \textbf{تتلقى} ثلاثة أعداد صحيحة \textbf{وتعيد} العدد الأصغر بين الثلاثة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int MinOfThree(int a, int b, int c)
+{
+    return Math.Min(a, Math.Min(b, c));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+
+\clearpage
+
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{AppendDigit} تتلقى عددين صحيحين. \\
+    العملية تلصق العدد الثاني بالعدد الأوّل وتعيد النتيجة. \\
+    \textbf{مثال:} إذا تلقت العملية العددين: $12$ والعدد $5$ فإنّها تعيد: $125$.
+    \item اكتب برنامجًا يستقبل من المستخدم 4 أرقام، كل واحد من خانة واحدة، ويكوّن له رقمًا من أربعة منازل ويطبعه. \\
+    الرقم الأول الذي يدخله المستخدم تكون خانة عشرات الآلاف، والرقم الأخير يكون الآحاد. \\
+    \textbf{مثال:} إذا أدخل المستخدم الأرقام $4,2,1,5$ فعلى البرنامج أن يطبع $4215$. \\
+    عليك استخدام العملية التي كتبتها في البند السابق. \\
+    لا حاجة للتحقق من صحة المدخلات.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int AppendDigit(int n, int d)
+{
+    return n * 10 + d;
+}
+
+// Reading four one-digit numbers and building the final number
+int d1 = int.Parse(Console.ReadLine());
+int d2 = int.Parse(Console.ReadLine());
+int d3 = int.Parse(Console.ReadLine());
+int d4 = int.Parse(Console.ReadLine());
+int number = AppendDigit(AppendDigit(AppendDigit(d1, d2), d3), d4);
+Console.WriteLine(number);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\end{enumerate}
+
+\clearpage
+\item
+\begin{center}
+    \includegraphics[width=1.1\textwidth]{../../../images/basics_functions_bagrut_question.png}
+\end{center}
+
+
+% قرّر مجلس البلدية في مدينة معيّنة أن يمنح سكان المدينة تخفيضات من مدفوعات مختلفة حسب المعايير التالية:
+% \begin{itemize}
+%     \item الساكن في المدينة الذي عمره 70 فأصعد، يستحق تخفيضًا من الدفع للأرونا.
+%     \item الساكن في المدينة الذي لديه 4 أولاد فأصعد، يستحق تخفيضًا من الدفع لرياض الأطفال.
+%     \item الساكن في المدينة الذي مكان عمله في المدينة، يستحق تخفيضًا من الدفع مقابل صفّ (ركن) السيارة في المدينة.
+% \end{itemize}
+
+% المعلومات عن مدى استحقاق هذه التخفيضات مُمثّلة بواسطة عدد مكوَّن من ثلاثة أرقام، مركّب من الرقمين 1 و 2 فقط.
+% الرقم 1 يشير إلى استحقاق التخفيض، والرقم 2 يشير إلى عدم استحقاق التخفيض.
+
+% \begin{itemize}
+%     \item الرقم الأوّل من اليسار (رقم المئات) يشير إلى الاستحقاق أو عدم الاستحقاق للتخفيض من الدفع للأرونا.
+%     \item الرقم الأوسط (رقم العشرات) يشير إلى الاستحقاق أو عدم الاستحقاق للتخفيض من الدفع لرياض الأطفال.
+%     \item الرقم الأخير (رقم الآحاد) يشير إلى الاستحقاق أو عدم الاستحقاق للتخفيض من الدفع لصفّ السيارة في المدينة.
+% \end{itemize}
+
+% مثال: الرقم $122$ يشير إلى الاستحقاق للتخفيض في الدفع للأرونا، وعدم الاستحقاق للتخفيض في الدفع لرياض الأطفال وفي الدفع لصفّ السيارة.
+
+% اكتبوا عملية خارجية باسم \textenglish{Discounts} بلغة \textenglish{C\#} تتلقّى ثلاثة متغيّرات:
+% \begin{itemize}
+%     \item \textenglish{age} وهو عدد صحيح يشير إلى عمر الساكن في المدينة،
+%     \item \textenglish{num} وهو عدد صحيح يشير إلى عدد الأولاد للساكن،
+%     \item \textenglish{city} وهو قيمة بوليانية \textenglish{(true/false)} تشير إلى ما إذا كان مكان عمل الساكن هو في المدينة أم لا.
+% \end{itemize}
+
+% تُعيد العملية عددًا صحيحًا مكوَّنًا من ثلاثة أرقام يعبّر عن استحقاق الساكن للتخفيضات أعلاه.
+% \ifdetailed
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{text}
+% Input:
+% age = 75, num = 2, city = false -> 122
+% age = 30, num = 5, city = true  -> 211
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \fi
+
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int Discounts(int age, int num, bool city)
+{
+    int hundreds = (age >= 70) ? 1 : 2;   // Arnona
+    int tens     = (num >= 4)  ? 1 : 2;   // Kindergarten
+    int ones     = (city)      ? 1 : 2;   // Parking
+    return hundreds * 100 + tens * 10 + ones;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+
+\end{enumerate}%
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
