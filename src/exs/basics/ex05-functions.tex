@@ -33,6 +33,10 @@ public static void PrintNameReceive()
     string name = Console.ReadLine();
     Console.WriteLine(name);
 }
+public static void Main()
+{
+    PrintNameReceive();
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -48,6 +52,11 @@ public static string ReadNameReturn()
 {
     string name = Console.ReadLine();
     return name;
+}
+public static void Main()
+{
+    string name = ReadNameReturn();
+    Console.WriteLine(name);
 }
 \end{minted}
 \end{english}
@@ -65,6 +74,11 @@ public static void PrintSquare(int n)
     int sq = n * n;
     Console.WriteLine(sq);
 }
+public static void Main()
+{
+    int n = int.Parse(Console.ReadLine());
+    PrintSquare(n);
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -80,11 +94,36 @@ public static int GetSquare(int n)
 {
     return n * n;
 }
+public static void Main()
+{
+    int n = int.Parse(Console.ReadLine());
+    Console.WriteLine(GetSquare(n));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
 \fi
 
+\item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتطبع} معدلهما
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void AverageTwo(double a, double b)
+{
+    double avg = (a + b) / 2.0;
+    Console.WriteLine(avg);
+}
+public static void Main()
+{
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    AverageTwo(a, b);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} معدلهما
 \ifwithsols
@@ -94,6 +133,12 @@ public static int GetSquare(int n)
 public static double AverageTwo(double a, double b)
 {
     return (a + b) / 2.0;
+}
+public static void Main()
+{
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    Console.WriteLine(AverageTwo(a, b));
 }
 \end{minted}
 \end{english}
@@ -109,13 +154,17 @@ public static double GetAverage(double a, double b)
 {
     return (a + b) / 2.0;
 }
+public static void Main()
+{
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    Console.WriteLine(GetAverage(a, b));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
 \fi
 
-
-\item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} معدلهما
 \item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} \textenglish{true} إذا كانا متساويين.
 \ifwithsols
 \begin{boxSolution}
@@ -124,6 +173,12 @@ public static double GetAverage(double a, double b)
 public static bool AreEqual(double a, double b)
 {
     return a == b;
+}
+public static void Main()
+{
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    Console.WriteLine(AreEqual(a, b));
 }
 \end{minted}
 \end{english}
@@ -141,6 +196,12 @@ public static bool Divides(int a, int b)
     if (a == 0) return false;
     return (b % a) == 0;
 }
+public static void Main()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    Console.WriteLine(Divides(a, b));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -156,6 +217,13 @@ public static int MaxOfThree(int a, int b, int c)
 {
     return Math.Max(a, Math.Max(b, c));
 }
+public static void Main()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    Console.WriteLine(MaxOfThree(a, b, c));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -170,6 +238,13 @@ public static int MaxOfThree(int a, int b, int c)
 public static int MinOfThree(int a, int b, int c)
 {
     return Math.Min(a, Math.Min(b, c));
+}
+public static void Main()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    Console.WriteLine(MinOfThree(a, b, c));
 }
 \end{minted}
 \end{english}
@@ -199,13 +274,16 @@ public static int AppendDigit(int n, int d)
     return n * 10 + d;
 }
 
-// Reading four one-digit numbers and building the final number
-int d1 = int.Parse(Console.ReadLine());
-int d2 = int.Parse(Console.ReadLine());
-int d3 = int.Parse(Console.ReadLine());
-int d4 = int.Parse(Console.ReadLine());
-int number = AppendDigit(AppendDigit(AppendDigit(d1, d2), d3), d4);
-Console.WriteLine(number);
+public static void Main()
+{
+    // Reading four one-digit numbers and building the final number
+    int d1 = int.Parse(Console.ReadLine());
+    int d2 = int.Parse(Console.ReadLine());
+    int d3 = int.Parse(Console.ReadLine());
+    int d4 = int.Parse(Console.ReadLine());
+    int number = AppendDigit(AppendDigit(AppendDigit(d1, d2), d3), d4);
+    Console.WriteLine(number);
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -271,6 +349,13 @@ public static int Discounts(int age, int num, bool city)
     int ones     = (city)      ? 1 : 2;   // Parking
     return hundreds * 100 + tens * 10 + ones;
 }
+public static void Main()
+{
+    int age = int.Parse(Console.ReadLine());
+    int num = int.Parse(Console.ReadLine());
+    bool city = bool.Parse(Console.ReadLine());
+    Console.WriteLine(Discounts(age, num, city));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -288,3 +373,6 @@ public static int Discounts(int age, int num, bool city)
 \end{flushleft}
 
 \end{document}
+
+
+
