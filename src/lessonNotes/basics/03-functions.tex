@@ -271,7 +271,7 @@ public static void Main()
 \end{itemize}
 
 \item اجعل كل عملية تقوم بمهمة واحدة فقط.
-\item لا تكرر الكود — استخدم العمليات بدل النسخ.
+\item لا تكرر الكود - استخدم العمليات بدل النسخ.
 \item تأكد من اختبار العملية جيدًا قبل دمجها مع الباقي.
 \item داخل كل عملية يمكنك إضافة كل الأوامر التي تعرفها، تماما كما تكتب في عملية الـ \textenglish{Main}. \\
 مثلًا يمكن استدعاء عملية من داخل عملية أخرى. \\
@@ -279,5 +279,302 @@ public static void Main()
 \item يمكن تمرير القيمة التي ترجعها عملية كبرامتر لعملية أخرى.
 
 \end{itemize}
+
+\clearpage
+\section{أمثلة متنوعة على العمليات}
+
+في هذا القسم سنعرض مجموعة من الأمثلة القصيرة المتنوعة على تعريف العمليات واستدعائها.
+
+\subsection{عملية لا تتلقى ولا ترجع (\textenglish{void})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static void SayHi()
+{
+    Console.WriteLine("Hi!");
+}
+
+public static void Main()
+{
+    SayHi();
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تطبع رسالة بسيطة عند استدعائها. \\
+- لا تتلقى $\leftarrow$ نستدعيها بدون بارامترات. \\
+- لا ترجع (\textenglish{void}) $\leftarrow$ لا يوجد فيها \textenglish{return}، ولا نحفظ القيمة في متغير عند استدعائها.
+
+\subsection{عملية تتلقى ولا ترجع (\textenglish{void})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintSquare(int n)
+{
+    Console.WriteLine("Square = " + (n * n));
+}
+
+public static void Main()
+{
+    PrintSquare(5);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتلقى عددًا وتطبع مربعه فقط دون إرجاع أي قيمة. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامترات بنفس النوع المطلوب في تعريفها. \\
+- لا ترجع (\textenglish{void}) $\leftarrow$ لا يوجد فيها \textenglish{return}، ولا نحفظ القيمة في متغير عند استدعائها.
+
+
+
+\subsection{عملية لا تتلقى ولكن ترجع عددًا صحيحًا (\textenglish{int})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static int GetNumber()
+{
+    return 42;
+}
+
+public static void Main()
+{
+    int x = GetNumber();
+    Console.WriteLine("The number is " + x);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+ترجع عددًا ثابتًا بدون تلقي أي بارامتر. \\
+- لا تتلقى $\leftarrow$ نستدعيها بدون بارامترات. \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نفس نوع الترجيع (\textenglish{int})،
+  وعند استدعائها نحفظ القيمة المرجعة في متغير من نفس النوع.
+
+
+
+\subsection{عملية تتلقى وترجع عددًا صحيحًا (\textenglish{int})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static int Multiply(int a, int b)
+{
+    return a * b;
+}
+
+public static void Main()
+{
+    int result = Multiply(6, 7);
+    Console.WriteLine("Result = " + result);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتلقى عددين وتعيد ناتج ضربهما. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامترات بنفس النوع المطلوب في تعريفها. \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نوع \textenglish{int}،
+  وعند استدعائها نحفظ القيمة المرجعة في متغير من نفس النوع.
+
+
+
+\subsection{عملية تتلقى وترجع عددًا عشريًا (\textenglish{double})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static double CircleArea(double radius)
+{
+    return Math.PI * radius * radius;
+}
+
+public static void Main()
+{
+    double area = CircleArea(2.5);
+    Console.WriteLine("Area = " + area);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تحسب مساحة دائرة من نصف قطر معطى وتعيدها. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامتر من نفس النوع (\textenglish{double}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نوع \textenglish{double}،
+  وعند استدعائها نحفظ القيمة المرجعة في متغير من نفس النوع.
+
+
+
+\subsection{عملية تتلقى وترجع قيمة منطقية (\textenglish{bool})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsEven(int num)
+{
+    return num % 2 == 0;
+}
+
+public static void Main()
+{
+    bool even = IsEven(8);
+    Console.WriteLine("Even? " + even);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتحقق مما إذا كان العدد زوجيًا وتعيد \textenglish{true} أو \textenglish{false}. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامتر من نفس النوع (\textenglish{int}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نوع \textenglish{bool}،
+  وعند استدعائها نحفظ القيمة المرجعة في متغير من نفس النوع.
+
+
+
+\subsection{عملية تتلقى وترجع نصًا (\textenglish{string})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static string Greet(string name)
+{
+    return "Hello " + name + "!";
+}
+
+public static void Main()
+{
+    string msg = Greet("Ali");
+    Console.WriteLine(msg);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتلقى اسمًا وتعيد تحية نصية. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامتر من نفس النوع (\textenglish{string}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نوع \textenglish{string}،
+  وعند استدعائها نحفظ القيمة المرجعة في متغير من نفس النوع.
+
+
+
+\subsection{عملية لا تتلقى وترجع نصًا (\textenglish{string})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static string GetDay()
+{
+    return "Friday";
+}
+
+public static void Main()
+{
+    Console.WriteLine("Today is " + GetDay());
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+ترجع نصًا ثابتًا دون تلقي أي بارامتر. \\
+- لا تتلقى $\leftarrow$ نستدعيها بدون بارامترات. \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نفس النوع (\textenglish{string}).
+
+
+
+\subsection{عملية تتلقى عددًا وترجع قيمة منطقية (\textenglish{bool})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPositive(int n)
+{
+    return n > 0;
+}
+
+public static void Main()
+{
+    Console.WriteLine(IsPositive(10));
+    Console.WriteLine(IsPositive(-3));
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتحقق إن كان العدد موجبًا أو سالبًا. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامتر من نفس النوع (\textenglish{int}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نفس النوع (\textenglish{bool}).
+
+
+
+\subsection*{10. عملية لا ترجع وتتلقى أكثر من بارامتر من أنواع مختلفة}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintPerson(string name, int age)
+{
+    Console.WriteLine(name + " is " + age + " years old.");
+}
+
+public static void Main()
+{
+    PrintPerson("Mona", 25);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تطبع جملة تحتوي على الاسم والعمر دون إرجاع أي قيمة. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامترات بنفس الأنواع المذكورة في تعريفها. \\
+- لا ترجع (\textenglish{void}) $\leftarrow$ لا يوجد فيها \textenglish{return}، ولا نحفظ القيمة في متغير عند استدعائها.
+
+
+
+\subsection*{11. عملية تستخدم شرطًا بسيطًا داخلها وترجع نتيجة (\textenglish{string})}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static string CheckGrade(int grade)
+{
+    if (grade >= 60)
+        return "Pass";
+    else
+        return "Fail";
+}
+
+public static void Main()
+{
+    Console.WriteLine(CheckGrade(85));
+    Console.WriteLine(CheckGrade(40));
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تتحقق إن كان الطالب قد نجح أو رسب. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامتر من نفس النوع (\textenglish{int}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return} في كل حالة، وبعده تعبير من نوع \textenglish{string}.
+
+
+
+\subsection*{12. عملية تتلقى عددين عشريين وترجع عددًا عشريًا (قسمة آمنة)}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+public static double SafeDivide(double a, double b)
+{
+    if (b == 0)
+        return 0;
+    return a / b;
+}
+
+public static void Main()
+{
+    Console.WriteLine(SafeDivide(10, 2));
+    Console.WriteLine(SafeDivide(5, 0));
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+تنفّذ قسمة وتتحقق من القسمة على صفر قبل الإرجاع. \\
+- تتلقى $\leftarrow$ نستدعيها مع بارامترين من نفس النوع (\textenglish{double}). \\
+- ترجع $\leftarrow$ يوجد فيها \textenglish{return}، وبعده تعبير من نفس النوع (\textenglish{double})،
+  وعند استدعائها يمكننا حفظ القيمة في متغير من نفس النوع.
+
 
 \end{document}

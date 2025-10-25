@@ -40,6 +40,7 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 
@@ -71,7 +72,7 @@ public static void Main()
 \begin{minted}{csharp}
 public static void PrintSquare(int n)
 {
-    int sq = n * n;
+    int sq = Math.Pow(n, 2); // Or n*n
     Console.WriteLine(sq);
 }
 public static void Main()
@@ -82,6 +83,7 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 
@@ -92,7 +94,7 @@ public static void Main()
 \begin{minted}{csharp}
 public static int GetSquare(int n)
 {
-    return n * n;
+    return Math.Pow(n, 2); // Or n*n
 }
 public static void Main()
 {
@@ -123,6 +125,7 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} معدلهما
@@ -143,36 +146,24 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
-\fi
-
-
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static double GetAverage(double a, double b)
-{
-    return (a + b) / 2.0;
-}
-public static void Main()
-{
-    double a = double.Parse(Console.ReadLine());
-    double b = double.Parse(Console.ReadLine());
-    Console.WriteLine(GetAverage(a, b));
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
+\clearpage
 \fi
 
 \item اكتب عملية خارجية \textbf{تتلقى} عددين عشريّين \textbf{وتعيد} \textenglish{true} إذا كانا متساويين.
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
 \begin{english}
 \begin{minted}{csharp}
 public static bool AreEqual(double a, double b)
 {
-    return a == b;
+    if(a == b)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 public static void Main()
 {
@@ -183,6 +174,23 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreEqual(double a, double b)
+{
+    return (a == b);
+}
+public static void Main()
+{
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    Console.WriteLine(AreEqual(a, b));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
 \fi
 
 
@@ -193,8 +201,18 @@ public static void Main()
 \begin{minted}{csharp}
 public static bool Divides(int a, int b)
 {
-    if (a == 0) return false;
-    return (b % a) == 0;
+    if (a == 0)
+    {
+        return false;
+    }
+    else if(b % a == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 public static void Main()
 {
@@ -205,6 +223,7 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 
@@ -265,7 +284,8 @@ public static void Main()
     \textbf{مثال:} إذا أدخل المستخدم الأرقام $4,2,1,5$ فعلى البرنامج أن يطبع $4215$. \\
     عليك استخدام العملية التي كتبتها في البند السابق. \\
     لا حاجة للتحقق من صحة المدخلات.
-\ifwithsols
+\end{enumerate}
+    \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
@@ -276,21 +296,20 @@ public static int AppendDigit(int n, int d)
 
 public static void Main()
 {
-    // Reading four one-digit numbers and building the final number
     int d1 = int.Parse(Console.ReadLine());
     int d2 = int.Parse(Console.ReadLine());
+    int result = AppendDigit(d1, d2);
     int d3 = int.Parse(Console.ReadLine());
+    result = AppendDigit(result, d3);
     int d4 = int.Parse(Console.ReadLine());
-    int number = AppendDigit(AppendDigit(AppendDigit(d1, d2), d3), d4);
-    Console.WriteLine(number);
+    result = AppendDigit(result, d4);
+    Console.WriteLine(result);
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
 \fi
 
-
-\end{enumerate}
 
 \clearpage
 \item
@@ -344,9 +363,22 @@ public static void Main()
 \begin{minted}{csharp}
 public static int Discounts(int age, int num, bool city)
 {
-    int hundreds = (age >= 70) ? 1 : 2;   // Arnona
-    int tens     = (num >= 4)  ? 1 : 2;   // Kindergarten
-    int ones     = (city)      ? 1 : 2;   // Parking
+    int hundreds = 2;
+    int tens = 2;
+    int ones = 2;
+
+    if(age >= 70)
+    {
+        hundreds = 1;
+    }
+    if(num >= 4)
+    {
+        tens = 1;
+    }
+    if (city)
+    {
+        ones = 1;
+    }
     return hundreds * 100 + tens * 10 + ones;
 }
 public static void Main()
