@@ -248,6 +248,29 @@ public static void Main()
 \end{boxSolution}
 \fi
 
+\item اكتب عملية خارجية \textbf{تستقبل} ثلاثة أعداد صحيحة \textbf{وتطبع} العدد الأكبر بين الثلاثة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int MaxOfThree(int a, int b, int c)
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    int result = Math.Max(a, Math.Max(b, c));
+    Console.WriteLine(result);
+}
+public static void Main()
+{
+    MaxOfThree(a, b, c);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
 
 \item اكتب عملية خارجية \textbf{تتلقى} ثلاثة أعداد صحيحة \textbf{وتعيد} العدد الأصغر بين الثلاثة.
 \ifwithsols
@@ -268,12 +291,167 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{AddNumbers} تتلقى عددين عشريّين وتعيد مجموعهما.
+    \item اكتب برنامجًا يستقبل من المستخدم أربعة أعداد عشريّة، ويطبع مجموعها. \\
+    عليك استخدام العملية التي كتبتها في الفرع السابق.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+public static double AddNumbers(double a, double b)
+{
+    return a+b;
+}
 
+// b
+public static void Main()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    int d = int.Parse(Console.ReadLine());
+    int result = AddNumbers(a, b);
+    result = AddNumbers(result, c);
+    result = AddNumbers(result, d);
+    Console.WriteLine(result);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{MultiplyNumbers} تتلقى عددين عشريّين وتعيد حاصل ضربهما.
+    \item اكتب برنامجًا يستقبل من المستخدم ثلاثة أعداد عشريّة، ويطبع حاصل ضربها. \\
+    عليك استخدام العملية التي كتبتها في الفرع السابق.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+public static double MultiplyNumbers(double a, double b)
+{
+    return a*b;
+}
 
+// b
+public static void Main()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    int c = int.Parse(Console.ReadLine());
+    int result = MultiplyNumbers(a, b);
+    result = MultiplyNumbers(result, c);
+    Console.WriteLine(result);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+معطى تعريف العملية التالية: \\
+\textenglish{public static int Func(int x)} \\
+العملية تحسب قيمة الدالة \textenglish{f(x)} وتعيد النتيجة.
+
+\begin{enumerate}
+\item اكتب برنامجًا يطبع قيمة \textenglish{f(7)} و \textenglish{f(13)}.
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا \textenglish{n} ويحسب \textenglish{f(n)} ويطبعه.
+\item اكتب برنامجًا يستقبل من المستخدم عددين صحيحين \textenglish{a} و \textenglish{b} ويطبع \textenglish{Equal} إذا كان \textenglish{f(a)} و \textenglish{f(b)} متساويين، ويطبع \textenglish{Not Equal} خلاف ذلك.
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// Assume we have: public static int Func(int x)
+
+public static void Main()
+{
+    // a
+    int result = Func(7);
+    Console.WriteLine(result);
+    result = Func(13);
+    Console.WriteLine(result);
+
+    // b
+    int n = int.Parse(Console.ReadLine());
+    result = Func(n);
+    Console.WriteLine(result);
+
+    // c
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    if (Func(a) == Func(b))
+    {
+        Console.WriteLine("Equal");
+    }
+    else
+    {
+        Console.WriteLine("Not Equal");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+\begin{enumerate}
+\item اكتب عملية خارجية تتلقى عددين صحيحين، وتفحص إن كان \textbf{الفرق} بينهما عددًا زوجيًا. \\
+على العملية أن تطبع \textenglish{"Even Difference"} إذا كان الفرق زوجيًا،
+وتطبع \textenglish{"Odd Difference"} إذا لم يكن كذلك.
+\item اكتب برنامجًا يستدعي العملية بالأعداد \textenglish{7, 3}.
+\item اكتب برنامجًا يستدعي العملية بأعداد أخرى من اختيارك بحيث تكون نتيجة الطباعة \textenglish{"Odd Difference"}.
+\item اكتب مقطع برنامج يستقبل عددين صحيحين من المستخدم ويفحص، باستخدام العملية من البند (أ)، ما إذا كان الفرق بينهما زوجيًا أم لا.
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+public static void CheckEvenDifference(int a, int b)
+{
+    int diff = Math.Abs(a - b);
+    if (diff % 2 == 0)
+    {
+        Console.WriteLine("Even Difference");
+    }
+    else
+    {
+        Console.WriteLine("Odd Difference");
+    }
+}
+public static void Main()
+{
+    // b
+    CheckEvenDifference(7, 3);
+    // c
+    CheckEvenDifference(8, 3);
+    // d
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    CheckEvenDifference(a, b);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
 \item
 \begin{enumerate}
     \item اكتب عملية خارجية باسم \textenglish{AppendDigit} تتلقى عددين صحيحين. \\
@@ -284,6 +462,9 @@ public static void Main()
     \textbf{مثال:} إذا أدخل المستخدم الأرقام $4,2,1,5$ فعلى البرنامج أن يطبع $4215$. \\
     عليك استخدام العملية التي كتبتها في البند السابق. \\
     لا حاجة للتحقق من صحة المدخلات.
+    \item اكتب عملية خارجية أخرى باسم \textenglish{AppendDigits} \textbf{تتلقى} عددًا صحيحًا، \textbf{وتستقبل} 3 أعداد أخرى من المستخدم، كل عدد مكون من خانة واحدة. \\
+    على العملية أن تلصق الأعداد التي استقبلتها بالعدد الذي تلقته، وتطبع النتيجة. \\
+    على العملية أن تستخدم العملية التي كتبتها في البند الأول.
 \end{enumerate}
     \ifwithsols
 \begin{boxSolution}
@@ -304,6 +485,17 @@ public static void Main()
     int d4 = int.Parse(Console.ReadLine());
     result = AppendDigit(result, d4);
     Console.WriteLine(result);
+}
+
+public static void AppendDigits(int n)
+{
+    int d1 = int.Parse(Console.ReadLine());
+    n = AppendDigit(n, d1);
+    int d2 = int.Parse(Console.ReadLine());
+    n = AppendDigit(n, d2);
+    int d3 = int.Parse(Console.ReadLine());
+    n = AppendDigit(n, d3);
+    Console.WriteLine(n);
 }
 \end{minted}
 \end{english}
