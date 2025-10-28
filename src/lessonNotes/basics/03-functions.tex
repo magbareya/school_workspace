@@ -47,7 +47,7 @@ public static void PrintHello()
     \item \textenglish{public static} $\leftarrow$ جزء ثابت.
     \item \textenglish{void} $\leftarrow$ العملية لا ترجع شيئًا.
     \item \textenglish{PrintHello} $\leftarrow$ اسم العملية.
-    \item \textenglish{()} $\leftarrow$ الأقواس الفارغة بعد اسم العملية معناها أنّ هذه العملية لا تستقبل بارامترات.
+    \item \textenglish{()} $\leftarrow$ الأقواس الفارغة بعد اسم العملية معناها أنّ هذه العملية لا تتلقى بارامترات.
     \item ما بين الأقواس \textenglish{\{ \}} هو جسم العملية، وفي هذه الحالة يطبع رسالة \textenglish{Hello}.
 \end{itemize}
 \end{boxExample}
@@ -67,7 +67,7 @@ public static int AddNumbers(int a, int b)
     \item \textenglish{public static} $\leftarrow$ جزء ثابت.
     \item \textenglish{int} $\leftarrow$ نوع القيمة المرجعة.
     \item \textenglish{AddNumbers} $\leftarrow$ اسم العملية.
-    \item \textenglish{(int a, int b)} $\leftarrow$ البارامترات التي تستقبلها العملية، في هذه الحالة تستقبل متغيرين كلاهما من نمط \textenglish{int}.
+    \item \textenglish{(int a, int b)} $\leftarrow$ البارامترات التي تتلقاها العملية، في هذه الحالة تتلقى متغيرين كلاهما من نمط \textenglish{int}.
     \item ما بين الأقواس \textenglish{\{ \}} هو جسم العملية، الذي ينفّذ عملية الجمع ويعيد النتيجة.
     \item نستخدم كلمة \textenglish{return} لننهي العملية ونعيد القيمة المطلوبة. \\
     \textbf{ملاحظة:} نوع القيمة التي ترجعها العملية يجب أن يطابق نوع القيمة بعد كلمة \textenglish{return}.
@@ -130,7 +130,7 @@ public static void Main(string[] args)
 \clearpage
 \section{أنواع العمليات}
 
-\subsection{لا ترجع ولا تستقبل بارامترات}
+\subsection{لا ترجع ولا تتلقى بارامترات}
 نستخدمها عندما نريد تنفيذ أمر محدد دون الحاجة لإدخال أو إخراج بيانات.
 
 \begin{boxExample}
@@ -151,8 +151,8 @@ public static void Main()
 
 عملية بسيطة تطبع رسالة فقط. لا تحتاج لأي معطيات ولا ترجع أي نتيجة.
 
-\subsection{تستقبل ولا ترجع}
-تستقبل معطيات (parameters) لكنها لا تعيد قيمة.
+\subsection{تتلقى ولا ترجع}
+تتلقى بارامترات لكنها لا تعيد قيمة.
 
 \begin{boxExample}[1]
 \begin{english}
@@ -171,7 +171,7 @@ public static void Main()
 \end{english}
 \end{boxExample}
 
-العملية تستقبل عددين وتطبع ناتج جمعهما فقط، دون إرجاع النتيجة. \\
+العملية تتلقى عددين وتطبع ناتج جمعهما فقط، دون إرجاع النتيجة. \\
 
 يمكننا أيضًا استخدام متغيرات كبرامترات عند استدعاء العملية:
 \begin{boxExample}[2]
@@ -195,10 +195,10 @@ public static void Main()
 
 \textbf{مثال لعملية كهذه نعرفها:} \\
 \textenglish{Console.WriteLine()} \\
-هي عملية تستقبل بارامتر واحد من نمط \textenglish{string} ولا تعيد أي قيمة. \\
+هي عملية تتلقى بارامتر واحد من نمط \textenglish{string} ولا تعيد أي قيمة. \\
 بما أنّ هذه العملية معرّفة في فئة أخرى غير، فعلينا كتابة اسم الفئة في هذه الحالة \textenglish{Console}.
 
-\subsection{ترجع ولا تستقبل}
+\subsection{ترجع ولا تتلقى}
 تقوم بإرجاع نتيجة معينة دون الحاجة لمعطيات.
 
 \begin{boxExample}
@@ -223,11 +223,11 @@ public static void Main()
 
 \textbf{مثال لعملية كهذه نعرفها:} \\
 \textenglish{Console.ReadLine()} \\
-هي عملية لا تستقبل أي بارامتر، لكنها تعيد قيمة من نمط \textenglish{string}. \\
+هي عملية لا تتلقى أي بارامتر، لكنها تعيد قيمة من نمط \textenglish{string}. \\
 بما أنّ هذه العملية معرّفة في فئة أخرى غير، فعلينا كتابة اسم الفئة في هذه الحالة \textenglish{Console}.
 
-\subsection{تستقبل وترجع}
-تستقبل معطيات وتعيد ناتجًا جديدًا بعد معالجتها.
+\subsection{تتلقى وترجع}
+تتلقى معطيات وتعيد ناتجًا جديدًا بعد معالجتها.
 
 \begin{boxExample}
 \begin{english}
@@ -247,15 +247,15 @@ public static void Main()
 \end{english}
 \end{boxExample}
 
-العملية تستقبل عددين وتحسب معدلهما ثم تعيد النتيجة.
+العملية تتلقى عددين وتحسب معدلهما ثم تعيد النتيجة.
 
 \subsection*{أمثلة نعرفها}
 \begin{itemize}
-    \item \textenglish{Math.Max} و \textenglish{Math.Min} هما عمليتان تستقبل كل واحدة منهما عددين من نمط \textenglish{int} وترجع قيمة من نمط \textenglish{int}.
-    \item \textenglish{Math.Abs} و \textenglish{Math.Pow} هما عمليتان تستقبل كل واحدة منهما عددين من نمط \textenglish{double} وترجع قيمة من نمط \textenglish{double}.
-    \item \textenglish{Math.Round} و \textenglish{Math.Sqrt} هما عمليتان تستقبل كل واحدة منهما عددًا من نمط \textenglish{double} وترجع قيمة من نمط \textenglish{double}.
-    \item \textenglish{int.Parse} هي عملية تستقبل بارامترًا واحدًا من نمط \textenglish{string} وترجع قيمة من نمط \textenglish{int}.
-    \item \textenglish{double.Parse} هي عملية تستقبل بارامترًا واحدًا من نمط \textenglish{string} وترجع قيمة من نمط \textenglish{double}.
+    \item \textenglish{Math.Max} و \textenglish{Math.Min} هما عمليتان تتلقى كل واحدة منهما عددين من نمط \textenglish{int} وترجع قيمة من نمط \textenglish{int}.
+    \item \textenglish{Math.Abs} و \textenglish{Math.Pow} هما عمليتان تتلقى كل واحدة منهما عددين من نمط \textenglish{double} وترجع قيمة من نمط \textenglish{double}.
+    \item \textenglish{Math.Round} و \textenglish{Math.Sqrt} هما عمليتان تتلقى كل واحدة منهما عددًا من نمط \textenglish{double} وترجع قيمة من نمط \textenglish{double}.
+    \item \textenglish{int.Parse} هي عملية تتلقى بارامترًا واحدًا من نمط \textenglish{string} وترجع قيمة من نمط \textenglish{int}.
+    \item \textenglish{double.Parse} هي عملية تتلقى بارامترًا واحدًا من نمط \textenglish{string} وترجع قيمة من نمط \textenglish{double}.
 \end{itemize}
 
 \section{ملاحظات مهمة}
