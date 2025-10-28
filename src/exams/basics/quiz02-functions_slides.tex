@@ -1,0 +1,415 @@
+\documentclass[13pt]{beamer}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri} % ← added
+\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\lstdefinelanguage{CSharp}{
+  language={[Sharp]C},
+  morekeywords={string,bool,void}
+}
+
+\lstset{
+  language=CSharp,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black},
+  showstringspaces=false,
+  numbers=none,
+  frame=single,
+  breaklines=true
+}
+
+\title{اختبار خفيف للصف\,10--10}
+\author{}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 1
+\begin{frame}[fragile]{السؤال\,1}
+\textbf{أي من التالية هي عملية خارجية تتلقى عددًا عشريًا وتعيد عددًا صحيحًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static int Foo(double x)}
+  \item \texttt{public static double Foo(int x)}
+  \item \texttt{public static int Foo()}
+  \item \texttt{public static double Foo()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+
+% -------------------------------------------------------------
+% Slide 2
+\begin{frame}[fragile]{السؤال\,2}
+\textbf{أي من التالية هي عملية خارجية تستقبل عددًا عشريًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static void Foo(double x)}
+  \item \texttt{public static double Foo()}
+  \item
+  \begin{lstlisting}[language=CSharp]
+public static void Foo()
+{
+    double d = double.Parse(Console.ReadLine());
+}
+  \end{lstlisting}
+  \item \texttt{public static double Foo(double d)}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+
+% -------------------------------------------------------------
+% Slide 3
+\begin{frame}[fragile]{السؤال\,3}
+\textbf{أي من التالية هي عملية لا تتلقى شيئًا ولا تعيد شيئًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static void Foo()}
+  \item \texttt{public static int Foo(int x)}
+  \item \texttt{public static void Foo(int x)}
+  \item \texttt{public static int Foo()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 4
+\begin{frame}[fragile]{السؤال\,4}
+\textbf{أي من التالية هي عملية تتلقى نصًا وتعيد نصًا جديدًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static string Greet(string name)}
+  \item \texttt{public static void Greet()}
+  \item \texttt{public static void Greet(string name)}
+  \item \texttt{public static string Greet()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 5
+\begin{frame}[fragile]{السؤال\,5}
+\textbf{أي من التالية هي عملية تستقبل عددًا صحيحًا وتعيد عددًا صحيحًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static int Square(int n)}
+  \item
+  \begin{lstlisting}[language=CSharp]
+public static int Square()
+{
+    int n = int.Parse(Console.ReadLine());
+}
+  \end{lstlisting}
+  \item \texttt{public static void Square(int n)}
+  \item \texttt{public static void Square()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 6
+\begin{frame}[fragile]{السؤال\,6}
+\textbf{أي من التالية تعريف صحيح لعملية تُعيد قيمة منطقية (bool) وتستقبل عددًا صحيحًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static bool IsEven(int n)}
+  \item \texttt{public static void IsEven(int n)}
+  \item \texttt{public static int IsEven(bool n)}
+  \item
+  \begin{lstlisting}[language=CSharp]
+public static bool IsEven()
+{
+    int n = int.Parse(Console.ReadLine());
+}
+  \end{lstlisting}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 7
+\begin{frame}[fragile]{السؤال\,7}
+\textbf{أي من التالية هي عملية خارجية تتلقى ولا تعيد؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static void Foo(int n)}
+  \item \texttt{public static int Foo()}
+  \item \texttt{public static int Foo(int n)}
+  \item \texttt{public static string Foo()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 8
+\begin{frame}[fragile]{السؤال\,8}
+\textbf{أي من التالية هي عملية خارجية تُعيد ولا تتلقى؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static int GetNumber()}
+  \item \texttt{public static void PrintNumber(int n)}
+  \item \texttt{public static int GetNumber(int n)}
+  \item \texttt{public static void GetNumber()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 9
+\begin{frame}[fragile]{السؤال\,9}
+\textbf{أي من التالية هي عملية تُعيد عددًا عشريًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static double GetAverage(int a, int b)}
+  \item \texttt{public static int GetAverage(double a, double b)}
+  \item \texttt{public static void GetAverage(double a, double b)}
+  \item \texttt{public static string GetAverage(int a, int b)}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+
+% -------------------------------------------------------------
+% Slide 10
+\begin{frame}[fragile]{السؤال\,10}
+\textbf{أي من التالية هي عملية خارجية لا تتلقى ولكنها تستقبل عددًا عشريًا وتعيده؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static double Foo(double x)}
+  \item
+  \begin{lstlisting}[language=CSharp]
+public static double Foo()
+{
+    double d = double.Parse(Console.ReadLine());
+    return d;
+}
+  \end{lstlisting}
+  \item \texttt{public static void Foo(double x)}
+  \item \texttt{public static void Foo()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 11
+\begin{frame}[fragile]{السؤال\,11}
+\textbf{معطاة العملية التالية:}
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Foo(string name, int age)
+\end{lstlisting}
+\end{english}
+
+\textbf{أي من التالية هي طريقة الاستدعاء الصحيحة؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{string result = Foo("Majd", 10);}
+  \item \texttt{Foo("Majd", 10);}
+  \item \texttt{int result = Foo("Majd", 10);}
+  \item
+  \begin{lstlisting}[language=CSharp]
+string name = Console.ReadLine();
+int age = int.Parse(Console.ReadLine());
+Foo();
+  \end{lstlisting}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 12
+\begin{frame}[fragile]{السؤال\,12}
+\textbf{معطاة العملية التالية:}
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int Add(int a, int b)
+\end{lstlisting}
+\end{english}
+
+\textbf{أي من التالية صحيحة؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{Add(5, 10);}
+  \item \texttt{int x = Add(5, 10);}
+  \item \texttt{double x = Add(5, 10);}
+  \item
+  \begin{lstlisting}[language=CSharp]
+int a = 4;
+int b = 8;
+Console.WriteLine(Add);
+  \end{lstlisting}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 13
+\begin{frame}[fragile]{السؤال\,13}
+\textbf{معطاة العملية التالية:}
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double Average(double x, double y)
+\end{lstlisting}
+\end{english}
+
+\textbf{اختر الاستدعاء الصحيح:}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{double a = Average(4, 5);}
+  \item \texttt{Average();}
+  \item \texttt{Average(4);}
+  \item \texttt{Average("4","5");}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+
+% -------------------------------------------------------------
+% Slide 14
+\begin{frame}[fragile]{السؤال\,14}
+\textbf{أي من التالية تُظهر الفرق بين عملية \textbf{تستقبل} عددًا صحيحًا و\textbf{تتلقى} عددًا صحيحًا؟}
+
+\begin{enumerate}[label=(\alph*)]
+  \item
+  \begin{english}
+    \begin{lstlisting}[language=CSharp]
+void Foo()
+int x = int.Parse(Console.ReadLine());
+    \end{lstlisting}
+  \end{english}
+  \item \textenglish{void Foo(int x)}
+  \item كلاهما صحيح لكن المعنى مختلف.
+  \item لا فرق بينهما.
+\end{enumerate}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 15
+\begin{frame}[fragile]{السؤال\,15}
+\textbf{ما الفرق بين العمليتين التاليتين؟}
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Foo(int n)
+public static int Foo(int n)
+\end{lstlisting}
+\end{english}
+
+\begin{enumerate}[label=(\alph*)]
+  \item الأولى لا تُعيد قيمة، الثانية تُعيد قيمة صحيحة.
+  \item الثانية لا تُعيد قيمة، الأولى تُعيد قيمة صحيحة.
+  \item الاثنتان متطابقتان.
+  \item الأولى تُعيد قيمة نصية.
+\end{enumerate}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 16
+\begin{frame}[fragile]{السؤال\,16}
+\textbf{أي من التالية تعريف صحيح لعملية تتلقى نصًا وتعيد طول النص؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static int GetLength(string s)}
+  \item \texttt{public static string GetLength(int s)}
+  \item \texttt{public static void GetLength(string s)}
+  \item \texttt{public static bool GetLength(string s)}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 17
+\begin{frame}[fragile]{السؤال\,17}
+\textbf{أي من التالية تعريف صحيح لعملية تتلقى عددًا عشريًا وتعيد ما إذا كان موجبًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static bool IsPositive(double n)}
+  \item \texttt{public static double IsPositive(double n)}
+  \item \texttt{public static void IsPositive(double n)}
+  \item \texttt{public static bool IsPositive()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 18
+\begin{frame}[fragile]{السؤال\,18}
+\textbf{أي من التالية هي عملية خارجية تستقبل عددًا صحيحًا وتطبع مربعه فقط؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static void PrintSquare(int n)}
+  \item \texttt{public static int PrintSquare(int n)}
+  \item \texttt{public static void PrintSquare()}
+  \item \texttt{public static void PrintSquare(double n)}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 19
+\begin{frame}[fragile]{السؤال\,19}
+\textbf{أي من التالية هي عملية خارجية لا تستقبل شيئًا وتُعيد عددًا ثابتًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static int GetNumber()}
+  \item \texttt{public static void GetNumber()}
+  \item \texttt{public static double GetNumber(int x)}
+  \item \texttt{public static string GetNumber()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+% -------------------------------------------------------------
+% Slide 20
+\begin{frame}[fragile]{السؤال\,20}
+\textbf{أي من التالية هي عملية خارجية تُعيد عددًا عشريًا؟}
+
+\begin{english}
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{public static double Foo()}
+  \item \texttt{public static int Foo()}
+  \item \texttt{public static void Foo()}
+  \item \texttt{public static string Foo()}
+\end{enumerate}
+\end{english}
+\end{frame}
+
+\end{document}

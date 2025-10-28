@@ -125,7 +125,7 @@ clean:
 	find . -type d -name "_minted*" -exec rm -rf {} +
 
 
-CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav
+CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz
 sclean:
 	find out -type f -empty -delete
 	@for ext in $(CLEAN_EXTS); do \

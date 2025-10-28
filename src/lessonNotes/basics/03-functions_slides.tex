@@ -1,0 +1,445 @@
+\documentclass[13pt]{beamer}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
+
+% ============================================================
+% Fix: visible bullets + proper RTL alignment
+% ============================================================
+\usepackage{bidi} % <-- enables proper RTL lists and bullets
+\setbeamertemplate{itemize items}[circle] % visible bullets
+\setbeamertemplate{itemize subitem}[triangle] % optional, for nested lists
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinelanguage{CSharp}{
+  language={[Sharp]C},
+  morekeywords={string,bool,void}
+}
+
+\lstset{
+  language=CSharp,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black},
+  showstringspaces=false,
+  numbers=none,
+  frame=single,
+  breaklines=true
+}
+
+\title{العمليات الخارجية في لغة \textenglish{C\#}}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{مقدمة}
+العمليات تقسّم البرنامج إلى مقاطع تؤدي مهام محددة.
+\begin{itemize}
+  \item تنظيم الكود وجعله أسهل للقراءة والصيانة.
+  \item إعادة استخدام نفس الكود أكثر من مرة.
+  \item سنعرّف الأنواع بحسب الاستقبال والإرجاع وكيفية التعريف والاستدعاء.
+\end{itemize}
+\end{frame}
+
+% مبنى تعريف العملية
+\begin{frame}[fragile]{مبنى تعريف العملية}
+كل عملية تتكوّن من:
+\begin{itemize}
+  \item \textbf{تعريف العملية} \textenglish{(Method Signature)}: \textenglish{public static}، نوع القيمة، اسم العملية، البرامترات \textenglish{(int x, int y)}.
+  \item \textbf{جسم العملية} \textenglish{(Function Body)}: الأوامر بين \textenglish{\{\}} وتُنفّذ عند الاستدعاء.
+\end{itemize}
+\end{frame}
+
+% مثال: PrintHello
+\begin{frame}[fragile]{مثال: عملية لا تُعيد ولا تستقبل}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintHello()
+{
+    Console.WriteLine("Hello");
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item \textenglish{public static} جزء ثابت في هذه المرحلة.
+  \item \textenglish{void} لا تُعيد شيئًا.
+  \item \textenglish{()} لا تستقبل بارامترات.
+\end{itemize}
+\end{frame}
+
+% مثال: AddNumbers
+\begin{frame}[fragile]{مثال: عملية تُعيد وتستقبل}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int AddNumbers(int a, int b)
+{
+    int sum = a + b;
+    return sum;
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item تُعيد \textenglish{int} ويجب أن يطابق نوع \textenglish{return}.
+  \item تستقبل \textenglish{(int a, int b)}.
+\end{itemize}
+\end{frame}
+
+% استدعاء العملية
+\begin{frame}[fragile]{استدعاء العملية}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Main(string[] args)
+{
+    PrintHello();
+    int sum1 = AddNumbers(5, 10);
+    int a = 5;
+    int b = 10;
+    int sum2 = AddNumbers(a, b);
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item \textenglish{PrintHello()} لا تُعيد قيمة.
+  \item \textenglish{AddNumbers} تُعيد قيمة تُحفظ في متغير من نفس النوع.
+  \item ترتيب وأنواع البرامترات يجب أن يطابق التعريف.
+\end{itemize}
+\end{frame}
+
+% استدعاء من فئة أخرى
+\begin{frame}[fragile]{استدعاء عملية من فئة أخرى}
+نكتب اسم الفئة ثم نقطة ثم اسم العملية:
+\begin{itemize}
+  \item \textenglish{Console.WriteLine("Hello World!");}
+  \item \textenglish{Console.ReadLine();}
+  \item \textenglish{Math.Max(5, 10); ~ Math.Min(5, 10);}
+  \item \textenglish{Math.Abs(-5); ~ Math.Pow(2, 3);}
+  \item \textenglish{Math.Sqrt(25); ~ Math.Round(2.5);}
+\end{itemize}
+\end{frame}
+
+% أنواع العمليات (概览)
+\begin{frame}[fragile]{أنواع العمليات}
+\begin{itemize}
+  \item لا تُرجع ولا تستقبل \textenglish{(void, no params)}
+  \item تستقبل ولا تُرجع \textenglish{(void, with params)}
+  \item تُرجع ولا تستقبل
+  \item تستقبل وتُرجع
+\end{itemize}
+\end{frame}
+
+% لا ترجع ولا تتلقى
+\begin{frame}[fragile]{لا ترجع ولا تتلقى}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintWelcome()
+{
+    Console.WriteLine("Welcome to the program!");
+}
+
+public static void Main()
+{
+    PrintWelcome();
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% تتلقى ولا ترجع - مثال 1
+\begin{frame}[fragile]{تتلقى ولا ترجع}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintSum(int a, int b)
+{
+    int sum = a + b;
+    Console.WriteLine("Sum = " + sum);
+}
+
+public static void Main()
+{
+    PrintSum(5, 3);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% تتلقى ولا ترجع - مثال 2
+\begin{frame}[fragile]{تتلقى ولا ترجع (بمتغيّرات)}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Main()
+{
+    int x = 5;
+    int y = 3;
+    PrintSum(x, y);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ترجع ولا تتلقى
+\begin{frame}[fragile]{ترجع ولا تتلقى}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int ReadNumber()
+{
+    int num = int.Parse(Console.ReadLine());
+    return num;
+}
+
+public static void Main()
+{
+    int x = ReadNumber();
+    Console.WriteLine("The number: " + x);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% تتلقى وترجع
+\begin{frame}[fragile]{تتلقى وترجع}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double GetAverage(double a, double b)
+{
+    double avg = (a + b) / 2.0;
+    return avg;
+}
+
+public static void Main()
+{
+    double result = GetAverage(7.5, 9.0);
+    Console.WriteLine("Average = " + result);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% أمثلة نعرفها
+\begin{frame}[fragile]{أمثلة نعرفها}
+\begin{english}
+\begin{itemize}
+  \item \textenglish{Math.Max/Min(int,int) -> int}
+  \item \textenglish{Math.Abs/Pow(double, double) -> double}
+  \item \textenglish{Math.Round/Sqrt(double) -> double}
+  \item \textenglish{int.Parse(string) -> int}
+  \item \textenglish{double.Parse(string) -> double}
+\end{itemize}
+\end{english}
+\end{frame}
+
+% ملاحظات مهمة
+\begin{frame}[fragile]{ملاحظات مهمة}
+\begin{itemize}
+  \item أسماء العمليات تبدأ بحرف كبير وتصف الوظيفة: \textenglish{CalculateSum(), GetMaxValue(), PrintResult()}
+  \item اجعل كل عملية تقوم بمهمة واحدة، وتجنّب تكرار الكود.
+  \item اختبر العملية جيدًا، ويمكن استدعاء عملية من داخل أخرى.
+  \item ممكن استخدام \textenglish{if..else} داخل العملية وتمرير ناتج عملية كبرامتر لأخرى.
+\end{itemize}
+\end{frame}
+
+% أمثلة متنوعة
+\begin{frame}[fragile]{مثال: void بدون برامترات}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void SayHi()
+{
+    Console.WriteLine("Hi!");
+}
+
+public static void Main()
+{
+    SayHi();
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: void مع برامتر}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintSquare(int n)
+{
+    Console.WriteLine("Square = " + (n * n));
+}
+
+public static void Main()
+{
+    PrintSquare(5);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: int مع برامترات}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int Multiply(int x, int y)
+{
+    return x * y;
+}
+
+public static void Main()
+{
+    int p = Multiply(4, 6);
+    Console.WriteLine(p);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: double مع برامتر}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double CircleArea(double radius)
+{
+    return Math.PI * radius * radius;
+}
+
+public static void Main()
+{
+    double area = CircleArea(2.5);
+    Console.WriteLine("Area = " + area);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: bool يتحقق من الزوجية}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static bool IsEven(int num)
+{
+    return num % 2 == 0;
+}
+
+public static void Main()
+{
+    bool even = IsEven(8);
+    Console.WriteLine("Even? " + even);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: string يُعيد تحية}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static string Greet(string name)
+{
+    return "Hello " + name + "!";
+}
+
+public static void Main()
+{
+    string msg = Greet("Ali");
+    Console.WriteLine(msg);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: string بدون برامترات}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static string GetDay()
+{
+    return "Friday";
+}
+
+public static void Main()
+{
+    Console.WriteLine("Today is " + GetDay());
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: bool يتحقق من الإيجابية}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static bool IsPositive(int n)
+{
+    return n > 0;
+}
+
+public static void Main()
+{
+    Console.WriteLine(IsPositive(10));
+    Console.WriteLine(IsPositive(-3));
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: void مع أنواع مختلفة}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintPerson(string name, int age)
+{
+    Console.WriteLine(name + " is " + age + " years old.");
+}
+
+public static void Main()
+{
+    PrintPerson("Mona", 25);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: شرط وإرجاع string}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static string CheckGrade(int grade)
+{
+    if (grade >= 60)
+        return "Pass";
+    else
+        return "Fail";
+}
+
+public static void Main()
+{
+    Console.WriteLine(CheckGrade(85));
+    Console.WriteLine(CheckGrade(40));
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: قسمة آمنة}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double SafeDivide(double a, double b)
+{
+    if (b == 0)
+        return 0;
+    return a / b;
+}
+
+public static void Main()
+{
+    Console.WriteLine(SafeDivide(10, 2));
+    Console.WriteLine(SafeDivide(5, 0));
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\end{document}
