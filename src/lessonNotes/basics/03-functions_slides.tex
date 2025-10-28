@@ -1,39 +1,5 @@
 \documentclass[13pt]{beamer}
-
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\setmainlanguage[numerals=western]{arabic}
-\setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
-\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
-\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
-
-% ============================================================
-% Fix: visible bullets + proper RTL alignment
-% ============================================================
-\usepackage{bidi} % <-- enables proper RTL lists and bullets
-\setbeamertemplate{itemize items}[circle] % visible bullets
-\setbeamertemplate{itemize subitem}[triangle] % optional, for nested lists
-
-\usepackage{listings}
-\usepackage{xcolor}
-
-\lstdefinelanguage{CSharp}{
-  language={[Sharp]C},
-  morekeywords={string,bool,void}
-}
-
-\lstset{
-  language=CSharp,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue},
-  stringstyle=\color{red},
-  commentstyle=\color{green!50!black},
-  showstringspaces=false,
-  numbers=none,
-  frame=single,
-  breaklines=true
-}
+\input{../../../scripts/beamer_preamble.tex}
 
 \title{العمليات الخارجية في لغة \textenglish{C\#}}
 \author{}
@@ -124,16 +90,18 @@ public static void Main(string[] args)
 % استدعاء من فئة أخرى
 \begin{frame}[fragile]{استدعاء عملية من فئة أخرى}
 نكتب اسم الفئة ثم نقطة ثم اسم العملية:
+
+\begin{english}
 \begin{itemize}
-  \item \textenglish{Console.WriteLine("Hello World!");}
-  \item \textenglish{Console.ReadLine();}
-  \item \textenglish{Math.Max(5, 10); ~ Math.Min(5, 10);}
-  \item \textenglish{Math.Abs(-5); ~ Math.Pow(2, 3);}
-  \item \textenglish{Math.Sqrt(25); ~ Math.Round(2.5);}
+  \item Console.WriteLine("Hello World!");
+  \item Console.ReadLine();
+  \item Math.Max(5, 10); ~ Math.Min(5, 10);
+  \item Math.Abs(-5); ~ Math.Pow(2, 3);
+  \item Math.Sqrt(25); ~ Math.Round(2.5);
 \end{itemize}
+\end{english}
 \end{frame}
 
-% أنواع العمليات (概览)
 \begin{frame}[fragile]{أنواع العمليات}
 \begin{itemize}
   \item لا تُرجع ولا تستقبل \textenglish{(void, no params)}

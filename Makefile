@@ -35,9 +35,9 @@ export TEXMF_OUTPUT_DIRECTORY=.
 # Targets
 # -----------------------
 
-all: pdf printable sols
+all: pdf printable sols sclean
 
-pdf: ipynb md tex
+pdf: ipynb md tex sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
 sols: $(SOLS_TEX)        # <-- new target
 
@@ -46,6 +46,7 @@ md: $(MDS)
 tex: $(TEXS)
 cs: $(CSFILES)
 
+hclean: sclean dclean
 # -----------------------
 # Rules
 # -----------------------
@@ -132,4 +133,6 @@ sclean:
 		find . -type f -name "*.$$ext" -delete; \
 	done
 	find . -type d -name "_minted*" -exec rm -rf {} +
-	python3 scripts/sclean.py out
+
+dclean:
+	python3 scripts/clean.py out
