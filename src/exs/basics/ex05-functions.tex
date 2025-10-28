@@ -15,12 +15,18 @@
 \fi
 
 
-
 \begin{boxAttention}
-عندما يٌطلب "عملية خارجية \textbf{تستقبل}" يجب ان يكون المستخدم يدخل قيمة للمتغير. أي عليك استعمال \texttt{Console.ReadLine()}. \\
+    \begin{itemize}
+\item عندما يٌطلب "عملية خارجية \textbf{تستقبل}" يجب ان يكون المستخدم يدخل قيمة للمتغير. أي عليك استعمال \texttt{Console.ReadLine()}.
 
+\item أما عندما يُطلب منك "عملية خارجية \textbf{تتلقى}" فهذا يعني أنّها تتلقى المطلوب كبارمترات.
 
-أما عندما يُطلب منك "عملية خارجية \textbf{تتلقى}" فهذا يعني أنّها تتلقى المطلوب كبارمترات.
+\item عندما يُطلب منك كتابة "برنامج" فهذا يعني كتابة داخل \texttt{Main()}.
+
+\item إذا كانت العملية تعيد قيمة ما، فعليك حفظ القيمة التي تعيدها في متغير عند استدعائها. \\
+أما إذا كانت لا تعيد أي قيمة، فإنّك تكتب اسمها فقط عند استدعائها، وتعطيها بارمتراتها إن وجدت.
+
+\end{itemize}
 \end{boxAttention}
 
 \item اكتب عملية خارجية \textbf{تستقبل} اسم المستخدم \textbf{وتطبع} اسمه.
@@ -28,14 +34,14 @@
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static void PrintNameReceive()
+public static void ReceiveAndPrintName()
 {
     string name = Console.ReadLine();
     Console.WriteLine(name);
 }
 public static void Main()
 {
-    PrintNameReceive();
+    ReceiveAndPrintName();
 }
 \end{minted}
 \end{english}
@@ -362,44 +368,44 @@ public static void Main()
 
 \item
 معطى تعريف العملية التالية: \\
-\textenglish{public static int Func(int x)} \\
-العملية تحسب قيمة الدالة \textenglish{f(x)} وتعيد النتيجة.
+\textenglish{public static double Root10(double x)} \\
+العملية تحسب قيمة الجذر العاشر للعدد \textenglish{x} المعطى وتعيدها.
 
 \begin{enumerate}
-\item اكتب برنامجًا يطبع قيمة \textenglish{f(7)} و \textenglish{f(13)}.
-\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا \textenglish{n} ويحسب \textenglish{f(n)} ويطبعه.
-\item اكتب برنامجًا يستقبل من المستخدم عددين صحيحين \textenglish{a} و \textenglish{b} ويطبع \textenglish{Equal} إذا كان \textenglish{f(a)} و \textenglish{f(b)} متساويين، ويطبع \textenglish{Not Equal} خلاف ذلك.
+\item اكتب برنامجًا يطبع قيمة الجذر العاشر للعدد $7$ وللعدد $13$.
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا \textenglish{n} ويحسب جذره العاشر ويطبعه.
+\item اكتب برنامجًا يستقبل من المستخدم عددين صحيحين \textenglish{a} و \textenglish{b} ويطبع \textenglish{Close} إذا كان الفرق بين جذريهما العاشر أقل من $10$، وإذا لم يكن كذلك فإنّه يطبع \textenglish{Not Close}.
 \end{enumerate}
 
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-// Assume we have: public static int Func(int x)
+// Assume we have: public static double Root10(double x)
 
 public static void Main()
 {
     // a
-    int result = Func(7);
+    double result = Root10(7);
     Console.WriteLine(result);
-    result = Func(13);
+    result = Root10(13);
     Console.WriteLine(result);
 
     // b
-    int n = int.Parse(Console.ReadLine());
-    result = Func(n);
+    double n = double.Parse(Console.ReadLine());
+    result = Root10(n);
     Console.WriteLine(result);
 
     // c
-    int a = int.Parse(Console.ReadLine());
-    int b = int.Parse(Console.ReadLine());
-    if (Func(a) == Func(b))
+    double a = double.Parse(Console.ReadLine());
+    double b = double.Parse(Console.ReadLine());
+    if (Math.Abs(Root10(a) - Root10(b)) < 10)
     {
-        Console.WriteLine("Equal");
+        Console.WriteLine("Close");
     }
     else
     {
-        Console.WriteLine("Not Equal");
+        Console.WriteLine("Not Close");
     }
 }
 \end{minted}
