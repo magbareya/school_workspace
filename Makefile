@@ -21,6 +21,10 @@ IPYNB := $(patsubst %.ipynb,out/%.pdf,$(NB_REL))
 MDS   := $(patsubst %.md,out/%.pdf,$(MD_REL))
 TEXS  := $(patsubst %.tex,out/%.pdf,$(TEX_REL))
 
+PDF_SRC := $(shell find src -name "*.pdf")
+PDF_REL := $(patsubst src/%,%,$(PDF_SRC))
+PDF_OUT := $(patsubst %,out/%,$(PDF_REL))
+
 PRINTABLE_NB  := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
 PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_REL))
 
@@ -30,16 +34,15 @@ CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
 export TEXMF_OUTPUT_DIRECTORY=.
 
-
 # -----------------------
 # Targets
 # -----------------------
 
 all: pdf printable sols sclean
 
-pdf: ipynb md tex sclean
+pdf: ipynb md tex $(PDF_OUT) sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
-sols: $(SOLS_TEX)        # <-- new target
+sols: $(SOLS_TEX)
 
 ipynb: $(IPYNB)
 md: $(MDS)
@@ -47,6 +50,7 @@ tex: $(TEXS)
 cs: $(CSFILES)
 
 hclean: sclean dclean
+
 # -----------------------
 # Rules
 # -----------------------
@@ -117,6 +121,10 @@ out/%_sols.pdf: src/%.tex
 	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
 	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
 
+out/%.pdf: src/%.pdf
+	@mkdir -p $(dir $@)
+	cp $< $@
+
 # -----------------------
 # Cleaning
 # -----------------------
@@ -124,7 +132,6 @@ out/%_sols.pdf: src/%.tex
 clean:
 	rm -rf out
 	find . -type d -name "_minted*" -exec rm -rf {} +
-
 
 CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz
 sclean:
