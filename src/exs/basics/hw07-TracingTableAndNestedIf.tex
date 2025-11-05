@@ -1,0 +1,304 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 7 للصف العاشر 10 \\ جمل شرطية متداخلة وجدول متابعة}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\setlist[enumerate]{itemsep=0.8em, topsep=0.5em}
+
+\begin{enumerate}[itemsep=2em]
+
+% -------------------------------------------------------
+\item
+أمامك البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    int count = 0;
+    int grade = int.Parse(Console.ReadLine());
+    if (grade >= 70)
+        count++;
+    grade = int.Parse(Console.ReadLine());
+    if (grade >= 70)
+        count++;
+    grade = int.Parse(Console.ReadLine());
+    if (grade >= 70)
+        count++;
+    grade = int.Parse(Console.ReadLine());
+    if (grade >= 70)
+        count++;
+    Console.WriteLine(count);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+\item اكتب جدول متابعة للكود أعلاه بحيث يحتوي على عمود لكل متغير، وعمود لكل شرط، وعمود للطباعة، عندما تكون المدخلات هي: $87, 77, 68, 93$.
+\item ما هي وظيفة البرنامج أعلاه؟
+\item أعط مثالًا لمدخلات ينتج عنها طباعة $0$.
+\item أعط مثالًا لمدخلات ينتج عنها طباعة $4$.
+\end{enumerate}
+
+
+\clearpage
+\item
+أمامك البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    int sum = 0;
+    int num = int.Parse(Console.ReadLine());
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+    sum += num;
+    Console.WriteLine(sum);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+\item اكتب جدول متابعة للكود أعلاه بحيث يحتوي على عمود لكل متغير، وعمود لكل شرط، وعمود للطباعة، عندما تكون المدخلات هي: $12, 17, 3, 8$.
+\item ما هي وظيفة البرنامج أعلاه؟
+\item أعط مثالًا لمدخلات ينتج عنها طباعة $4$.
+\end{enumerate}
+
+
+\clearpage
+\item
+أمامك البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Please enter 4 positive numbers:");
+    int m = 0;
+    int n = int.Parse(Console.ReadLine());
+    if (n > m)
+        m = n;
+    n = int.Parse(Console.ReadLine());
+    if (n > m)
+        m = n;
+    n = int.Parse(Console.ReadLine());
+    if (n > m)
+        m = n;
+    n = int.Parse(Console.ReadLine());
+    if (n > m)
+        m = n;
+    Console.WriteLine(m);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+\item اكتب جدول متابعة للكود أعلاه بحيث يحتوي على عمود لكل متغير، وعمود لكل شرط، وعمود للطباعة، عندما تكون المدخلات هي: $23, 11, 34, 40$.
+\item ما هي وظيفة البرنامج أعلاه؟
+\item أعط مثالًا لمدخلات ينتج عنها طباعة $7$.
+\end{enumerate}
+
+\clearpage
+\item
+أمامك البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    int n = int.Parse(Console.ReadLine());
+    int m = int.Parse(Console.ReadLine());
+    if (n == 0 || m == 0)
+        Console.WriteLine("1");
+    else
+    {
+        if (n % m == 0)
+            Console.WriteLine("2");
+        Console.WriteLine("3");
+        if (m % n == 0)
+            Console.WriteLine("4");
+        else
+            Console.WriteLine("5");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+\item
+املأ الجدول التالي بناءً على المدخلات المختلفة: لكل زوج من القيم $n$ و $m$،
+اكتب \textenglish{true} أو \textenglish{false} في الأعمدة الخاصة بالشروط الثلاثة،
+وضع علامة صح ($\checkmark$) في الأعمدة التي ستتمّ طباعتها عند تشغيل البرنامج مع هذه المدخلات.
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textenglish{n} & \textenglish{m} &
+$n==0 || m==0$ &
+$n \% m==0$ &
+$m \% n==0$ &
+1 &
+2 &
+3 &
+4 &
+5 \\ \hline
+$0$ & $5$ &  &  &  &  &  &  &  &  \\ \hline
+$7$ & $0$ &  &  &  &  &  &  &  &  \\ \hline
+$4$ & $2$ &  &  &  &  &  &  &  &  \\ \hline
+$2$ & $4$ &  &  &  &  &  &  &  &  \\ \hline
+$3$ & $3$ &  &  &  &  &  &  &  &  \\ \hline
+$5$ & $7$ &  &  &  &  &  &  &  &  \\ \hline
+$8$ & $4$ &  &  &  &  &  &  &  &  \\ \hline
+$9$ & $3$ &  &  &  &  &  &  &  &  \\ \hline
+$6$ & $2$ &  &  &  &  &  &  &  &  \\ \hline
+$2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
+\end{tabular}
+
+\item هل يمكنك إعطاء قيم تجعل البرنامج يطبع الأرقام 1 و 2 معًا (سواء مع طباعة أرقام أخرى أو لا)؟
+\item هل يمكنك إعطاء قيم تجعل البرنامج يطبع الأرقام 4 و 5 معًا (سواء مع طباعة أرقام أخرى أو لا)؟
+\item هل يمكنك إعطاء قيم بحيث \textbf{لا} يطبع البرنامج الرقم 1 \textbf{ولا} الرقم 3؟
+
+\end{enumerate}
+
+\clearpage
+\item
+اكتب برنامجًا يستقبل من المستخدم 4 أعداد صحيحة، ويطبع أصغر عدد من بينها. \\
+\begin{boxWarning}
+على البرنامج أن يحتوي فقط على متغيّرين اثنين: $min$ و $num$ كلاهما من نمط عدد صحيح (\textenglish{int}).
+\end{boxWarning}
+
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 4 أعداد صحيحة، ويطبع كم عددًا زوجيًّا كان من بينها. \\
+\textbf{مثال:} إذا كانت الأعداد المدخلة هي $3, 4, 7, 8$ فإن البرنامج يجب أن يطبع $2$، لأنّه يوجد فقط عددان زوجيان ($4$ و $8$). \\
+\begin{boxWarning}
+على البرنامج أن يحتوي فقط على متغيّرين اثنين: $count$ و $n$ كلاهما من نمط عدد صحيح (\textenglish{int}).
+\end{boxWarning}
+
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 4 أعداد عشريّة، ويطبع معدّلها (معدّل الأعداد = مجموعها تقسيم عددها). \\
+\begin{boxWarning}
+على البرنامج أن يحتوي فقط على متغيّرين اثنين: $average$ و $num$ كلاهما من نمط عدد عشري (\textenglish{double}).
+\end{boxWarning}
+
+\clearpage
+\item
+اكتب برنامجًا يقرأ من المستخدم 4 أعداد صحيحة ويطبع \textbf{مجموع} الأرقام الفردية فقط. \\
+\textbf{مثال:} إذا كانت الأعداد المدخلة هي $5, 2, 7, 4$ فإن البرنامج يجب أن يطبع $12$، لأنّ مجموع الأعداد الفردية ($5 + 7$) يساوي $12$.
+\begin{boxWarning}
+على البرنامج أن يحتوي فقط على متغيّرين اثنين: $sum$ و $n$ كلاهما من نمط عدد صحيح (\textenglish{int}).
+\end{boxWarning}
+
+
+\item
+اكتب برنامجًا يقرأ من المستخدم 4 أعداد صحيحة ويطبع \textbf{مجموع} الأرقام الموجبة على حدة، والسالبة على حدة. \\
+\textbf{مثال:} إذا كانت الأعداد المدخلة هي $5, -2, 7, -4$ فإن البرنامج يجب أن يطبع $12$ للموجبة ($5 + 7$) و $-6$ للسالبة ($-2 + -4$).
+\begin{boxWarning}
+على البرنامج أن يحتوي فقط على ثلاثة متغيّرات: $posSum$ و $negSum$ و $n$ كلها من نمط عدد صحيح (\textenglish{int}).
+\end{boxWarning}
+
+\clearpage
+\item
+اكتب مقطع برنامج يستقبل من المستخدم عددًا صحيحًا، ويطبع:
+\begin{itemize}
+\item "موجب زوجي" إذا كان العدد موجبًا وزوجيًّا.
+\item "موجب فردي" إذا كان العدد موجبًا وفرديًّا.
+\item "سالب" إذا كان العدد سالبًا.
+\item "صفر" إذا كان العدد صفرًا.
+\end{itemize}
+\begin{boxWarning}
+ممنوع استخدام \textenglish{\&\&} أو \textenglish{||} في الشروط.
+\end{boxWarning}
+
+\item
+للتذكير: رأينا في تمرين سابق كيف نحسب مؤشر كتلة الجسم (BMI) باستخدام المعادلة التالية:
+\[\text{BMI} = \frac{\text{الوزن بالكيلوغرام}}{(\text{الطول بالمتر})^2}\]
+
+وباستخدام مؤشر كتلة الجسم يمكننا تصنيف حالة الشخص الصحية كما في الجدول التالي:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{التصنيف} & \textbf{القيمة (BMI)} \\ \hline
+نقص في الوزن & $\text{BMI} < 18.5$ \\ \hline
+وزن طبيعي & $18.5 \leq \text{BMI} < 25$ \\ \hline
+زيادة في الوزن & $25 \leq \text{BMI} < 30$ \\ \hline
+سمنة من الدرجة الأولى & $30 \leq \text{BMI} < 35$ \\ \hline
+سمنة من الدرجة الثانية & $35 \leq \text{BMI} < 40$ \\ \hline
+سمنة مفرطة (درجة ثالثة) & $\text{BMI} \geq 40$ \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{CalculateBMI} تتلقى الوزن (بالكيلوغرام) والطول (بالمتر) وتُعيد قيمة مؤشر كتلة الجسم (BMI). \\
+    \textbf{مثال:} إذا تلقت الوزن $80$ كيلوغرام والطول $1.8$ متر تعيد $24.22$.
+
+    \item اكتب برنامجًا يستقبل من المستخدم الوزن والطول، ويحسب مؤشر كتلة الجسم باستخدام العملية السابقة، ثم يطبع القيمة التي أرجعتها العملية.
+
+    \item اكتب عملية خارجية إضافية باسم \textenglish{BMICategory} تتلقى قيمة مؤشر كتلة الجسم (BMI) وتطبع التصنيف المناسب حسب الجدول أعلاه. \\
+    \textbf{مثال:} إذا تلقت قيمة $24.22$ تطبع "وزن طبيعي".
+
+    \item عدّل للبرنامج السابق (من بند ب) بحيث يستدعي العملية الجديدة بعد حساب مؤشر كتلة الجسم، ليطبع التصنيف المناسب أيضًا.
+
+    \item اكتب عملية خارجية إضافية باسم \textenglish{BMI} تتلقى الوزن والطول، وتطبع التصنيف المناسب حسب الجدول أعلاه، واستدعها من البرنامج الرئيسي. \\
+    \textbf{مثال:} إذا تلقت الوزن $80$ كيلوغرام والطول $1.8$ متر تطبع "وزن طبيعي".
+    \begin{boxHint}
+         استخدم العمليتين السابقتين داخل هذه العملية.
+    \end{boxHint}
+\end{enumerate}
+
+% \item
+% \begin{enumerate}
+%     \item اكتب عملية خارجية باسم \textenglish{AverageTwo} تتلقى عددين صحيحين وتُعيد معدلهما الحسابي (أي مجموعهما تقسيم 2). \\
+%     \textbf{مثال:} إذا تلقت العددين $8$ و $6$ تعيد $7$.
+
+%     \item اكتب برنامجًا يستقبل من المستخدم عددين صحيحَين ويطبع له معدّلهما باستخدام العملية السابقة.
+
+%     \item اكتب برنامجًا يطلب من المستخدم 4 علامات، ويحسب معدلها باستخدام العملية السابقة أكثر من مرة. \\
+%     \begin{boxHint}
+%          استخدم العملية لحساب معدل كل زوج، ثم معدل الناتجين.  \\
+%          \textbf{مثال:} إذا كانت العلامات المدخلة هي $80, 90, 70, 60$ فإن البرنامج يحسب أولًا معدل $80$ و $90$، ثم معدل $70$ و $60$، وأخيرًا يحسب معدل الناتجين ويطبعه. \\
+%         \end{boxHint}
+% \end{enumerate}
+
+\clearpage
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{ToSeconds} تتلقى ثلاث قيم: عدد الساعات، عدد الدقائق، وعدد الثواني. \\
+    على العملية أن تُعيد عدد الثواني الكلي الناتج عن تحويل الساعات والدقائق والثواني إلى ثوانٍ. \\
+    \begin{boxExample}
+         إذا تلقت العملية $1$، $2$، $30$، فعليها أن تُعيد $3750$ لأنّ \\ $1 \times 3600 + 2 \times 60 + 30 = 3750$.
+    \end{boxExample}
+
+    \item اكتب برنامجًا يطلب من المستخدم إدخال عدد الساعات والدقائق والثواني، ثم يستدعي العملية ويطبع الناتج الذي أعادته.
+
+    \item اكتب برنامجًا يستقبل من المستخدم وقتيْن (ساعات، دقائق، ثوانٍ لكل وقت). \\
+    على البرنامج أن يطبع \textenglish{Equal} إذا كان الوقتان متساويين من حيث عدد الثواني، و \textenglish{Not Equal} إذا لم يكونا متساويين.
+    \begin{boxExample}
+         إذا كانت المدخلات هي $1$، $30$، $0$ للوقت الأول، و $1$، $29$، $60$ للوقت الثاني، فإن البرنامج يطبع \textenglish{Equal} لأنّ كلا الوقتين يساوي $5400$ ثانية.
+    \end{boxExample}
+\end{enumerate}
+
+
+% \begin{boxCode}
+% \begin{english}
+% \begin{minted}{csharp}
+
+% \end{minted}
+% \end{english}
+% \end{boxCode}
+
+\end{enumerate}
+\end{document}
