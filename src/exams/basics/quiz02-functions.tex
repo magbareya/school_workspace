@@ -18,12 +18,7 @@
     \item public static double Foo()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تُعيد \textenglish{int} وتتلقى \textenglish{double}.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -42,12 +37,7 @@ public static void Foo()
     \item public static double Foo(double d)
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (c).
-"تستقبل" تعني أنّ العملية تقرأ من المستخدم داخلها.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -61,18 +51,13 @@ public static void Foo()
     \item public static int Foo()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-لا بارامترات ولا return.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
 \clearpage
 \item
-أي من التالية هي \textbf{عملية تتلقى نصًا وتعيد نصًا جديدًا}؟
+أي من التالية هي \textbf{عملية تتلقى نصًا وتعيد نصًا}؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
     \item public static string Greet(string name)
@@ -81,12 +66,7 @@ public static void Foo()
     \item public static string Greet()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تتلقى \textenglish{string} وتعيد \textenglish{string}.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -105,12 +85,7 @@ public static int Square()
     \item public static void Square()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (b).
-تقرأ العدد من المستخدم ثم تعيده.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -129,12 +104,7 @@ public static bool IsEven()
 \end{minted}
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-نوع الإرجاع \textenglish{bool} وتستقبل \textenglish{int}.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 \clearpage
@@ -148,12 +118,7 @@ public static bool IsEven()
     \item public static string Foo()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تتلقى عددًا صحيحًا ولا ترجع شيئًا.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -167,12 +132,7 @@ public static bool IsEven()
     \item public static void GetNumber()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-لا بارامترات وتُعيد قيمة.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -186,12 +146,7 @@ public static bool IsEven()
     \item public static string GetAverage(int a, int b)
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-نوع الإرجاع \textenglish{double}.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -212,12 +167,7 @@ public static double Foo()
     \item public static void Foo()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (b).
-تقرأ من المستخدم وتعيد القيمة.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -241,12 +191,7 @@ Foo();
 \end{minted}
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (b).
-عملية void تُستدعى مباشرة دون تخزين نتيجة.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -258,12 +203,12 @@ Foo();
 public static int Add(int a, int b)
 \end{minted}
 \end{english}
-أي من التالية صحيحة؟
+أي من التالية هي طريقة الاستدعاء الصحيحة؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
-    \item Add(5, 10);
+    \item Add(5.0, 10.2);
     \item int x = Add(5, 10);
-    \item double x = Add(5, 10);
+    \item double x = Add("5", "10");
     \item \begin{minted}{csharp}
 int a = 4;
 int b = 8;
@@ -271,12 +216,7 @@ Console.WriteLine(Add);
 \end{minted}
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (b).
-ترجع int لذا يجب حفظها في متغير من نفس النوع.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -287,7 +227,7 @@ Console.WriteLine(Add);
 public static double Average(double x, double y)
 \end{minted}
 \end{english}
-اختر الاستدعاء الصحيح:
+أي من التالية هي طريقة الاستدعاء الصحيحة؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
     \item double a = Average(4, 5);
@@ -296,56 +236,25 @@ public static double Average(double x, double y)
     \item Average("4","5");
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-يجب تمرير قيمتين عشريتين وحفظ النتيجة في متغير double.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
 \clearpage
 \item
-أي من التالية تُظهر الفرق بين عملية \textbf{تستقبل} عددًا صحيح و\textbf{تتلقى} عددًا صحيحًا؟
-\begin{enumerate}[label=(\alph*)]
-    \item \begin{minted}{csharp}
-void Foo()
-int x = int.Parse(Console.ReadLine());
-\end{minted}
-    \item \begin{minted}{csharp}
-void Foo(int x)
-\end{minted}
-    \item كلاهما صحيح لكن المعنى مختلف.
-    \item لا فرق بينهما.
-\end{enumerate}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (c).
-الأولى تستقبل من المستخدم، الثانية تتلقى بارامتر.
-\end{boxSolution}
-\fi
-
-% -------------------------------
-
-\item
 ما الفرق بين العمليتين التاليتين؟
+\begin{english}
 \begin{minted}{csharp}
 public static void Foo(int n)
 public static int Foo(int n)
 \end{minted}
+\end{english}
 \begin{enumerate}[label=(\alph*)]
     \item الأولى لا تُعيد قيمة، الثانية تُعيد قيمة صحيحة.
     \item الثانية لا تُعيد قيمة، الأولى تُعيد قيمة صحيحة.
     \item الاثنتان متطابقتان.
     \item الأولى تُعيد قيمة نصية.
 \end{enumerate}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-الفرق في نوع الإرجاع فقط.
-\end{boxSolution}
-\fi
 
 % -------------------------------
 
@@ -359,18 +268,13 @@ public static int Foo(int n)
     \item public static bool GetLength(string s)
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تتلقى string وتُعيد int (طول النص).
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
 \clearpage
 \item
-أي من التالية تعريف صحيح لعملية \textbf{تتلقى عددًا عشريًا وتعيد ما إذا كان موجبًا}؟
+أي من التالية تعريف صحيح لعملية \textbf{تتلقى عددًا عشريًا وتعيد \textenglish{true} إذا كان موجبًا}؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
     \item public static bool IsPositive(double n)
@@ -379,17 +283,12 @@ public static int Foo(int n)
     \item public static bool IsPositive()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تُعيد bool وتستقبل double.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
 \item
-أي من التالية هي \textbf{عملية خارجية تستقبل عددًا صحيحًا وتطبع مربعه فقط}؟
+أي من التالية هي \textbf{عملية خارجية تتلقى عددًا صحيحًا وتطبع تربيعه دون أن تعيده}؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
     \item public static void PrintSquare(int n)
@@ -398,17 +297,12 @@ public static int Foo(int n)
     \item public static void PrintSquare(double n)
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-تطبع فقط لذا نوعها void وتتلقى int.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
 \item
-أي من التالية هي \textbf{عملية خارجية لا تستقبل شيئًا وتُعيد عددًا ثابتًا}؟
+أي من التالية هي \textbf{عملية خارجية لا تتلقى شيئًا وتُعيد عددًا صحيحًا}؟
 \begin{english}
 \begin{enumerate}[label=(\alph*)]
     \item public static int GetNumber()
@@ -417,12 +311,7 @@ public static int Foo(int n)
     \item public static string GetNumber()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-لا بارامترات وتُعيد int.
-\end{boxSolution}
-\fi
+
 
 % -------------------------------
 
@@ -436,13 +325,36 @@ public static int Foo(int n)
     \item public static string Foo()
 \end{enumerate}
 \end{english}
-\ifwithsols
-\begin{boxSolution}
-الإجابة: (a).
-نوع الإرجاع double.
-\end{boxSolution}
-\fi
-
 \end{enumerate}
+
+\clearpage
+\section*{الأجوبة الصحيحة}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{رقم السؤال} & \textbf{الجواب الصحيح} \\
+\hline
+1 & (a) \\ \hline
+2 & (c) \\ \hline
+3 & (a) \\ \hline
+4 & (a) \\ \hline
+5 & (b) \\ \hline
+6 & (d) \\ \hline
+7 & (a) \\ \hline
+8 & (a) \\ \hline
+9 & (a) \\ \hline
+10 & (b) \\ \hline
+11 & (b) \\ \hline
+12 & (b) \\ \hline
+13 & (a) \\ \hline
+14 & (a) \\ \hline
+15 & (a) \\ \hline
+16 & (a) \\ \hline
+17 & (a) \\ \hline
+18 & (a) \\ \hline
+19 & (a) \\ \hline
+\end{tabular}
+\end{center}
 
 \end{document}

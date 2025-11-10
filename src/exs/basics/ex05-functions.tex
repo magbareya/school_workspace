@@ -518,8 +518,8 @@ public static void AppendDigits(int n)
 
 % قرّر مجلس البلدية في مدينة معيّنة أن يمنح سكان المدينة تخفيضات من مدفوعات مختلفة حسب المعايير التالية:
 % \begin{itemize}
-%     \item الساكن في المدينة الذي عمره 70 فأصعد، يستحق تخفيضًا من الدفع للأرونا.
-%     \item الساكن في المدينة الذي لديه 4 أولاد فأصعد، يستحق تخفيضًا من الدفع لرياض الأطفال.
+%     \item الساكن في المدينة الذي عمره 70 فصاعدًا، يستحق تخفيضًا من الدفع للأرونا.
+%     \item الساكن في المدينة الذي لديه 3 أولاد فصاعدًا، يستحق تخفيضًا من الدفع لرياض الأطفال.
 %     \item الساكن في المدينة الذي مكان عمله في المدينة، يستحق تخفيضًا من الدفع مقابل صفّ (ركن) السيارة في المدينة.
 % \end{itemize}
 
@@ -556,7 +556,7 @@ public static void AppendDigits(int n)
 
 
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
 \begin{english}
 \begin{minted}{csharp}
 public static int Discounts(int age, int num, bool city)
@@ -566,18 +566,43 @@ public static int Discounts(int age, int num, bool city)
     int ones = 2;
 
     if(age >= 70)
-    {
         hundreds = 1;
-    }
-    if(num >= 4)
-    {
+    if(num >= 3)
         tens = 1;
-    }
     if (city)
-    {
         ones = 1;
-    }
     return hundreds * 100 + tens * 10 + ones;
+}
+public static void Main()
+{
+    int age = int.Parse(Console.ReadLine());
+    int num = int.Parse(Console.ReadLine());
+    bool city = bool.Parse(Console.ReadLine());
+    Console.WriteLine(Discounts(age, num, city));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static int Discounts(int age, int num, bool city)
+{
+    int d = 0;
+
+    if(age >= 70)
+        d += 100;
+    else
+        d += 200;
+    if(num >= 3)
+        d += 10;
+    else
+        d += 20;
+    if (city)
+        d += 1;
+    else
+        d += 2;
+    return d;
 }
 public static void Main()
 {

@@ -1,0 +1,407 @@
+\documentclass[13pt]{beamer}
+\input{../../../scripts/beamer_preamble.tex}
+
+%% ------------------------------------------------------------------
+\title{الحلقات في لغة \textenglish{C\#}}
+\author{}
+\date{}
+
+\begin{document}
+
+%% Title page
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+% ------------------------------------------------------------------
+\begin{frame}{مقدمة}
+الحلقة هي مقطع كود يتكرر عدة مرات لتحقيق مهمة متكررة دون إعادة كتابة الأوامر.
+\begin{itemize}
+  \item التكرار يجعل البرنامج أقصر وأكثر مرونة.
+  \item يُمكن للحاسوب تنفيذ نفس التعليمات آلاف المرات بسرعة.
+  \item توجد أنواع مختلفة من الحلقات، أهمها: \textenglish{while} و \textenglish{for}.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{مفهوم الحلقة بشكل عام}
+فكرة الحلقة: \textbf{طالما أن شرطًا ما صحيح، استمر في تنفيذ الأوامر.}
+\begin{itemize}
+  \item عند كل تكرار يُفحص الشرط.
+  \item إذا كان الشرط \textenglish{true} يُنفَّذ الجسم، وإذا أصبح \textenglish{false} تتوقف الحلقة.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{حلقة \textenglish{while}}
+تُستخدم عندما لا نعرف عدد التكرارات مسبقًا.
+\begin{english}
+\begin{lstlisting}
+while (condition)
+{
+    // الأوامر
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{جمع حتى إدخال 0}
+يحسب مجموع الأعداد حتى إدخال 0.
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Sum = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{جمع حتى يصبح المجموع أكبر من 10}
+يستمر حتى يصبح مجموع الأعداد أكبر من 10.
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+while (sum <= 10)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+Console.WriteLine("Total = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{الضرب حتى إدخال 1}
+يضرب الأعداد حتى إدخال 1.
+\begin{english}
+\begin{lstlisting}
+int prod = 1;
+int num = int.Parse(Console.ReadLine());
+while (num != 1)
+{
+    prod *= num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Product = " + prod);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{عدد الأعداد الموجبة حتى إدخال عدد سالب}
+يعد الأعداد الموجبة فقط.
+\begin{english}
+\begin{lstlisting}
+int count = 0;
+int num = int.Parse(Console.ReadLine());
+while (num >= 0)
+{
+    count++;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Count = " + count);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{عدد الأعداد الزوجية حتى إدخال -1}
+يحسب عدد الأعداد الزوجية فقط.
+\begin{english}
+\begin{lstlisting}
+int evenCount = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    if (num % 2 == 0)
+        evenCount++;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Even count = " + evenCount);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{إيجاد أكبر عدد حتى إدخال 0}
+يجد أكبر رقم من المدخلات.
+\begin{english}
+\begin{lstlisting}
+int max = int.MinValue;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    if (num > max)
+        max = num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Max = " + max);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{إيجاد أصغر عدد حتى إدخال 0}
+يجد أصغر رقم من المدخلات.
+\begin{english}
+\begin{lstlisting}
+int min = int.MaxValue;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    if (num < min)
+        min = num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Min = " + min);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{عدد خانات عدد معين}
+يحسب عدد خانات الرقم.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int count = 0;
+while (n > 0)
+{
+    n /= 10;
+    count++;
+}
+Console.WriteLine("Digits = " + count);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{من \textenglish{while} إلى \textenglish{for}}
+توضيح أن \textenglish{for} هي شكل مختصر من \textenglish{while}.
+\begin{english}
+\begin{lstlisting}
+// باستخدام while
+int i = 0;
+while (i < 10)
+{
+    Console.WriteLine(i);
+    i++;
+}
+
+// باستخدام for
+for (int i = 0; i < 10; i++)
+{
+    Console.WriteLine(i);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{حلقة \textenglish{for}}
+تُستخدم عندما نعرف عدد التكرارات مسبقًا.
+\begin{english}
+\begin{lstlisting}
+for (initialization; condition; update)
+{
+    // الأوامر
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{طباعة الأعداد من 1 إلى 10}
+يطبع الأعداد من 1 إلى 10.
+\begin{english}
+\begin{lstlisting}
+for (int i = 1; i <= 10; i++)
+    Console.WriteLine(i);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{طباعة الأعداد الزوجية من 1 إلى 100}
+يطبع الأعداد الزوجية فقط.
+\begin{english}
+\begin{lstlisting}
+for (int i = 2; i <= 100; i += 2)
+    Console.WriteLine(i);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{مجموع الأعداد من 1 إلى n}
+يحسب مجموع الأعداد من 1 إلى n.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = 1; i <= n; i++)
+    sum += i;
+Console.WriteLine("Sum = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{مجموع الأعداد من m إلى n}
+يحسب مجموع الأعداد بين رقمين.
+\begin{english}
+\begin{lstlisting}
+int m = int.Parse(Console.ReadLine());
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = m; i <= n; i++)
+    sum += i;
+Console.WriteLine("Sum = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{مجموع الأعداد الزوجية من 1 إلى n}
+يحسب مجموع الأعداد الزوجية فقط.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = 2; i <= n; i += 2)
+    sum += i;
+Console.WriteLine("Even sum = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{استقبال 10 أرقام وطباعتها}
+يطبع كل الأرقام المدخلة.
+\begin{english}
+\begin{lstlisting}
+for (int i = 1; i <= 10; i++)
+{
+    int num = int.Parse(Console.ReadLine());
+    Console.WriteLine(num);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{استقبال 10 أرقام وحساب معدلها}
+يحسب معدل 10 أعداد.
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+for (int i = 1; i <= 10; i++)
+{
+    int num = int.Parse(Console.ReadLine());
+    sum += num;
+}
+double avg = sum / 10.0;
+Console.WriteLine("Average = " + avg);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{معدل حتى إدخال -1}
+يحسب معدل الأعداد حتى إدخال -1.
+\begin{english}
+\begin{lstlisting}
+int sum = 0, count = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    sum += num;
+    count++;
+    num = int.Parse(Console.ReadLine());
+}
+double avg = (double)sum / count;
+Console.WriteLine("Average = " + avg);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{حساب الباقي والقسمة}
+يحسب خارج القسمة والباقي.
+\begin{english}
+\begin{lstlisting}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int quotient = a / b;
+int remainder = a % b;
+Console.WriteLine("Quotient = " + quotient);
+Console.WriteLine("Remainder = " + remainder);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{طباعة جدول ضرب عدد معين}
+يطبع جدول الضرب لعدد محدد.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+for (int i = 1; i <= 10; i++)
+{
+    Console.WriteLine(n + " x " + i + " = " + (n * i));
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{مجموع الأرقام داخل عدد واحد}
+يجمع خانات العدد.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+while (n > 0)
+{
+    sum += n % 10;
+    n /= 10;
+}
+Console.WriteLine("Digits sum = " + sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}[fragile]{حساب المضروب}
+يحسب مضروب عدد n.
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int factorial = 1;
+for (int i = 1; i <= n; i++)
+    factorial *= i;
+Console.WriteLine(n + "! = " + factorial);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
+\begin{frame}{خاتمة}
+\begin{itemize}
+  \item حلقة \textenglish{while} تكرّر الأوامر طالما الشرط صحيح.
+  \item حلقة \textenglish{for} تستخدم عند معرفة عدد التكرارات.
+  \item احذر من نسيان تحديث العداد أو تغيير الشرط.
+  \item استخدم المتغيرات الجامعة والعدادات لتبسيط الحسابات.
+\end{itemize}
+\end{frame}
+
+\end{document}

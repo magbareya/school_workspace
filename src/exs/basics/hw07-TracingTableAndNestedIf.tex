@@ -45,6 +45,36 @@ private static void Main(string[] args)
 \item أعط مثالًا لمدخلات ينتج عنها طباعة $4$.
 \end{enumerate}
 
+\ifwithsols
+\begin{boxSolution}
+% \textbf{جدول المتابعة للمدخلات $87,77,68,93$:}
+
+% \renewcommand{\arraystretch}{1.2}
+% \begin{tabular}{|c|c|c|c|c|c|c|}
+% \hline
+% \textbf{الحدث} & \textenglish{grade} & \textenglish{count} & \textenglish{grade>=70 (1)} & (2) & (3) & (4) \\
+% \hline
+% بدء & — & 0 &  &  &  &  \\
+% \hline
+% إدخال1=87 & 87 & 1 & \textenglish{true} &  &  &  \\
+% \hline
+% إدخال2=77 & 77 & 2 &  & \textenglish{true} &  &  \\
+% \hline
+% إدخال3=68 & 68 & 2 &  &  & \textenglish{false} &  \\
+% \hline
+% إدخال4=93 & 93 & 3 &  &  &  & \textenglish{true} \\
+% \hline
+% طباعة & — & 3 &  &  &  &  \\
+% \hline
+% \end{tabular}
+
+% \vspace{0.6em}
+\textbf{وظيفة البرنامج:} عدّ كم علامة من أصل أربع علامات هي على الأقل $70$ ثم طباعة العدد.\\
+\textbf{مثال يطبع 0:} \textenglish{10, 20, 30, 40}.\\
+\textbf{مثال يطبع 4:} \textenglish{70, 80, 90, 100}.
+\end{boxSolution}
+\fi
+
 
 \clearpage
 \item
@@ -74,6 +104,34 @@ private static void Main(string[] args)
 \item ما هي وظيفة البرنامج أعلاه؟
 \item أعط مثالًا لمدخلات ينتج عنها طباعة $4$.
 \end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textenglish{num} & \textenglish{sum} & \textbf{الطباعة} \\
+\hline
+   & 0 &  \\
+\hline
+12 & 12 &  \\
+\hline
+17 & 29 &  \\
+\hline
+3 & 32 &  \\
+\hline
+8 & 40 &  \\
+\hline
+  & 40 & \textenglish{40} \\
+\hline
+\end{tabular}
+
+\vspace{0.6em}
+\textbf{وظيفة البرنامج:} قراءة أربعة أعداد صحيحة وجمعها ثم طباعة المجموع.\\
+\textbf{مثال يطبع 4:} \textenglish{1, 1, 1, 1}.
+\end{boxSolution}
+\fi
 
 
 \clearpage
@@ -109,6 +167,35 @@ private static void Main(string[] args)
 \item ما هي وظيفة البرنامج أعلاه؟
 \item أعط مثالًا لمدخلات ينتج عنها طباعة $7$.
 \end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+% \textbf{جدول المتابعة للمدخلات $23,11,34,40$:}
+
+% \renewcommand{\arraystretch}{1.2}
+% \begin{tabular}{|c|c|c|c|c|c|c|}
+% \hline
+% \textbf{الحدث} & \textenglish{n} & \textenglish{m} & \textenglish{(n>m)1} & (2) & (3) & (4) \\
+% \hline
+% بدء & — & 0 &  &  &  &  \\
+% \hline
+% إدخال1=23 & 23 & 23 & \textenglish{true} &  &  &  \\
+% \hline
+% إدخال2=11 & 11 & 23 &  & \textenglish{false} &  &  \\
+% \hline
+% إدخال3=34 & 34 & 34 &  &  & \textenglish{true} &  \\
+% \hline
+% إدخال4=40 & 40 & 40 &  &  &  & \textenglish{true} \\
+% \hline
+% طباعة & — & 40 &  &  &  &  \\
+% \hline
+% \end{tabular}
+
+% \vspace{0.6em}
+\textbf{وظيفة البرنامج:} إيجاد وطباعة أكبر عدد من بين أربعة أعداد موجبة مُدخلة.\\
+\textbf{مثال يطبع 7:} \textenglish{1, 2, 7, 3} (أو أي مجموعة يكون أكبرها $7$).
+\end{boxSolution}
+\fi
 
 \clearpage
 \item
@@ -172,12 +259,83 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
 
 \end{enumerate}
 
+\ifwithsols
+\begin{boxSolution}
+\textbf{استكمال الجدول:}
+
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textenglish{n} & \textenglish{m} &
+\textenglish{$n==0 || m==0$} &
+\textenglish{$n \% m==0$} &
+\textenglish{$m \% n==0$} &
+1 & 2 & 3 & 4 & 5 \\
+\hline
+0 & 5 & \textenglish{true} & — & — & \checkmark &  &  &  &  \\
+\hline
+7 & 0 & \textenglish{true} & — & — & \checkmark &  &  &  &  \\
+\hline
+4 & 2 & \textenglish{false} & \textenglish{true} & \textenglish{false} &  & \checkmark & \checkmark &  & \checkmark \\
+\hline
+2 & 4 & \textenglish{false} & \textenglish{false} & \textenglish{true} &  &  & \checkmark & \checkmark &  \\
+\hline
+3 & 3 & \textenglish{false} & \textenglish{true} & \textenglish{true} &  & \checkmark & \checkmark & \checkmark &  \\
+\hline
+5 & 7 & \textenglish{false} & \textenglish{false} & \textenglish{false} &  &  & \checkmark &  & \checkmark \\
+\hline
+8 & 4 & \textenglish{false} & \textenglish{true} & \textenglish{false} &  & \checkmark & \checkmark &  & \checkmark \\
+\hline
+9 & 3 & \textenglish{false} & \textenglish{true} & \textenglish{false} &  & \checkmark & \checkmark &  & \checkmark \\
+\hline
+6 & 2 & \textenglish{false} & \textenglish{true} & \textenglish{false} &  & \checkmark & \checkmark &  & \checkmark \\
+\hline
+2 & 6 & \textenglish{false} & \textenglish{false} & \textenglish{true} &  &  & \checkmark & \checkmark &  \\
+\hline
+\end{tabular}
+
+\vspace{0.6em}
+ملاحظة: عندما يكون الشرط الأول \textenglish{true} لا تُقيَّم الشروط داخل الفرع \textenglish{else}، لذا وُضعت \textenglish{—}.
+
+\vspace{0.6em}
+\textbf{(ب)} طباعة 1 و 2 معًا: \textbf{غير ممكن}، لأن طباعة 1 تعني الدخول في الـ \textenglish{if} و طباعة 2 تعني الدخول في الـ \textenglish{else} وهذا غير ممكن.\\
+\textbf{(ج)} طباعة 4 و 5 معًا: \textbf{غير ممكن}، لأنهما فرعا \textenglish{if/else} متنافيان.\\
+\textbf{(د)} عدم طباعة 1 ولا 3: \textbf{غير ممكن}، إذا لم تُطبع 1 فهذا يعني الدخول إلى \textenglish{else} حيث تُطبع 3 دائمًا.
+\end{boxSolution}
+\fi
+
 \clearpage
 \item
 اكتب برنامجًا يستقبل من المستخدم 4 أعداد صحيحة، ويطبع أصغر عدد من بينها. \\
 \begin{boxWarning}
 على البرنامج أن يحتوي فقط على متغيّرين اثنين: $min$ و $num$ كلاهما من نمط عدد صحيح (\textenglish{int}).
 \end{boxWarning}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    int num = int.Parse(Console.ReadLine());
+    int min = num;
+
+    num = int.Parse(Console.ReadLine());
+    if (num < min)
+        min = num;
+    num = int.Parse(Console.ReadLine());
+    if (num < min)
+        min = num;
+    num = int.Parse(Console.ReadLine());
+    if (num < min)
+        min = num;
+    Console.WriteLine(min);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 
 \item
@@ -187,6 +345,33 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
 على البرنامج أن يحتوي فقط على متغيّرين اثنين: $count$ و $n$ كلاهما من نمط عدد صحيح (\textenglish{int}).
 \end{boxWarning}
 
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    int count = 0;
+    int n = int.Parse(Console.ReadLine());
+    if (n % 2 == 0)
+        count++;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 == 0)
+        count++;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 == 0)
+        count++;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 == 0)
+        count++;
+    Console.WriteLine(count);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
 
 \item
 اكتب برنامجًا يستقبل من المستخدم 4 أعداد عشريّة، ويطبع معدّلها (معدّل الأعداد = مجموعها تقسيم عددها). \\
@@ -194,13 +379,69 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
 على البرنامج أن يحتوي فقط على متغيّرين اثنين: $average$ و $num$ كلاهما من نمط عدد عشري (\textenglish{double}).
 \end{boxWarning}
 
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double average = 0.0;
+    double num = double.Parse(Console.ReadLine());
+    average += num;
+
+    num = double.Parse(Console.ReadLine());
+    average += num;
+
+    num = double.Parse(Console.ReadLine());
+    average += num;
+
+    num = double.Parse(Console.ReadLine());
+    average += num;
+
+    average = average / 4.0;
+    Console.WriteLine(average);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 \clearpage
 \item
 اكتب برنامجًا يقرأ من المستخدم 4 أعداد صحيحة ويطبع \textbf{مجموع} الأرقام الفردية فقط. \\
 \textbf{مثال:} إذا كانت الأعداد المدخلة هي $5, 2, 7, 4$ فإن البرنامج يجب أن يطبع $12$، لأنّ مجموع الأعداد الفردية ($5 + 7$) يساوي $12$.
+
 \begin{boxWarning}
 على البرنامج أن يحتوي فقط على متغيّرين اثنين: $sum$ و $n$ كلاهما من نمط عدد صحيح (\textenglish{int}).
 \end{boxWarning}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    int sum = 0;
+
+    int n = int.Parse(Console.ReadLine());
+    if (n % 2 != 0)
+        sum += n;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 != 0)
+        sum += n;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 != 0)
+        sum += n;
+    n = int.Parse(Console.ReadLine());
+    if (n % 2 != 0)
+        sum += n;
+    Console.WriteLine(sum);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 
 \item
@@ -209,6 +450,46 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
 \begin{boxWarning}
 على البرنامج أن يحتوي فقط على ثلاثة متغيّرات: $posSum$ و $negSum$ و $n$ كلها من نمط عدد صحيح (\textenglish{int}).
 \end{boxWarning}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    int posSum = 0;
+    int negSum = 0;
+    int n = int.Parse(Console.ReadLine());
+    if (n > 0)
+        posSum += n;
+    else if (n < 0)
+        negSum += n;
+
+    n = int.Parse(Console.ReadLine());
+    if (n > 0)
+        posSum += n;
+    else if (n < 0)
+        negSum += n;
+
+    n = int.Parse(Console.ReadLine());
+    if (n > 0)
+        posSum += n;
+    else if (n < 0)
+        negSum += n;
+
+    n = int.Parse(Console.ReadLine());
+    if (n > 0)
+        posSum += n;
+    else if (n < 0)
+        negSum += n;
+
+    Console.WriteLine(posSum);
+    Console.WriteLine(negSum);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
 \item
@@ -222,6 +503,31 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
 \begin{boxWarning}
 ممنوع استخدام \textenglish{\&\&} أو \textenglish{||} في الشروط.
 \end{boxWarning}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    int n = int.Parse(Console.ReadLine());
+    if (n > 0)
+    {
+        if (n % 2 == 0)
+            Console.WriteLine("Positive Even");
+        else
+            Console.WriteLine("Positive Odd");
+    }
+    else if (n < 0)
+        Console.WriteLine("Negative");
+    else
+        Console.WriteLine("Zero");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item
 للتذكير: رأينا في تمرين سابق كيف نحسب مؤشر كتلة الجسم (BMI) باستخدام المعادلة التالية:
@@ -245,12 +551,87 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
     \item اكتب عملية خارجية باسم \textenglish{CalculateBMI} تتلقى الوزن (بالكيلوغرام) والطول (بالمتر) وتُعيد قيمة مؤشر كتلة الجسم (BMI). \\
     \textbf{مثال:} إذا تلقت الوزن $80$ كيلوغرام والطول $1.8$ متر تعيد $24.22$.
 
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double CalculateBMI(double weightKg, double heightM)
+{
+    return weightKg / (heightM * heightM);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
     \item اكتب برنامجًا يستقبل من المستخدم الوزن والطول، ويحسب مؤشر كتلة الجسم باستخدام العملية السابقة، ثم يطبع القيمة التي أرجعتها العملية.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double w = double.Parse(Console.ReadLine());
+    double h = double.Parse(Console.ReadLine());
+    double bmi = CalculateBMI(w, h);
+    Console.WriteLine(bmi);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
     \item اكتب عملية خارجية إضافية باسم \textenglish{BMICategory} تتلقى قيمة مؤشر كتلة الجسم (BMI) وتطبع التصنيف المناسب حسب الجدول أعلاه. \\
     \textbf{مثال:} إذا تلقت قيمة $24.22$ تطبع "وزن طبيعي".
 
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void BMICategory(double bmi)
+{
+    if (bmi < 18.5)
+        Console.WriteLine("Underweight");
+    else if (bmi < 25)
+        Console.WriteLine("Normal weight");
+    else if (bmi < 30)
+        Console.WriteLine("Overweight");
+    else if (bmi < 35)
+        Console.WriteLine("Obesity class I");
+    else if (bmi < 40)
+        Console.WriteLine("Obesity class II");
+    else
+        Console.WriteLine("Obesity class III");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
     \item عدّل للبرنامج السابق (من بند ب) بحيث يستدعي العملية الجديدة بعد حساب مؤشر كتلة الجسم، ليطبع التصنيف المناسب أيضًا.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double w = double.Parse(Console.ReadLine());
+    double h = double.Parse(Console.ReadLine());
+    double bmi = CalculateBMI(w, h);
+    Console.WriteLine(bmi);
+
+    BMICategory(bmi);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
     \item اكتب عملية خارجية إضافية باسم \textenglish{BMI} تتلقى الوزن والطول، وتطبع التصنيف المناسب حسب الجدول أعلاه، واستدعها من البرنامج الرئيسي. \\
     \textbf{مثال:} إذا تلقت الوزن $80$ كيلوغرام والطول $1.8$ متر تطبع "وزن طبيعي".
@@ -258,6 +639,32 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
          استخدم العمليتين السابقتين داخل هذه العملية.
     \end{boxHint}
 \end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void BMI(double weightKg, double heightM)
+{
+    double bmi = CalculateBMI(weightKg, heightM);
+    BMICategory(bmi);
+}
+
+public static void Main()
+{
+    double w = double.Parse(Console.ReadLine());
+    double h = double.Parse(Console.ReadLine());
+    double bmi = CalculateBMI(w, h);
+    Console.WriteLine(bmi);
+
+    BMICategory(bmi);
+
+    BMI(w, h);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 % \item
 % \begin{enumerate}
@@ -291,14 +698,42 @@ $2$ & $6$ &  &  &  &  &  &  &  &  \\ \hline
     \end{boxExample}
 \end{enumerate}
 
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int ToSeconds(int hours, int minutes, int seconds)
+{
+    return hours * 3600 + minutes * 60 + seconds;
+}
 
-% \begin{boxCode}
-% \begin{english}
-% \begin{minted}{csharp}
+public static void Main()
+{
+    // b)
+    int h = int.Parse(Console.ReadLine());
+    int m = int.Parse(Console.ReadLine());
+    int s = int.Parse(Console.ReadLine());
+    Console.WriteLine(ToSeconds(h, m, s));
 
-% \end{minted}
-% \end{english}
-% \end{boxCode}
+    // c)
+    int h1 = int.Parse(Console.ReadLine());
+    int m1 = int.Parse(Console.ReadLine());
+    int s1 = int.Parse(Console.ReadLine());
+    int h2 = int.Parse(Console.ReadLine());
+    int m2 = int.Parse(Console.ReadLine());
+    int s2 = int.Parse(Console.ReadLine());
+
+    int t1 = ToSeconds(h1, m1, s1);
+    int t2 = ToSeconds(h2, m2, s2);
+    if (t1 == t2)
+        Console.WriteLine("Equal");
+    else
+        Console.WriteLine("Not Equal");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 \end{document}
