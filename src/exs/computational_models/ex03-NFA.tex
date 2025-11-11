@@ -1,0 +1,111 @@
+﻿\documentclass[12pt]{article}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{تمرين 3 للصف 11-10 \\ أوتومات نهائي غير محدود}
+
+\begin{document}
+
+\maketitle
+
+\section{تحديد لغة الأوتومات}
+
+حدد لغة كل أوتومات من التالية:
+
+\ifwithsols
+\begin{enumerate}[itemsep=2em]
+\else
+\begin{enumerate}
+\fi
+
+\item
+\includegraphics[width=0.5\textwidth]{../../../images/NFAs/01-endsWith-ab.png}\\
+\ifwithsols
+\begin{boxSolution}
+لغة كل الكلمات التي تنتهي بـ $ab$.
+\end{boxSolution}
+\fi
+
+\item
+\includegraphics[width=0.3\textwidth]{../../../images/NFAs/02-containsA.png}\\
+\ifwithsols
+\begin{boxSolution}
+    لغة كل الكلمات التي تحتوي الحرف $a$.
+\end{boxSolution}
+\fi
+
+\item
+\includegraphics[width=0.5\textwidth]{../../../images/NFAs/03-startsAAndEndsB.png}\\
+\ifwithsols
+\begin{boxSolution}
+لغة كل الكلمات التي تبدأ بالحرف $a$ وتنتهي بالحرف $b$.
+\end{boxSolution}
+\fi
+
+\item
+\includegraphics[width=0.5\textwidth]{../../../images/NFAs/04-containsBAB.png}\\
+\ifwithsols
+\begin{boxSolution}
+كل الكلمات التي تحتوي على السلسلة الفرعية $bab$.
+\end{boxSolution}
+\fi
+
+\item
+\includegraphics[width=0.6\textwidth]{../../../images/NFAs/05-containsaaaOrbbb.png}\\
+\ifwithsols
+\begin{boxSolution}
+كل الكلمات التي تحتوي على السلسلة الفرعية $aaa$ أو السلسلة الفرعية $bbb$.
+\end{boxSolution}
+\fi
+
+\item
+\includegraphics[width=0.4\textwidth]{../../../images/NFAs/06-beforeLastA.png}\\
+\ifwithsols
+\begin{boxSolution}
+كل الكلمات التي  فيها الحرف قبل الأخير هو $a$.
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\section{بناء أوتومات من اللغة}
+
+\begin{enumerate}
+\item
+لكل لغة من اللغات التالية، ابنِ أوتوماتًا نهائيًّا \textbf{غير محدود} يقبل هذه اللغة
+\begin{enumerate}[itemsep=1em]
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي تحتوي على $1$ واحدة على الأقل.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ وتنتهي بنفس الحرف.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة الفرعية $aba$.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي مجموع خاناتها يقسم على 2 أو على 3 بدون باقٍ.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي يكون فيها الحرف الثالث من النهاية هو $a$.
+
+\end{enumerate}
+
+\vspace{2em}
+
+\item
+لكل لغة من اللغات التالية، ابنِ أوتوماتًا حسب المطلوب
+\begin{enumerate}[itemsep=1em]
+
+\item ابن أوتوماتًا نهائيًّا محدودًا للغة التالية: \\
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي هي من الصورة $(ab)^n$ حيث $n \ge 1$. \\
+(مثل: $ab, abab, ababab, \dots$)
+
+\item ابن أوتوماتًا نهائيًّا للغة التالية: \\
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ ذات الطول الزوجي والتي تنتهي بالحرف $a$.
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
