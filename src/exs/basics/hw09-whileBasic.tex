@@ -1,0 +1,147 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 9 للصف العاشر 10 \\ حلقة \textenglish{while}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\setlist[enumerate]{itemsep=0.8em, topsep=0.5em}
+
+\begin{enumerate}[itemsep=2em]
+
+% -------------------------------------------------------
+\item
+تتبع الكود التالي بجدول متابعة بحيث يحتوي على عمود لكل متغير، وعمود لكل شرط، وعمود للطباعة.
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    int num = 100;
+    while(num >= 93)
+    {
+        if(num % 2 == 0)
+            Console.WriteLine(num);
+        num --;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{tabular}{c|c|c|c}
+\textenglish{num} & \textenglish{num >= 93} & \textenglish{num \% 2 == 0} & \textenglish{Console.WriteLine} \\
+\hline
+100 & \textenglish{True} & \textenglish{True} & 100 \\ \hline
+99 & \textenglish{True} & \textenglish{False} & \textemdash \\ \hline
+98 & \textenglish{True} & \textenglish{True} & 98 \\ \hline
+97 & \textenglish{True} & \textenglish{False} & \textemdash \\ \hline
+96 & \textenglish{True} & \textenglish{True} & 96 \\ \hline
+95 & \textenglish{True} & \textenglish{False} & \textemdash \\ \hline
+94 & \textenglish{True} & \textenglish{True} & 94 \\ \hline
+93 & \textenglish{True} & \textenglish{False} & \textemdash \\ \hline
+92 & \textenglish{False} & \textemdash & \textemdash \\ \hline
+\end{tabular}
+\end{center}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+صاحب دكانة صغيرة يبيع الأغراض في دكانه، بحيث يكون ربحه من كل غرض يبيعه هو $20\%$ من سعره.
+مثلًا: إذا كان يبيع غرضًا ما بسعر $100$ شاقل، فهذا يعني أنّه ربح من هذا الغرض $20 = 0.2 \times 100$ شاقلًا.
+
+اكتب برنامجًا لهذا التاجر، بحيث في كل مرة يشتري فيها زبون من دكانه غرضًا ما فإنّه يُدخل لك المبلغ الذي دفعه هذا الزبون. \\
+ينتهي الإدخال عندما يُدخل التاجر القيمة $-1$. \\
+على البرنامج أن يطبع للمستخدم ربحه في ذلك اليوم.
+
+\begin{boxExample}
+    إذا أدخل التاجر في أحد الأيام المدخلات التالية: \\
+    \begin{english}
+    \begin{minted}{text}
+    100
+    50
+    200
+    3
+    -1
+    \end{minted}
+    \end{english}
+    فإنّ البرنامج يجب أن يطبع له: $70.6$  لأنّ: \\
+    $0.2 \times 100 + 0.2 \times 50 + 0.2 \times 200 + 0.2 \times 3 = 70.6$
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double profit = 0;
+    double price = 0;
+    while (price != -1)
+    {
+        price = double.Parse(Console.ReadLine());
+        profit += 0.2 * price;
+    }
+    Console.WriteLine(profit);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double sum = 0;
+    double price = 0;
+    while (price != -1)
+    {
+        price = double.Parse(Console.ReadLine());
+        sum += price;
+    }
+    Console.WriteLine(sum * 0.2);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل علامات طلاب صف معيّن، ينتهي الاستقبال عند إدخال الرقم $-1$. \\
+على البرنامج أن يطبع معدّل علامات طلاب الصف.
+\begin{boxHint}
+    ستحتاج إلى متغيّرين: متغير يحسب المجموع، ومتغير يحسب عدد الطلاب.
+\end{boxHint}
+
+\ifwithsols
+\begin{boxSolution}
+نستخدم مجموعًا وعدّادًا ثم نقسم للحصول على المعدل.
+\begin{english}
+\begin{minted}{csharp}
+public static void Main()
+{
+    double sum = 0;
+    int count = 0;
+    double grade = 0;
+    while (grade != -1)
+    {
+        grade = double.Parse(Console.ReadLine());
+        sum += grade;
+        count++;
+    }
+    Console.WriteLine(sum / count);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+\end{document}
