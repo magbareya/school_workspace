@@ -1,7 +1,11 @@
-\documentclass[12pt]{article}
+\documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{وظيفة 2 للصف 11-10 - أوتومات نهائي محدّد (DFA)}
+\ifwithsols
+\title{حل وظيفة 2 للصف 11-10 \\ أوتومات نهائي محدود (DFA)}
+\else
+\title{وظيفة 2 للصف 11-10 \\ أوتومات نهائي محدود (DFA)}
+\fi
 
 \begin{document}
 \maketitle
@@ -16,32 +20,108 @@
     $L_6$ = لغة جميع الكلمات التي تبدأ بالحرف $a$ وتنتهي بالحرف $b$ \underline{\textbf{أو}} تبدأ بالحرف $b$ وتنتهي بالحرف $a$.
 \end{boxCode}
 
-\begin{enumerate}
-
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
+\begin{enumerate}[itemsep=1em]
+\fi
     \item اكتب اللغة الناتجة من العملية $L_1 \cup L_2$.
+\ifwithsols
+\begin{boxSolution}
+  $$L_1 \cup L_2 = \{ w \in \{a,b\}^* \mid \#_a(w) \geq \#_b(w) \}$$
+\end{boxSolution}
+\fi
+
     \item اكتب اللغة الناتجة من العملية $L_1 \cap L_2$.
-    \item بالنسبة للغة $L_3$:
+\ifwithsols
+\begin{boxSolution}
+  $$L_1 \cap L_2 = \emptyset$$
+\end{boxSolution}
+\clearpage
+\fi
+
+\item بالنسبة للغة $L_3$:
   \begin{enumerate}
     \item اكتب 3 كلمات موجودة في اللغة.
     \item اكتب 3 كلمات ليست موجودة في اللغة.
     \item ابنِ أوتوماتًا نهائيًّا محدودًا يتلقّى اللغة $L_3$.
-    \item اكتب جدول التنفيذ للكلمة $abbab$.
+    \item اكتب مسار التنفيذ للكلمة $abbab$.
+  \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+\item
+$aabb, abab, aaaa$
+
+\item $a, aa, aaa$
+
+\item . \\
+\includegraphics[width=\textwidth]{../../../images/DFAs/at_least_3_letters.png}
+
+\item
+$ q0 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q2 \xrightarrow{\text{b}} q3 \xrightarrow{\text{a}} q4 \xrightarrow{\text{b}} q4$
 \end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
+
 
 \item ابنِ أوتوماتًا نهائيًّا محدودًا يتلقّى اللغة $L_4$.
-\item ابنِ أوتوماتًا نهائيًّا محدودًا يتلقّى اللغة $L_5$.
+\ifwithsols
+\begin{boxSolution}
+  \includegraphics[width=\textwidth]{../../../images/DFAs/starts_with_b_and_ends_wtih_a.png}
+\end{boxSolution}
+\fi
 
+\item ابنِ أوتوماتًا نهائيًّا محدودًا يتلقّى اللغة $L_5$.
+\ifwithsols
+\begin{boxSolution}
+  \includegraphics[width=\textwidth]{../../../images/DFAs/starts_with_a_and_ends_wtih_b.png}
+\end{boxSolution}
+\fi
 \clearpage
+
 \item بالنسبة للغة $L_6$:
   \begin{enumerate}
     \item ما هي أقصر كلمة موجودة في اللغة؟ إذا كان هناك أكثر من كلمة بأقصر طول، اكتبها كلها.
     \item اكتب 3 كلمات موجودة في اللغة.
     \item اكتب 3 كلمات ليست موجودة في اللغة.
     \item ابنِ أوتوماتًا نهائيًّا محدودًا يتلقّى اللغة $L_6$.
-    \item اكتب جدول التنفيذ للكلمة $abbaab$.
+    \item اكتب مسار التنفيذ للكلمة $abbaab$.
   \end{enumerate}
 
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+\item
+هناك كلمتان بنفس الطول هما أقصر كلمتين:
+  $ab, ba$
+
+\item $aabb, baaba, abbbb$
+
+\item $aaba, aa, bbbb$
+
+\item .
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{../../../images/DFAs/first_and_last_letters_are_different.png}
+\end{center}
+
+\item
+$ q0 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q3 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q3$
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
+
   \item ما هي أقصر كلمة موجودة في اللغة $L_6 \cdot L_6$؟ إذا كان هناك أكثر من كلمة بأقصر طول، اكتبها كلها.
+
+  \ifwithsols
+\begin{boxSolution}
+  هناك 4 كلمات بنفس الطول هي أقصر كلمات:
+  $$abab, abba, baab, baba$$
+\end{boxSolution}
+\fi
+
 \end{enumerate}
 
 \end{document}

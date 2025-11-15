@@ -1,0 +1,53 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\begin{document}
+\thispagestyle{fancy}
+
+\begin{boxSolution}
+\begin{enumerate}[label=(\alph*)]
+\item $L_3 = \{b, bb, abb, bab, bba \}$
+
+\item . \\
+\includegraphics[width=\textwidth]{../../../images/DFAs/include_aa_or_bb_notBoth.png}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}
+\begin{enumerate}[label=(\alph*)]
+\item $$0^3\$0^0\$ = 000\$\$$$
+
+\item . \\
+\includegraphics[width=\textwidth]{../../../images/DFAs/zeros_wtih_dollars_dfa.png}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}
+\begin{enumerate}[label=(\alph*)]
+\item
+$$L = \{ w \in \{a,c\}^* \mid \#_a(w) \% 2 == 0 \text{ and } \#_c(w) \% 3 == 0 \} $$
+
+لغة كل الكلمات التي عدد الـ $a$ فيها زوجي، وعدد الـ $c$ يقسم على 3 بدون باقٍ.
+
+\item . \\
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{../../../images/DFAs/Amod2Cmod3Zero.png}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}
+\begin{center}
+\includegraphics[width=\textwidth]{../../../images/DFAs/numC-numD_in_each_prefix_between0And3.png}
+\end{center}
+\end{boxSolution}
+
+\end{document}
