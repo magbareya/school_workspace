@@ -1,0 +1,126 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\begin{document}
+\thispagestyle{fancy}
+
+\begin{boxSolution}
+    \begin{enumerate}[label=\alph*.]
+    \item
+    \begin{enumerate}[label=(\arabic*)]
+        \item $bcbcac$
+        \item $a$
+    \end{enumerate}
+
+    \item
+    نبني أوتوماتًا نهائيًّا لكل واحد من المتطلّبات:
+\begin{itemize}[label=-, itemsep=2em]
+\item $L_1$ هي لغة كل الكلمات التي فيها الحرف قبل الأخير هو $a$، هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.5\textwidth]{../../../images/DFAs/before_last_is_a.png}
+
+\item $L_2$ هي لغة كل الكلمات التي تحتوي على الأقلّ مرّتين التسلسل $bc$، هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=\textwidth]{../../../images/DFAs/contains_bc_twice.png}
+\end{itemize}
+\end{enumerate}
+\end{boxSolution}
+
+\begin{boxSolution}[تكملة]
+\begin{itemize}[label=-, itemsep=2em]
+
+\item $L_3$ هي لغة كل الكلمات التي عدد مرات ظهور الحرف $b$ فيها هو زوجيّ. هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.4\textwidth]{../../../images/DFAs/even_b.png}
+
+\item $L_4$ هي لغة كل الكلمات التي لا تحوي التسلسل $bb$. هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.5\textwidth]{../../../images/DFAs/no_bb.png}
+\end{itemize}
+
+اللغة $L$ الموصوفة في السؤال هي اللغة: $L = L_1 \cap L_2 \cap L_3 \cap L_4$. \\
+رأينا أعلاه أنّ كل واحدة من اللغات $L_1, L_2, L_3, L_4$ هي لغة نظامية، لذلك $L$ هي لغة نظامية حسب صفة الانغلاق للغات النظامية تحت عملية التقاطع.
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $\overline{L_1} = \emptyset$ .
+
+\item $L_3 = L_2 \cap \overline{L_1} = L_2 \cap \emptyset = \emptyset$ .\\
+إذن، اللغة $L_3$ هي اللغة الفارغة، وهي لغة نظامية، لأنّه يوجد أوتومات يقبل هذه اللغة (أي لا يقبل أي كلمة. ) \\
+وهو الأوتومات الذي فيه حالة واحدة هي حالة فخ:
+\begin{center} \includegraphics[width=0.2\textwidth]{../../../images/DFAs/emptyset.png} \end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}
+    \begin{enumerate}[label=\alph*., itemsep=2em]
+        \item . \\
+\begin{tabular}{|r|c|c|c|}
+\hline
+\textbf{هل مقبولة؟} & $m \% 4$ & $n\%2$ & \textbf{الكلمة} \\
+\hline
+غير مقبولة & 0 & 1 & $a = a^{1}b^{0}$ \\
+\hline
+مقبولة & 1 & 1 & $ab = a^{1}b^{1}$ \\
+\hline
+ مقبولة & 3 & 3 & $aaabbb = a^{3}b^{3}$ \\
+\hline
+مقبولة & 1 & 1 & $aaabbbbb = a^{3}b^{5}$ \\
+\hline
+غير مقبولة & 2 & 0 & $aabb = a^{2}b^{2}$ \\
+\hline
+مقبولة & 1 & 1 & $aaab = a^{3}b^{1}$ \\
+\hline
+مقبولة & 0 & 0 & $aa = a^{2}b^{0}$ \\
+\hline
+غير مقبولة (لأن شرط اللغة يطلب $n>0$) & 0 & 0 & $bbbb = a^{0}b^{4}$ \\
+\hline
+مقبولة & 0 & 0 & $aaaa = a^{4}b^{0}$ \\
+\hline
+غير مقبولة & 3 & 1 & $abbb = a^{1}b^{3}$ \\
+\hline
+\end{tabular}
+
+\item . \\
+    \includegraphics[width=0.9\textwidth]{../../../images/DFAs/an_bm_mmod4_equals_nmod2.png}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+
+\begin{boxSolution}
+\begin{enumerate}[label=\alph*., itemsep=2em]
+    \item نحصل على أقصر كلمة عندما نعوّض أصغر قيمة لكل بارامتر، أي: $k = 1, n=1$. \\
+    لذلك أقصر كلمة هي:
+    $$ c^{1+1+1} b^1 a^{2 \cdot 1} \rightarrow c^3 b^1 a^2 \rightarrow cccbaa $$ \\
+    كي نحدد إذا كانت كلمة ما موجودة في $L_2$ يجب أن يظهر الحرف $d$ مرة واحدة في الوسط بالضبط. \\
+    وأيضًا، القسم الذي قبل الحرف $d$ يجب أن يكون كلمة في $L_1$. \\
+    والقسم الذي بعد الحرف $d$ يجب ان يكون مقلوب كلمة في $L_1$ (ليس بالضرورة نفس الكلمة التي كانت قبل الحرف $d$).
+
+    \item $L2 = L_1 \cdot d \cdot R(L_1) = \{ c^{1+k+n} b^k a^{2n} d a^{2m} b^q c^{1+q+m} \mid, m,n,k,q \geq 1 \}$
+    \begin{itemize}
+        \item \textenglish{cccbaaddaabccc} \\
+        ليست موجودة في اللغة، لأنّ الحرف $d$  يظهر مرتين في الكلمة.
+
+        \item \textenglish{cccbaadcccbaa} \\
+        ليست موجودة في الكلمة لأنّ القسم الموجود بعد الحرف $d$ ليس مقلوب كلمة من اللغة $L_1$، بل هو نفسه موجود في اللغة $L_1$.
+
+        \item $w = cccbaadaaaabcccc$ \\
+        موجودة في اللغة $L_2$. لنوضح ذلك نعرّف كلمتين: \\
+        $u = cccbaa = c^3 b^1 a^2$ و $v = aaaabcccc = a^4 b^1 c^4$. \\
+        يمكننا كتابة:  $w = u \cdot d \cdot v$. \\
+        نلاحظ أنّ:
+        \begin{itemize}
+        \item $u \in L_1$ عندما نعوّض $k = 1, n=1$ (هذه عمليا أقصر كلمة التي وجدناها في الفرع السابق.)
+        \item $v \in R(L_1)$ عندما نعوّض $n = 2, k=1$
+        \end{itemize}
+        لذلك: $w = u \cdot d \cdot v \in L_1 \cdot d \cdot R(L_1) \rightarrow w \in L_2$
+
+    \end{itemize}
+\end{enumerate}
+\end{boxSolution}
+
+\end{document}
