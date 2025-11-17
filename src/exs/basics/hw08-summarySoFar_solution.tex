@@ -5,49 +5,128 @@
 \begin{document}
 \thispagestyle{fancy}
 
+\subsection*{السؤال 1}
 \begin{boxSolution}
-\begin{enumerate}[label=(\alph*)]
-\item $L_3 = \{b, bb, abb, bab, bba \}$
+الدالة تُعيد أكبر قيمة من بين \texttt{x} و \texttt{y} و \texttt{z}.
 
-\item . \\
-\includegraphics[width=\textwidth]{../../../images/DFAs/include_aa_or_bb_notBoth.png}
-\end{enumerate}
+\[
+\text{Mystery}(7,9,9) = 9
+\]
 \end{boxSolution}
 
-\clearpage
-
+\subsection*{السؤال 3}
 \begin{boxSolution}
-\begin{enumerate}[label=(\alph*)]
-\item $$0^3\$0^0\$ = 000\$\$$$
-
-\item . \\
-\includegraphics[width=\textwidth]{../../../images/DFAs/zeros_wtih_dollars_dfa.png}
-\end{enumerate}
-\end{boxSolution}
-
-\clearpage
-
-\begin{boxSolution}
-\begin{enumerate}[label=(\alph*)]
-\item
-$$L = \{ w \in \{a,c\}^* \mid \#_a(w) \% 2 == 0 \text{ and } \#_c(w) \% 3 == 0 \} $$
-
-لغة كل الكلمات التي عدد الـ $a$ فيها زوجي، وعدد الـ $c$ يقسم على 3 بدون باقٍ.
-
-\item . \\
+أ. الحالة:
+\(a=25,\; b=10\). \\
+\textbf{جدول التتبّع:}
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{../../../images/DFAs/Amod2Cmod3Zero.png}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+الطباعة & $x==y$ & $x$ & $y$ & $b$ & $a$ \\
+\hline
+\textenglish{print2} & \textenglish{false} & $-15$ & $15$ & $10$ & $25$ \\
+\hline
+\end{tabular}
 \end{center}
-\end{enumerate}
+
+
+\textbf{ب. مثال يعطي مخرج مختلف:}
+يمكننا اختيار أي قيمتين بحيث يتحقق $b > a$. \\
+مثلا، نختار \(a=5,\; b=10\):
+
+\[
+y = |5-10| = 5,\qquad x=b-a = 5
+\]
+
+\[
+x==y \Rightarrow \text{true} \Rightarrow \texttt{print1}
+\]
 \end{boxSolution}
 
-\clearpage
+\subsection*{السؤال 4}
+\begin{boxSolution}
+\textbf{أ. الحالة: \(a=8,\; b=2\).}
+
+\noindent\textbf{جدول تتبّع:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+الطباعة & $a>b$ & $x$ & $b$ & $a$ \\
+\hline
+  & \textenglish{true} & $0$ & $2$ & $8$ \\ \hline
+\textenglish{***16***}  &  & $16$ & &  \\ \hline
+$16$  &  &  & &  \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{ب. مثال يعطي سطرًا واحدًا فقط:}
+
+يمكننا قلب القيم أعلاه: \(a=4, b=2\).
+عندها سيكون  المخرج هو $10$.
+\end{boxSolution}
+
+\subsection*{السؤال 5}
+\begin{boxSolution}
+\noindent\textbf{جدول التتبّع:}
+
+للاختصار، نسمي:
+\begin{english}
+\begin{itemize}
+    \item Y12 = Years(y1, y2)
+    \item Y23 = Years(y2, y3)
+    \item Y13 = Years(y1, y3)
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Print & Y13& Y13 > Y23 & Y23 & Y13 & y3 & y2 & y1 \\ \hline
+  50 & 50 & true & 30 & 80 & 1950 & 1980 & 1900 \\ \hline
+\end{tabular}
+\end{center}
+\end{english}
+\end{boxSolution}
+
+\subsection*{السؤال 2}
 
 \begin{boxSolution}
-\begin{center}
-\includegraphics[width=\textwidth]{../../../images/DFAs/numC-numD_in_each_prefix_between0And3.png}
-\end{center}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static char EvenSome(int a, int b, int c)
+{
+    if ((a + b + c) % 2 == 0)
+        return 'y';
+    else
+        return 'n';
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+
+\subsection*{السؤال 3}
+
+\begin{boxSolution}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void CheckBrother(int num)
+{
+    int tens = num / 10;
+    int ones = num % 10;
+    if (tens == ones || ones == 0)
+        Console.WriteLine("No Brother");
+    else
+        Console.WriteLine(tens + ones*10);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
 \end{boxSolution}
 
 \end{document}
+
