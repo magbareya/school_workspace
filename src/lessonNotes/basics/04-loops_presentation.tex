@@ -1,18 +1,16 @@
 \documentclass[13pt]{beamer}
 \input{../../../scripts/beamer_preamble.tex}
 
-%% ------------------------------------------------------------------
-\title{الحلقات في لغة \textenglish{C\#}}
+\title{الحلقات \textenglish{(Loops)} في لغة \textenglish{C\#}}
 \author{}
 \date{}
 
 \begin{document}
 
-%% Title page
+% -----------------------
 \begin{frame}
   \titlepage
 \end{frame}
-
 
 % ------------------------------------------------------------------
 \begin{frame}{مقدمة}
@@ -24,31 +22,39 @@
 \end{itemize}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{مفهوم الحلقة بشكل عام}
-فكرة الحلقة: \textbf{طالما أن شرطًا ما صحيح، استمر في تنفيذ الأوامر.}
-\begin{itemize}
-  \item عند كل تكرار يُفحص الشرط.
-  \item إذا كان الشرط \textenglish{true} يُنفَّذ الجسم، وإذا أصبح \textenglish{false} تتوقف الحلقة.
-\end{itemize}
+% =======================
+% WHILE section start
+% =======================
+\begin{frame}[fragile]{مفهوم حلقة \textenglish{while}}
+    فكرة الحلقة: \textbf{طالما أن شرطًا ما صحيح، استمر في تنفيذ الأوامر.}
+    \begin{itemize}
+        \item عندما لا نعرف عدد التكرارات مسبقًا.
+        \item نستمر بالتكرار حتى يحصل "شيء ما" (يتحقق شرط معين)
+        \item عند كل تكرار يُفحص الشرط.
+        \item إذا كان الشرط \textenglish{true} يُنفَّذ الجسم، وإذا أصبح \textenglish{false} تتوقف الحلقة.
+    \end{itemize}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{حلقة \textenglish{while}}
-تُستخدم عندما لا نعرف عدد التكرارات مسبقًا.
+\begin{frame}[fragile]{مبنى حلقة \textenglish{while}}
+
 \begin{english}
-\begin{lstlisting}
+\begin{lstlisting}[language=CSharp]
 while (condition)
 {
-    // الأوامر
+    // body
 }
 \end{lstlisting}
 \end{english}
+\begin{itemize}
+  \item يختبر الشرط قبل تنفيذ أي تكرار.
+  \item إذا كان الشرط \textenglish{true} يُنفَّذ جسم الحلقة، وإذا كان \textenglish{false} تتوقف الحلقة،
+  \item إذا كان الشرط \textenglish{false} من البداية، فلا ينفذ الجسم ولا مرة.
+\end{itemize}
 \end{frame}
 
-% ------------------------------------------------------------------
 \begin{frame}[fragile]{جمع حتى إدخال 0}
 يحسب مجموع الأعداد حتى إدخال 0.
+
 \begin{english}
 \begin{lstlisting}
 int sum = 0;
@@ -66,6 +72,7 @@ Console.WriteLine("Sum = " + sum);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{جمع حتى يصبح المجموع أكبر من 10}
 يستمر حتى يصبح مجموع الأعداد أكبر من 10.
+
 \begin{english}
 \begin{lstlisting}
 int sum = 0;
@@ -82,6 +89,7 @@ Console.WriteLine("Total = " + sum);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{الضرب حتى إدخال 1}
 يضرب الأعداد حتى إدخال 1.
+
 \begin{english}
 \begin{lstlisting}
 int prod = 1;
@@ -99,6 +107,7 @@ Console.WriteLine("Product = " + prod);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{عدد الأعداد الموجبة حتى إدخال عدد سالب}
 يعد الأعداد الموجبة فقط.
+
 \begin{english}
 \begin{lstlisting}
 int count = 0;
@@ -116,6 +125,7 @@ Console.WriteLine("Count = " + count);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{عدد الأعداد الزوجية حتى إدخال -1}
 يحسب عدد الأعداد الزوجية فقط.
+
 \begin{english}
 \begin{lstlisting}
 int evenCount = 0;
@@ -132,8 +142,28 @@ Console.WriteLine("Even count = " + evenCount);
 \end{frame}
 
 % ------------------------------------------------------------------
+\begin{frame}[fragile]{مثال: قراءة 3 أعداد زوجية بالضبط }
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int number, count = 0;
+while (count < 3)
+{
+    Console.WriteLine("enter a number");
+    number = int.Parse(Console.ReadLine());
+    if (number % 2 == 0)
+        count++;
+}
+Console.WriteLine("End loop");
+Console.WriteLine("count=" + count);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ------------------------------------------------------------------
 \begin{frame}[fragile]{إيجاد أكبر عدد حتى إدخال 0}
 يجد أكبر رقم من المدخلات.
+
 \begin{english}
 \begin{lstlisting}
 int max = int.MinValue;
@@ -152,6 +182,7 @@ Console.WriteLine("Max = " + max);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{إيجاد أصغر عدد حتى إدخال 0}
 يجد أصغر رقم من المدخلات.
+
 \begin{english}
 \begin{lstlisting}
 int min = int.MaxValue;
@@ -170,6 +201,7 @@ Console.WriteLine("Min = " + min);
 % ------------------------------------------------------------------
 \begin{frame}[fragile]{عدد خانات عدد معين}
 يحسب عدد خانات الرقم.
+
 \begin{english}
 \begin{lstlisting}
 int n = int.Parse(Console.ReadLine());
@@ -184,224 +216,453 @@ Console.WriteLine("Digits = " + count);
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{من \textenglish{while} إلى \textenglish{for}}
-توضيح أن \textenglish{for} هي شكل مختصر من \textenglish{while}.
+\begin{frame}[fragile]{التحقق الصارم من المدخلات }
+
 \begin{english}
-\begin{lstlisting}
-// باستخدام while
-int i = 0;
-while (i < 10)
+\begin{lstlisting}[language=CSharp]
+int n = int.Parse(Console.ReadLine());
+while (n < 1 || n > 10)
 {
-    Console.WriteLine(i);
+    Console.WriteLine("Invalid! Enter 1-10:");
+    n = int.Parse(Console.ReadLine());
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{ شرط توقّف مركب في \textenglish{while}}
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int sum = 0, i = 0;
+while (i < 10 && sum < 200)
+{
+    sum += int.Parse(Console.ReadLine());
     i++;
 }
-
-// باستخدام for
-for (int i = 0; i < 10; i++)
-{
-    Console.WriteLine(i);
-}
 \end{lstlisting}
 \end{english}
+\begin{itemize}
+  \item هنا شرط التوقف يعتمد على عداد وشرط آخر (هدف مالي).
+  \item مثال مأخوذ من المواد: التوقف إذا وصلنا إلى هدف.
+\end{itemize}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{حلقة \textenglish{for}}
-تُستخدم عندما نعرف عدد التكرارات مسبقًا.
+% =======================
+% FOR section start (after while)
+% =======================
+\begin{frame}{متى نستخدم \textenglish{for}؟}
+\begin{itemize}
+  \item عندما نعرف عدد التكرارات أو يمكن حسابه بسهولة.
+  \item بنية مركّبة في سطر واحد: \textenglish{initialization; condition; update;}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{مبنى حلقة \textenglish{for}}
+
 \begin{english}
-\begin{lstlisting}
+\begin{lstlisting}[language=CSharp]
 for (initialization; condition; update)
 {
-    // الأوامر
+    // body
+}
+\end{lstlisting}
+\end{english}
+\begin{itemize}
+  \item ترتيب التنفيذ:
+    \begin{enumerate}
+        \item \textenglish{initialization} - التهئية، مرة واحدة
+        \item كرر التالي:
+        \begin{enumerate}
+            \item \textenglish{condition} - شرط التوقف، يُفحَص كل مرة \textbf{قبل} تنفيذ جسم الحلقة. إذا كان الشرط لا يتحقق فأوقف التكرار.
+            \item تنفيذ جسم الحلقة
+            \item \textenglish{update} - التحديث، يحصل كل مرة \textbf{بعد} تنفيذ جسم الحلقة
+        \end{enumerate}
+    \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: طباعة الأعداد 1..3 }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+for (int i = 1; i <= 3; i++)
+{
+    Console.WriteLine(i);
+}
+\end{lstlisting}
+\end{english}
+
+الكود أعلاه يفعل نفس ما يفعله هذا الكود:
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int i = 1;
+// check that i <= 3  --> true
+Console.WriteLine(i);
+i++; // i <-- 2
+// check that i <= 3  --> true
+Console.WriteLine(i);
+i++; // i <-- 3
+// check that i <= 3  --> true
+Console.WriteLine(i);
+i++; // i <-- 4
+// check that i <= 3  --> false
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+
+\begin{frame}[fragile]{متغير عداد الحلقة موجود دائمًا حتى لو لم نستخدمه في جسم الحلقة. }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+for (int i = 0; i < 5; i++)
+{
+    Console.WriteLine("Hello");
 }
 \end{lstlisting}
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{طباعة الأعداد من 1 إلى 10}
-يطبع الأعداد من 1 إلى 10.
-\begin{english}
-\begin{lstlisting}
-for (int i = 1; i <= 10; i++)
-    Console.WriteLine(i);
-\end{lstlisting}
-\end{english}
-\end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{طباعة الأعداد الزوجية من 1 إلى 100}
-يطبع الأعداد الزوجية فقط.
+\begin{frame}[fragile]{مثال: طباعة الأعداد الزوجية بين 1 و 100 }
 \begin{english}
-\begin{lstlisting}
+\begin{lstlisting}[language=CSharp]
 for (int i = 2; i <= 100; i += 2)
     Console.WriteLine(i);
 \end{lstlisting}
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{مجموع الأعداد من 1 إلى n}
-يحسب مجموع الأعداد من 1 إلى n.
-\begin{english}
-\begin{lstlisting}
-int n = int.Parse(Console.ReadLine());
-int sum = 0;
-for (int i = 1; i <= n; i++)
-    sum += i;
-Console.WriteLine("Sum = " + sum);
-\end{lstlisting}
-\end{english}
-\end{frame}
+\begin{frame}[fragile]{مثال: طباعة الأعداد الزوجية بين 1 و 100  - طريقة 2}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{مجموع الأعداد من m إلى n}
-يحسب مجموع الأعداد بين رقمين.
 \begin{english}
-\begin{lstlisting}
-int m = int.Parse(Console.ReadLine());
-int n = int.Parse(Console.ReadLine());
-int sum = 0;
-for (int i = m; i <= n; i++)
-    sum += i;
-Console.WriteLine("Sum = " + sum);
-\end{lstlisting}
-\end{english}
-\end{frame}
-
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{مجموع الأعداد الزوجية من 1 إلى n}
-يحسب مجموع الأعداد الزوجية فقط.
-\begin{english}
-\begin{lstlisting}
-int n = int.Parse(Console.ReadLine());
-int sum = 0;
-for (int i = 2; i <= n; i += 2)
-    sum += i;
-Console.WriteLine("Even sum = " + sum);
-\end{lstlisting}
-\end{english}
-\end{frame}
-
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{استقبال 10 أرقام وطباعتها}
-يطبع كل الأرقام المدخلة.
-\begin{english}
-\begin{lstlisting}
-for (int i = 1; i <= 10; i++)
+\begin{lstlisting}[language=CSharp]
+for (int i = 1; i <= 100; i++)
 {
-    int num = int.Parse(Console.ReadLine());
-    Console.WriteLine(num);
+    if (i % 2 == 0)
+        Console.WriteLine(i);
 }
 \end{lstlisting}
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{استقبال 10 أرقام وحساب معدلها}
-يحسب معدل 10 أعداد.
+
+\begin{frame}[fragile]{مثال: طباعة الأعداد التي تقبل القسمة على 5 ضمن 0..N }
 \begin{english}
-\begin{lstlisting}
-int sum = 0;
-for (int i = 1; i <= 10; i++)
+\begin{lstlisting}[language=CSharp]
+int N = int.Parse(Console.ReadLine());
+for (int i = 0; i <= N; i++)
 {
-    int num = int.Parse(Console.ReadLine());
-    sum += num;
+    if (i % 5 == 0)
+        Console.WriteLine(i);
 }
-double avg = sum / 10.0;
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: طباعة الأعداد التي تقبل القسمة على 5 ضمن 0..N  - حل 2}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int N = int.Parse(Console.ReadLine());
+for (int i = 0; i <= N; i+=5)
+{
+    Console.WriteLine(i);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+
+\begin{frame}[fragile]{مثال: حساب المجموع }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int sum = 0;
+for (int i = 1; i <= 100; i++)
+    sum += i;
+Console.WriteLine(sum);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: إيجاد القيمة العظمى (max) أثناء القراءة }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int max = int.MinValue;
+for (int i = 0; i < 10; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > max) max = x;
+}
+Console.WriteLine("Max = " + max);
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: متوسط مجموعة أعداد }
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int sum = 0, n = 5;
+for (int i = 0; i < n; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+double avg = sum / (double)n;
 Console.WriteLine("Average = " + avg);
 \end{lstlisting}
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{معدل حتى إدخال -1}
-يحسب معدل الأعداد حتى إدخال -1.
-\begin{english}
-\begin{lstlisting}
-int sum = 0, count = 0;
-int num = int.Parse(Console.ReadLine());
-while (num != -1)
-{
-    sum += num;
-    count++;
-    num = int.Parse(Console.ReadLine());
-}
-double avg = (double)sum / count;
-Console.WriteLine("Average = " + avg);
-\end{lstlisting}
-\end{english}
+\begin{frame}[fragile]{أيّهما أقوى: \textenglish{for} أم \textenglish{while}؟}
+    هل يمكنك التفكير في مشكلة يمكن حلّها فقط بواسطة \textenglish{for} ولا يمكن حلّها بواسطة \textenglish{while}?
+
+    أو العكس:
+
+    هل يمكنك التفكير في مشكلة يمكن حلّها فقط بواسطة \textenglish{while} ولا يمكن حلّها بواسطة \textenglish{for}?
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{حساب الباقي والقسمة}
-يحسب خارج القسمة والباقي.
-\begin{english}
-\begin{lstlisting}
-int a = int.Parse(Console.ReadLine());
-int b = int.Parse(Console.ReadLine());
-int quotient = a / b;
-int remainder = a % b;
-Console.WriteLine("Quotient = " + quotient);
-Console.WriteLine("Remainder = " + remainder);
-\end{lstlisting}
-\end{english}
-\end{frame}
+\begin{frame}[fragile]{مثال: تحويل \textenglish{for} إلى \textenglish{while} }
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{طباعة جدول ضرب عدد معين}
-يطبع جدول الضرب لعدد محدد.
 \begin{english}
-\begin{lstlisting}
-int n = int.Parse(Console.ReadLine());
-for (int i = 1; i <= 10; i++)
+\begin{lstlisting}[language=CSharp]
+// for-style
+for (int i = 1; i <= 5; i++)
+    Console.WriteLine(i);
+
+// while-style equivalent
+int i = 1;
+while (i <= 5)
 {
-    Console.WriteLine(n + " x " + i + " = " + (n * i));
+    Console.WriteLine(i);
+    i++;
 }
 \end{lstlisting}
 \end{english}
 \end{frame}
 
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{مجموع الأرقام داخل عدد واحد}
-يجمع خانات العدد.
-\begin{english}
-\begin{lstlisting}
-int n = int.Parse(Console.ReadLine());
-int sum = 0;
-while (n > 0)
-{
-    sum += n % 10;
-    n /= 10;
-}
-Console.WriteLine("Digits sum = " + sum);
-\end{lstlisting}
-\end{english}
-\end{frame}
-
-% ------------------------------------------------------------------
-\begin{frame}[fragile]{حساب المضروب}
-يحسب مضروب عدد n.
-\begin{english}
-\begin{lstlisting}
-int n = int.Parse(Console.ReadLine());
-int factorial = 1;
-for (int i = 1; i <= n; i++)
-    factorial *= i;
-Console.WriteLine(n + "! = " + factorial);
-\end{lstlisting}
-\end{english}
-\end{frame}
-
-% ------------------------------------------------------------------
-\begin{frame}{خاتمة}
+% =======================
+% Infinite loops and showing examples where stop condition never met
+% =======================
+\begin{frame}{أمثلة على حلقات شرط التوقف لا يتحقق — حالات حقيقية}
 \begin{itemize}
-  \item حلقة \textenglish{while} تكرّر الأوامر طالما الشرط صحيح.
-  \item حلقة \textenglish{for} تستخدم عند معرفة عدد التكرارات.
-  \item احذر من نسيان تحديث العداد أو تغيير الشرط.
-  \item استخدم المتغيرات الجامعة والعدادات لتبسيط الحسابات.
+  \item ننسى تحديث العداد.
+  \item استخدام شرط خاطئ (مثلاً: `i > 0` مع `i` يبدأ بصفر ويتناقص إلى سالب).
+  \item مدخلات خارجة عن السيطرة (انتظار إدخال لن يحدث).
 \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{مبدأ الحلقات اللانهائية — مثال توضيحي }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+int x = 5;
+while (x > 0)
+{
+    Console.WriteLine(x);
+    // x is not updated anywhere --> infinite loop
+}
+\end{lstlisting}
+\end{english}
+\begin{itemize}
+  \item هذه الحلقة خاطئة منطقيًا، لأنّ شرط التوقف في الحلقة يجب أن يتعلق بمتغيرات تتغير قيمتها في جسم الحلقة.
+  \item الحل: تحديث المتغير أو تغيير الشرط داخل الجسم.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{مثال: for بلا تحديث }
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+for (int i = 1; i > 0; ) //i is not updated
+{
+    Console.WriteLine("Infinite?");
+}
+\end{lstlisting}
+\end{english}
+
+أو
+
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+for (int i = 1; i > 0; i++) //always true
+{
+    Console.WriteLine("Infinite?");
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% % =======================
+% % Validity and program correctness with follow tables
+% % =======================
+% \begin{frame}{تحليل صحة البرنامج باستخدام جدول متابعة}
+% \begin{itemize}
+%   \item أضف عمودًا لشرط الحلقة، وعمودًا لمتغير عداد الحلقة حتى لو لم يُستخدم في الجسم.
+%   \item الجدول يوضح القيم قبل وبعد كل تكرار — يساعد على إثبات صحة الخروج.
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]{مثال جدول متابعة — برنامج يحسب مجموع أول n أعداد }
+% \begin{tabular}{|c|c|c|c|c|}
+% \hline
+% تكرار & i (قبل) & شرط & sum (قبل) & sum (بعد) \\
+% \hline
+% 0 & 1 & true & 0 & 1 \\
+% 1 & 2 & true & 1 & 3 \\
+% 2 & 3 & true & 3 & 6 \\
+% ... & ... & ... & ... & ... \\
+% n & n & true/false & ... & ... \\
+% \hline
+% \end{tabular}
+% \end{frame}
+
+% % =======================
+% % Complexity / number of iterations
+% % =======================
+% \begin{frame}{تحليل النجاعة: عدد التكرارات}
+% \begin{itemize}
+%   \item نعدّ كم مرة ينفّذ جسم الحلقة — يساعد في تقدير الزمن (تقدير تقريبِي).
+%   \item مثال: من 1 إلى 100 خطوة 1 $\Rightarrow$ 100 تكرار.
+%   \item مع التداخل: حلقة داخل حلقة، إذا كانت الأولى m والثانية n => $m\times n$ تكرار.
+% \end{itemize}
+% \end{frame}
+
+% % =======================
+% % Nested loops
+% % =======================
+% \begin{frame}[fragile]{مثال: تداخل حلقات }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% for (int i = 1; i <= 3; i++)
+% {
+%     for (int j = 1; j <= 4; j++)
+%     {
+%         Console.Write(i + "," + j + " ");
+%     }
+%     Console.WriteLine();
+% }
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% % =======================
+% % Using loops for sequences (arith/geom)
+% % =======================
+% \begin{frame}{الحلقات والمتواليات الحسابية والهندسية}
+% \begin{itemize}
+%   \item متتالية حسابية: \(a, a+d, a+2d, \dots\)
+%   \item متتالية هندسية: \(a, ar, ar^2, \dots\)
+%   \item الحلقات تنفّذ بسهولة توليد الحدود الأولى.
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]{مثال: أول 10 حدود من متوالية هندسية }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% double a = 2, r = 3;
+% for (int k = 0; k < 10; k++)
+% {
+%     Console.WriteLine(a * Math.Pow(r, k));
+% }
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% % =======================
+% % External methods with loops
+% % =======================
+% \begin{frame}[fragile]{عمليات خارجية تحتوي على حلقات - مثال }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% public static int SumToN(int n)
+% {
+%     int sum = 0;
+%     for (int i = 1; i <= n; i++)
+%         sum += i;
+%     return sum;
+% }
+
+% public static void Main()
+% {
+%     Console.WriteLine(SumToN(10));
+% }
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% % =======================
+% % Exercises — each in its own frame (several)
+% % =======================
+% \begin{frame}{سؤال 1 }
+% اكتب حلقة \textenglish{while} تطلب من المستخدم أعدادًا حتى يدخل 0، ثم تطبع مجموعها.
+% \end{frame}
+
+% \begin{frame}[fragile]{حل سؤال 1 }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% int sum = 0;
+% int x = int.Parse(Console.ReadLine());
+% while (x != 0)
+% {
+%     sum += x;
+%     x = int.Parse(Console.ReadLine());
+% }
+% Console.WriteLine("Sum = " + sum);
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% \begin{frame}{سؤال 2 }
+% اكتب حلقة \textenglish{for} تطبع الأعداد الزوجية من 2 إلى 20.
+% \end{frame}
+
+% \begin{frame}[fragile]{حل سؤال 2 }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% for (int i = 2; i <= 20; i += 2)
+%     Console.WriteLine(i);
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% \begin{frame}{سؤال 3 }
+% اكتب برنامجًا يقرأ 10 أعداد ويطبع أكبر واحد منها.
+% \end{frame}
+
+% \begin{frame}[fragile]{حل سؤال 3 }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% int max = int.MinValue;
+% for (int i = 0; i < 10; i++)
+% {
+%     int x = int.Parse(Console.ReadLine());
+%     if (x > max) max = x;
+% }
+% Console.WriteLine("Max = " + max);
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
+
+% \begin{frame}{سؤال 4 }
+% اكتب حلقة تعرض أول 8 حدود من متتالية حسابية تبدأ من 5 وتزداد بمقدار 3.
+% \end{frame}
+
+% \begin{frame}[fragile]{حل سؤال 4 }
+
+% \begin{english}
+% \begin{lstlisting}[language=CSharp]
+% int a = 5, d = 3;
+% for (int k = 0; k < 8; k++)
+% {
+%     Console.WriteLine(a + k*d);
+% }
+% \end{lstlisting}
+% \end{english}
+% \end{frame}
 
 \end{document}
