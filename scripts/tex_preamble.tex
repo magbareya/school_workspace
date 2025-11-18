@@ -16,6 +16,7 @@
 \usepackage{etoolbox}
 \usepackage{array}
 \usepackage{extsizes}
+\usepackage{float}
 \usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
 
 
@@ -106,6 +107,14 @@
 
 \setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
 
+\newcommand{\importpdfpage}[2]{%
+    \newpage
+    \thispagestyle{empty}
+    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \includegraphics[page=#2,width=\paperwidth,height=\paperheight,keepaspectratio]{#1}
+    \restoregeometry
+    \newpage
+}
 
 % ----------------------
 

@@ -44,3 +44,20 @@
 %     9 / 2 &= 4 \\
 %     9 \% 2 &= 1
 % \end{align*}
+
+
+% import pdf page from pdf file
+% use this macro:
+% \importpdfpage{../../../pdf_files/2015-899222-7-while.pdf}{1}
+% or this sequence:
+% \newpage
+% \thispagestyle{empty}
+% \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+% \includegraphics[
+%     page=1,
+%     width=\paperwidth,
+%     height=\paperheight,
+%     keepaspectratio
+% ]{../../../pdf_files/2015-899222-7-while.pdf}
+% \restoregeometry
+% \newpage
