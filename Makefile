@@ -26,9 +26,24 @@ PDF_REL := $(patsubst src/%,%,$(PDF_SRC))
 PDF_OUT := $(patsubst %,out/%,$(PDF_REL))
 
 PRINTABLE_NB  := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
-PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_REL))
 
-SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_REL))
+# Find TEX files that contain the string 'ifwithdetails' and remove the src/ prefix
+TEX_WITH_DETAILS := $(shell for f in $(TEX); do \
+	if grep -q 'ifwithdetails' $$f; then \
+		echo $$(echo $$f | sed 's/^src\///'); \
+	fi; \
+done)
+
+PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_WITH_DETAILS))
+
+# Find TEX files that contain the string 'ifwithsols' and remove the src/ prefix
+TEX_WITH_SOLS := $(shell for f in $(TEX); do \
+	if grep -q 'ifwithsols' $$f; then \
+		echo $$(echo $$f | sed 's/^src\///'); \
+	fi; \
+done)
+
+SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_WITH_SOLS))
 
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
