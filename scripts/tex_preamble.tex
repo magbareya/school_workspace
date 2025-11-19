@@ -26,7 +26,8 @@
 
 \setmainlanguage[numerals=western]{arabic}
 \setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfont[Script=Arabic]{Calibri}
 \newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
 
 \lstset{
@@ -114,6 +115,18 @@
     \includegraphics[page=#2,width=\paperwidth,height=\paperheight,keepaspectratio]{#1}
     \restoregeometry
     \newpage
+}
+
+\newcommand{\importpdfpagewtihsol}[2]{%
+    \newpage
+    \thispagestyle{empty}
+    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \includegraphics[page=#2,width=\paperwidth,height=\paperheight,keepaspectratio]{#1.pdf}
+    \restoregeometry
+    \newpage
+    \ifwithsols
+    \input{#1_sol.tex}
+    \fi
 }
 
 % ----------------------

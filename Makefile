@@ -64,8 +64,6 @@ md: $(MDS)
 tex: $(TEXS)
 cs: $(CSFILES)
 
-hclean: sclean dclean
-
 # -----------------------
 # Rules
 # -----------------------
@@ -155,6 +153,3 @@ sclean:
 		find . -type f -name "*.$$ext" -delete; \
 	done
 	find . -type d -name "_minted*" -exec rm -rf {} +
-
-dclean:
-	python3 scripts/clean.py out

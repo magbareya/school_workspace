@@ -1,0 +1,40 @@
+\clearpage
+\paragraph*{حل سؤال 7 امتحان 899222 سنة 2015}
+
+
+\begin{english}
+\begin{minted}{csharp}
+private static void Main(string[] args)
+{
+    Console.WriteLine("Enter the price of offer 0");
+    int offer0Price = int.Parse(Console.ReadLine());
+    Console.WriteLine("Enter the price of offer 1");
+    int offer1Price = int.Parse(Console.ReadLine());
+    Console.WriteLine("Enter the price of offer 2");
+    int offer2Price = int.Parse(Console.ReadLine());
+    int cnt0 = 0, cnt1 = 0, cnt2 = 0, userOffer;
+    int LIMIT = 500;
+    string name;
+    while(cnt0 < LIMIT && cnt1 < LIMIT && cnt2 < LIMIT)
+    {
+        name = Console.ReadLine();
+        Console.WriteLine(name);
+        if(userOffer == 0)
+        {
+            cnt0++;
+            Console.WriteLine(name + " have to pay: " + offer0Price);
+        }
+        else if(userOffer == 1)
+        {
+            cnt1++;
+            Console.WriteLine(name + " have to pay: " + offer1Price);
+        }
+        else if(userOffer == 2)
+        {
+            cnt2++;
+            Console.WriteLine(name + " have to pay: " + offer2Price);
+        }
+    }
+}
+\end{minted}
+\end{english}
