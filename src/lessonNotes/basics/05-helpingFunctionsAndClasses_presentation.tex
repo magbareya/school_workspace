@@ -1,0 +1,383 @@
+\documentclass[13pt]{beamer}
+\input{../../../scripts/beamer_preamble.tex}
+
+\title{أساسيات في \textenglish{C\#}: الطباعة، النصوص، العمليات الرياضية، العشوائية، والمحارف}
+\author{}
+\date{}
+
+\begin{document}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]
+  \titlepage
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{مقدمة}
+يتناول هذا العرض بعض الأدوات الأساسية في \textenglish{C\#}:
+\begin{itemize}
+    \item الفرق بين \textenglish{WriteLine} و \textenglish{Write}
+    \item أهم دوال فئة \textenglish{string}
+    \item دوال \textenglish{Math}
+    \item استخدام الفئة \textenglish{Random}
+    \item التعامل مع النوع \textenglish{char}
+\end{itemize}
+\end{frame}
+
+% =============================================================
+% WriteLine vs Write
+% =============================================================
+ \begin{frame}[fragile]{\textenglish{WriteLine} مقابل \textenglish{Write}}
+\textenglish{WriteLine}: تطبع النص وتنتقل لسطر جديد.\\
+\textenglish{Write}: تطبع النص بدون سطر جديد.
+
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine("Hello");
+Console.Write("World");
+Console.WriteLine("!");
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+Hello
+World!
+\end{verbatim}
+\end{frame}
+
+% =============================================================
+% STRING CLASS
+% =============================================================
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{الوصول إلى حرف داخل نص \textenglish{(Indexing)}}
+يمكن الوصول لأي حرف باستخدام الفهرس الذي يبدأ من 0.
+
+\begin{english}
+\begin{lstlisting}
+string s = "Hello";
+char c = s[1];
+Console.WriteLine(c);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+e
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Contains}}
+تفحص وجود نص داخل نص آخر.
+
+\begin{english}
+\begin{lstlisting}
+string s = "programming";
+bool b = s.Contains("gram");
+Console.WriteLine(b);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+True
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{IndexOf}}
+تعيد موقع ظهور نص داخل نص آخر.
+
+\begin{english}
+\begin{lstlisting}
+string s = "banana";
+int index = s.IndexOf("na");
+Console.WriteLine(index);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+2
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Length}}
+تمثل طول النص بعدد الحروف.
+
+\begin{english}
+\begin{lstlisting}
+string s = "Hello";
+Console.WriteLine(s.Length);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+5
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Substring}}
+تستخرج جزءًا من النص.
+
+\begin{english}
+\begin{lstlisting}
+string s = "HelloWorld";
+Console.WriteLine( s.Substring(5) );
+Console.WriteLine( s.Substring(0, 4) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+World
+Hell
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{ToLower / ToUpper}}
+تحويل الحروف إلى صغيرة أو كبيرة.
+
+\begin{english}
+\begin{lstlisting}
+string s = "HeLLo";
+Console.WriteLine( s.ToLower() );
+Console.WriteLine( s.ToUpper() );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+hello
+HELLO
+\end{verbatim}
+\end{frame}
+
+% =============================================================
+% MATH CLASS
+% =============================================================
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Math.Max} و \textenglish{Math.Min}}
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine( Math.Max(10, 25) );
+Console.WriteLine( Math.Min(10, 25) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+25
+10
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Math.Pow}}
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine( Math.Pow(2, 3) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+8
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Math.Sqrt}}
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine( Math.Sqrt(81) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+9
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Math.Abs}}
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine( Math.Abs(-12) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+12
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Math.Round}}
+\begin{english}
+\begin{lstlisting}
+Console.WriteLine( Math.Round(3.67) );
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+4
+\end{verbatim}
+\end{frame}
+
+% =============================================================
+% RANDOM CLASS
+% =============================================================
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{إنشاء كائن \textenglish{Random}}
+يُستخدم لتوليد أعداد عشوائية.
+
+\begin{english}
+\begin{lstlisting}
+Random rnd = new Random();
+int x = rnd.Next(1, 6);
+Console.WriteLine(x);
+\end{lstlisting}
+\end{english}
+
+الناتج: رقم بين 1 و 5
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Next()}}
+\begin{english}
+\begin{lstlisting}
+Random r = new Random();
+Console.WriteLine( r.Next() );
+\end{lstlisting}
+\end{english}
+
+الناتج: رقم كبير عشوائي
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Next(max)}}
+\begin{english}
+\begin{lstlisting}
+Random r = new Random();
+Console.WriteLine( r.Next(10) );
+\end{lstlisting}
+\end{english}
+
+الناتج: رقم بين 0 و 9
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{Next(min, max)}}
+\begin{english}
+\begin{lstlisting}
+Random r = new Random();
+Console.WriteLine( r.Next(5, 11) );
+\end{lstlisting}
+\end{english}
+
+الناتج: رقم بين 5 و 10
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{\textenglish{NextDouble}}
+\begin{english}
+\begin{lstlisting}
+Random r = new Random();
+Console.WriteLine( r.NextDouble() );
+\end{lstlisting}
+\end{english}
+
+الناتج: عدد كسري بين 0 و 1
+\end{frame}
+
+% =============================================================
+% CHAR
+% =============================================================
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{تعريف \textenglish{char}}
+\begin{english}
+\begin{lstlisting}
+char c = 'A';
+Console.WriteLine(c);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+A
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{قراءة محرف من المستخدم}
+\begin{english}
+\begin{lstlisting}
+char c = char.Parse(Console.ReadLine());
+Console.WriteLine(c);
+\end{lstlisting}
+\end{english}
+
+الناتج: حسب إدخال المستخدم
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{مقارنة محارف}
+\begin{english}
+\begin{lstlisting}
+char a = 'A';
+char b = 'B';
+Console.WriteLine(a < b);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+True
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{التحويل بين \textenglish{char} و \textenglish{int}}
+\begin{english}
+\begin{lstlisting}
+char c = 'A';
+int code = (int)c;
+Console.WriteLine(code);
+
+int x = 66;
+char d = (char)x;
+Console.WriteLine(d);
+\end{lstlisting}
+\end{english}
+
+الناتج:
+\begin{verbatim}
+65
+B
+\end{verbatim}
+\end{frame}
+
+% -------------------------------------------------------------
+ \begin{frame}[fragile]{خاتمة}
+\begin{itemize}
+    \item فئة \textenglish{string} توفر أدوات قوية لمعالجة النصوص.
+    \item فئة \textenglish{Math} توفر عمليات رياضية جاهزة.
+    \item الفئة \textenglish{Random} تُستخدم لتوليد الأعداد العشوائية.
+    \item النوع \textenglish{char} يمثل محرفًا واحدًا ويمكن تحويله إلى \textenglish{ASCII}.
+\end{itemize}
+\end{frame}
+
+\end{document}
