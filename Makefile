@@ -63,9 +63,13 @@ md: $(MDS)
 tex: $(TEXS)
 cs: $(CSFILES)
 
+
 # -----------------------
 # Rules
 # -----------------------
+
+index:
+	python scripts/create_questions_index.py
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: src/%.ipynb
