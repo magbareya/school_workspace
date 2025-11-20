@@ -1,0 +1,37 @@
+% \clearpage
+\importpdfpage{../../../bagrut_questions/basics/if_2011_899222_3.pdf}{1}
+
+\ifwithsols
+
+\paragraph*{حل سؤال 3 امتحان 899222 سنة 2011}:
+\bigskip
+
+أ. الحالة:
+\(a=25,\; b=10\). \\
+\textbf{جدول التتبّع:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+الطباعة & $x==y$ & $x$ & $y$ & $b$ & $a$ \\
+\hline
+\textenglish{print2} & \textenglish{false} & $-15$ & $15$ & $10$ & $25$ \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\textbf{ب. مثال يعطي مخرج مختلف:}
+يمكننا اختيار أي قيمتين بحيث يتحقق $b > a$. \\
+مثلا، نختار \(a=5,\; b=10\):
+
+\[
+y = |5-10| = 5,\qquad x=b-a = 5
+\]
+
+\[
+x==y \Rightarrow \text{true} \Rightarrow \texttt{print1}
+\]
+
+\clearpage
+\fi

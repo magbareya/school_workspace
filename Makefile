@@ -36,13 +36,12 @@ done)
 
 PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_WITH_DETAILS))
 
-# Find TEX files that contain the string 'ifwithsols' and remove the src/ prefix
+# Find TEX files that contain the string 'ifwithsols' OR 'input' and remove the src/ prefix
 TEX_WITH_SOLS := $(shell for f in $(TEX); do \
-	if grep -q 'ifwithsols' $$f; then \
-		echo $$(echo $$f | sed 's/^src\///'); \
-	fi; \
+    if grep -q 'ifwithsols' $$f || grep -q 'input' $$f; then \
+        echo $$(echo $$f | sed 's/^src\///'); \
+    fi; \
 done)
-
 SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_WITH_SOLS))
 
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))

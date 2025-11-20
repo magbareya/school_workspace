@@ -4,30 +4,7 @@
 \begin{document}
 \thispagestyle{fancy}
 
-\begin{boxSolution}
-\begin{enumerate}[label=(\alph*)]
-\item .
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/DNA_startsAATcontainsATtwice.png}
-\end{center}
-
-\item
-\begin{enumerate}[label=\roman*]
-\item $L_6 \subset L_3$ \\
-صحيح، لأنّ كل عدد يقسم على 6، فهو بالضرورة يقسم على 3. \\
-لذلك، كل حد ينتمي إلى $L_6$ فإنّه ينتمي إلى $L_3$ بالضرورة.
-
-\item $L_2 \cap L_3 = L_6$ \\
-صحيح، لأنّ الأعداد التي تقسم على 6 هي الأعداد التي تقسم على 2 وأيضًا تقسم على 3.
-
-\item $L_2 \cdot L_3 = L_6$ \\
-غير صحيح، لأنّه ليس بالضرورة إذا ألصقنا عددًا يقسم على 3 مع عدد يقسم على 2 فإنّ النتيجة تقسم على 6. \\
-مثلًا: العدد $123$ مكون من العدد $12$ الذي يقسم على 2، وألصقنا به العدد $3$ الذي يقسم على $3$. لذلك:
-$123 \in L_2 \cdot L_3$ ولكن $123 \notin L_6$.
-\end{enumerate}
-
-\end{enumerate}
-\end{boxSolution}
+\input{../../../bagrut_questions/computational_models/DFA_2017_899205_13.tex}
 
 \clearpage
 
@@ -93,31 +70,7 @@ $123 \in L_2 \cdot L_3$ ولكن $123 \notin L_6$.
 
 \clearpage
 
-\begin{boxSolution}
-\begin{enumerate}[label=\alph*., itemsep=2em]
-    \item .
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/last_letter_appears_even_times.png}
-\end{center}
-
-\item
-\begin{enumerate}[label=(\arabic*)]
-\item
-
-\begin{enumerate}[label=(\arabic*)]
-\item $aaba$  لا يتلقاها الأوتومات.
-\item $bbaabb$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4$$
-\item $abaa$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q3 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2$$
-\item $bb$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4$$
-
-\end{enumerate}
-
-\item لغة الأوتومات هي كل الكلمات التي يكون الحرف قبل الأخير فيها هو نفس الحرف الأخير. \\
-بكلمات أخرى، هي كل الكلمات التي تنتهي بـ $aa$ أو $bb$.
-\end{enumerate}
-
-\end{enumerate}
-\end{boxSolution}
+\input{../../../bagrut_questions/computational_models/DFA_2011_899205_14.tex}
 
 \clearpage
 

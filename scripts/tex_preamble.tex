@@ -109,24 +109,10 @@
 \setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
 
 \newcommand{\importpdfpage}[2]{%
-    \newpage
     \thispagestyle{empty}
     \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
-    \includegraphics[page=#2,width=\paperwidth,height=\paperheight,keepaspectratio]{#1}
+    \includegraphics[page=#2,width=0.98\paperwidth,height=0.98\paperheight,keepaspectratio]{#1}
     \restoregeometry
-    \newpage
-}
-
-\newcommand{\importpdfpagewtihsol}[2]{%
-    \newpage
-    \thispagestyle{empty}
-    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
-    \includegraphics[page=#2,width=\paperwidth,height=\paperheight,keepaspectratio]{#1.pdf}
-    \restoregeometry
-    \newpage
-    \ifwithsols
-    \input{#1_sol.tex}
-    \fi
 }
 
 % ----------------------

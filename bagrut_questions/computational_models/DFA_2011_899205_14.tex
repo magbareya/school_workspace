@@ -1,0 +1,33 @@
+\importpdfpage{../../../bagrut_questions/computational_models/DFA_2011_899205_14.pdf}{1}
+\importpdfpage{../../../bagrut_questions/computational_models/DFA_2011_899205_14.pdf}{2}
+
+\ifwithsols
+
+\paragraph*{حل سؤال 14 امتحان 899205 سنة 2011}:
+\bigskip
+
+\begin{enumerate}[label=\alph*., itemsep=2em]
+    \item .
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/last_letter_appears_even_times.png}
+\end{center}
+
+\item
+\begin{enumerate}[label=(\arabic*)]
+\item
+
+\begin{enumerate}[label=(\arabic*)]
+\item $aaba$  لا يتلقاها الأوتومات.
+\item $bbaabb$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4$$
+\item $abaa$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q3 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2$$
+\item $bb$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4$$
+
+\end{enumerate}
+
+\item لغة الأوتومات هي كل الكلمات التي يكون الحرف قبل الأخير فيها هو نفس الحرف الأخير. \\
+بكلمات أخرى، هي كل الكلمات التي تنتهي بـ $aa$ أو $bb$.
+\end{enumerate}
+
+\end{enumerate}
+
+\fi

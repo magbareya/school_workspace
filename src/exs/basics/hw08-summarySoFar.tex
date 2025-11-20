@@ -1,0 +1,56 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\begin{document}
+\thispagestyle{fancy}
+
+\input{../../../bagrut_questions/basics/if_2017_899222_1.tex}
+
+\input{../../../bagrut_questions/basics/if_2011_899222_3.tex}
+
+\input{../../../bagrut_questions/basics/if_2015_899222_4.tex}
+
+\input{../../../bagrut_questions/basics/if_2015_899222_5.tex}
+
+\subsection*{السؤال 2}
+
+\begin{boxSolution}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static char EvenSome(int a, int b, int c)
+{
+    if ((a + b + c) % 2 == 0)
+        return 'y';
+    else
+        return 'n';
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+
+\subsection*{السؤال 3}
+
+\begin{boxSolution}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void CheckBrother(int num)
+{
+    int tens = num / 10;
+    int ones = num % 10;
+    if (tens == ones || ones == 0)
+        Console.WriteLine("No Brother");
+    else
+        Console.WriteLine(tens + ones*10);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\end{document}
+
