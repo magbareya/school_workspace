@@ -128,11 +128,14 @@ public static int PasswordTries(int pass)
     }
     return fails;
 }
-// b
-Console.WriteLine(PasswordTries(8264));
-// c
-int p = int.Parse(Console.ReadLine());
-Console.WriteLine(PasswordTries(p));
+private static void Main(string[] args)
+{
+    // b
+    Console.WriteLine(PasswordTries(8264));
+    // c
+    int p = int.Parse(Console.ReadLine());
+    Console.WriteLine(PasswordTries(p));
+}
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -245,7 +248,9 @@ for (int i = 20; i <= 50; i+=2)
 \begin{english}
 \begin{minted}{csharp}
 int sum = 0;
-for (int i = 70; i <= 100; i++) sum += i;
+for (int i = 70; i <= 100; i++)
+    sum += i;
+
 Console.WriteLine(sum);
 \end{minted}
 \end{english}
@@ -279,7 +284,7 @@ for (int i = 1; i <= 15; i++)
 
 \item اكتب مقطع برنامج يطبع عدد الاعداد ثلاثية المنزلة التي تقسم على 7.
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
 \begin{english}
 \begin{minted}{csharp}
 int count = 0;
