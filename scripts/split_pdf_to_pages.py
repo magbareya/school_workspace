@@ -59,8 +59,9 @@ def pdf_to_images(pdf_path, output_folder='pages', dpi=300, crop=False, crop_twi
 
 def main():
     # pdf_file = "bagrut_exams/2025-899371.PDF"
-    pdf_file = "bagrut_exams/2024-899371.pdf"
-    pdf_to_images(pdf_file, output_folder="bagrut_exams/pages/", crop=True, crop_twice=True)
+    files = ["bagrut_questions/exams/2023-899371.pdf", "bagrut_questions/exams/2024-899371.pdf", "bagrut_questions/exams/2025-899371.pdf"]
+    for pdf_file in files:
+        pdf_to_images(pdf_file, output_folder="bagrut_questions/exams/pages/", crop=True, crop_twice=True)
     # crop_bottom_pdf(pdf_file, output_folder="bagrut_exams/pages2/", crop=True)
 
 
