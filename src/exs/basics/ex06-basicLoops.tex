@@ -329,33 +329,6 @@ Console.WriteLine((double) sum / n;);
 \end{boxSolution}
 \fi
 
-\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحا، ويطبع له كل عوامل هذا العدد (أي كل الأعداد التي يقسم عليها هذا العدد).
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int n = int.Parse(Console.ReadLine());
-for (int d = 1; d <= n; d++)
-{
-    if (n % d == 0)
-        Console.WriteLine(d);
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item اطبع أول 20 عددًا من المتتالية: $3, 6, 9, 12,\dots$
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-for (int i = 1; i <= 20; i++)
-    Console.WriteLine(3 * i);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
 \end{enumerate}
 
 \clearpage
@@ -364,7 +337,7 @@ for (int i = 1; i <= 20; i++)
     \item
     \begin{enumerate}
         \item اكتب عمليّة تتلقى عددين صحيحين، على العمليّة أن تعيد عدد الأعداد التي تقسم على 3 بينهما (افترض أن العدد الأول أصغر من الثاني)
-        \item في البرنامج الرئيسي، قم باستدعاء العملية مع العددين 20 و70, واطبع النتيجة.
+        \item في البرنامج الرئيسي، قم باستدعاء العملية مع العددين 20 و70، واطبع النتيجة.
     \end{enumerate}
 \ifwithsols
 \begin{boxSolution}
@@ -392,31 +365,11 @@ private static void Main(string[] args)
 \fi
 
 \item
-    في إحدى مسابقات العاب القوى هناك مسابقة "العرض الشيق" بحيث يقوم كل متسابق بعرض مواهبه الرياضية في القفز والحركة. \\
-     في هذه اللعبة هناك 7 حكام، كل حكم علامة للمتسابق بعد عرضه. \\
-     العلامة النهائية التي يستحقها اللاعب تكون بحساب معدل 5 علامات فقط من بين 7 وذلك بعد شطب العلامة الكبرى والعلامة الصغرى. \\
-      اكتب مقطع برنامج يستقبل علامات الحكام السبعة لأحد المتسابقين، على البرنامج أن يطبع معدله النهائي.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int min = int.MaxValue, max = int.MinValue, sum = 0;
-for (int i = 0; i < 7; i++)
-{
-    int s = int.Parse(Console.ReadLine());
-    sum += s;
-    if (s < min)
-        min = s;
-    if (s > max)
-        max = s;
-}
-double avg = (sum - min - max) / 5.0;
-Console.WriteLine(avg);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\clearpage
-\fi
+\begin{enumerate}
+    \item اكتب عمليّة تتلقى عددين صحيحين، على العمليّة أن تعيد مجموع الأعداد بينهما (يشمل العددين نفسيهما. ). \\
+لا تفترض أنّ العدد الثاني أصغر من الأول. (قد يكون الأول أكبر وقد يكون الثاني أكبر).
+    \item في البرنامج الرئيسي، قم باستدعاء العملية مع العددين 30 و20، واطبع النتيجة.
+\end{enumerate}
 
 \item اكتب عملية خارجية تتلقى عددًا صحيحًا، على العملية أن تطبع الأعداد من 1 إلى الرقم الذي تلقته وبجانب كل رقم تربيعه. \\
     مثلًا، إذا  تلقت العملية الرقم 5، فعليها أن تطبع:
@@ -450,8 +403,121 @@ private static void Main(string[] args)
 \clearpage
 \fi
 
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، على البرنامج أن يطبع الجذر التربيعي لكل عدد. (بعد التأكد من أنّ العدد ليس سالبًا).
+ينتهي الاستقبال عندما يصبح عدد الأعداد السالبة التي أدخلها المستخدم 3 أعداد.
+
+\item
+تحسب العلامة النهائية في الحاسوب على الشكل التالي: \\
+- $30\%$ للوظائف \\
+- $30\%$ للامتحان الشهري \\
+- $40\%$ للامتحان الفصلي. \\
+اكتب عملية خارجية تتلقى عدد طلاب الصف، ثم تستقبل علامات كل واحد من الطلاب (لكل طالب تستقبل 3 علامات)، وتطبع لكل طالب علامته النهائية. \\
+على العملية في النهاية أن تعيد عدد الطلاب الناجحين، أي الذي حصلوا على علامة أعلى من 70.
+
+\clearpage
+\item اكتب عمليّة خارجيّة تتلقى عددًا صحيحًا $x$ الذي يمثل الحد الأقصى للوزن الإجمالي الذي يمكن أن تحمله شاحنة ما بالكيلوغرام، على العملية أن تستقبل وزن كل صندوق يتم تحميله للشاحنة، على العملية أن تعيد عدد الصناديق التي تم تحميلها للشاحنة حتى امتلأت. (فكّر ما هو شرط الحلقة؟)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int LoadBoxes(int x)
+{
+    int sum = 0, count = 0;
+    int w = int.Parse(Console.ReadLine());
+    while (sum + w < x)
+    {
+        sum += w;
+        count++;
+        w = int.Parse(Console.ReadLine());
+    }
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+    في إحدى مسابقات العاب القوى هناك مسابقة "العرض الشيق" بحيث يقوم كل متسابق بعرض مواهبه الرياضية في القفز والحركة. \\
+     في هذه اللعبة هناك 7 حكام، كل حكم علامة للمتسابق بعد عرضه. \\
+     العلامة النهائية التي يستحقها اللاعب تكون بحساب معدل 5 علامات فقط من بين 7 وذلك بعد شطب العلامة الكبرى والعلامة الصغرى. \\
+      اكتب مقطع برنامج يستقبل علامات الحكام السبعة لأحد المتسابقين، على البرنامج أن يطبع معدله النهائي.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int min = int.MaxValue, max = int.MinValue, sum = 0;
+for (int i = 0; i < 7; i++)
+{
+    int s = int.Parse(Console.ReadLine());
+    sum += s;
+    if (s < min)
+        min = s;
+    if (s > max)
+        max = s;
+}
+double avg = (sum - min - max) / 5.0;
+Console.WriteLine(avg);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح، ويحسب أكبر عدد زوجي وأكبر عدد فرديّ من الأعداد التي أدخلها المستخدم.
+
+\item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. \\
+على البرنامج أن يعدّ الأعداد التي لها نفس زوجية ترتيب إدخالها ويطبعه. \\
+أي: إذا كان أول عدد يدخله المستخدم فرديًّا فنعده وإلا فلا. والعدد الثاني إذا كان زوجيًّا نعده وإلا فلا، والعدد الثالث إذا كان فرديًّا نعدّه وإلا فلا \ldots وهكذا.
+
+\clearpage
+\item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
+\begin{boxExample}
+    إذا كانت الأرقام المدخلة هي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+3
+4 --> counted because 4 > 3
+7 --> counted because 7 > 4
+2 --> not counted because 2 < 7
+6 --> counted because 6 > 2
+7 --> counted because 7 > 6
+1 --> not counted because 1 < 7
+9 --> counted because 9 > 1
+5 --> not counted because 5 < 9
+6 --> counted because 6 > 5
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    على البرنامج أن يطبع 6.
+\end{boxExample}
+
+\item اكتب برنامجًا يستقبل من المستخدم 20 عددًا صحيحًا، على البرنامج أن يطبع أكبر عددين أدخلهما المستخدم (أكبر عدد وثاني أكبر عدد)
+
+\item اكتب برنامجًا يستقبل من المستخدم 20 عددًا صحيحًا، على البرنامج أن يطبع أصغر عددين أدخلهما المستخدم (أصغر عدد وثاني أصغر عدد)
+
+\item اكتب برنامجًا يستقبل من المستخدم 20 زوجًا من الأعداد (أي ما مجمله 40 عددًا.) \\
+لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه. \\
+وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
+
+\end{enumerate}
+
+%------------------------------------------------
+
+\clearpage
+\section{أسئلة حلقات عن تحليل العدد لخاناته}
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد عدد خاناته.
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد مجموع خاناته.
+
 \item اكتب عملية خارجية تتلقى عددًا موجبًا وتطبع: عدد خاناته، ومجموع خاناته، ومعدّل خاناته. \\
-        \textbf{مثلًا:} إذا تقلت العملية العدد 762945، فإنّها تطبع: \\
+        \textbf{مثلًا:} إذا تلقت العملية العدد 762945، فإنّها تطبع: \\
+        لا تستخدم العمليات من الأسئلة السابقة، اكتب حلقة \textenglish{while} واحدة فقط.
 
 \begin{english}
 \begin{boxCode}
@@ -483,14 +549,61 @@ public static void PrintDigitsStats(int n)
 \end{english}
 \end{boxSolution}
 \fi
-\clearpage
 
-    \item \textbf{للتذكير} عدد أوّلي هو عدد يقسم فقط على نفسه وعلى 1.
+\item اكتب عملية خارجية تتلقى عددًا صحيحا، وتطبع عدد الخانات الزوجية فيه وعدد الخانات الفردية فيه.
+
+\item
+اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويعدّ الأعداد التي خانة العشرات فيها زوجية، ويطبعه. \\
+ينتهي الاستقبال عندما يدخل المستخدم عددًا سالبًا.
+
+\item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. في نهاية البرنامج عليه أن يطبع الرقم الذي له أكبر مجموع خانات (يمكنك الاستعانة بالعملية التي كتبتها في الأسئلة السابقة).
+
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد قيمة أكبر خانة فيه. \\
+    \textbf{مثلًا:} إذا تلقّت العدد $23481$ فإنّها تعيد $8$.
+
+    \item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. في نهاية البرنامج عليه أن يطبع الرقم الذي ظهرت فيه أكبر خانة. \\
+    إذا كان هناك أكثر من رقم ظهرت فيه أكبر خانة، فإنّه يطبع أكبر رقم من بينها.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item اكتب عملية خارجية باسم \textenglish{SumSquares} تتلقى عددًا صحيحًا، وتعيد مجموع \textbf{تربيع} خاناته.
+\item في البرنامج الرئيسي، استدعِ العملية مع الرقم 23.
+\item هل هناك أعداد تساوي مجموع تربيع خاناتها بين 1 و 10000؟ ما هي؟
+\end{enumerate}
+
+\end{enumerate}
+
+%------------------------------------------------
+\clearpage
+\section{أسئلة حلقات عن تحليل العدد لعوامله}
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحا، ويطبع له كل عوامل هذا العدد (أي كل الأعداد التي يقسم عليها هذا العدد).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int d = 1; d <= n; d++)
+{
+    if (n % d == 0)
+        Console.WriteLine(d);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{للتذكير} عدد أوّلي هو عدد يقسم فقط على نفسه وعلى 1.
     \begin{enumerate}
         \item اكتب عمليّة خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوليًّا، وإلا فإنّها تعيد \textenglish{false}.
         \item في البرنامج الرئيسي، استدعِ العملية مع العدد 17 واطبع النتيجة. ومع العدد 20 واطبع النتيجة.
         \item اكتب عملية خارجية أخرى باسم \textenglish{PrintPrimes} تتلقى عددًا صحيحًا وتطبع كل الأعداد الأولية حتى هذا العدد. \\
-                 \textbf{مثلًا:} إذا تقلت العملية العدد 20 فإنّها تطبع: 2، 3، 5، 7، 11، 13، 17، 19.
+                 \textbf{مثلًا:} إذا تلقت العملية العدد 20 فإنّها تطبع: 2، 3، 5، 7، 11، 13، 17، 19.
         \item في البرنامج الرئيسي استدعِ العملية مع الرقم 100.
     \end{enumerate}
 \ifwithsols
@@ -527,33 +640,41 @@ private static void Main(string[] args)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
 
-\item اكتب عمليّة خارجيّة تتلقى عددًا صحيحًا $x$ الذي يمثل الحد الأقصى للوزن الإجمالي الذي يمكن أن تحمله شاحنة ما بالكيلوغرام، على العملية أن تستقبل وزن كل صندوق يتم تحميله للشاحنة، على العملية أن تعيد عدد الصناديق التي تم تحميلها للشاحنة حتى امتلأت. (فكّر ما هو شرط الحلقة؟)
+\item اكتب عملية تتلقى عددًا صحيحًا، وتطبع كل عوامله \textbf{الأوّلية}. (أي كل الأعداد الأولية التي يقسم عليها هذا العدد) \\
+يمكنك الاستعانة بالعملية \textenglish{IsPrime} التي كتبتها في السؤال السابق.
+
+\item اكتب عملية خارجية باسم \textenglish{IsPrimeSquare} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان العدد الذي تلقته عبارة عن تربيع عدد أوّلي. وإلا فإنّها تعيد \textenglish{false} \\
+\textbf{مثلًا:} تعيد العملية \textenglish{true} إذا تلقّت 25. وتعيد \textenglish{false} إذا تلقت 30.
+
+\end{enumerate}
+
+%------------------------------------------------
+\clearpage
+\section{أسئلة جدول متابعة للحلقات}
+\begin{enumerate}[itemsep=1.5em]
+    \item
+\end{enumerate}
+
+%------------------------------------------------
+\clearpage
+\section{أسئلة حلقات عن متواليات}
+\begin{enumerate}[itemsep=1.5em]
+
+\item اطبع أول 20 عددًا من المتوالية: $3, 6, 9, 12,\dots$
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static int LoadBoxes(int x)
-{
-    int sum = 0, count = 0;
-    int w = int.Parse(Console.ReadLine());
-    while (sum + w < x)
-    {
-        sum += w;
-        count++;
-        w = int.Parse(Console.ReadLine());
-    }
-    return count;
-}
+for (int i = 1; i <= 20; i++)
+    Console.WriteLine(3 * i);
 \end{minted}
 \end{english}
 \end{boxSolution}
 \fi
-\clearpage
 
-    \item متوالية فيبوناتشي معرفة بالشكل التالي:
+\item متوالية فيبوناتشي معرفة بالشكل التالي:
     \begin{english}
         \begin{align*}
             a_1 &= 1 \\
@@ -616,6 +737,15 @@ private static void Main(string[] args)
 \end{english}
 \end{boxSolution}
 \fi
+
+\end{enumerate}
+
+%------------------------------------------------
+\clearpage
+\section{أسئلة حلقات عن النص \textenglish{string}}
+
+\begin{enumerate}[itemsep=1.5em]
+    \item
 
 \end{enumerate}
 
