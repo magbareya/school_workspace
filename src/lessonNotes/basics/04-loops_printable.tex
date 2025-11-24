@@ -1,0 +1,293 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{الحلقات}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+
+\section*{مقدمة}
+الحلقة هي مقطع كود يتكرر عدة مرات لتحقيق مهمة متكررة دون إعادة كتابة الأوامر:
+\begin{itemize}
+  \item التكرار يجعل البرنامج أقصر وأكثر مرونة.
+  \item يمكن للحاسوب تنفيذ نفس التعليمات آلاف المرات بسرعة.
+  \item توجد أنواع مختلفة، أهمها: \textenglish{while} و \textenglish{for}.
+\end{itemize}
+
+% ========================
+\section{حلقة while}
+
+\subsection{مفهوم حلقة while}
+فكرة الحلقة: \textbf{طالما أن شرطًا ما صحيح، تستمر الأوامر بالتنفيذ}.
+
+\begin{itemize}
+    \item تستخدم عندما لا نعرف عدد التكرارات مسبقًا.
+    \item يفحص الشرط قبل كل تكرار.
+    \item إذا أصبح الشرط \textenglish{false} تتوقف الحلقة.
+\end{itemize}
+
+\subsection{مبنى حلقة while}
+\begin{english}
+\begin{lstlisting}
+while (condition)
+{
+    // body
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{جمع الأعداد حتى إدخال 0}
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Sum = " + sum);
+\end{lstlisting}
+\end{english}
+
+\subsection{جمع حتى يصبح المجموع أكبر من 10}
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+while (sum <= 10)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+Console.WriteLine("Total = " + sum);
+\end{lstlisting}
+\end{english}
+
+\subsection{الضرب حتى إدخال 1}
+\begin{english}
+\begin{lstlisting}
+int prod = 1;
+int num = int.Parse(Console.ReadLine());
+while (num != 1)
+{
+    prod *= num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Product = " + prod);
+\end{lstlisting}
+\end{english}
+
+\subsection{عدد الأعداد الموجبة حتى إدخال عدد سالب}
+\begin{english}
+\begin{lstlisting}
+int count = 0;
+int num = int.Parse(Console.ReadLine());
+while (num >= 0)
+{
+    count++;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Count = " + count);
+\end{lstlisting}
+\end{english}
+
+\subsection{عدد الأعداد الزوجية حتى إدخال -1}
+\begin{english}
+\begin{lstlisting}
+int evenCount = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    if (num % 2 == 0)
+        evenCount++;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Even count = " + evenCount);
+\end{lstlisting}
+\end{english}
+
+\subsection{قراءة 3 أعداد زوجية بالضبط}
+\begin{english}
+\begin{lstlisting}
+int number, count = 0;
+while (count < 3)
+{
+    Console.WriteLine("enter a number");
+    number = int.Parse(Console.ReadLine());
+    if (number % 2 == 0)
+        count++;
+}
+Console.WriteLine("End loop");
+Console.WriteLine("count=" + count);
+\end{lstlisting}
+\end{english}
+
+\subsection{إيجاد أكبر عدد حتى إدخال 0}
+\begin{english}
+\begin{lstlisting}
+int max = int.MinValue;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    if (num > max)
+        max = num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Max = " + max);
+\end{lstlisting}
+\end{english}
+
+\subsection{إيجاد أصغر عدد حتى إدخال 0}
+\begin{english}
+\begin{lstlisting}
+int min = int.MaxValue;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    if (num < min)
+        min = num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Min = " + min);
+\end{lstlisting}
+\end{english}
+
+\clearpage
+\subsection{عدد خانات عدد معين}
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+int count = 0;
+while (n > 0)
+{
+    n /= 10;
+    count++;
+}
+Console.WriteLine("Digits = " + count);
+\end{lstlisting}
+\end{english}
+
+\subsection{التحقق الصارم من المدخلات}
+\begin{english}
+\begin{lstlisting}
+int n = int.Parse(Console.ReadLine());
+while (n < 1 || n > 10)
+{
+    Console.WriteLine("Invalid! Enter 1-10:");
+    n = int.Parse(Console.ReadLine());
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{شرط توقف مركب}
+\begin{english}
+\begin{lstlisting}
+int sum = 0, i = 0;
+while (i < 10 && sum < 200)
+{
+    sum += int.Parse(Console.ReadLine());
+    i++;
+}
+\end{lstlisting}
+\end{english}
+
+% ========================
+\clearpage
+\section{حلقة for}
+
+\subsection{متى نستخدم for؟}
+\begin{itemize}
+  \item عند معرفة عدد التكرارات.
+  \item بنية الحلقة تحتوي على: تهئية - شرط - تحديث.
+\end{itemize}
+
+\subsection{مبنى حلقة for}
+\begin{english}
+\begin{lstlisting}
+for (initialization; condition; update)
+{
+    // body
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{مثال: طباعة الأعداد 1..3}
+\begin{english}
+\begin{lstlisting}
+for (int i = 1; i <= 3; i++)
+{
+    Console.WriteLine(i);
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{طباعة "Hello" 5 مرات}
+\begin{english}
+\begin{lstlisting}
+for (int i = 0; i < 5; i++)
+{
+    Console.WriteLine("Hello");
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{الأعداد الزوجية 1..100}
+\begin{english}
+\begin{lstlisting}
+for (int i = 2; i <= 100; i += 2)
+    Console.WriteLine(i);
+\end{lstlisting}
+\end{english}
+
+\clearpage
+\subsection{القسمة على 5 حتى N}
+\begin{english}
+\begin{lstlisting}
+int N = int.Parse(Console.ReadLine());
+for (int i = 0; i <= N; i++)
+{
+    if (i % 5 == 0)
+        Console.WriteLine(i);
+}
+\end{lstlisting}
+\end{english}
+
+\subsection{حساب المجموع}
+\begin{english}
+\begin{lstlisting}
+int sum = 0;
+for (int i = 1; i <= 100; i++)
+    sum += i;
+Console.WriteLine(sum);
+\end{lstlisting}
+\end{english}
+
+\subsection{إيجاد القيمة العظمى}
+\begin{english}
+\begin{lstlisting}
+int max = int.MinValue;
+for (int i = 0; i < 10; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > max) max = x;
+}
+Console.WriteLine("Max = " + max);
+\end{lstlisting}
+\end{english}
+
+\subsection{المتوسط}
+\begin{english}
+\begin{lstlisting}
+int sum = 0, n = 5;
+for (int i = 0; i < n; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+double avg = sum / (double)n;
+Console.WriteLine("Average = " + avg);
+\end{lstlisting}
+\end{english}
+\end{document}

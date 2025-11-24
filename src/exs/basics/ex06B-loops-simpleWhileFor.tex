@@ -12,7 +12,6 @@
 \maketitle
 \thispagestyle{fancy}
 
-\section{أسئلة حلقات عامة}
 \begin{enumerate}[itemsep=1.5em]
     \item
     \begin{enumerate}
@@ -50,6 +49,30 @@ private static void Main(string[] args)
 لا تفترض أنّ العدد الثاني أصغر من الأول. (قد يكون الأول أكبر وقد يكون الثاني أكبر).
     \item في البرنامج الرئيسي، قم باستدعاء العملية مع العددين 30 و20، واطبع النتيجة.
 \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumRange(int a, int b)
+{
+    int max = Math.Max(a, b);
+    int min = Math.Min(a, b);
+    int sum = 0;
+    for(int i = min; i <= max; i++)
+    {
+        sum += i;
+    }
+    return sum;
+}
+private static void Main(string[] args)
+{
+    Console.WriteLine(SumRange(30, 20));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب عملية خارجية تتلقى عددًا صحيحًا، على العملية أن تطبع الأعداد من 1 إلى الرقم الذي تلقته وبجانب كل رقم تربيعه. \\
     مثلًا، إذا  تلقت العملية الرقم 5، فعليها أن تطبع:
@@ -85,6 +108,24 @@ private static void Main(string[] args)
 
 \item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، على البرنامج أن يطبع الجذر التربيعي لكل عدد. (بعد التأكد من أنّ العدد ليس سالبًا).
 ينتهي الاستقبال عندما يصبح عدد الأعداد السالبة التي أدخلها المستخدم 3 أعداد.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int x;
+int negCnt = 0;
+while(negCnt < 3)
+{
+    x = int.Parse(Console.ReadLine());
+    if(x >= 0)
+        Console.WriteLine(Math.Sqrt(x));
+    else
+        negCnt++;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
 \item
@@ -94,6 +135,32 @@ private static void Main(string[] args)
 - $40\%$ للامتحان الفصلي. \\
 اكتب عملية خارجية تتلقى عدد طلاب الصف، ثم تستقبل علامات كل واحد من الطلاب (لكل طالب تستقبل 3 علامات)، وتطبع لكل طالب علامته النهائية. \\
 على العملية في النهاية أن تعيد عدد الطلاب الناجحين، أي الذي حصلوا على علامة أعلى من 70.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int CountSuccessful(int pupilsCnt)
+{
+    int hw, mid, final, cnt = 0;
+    double avg;
+    for(int i=1 ; i <= pupilsCnt; i++)
+    {
+        hw = int.Parse(Console.ReadLine());
+        mid = int.Parse(Console.ReadLine());
+        final = int.Parse(Console.ReadLine());
+        avg = hw * 0.3 + mid * 0.3 + final * 0.4;
+        Console.WriteLine(avg);
+        if(avg >= 70)
+            cnt++;
+    }
+    return cnt;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب عمليّة خارجيّة تتلقى عددًا صحيحًا $x$ الذي يمثل الحد الأقصى للوزن الإجمالي الذي يمكن أن تحمله شاحنة ما بالكيلوغرام، على العملية أن تستقبل وزن كل صندوق يتم تحميله للشاحنة، على العملية أن تعيد عدد الصناديق التي تم تحميلها للشاحنة حتى امتلأت. (فكّر ما هو شرط الحلقة؟)
 \ifwithsols
@@ -115,6 +182,7 @@ public static int LoadBoxes(int x)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item
@@ -146,10 +214,49 @@ Console.WriteLine(avg);
 
 \item
 اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح، ويحسب أكبر عدد زوجي وأكبر عدد فرديّ من الأعداد التي أدخلها المستخدم.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int maxEven = int.MinValue;
+int maxOdd = int.MinValue;
+int x;
+for (int i = 1; i <= 100; i++)
+{
+    x = int.Parse(Console.ReadLine());
+    if (x % 2 == 0)
+        maxEven = Math.Max(maxEven, x);
+    else
+        maxOdd = Math.Max(maxOdd, x);
+}
+Console.WriteLine(maxEven);
+Console.WriteLine(maxOdd);
+\end{minted}
+\end{english}
+\end{boxSolution}
+%\clearpage
+\fi
 
 \item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. \\
 على البرنامج أن يعدّ الأعداد التي لها نفس زوجية ترتيب إدخالها ويطبعه. \\
 أي: إذا كان أول عدد يدخله المستخدم فرديًّا فنعده وإلا فلا. والعدد الثاني إذا كان زوجيًّا نعده وإلا فلا، والعدد الثالث إذا كان فرديًّا نعدّه وإلا فلا \ldots وهكذا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+int x;
+for (int i = 1; i <= 100; i++)
+{
+    x = int.Parse(Console.ReadLine());
+    if (i % 2 == x % 2 )
+        cnt++;
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
 \item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
@@ -173,14 +280,108 @@ Console.WriteLine(avg);
     \end{boxCode}
     على البرنامج أن يطبع 6.
 \end{boxExample}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int count = 0;
+for (int i = 1; i < 10; i++)
+{
+    int current = int.Parse(Console.ReadLine());
+    if (current > prev)
+        count++;
+    prev = current;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب برنامجًا يستقبل من المستخدم 20 عددًا صحيحًا، على البرنامج أن يطبع أكبر عددين أدخلهما المستخدم (أكبر عدد وثاني أكبر عدد)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int max1 = int.MinValue, max2 = int.MinValue;
+for (int i = 0; i < 20; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > max1)
+    {
+        max2 = max1;
+        max1 = x;
+    }
+    else if (x > max2)
+    {
+        max2 = x;
+    }
+}
+Console.WriteLine(max1);
+Console.WriteLine(max2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب برنامجًا يستقبل من المستخدم 20 عددًا صحيحًا، على البرنامج أن يطبع أصغر عددين أدخلهما المستخدم (أصغر عدد وثاني أصغر عدد)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int min1 = int.MaxValue, min2 = int.MaxValue;
+for (int i = 0; i < 20; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x < min1)
+    {
+        min2 = min1;
+        min1 = x;
+    }
+    else if (x < min2)
+    {
+        min2 = x;
+    }
+}
+Console.WriteLine(min1);
+Console.WriteLine(min2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب برنامجًا يستقبل من المستخدم 20 زوجًا من الأعداد (أي ما مجمله 40 عددًا.) \\
 لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه. \\
 وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double maxAvg = double.MinValue;
+int num1 = 0, num2 = 0;
+for (int i = 0; i < 20; i++)
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    double avg = (a + b) / 2.0;
+    Console.WriteLine(avg);
+    if (avg > maxAvg)
+    {
+        maxAvg = avg;
+        num1 = a;
+        num2 = b;
+    }
+}
+Console.WriteLine(num1);
+Console.WriteLine(num2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 
