@@ -26,6 +26,42 @@ for (int i = 1; i <= 20; i++)
 \end{boxSolution}
 \fi
 
+
+\item
+اكتب عملية تتلقى عددًا صحيحًا $n$، وتقوم بحساب وإرجاع مجموع السلسلة التالية: \\
+$Sum = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}$
+\begin{boxExample}
+\begin{itemize}
+\item
+إذا تلقّت 1 فإنّها تعيد 1.
+\item
+إذا تلقّت 2 فإنّها تعيد: $1 + \frac{1}{2} = 1.5$
+\item
+إذا تلقّت 3 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} = 1.833$
+\item
+إذا تلقّت 10 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} + \ldots + \frac{1}{10} = 2.9289$
+\end{itemize}
+\end{boxExample}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double SeriesSum(int n)
+{
+    double sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += 1.0 / i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+
 \item متوالية فيبوناتشي معرفة بالشكل التالي:
     \begin{english}
         \begin{align*}
@@ -89,6 +125,31 @@ private static void Main(string[] args)
 \end{english}
 \end{boxSolution}
 \fi
+
+\item
+اكتب عملية تتلقى عددًا $n$ وتطبع سلسلة الأعداد:
+$$1,\; 2,\; 4,\; 7,\; 11,\; 16,\ldots$$
+حتى يصل المجموع إلى $n$ أو يتجاوزه.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintSequence(int n)
+{
+    int val = 1;
+    int add = 1;
+    while(val <= n)
+    {
+        Console.WriteLine(val);
+        add++;
+        val += add;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 
 \end{enumerate}
 

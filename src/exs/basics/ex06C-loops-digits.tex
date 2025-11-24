@@ -56,6 +56,44 @@ public static void PrintDigitsStats(int n)
 \item اكتب عملية خارجية تتلقى عددًا صحيحا، وتطبع عدد الخانات الزوجية فيه وعدد الخانات الفردية فيه.
 
 \item
+اكتب عملية خارجية تتلقى عددًا صحيحًا $n$ وتطبع من 1 حتى $n$ فقط الأعداد التي ينتهي رقمها بــ 5.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintEndingWith5(int n)
+{
+    for(int i = 1; i <= n; i++)
+        if (i % 10 == 5)
+            Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 20 عددًا ويطبع عدد الأعداد التي كان رقم آحادها أكبر من رقم عشراتها.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+for(int i=0; i<20; i++)
+{
+    int x = Math.Abs(int.Parse(Console.ReadLine()));
+    int ones = x % 10;
+    int tens = (x / 10) % 10;
+    if (ones > tens)
+        cnt++;
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
 اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويعدّ الأعداد التي خانة العشرات فيها زوجية، ويطبعه. \\
 ينتهي الاستقبال عندما يدخل المستخدم عددًا سالبًا.
 
@@ -90,6 +128,77 @@ public static void PrintDigitsStats(int n)
     \textbf{مثال:} إذا أدخل المستخدم الأرقام $-1,4,2,1,5$ فعلى البرنامج أن يطبع $4215$. \\
     لا حاجة للتحقق من صحة المدخلات.
 \end{enumerate}
+
+\item مثل السؤال السابق لكن تكوّن العدد بالترتيب المعكوس: أول منزلة نقرأها هي منزلة الآحاد، ثم العشرات \dots
+
+\item
+اكتب عملية تتلقى عددًا صحيحًا وتعيد صحيحًا جديدًا يحوي فقط الأرقام الزوجية منه.
+مثال: إذا تلقّت 835462 تُعيد 8462.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int ExtractEvenDigits(int n)
+{
+    n = Math.Abs(n);
+    int res = 0, p = 1;
+    while(n > 0)
+    {
+        int d = n % 10;
+        if (d % 2 == 0)
+        {
+            res += d * p;
+            p *= 10;
+        }
+        n /= 10;
+    }
+    return res;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب عملية تتلقى عددًا $n$ وتعيد مجموع كل الأعداد التي رقم آحادها 3 بين 1 و $n$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumEnding3(int n)
+{
+    int sum = 0;
+    for(int i=1; i<=n; i++)
+        if (i % 10 == 3)
+            sum += i;
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتب عملية تتلقى عددًا صحيحًا، وتعيد حاصل ضرب خاناته \\
+مثال: إذا كان العدد 234، النتيجة تكون $2 \times 3 \times 4 = 24$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int ProductOfDigits(int n)
+{
+    if (n == 0) return 0;
+    int prod = 1;
+    while (n != 0)
+    {
+        prod *= (n % 10);
+        n /= 10;
+    }
+    return prod;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 

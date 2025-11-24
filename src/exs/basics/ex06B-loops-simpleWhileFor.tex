@@ -258,6 +258,104 @@ Console.WriteLine(cnt);
 \end{boxSolution}
 \fi
 
+\item
+اكتب عملية تتلقى عددًا $n$ وتعيد عدد القيم $i$ من 1 حتى $n$ التي يكون فيها
+$i^2 - i$ عددًا زوجيًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int CountEvenFormula(int n)
+{
+    int cnt = 0;
+    for(int i=1; i<=n; i++)
+    {
+        int v = i*i - i;
+        if (v % 2 == 0)
+            cnt++;
+    }
+    return cnt;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item
+اكتب برنامجًا يستقبل 25 عددًا صحيحًا ويطبع عدد الأعداد التي كانت أصغر من المتوسط الجزئي حتى تلك اللحظة
+(أي: في اللحظة i، نحسب متوسط أوّل i أعداد، ونفحص العدد i).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int cnt = 0;
+
+for(int i=1; i<=25; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+    double avg = sum / (double)i;
+    if (x < avg)
+        cnt++;
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتب برنامجًا يستقبل 20 عددًا صحيحًا من المستخدم. على البرنامج أن يعد ويطبع عدد المرات التي أدخل فيها المستخدم رقمين متتاليين متساويين. \\
+مثال: 5, 3, \textbf{4, 4}, 7, \textbf{9, 9} $\leftarrow$ (هنا العداد يساوي 2).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+Console.WriteLine("Enter 1st number:");
+int prev = int.Parse(Console.ReadLine());
+
+for (int i = 1; i < 20; i++)
+{
+    int curr = int.Parse(Console.ReadLine());
+    if (curr == prev)
+    {
+        count++;
+    }
+    prev = curr;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item اكتب عملية تتلقى عددًا صحيحًا $n$، وتحسب قيمة التعبير التالي: \\
+$1 - 2 + 3 - 4 + 5 - 6 \dots n$ \\
+(لاحظ أن الأعداد الفردية تضاف، والأعداد الزوجية تطرح).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int AlternatingSum(int n)
+{
+    int sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (i % 2 == 0)
+            sum -= i;
+        else
+            sum += i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 \clearpage
 \item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
 \begin{boxExample}
@@ -382,6 +480,31 @@ Console.WriteLine(num2);
 \end{english}
 \end{boxSolution}
 \fi
+
+
+\item
+اكتب برنامجًا يستقبل 30 عددًا صحيحًا ويحسب أكبر فرق بين عددين متتاليين (بالقيمة المطلقة).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int maxDiff = 0;
+
+for(int i=1; i<30; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    int diff = Math.Abs(x - prev);
+    if (diff > maxDiff)
+        maxDiff = diff;
+    prev = x;
+}
+Console.WriteLine(maxDiff);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 
 \end{enumerate}
 

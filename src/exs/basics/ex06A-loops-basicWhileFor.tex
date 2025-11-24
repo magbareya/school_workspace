@@ -330,6 +330,27 @@ Console.WriteLine(sum);
 \end{boxSolution}
 \fi
 
+\item
+اكتب عملية تتلقى عددًا $n$ وتطبع الأعداد من 1 حتى $n$ ولكن تطبع بدل كل عدد يقبل القسمة على 4 كلمة "FOUR".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintFour(int n)
+{
+    for(int i=1; i<=n; i++)
+    {
+        if (i % 4 == 0)
+            Console.WriteLine("FOUR");
+        else
+            Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 \end{enumerate}
 
 \vspace{1cm}

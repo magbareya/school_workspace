@@ -33,6 +33,35 @@
     \item استخدم \textenglish{for داخل for} لطباعة جميع الأزواج $(i,j)$ حيث $j>i$ و $i,j$ من 1 إلى 5.
     \item استخدم \textenglish{while داخل for}: اطبع الأعداد من 1 إلى 5، لكن قبل كل عدد اطلب من المستخدم إدخال ``y'' للتأكيد.
     \item استخدم \textenglish{for داخل while}: اقرأ أعدادًا حتى يدخل المستخدم عددًا سالبًا، ولكل عدد موجب اطبع كلمة ``Hello'' بعدد ذلك العدد.
+
+    \item اكتب عملية تتلقى عددًا $n$ وتطبع مثلثًا من الأرقام كما في الشكل (للمدخل 4):
+\begin{english}
+\begin{verbatim}
+1
+1 2
+1 2 3
+1 2 3 4
+\end{verbatim}
+\end{english}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintNumTriangle(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            Console.Write(j + " ");
+        }
+        Console.WriteLine();
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 \end{enumerate}
 
 \vspace{1cm}

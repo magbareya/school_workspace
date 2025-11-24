@@ -1,0 +1,201 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\ifwithsols
+\title{حل وظيفة بيتية 11 - الحلقات}
+\else
+\title{وظيفة بيتية 11 - الحلقات}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=1.5em]
+
+
+\item
+اكتب عملية تتلقى عددين صحيحَين. على العملية أن تعيد مجموع كل الأعداد الفردية الواقعة داخل هذا المجال (يشمل الطرفين).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumOddRange(int start, int end)
+{
+    int sum = 0;
+    int mn = Math.Min(start, end);
+    int mx = Math.Max(start, end);
+    for (int i = mn; i <= mx; i++)
+    {
+        if (i % 2 != 0)
+            sum += i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item
+ اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$. على العملية أن تعيد قيمة "مضروب" العدد، أي $n!$\\
+مضروب العدد $n$ هو حاصل ضرب كل الأعداد من 1 إلى $n$. \\
+\textbf{مثلًا}: مضروب العدد 5 هو: $1 \times 2 \times 3 \times 4 \times 5 = 120$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static long Factorial(int n)
+{
+    long f = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        f = f * i;
+    }
+    return f;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+في هذا السؤال سنكتب عملية تحسب عددًا مرفوعًا لقوة عدد آخر: $b^e$\\
+اكتب عملية تتلقى عددين صحيحين: $b$ (الأساس) و $e$ (القوة ). على العملية حساب وإرجاع قيمة $b^e$، دون استخدام الدالة الجاهزة \texttt{Math.Pow}. \\
+\textbf{ملاحظة:} $b^e$ هي ضرب العدد $b$ بنفسه $e$ مرّات.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int Power(int baseNum, int exp)
+{
+    int res = 1;
+    for (int i = 1; i <= exp; i++)
+    {
+        res = res * baseNum;
+    }
+    return res;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب عملية تتلقى عددًا صحيحًا $n$، وتقوم بحساب وإرجاع مجموع السلسلة التالية: \\
+$Sum = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}$
+\begin{boxExample}
+\begin{itemize}
+\item
+إذا تلقّت 1 فإنّها تعيد 1.
+\item
+إذا تلقّت 2 فإنّها تعيد: $1 + \frac{1}{2} = 1.5$
+\item
+إذا تلقّت 3 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} = 1.833$
+\item
+إذا تلقّت 10 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} + \ldots + \frac{1}{10} = 2.9289$
+\end{itemize}
+\end{boxExample}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double SeriesSum(int n)
+{
+    double sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += 1.0 / i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل 10 أعداد. على البرنامج أن يفحص هل الأعداد مدخلة بترتيب تصاعدي (كل عدد أكبر من سابقه). \\
+يطبع البرنامج "Sorted" إذا كانت مرتبة، و "Not Sorted" إذا لم تكن كذلك.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+bool isSorted = true;
+int prev = int.Parse(Console.ReadLine());
+for (int i = 1; i < 10; i++)
+{
+    int curr = int.Parse(Console.ReadLine());
+    if (curr <= prev)
+        isSorted = false;
+    prev = curr;
+}
+if (isSorted) Console.WriteLine("Sorted");
+else Console.WriteLine("Not Sorted");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+\item
+\textbf{سؤال بونوس} \\
+اكتب عملية خارجية تتلقى عددين صحيحين $a$ و $b$ وتطبع حاصل قسمة $a$ على $b$ والباقي من القسمة، بدون استخدام العمليات $/$ و $\%$.
+
+\begin{boxHint}
+    يمكن حساب حاصل قسمة $a$ على $b$ والباقي بالطريقة التالية: نكرر طرح العدد $b$ من $a$  حتى يصبح أصغر من $b$ . \\
+عدد المرات التي طرحنا فيها $b$ من $a$  هي حاصل القسمة. \\
+والعدد الأصغر من $b$ الذي نتج بعد تكرار الطرح هو الباقي. \\
+مثلًا: إذا كان $a=20$ و $b=6$، فإنّنا نكرّر طرح 6 من 20 حتى يكون الناتج أصغر من 6 $\leftarrow$ طرحنا 6 من 20 ثلاث مرات. بعد أن طرحنا من ال 20 العدد 6 ثلاث مرات، سيبقى 2. إذن حاصل قسمة 20 على 6 هو 3 والباقي 2.
+\end{boxHint}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void DivMod(int a, int b)
+{
+    int cnt = 0;
+    while (a >= b)
+    {
+        cnt++;
+        a -= b;
+    }
+    Console.WriteLine("a / b = " + cnt);
+    Console.WriteLine("a % b = " + a);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+% \item اكتب عملية تتلقى عددين صحيحين، وتعيد القاسم المشترك الأكبر لهما (أكبر عدد يقسم العددين معًا). \\
+% (يمكنك استخدام طريقة التجربة بالتنازل من العدد الأصغر وصولًا للواحد).
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% public static int GCD(int a, int b)
+% {
+%     int min = Math.Min(a, b);
+%     for (int i = min; i >= 1; i--)
+%     {
+%         if (a % i == 0 && b % i == 0)
+%             return i;
+%     }
+%     return 1;
+% }
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \fi
+
+\end{enumerate}
+
+\end{document}
