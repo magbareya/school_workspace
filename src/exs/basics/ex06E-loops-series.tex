@@ -1,0 +1,102 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن 6 للصف العاشر 10 - قسم 5 \\ أسئلة متواليات}
+\else
+\title{ورقة تمرن 6 للصف العاشر 10 - قسم 5 \\ أسئلة متواليات}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item اطبع أول 20 عددًا من المتوالية: $3, 6, 9, 12,\dots$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 20; i++)
+    Console.WriteLine(3 * i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item متوالية فيبوناتشي معرفة بالشكل التالي:
+    \begin{english}
+        \begin{align*}
+            a_1 &= 1 \\
+            a_2 &= 1 \\
+            a_n &= a_{n-1} + a_{n-2} \text{ , for } n > 2
+        \end{align*}
+    \end{english}
+    مثلًا، أول 7 حدود من متوالية فيبوناتشي هي: $1, 1, 2, 3, 5, 8, 13$. \\
+    \begin{enumerate}
+      \item اكتب عملية خارجية تتلقى عددًا صحيحًا: $n$ وتعيد الحد الـ $n$-ي من متوالية فيبوناتشي.
+      مثلًا: إذا تلقت العدد 3، فإنّها تعيد 2.
+
+      \item اكتب عملية تتلقى عددًا صحيحًا $n$، وتطبع أول $n$ حدود من متوالية فيبوناتشي. \\
+      عليك استخدام العملية من البند السابق. \\
+      مثلًا، إذا تلقت العملية الرقم 8، فعليها أن يطبع أول 8 حدود من المتوالية، أي:
+    \begin{english}
+    \begin{boxCode}
+    1 \\
+    1 \\
+    2 \\
+    3 \\
+    5 \\
+    8 \\
+    13 \\
+    21
+    \end{boxCode}
+    \end{english}
+
+      \item اكتب برنامجًا رئيسيًّا يستقبل عددًا صحيحًا، ويستدعي العملية من البند ب مع الرقم الذي أدخله المستخدم.
+      \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int Fib(int n)
+{
+    if (n <= 2)
+        return 1;
+    int a = 1, b = 1;
+    for (int i = 3; i <= n; i++)
+    {
+        int c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+public static void PrintFirstNFibs(int n)
+{
+    for (int i = 1; i <= n; i++)
+        Console.WriteLine(Fib(i));
+}
+
+private static void Main(string[] args)
+{
+    int n = int.Parse(Console.ReadLine());
+    PrintFirstNFibs(n);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

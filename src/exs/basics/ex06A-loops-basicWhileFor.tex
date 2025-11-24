@@ -1,0 +1,342 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن 6 للصف العاشر 10 - قسم 1 \\ أسئلة تأسيسية}
+\else
+\title{ورقة تمرن 6 للصف العاشر 10 - قسم 1 \\ أسئلة تأسيسية}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section{أسئلة على حلقة \textenglish{while}}
+\begin{enumerate}[itemsep=1.5em]
+    \item اطلب من المستخدم إدخال أعداد صحيحة، على البرنامج أن يطبع كل عدد يدخله المستخدم، إذا أدخل المستخدم العدد 0، يتوقف البرنامج.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n != 0)
+{
+    Console.WriteLine(n);
+    n = int.Parse(Console.ReadLine());
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اطلب من المستخدم إدخال رقم بين 1 و 10. إذا أدخل رقمًا غير ذلك، اطبع رسالة خطأ واطلب رقمًا جديدًا حتى يُدخل رقمًا صحيحًا. في النهاية اطبع له عدد المرات التي أدخل فيها عددًا غير صحيح.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int invalid = 0;
+int x = int.Parse(Console.ReadLine());
+while (x < 1 || x > 10)
+{
+    Console.WriteLine("Error");
+    invalid++;
+    x = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(invalid);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item اطلب من المستخدم رقمًا صحيحًا يقسم على 7، فإذا أدخل رقمًا لا يقسم على 7، كرر الطلب حتى يدخل رقمًا يقبل القسمة على 7.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n % 7 != 0)
+{
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(n);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اقرأ أعدادًا من المستخدم، واجمعها جميعًا، وتوقف فقط عندما تصبح قيمة المجموع أكبر من 100.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+while (sum <= 100)
+{
+    int v = int.Parse(Console.ReadLine());
+    sum += v;
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item اطلب من المستخدم إدخال أعداد صحيحة حتى يدخل العدد 999. بعد التوقف، اطبع أكبر عدد قام بإدخاله قبل 999.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int max = int.MinValue;
+int v = int.Parse(Console.ReadLine());
+while (v != 999)
+{
+    if (v > max)
+        max = v;
+    v = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(max);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+\begin{enumerate}
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا يمثّل كلمة السر. \\
+على العملية أن تستقبل من المستخدم كلمة مرور، إذا كانت خاطئة تستمر بالاستقبال حتى يدخل كلمة السر الصحيحة. \\
+على العملية أن تعيد عدد المحاولات الفاشلة التي حاولها المستخدم.
+\item
+في البرنامج الرئيسي: استدع العملية مع كلمة المرور 8264، ثم اطبع (في البرنامج الرئيسي) عدد المحاولات الفاشلة التي حاولها المستخدم.
+\item في البرنامج الرئيسي استقبل عددًا صحيحًا، واستدع العملية من البند أ مع كلمة المرور هذه، ثم اطبع عدد المحاولات الفاشلة.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int PasswordTries(int pass)
+{
+    int fails = 0;
+    int x = int.Parse(Console.ReadLine());
+    while (x != pass)
+    {
+        fails++;
+        x = int.Parse(Console.ReadLine());
+    }
+    return fails;
+}
+private static void Main(string[] args)
+{
+    // b
+    Console.WriteLine(PasswordTries(8264));
+    // c
+    int p = int.Parse(Console.ReadLine());
+    Console.WriteLine(PasswordTries(p));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+    \item أمامك مقطع البرنامج التالي:
+    \begin{english}
+    \begin{boxCode}
+    \begin{minted}{csharp}
+while(x != y)
+{
+     x += 1;
+     y -= 2;
+}
+\end{minted}
+    \end{boxCode}
+    \end{english}
+
+    \begin{enumerate}
+        \item أعط مثالًا لعددين x و  y بحيث تتكرر الحلقة 3 مرات.
+        \item أعط مثالًا لعددين x و  y بحيث تتكرر الحلقة مرة واحدة فقط.
+        \item أعط مثالًا لعددين x و  y بحيث لا تتكرر الحلقة أبدا.
+        \item أعط مثالًا لعددين x و  y بحيث تتكرر الحلقة الى ما لا نهاية من المرّات.
+    \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+    \begin{enumerate}
+\item نأخذ: $x=0$, $y=9$. بعد 3 خطوات يصبحان متساويين $(3,3)$ ثم يتوقف.(يمكن أخذ أي عددين بحيث $y-x=9$)
+
+\item نأخذ: $x=0$, $y=3$. بعد خطوة واحدة يصبحان متساويين $(1,1)$ ثم يتوقف.(يمكن أخذ أي عددين بحيث $y-x=3$)
+
+\item أي رقم نأخذه بحيث $x=y$ فإن الحلقة لن تتكرر لأنّ شرطها غير متحقّق من البداية.
+
+\item نأخذ مثلًا: $x=1$ و $y=0$ عندها لن يتساويا أبدًا. \\
+هنا يمكننا أخذ أي قيمتين بحيث يكون $x>y$ أو يكون الفرق بينهما ليس من مضاعفات الـ 3.
+\end{enumerate}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+
+\clearpage
+\section{أسئلة على حلقة \textenglish{for}}
+\begin{enumerate}[itemsep=1.5em]
+    \item اكتب حلقة \textenglish{for} تطبع الأعداد من 1 إلى 20.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 20; i++)
+    Console.WriteLine(i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اقرأ عددًا من المستخدم $N$، ثم اطبع $N$ أسطر، في كل سطر كلمة \textenglish{Hello}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int N = int.Parse(Console.ReadLine());
+for (int i = 0; i < N; i++)
+    Console.WriteLine("Hello");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتب برنامجًا يطبع الأعداد من 10 إلى 1 تنازليًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 10; i >= 1; i--)
+    Console.WriteLine(i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+    \item اطبع جميع الأعداد الزوجية بين 20 و 50.
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 20; i <= 50; i++)
+{
+    if (i % 2 == 0)
+        Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 20; i <= 50; i+=2)
+    Console.WriteLine(i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item احسب مجموع الأعداد من 70 إلى 100.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+for (int i = 70; i <= 100; i++)
+    sum += i;
+
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اطبع أول 12 مضاعفًا للعدد 7.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 12; i++)
+    Console.WriteLine(7 * i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item اطبع تربيع الأعداد من 1 إلى 15.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 15; i++)
+    Console.WriteLine(i * i);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتب مقطع برنامج يطبع عدد الاعداد ثلاثية المنزلة التي تقسم على 7.
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+for (int i = 100; i <= 999; i++)
+{
+    if (i % 7 == 0)
+        count++;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item لكل عدد من 1 إلى 10، اطبع العدد مرفوعًا لقوة نفسه (أي: $1^1, 2^2, 3^3, \ldots, 10^{10}$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 10; i++)
+{
+    Console.WriteLine(Math.Pow(i, i));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا $n$، ثم يستقبل منه $n$ أعداد صحيحة ويطبع مجموعها.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = 0; i < n; i++)
+    sum += int.Parse(Console.ReadLine());
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

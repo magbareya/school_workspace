@@ -1,0 +1,92 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن 6 للصف العاشر 10 - قسم 4 \\ أسئلة تحليل العدد إلى عوامله}
+\else
+\title{ورقة تمرن 6 للصف العاشر 10 - قسم 4 \\ أسئلة تحليل العدد إلى عوامله}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحا، ويطبع له كل عوامل هذا العدد (أي كل الأعداد التي يقسم عليها هذا العدد).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int d = 1; d <= n; d++)
+{
+    if (n % d == 0)
+        Console.WriteLine(d);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{للتذكير} عدد أوّلي هو عدد يقسم فقط على نفسه وعلى 1.
+    \begin{enumerate}
+        \item اكتب عمليّة خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوليًّا، وإلا فإنّها تعيد \textenglish{false}.
+        \item في البرنامج الرئيسي، استدعِ العملية مع العدد 17 واطبع النتيجة. ومع العدد 20 واطبع النتيجة.
+        \item اكتب عملية خارجية أخرى باسم \textenglish{PrintPrimes} تتلقى عددًا صحيحًا وتطبع كل الأعداد الأولية حتى هذا العدد. \\
+                 \textbf{مثلًا:} إذا تلقت العملية العدد 20 فإنّها تطبع: 2، 3، 5، 7، 11، 13، 17، 19.
+        \item في البرنامج الرئيسي استدعِ العملية مع الرقم 100.
+    \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPrime(int n)
+{
+    if (n < 2)
+        return false;
+    for (int d = 2; d * d <= n; d++)
+    {
+        if (n % d == 0)
+            return false;
+    }
+    return true;
+}
+
+public static void PrintPrimes(int n)
+{
+    for (int i = 2; i <= n; i++)
+    {
+        if (IsPrime(i))
+            Console.WriteLine(i);
+    }
+}
+
+private static void Main(string[] args)
+{
+    Console.WriteLine(IsPrime(17));
+    Console.WriteLine(IsPrime(20));
+    PrintPrimes(100);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتب عملية تتلقى عددًا صحيحًا، وتطبع كل عوامله \textbf{الأوّلية}. (أي كل الأعداد الأولية التي يقسم عليها هذا العدد) \\
+يمكنك الاستعانة بالعملية \textenglish{IsPrime} التي كتبتها في السؤال السابق.
+
+\item اكتب عملية خارجية باسم \textenglish{IsPrimeSquare} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان العدد الذي تلقته عبارة عن تربيع عدد أوّلي. وإلا فإنّها تعيد \textenglish{false} \\
+\textbf{مثلًا:} تعيد العملية \textenglish{true} إذا تلقّت 25. وتعيد \textenglish{false} إذا تلقت 30.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
