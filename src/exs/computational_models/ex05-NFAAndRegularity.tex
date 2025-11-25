@@ -1,0 +1,42 @@
+﻿\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{تمرين 4 للصف 11-10 \\ أوتومات نهائي غير محدود}
+
+\begin{document}
+
+\maketitle
+
+\section{بناء أوتومات من اللغة}
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ أو تنتهي بالسلسلة $aa$.
+
+\item
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة $bb$ مرتين على الأقل.
+
+\end{enumerate}
+
+\section{لغات نظامية}
+معطاة اللغة $L$ فوق الأبجدية $\{a,b\}$ هي لغة نظامية. \\
+لكل لغة من اللغات التالية، حدد هل هي نظامية أم لا. إذا كانت نظامية أثبت ذلك عن طريق صفات الانغلاق.
+
+\begin{enumerate}[itemsep=1.5em]
+
+\item
+$$L_1 = \{w \cdot c \cdot R(w) \mid w \in L \}$$
+فوق الأبجدية $\{a,b,c\}$.
+
+\item
+$$L_2 = L \cdot c \cdot R(L)$$
+فوق الأبجدية $\{a,b,c\}$.
+
+\end{enumerate}
+
+\insertFullImg{../../../bagrut_questions/computational_models/NFA_2016_899381_11.png}
+\insertFullImg{../../../bagrut_questions/computational_models/NFA_2010_899205_15A.png}
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2010_899205_13.png}
+
+\end{document}
