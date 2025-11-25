@@ -111,14 +111,14 @@
 \newcommand{\importpdfpage}[2]{%
     \thispagestyle{empty}
     \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
-    \includegraphics[page=#2,width=0.98\paperwidth,height=0.98\paperheight,keepaspectratio]{#1}
+    \includegraphics[page=#2,width=0.95\paperwidth,height=0.95\paperheight,keepaspectratio]{#1}
     \restoregeometry
 }
 
 \newcommand{\insertFullImg}[1]{%
     \noindent
     \makebox[\textwidth][c]{
-        \includegraphics[width=\paperwidth,keepaspectratio]{#1}%
+        \includegraphics[width=0.9\paperwidth,keepaspectratio]{#1}%
     }%
 }%
 
