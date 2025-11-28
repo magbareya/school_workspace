@@ -3,7 +3,32 @@
 \insertFullImg{../../../bagrut_questions/computational_models/NFA_2016_899381_11.png}
 
 \ifwithsols
-\subsubsection*{حل سؤال 11 امتحان 899381 سنة 2016}:
+\subsubsection*{حل سؤال 11 امتحان 899381 سنة 2016}
 \bigskip
-% // TODO:
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+\item
+نلاحظ أنّ:
+$$\overline{L_1} = \{a^{2n+1} \mid n \geq 0 \}$$
+و
+$$\overline{L_2} = \{b^{2n} \mid n \geq 0 \}$$
+
+يمكننا التعبير عن اللغة $L$ كما يلي:
+$$L = (L1 \cap L2) \cup (\overline{L_1} \cap \overline{L_2})$$
+
+\begin{itemize}
+\item $L_1$ و $L_2$ نظاميّتان حسب المعطى $\leftarrow$ $L_1 \cap L_2$ نظامية لأنّ اللغات النظامية منغلقة تحت عملية التقاطع.
+\item $\overline{L_1}$ و $\overline{L_2}$ نظاميّتان لأن كلّ واحدة منهما مكمّلة للغة نظامية، واللغات النّظامية منغلقة تحت عملية المكمّل
+\item $\overline{L_1} \cap \overline{L_2}$ نظامية لأنّ اللغات النظامية منغلقة تحت عملية التقاطع.
+\item $L = (L1 \cap L2) \cup (\overline{L_1} \cap \overline{L_2})$ نظامية لأنّها اتّحاد لغتين نظاميّتين.
+\end{itemize}
+
+\clearpage
+\item .
+\begin{center}
+    \includegraphics[width=0.3\paperwidth,keepaspectratio]{../../../images/DFAs/an_bm_one_even_other_odd.png}%
+\end{center}
+
+\end{enumerate}
+
+\clearpage
 \fi

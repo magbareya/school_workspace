@@ -3,7 +3,25 @@
 \insertFullImg{../../../bagrut_questions/computational_models/DFA_2010_899205_13.png}
 
 \ifwithsols
-\subsubsection*{حل سؤال 13 امتحان 899205 سنة 2010}:
-\bigskip
-% // TODO:
+\begin{boxSolution}[سؤال 13 امتحان 899205 سنة 2010]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+\item
+\begin{itemize}
+\item
+$L_1$ ليست نظامية لأنها تشترط أن يكون عدد الـ $b$ مساويًا لعدد الـ $1 - a$ وهذا الشرط لا يمكن فحصه بأوتومات نهائي.
+\item $L_2$ نظامية، الأوتومات التالي يقبلها:\\
+\begin{center}
+    \includegraphics[width=0.23\paperwidth,keepaspectratio]{../../../images/DFAs/an_bm_one_even_other_odd.png}%
+\end{center}
+
+\item $L_3$ نظامية، الأوتومات التالي يقبلها:\\
+\begin{center}
+    \includegraphics[width=0.3\paperwidth,keepaspectratio]{../../../images/DFAs/a_star_b_even.png}%
+\end{center}
+\end{itemize}
+
+\item
+$$L_5 = \{a^n b^{n+m-2}a^m \mid n \geq 1, m \geq 1, m \text{فردي  }\}$$
+\end{enumerate}
+\end{boxSolution}
 \fi
