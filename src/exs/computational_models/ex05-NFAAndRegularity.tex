@@ -1,30 +1,56 @@
 ﻿\documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
+\ifwithsols
+\title{حل تمرين 4 للصف 11-10 \\ أوتومات نهائي غير محدود}
+\else
 \title{تمرين 4 للصف 11-10 \\ أوتومات نهائي غير محدود}
+\fi
 
 \begin{document}
 
 \maketitle
 
 \section{بناء أوتومات من اللغة}
+ابن أوتوماتًا نهائيًّا غير محدود لكل واحدة من اللغات التالية:
 
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
 \begin{enumerate}[itemsep=1.5em]
+\fi
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ أو تنتهي بالسلسلة $aa$.
 
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.4\paperwidth,keepaspectratio]{../../../images/DFAs/start_or_end_aa.png}%
+\end{center}
+\end{boxSolution}
+\fi
+
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة $bb$ مرتين على الأقل.
-
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.6\paperwidth,keepaspectratio]{../../../images/DFAs/contains_bb_twice.png}%
+\end{center}
+\end{boxSolution}
+\fi
 \end{enumerate}
+
+\ifwithsols
+\clearpage
+\fi
 
 \section{لغات نظامية}
 معطاة اللغة $L$ فوق الأبجدية $\{a,b\}$ هي لغة نظامية. \\
 لكل لغة من اللغات التالية، حدد هل هي نظامية أم لا. إذا كانت نظامية أثبت ذلك عن طريق صفات الانغلاق.
 
 \begin{enumerate}[itemsep=1.5em]
-
 \item
 $$L_1 = \{w \cdot c \cdot R(w) \mid w \in L \}$$
 فوق الأبجدية $\{a,b,c\}$.
@@ -32,9 +58,27 @@ $$L_1 = \{w \cdot c \cdot R(w) \mid w \in L \}$$
 \item
 $$L_2 = L \cdot c \cdot R(L)$$
 فوق الأبجدية $\{a,b,c\}$.
-
 \end{enumerate}
 
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[itemsep=2em]
+\item $L_1$ ليست نظامية بالضرورة:
+\begin{enumerate}[itemsep=2em]
+\item إذا كانت $L$ نهائية، فإنّ $L_1$ ستكون نهائية أيضًا، وبالتالي هي نظامية.
+\item إذا كانت $L$ غير نهائية، فإنّ $L_1$  ليست نظامية بالضرورة، لأنّنا نحتاج أن نتذكّر السلسلة $w$ لنتحقق من أنّ الجزء الثاني من السلسلة هو $R(w)$. وهذا غير ممكن في أوتومات نهائي محدود أن نتذكّر كلمة بكل طول ممكن.
+\end{enumerate}
+
+\item $L_2$ نظامية: لأنّها تسلسل ثلاث لغات نظامية: \\
+- $L$ نظامية (معطاة). \\
+- $\{c\}$ نظامية لأنّها نهائية \\
+- $R(L)$ نظامية لأنّ اللغات النظامية مغلقة تحت عملية الانعكاس. \\
+وبما أنّ اللغات النظامية منغلقة تحت عملية التسلسل، فإنّ $L_2$ نظامية.
+\end{enumerate}
+\end{boxSolution}
+\fi
+
+\clearpage
 \input{../../../bagrut_questions/computational_models/NFA_2016_899381_11.tex}
 
 \input{../../../bagrut_questions/computational_models/NFA_2010_899205_15A.tex}
