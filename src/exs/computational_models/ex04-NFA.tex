@@ -67,6 +67,9 @@
 
 \end{enumerate}
 
+\ifwithsols
+\clearpage
+\fi
 \section{بناء أوتومات من اللغة}
 
 \begin{enumerate}
@@ -75,40 +78,100 @@
 \begin{enumerate}[itemsep=1em]
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي تحتوي على $1$ واحدة على الأقل.
-
-\item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ وتنتهي بنفس الحرف.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.3\paperwidth,keepaspectratio]{../../../images/DFAs/starts_and_ends_same_letter.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة الفرعية $aba$.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.6\paperwidth,keepaspectratio]{../../../images/DFAs/nfa_contains_aba.png}%
+\end{center}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item
-\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي مجموع خاناتها يقسم على 2 أو على 3 بدون باقٍ.
+\textbf{اللغة:} كل السلاسل من الأبجدية $\{0, 1\}$ التي \textbf{مجموع} خاناتها يقسم على 2 أو على 3 بدون باقٍ.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.4\paperwidth,keepaspectratio]{../../../images/DFAs/nfa_div_2_or_3.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي يكون فيها الحرف الثالث من النهاية هو $a$.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.6\paperwidth,keepaspectratio]{../../../images/DFAs/nfa_3rd_from_end_is_a.png}%
+\end{center}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تبدأ أو تنتهي بالسلسلة $aa$.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.4\paperwidth,keepaspectratio]{../../../images/DFAs/start_or_end_aa.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \item
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي تحتوي على السلسلة $bb$ مرتين على الأقل.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.6\paperwidth,keepaspectratio]{../../../images/DFAs/contains_bb_twice.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 
-\vspace{2em}
+\ifwithsols
+\clearpage
+\fi
 
 \item
 لكل لغة من اللغات التالية، ابنِ أوتوماتًا حسب المطلوب
+\ifwithsols
+\begin{enumerate}[itemsep=3em]
+\else
 \begin{enumerate}[itemsep=1em]
-
+\fi
 \item ابن أوتوماتًا نهائيًّا محدودًا للغة التالية: \\
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ التي هي من الصورة $(ab)^n$ حيث $n \ge 1$. \\
 (مثل: $ab, abab, ababab, \dots$)
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.5\paperwidth,keepaspectratio]{../../../images/DFAs/ab_to_power_n.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \item ابن أوتوماتًا نهائيًّا للغة التالية: \\
 \textbf{اللغة:} كل السلاسل من الأبجدية $\{a, b\}$ ذات الطول الزوجي والتي تنتهي بالحرف $a$.
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+    \includegraphics[width=0.5\paperwidth,keepaspectratio]{../../../images/DFAs/even_length_ends_wtih_a.png}%
+\end{center}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 
