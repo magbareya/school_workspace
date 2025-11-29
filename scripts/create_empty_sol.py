@@ -28,7 +28,7 @@ with open(TEMPLATE_FILE, "r", encoding="utf-8") as t:
 
 # Build Regex
 supported_extensions = "|".join(EXTENSION_TEMPLATES.keys())
-PATTERN = re.compile(rf"(.+?)_(\d{{4}})_(\d+)_(\d+[A-Z]?)\.({supported_extensions})$")
+PATTERN = re.compile(rf"(.+?)_(\d{{4}}[A-Z]?)_(\d+)_(\d+[A-Z]?)\.({supported_extensions})$")
 
 def process_file(file_path):
     """
