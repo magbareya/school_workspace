@@ -1,0 +1,40 @@
+\subsection*{سؤال 12 امتحان 899381 سنة 2022}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2022_899381_12.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 12 امتحان 899381 سنة 2022]
+\begin{enumerate}[label=\alph*., itemsep=2em]
+        \item . \\
+\begin{tabular}{|r|c|c|c|}
+\hline
+\textbf{هل مقبولة؟} & $m \% 4$ & $n\%2$ & \textbf{الكلمة} \\
+\hline
+غير مقبولة & 0 & 1 & $a = a^{1}b^{0}$ \\
+\hline
+مقبولة & 1 & 1 & $ab = a^{1}b^{1}$ \\
+\hline
+ مقبولة & 3 & 3 & $aaabbb = a^{3}b^{3}$ \\
+\hline
+مقبولة & 1 & 1 & $aaabbbbb = a^{3}b^{5}$ \\
+\hline
+غير مقبولة & 2 & 0 & $aabb = a^{2}b^{2}$ \\
+\hline
+مقبولة & 1 & 1 & $aaab = a^{3}b^{1}$ \\
+\hline
+مقبولة & 0 & 0 & $aa = a^{2}b^{0}$ \\
+\hline
+غير مقبولة (لأن شرط اللغة يطلب $n>0$) & 0 & 0 & $bbbb = a^{0}b^{4}$ \\
+\hline
+مقبولة & 0 & 0 & $aaaa = a^{4}b^{0}$ \\
+\hline
+غير مقبولة & 3 & 1 & $abbb = a^{1}b^{3}$ \\
+\hline
+\end{tabular}
+
+\item . \\
+    \includegraphics[width=0.9\textwidth]{../../../images/DFAs/an_bm_mmod4_equals_nmod2.png}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

@@ -1,0 +1,38 @@
+\subsection*{سؤال 13B امتحان 899381 سنة 2022}
+
+\insertFullImg{../../../bagrut_questions/computational_models/languages_2022_899381_13B.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 13B امتحان 899381 سنة 2022]
+\begin{enumerate}[label=\alph*., itemsep=2em]
+    \item نحصل على أقصر كلمة عندما نعوّض أصغر قيمة لكل بارامتر، أي: $k = 1, n=1$. \\
+    لذلك أقصر كلمة هي:
+    $$ c^{1+1+1} b^1 a^{2 \cdot 1} \rightarrow c^3 b^1 a^2 \rightarrow cccbaa $$ \\
+    كي نحدد إذا كانت كلمة ما موجودة في $L_2$ يجب أن يظهر الحرف $d$ مرة واحدة في الوسط بالضبط. \\
+    وأيضًا، القسم الذي قبل الحرف $d$ يجب أن يكون كلمة في $L_1$. \\
+    والقسم الذي بعد الحرف $d$ يجب ان يكون مقلوب كلمة في $L_1$ (ليس بالضرورة نفس الكلمة التي كانت قبل الحرف $d$).
+
+    \item $L2 = L_1 \cdot d \cdot R(L_1) = \{ c^{1+k+n} b^k a^{2n} d a^{2m} b^q c^{1+q+m} \mid, m,n,k,q \geq 1 \}$
+    \begin{itemize}
+        \item \textenglish{cccbaaddaabccc} \\
+        ليست موجودة في اللغة، لأنّ الحرف $d$  يظهر مرتين في الكلمة.
+
+        \item \textenglish{cccbaadcccbaa} \\
+        ليست موجودة في الكلمة لأنّ القسم الموجود بعد الحرف $d$ ليس مقلوب كلمة من اللغة $L_1$، بل هو نفسه موجود في اللغة $L_1$.
+
+        \item $w = cccbaadaaaabcccc$ \\
+        موجودة في اللغة $L_2$. لنوضح ذلك نعرّف كلمتين: \\
+        $u = cccbaa = c^3 b^1 a^2$ و $v = aaaabcccc = a^4 b^1 c^4$. \\
+        يمكننا كتابة:  $w = u \cdot d \cdot v$. \\
+        نلاحظ أنّ:
+        \begin{itemize}
+        \item $u \in L_1$ عندما نعوّض $k = 1, n=1$ (هذه عمليا أقصر كلمة التي وجدناها في الفرع السابق.)
+        \item $v \in R(L_1)$ عندما نعوّض $n = 2, k=1$
+        \end{itemize}
+        لذلك: $w = u \cdot d \cdot v \in L_1 \cdot d \cdot R(L_1) \rightarrow w \in L_2$
+
+    \end{itemize}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

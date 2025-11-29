@@ -1,0 +1,41 @@
+\subsection*{سؤال 12 امتحان 899381 سنة 2021}
+
+\insertFullImg{../../../bagrut_questions/computational_models/languages_2021_899381_12.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 12 امتحان 899381 سنة 2021]
+    \begin{enumerate}[label=\alph*.]
+    \item
+    \begin{enumerate}[label=(\arabic*)]
+        \item $bcbcac$
+        \item $a$
+    \end{enumerate}
+
+    \item
+    نبني أوتوماتًا نهائيًّا لكل واحد من المتطلّبات:
+\begin{itemize}[label=-, itemsep=2em]
+\item $L_1$ هي لغة كل الكلمات التي فيها الحرف قبل الأخير هو $a$، هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.5\textwidth]{../../../images/DFAs/before_last_is_a.png}
+
+\item $L_2$ هي لغة كل الكلمات التي تحتوي على الأقلّ مرّتين التسلسل $bc$، هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=\textwidth]{../../../images/DFAs/contains_bc_twice.png}
+\end{itemize}
+\end{enumerate}
+\end{boxSolution}
+
+\begin{boxSolution}[سؤال 12 امتحان 899381 سنة 2021 - تكملة]
+\begin{itemize}[label=-, itemsep=2em]
+
+\item $L_3$ هي لغة كل الكلمات التي عدد مرات ظهور الحرف $b$ فيها هو زوجيّ. هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.4\textwidth]{../../../images/DFAs/even_b.png}
+
+\item $L_4$ هي لغة كل الكلمات التي لا تحوي التسلسل $bb$. هذه لغة نظامية لأنّ الأوتومات التالي يقبلها: \\
+\includegraphics[width=0.5\textwidth]{../../../images/DFAs/no_bb.png}
+\end{itemize}
+
+اللغة $L$ الموصوفة في السؤال هي اللغة: $L = L_1 \cap L_2 \cap L_3 \cap L_4$. \\
+رأينا أعلاه أنّ كل واحدة من اللغات $L_1, L_2, L_3, L_4$ هي لغة نظامية، لذلك $L$ هي لغة نظامية حسب صفة الانغلاق للغات النظامية تحت عملية التقاطع.
+\end{boxSolution}
+
+\clearpage
+\fi
