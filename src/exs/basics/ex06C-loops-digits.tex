@@ -14,13 +14,182 @@
 
 \begin{enumerate}[itemsep=1.5em]
 
-\item اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد عدد خاناته.
+
+\item
+اكتب عملية خارجية تتلقى عددًا صحيحًا $n$ وتطبع من 1 حتى $n$ فقط الأعداد التي ينتهي رقمها بــ 5.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintEndingWith5(int n)
+{
+    for(int i = 1; i <= n; i++)
+    {
+        if (i % 10 == 5)
+            Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب عملية تتلقى عددًا $n$ وتعيد مجموع كل الأعداد التي رقم آحادها 3 بين 1 و $n$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumEnding3(int n)
+{
+    int sum = 0;
+    for(int i=1; i<=n; i++)
+    {
+        if (i % 10 == 3)
+            sum += i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 20 عددًا ويطبع عدد الأعداد التي كان رقم آحادها أكبر من رقم عشراتها.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0, x;
+for(int i=0; i<20; i++)
+{
+    x = int.Parse(Console.ReadLine());
+    x = Math.Abs(x);
+    int ones = x % 10;
+    int tens = (x / 10) % 10;
+    if (ones > tens)
+        cnt++;
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويعدّ الأعداد التي خانة العشرات فيها زوجية، ويطبعه. \\
+ينتهي الاستقبال عندما يدخل المستخدم عددًا سالبًا.
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+int n = int.Parse(Console.ReadLine());
+while (n >= 0)
+{
+    int tens = (n / 10) % 10;
+    if (tens % 2 == 0)
+        cnt++;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2، فكر لماذا هو صحيح؟]
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+int n = int.Parse(Console.ReadLine());
+while (n >= 0)
+{
+    n /= 10;
+    if (n % 2 == 0)
+        cnt++;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item \label{item:digitCount} اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد عدد خاناته.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DigitsCount(int n)
+{
+    if(n == 0)
+        return 1;
+    int count = 0;
+    while (n > 0)
+    {
+        count++;
+        n /= 10;
+    }
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item اكتب عملية خارجية تتلقى عددًا صحيحًا وتعيد مجموع خاناته.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DigitsSum(int n)
+{
+    int sum = 0;
+    while (n > 0)
+    {
+        sum += (n % 10);
+        n /= 10;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item اكتب عملية تتلقى عددًا صحيحًا، وتعيد حاصل ضرب خاناته \\
+مثال: إذا كان العدد 234، النتيجة تكون $2 \times 3 \times 4 = 24$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int ProductOfDigits(int n)
+{
+    if (n == 0)
+        return 0;
+    int prod = 1;
+    while (n != 0)
+    {
+        prod *= (n % 10);
+        n /= 10;
+    }
+    return prod;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item اكتب عملية خارجية تتلقى عددًا موجبًا وتطبع: عدد خاناته، ومجموع خاناته، ومعدّل خاناته. \\
-        \textbf{مثلًا:} إذا تلقت العملية العدد 762945، فإنّها تطبع: \\
-        لا تستخدم العمليات من الأسئلة السابقة، اكتب حلقة \textenglish{while} واحدة فقط.
+لا تستخدم العمليات من الأسئلة السابقة، اكتب حلقة \textenglish{while} واحدة فقط. \\
+        \textbf{مثلًا:} إذا تلقت العملية العدد 762945، فإنّها تطبع:
 
 \begin{english}
 \begin{boxCode}
@@ -51,53 +220,59 @@ public static void PrintDigitsStats(int n)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item اكتب عملية خارجية تتلقى عددًا صحيحا، وتطبع عدد الخانات الزوجية فيه وعدد الخانات الفردية فيه.
-
-\item
-اكتب عملية خارجية تتلقى عددًا صحيحًا $n$ وتطبع من 1 حتى $n$ فقط الأعداد التي ينتهي رقمها بــ 5.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static void PrintEndingWith5(int n)
+public static void PrintEvenOddDigitsCount(int n)
 {
-    for(int i = 1; i <= n; i++)
-        if (i % 10 == 5)
-            Console.WriteLine(i);
+    int even = 0, odd = 0;
+    if (n == 0)
+        even = 1;
+    while (n > 0)
+    {
+        int d = n % 10;
+        if (d % 2 == 0)
+            even++;
+        else
+            odd++;
+        n /= 10;
+    }
+    Console.WriteLine("Even digits = " + even);
+    Console.WriteLine("Odd digits = " + odd);
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
-
-\item
-اكتب برنامجًا يستقبل من المستخدم 20 عددًا ويطبع عدد الأعداد التي كان رقم آحادها أكبر من رقم عشراتها.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int cnt = 0;
-for(int i=0; i<20; i++)
-{
-    int x = Math.Abs(int.Parse(Console.ReadLine()));
-    int ones = x % 10;
-    int tens = (x / 10) % 10;
-    if (ones > tens)
-        cnt++;
-}
-Console.WriteLine(cnt);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويعدّ الأعداد التي خانة العشرات فيها زوجية، ويطبعه. \\
-ينتهي الاستقبال عندما يدخل المستخدم عددًا سالبًا.
 
 \item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. في نهاية البرنامج عليه أن يطبع الرقم الذي له أكبر مجموع خانات (يمكنك الاستعانة بالعملية التي كتبتها في الأسئلة السابقة).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int bestNum = 0, bestSum = -1;
+for (int i = 0; i < 100; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    int s = DigitsSum(x);
+    if (s > bestSum)
+    {
+        bestSum = s;
+        bestNum = x;
+    }
+}
+Console.WriteLine(bestNum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item
 \begin{enumerate}
@@ -107,14 +282,125 @@ Console.WriteLine(cnt);
     \item اكتب برنامجًا يستقبل من المستخدم 100 عدد صحيح. في نهاية البرنامج عليه أن يطبع الرقم الذي ظهرت فيه أكبر خانة. \\
     إذا كان هناك أكثر من رقم ظهرت فيه أكبر خانة، فإنّه يطبع أكبر رقم من بينها.
 \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int MaxDigit(int n)
+{
+    if (n == 0)
+        return 0;
+    int md = 0;
+    while (n > 0)
+    {
+        md = Math.Max(md, n % 10);
+        n /= 10;
+    }
+    return md;
+}
 
+private static void Main(string[] args)
+{
+    int bestNum = 0, bestMax = -1;
+    for (int i = 0; i < 100; i++)
+    {
+        int x = int.Parse(Console.ReadLine());
+        int m = MaxDigit(x);
+        if (m > bestMax || (m == bestMax && x > bestNum))
+        {
+            bestMax = m;
+            bestNum = x;
+        }
+    }
+    Console.WriteLine(bestNum);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
 \clearpage
+\fi
+
 \item
 \begin{enumerate}
-\item اكتب عملية خارجية باسم \textenglish{SumSquares} تتلقى عددًا صحيحًا، وتعيد مجموع \textbf{تربيع} خاناته.
+\item اكتب عملية خارجية باسم \textenglish{SumSquares} تتلقى عددًا صحيحًا، وتعيد مجموع \textbf{تربيع} خاناته. \\
+\textbf{مثال:} إذا تلقت العملية العدد 123، فإنها تعيد: $1^2 + 2^2 + 3^2 = 1 + 4 + 9 = 14$.
 \item في البرنامج الرئيسي، استدعِ العملية مع الرقم 23.
 \item هل هناك أعداد تساوي مجموع تربيع خاناتها بين 1 و 10000؟ ما هي؟
 \end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumSquares(int n)
+{
+    int sum = 0;
+    while (n > 0)
+    {
+        int d = n % 10;
+        sum += d * d;
+        n /= 10;
+    }
+    return sum;
+}
+
+private static void Main(string[] args)
+{
+    Console.WriteLine(SumSquares(23));
+
+    for (int i = 1; i <= 10000; i++)
+    {
+        if (SumSquares(i) == i)
+            Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item نعرّف عددًا مميّزًا بأنّه عدد إذا رفعنا كل خانة من خاناته لقوة مساوية لعدد خاناته ثم جمعنا النتائج فإنّنا نحصل على العدد الأصلي. \\
+\textbf{مثال:} العدد 153 هو عدد مميّز، لأنّه مكوّن من 3 خانات، و: \\
+$1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153$
+\begin{enumerate}
+\item اكتب عملية خارجية باسم \textenglish{IsSpecial} تتلقى عددًا صحيحًا، وتعيد \textenglish{true} إذا كان العدد مميّزًا، و\textenglish{false} خلاف ذلك. \\
+يمكنك الاستعانة بالعملية التي كتبتها في السؤال (\ref{item:digitCount}) لمعرفة عدد خانات العدد.
+\item في البرنامج الرئيسي، اطبع الأعداد المميّزة من 1 إلى 10000. \\
+عليك الاستعانة بالعملية التي كتبتها في الفرع السابق.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsSpecial(int n)
+{
+    int k = DigitsCount(n);
+    int m = n, sum = 0;
+    while (m > 0)
+    {
+        int d = m % 10;
+        sum += (int) Math.Pow(d, k);
+        m /= 10;
+    }
+    if(sum == n)
+        return true;
+    else
+        return false;
+}
+
+private static void Main(string[] args)
+{
+    for (int i = 1; i <= 10000; i++)
+    {
+        if (IsSpecial(i))
+            Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
 \item
 \begin{enumerate}
@@ -122,83 +408,87 @@ Console.WriteLine(cnt);
     العملية تلصق المنزلة بالعدد الأوّل وتعيد النتيجة. \\
     \textbf{مثال:} إذا تلقت العملية العددين: $12$ والعدد $5$ فإنّها تعيد: $125$.
     \item اكتب برنامجًا يستقبل من المستخدم أرقامًا (من منزلة واحدة) ويكوّن عددًا صحيحًا من هذه الأرقام ويطبعه. \\
-    ينتهي استقبال الأرقام عندما يدخل المستخدم عددًا سالبًا.
-    \item اكتب برنامجًا يستقبل من المستخدم 7 أرقام، كل واحد من خانة واحدة، ويكوّن له رقمًا من أربعة منازل ويطبعه. \\
-    الرقم الأول الذي يدخله المستخدم تكون خانة عشرات الآلاف، والرقم الأخير يكون الآحاد. \\
-    \textbf{مثال:} إذا أدخل المستخدم الأرقام $-1,4,2,1,5$ فعلى البرنامج أن يطبع $4215$. \\
-    لا حاجة للتحقق من صحة المدخلات.
+    ينتهي استقبال الأرقام عندما يدخل المستخدم عددًا سالبًا. \\
+    \textbf{مثال:} إذا أدخل المستخدم الأرقام $-1,4,2,1,5$ فعلى البرنامج أن يطبع $5124$. \\
+    عليك استخدام العملية من الفرع السابق. لا حاجة للتحقق من صحة المدخلات.
 \end{enumerate}
-
-\item مثل السؤال السابق لكن تكوّن العدد بالترتيب المعكوس: أول منزلة نقرأها هي منزلة الآحاد، ثم العشرات \dots
-
-\item
-اكتب عملية تتلقى عددًا صحيحًا وتعيد صحيحًا جديدًا يحوي فقط الأرقام الزوجية منه.
-مثال: إذا تلقّت 835462 تُعيد 8462.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static int ExtractEvenDigits(int n)
+public static int AppendDigit(int n, int d)
 {
-    n = Math.Abs(n);
-    int res = 0, p = 1;
-    while(n > 0)
+    return n * 10 + d;
+}
+
+private static void Main(string[] args)
+{
+    int res = 0;
+    int d = int.Parse(Console.ReadLine());
+    while (d >= 0)
     {
-        int d = n % 10;
-        if (d % 2 == 0)
-        {
-            res += d * p;
-            p *= 10;
-        }
-        n /= 10;
+        res = AppendDigit(res, d);
+        d = int.Parse(Console.ReadLine());
     }
-    return res;
+    Console.WriteLine(res);
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
-\item
-اكتب عملية تتلقى عددًا $n$ وتعيد مجموع كل الأعداد التي رقم آحادها 3 بين 1 و $n$.
+\item \label{item:appendDigitToLeft}
+ اكتب عملية خارجية باسم \textenglish{AppendDigitToLeft} تتلقى عددًا صحيحًا، ورقمًا (عددا من منزلة واحدة). \\
+العملية تلصق المنزلة بالعدد الأوّل \textbf{من اليسار} وتعيد النتيجة. \\
+\textbf{مثال:} إذا تلقت العملية العددين: $12$ والعدد $5$ فإنّها تعيد: $512$.
+\begin{boxHint}
+    يمكنك الاستعانة بالعملية التي كتبتها في السؤال (\ref{item:digitCount}) لمعرفة عدد خانات العدد. \\
+    لكي نحصل على $512$ من $5$ و $12$ نضرب الـ $5$ بـ $100$ (وهو $10$ مرفوعًا لعدد خانات الـ $12$) ثم نجمع الـ $12$.
+\end{boxHint}
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static int SumEnding3(int n)
+public static int AppendDigitToLeft(int n, int d)
 {
-    int sum = 0;
-    for(int i=1; i<=n; i++)
-        if (i % 10 == 3)
-            sum += i;
-    return sum;
+    int dc = DigitsCount(n);
+    int p = (int) Math.Pow(10, dc);
+    return d * p + n;
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
-\item اكتب عملية تتلقى عددًا صحيحًا، وتعيد حاصل ضرب خاناته \\
-مثال: إذا كان العدد 234، النتيجة تكون $2 \times 3 \times 4 = 24$.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static int ProductOfDigits(int n)
-{
-    if (n == 0) return 0;
-    int prod = 1;
-    while (n != 0)
-    {
-        prod *= (n % 10);
-        n /= 10;
-    }
-    return prod;
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+% \item
+% //TODO: هذا السؤال فيه خطأ، بحاجة لإعادة صياغة: إذا كانت إحدى خانات العدد 0 فإنّها لا تضاف للعدد الناتج. يمكن حل المشكلة عن طريق حلقات متداخلة.
+% اكتب عملية تتلقى عددًا صحيحًا وتعيد عددًا صحيحًا جديدًا يحوي فقط الأرقام الزوجية منه.
+% مثال: إذا تلقّت 835462 تُعيد 8462.
+% \begin{boxHint}
+%     يمكنك استخدام عملية \textenglish{AppendDigitToLeft} التي كتبتها في السؤال \ref{item:appendDigitToLeft} لبناء العدد الجديد.
+% \end{boxHint}
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% public static int ExtractEvenDigits(int n)
+% {
+%     int res = 0;
+%     while(n > 0)
+%     {
+%         int d = n % 10;
+%         if (d % 2 == 0)
+%             res = AppendDigitToLeft(res, d);
+%         n /= 10;
+%     }
+%     return res;
+% }
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \fi
 
 \end{enumerate}
 

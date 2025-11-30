@@ -256,11 +256,12 @@ Console.WriteLine(cnt);
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item
 اكتب عملية تتلقى عددًا $n$ وتعيد عدد القيم $i$ من 1 حتى $n$ التي يكون فيها
-$i^2 - i$ عددًا زوجيًا.
+$i^2 - i$ عددًا يقسم على 3 بدون باقٍ.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -271,7 +272,7 @@ public static int CountEvenFormula(int n)
     for(int i=1; i<=n; i++)
     {
         int v = i*i - i;
-        if (v % 2 == 0)
+        if (v % 3 == 0)
             cnt++;
     }
     return cnt;
@@ -284,19 +285,20 @@ public static int CountEvenFormula(int n)
 
 \item
 اكتب برنامجًا يستقبل 25 عددًا صحيحًا ويطبع عدد الأعداد التي كانت أصغر من المتوسط الجزئي حتى تلك اللحظة
-(أي: في اللحظة i، نحسب متوسط أوّل i أعداد، ونفحص العدد i).
+(أي: في اللحظة i، نحسب متوسط أوّل i أعداد، ونفحص هل العدد i أصغر من هذا المتوسط).
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 int sum = 0;
 int cnt = 0;
+double avg;
 
 for(int i=1; i<=25; i++)
 {
     int x = int.Parse(Console.ReadLine());
     sum += x;
-    double avg = sum / (double)i;
+    avg = sum / (double)i;
     if (x < avg)
         cnt++;
 }
@@ -304,33 +306,8 @@ Console.WriteLine(cnt);
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
-
-\item اكتب برنامجًا يستقبل 20 عددًا صحيحًا من المستخدم. على البرنامج أن يعد ويطبع عدد المرات التي أدخل فيها المستخدم رقمين متتاليين متساويين. \\
-مثال: 5, 3, \textbf{4, 4}, 7, \textbf{9, 9} $\leftarrow$ (هنا العداد يساوي 2).
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int count = 0;
-Console.WriteLine("Enter 1st number:");
-int prev = int.Parse(Console.ReadLine());
-
-for (int i = 1; i < 20; i++)
-{
-    int curr = int.Parse(Console.ReadLine());
-    if (curr == prev)
-    {
-        count++;
-    }
-    prev = curr;
-}
-Console.WriteLine(count);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
 
 \item اكتب عملية تتلقى عددًا صحيحًا $n$، وتحسب قيمة التعبير التالي: \\
 $1 - 2 + 3 - 4 + 5 - 6 \dots n$ \\
@@ -354,44 +331,34 @@ public static int AlternatingSum(int n)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
-\clearpage
-\item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
-\begin{boxExample}
-    إذا كانت الأرقام المدخلة هي:
-    \begin{boxCode}
-    \begin{english}
-    \begin{minted}{csharp}
-3
-4 --> counted because 4 > 3
-7 --> counted because 7 > 4
-2 --> not counted because 2 < 7
-6 --> counted because 6 > 2
-7 --> counted because 7 > 6
-1 --> not counted because 1 < 7
-9 --> counted because 9 > 1
-5 --> not counted because 5 < 9
-6 --> counted because 6 > 5
-    \end{minted}
-    \end{english}
-    \end{boxCode}
-    على البرنامج أن يطبع 6.
-\end{boxExample}
+
+\item اكتب برنامجًا يستقبل من المستخدم 20 زوجًا من الأعداد (أي ما مجمله 40 عددًا.) \\
+لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه. \\
+وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-int prev = int.Parse(Console.ReadLine());
-int count = 0;
-for (int i = 1; i < 10; i++)
+double maxAvg = double.MinValue;
+int num1 = 0, num2 = 0;
+for (int i = 0; i < 20; i++)
 {
-    int current = int.Parse(Console.ReadLine());
-    if (current > prev)
-        count++;
-    prev = current;
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    double avg = (a + b) / 2.0;
+    Console.WriteLine(avg);
+    if (avg > maxAvg)
+    {
+        maxAvg = avg;
+        num1 = a;
+        num2 = b;
+    }
 }
-Console.WriteLine(count);
+Console.WriteLine(num1);
+Console.WriteLine(num2);
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -452,30 +419,26 @@ Console.WriteLine(min2);
 \clearpage
 \fi
 
-\item اكتب برنامجًا يستقبل من المستخدم 20 زوجًا من الأعداد (أي ما مجمله 40 عددًا.) \\
-لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه. \\
-وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
+\item اكتب برنامجًا يستقبل 20 عددًا صحيحًا من المستخدم. على البرنامج أن يطبع عدد المرات التي أدخل فيها المستخدم رقمين متتاليين متساويين. \\
+مثال: 5, 3, \textbf{4, 4}, 7, \textbf{9, 9} $\leftarrow$ (هنا العداد يساوي 2).
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-double maxAvg = double.MinValue;
-int num1 = 0, num2 = 0;
-for (int i = 0; i < 20; i++)
+int count = 0;
+Console.WriteLine("Enter 1st number:");
+int prev = int.Parse(Console.ReadLine());
+
+for (int i = 1; i < 20; i++)
 {
-    int a = int.Parse(Console.ReadLine());
-    int b = int.Parse(Console.ReadLine());
-    double avg = (a + b) / 2.0;
-    Console.WriteLine(avg);
-    if (avg > maxAvg)
+    int curr = int.Parse(Console.ReadLine());
+    if (curr == prev)
     {
-        maxAvg = avg;
-        num1 = a;
-        num2 = b;
+        count++;
     }
+    prev = curr;
 }
-Console.WriteLine(num1);
-Console.WriteLine(num2);
+Console.WriteLine(count);
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -504,6 +467,49 @@ Console.WriteLine(maxDiff);
 \end{english}
 \end{boxSolution}
 \fi
+
+\clearpage
+\item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
+\begin{boxExample}
+    إذا كانت الأرقام المدخلة هي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+3
+4 --> counted because 4 > 3
+7 --> counted because 7 > 4
+2 --> not counted because 2 < 7
+6 --> counted because 6 > 2
+7 --> counted because 7 > 6
+1 --> not counted because 1 < 7
+9 --> counted because 9 > 1
+5 --> not counted because 5 < 9
+6 --> counted because 6 > 5
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    على البرنامج أن يطبع 6.
+\end{boxExample}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int count = 0;
+for (int i = 1; i < 10; i++)
+{
+    int current = int.Parse(Console.ReadLine());
+    if (current > prev)
+        count++;
+    prev = current;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
 
 
 \end{enumerate}
