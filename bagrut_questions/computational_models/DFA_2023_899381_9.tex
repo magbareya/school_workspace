@@ -1,0 +1,44 @@
+\subsection*{سؤال 9 امتحان 899381 سنة 2023}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2023_899381_9.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 9 امتحان 899381 سنة 2023]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item .
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{../../../images/DFAs/first_and_last_letters_are_different.png}
+\end{center}
+
+  \item $L_4$ هي لغة نظامية لأنّه يوجد أوتومات يقبلها: الأوتومات الذي بنيناه في الفرع السابق. \\
+  $L_3$ هي لغة نظامية لأنّها مكمّلة للغة نهائية.\\
+  $L_3 \cap L_4$ نظامية لأنّ اللغات النظامية منغلقة تحت عملية التقاطع.
+
+  \item $L_1 \cup L_2 = \{ w \in \{a,b\}^* \mid \#_a(w) \geq \#_b(w)\}$ \\
+  هذه اللغة ليست نظامية، لأنّنا نحتاج أن نتذكر عدد مرات ظهور الـ $a$ وعدد مرات ظهور الـ $b$ وهذا عدد غير نهائي، لذلك لا يمكن بناء أوتومات نهائي يقبل هذه اللغة.
+
+  \item نلاحظ أنّ $L_1 \cap L_2 = \emptyset$، لذلك: \\
+  $L_1 \cap L_2 \cup \overline{L_2} = \emptyset \cup \overline{L_2} = \overline{L_2}$ \\
+  $\rightarrow \overline{L_2} = \{ w \in \{a,b\}^* \mid \#_a(w) \leq \#_b(w) \}$
+
+  \item $L_1 \cap L_2 = \emptyset$، واللغة الفارغة هي لغة نظامية.
+\end{enumerate}
+\end{boxSolution}
+\begin{boxSolution}[سؤال 9 امتحان 899381 سنة 2023 - تكملة]
+\begin{enumerate}[itemsep=1.5em, label=\alph*., resume]
+  \item
+  \begin{align*}
+  L_2 \cap \overline{L_3} &= \{w \in \{a,b\}^* \mid \#_a(w) \leq \#_b(w) \text{ and } |w| \leq 3 \} \\
+  &= \{\epsilon, b, ab, ba, bb, abb, bab, bba, bbb\}
+  \end{align*}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{../../../images/DFAs/a_leq_b_and_w_length_leq3.png}
+\end{center}
+
+\item نلاحظ أنّ $R(L_4) = L_4$ لأنّه يمكننا التعبير عن $L_4$ بأنّها لغة كل الكلمات التي تنتهي بحرف مختلف عن الحرف الذي بدأت به.\\
+لذلك، إذا قلبنا كل كلمة، فإنّها ستبقى تحقق الشرط: تبدأ بحرف مختلف عن الحرف الذي انتهت به. \\
+لذلك: $R(L_4) = L_4 \rightarrow L_4 \cap R(L_4) = L_4 \cap L_4 = L_4$.
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

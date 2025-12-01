@@ -28,7 +28,7 @@ with open(TEMPLATE_FILE, "r", encoding="utf-8") as t:
 
 # Build Regex
 supported_extensions = "|".join(EXTENSION_TEMPLATES.keys())
-PATTERN = re.compile(rf"(.+?)_(\d{{4}}[A-Z]?)_(\d+)_(\d+[A-Z]?)(.+?)\.({supported_extensions})$")
+PATTERN = re.compile(rf"(.+?)_(\d{{4}}[A-Z]?)_(\d+)_(\d+[A-Z]?)\.({supported_extensions})$")
 
 def process_file(file_path):
     """
@@ -54,7 +54,7 @@ def process_file(file_path):
         print(f"Skipping (bad format): {filename}")
         return
 
-    prefixes, year, model, number, suffixes, extension = match.groups()
+    prefixes, year, model, number, extension = match.groups()
     tex_filename = filename.replace(f".{extension}", ".tex")
     full_tex_path = os.path.join(directory, tex_filename)
 
