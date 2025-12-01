@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
+	<type>pda</type>&#13;
+	<automaton>&#13;
+		<!--The list of states.-->&#13;
+		<state id="0" name="q0">&#13;
+			<x>115.0</x>&#13;
+			<y>180.0</y>&#13;
+		</state>&#13;
+		<state id="1" name="q1">&#13;
+			<x>222.0</x>&#13;
+			<y>180.0</y>&#13;
+		</state>&#13;
+		<state id="2" name="q2">&#13;
+			<x>319.0</x>&#13;
+			<y>180.0</y>&#13;
+		</state>&#13;
+		<state id="3" name="q3">&#13;
+			<x>413.0</x>&#13;
+			<y>180.0</y>&#13;
+		</state>&#13;
+	</automaton>&#13;
+</structure>

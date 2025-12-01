@@ -27,18 +27,18 @@ PDF_OUT := $(patsubst %,out/%,$(PDF_REL))
 
 PRINTABLE_NB  := $(patsubst %.ipynb,out/%_printable.pdf,$(NB_REL))
 
-# Find TEX files that contain the string 'ifwithdetails' and remove the src/ prefix
+# Find TEX files that contain the string 'ifdetailed' and remove the src/ prefix
 TEX_WITH_DETAILS := $(shell for f in $(TEX); do \
-	if grep -q 'ifwithdetails' $$f; then \
+	if grep -q 'ifdetailed' $$f; then \
 		echo $$(echo $$f | sed 's/^src\///'); \
 	fi; \
 done)
 
 PRINTABLE_TEX := $(patsubst %.tex,out/%_printable.pdf,$(TEX_WITH_DETAILS))
 
-# Find TEX files that contain the string 'ifwithsols' OR 'input' and remove the src/ prefix
+# Find TEX files that contain the string 'ifwithsols' OR 'bagrut_questions' and remove the src/ prefix
 TEX_WITH_SOLS := $(shell for f in $(TEX); do \
-    if grep -q 'ifwithsols' $$f || grep -q 'input' $$f; then \
+    if grep -q 'ifwithsols' $$f || grep -q 'bagrut_questions' $$f; then \
         echo $$(echo $$f | sed 's/^src\///'); \
     fi; \
 done)
@@ -156,3 +156,7 @@ sclean:
 		find . -type f -name "*.$$ext" -delete; \
 	done
 	find . -type d -name "_minted*" -exec rm -rf {} +
+
+dclean:
+	python3 scripts/clean.py out
+
