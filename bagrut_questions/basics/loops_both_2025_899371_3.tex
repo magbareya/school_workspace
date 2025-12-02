@@ -1,0 +1,57 @@
+\subsection*{سؤال 3 امتحان 899371 سنة 2025}
+
+\insertFullImg{../../../bagrut_questions/basics/loops_both_2025_899371_3.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 3 امتحان 899371 سنة 2025]
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+private static int DigitsCount(int n)
+{
+    int cnt = 0;
+    while (n > 0)
+    {
+        cnt++;
+        n /= 10;
+    }
+    return cnt;
+}
+public static bool IsNarc(int num)
+{
+    int digitsCnt = DigitsCount(num);
+    int sum = 0, digit;
+    int temp = num;
+    while (temp > 0)
+    {
+        digit = temp % 10;
+        sum += (int)Math.Pow(digit, digitsCnt);
+        temp /= 10;
+    }
+    return sum == num;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void TheNarc(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        if (IsNarc(i))
+            Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

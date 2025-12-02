@@ -1,0 +1,114 @@
+\subsection*{سؤال 6 امتحان 899371 سنة 2024}
+
+\insertFullImg{../../../bagrut_questions/basics/loops_both_2024_899371_6.png}
+
+
+\noindent
+\textbf{ج.} اكتبو تطبيقًا للعمليتين \textenglish{DigitSum} و \textenglish{DigitExists}
+
+\clearpage
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899371 سنة 2024]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+\item
+\begin{enumerate}[itemsep=1.5em, label=\textbf{(\arabic*)}]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int DeepSum(int n)
+{
+    int ds = DigitSum(n);
+    while (ds >= 10)
+    {
+        ds = DigitSum(ds);
+    }
+    return ds;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsCorrect()
+{
+    int LIMIT = 999999;
+    int evenCnt = 0, oddCnt = 0;
+    for(int i = 1; i <= LIMIT; i++)
+    {
+        int ds = DeepSum(i);
+        if(ds % 2 == 0)
+            evenCnt++;
+        else
+            oddCnt++;
+    }
+
+    if(evenCnt > oddCnt)
+        return true;
+    else
+        return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+
+\begin{boxSolution}[سؤال 6 امتحان 899371 سنة 2024 - فرغ ب]
+\begin{enumerate}[itemsep=1.5em, label=\alph*., start=2]
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool InBoth(int num1, int num2)
+{
+    int ds1 = DeepSum(num1);
+    int ds2 = DeepSum(num2);
+    if(DigitExists(num1, ds2) && DigitExists(num2, ds1))
+        return true;
+    else
+        return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int DigitSum(int num1)
+{
+    int sum = 0;
+    while (num1 > 0)
+    {
+        sum += (num1 % 10);
+        num1 /= 10;
+    }
+    return sum;
+}
+
+public static bool DigitExists(int num, int digit)
+{
+    while (num > 0)
+    {
+        if (num % 10 == digit)
+            return true;
+        num /= 10;
+    }
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+\fi
