@@ -282,10 +282,29 @@ public static int CountEvenFormula(int n)
 \end{boxSolution}
 \fi
 
-
+\clearpage
 \item
 اكتب برنامجًا يستقبل 25 عددًا صحيحًا ويطبع عدد الأعداد التي كانت أصغر من المتوسط الجزئي حتى تلك اللحظة
 (أي: في اللحظة i، نحسب متوسط أوّل i أعداد، ونفحص هل العدد i أصغر من هذا المتوسط).
+\ifdetailed
+\begin{boxExample}
+إذا كانت أول 5 أرقام مدخلة هي: $12, 8, 20, 4, 6$ فإنّ البرنامج يحسب كالتالي:
+\begin{boxCode}
+\begin{enumerate}[label=(\arabic*)]
+    \item عندما نقرأ الرقم 12، المتوسط الجزئي هو 12. \\
+    12 ليس أصغر من 12 $\leftarrow$ لا نعدّ
+    \item عندما نقرأ الرقم 8، المتوسط الجزئي هو  $\frac{12 + 8}{2} = 10$. \\
+    8 أصغر من 10 $\leftarrow$ نعدّ (العداد الآن 1)
+    \item عندما نقرأ الرقم 20، المتوسط الجزئي هو  $\frac{12 + 8 + 20}{3} = 13.33$. \\
+    20 ليس أصغر من 13.33 $\leftarrow$ لا نعدّ (العداد الآن 1)
+    \item عندما نقرأ الرقم 4، المتوسط الجزئي هو  $\frac{12 + 8 + 20 + 4}{4} = 11$. \\
+    4 أصغر من 11 $\leftarrow$ نعدّ (العداد الآن 2)
+    \item عندما نقرأ الرقم 6، المتوسط الجزئي هو $\frac{12 + 8 + 20 + 4 + 6}{5} = 10$. \\
+    6 أصغر من 10 $\leftarrow$ نعدّ (العداد الآن 3)
+\end{enumerate}
+\end{boxCode}
+\end{boxExample}
+\fi
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -334,10 +353,25 @@ public static int AlternatingSum(int n)
 \clearpage
 \fi
 
-
+\clearpage
 \item اكتب برنامجًا يستقبل من المستخدم 20 زوجًا من الأعداد (أي ما مجمله 40 عددًا.) \\
 لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه. \\
 وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
+\ifdetailed
+\begin{boxExample}
+إذا كان البرنامج سيستقبل 5 أزواج فقط، وهذه الأزواج هي: $(2,4), (5,7), (1,9), (6,8), (3,3)$ فإنّ البرنامج يعمل كما يلي:
+\begin{boxCode}
+    \begin{enumerate}[label=(\arabic*)]
+        \item يستقبل الرقمين 2 و 4، المعدّل هو $\frac{2+4}{2} = 3$. يطبع 3.
+        \item يستقبل الرقمين 5 و 7، المعدّل هو $\frac{5+7}{2} = 6$. يطبع 6.
+        \item يستقبل الرقمين 1 و 9، المعدّل هو $\frac{1+9}{2} = 5$. يطبع 5.
+        \item يستقبل الرقمين 6 و 8، المعدّل هو $\frac{6+8}{2} = 7$. يطبع 7.
+        \item يستقبل الرقمين 3 و 3، المعدّل هو $\frac{3+3}{2} = 3$. يطبع 3.
+    \end{enumerate}
+    في النهاية، يطبع العددين اللذين كان لهما أكبر معدّل: 6 و 8 (لأنّ معدلهما هو 7 وهو الأكبر بين المعدّلات).
+\end{boxCode}
+\end{boxExample}
+\fi
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -470,26 +504,26 @@ Console.WriteLine(maxDiff);
 
 \clearpage
 \item اكتب برنامجًا يستقبل من المستخدم 10 أعداد صحيحة، على البرنامج أن يطبع عدد الأعداد التي كانت أكبر من الرقم الذي أدخِلَ قبلها مباشرة. \\
+\ifdetailed
 \begin{boxExample}
-    إذا كانت الأرقام المدخلة هي:
-    \begin{boxCode}
-    \begin{english}
-    \begin{minted}{csharp}
-3
-4 --> counted because 4 > 3
-7 --> counted because 7 > 4
-2 --> not counted because 2 < 7
-6 --> counted because 6 > 2
-7 --> counted because 7 > 6
-1 --> not counted because 1 < 7
-9 --> counted because 9 > 1
-5 --> not counted because 5 < 9
-6 --> counted because 6 > 5
-    \end{minted}
-    \end{english}
-    \end{boxCode}
-    على البرنامج أن يطبع 6.
+إذا كانت الأرقام المدخلة هي:
+\begin{boxCode}
+\begin{enumerate}[label=(\arabic*)]
+        \item 5
+        \item 8  $\leftarrow$ (8 أكبر من 5 $\rightarrow$ نعدّ)
+        \item 3  $\leftarrow$ (3 أصغر من 8 $\rightarrow$ لا نعدّ)
+        \item 10 $\leftarrow$ (10 أكبر من 3 $\rightarrow$ نعدّ)
+        \item 7  $\leftarrow$ (7 أصغر من 10 $\rightarrow$ لا نعدّ)
+        \item 12 $\leftarrow$ (12 أكبر من 7 $\rightarrow$ نعدّ)
+        \item 6  $\leftarrow$ (6 أصغر من 12 $\rightarrow$ لا نعدّ)
+        \item 15 $\leftarrow$ (15 أكبر من 6 $\rightarrow$ نعدّ)
+        \item 9  $\leftarrow$ (9 أصغر من 15 $\rightarrow$ لا نعدّ)
+        \item 20 $\leftarrow$ (20 أكبر من 9 $\rightarrow$ نعدّ)
+    \end{enumerate}
+\end{boxCode}
+على البرنامج أن يطبع في النهاية 5، لأنّ هناك 5 أعداد كانت أكبر من العدد الذي قبلها مباشرة.
 \end{boxExample}
+\fi
 \ifwithsols
 \begin{boxSolution}
 \begin{english}

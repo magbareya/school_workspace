@@ -80,8 +80,49 @@ private static void Main(string[] args)
 \item اكتب عملية خارجية باسم \textenglish{IsPrimeSquare} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان العدد الذي تلقته عبارة عن تربيع عدد أوّلي. وإلا فإنّها تعيد \textenglish{false} \\
 \textbf{مثلًا:} تعيد العملية \textenglish{true} إذا تلقّت 25. وتعيد \textenglish{false} إذا تلقت 30.
 
-\item GCD
-\item LCM
+\item اكتب عملية خارجية باسم \textenglish{GCD} تتلقى عددين صحيحين $a$ و $b$، وتعيد القاسم المشترك الأكبر لهما (أكبر عدد يقسم عليه كلا العددين). \\
+\textbf{مثلًا:} القاسم المشترك الأكبر للعددين 12 و 15 هو 3، لأنّه أكبر عدد يقسم عليه 12 وأيضًا يقسم عليه 15. \\
+\textbf{ملاحظة:} القاسم المشترك الأكبر بالضرورة أصغر أو يساوي \textenglish{Min(a,b)}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int GCD(int a, int b)
+{
+    int min = Math.Min(a, b);
+    for (int i = min; i >= 1; i--)
+    {
+        if (a % i == 0 && b % i == 0)
+            return i;
+    }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+\item اكتب عملية خارجية باسم \textenglish{LCM} تتلقى عددين صحيحين $a$ و $b$، وتعيد المقام المشترك الأصغر لهما (أصغر عدد يقسم على العددين معًا). \\
+\textbf{مثلًا:} المقام المشترك الأصغر للعددين 6 و 8 هو 24، لأنّه أصغر عدد يقسم على 6 وأيضًا يقسم على 8. \\
+\textbf{ملاحظة:} المقام المشترك الأصغر بالضرورة أكبر أو يساوي \textenglish{Max(a,b)} وبالضرورة أصغر من $a \cdot b$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int LCM(int a, int b)
+{
+    int max = Math.Max(a, b);
+    for (int i = max; i <= (a*b) ; i++)
+    {
+        if (i % a == 0 && i % b == 0)
+            return i;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 \end{enumerate}
 
 \vspace{1cm}

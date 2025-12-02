@@ -125,7 +125,26 @@ public static double SeriesSum(int n)
 اكتب برنامجًا يستقبل 10 أعداد. على البرنامج أن يفحص هل الأعداد مدخلة بترتيب تصاعدي (كل عدد أكبر من سابقه). \\
 يطبع البرنامج "Sorted" إذا كانت مرتبة، و "Not Sorted" إذا لم تكن كذلك.
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int cntSorted = 0;
+for (int i = 1; i < 10; i++)
+{
+    int curr = int.Parse(Console.ReadLine());
+    if (curr > prev)
+        cntSorted++;
+    prev = curr;
+}
+if (cnt == 0)
+    Console.WriteLine("Sorted");
+else
+    Console.WriteLine("Not Sorted");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
 \begin{english}
 \begin{minted}{csharp}
 bool isSorted = true;
@@ -137,8 +156,10 @@ for (int i = 1; i < 10; i++)
         isSorted = false;
     prev = curr;
 }
-if (isSorted) Console.WriteLine("Sorted");
-else Console.WriteLine("Not Sorted");
+if (isSorted)
+    Console.WriteLine("Sorted");
+else
+    Console.WriteLine("Not Sorted");
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -174,27 +195,6 @@ public static void DivMod(int a, int b)
 \end{english}
 \end{boxSolution}
 \fi
-
-% \item اكتب عملية تتلقى عددين صحيحين، وتعيد القاسم المشترك الأكبر لهما (أكبر عدد يقسم العددين معًا). \\
-% (يمكنك استخدام طريقة التجربة بالتنازل من العدد الأصغر وصولًا للواحد).
-% \ifwithsols
-% \begin{boxSolution}
-% \begin{english}
-% \begin{minted}{csharp}
-% public static int GCD(int a, int b)
-% {
-%     int min = Math.Min(a, b);
-%     for (int i = min; i >= 1; i--)
-%     {
-%         if (a % i == 0 && b % i == 0)
-%             return i;
-%     }
-%     return 1;
-% }
-% \end{minted}
-% \end{english}
-% \end{boxSolution}
-% \fi
 
 \end{enumerate}
 
