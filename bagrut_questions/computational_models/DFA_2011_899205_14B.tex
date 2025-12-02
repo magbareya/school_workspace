@@ -1,22 +1,15 @@
-\importpdfpage{../../../bagrut_questions/computational_models/DFA_2011_899205_14.pdf}{1}
-\importpdfpage{../../../bagrut_questions/computational_models/DFA_2011_899205_14.pdf}{2}
+\subsection*{سؤال 14B امتحان 899205 سنة 2011}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2011_899205_14B.png}
 
 \ifwithsols
-
-\paragraph*{حل سؤال 14 امتحان 899205 سنة 2011}:
-\bigskip
-
-\begin{enumerate}[label=\alph*., itemsep=2em]
-    \item .
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/last_letter_appears_even_times.png}
-\end{center}
-
-\item
-\begin{enumerate}[label=(\arabic*)]
+\begin{boxSolution}[سؤال 14B امتحان 899205 سنة 2011]
+\begin{enumerate}[itemsep=1.5em, label=\alph*., start=2]
+    \item
+    \begin{enumerate}[label=(\arabic*)]
 \item
 
-\begin{enumerate}[label=(\arabic*)]
+\begin{enumerate}[label=(\textbf{\roman*})]
 \item $aaba$  لا يتلقاها الأوتومات.
 \item $bbaabb$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2 \xrightarrow{\text{b}} q3 \xrightarrow{\text{b}} q4$$
 \item $abaa$ يتلقاها الأوتومات: $$ q0 \xrightarrow{\text{a}} q1 \xrightarrow{\text{b}} q3 \xrightarrow{\text{a}} q1 \xrightarrow{\text{a}} q2$$
@@ -27,7 +20,7 @@
 \item لغة الأوتومات هي كل الكلمات التي يكون الحرف قبل الأخير فيها هو نفس الحرف الأخير. \\
 بكلمات أخرى، هي كل الكلمات التي تنتهي بـ $aa$ أو $bb$.
 \end{enumerate}
-
 \end{enumerate}
-
+\end{boxSolution}
+\clearpage
 \fi

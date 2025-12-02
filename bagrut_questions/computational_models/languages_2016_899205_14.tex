@@ -1,22 +1,9 @@
-\documentclass[14pt]{extarticle}
-\input{../../../scripts/tex_preamble.tex}
+\subsection*{سؤال 14 امتحان 899205 سنة 2016}
 
-\begin{document}
-\thispagestyle{fancy}
+\insertFullImg{../../../bagrut_questions/computational_models/languages_2016_899205_14.png}
 
-\input{../../../bagrut_questions/computational_models/DFA_2017_899205_13.tex}
-
-\clearpage
-
-\begin{boxSolution}
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/different_parity_for_a_and_b.png}
-\end{center}
-\end{boxSolution}
-
-\clearpage
-
-\begin{boxSolution}
+\ifwithsols
+\begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2016]
 \begin{enumerate}[label=(\arabic*), itemsep=1em]
 \item $\epsilon \in L_1 \cup L_3 \cup L_4$ - غير صحيح \\
  لكي نثبت ذلك علينا أن نثبت أنّ $\epsilon \notin L_1$ و $\epsilon \notin L_3$ و $\epsilon \notin L_4$. \\
@@ -36,16 +23,16 @@
  لذلك، الكلمات التي ليست موجودة في $L_2$ هي كل الكلمات التي \textbf{تحتوي} على التسلسل 00.\\
  على سبيل المثال: الكلمة $11$ تحتوي على التسلسل 11، لذلك هي موجودة في اللغة المعطاة في هذا الفرع، وهي لا تحتوي على التسلسل 00، لذلك فهي ليست موجودة في $L_2$. \\
  فهذه الكلمة موجودة في المجموعتين، وهذا يدحص الادعاء أنّ اللغة المعطاة هي اللغة المكملة لـ $L_2$.
-\end{enumerate}
-\end{boxSolution}
 
-\begin{boxSolution}
-\begin{enumerate}[label=(\arabic*), itemsep=1em, start=4]
-
-\item $L_1 \subset L_3$ - غير صحيح. \\
+ \item $L_1 \subset L_3$ - غير صحيح. \\
 لكي نثبت ذلك، يكفي أن نجد كلمة موجودة في $L_1$ ولكنها ليست موجودة في $L_3$. \\
 على سبيل المثال الكلمة $0101$ موجودة في اللغة $L_1$ لأنّها تحتوي على السلسلة $010$، لكنها ليست موجودة في $L_3$ لأنّ عدد الأصفار والآحاد فيها متساوٍ.
-    \item $L_4 = R(L_4)$ - صحيح. \\
+\end{enumerate}
+\end{boxSolution}
+\begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2016 - تكملة]
+\begin{enumerate}[label=(\arabic*), itemsep=1em, start=5]
+
+\item $L_4 = R(L_4)$ - صحيح. \\
     علينا أن نثبت أنّه لكل كلمة $w \in L_4$ فإنّ $R(w) \in L_4$ أيضًا. \\
     هذا يتحقق لأنّ قلب الكلمة لا يؤثر على عدد الأصفار التي فيها. فإذا كان عدد الأصفار فيها فردًّا، فمقلوبها أيضًا فيه عدد فردي من الأصفار وبالتالي سيكون منتميًا إلى $L_4$.
 
@@ -58,33 +45,5 @@
 
 \end{enumerate}
 \end{boxSolution}
-
 \clearpage
-
-\begin{boxSolution}
-    لكي نجد أقصر كلمة في اللغة، نعوّض أصغر قيمة ممكنة للبارامترات، أي:
-    $n=1 , k = 1$ \\
-    لذلك، أقصر كلمة هي:
-    $$ a^1b^{3+1}c^1  \rightarrow abbbbc $$
-\end{boxSolution}
-
-\clearpage
-
-\input{../../../bagrut_questions/computational_models/DFA_2011_899205_14.tex}
-
-\clearpage
-
-
-\begin{boxSolution}
-\begin{enumerate}[label=(\arabic*)]
-\item $L_1 \cap L2 = \emptyset$ \\
-لأنّ كل الكلمات في $L$ تبدأ بالحرف $0$، بينما في $L_1$ فإنّه لا توجد كلمات تحتوي على $0$ أصلًا.
-
-\item .
-\begin{center}
-    \includegraphics[width=0.4\textwidth]{../../../images/DFAs/1power_n_2.png}
-\end{center}
-\end{enumerate}
-\end{boxSolution}
-
-\end{document}
+\fi

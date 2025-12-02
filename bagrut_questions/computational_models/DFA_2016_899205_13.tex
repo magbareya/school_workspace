@@ -1,0 +1,28 @@
+\subsection*{سؤال 13 امتحان 899205 سنة 2016}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2016_899205_13.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 13 امتحان 899205 سنة 2016]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item نلاحظ أنّ:
+    \begin{align*}
+        \overline{L_1} &= \{ a^{2n+1} \mid n \geq 0 \} \\
+        \overline{L_2} &= \{ b^{3n+1} \mid n \geq 0 \}
+    \end{align*}
+    الآن يمكننا التعبير عن اللغة $L$ بالصورة التالية:
+    $$ L = (L_1 \cdot L_2) \cup (\overline{L_1} \cdot \overline{L_2}) $$
+    \begin{itemize}
+        \item معطى أنّ $L_1$ و $L_2$ هما لغتان نظاميّتان، إذن فإنّ إلصاقهما $L_1 \cdot L_2$ هو أيضًا لغة نظامية، لأنّ اللغات النظامية منغلقة تحت عملية الإلصاق (التسلسل).
+        \item معطى أنّ $L_1$ و $L_2$ هما لغتان نظاميّتان، إذن فإنّ اللغات المكملة لهما $\overline{L_1}$ و $\overline{L_2}$ هما أيضًا لغتان نظاميّتان، لأنّ اللغات النظامية منغلقة تحت عملية التكامل.
+        \item وبالتالي، فإنّ الإلصاق $\overline{L_1} \cdot \overline{L_2}$ هو أيضًا لغة نظامية، لأنّ اللغات النظامية منغلقة تحت عملية الإلصاق (التسلسل).
+    \end{itemize}
+
+    \item
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{../../../images/DFAs/different_parity_for_a_and_b.png}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
