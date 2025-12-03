@@ -176,60 +176,60 @@ Console.WriteLine($"Remaining time (seconds): {time}");
 \clearpage
 \fi
 
-\item
-نفس السؤال السابق، لكن المستخدم يُدخل الوقت الذي مضى بالثواني، وأنت تطبع له الوقت المتبقي بالدقائق. \\
-\ifdetailed
-\begin{boxExample}
-\begin{english}
-\begin{minted}{text}
-Enter seconds passed:
-600
-Remaining time (minutes): 50
-Enter seconds passed:
-300
-Remaining time (minutes): 45
-Enter seconds passed:
-1200
-Remaining time (minutes): 25
-Enter seconds passed:
-500
-Remaining time (minutes): 16
-\end{minted}
-\end{english}
-\end{boxExample}
+% \item
+% نفس السؤال السابق، لكن المستخدم يُدخل الوقت الذي مضى بالثواني، وأنت تطبع له الوقت المتبقي بالدقائق. \\
+% \ifdetailed
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{text}
+% Enter seconds passed:
+% 600
+% Remaining time (minutes): 50
+% Enter seconds passed:
+% 300
+% Remaining time (minutes): 45
+% Enter seconds passed:
+% 1200
+% Remaining time (minutes): 25
+% Enter seconds passed:
+% 500
+% Remaining time (minutes): 16
+% \end{minted}
+% \end{english}
+% \end{boxExample}
 
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int time = 3600;
-int passedTime;
-Console.WriteLine("Enter seconds passed:");
-passedTime = int.Parse(Console.ReadLine());
-time = time - passedTime;
-Console.WriteLine($"Remaining time (seconds): {time / 60}");
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% int time = 3600;
+% int passedTime;
+% Console.WriteLine("Enter seconds passed:");
+% passedTime = int.Parse(Console.ReadLine());
+% time = time - passedTime;
+% Console.WriteLine($"Remaining time (seconds): {time / 60}");
 
-Console.WriteLine("Enter seconds passed:");
-passedTime = int.Parse(Console.ReadLine());
-time = time - passedTime;
-Console.WriteLine($"Remaining time (seconds): {time / 60}");
+% Console.WriteLine("Enter seconds passed:");
+% passedTime = int.Parse(Console.ReadLine());
+% time = time - passedTime;
+% Console.WriteLine($"Remaining time (seconds): {time / 60}");
 
-Console.WriteLine("Enter seconds passed:");
-passedTime = int.Parse(Console.ReadLine());
-time = time - passedTime;
-Console.WriteLine($"Remaining time (seconds): {time / 60}");
+% Console.WriteLine("Enter seconds passed:");
+% passedTime = int.Parse(Console.ReadLine());
+% time = time - passedTime;
+% Console.WriteLine($"Remaining time (seconds): {time / 60}");
 
-Console.WriteLine("Enter seconds passed:");
-passedTime = int.Parse(Console.ReadLine());
-time = time - passedTime;
-Console.WriteLine($"Remaining time (seconds): {time / 60}");
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+% Console.WriteLine("Enter seconds passed:");
+% passedTime = int.Parse(Console.ReadLine());
+% time = time - passedTime;
+% Console.WriteLine($"Remaining time (seconds): {time / 60}");
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \fi
 
-\clearpage
-\fi
+% \clearpage
+% \fi
 
 % \item
 % اكتب برنامجًا يستقبل من المستخدم الوقت الحالي (الساعة، ثم الدقائق، ثم الثواني). \\

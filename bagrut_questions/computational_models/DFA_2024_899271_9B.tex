@@ -1,0 +1,41 @@
+\subsection*{سؤال 9-ب امتحان 899271 سنة 2024}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2024_899271_9B.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 9-ب امتحان 899271 سنة 2024]
+\begin{enumerate}[itemsep=1.5em, label=\textbf{(\arabic*)}]
+    \item .
+    \begin{itemize}
+        \item $aaccc \notin L$ لأنّ: $\#_a(aaccc) + \#_c(aaccc) = 2 + 3 = 5$ ليس زوجيًّا.
+        \item $aab \notin L$ لأنّها تحتوي على $ab$.
+        \item $\epsilon \in L$ لأنّها تحقق كل الشروط: لا تحتوي على $ab$ ولا على $bc$ و $\#_a(\epsilon) + \#_c(\epsilon) = 0 + 0 = 0$ وهو زوجيّ.
+        \item $baa \in L$ لأنّها تحقق كل الشروط: لا تحتوي على $ab$ ولا على $bc$ و $\#_a(baa) + \#_c(baa) = 2 + 0 = 2$ وهو زوجيّ.
+        \item $cbba \in L$ لأنّها تحقق كل الشروط: لا تحتوي على $ab$ ولا على $bc$ و $\#_a(cbba) + \#_c(cbba) = 1 + 1 = 2$ وهو زوجيّ.
+    \end{itemize}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\begin{boxSolution}[سؤال 9-ب امتحان 899271 سنة 2024 - فرع (2)]
+\begin{enumerate}[itemsep=1.5em, label=\textbf{(\arabic*)}, start=2]
+    \item .
+\begin{center}
+    \includegraphics[width=\textwidth]{../../../images/DFAs/no_ab_no_bc_a_and_c_even.png}
+\end{center}
+
+فكرة الأوتومات أنّنا نحتاج أن نتذكّر هل مجموع عدد $a$ و $c$ حتى الآن زوجيّ أم فرديّ، وأن نتذكّر ما هو آخر حرف قرأناه. \\
+نحتاج أن نتذكّر هل مجموع عدد $a$ و $c$ زوجيّ أم فرديّ، لأنّ هذا أحد شروط اللغة. \\
+ونحتاج أن نتذكّر ما هو آخر حرف حتّى نتمكّن من تجنّب السلاسل الممنوعة.
+\begin{itemize}
+    \item $q0$: الحالة الابتدائية، وهي قابلة لأنّ $\epsilon \in L$.
+    \item $q1$  يمثل الحالة: $\#_a(w)+\#_c(w)$ فردي، وآخر حرف قرأناه هو $a$.
+    \item $q2$  يمثل الحالة: $\#_a(w)+\#_c(w)$ فردي، وآخر حرف قرأناه هو $c$.
+    \item $q3$  يمثل الحالة: $\#_a(w)+\#_c(w)$ زوجي، وآخر حرف قرأناه هو $b$.
+    \item $q4$  يمثل الحالة: $\#_a(w)+\#_c(w)$ زوجي، وآخر حرف قرأناه هو $a$.
+    \item $q5$  يمثل الحالة: $\#_a(w)+\#_c(w)$ زوجي، وآخر حرف قرأناه هو $c$.
+    \item $q6$  يمثل الحالة: $\#_a(w)+\#_c(w)$ فردي، وآخر حرف قرأناه هو $b$.
+\end{itemize}
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

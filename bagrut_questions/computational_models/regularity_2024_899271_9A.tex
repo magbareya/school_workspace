@@ -1,0 +1,31 @@
+\subsection*{سؤال 9-أ امتحان 899271 سنة 2024}
+
+\insertFullImg{../../../bagrut_questions/computational_models/regularity_2024_899271_9A.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 9-أ امتحان 899271 سنة 2024]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item غير صحيح. \\
+    مثلًا: $L_1 = \{a^n b^n \mid n \geq 1\}$ و $L_2 = \{a^n b^k \mid n > k\}$ هما لغتان غير نظاميّتين، ولكن تقاطعهما هو اللغة الفارغة $\emptyset$، وهي لغة نظاميّة.
+
+    \item غير صحيح. \\
+    مثلًا: $L_1 = \{a\}$ و $L_2 = \{b\}$. عندها: \\
+    $L_1^n = \{a^n\}$ و $L_2^n = \{b^n\}$. \\
+    $(L_1 \cdot L_2)^n = \{(ab)^n\}$ لكن: $L_1^n \cdot L_2^n = \{a^n b^n\}$. \\
+    وهما ليستا متساويتين، مثلًا: \\
+    $abab \in (L_1 \cdot L_2)^n$ ولكن $abab \notin L_1^n \cdot L_2^n$. \\
+    $aabb \notin (L_1 \cdot L_2)^n$ ولكن $aabb \in L_1^n \cdot L_2^n$.
+
+\begin{boxNote}
+    عملية التسلسل (الإلصاق) بين اللغات، عادة لا تحافظ على العمليات، بمعنى تطبيق عملية معينة على لغتين قبل الإلصاق يعطينا نتيجة مختلفة عن تطبيقها بعد الإلصاق. \\
+    مثلًا:
+    \begin{itemize}
+        \item $\overline{L_1 \cdot L_2} \neq \overline{L_1} \cdot \overline{L_2}$
+        \item $R(L_1 \cdot L_2) \neq R(L_1) \cdot R(L_2)$
+    \end{itemize}
+\end{boxNote}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
