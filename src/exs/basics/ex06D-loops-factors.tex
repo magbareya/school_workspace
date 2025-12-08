@@ -30,6 +30,30 @@ for (int d = 1; d <= n; d++)
 \end{boxSolution}
 \fi
 
+\item \label{item:divisors_sum}
+اكتب عملية خارجية باسم \textenglish{DivisorsSum} تتلقى عددًا صحيحًا وتعيد \textbf{مجموع} قواسمه (أي مجموع الأعداد التي يقسم عليها هذا العدد) \textbf{بدون نفسه}. \\
+\textbf{مثلًا} إذا تقلت العدد 8، فإنّها تعيد: $1+2+4 = 7$
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DivisorsSum(int n)
+{
+    int sum = 0;
+    for (int d = 1; d < n; d++)
+    {
+        if (n % d == 0)
+            sum += d;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
 \item \textbf{للتذكير} عدد أوّلي هو عدد يقسم فقط على نفسه وعلى 1.
     \begin{enumerate}
         \item اكتب عمليّة خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوليًّا، وإلا فإنّها تعيد \textenglish{false}.
@@ -115,6 +139,30 @@ public static bool IsPrimeSquare(int n)
 \clearpage
 \fi
 
+\item اكتب عملية خارجية باسم \textenglish{LCM} تتلقى عددين صحيحين $a$ و $b$، وتعيد المقام المشترك الأصغر لهما (أصغر عدد يقسم على العددين معًا). \\
+\textbf{مثلًا:} المقام المشترك الأصغر للعددين 6 و 8 هو 24، لأنّه أصغر عدد يقسم على 6 وأيضًا يقسم على 8. \\
+\textbf{ملاحظة:} المقام المشترك الأصغر بالضرورة أكبر أو يساوي \textenglish{Max(a,b)} وبالضرورة أصغر من $a \cdot b$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int LCM(int a, int b)
+{
+    int max = Math.Max(a, b);
+    for (int i = max; i < (a*b) ; i++)
+    {
+        if (i % a == 0 && i % b == 0)
+            return i;
+    }
+    return a * b;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\else
+\clearpage
+\fi
+
 \item اكتب عملية خارجية باسم \textenglish{GCD} تتلقى عددين صحيحين $a$ و $b$، وتعيد القاسم المشترك الأكبر لهما (أكبر عدد يقسم عليه كلا العددين). \\
 \textbf{مثلًا:} القاسم المشترك الأكبر للعددين 12 و 15 هو 3، لأنّه أكبر عدد يقسم عليه 12 وأيضًا يقسم عليه 15. \\
 \textbf{ملاحظة:} القاسم المشترك الأكبر بالضرورة أصغر أو يساوي \textenglish{Min(a,b)}
@@ -135,36 +183,80 @@ public static int GCD(int a, int b)
 \end{minted}
 \end{english}
 \end{boxSolution}
-\else
-\clearpage
 \fi
 
-\item اكتب عملية خارجية باسم \textenglish{LCM} تتلقى عددين صحيحين $a$ و $b$، وتعيد المقام المشترك الأصغر لهما (أصغر عدد يقسم على العددين معًا). \\
-\textbf{مثلًا:} المقام المشترك الأصغر للعددين 6 و 8 هو 24، لأنّه أصغر عدد يقسم على 6 وأيضًا يقسم على 8. \\
-\textbf{ملاحظة:} المقام المشترك الأصغر بالضرورة أكبر أو يساوي \textenglish{Max(a,b)} وبالضرورة أصغر من $a \cdot b$
+\item اكتب عملية خارجية باسم \textenglish{GCDThreeNumbers} تتلقى ثلاثة أعداد صحيحة $a$ و $b$ و $c$، وتعيد القاسم المشترك الأكبر للأعداد الثلاثة. \\
+\textbf{مثلًا:} القاسم المشترك الأكبر للأعداد 12 و 18 و 24 هو 6. \\
+\textbf{ملاحظة:} يمكنك الاستعانة بالعملية \textenglish{GCD} التي كتبتها في السؤال السابق.
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
 \begin{english}
 \begin{minted}{csharp}
-public static int LCM(int a, int b)
+public static int GCDThreeNumbers(int a, int b, int c)
 {
-    int max = Math.Max(a, b);
-    for (int i = max; i <= (a*b) ; i++)
+    int min = Math.Min(c, Math.Min(a, b));
+    for (int i = min; i >= 1; i--)
     {
-        if (i % a == 0 && i % b == 0)
+        if (a % i == 0 && b % i == 0 && c % i == 0)
             return i;
     }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static int GCDThreeNumbers(int a, int b, int c)
+{
+    int gcdAB = GCD(a, b);
+    return GCD(gcdAB, c);
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
 \fi
 
-% // TODO: order the question from here until the end of the file. put them in correct order + combine if needed.
+\item سؤال للتفكير: معطاة معك العملية \textenglish{GCDThreeNumbers} التي كتبتها في السؤال السابق. \\
+كيف يمكنك باستخدامها فقط حساب $GCD$ لعددين صحيحين؟
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int GCD(int a, int b)
+{
+    return GCDThreeNumbers(a, a, b);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
 
-\item اكتب عملية خارجية باسم \textenglish{IsPerfectNumber} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان عددًا كاملًا. \\
-\textbf{للتذكير:} العدد الكامل هو عدد يساوي مجموع قواسمه باستثناء نفسه. \\
-\textbf{مثلًا:} 6 عدد كامل لأن: 1+2+3 = 6
+\item
+\textbf{عددان أوليان نسبيًا:}  هما عددان القاسم المشترك الأكبر لهما يساوي 1. \\
+\textbf{مثلًا:} العددان 15 و 28 أوليان نسبيًا لأن القاسم المشترك الأكبر لهما = 1. \\
+اكتب عملية خارجية باسم \textenglish{AreRelativelyPrime} تتلقى عددين صحيحين وتعيد \textenglish{true} إذا كانا أوليين نسبيًا. \\
+\textbf{ملاحظة:} يمكنك الاستعانة بالعملية \textenglish{GCD} التي كتبتها في السؤال السابق.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreRelativelyPrime(int a, int b)
+{
+    return GCD(a, b) == 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+\textbf{العدد الكامل:} هو عدد يساوي مجموع قواسمه باستثناء نفسه. \\
+\textbf{مثلًا:} 6 عدد كامل لأن: 1+2+3 = 6\\
+اكتب عملية خارجية باسم \textenglish{IsPerfectNumber} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان عددًا كاملًا. \\
+\textbf{ملاحظة:}يمكنك استخدام العملية التي كتبتها في السؤال (\ref{item:divisors_sum})
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -182,66 +274,34 @@ public static bool IsPerfectNumber(int n)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\begin{boxSolution}[2 مع استعمال العملية من سؤال (\ref{item:divisors_sum})]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPerfectNumber(int n)
+{
+    return DivisorsSum(n) == n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
 \fi
 
-\item اكتب عملية خارجية باسم \textenglish{AreAmicable} تتلقى عددين صحيحين وتعيد \textenglish{true} إذا كانا عددين صديقين. \\
-\textbf{للتذكير:} عددان صديقان إذا كان مجموع قواسم الأول (بدون نفسه) يساوي الثاني، والعكس صحيح. \\
-\textbf{مثلًا:} 220 و 284 عددان صديقان، لأن مجموع قواسم 220 (بدون نفسه) = 284، ومجموع قواسم 284 (بدون نفسه) = 220.
+\item
+\textbf{عددان صديقان:} هما عددان يحقّقان أنّ مجموع قواسم الأول (بدون نفسه) يساوي الثاني، والعكس صحيح. \\
+\textbf{مثلًا:} 220 و 284 عددان صديقان، لأن مجموع قواسم 220 (بدون نفسه) = 284، ومجموع قواسم 284 (بدون نفسه) = 220.\\
+اكتب عملية خارجية باسم \textenglish{AreAmicable} تتلقى عددين صحيحين وتعيد \textenglish{true} إذا كانا عددين صديقين. \\
+\textbf{ملاحظة:}يمكنك استخدام العملية التي كتبتها في السؤال (\ref{item:divisors_sum})
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static int SumOfDivisors(int n)
-{
-    int sum = 0;
-    for (int i = 1; i < n; i++)
-    {
-        if (n % i == 0)
-            sum += i;
-    }
-    return sum;
-}
-
 public static bool AreAmicable(int a, int b)
 {
-    return SumOfDivisors(a) == b && SumOfDivisors(b) == a;
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item اكتب عملية خارجية باسم \textenglish{GCDThreeNumbers} تتلقى ثلاثة أعداد صحيحة $a$ و $b$ و $c$، وتعيد القاسم المشترك الأكبر للأعداد الثلاثة. \\
-\textbf{مثلًا:} القاسم المشترك الأكبر للأعداد 12 و 18 و 24 هو 6. \\
-\textbf{ملاحظة:} يمكنك الاستعانة بالعملية \textenglish{GCD} التي كتبتها في السؤال السابق.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static int GCDThreeNumbers(int a, int b, int c)
-{
-    int gcdAB = GCD(a, b);
-    return GCD(gcdAB, c);
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item سؤال للتفكير: معطاة معك العملية \textenglish{GCDThreeNumbers} التي كتبتها في السؤال السابق. \\
-كيف يمكنك باستخدامها فقط حساب $GCD$ لعددين صحيحين؟
-
-\item اكتب عملية خارجية باسم \textenglish{AreRelativelyPrime} تتلقى عددين صحيحين وتعيد \textenglish{true} إذا كانا أوليين نسبيًا. \\
-\textbf{للتذكير:} عددان أوليان نسبيًا إذا كان القاسم المشترك الأكبر لهما يساوي 1. \\
-\textbf{مثلًا:} العددان 15 و 28 أوليان نسبيًا لأن القاسم المشترك الأكبر لهما = 1. \\
-\textbf{ملاحظة:} يمكنك الاستعانة بالعملية \textenglish{GCD} التي كتبتها في السؤال السابق.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static bool AreRelativelyPrime(int a, int b)
-{
-    return GCD(a, b) == 1;
+    if(SumOfDivisors(a) == b && SumOfDivisors(b) == a)
+        return true;
+    else
+        return false;
 }
 \end{minted}
 \end{english}
