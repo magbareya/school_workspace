@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي تحليل العدد (While Loop)</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #e74c3c;
+            --success: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --highlight-bg: #fff3cd; /* لون السطر النشط */
+            --highlight-border: #ffc107;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 { margin-bottom: 10px; color: var(--dark); }
+        
+        .main-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .input-section { margin-bottom: 30px; }
+        
+        input {
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            width: 150px;
+            text-align: center;
+        }
+
+        /* تنسيق الجدول الجديد */
+        .table-container {
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        thead {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th { font-weight: 600; }
+        
+        /* السطر النشط */
+        tr.active-row {
+            background-color: var(--highlight-bg);
+            border: 2px solid var(--highlight-border);
+            font-weight: bold;
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+
+        /* ألوان القيم في الجدول لتمييزها */
+        .val-num { color: var(--primary); }
+        .val-rem { color: var(--secondary); }
+        .val-sum { color: var(--success); }
+
+        .code-display {
+            background: #2d3436;
+            color: #dcdde1;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            font-family: 'Consolas', 'Monaco', monospace;
+            direction: ltr;
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .code-line {
+            padding: 2px 5px;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background-color: #e17055;
+            color: white;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-start { background-color: var(--primary); color: white; }
+        .btn-next { background-color: var(--success); color: white; }
+        .btn-reset { background-color: #95a5a6; color: white; }
+        
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        button:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
+
+        .explanation {
+            min-height: 60px;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #fff3cd;
+            color: #856404;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>محاكي: جمع خانات العدد (جدول التتبع)</h1>
+    <p>تتبع قيم المتغيرات في كل دورة من حلقات التكرار (Trace Table)</p>
+
+    <div class="main-container">
+        
+        <div class="input-section">
+            <label>أدخل عدداً صحيحاً: </label>
+            <input type="number" id="inputNumber" value="123" placeholder="مثلاً: 458">
+        </div>
+
+        <div class="controls">
+            <button class="btn-start" onclick="initSimulation()" id="startBtn">بدء المحاكاة</button>
+            <button class="btn-next" onclick="nextStep()" id="nextBtn" disabled>الخطوة التالية ➡️</button>
+            <button class="btn-reset" onclick="resetSimulation()">إعادة تعيين 🔄</button>
+        </div>
+
+        <div class="explanation" id="explanationText">
+            اضغط "بدء المحاكاة" لإنشاء الجدول.
+        </div>
+
+        <div class="table-container">
+            <table id="traceTable">
+                <thead>
+                    <tr>
+                        <th>الرقم الحالي (number)</th>
+                        <th>الباقي (digit)</th>
+                        <th>المجموع (sum)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows will be added here -->
+                    <tr>
+                        <td colspan="3" style="color: #95a5a6;">الجدول فارغ...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="code-display">
+            <span class="code-line" id="line-1">int number = <span id="code-input-val">...</span>;</span>
+            <span class="code-line" id="line-2">int sum = 0;</span>
+            <span class="code-line" id="line-3">while (number > 0)</span>
+            <span class="code-line" id="line-4">{</span>
+            <span class="code-line" id="line-5">    int digit = number % 10;  // استخراج الخانة</span>
+            <span class="code-line" id="line-6">    sum = sum + digit;        // جمع الخانة</span>
+            <span class="code-line" id="line-7">    number = number / 10;     // حذف الخانة</span>
+            <span class="code-line" id="line-8">}</span>
+            <span class="code-line" id="line-9">Console.WriteLine(sum);</span>
+        </div>
+
+    </div>
+
+    <script>
+        let currentNumber = 0;
+        let currentSum = 0;
+        let currentRemainder = 0;
+        let step = 0; 
+        // Steps: 
+        // 1: Check While
+        // 2: Modulo (update table col 2)
+        // 3: Add Sum (update table col 3)
+        // 4: Divide (create NEW row with new number)
+        // 5: End
+
+        const elExplanation = document.getElementById('explanationText');
+        const nextBtn = document.getElementById('nextBtn');
+        const startBtn = document.getElementById('startBtn');
+        const inputField = document.getElementById('inputNumber');
+        const tableBody = document.getElementById('tableBody');
+        
+        let currentRowElement = null;
+
+        function highlightLine(lineId) {
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('highlight'));
+            if(lineId) document.getElementById(lineId).classList.add('highlight');
+        }
+
+        function createRow(num, rem, sum, isActive) {
+            // Remove active class from previous rows
+            document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row'));
+
+            const tr = document.createElement('tr');
+            if(isActive) tr.classList.add('active-row');
+            
+            tr.innerHTML = `
+                <td class="val-num">${num}</td>
+                <td class="val-rem">${rem !== null ? rem : '-'}</td>
+                <td class="val-sum">${sum}</td>
+            `;
+            tableBody.appendChild(tr);
+            return tr;
+        }
+
+        function updateCurrentRow(colIndex, value) {
+            if(currentRowElement) {
+                // colIndex 0=num, 1=rem, 2=sum
+                const cell = currentRowElement.cells[colIndex];
+                cell.innerText = value;
+                
+                // Add tiny animation effect
+                cell.style.transition = "background 0.3s";
+                cell.style.backgroundColor = "#ffeaa7";
+                setTimeout(() => cell.style.backgroundColor = "transparent", 500);
+            }
+        }
+
+        function initSimulation() {
+            let val = parseInt(inputField.value);
+            if (isNaN(val) || val < 0) {
+                alert("الرجاء إدخال رقم صحيح موجب");
+                return;
+            }
+            
+            currentNumber = val;
+            currentSum = 0;
+            currentRemainder = 0;
+            step = 1;
+            
+            // Reset UI
+            tableBody.innerHTML = '';
+            document.getElementById('code-input-val').innerText = currentNumber;
+            
+            inputField.disabled = true;
+            startBtn.disabled = true;
+            nextBtn.disabled = false;
+            
+            highlightLine('line-1');
+            elExplanation.innerText = `بداية البرنامج: الرقم = ${currentNumber}، المجموع = 0.`;
+
+            // Create First Row
+            currentRowElement = createRow(currentNumber, null, 0, true);
+        }
+
+        function nextStep() {
+            switch(step) {
+                case 1: // While Check
+                    highlightLine('line-3');
+                    // Ensure current row is highlighted
+                    if(currentRowElement) {
+                        document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row'));
+                        currentRowElement.classList.add('active-row');
+                    }
+
+                    if (currentNumber > 0) {
+                        elExplanation.innerText = `فحص الشرط: هل ${currentNumber} > 0؟ نعم. ندخل الحلقة.`;
+                        step = 2;
+                    } else {
+                        elExplanation.innerText = `فحص الشرط: هل ${currentNumber} > 0؟ لا. الحلقة تتوقف.`;
+                        step = 5; // End
+                    }
+                    break;
+
+                case 2: // Modulo
+                    highlightLine('line-5');
+                    currentRemainder = currentNumber % 10;
+                    updateCurrentRow(1, currentRemainder); // Update Remainder Column
+                    elExplanation.innerText = `حساب الباقي: ${currentNumber} % 10 = ${currentRemainder}.`;
+                    step = 3;
+                    break;
+
+                case 3: // Sum
+                    highlightLine('line-6');
+                    currentSum += currentRemainder;
+                    updateCurrentRow(2, currentSum); // Update Sum Column
+                    elExplanation.innerText = `تحديث المجموع: المجموع السابق + ${currentRemainder} = ${currentSum}.`;
+                    step = 4;
+                    break;
+
+                case 4: // Division (New Line Logic)
+                    highlightLine('line-7');
+                    let oldNum = currentNumber;
+                    currentNumber = Math.floor(currentNumber / 10);
+                    
+                    elExplanation.innerText = `القسمة: ${oldNum} / 10 = ${currentNumber}. ننتقل لسطر جديد للرقم الجديد.`;
+                    
+                    // Create NEW row for the new number
+                    currentRowElement = createRow(currentNumber, null, currentSum, true);
+                    
+                    step = 1; // Back to start of loop
+                    break;
+
+                case 5: // End
+                    highlightLine('line-9');
+                    elExplanation.innerText = `تمت الطباعة: ${currentSum}. انتهى البرنامج.`;
+                    nextBtn.disabled = true;
+                    if(currentRowElement) currentRowElement.classList.remove('active-row');
+                    break;
+            }
+        }
+
+        function resetSimulation() {
+            inputField.disabled = false;
+            startBtn.disabled = false;
+            nextBtn.disabled = true;
+            tableBody.innerHTML = '<tr><td colspan="3" style="color: #95a5a6;">الجدول فارغ...</td></tr>';
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('highlight'));
+            elExplanation.innerText = 'اضغط "بدء المحاكاة" لإنشاء الجدول.';
+            currentRowElement = null;
+        }
+    </script>
+</body>
+</html>

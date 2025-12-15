@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي الخوارزميات التعليمي</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #00cec9;
+            --bg: #dfe6e9;
+            --text: #2d3436;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 { margin-bottom: 10px; color: var(--primary); }
+        .description { max-width: 600px; text-align: center; margin-bottom: 30px; line-height: 1.6; }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .array-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 250px;
+            margin: 20px 0;
+            gap: 10px;
+            border-bottom: 3px solid #b2bec3;
+            padding-bottom: 5px;
+        }
+
+        .bar {
+            width: 50px;
+            background-color: var(--secondary);
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
+        .bar.comparing { background-color: #e17055; transform: scale(1.1); } /* أحمر للمقارنة */
+        .bar.sorted { background-color: #00b894; } /* أخضر للمرتب */
+        .bar.swapping { background-color: #0984e3; } /* أزرق للتبديل */
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            transition: transform 0.2s;
+            font-family: inherit;
+        }
+
+        button:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        button:disabled { background-color: #b2bec3; cursor: not-allowed; transform: none; }
+
+        .code-display {
+            background: #2d3436;
+            color: #fab1a0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+            direction: ltr;
+            min-height: 120px;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        .status-msg {
+            font-weight: bold;
+            margin-top: 10px;
+            color: var(--primary);
+            min-height: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>محاكي خوارزمية الترتيب (Bubble Sort)</h1>
+    <p class="description">
+        تساعد هذه الأداة الطلاب على فهم منطق "الحلقات المتداخلة" (Nested Loops) وتبديل المتغيرات قبل كتابتها بلغة C#.
+    </p>
+
+    <div class="container">
+        <div class="array-container" id="arrayContainer"></div>
+        <div class="status-msg" id="statusMsg">اضغط "بدء الترتيب" للمشاهدة</div>
+
+        <div class="controls">
+            <button onclick="generateArray()">🔄 توليد أرقام جديدة</button>
+            <button onclick="startSort()" id="startBtn">▶️ بدء الترتيب</button>
+        </div>
+
+        <div class="code-display" id="codeDisplay">
+// C# Logic Visualization
+int[] numbers = { ... };
+// Ready to start...
+        </div>
+    </div>
+
+    <script>
+        let array = [];
+        const container = document.getElementById('arrayContainer');
+        const statusMsg = document.getElementById('statusMsg');
+        const codeDisplay = document.getElementById('codeDisplay');
+        const startBtn = document.getElementById('startBtn');
+        let isSorting = false;
+
+        function generateArray() {
+            if(isSorting) return;
+            array = [];
+            container.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const value = Math.floor(Math.random() * 80) + 10;
+                array.push(value);
+                const bar = document.createElement('div');
+                bar.classList.add('bar');
+                bar.style.height = `${value * 2.5}px`;
+                bar.innerText = value;
+                container.appendChild(bar);
+            }
+            statusMsg.innerText = "تم توليد مصفوفة جديدة. جاهز للترتيب.";
+            resetCode();
+        }
+
+        function resetCode() {
+            codeDisplay.innerText = `// منطق C#
+int[] arr = { ${array.join(', ')} };
+// اضغط بدء لرؤية الـ Loops تعمل`;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function startSort() {
+            if(isSorting) return;
+            isSorting = true;
+            startBtn.disabled = true;
+            let bars = document.getElementsByClassName('bar');
+
+            for (let i = 0; i < array.length - 1; i++) {
+                for (let j = 0; j < array.length - i - 1; j++) {
+
+                    // التلوين للمقارنة
+                    bars[j].classList.add('comparing');
+                    bars[j+1].classList.add('comparing');
+
+                    statusMsg.innerText = `مقارنة العنصر [${j}] (${array[j]}) مع [${j+1}] (${array[j+1]})`;
+                    codeDisplay.innerText = `for (int i = 0; i < n - 1; i++)
+  for (int j = 0; j < n - i - 1; j++)
+    if (arr[j] > arr[j + 1]) // ${array[j]} > ${array[j+1]} ?`;
+
+                    await sleep(800);
+
+                    if (array[j] > array[j + 1]) {
+                        statusMsg.innerText = `تبديل! ${array[j]} أكبر من ${array[j+1]}`;
+                        bars[j].classList.remove('comparing');
+                        bars[j+1].classList.remove('comparing');
+
+                        bars[j].classList.add('swapping');
+                        bars[j+1].classList.add('swapping');
+
+                        codeDisplay.innerText = `      // عملية التبديل (Swap)
+      int temp = arr[j];
+      arr[j] = arr[j + 1];
+      arr[j + 1] = temp;`;
+
+                        await sleep(600);
+
+                        // المنطق الفعلي
+                        let temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+
+                        // تحديث الواجهة
+                        bars[j].style.height = `${array[j] * 2.5}px`;
+                        bars[j].innerText = array[j];
+                        bars[j+1].style.height = `${array[j+1] * 2.5}px`;
+                        bars[j+1].innerText = array[j+1];
+
+                        await sleep(600);
+
+                        bars[j].classList.remove('swapping');
+                        bars[j+1].classList.remove('swapping');
+                    } else {
+                        bars[j].classList.remove('comparing');
+                        bars[j+1].classList.remove('comparing');
+                    }
+                }
+                bars[array.length - i - 1].classList.add('sorted');
+            }
+            bars[0].classList.add('sorted');
+            statusMsg.innerText = "تم ترتيب المصفوفة بنجاح! 🎉";
+            codeDisplay.innerText = "// تم الانتهاء من الترتيب\n// Console.WriteLine(\"Sorted!\");";
+            isSorting = false;
+            startBtn.disabled = false;
+        }
+
+        // Initialize on load
+        generateArray();
+
+    </script>
+</body>
+</html>
