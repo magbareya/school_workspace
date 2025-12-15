@@ -306,11 +306,13 @@ private static void Main(string[] args)
     {
         int x = int.Parse(Console.ReadLine());
         int m = MaxDigit(x);
-        if (m > bestMax || (m == bestMax && x > bestNum))
+        if (m > bestMax)
         {
             bestMax = m;
             bestNum = x;
         }
+        else if (m == bestMax && x > bestNum)
+            bestNum = x;
     }
     Console.WriteLine(bestNum);
 }

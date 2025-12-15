@@ -56,12 +56,9 @@ public static int DivisorsSum(int n)
 
 \item \textbf{للتذكير} عدد أوّلي هو عدد يقسم فقط على نفسه وعلى 1.
     \begin{enumerate}
-        \item اكتب عمليّة خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوليًّا، وإلا فإنّها تعيد \textenglish{false}.
-        \item في البرنامج الرئيسي، استدعِ العملية مع العدد 17 واطبع النتيجة. ومع العدد 20 واطبع النتيجة.
-        \item اكتب عملية خارجية أخرى باسم \textenglish{PrintPrimes} تتلقى عددًا صحيحًا وتطبع كل الأعداد الأولية حتى هذا العدد. \\
-                 \textbf{مثلًا:} إذا تلقت العملية العدد 20 فإنّها تطبع: 2، 3، 5، 7، 11، 13، 17، 19.
-        \item في البرنامج الرئيسي استدعِ العملية مع الرقم 100.
-    \end{enumerate}
+
+\item اكتب عمليّة خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوليًّا، وإلا فإنّها تعيد \textenglish{false}.
+\item في البرنامج الرئيسي، استدعِ العملية مع العدد 17 واطبع النتيجة. ومع العدد 20 واطبع النتيجة.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -70,14 +67,33 @@ public static bool IsPrime(int n)
 {
     if (n < 2)
         return false;
-    for (int d = 2; d * d <= n; d++)
+    for (int i = 2; i < n; i++)
     {
-        if (n % d == 0)
+        if (n % i == 0)
             return false;
     }
     return true;
 }
 
+private static void Main(string[] args)
+{
+    Console.WriteLine(IsPrime(17));
+    Console.WriteLine(IsPrime(20));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+
+\item اكتب عملية خارجية أخرى باسم \textenglish{PrintPrimes} تتلقى عددًا صحيحًا وتطبع كل الأعداد الأولية حتى هذا العدد. \\
+\textbf{مثلًا:} إذا تلقت العملية العدد 20 فإنّها تطبع: 2، 3، 5، 7، 11، 13، 17، 19.
+\item في البرنامج الرئيسي استدعِ العملية مع الرقم 100.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
 public static void PrintPrimes(int n)
 {
     for (int i = 2; i <= n; i++)
@@ -89,15 +105,13 @@ public static void PrintPrimes(int n)
 
 private static void Main(string[] args)
 {
-    Console.WriteLine(IsPrime(17));
-    Console.WriteLine(IsPrime(20));
     PrintPrimes(100);
 }
 \end{minted}
 \end{english}
 \end{boxSolution}
-\clearpage
 \fi
+\end{enumerate}
 
 \item اكتب عملية تتلقى عددًا صحيحًا، وتطبع كل عوامله \textbf{الأوّلية}. (أي كل الأعداد الأولية التي يقسم عليها هذا العدد) \\
 يمكنك الاستعانة بالعملية \textenglish{IsPrime} التي كتبتها في السؤال السابق.
@@ -116,12 +130,13 @@ public static void PrintPrimeFactors(int n)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
 \fi
 
 \item اكتب عملية خارجية باسم \textenglish{IsPrimeSquare} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان العدد الذي تلقته عبارة عن تربيع عدد أوّلي. وإلا فإنّها تعيد \textenglish{false} \\
 \textbf{مثلًا:} تعيد العملية \textenglish{true} إذا تلقّت 25. وتعيد \textenglish{false} إذا تلقت 30.
 \ifwithsols
-\begin{boxSolution}
+\begin{boxSolution}[1]
 \begin{english}
 \begin{minted}{csharp}
 public static bool IsPrimeSquare(int n)
@@ -131,6 +146,19 @@ public static bool IsPrimeSquare(int n)
         if (i * i == n && IsPrime(i))
             return true;
     }
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPrimeSquare(int n)
+{
+    int sq = (int) Math.Sqrt(n);
+    if (sq*sq == n && IsPrime(sq))
+        return true;
     return false;
 }
 \end{minted}
