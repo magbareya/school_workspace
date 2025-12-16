@@ -14,8 +14,8 @@
         \item \textbf{الاختبار مكوّن من ثلاثة فصول:}
         \begin{itemize}
             \item \textbf{الفصل الأول:} السؤال الأول وهو \underline{إجباري}.
-            \item \textbf{الفصل الثاني:} الأسئلة 2-4، أجب عن \underline{سؤالين} فقط.
-            \item \textbf{الفصل الثالث:} الأسئلة 5-6، أجب عن \underline{سؤال واحد} فقط.
+            \item \textbf{الفصل الثاني:} الأسئلة 2-3، أجب عن \underline{كلا السؤالين}.
+            \item \textbf{الفصل الثالث:} الأسئلة 4-5، أجب عن \underline{سؤال واحد} فقط.
         \end{itemize}
         \item الوقت المخصص: ساعتان.
         \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
@@ -76,9 +76,7 @@ static void Main()
 الأعداد: \textenglish{30, 45, 60, 15, 22, 50} \\
 على الجدول أن يشمل عمودًا لكل واحد من المتغيرات: \textenglish{count, i, x} والشرطين \textenglish{if(x<50)} و \textenglish{if(x\%2==0)} وعمودا للطباعة.
 
-\item أعط مثالاً لمدخلات (\textenglish{n=4}) ينتج عنها طباعة \textenglish{"hello"} مرتين و \textenglish{count = 2}.
-
-\item أعط مثالاً لمدخلات (\textenglish{n=4}) ينتج عنها طباعة \textenglish{"hello"} مرة واحدة و \textenglish{count = 1}.
+\item أعط مثالاً لمدخلات (\textenglish{n=4}) ينتج عنها طباعة \textenglish{"hello"} مرتين و \textenglish{count = 1}.
 
 \end{enumerate}
 
@@ -117,7 +115,7 @@ static void Main()
 
 % ================= الفصل الثاني =================
 \section{الفصل الثاني}
-\textbf{أجب عن \underline{سؤالين} من الأسئلة 2 - 4}.
+\textbf{أجب عن \underline{كلا السؤالين} 2 - 3}.
 
 \begin{enumerate}[itemsep=3em, start=2]
 
@@ -171,46 +169,17 @@ public static int SumBigDigits(int num)
 \clearpage
 \fi
 
-\item \textbf{السؤال الرابع} (20 علامة) \\
-اكتب عملية خارجية باسم \textenglish{BiggestDivisor} تتلقى عددًا صحيحًا موجبًا $num$. \\
-على العملية أن تعيد أكبر قاسم للعدد، أي أكبر عدد يقسم عليه العدد $num$ (لا يشمل $num$ نفسه).
-
-\textbf{أمثلة للتوضيح:}
-\begin{itemize}
-    \item إذا تلقت العملية العدد \textbf{10}: القواسم هي 1، 2، 5. القاسم الأكبر هو \textbf{5}.
-    \item إذا تلقت العملية العدد \textbf{24}: القواسم (غير 24) هي 1، 2، 3، 4، 6، 8، 12. القاسم الأكبر هو \textbf{12}.
-    \item إذا تلقت العملية العدد \textbf{7}: القواسم (غير 7) هي 1 فقط. القاسم الأكبر هو \textbf{1}.
-\end{itemize}
-
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static int BiggestDivisor(int num)
-{
-    for (int i = num - 1; i >= 1; i--)
-    {
-        if (num % i == 0)
-            return i;
-    }
-    return 1;
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
 \end{enumerate}
 
 \clearpage
 
 % ================= الفصل الثالث =================
 \section{الفصل الثالث}
-\textbf{أجب عن \underline{أحد السؤالين} 5 - 6}.
+\textbf{أجب عن \underline{أحد السؤالين} 4 - 5}.
 
-\begin{enumerate}[itemsep=3em, start=5]
+\begin{enumerate}[itemsep=3em, start=4]
 
-\item \textbf{السؤال الخامس} (30 علامة) \\
+\item \textbf{السؤال الرابع} (30 علامة) \\
 يوجد في مصنع معيّن موقف سيّارات لعاملي المصنع. \\
 تستطيع أن تدخل إلى موقف السيّارات كلّ سيّارة وزنها أقلّ من 10 أطنان، وارتفاعها أقلّ من 5 أمتار. \\
 العاملون الذين يستعملون موقف السيّارات يدخلون مع سيّاراتهم في الصباح ويغادرون بعد انتهاء يوم العمل فقط.
@@ -271,7 +240,7 @@ static void Main(string[] args)
 
 \clearpage
 
-\item \textbf{السؤال السادس} (30 علامة) \\
+\item \textbf{السؤال الخامس} (30 علامة) \\
 في مطعم "الشبعي" يبيعون نوعين من الشطائر: شطيرة جبنة وشطيرة أفوكادو. \\
 من أجل طلب شطيرة جبنة، يجب اختيار نوع 0، وسعرها 10 شواكل. \\
 من أجل طلب شطيرة أفوكادو، يجب اختيار نوع 1، وسعرها 12 شيكلاً. \\
@@ -335,4 +304,49 @@ static void Main(string[] args)
 
 \end{enumerate}
 
+
+\clearpage              % Push all content to the next page
+\thispagestyle{empty}   % Remove page numbers and headers for this specific page
+\mbox{}                 % Insert an invisible box so the page isn't "empty" to LaTeX
+\clearpage
+
+\begin{center}
+    \textbf{\Large السؤال الأول - جدول متابعة}
+\end{center}
+\vspace{0.5cm}
+
+\begin{flushright}
+    \textbf{\Large الاسم: \underline{\hspace{6cm}}}
+\end{flushright}
+
+\vspace{1cm}
+
+\textbf{\large أ.}
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{\textenglish{i}} & \textbf{\textenglish{x}} & \textbf{\textenglish{count}} & \textbf{\textenglish{x < 50}} & \textbf{\textenglish{x \% 2 == 0}} & \textbf{الطباعة} \\
+        \hline
+        \hspace{1cm} & \hspace{1.5cm} & \hspace{1.5cm} & \hspace{2cm} & \hspace{2.5cm} & \hspace{3cm} \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+         & & & & & \\ \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1.5cm}
+
+\textbf{\large ب.}
+\textbf{\textenglish{n = 4}}، الأعداد هي: \\
+
+\begin{center}
+    \Large
+    \textenglish{\underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}}}
+\end{center}
 \end{document}

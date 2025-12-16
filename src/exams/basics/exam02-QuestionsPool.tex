@@ -268,6 +268,35 @@ static void Main(string[] args)
 \end{boxSolution}
 \fi
 
+\item \textbf{السؤال الرابع} (20 علامة) \\
+اكتب عملية خارجية باسم \textenglish{BiggestDivisor} تتلقى عددًا صحيحًا موجبًا $num$. \\
+على العملية أن تعيد أكبر قاسم للعدد، أي أكبر عدد يقسم عليه العدد $num$ (لا يشمل $num$ نفسه).
+
+\textbf{أمثلة للتوضيح:}
+\begin{itemize}
+    \item إذا تلقت العملية العدد \textbf{10}: القواسم هي 1، 2، 5. القاسم الأكبر هو \textbf{5}.
+    \item إذا تلقت العملية العدد \textbf{24}: القواسم (غير 24) هي 1، 2، 3، 4، 6، 8، 12. القاسم الأكبر هو \textbf{12}.
+    \item إذا تلقت العملية العدد \textbf{7}: القواسم (غير 7) هي 1 فقط. القاسم الأكبر هو \textbf{1}.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int BiggestDivisor(int num)
+{
+    for (int i = num - 1; i >= 1; i--)
+    {
+        if (num % i == 0)
+            return i;
+    }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 
 \end{enumerate}
 
