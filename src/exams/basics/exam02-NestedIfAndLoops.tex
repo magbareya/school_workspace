@@ -4,26 +4,32 @@
 \title{اختبار فصلي للصف 10-10}
 
 \begin{document}
-\baselineskip=1.3\baselineskip
+\onehalfspacing
 \maketitle
 
 \ifwithsols
 \else
 \begin{boxCode}
     \begin{itemize}
-        \item \textbf{الاختبار مكوّن من فصلين:}
+        \item \textbf{الاختبار مكوّن من ثلاثة فصول:}
         \begin{itemize}
-            \item \textbf{الفصل الأول: أجب عن كل الأسئلة}
-            \item \textbf{الفصل الثاني: أجب عن سؤالين}
+            \item \textbf{الفصل الأول:} السؤال الأول وهو \underline{إجباري}.
+            \item \textbf{الفصل الثاني:} الأسئلة 2-4، أجب عن \underline{سؤالين} فقط.
+            \item \textbf{الفصل الثالث:} الأسئلة 5-6، أجب عن \underline{سؤال واحد} فقط.
         \end{itemize}
         \item الوقت المخصص: ساعتان.
         \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
         \item أجب بلغة \textenglish{C\#} فقط.
         \item اكتب بقلم حبر فقط، وبخط واضح.
-        \item الحل على ورقة خارجية، لا تنسَ كتابة اسمك
-        \item مرفقة ورقة للتسليم فيها جدول متابعة للسؤال الأول، يمكنك ملؤها وتسليمها.
+        \item الحل على ورقة خارجية، لا تنسَ كتابة اسمك.
+        \item مرفق ورقة خاصة لتسليم حل السؤال الأول (جدول المتابعة)
     \end{itemize}
 \end{boxCode}
+
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{../../../images/logoTasamoh.png}
+\end{center}
+
 \vspace{2cm}
 \begin{flushleft}
     أرجو لكم التفوّق.
@@ -33,11 +39,12 @@
 \clearpage
 \fi
 
+% ================= الفصل الأول =================
 \section{الفصل الأوّل}
-\textbf{أجب عن \underline{جميع} الأسئلة 1 - 3}.
+\textbf{أجب عن السؤال الأول (إجباري)}.
 
 \begin{enumerate}[itemsep=3em]
-\item \textbf{السؤال الأوّل} (25 علامة) \\
+\item \textbf{السؤال الأوّل} (30 علامة) \\
 أمامك البرنامج التالي:
 \begin{boxCode}
 \begin{english}
@@ -67,7 +74,7 @@ static void Main()
 \item اكتب جدول متابعة للبرنامج عندما تكون المدخلات كالتالي: \\
 \textenglish{n = 6} \\
 الأعداد: \textenglish{30, 45, 60, 15, 22, 50} \\
-على الجدول أن يشمل عمودًا لكل واحد من المتغيرات: \textenglish{count, n, i, x} والشرطين \textenglish{if(x<50)} و \textenglish{if(x\%2==0)} وعمودا للطباعة.
+على الجدول أن يشمل عمودًا لكل واحد من المتغيرات: \textenglish{count, i, x} والشرطين \textenglish{if(x<50)} و \textenglish{if(x\%2==0)} وعمودا للطباعة.
 
 \item أعط مثالاً لمدخلات (\textenglish{n=4}) ينتج عنها طباعة \textenglish{"hello"} مرتين و \textenglish{count = 2}.
 
@@ -78,7 +85,6 @@ static void Main()
 \ifwithsols
 \begin{boxSolution}
 \textbf{أ.} جدول المتابعة:
-
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -87,48 +93,41 @@ static void Main()
 \hline
 6 &  &  &  &  & 0 &  \\
 \hline
- & 1 & 30 & \textenglish{true} & \textenglish{true} & 0 & \textenglish{hello} \\
+ & 1 & 30 & T & T & 0 & \textenglish{hello} \\
 \hline
- & 2 & 45 & \textenglish{true} & \textenglish{false} & 1 &  \\
+ & 2 & 45 & T & F & 1 &  \\
 \hline
- & 3 & 60 & \textenglish{false} & — & 1 &  \\
+ & 3 & 60 & F & — & 1 &  \\
 \hline
- & 4 & 15 & \textenglish{true} & \textenglish{false} & 2 &  \\
+ & 4 & 15 & T & F & 2 &  \\
 \hline
- & 5 & 22 & \textenglish{true} & \textenglish{true} & 2 & \textenglish{hello} \\
+ & 5 & 22 & T & T & 2 & \textenglish{hello} \\
 \hline
- & 6 & 50 & \textenglish{false} & — & 2 &  \\
+ & 6 & 50 & F & — & 2 &  \\
 \hline
  &  &  &  &  & 2 & \textenglish{2} \\
 \hline
 \end{tabular}
 \end{center}
-
-\vspace{0.5cm}
-\textbf{ب.} مثال: \textenglish{n = 4}، المدخلات: \textenglish{10, 20, 5, 15} \\
-- العدد 10: أقل من 50 وزوجي $\leftarrow$ يطبع \textenglish{"hello"} \\
-- العدد 20: أقل من 50 وزوجي $\leftarrow$ يطبع \textenglish{"hello"} \\
-- العدد 5: أقل من 50 وفردي $\leftarrow$ \textenglish{count++} \\
-- العدد 15: أقل من 50 وفردي $\leftarrow$ \textenglish{count++} \\
-النتيجة: طباعة \textenglish{"hello"} مرتين و \textenglish{count = 2}
-
-\vspace{0.5cm}
-\textbf{ج.} مثال: \textenglish{n = 4}، المدخلات: \textenglish{8, 60, 70, 13} \\
-- العدد 8: أقل من 50 وزوجي $\leftarrow$ يطبع \textenglish{"hello"} \\
-- العدد 60: أكبر من أو يساوي 50 $\leftarrow$ لا يدخل الشرط \\
-- العدد 70: أكبر من أو يساوي 50 $\leftarrow$ لا يدخل الشرط \\
-- العدد 13: أقل من 50 وفردي $\leftarrow$ \textenglish{count++} \\
-النتيجة: طباعة \textenglish{"hello"} مرة واحدة و \textenglish{count = 1}
 \end{boxSolution}
 \fi
+\end{enumerate}
 
 \clearpage
+
+% ================= الفصل الثاني =================
+\section{الفصل الثاني}
+\textbf{أجب عن \underline{سؤالين} من الأسئلة 2 - 4}.
+
+\begin{enumerate}[itemsep=3em, start=2]
+
 \item \textbf{السؤال الثاني}  (20 علامة) \\
 اكتب مقطع برنامج يستقبل من المستخدم 10 أعداد صحيحة، ويطبع العدد الذي له أكبر تربيع من بين الأعداد التي أدخلها المستخدم. \\
+إذا كان هناك أكثر من عدد لها نفس التربيع وهو أكبر تربيع، اطبع أحدها. \\
 \textbf{مثال:} إذا كانت سلسلة الاستقبال: $1, 5, -10, 8, 0, -3, -40 , 22, 30, -12$ على البرنامج أن يطبع $-40$، لأنّ $(-40)^2$ أكبر من تربيع أي رقم آخر أدخله المستخدم.
 
 \ifwithsols
-\begin{boxSolution}[1]
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 int max = int.Parse(Console.ReadLine());
@@ -142,25 +141,11 @@ Console.WriteLine(max);
 \end{minted}
 \end{english}
 \end{boxSolution}
-\begin{boxSolution}[2]
-\begin{english}
-\begin{minted}{csharp}
-int max = int.Parse(Console.ReadLine());
-for (int i = 2; i <= 10; i++)
-{
-    int num = int.Parse(Console.ReadLine());
-    if (Math.Abs(num) > Math.Abs(maxNum))
-        max = num;
-}
-Console.WriteLine(max);
-\end{minted}
-\end{english}
-\end{boxSolution}
 \clearpage
 \fi
 
 \item \textbf{السؤال الثالث} (20 علامة)  \\
-اكتب عملية خارجية باسم \textenglish{SumBigDigits} تتلقى عددًا صحيحًا وتعيد مجموع الخانات التي قيمتها أكبر من 5 فيه. \\
+اكتب عملية خارجية باسم \textenglish{SumBigDigits} تتلقى عددًا صحيحًا موجبًا وتعيد مجموع الخانات التي قيمتها أكبر من 5 فيه. \\
 \textbf{مثال:}  إذا استقبلت العدد $837815$ فإنّها تعيد: $8+7+8=23$ \\
 \textbf{مثال آخر:}  إذا استقبلت العدد $12345$ فإنّها تعيد: $0$ لأنّه لا يوجد خانات أكبر من 5.
 
@@ -183,177 +168,165 @@ public static int SumBigDigits(int num)
 \end{minted}
 \end{english}
 \end{boxSolution}
+\clearpage
+\fi
+
+\item \textbf{السؤال الرابع} (20 علامة) \\
+اكتب عملية خارجية باسم \textenglish{BiggestDivisor} تتلقى عددًا صحيحًا موجبًا $num$. \\
+على العملية أن تعيد أكبر قاسم للعدد، أي أكبر عدد يقسم عليه العدد $num$ (لا يشمل $num$ نفسه).
+
+\textbf{أمثلة للتوضيح:}
+\begin{itemize}
+    \item إذا تلقت العملية العدد \textbf{10}: القواسم هي 1، 2، 5. القاسم الأكبر هو \textbf{5}.
+    \item إذا تلقت العملية العدد \textbf{24}: القواسم (غير 24) هي 1، 2، 3، 4، 6، 8، 12. القاسم الأكبر هو \textbf{12}.
+    \item إذا تلقت العملية العدد \textbf{7}: القواسم (غير 7) هي 1 فقط. القاسم الأكبر هو \textbf{1}.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int BiggestDivisor(int num)
+{
+    for (int i = num - 1; i >= 1; i--)
+    {
+        if (num % i == 0)
+            return i;
+    }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
 \fi
 
 \end{enumerate}
 
 \clearpage
-\section{الفصل الثاني}
-\textbf{أجب عن \underline{سؤالين} من الأسئلة 4 - 6}.
-\begin{enumerate}[itemsep=3em, start=4]
 
-\item \textbf{السؤال الرابع}  (20 علامة + 5)  \\
-نعرف المتوالية التالية:
-$$a_1 = 1 , \qquad a_n = a_{n-1} + (n-1)$$
-مثلًا:
-\begin{align*}
-    a_2 &= a_1 + 1 = 1 + 1 = 2 \\
-    a_3 &= a_2 + 2 = 2 + 2 = 4 \\
-    a_4 &= a_3 + 3 = 4 + 3 = 7 \\
-    a_5 &= a_4 + 4 = 7 + 4 = 11
-\end{align*}
+% ================= الفصل الثالث =================
+\section{الفصل الثالث}
+\textbf{أجب عن \underline{أحد السؤالين} 5 - 6}.
 
-اكتب عملية خارجية باسم \textenglish{PrintSeries} تتلقى عددًا $n$ وتطبع أوّل $n$ حدود من السلسلة الموصوفة أعلاه.
+\begin{enumerate}[itemsep=3em, start=5]
 
-\textbf{مثال:}إذا تلقت العملية العدد 7، فإنّها ستطبع أول 7 حدود، أي:
-$$1,\; 2,\; 4,\; 7,\; 11,\; 16,\; 22$$
-
-\textbf{سؤال بونوس} (5 علامات): بعد طباعة الحدود، اطبع أيضًا معدّلها.
-
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static void PrintSeries(int n)
-{
-    int current = 1;
-    int sum = 0;
-
-    for (int i = 1; i <= n; i++)
-    {
-        Console.WriteLine(current);
-        sum += current;
-        current = current + i;
-    }
-
-    // Bonus
-    double average = (double)sum / n;
-    Console.WriteLine("Average = " + average);
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\clearpage
-\item \textbf{السؤال الخامس}  (20 علامة + 5) \\
-معطاة العملية \textenglish{AppendDigit} تتلقى عددًا صحيحًا ورقمًا مكوّنًا من منزلة واحدة، وتعيد الرقم الناتج عن إلصاق الخانة بالعدد الصحيح من جهة الآحاد. \\
-\textbf{مثلا:} $341 \leftarrow \text{AppendDigit}(34, 1)$ و $465 \leftarrow \text{AppendDigit}(46, 5)$. \\
-\textbf{العملية معطاة لكم ويمكنكم استخدامها بدون تطبيقها.}
-
-اكتب عملية خارجية باسم \textenglish{ReverseNumber} تتلقى عددًا صحيحًا وتعيد معكوس العدد. \\
-\textbf{مثال:} إذا تلقّت العدد 123 فإنّها تعيد 321. وإذا تلقّت العدد 10 فإنّها تعيد 1.
-
-\textbf{ملاحظة:} \underline{يجب} عليكم استخدام العملية \textenglish{AppendDigit}. \\
-
-\textbf{سؤال بونوس} (5 علامات): في نهاية العملية \textenglish{ReverseNumber}، اطبع كلمة \textenglish{Palindrome} إذا كان الرقم الأصلي يُقرأ من اليمين ومن اليسار بنفس الطريقة. \\
-مثلًا: الرقم 1221 هو \textenglish{Palindrome} لأنّك إذا قرأته من اليمين لليسار أو من اليسار لليمين تحصل على نفس الرقم.
-
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static int AppendDigit(int num, int digit)
-{
-    return num * 10 + digit;
-}
-
-public static int ReverseNumber(int num)
-{
-    int original = num;
-    int reversed = 0;
-    while (num > 0)
-    {
-        int digit = num % 10;
-        reversed = AppendDigit(reversed, digit);
-        num /= 10;
-    }
-
-    // Bonus
-    if (original == reversed)
-        Console.WriteLine("Palindrome");
-
-    return reversed;
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\clearpage
-\item \textbf{السؤال السادس}  (20 علامة + 5) \\
-في دولة معينة، يتم احتساب ضريبة الدخل الشهرية بطريقة تراكمية كالتالي:
-\begin{itemize}
-    \item \textbf{أوّل 5000 شيكل} من الراتب: معفية من الضريبة (0\%).
-    \item \textbf{المبلغ بين 5001 و 10000 شيكل}: ضريبة بنسبة 10\%.
-    \item \textbf{أي مبلغ فوق الـ 10000 شيكل}: ضريبة بنسبة 20\%.
-\end{itemize}
-
-\textbf{مثال لتوضيح حساب الضريبة:} \\
-إذا كان الراتب $12000$ شيكل، فإن الضريبة تحسب كالتالي:
-\begin{itemize}
-    \item الـ 5000 الأولى $\leftarrow$ ضريبة 0.
-    \item الـ 5000 الثانية (من 5001 لـ 10000) $\leftarrow$ $5000 \times 0.10 = 500$.
-    \item المبلغ المتبقي ($12000 - 10000 = 2000$) $\leftarrow$ $2000 \times 0.20 = 400$.
-    \item إجمالي الضريبة: $0 + 500 + 400 = 900$ شيكل.
-\end{itemize}
+\item \textbf{السؤال الخامس} (30 علامة) \\
+يوجد في مصنع معيّن موقف سيّارات لعاملي المصنع. \\
+تستطيع أن تدخل إلى موقف السيّارات كلّ سيّارة وزنها أقلّ من 10 أطنان، وارتفاعها أقلّ من 5 أمتار. \\
+العاملون الذين يستعملون موقف السيّارات يدخلون مع سيّاراتهم في الصباح ويغادرون بعد انتهاء يوم العمل فقط.
 
 \begin{enumerate}
-\item
-اكتب عملية خارجية باسم \textenglish{EmployeeTax} تتلقى قيمة الراتب كعدد صحيح، وتعيد مبلغ الضريبة الذي يجب دفعه لصاحب هذا الراتب حسب الجدول أعلاه.
+    \item اكتب عملية تتلقى عددين صحيحين يمثّلان وزن سيارة (بالأطنان) وارتفاعها (بالأمتار). \\
+    تُعيد العملية \textenglish{true} إذا كانت السيارة تستطيع الدخول إلى الموقف، وتُعيد \textenglish{false} إذا لم تكن تستطيع.
+    \\ \textbf{مثال:} وزن 8 وارتفاع 4 $\leftarrow$ \textenglish{true}. وزن 12 وارتفاع 3 $\leftarrow$ \textenglish{false}.
 
-\item
-اكتب عملية خارجية باسم \textenglish{CompanyTax} تقوم بما يلي:
-\begin{itemize}
-    \item تتلقى عدد الموظفين في شركة ($n$).
-    \item تستقبل الراتب الشهري لكل موظف.
-    \item تطبع قيمة الضريبة التي يجب أن يدفعها كل موظف.
-    \item \underline{تعيد} \textbf{مجموع} الضرائب الكلي الذي دفعه كل الموظفين.
-\end{itemize}
-\textbf{ملاحظة:} \underline{يجب} عليكم استخدام العملية \textenglish{EmployeeTax} التي كتبتها في البند السابق.
+    \item اكتب مقطع برنامج يستقبل في البداية عدد أماكن الوقوف الكليّة في الموقف. \\
+    بعد ذلك، يستقبل البرنامج وزن ثم ارتفاع كل سيارة ترغب في الدخول. \\
+    لكل سيارة، يجب فحص إمكانية دخولها باستخدام العملية التي كتبتها في البند "أ".
+    \begin{itemize}
+        \item إذا كانت السيارة مناسبة: يطبع البرنامج \textenglish{"IN"}، ويتم حجز مكان واحد في الموقف.
+        \item إذا لم تكن مناسبة: يطبع البرنامج \textenglish{"OUT"}.
+    \end{itemize}
+    ينتهي البرنامج عندما يمتلئ الموقف تمامًا (لا تتبقى أماكن خالية). \\
+
+    \textbf{(بونوس +5 علامات)} في النهاية، يطبع البرنامج عدد السيارات التي \underline{لم} تستطع الدخول.
 \end{enumerate}
-
-\textbf{سؤال بونوس} (5 علامات): في نهاية العملية \textenglish{CompanyTax}، اطبع \textbf{أعلى} مبلغ ضريبة دفعه موظف واحد في الشركة.
 
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-public static double EmployeeTax(int salary)
+public static bool CanPark(int weight, int height)
 {
-    double tax = 0;
-    if (salary <= 5000)
-    {
-        tax = 0;
-    }
-    else if (salary <= 10000)
-    {
-        tax = (salary - 5000) * 0.10;
-    }
-    else
-    {
-        tax = 5000 * 0.10 + (salary - 10000) * 0.20;
-    }
-    return tax;
+    return (weight < 10) && (height < 5);
 }
 
-public static double CompanyTax(int n)
+static void Main(string[] args)
 {
-    double totalTax = 0, maxTax = 0;
-    for (int i = 1; i <= n; i++)
+    int available_parks = int.Parse(Console.ReadLine());
+    int weight, height, count = 0;
+    while (available_parks > 0)
     {
-        int salary = int.Parse(Console.ReadLine());
-        double empTax = EmployeeTax(salary);
-        Console.WriteLine(empTax);
-        totalTax += empTax;
-
-        if (empTax > maxTax) // Bonus
-            maxTax = empTax;
+        Console.WriteLine("Enter the car's weight (tons): ");
+        weight = int.Parse(Console.ReadLine());
+        Console.WriteLine("Enter the car's height (meters): ");
+        height = int.Parse(Console.ReadLine());
+        if(CanPark(weight, height))
+        {
+            Console.WriteLine("IN");
+            available_parks--;
+        }
+        else
+        {
+            count++;
+            Console.WriteLine("OUT");
+        }
     }
+    Console.WriteLine(count);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
-    Console.WriteLine("Maximum tax = " + maxTax); // Bonus
+\clearpage
 
-    return totalTax;
+\item \textbf{السؤال السادس} (30 علامة) \\
+في مطعم "الشبعي" يبيعون نوعين من الشطائر: شطيرة جبنة وشطيرة أفوكادو. \\
+من أجل طلب شطيرة جبنة، يجب اختيار نوع 0، وسعرها 10 شواكل. \\
+من أجل طلب شطيرة أفوكادو، يجب اختيار نوع 1، وسعرها 12 شيكلاً. \\
+الطلبيّة التي تشمل 10 شطائر أو أكثر تمنح تخفيضًا قدره 20 شيكلاً لكلّ الطلبيّة.
+
+\begin{enumerate}
+    \item اكتب عملية تتلقى نوع الشطيرة (0 أو 1) وعدد الشطائر في الطلبية. \\
+    تحسب العملية وتعيد \textbf{السعر النهائي} للطلبية (مع احتساب التخفيض إذا استحق ذلك).
+    \\ \textbf{أمثلة:}
+    \begin{itemize}
+        \item 5 شطائر جبنة (نوع 0): السعر $5 \times 10 = 50$.
+        \item 10 شطائر جبنة (نوع 0): السعر $(10 \times 10) - 20 = 80$.
+        \item 15 شطيرة أبوكادو (نوع 1): السعر $(15 \times 12) - 20 = 160$.
+    \end{itemize}
+
+    \item اكتب برنامجًا يستقبل الطلبيّات التي تلقاها المطعم في يوم معيّن. \\
+    بالنسبة لكلّ طلبيّة، يستقبل البرنامج نوع الشطيرة ثم عدد الشطائر. \\
+    لكل طلبية يستقبلها البرنامج، عليه أن يطبع التكلفة النهائية لهذه الطلبية. \\
+    يجب أن تستخدموا العملية من البند "أ" لحساب تكلفة كل طلبية. \\
+    ينتهي الاستقبال عندما يتم إدخال 0 في عدد الشطائر. \\
+
+    \textbf{(بونوس +5 علامات)} بعد نهاية الاستقبال، على البرنامج أن يطبع عدد الطلبيّات الكلي التي تلقاها المطعم في ذلك اليوم.
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int CalcPrice(int type, int count)
+{
+    int total;
+    if (type == 0)
+        total = 10 * count;
+    else
+        total = 12 * count;
+
+    if (count >= 10)
+        total -= 20;
+    return total;
+}
+
+static void Main(string[] args)
+{
+    int type = int.Parse(Console.ReadLine());
+    int count = int.Parse(Console.ReadLine());
+    int sum = 0;
+    while(count > 0)
+    {
+        Console.WriteLine(CalcPrice(type, count));
+        sum += count;
+
+        type = int.Parse(Console.ReadLine());
+        count = int.Parse(Console.ReadLine());
+    }
+    Console.WriteLine(sum);
 }
 \end{minted}
 \end{english}
