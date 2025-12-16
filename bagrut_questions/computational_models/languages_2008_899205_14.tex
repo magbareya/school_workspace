@@ -1,0 +1,36 @@
+\subsection*{سؤال 14 امتحان 899205 سنة 2008}
+
+\insertFullImg{../../../bagrut_questions/computational_models/languages_2008_899205_14.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2008]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+
+    \item
+    \begin{enumerate}[label=\textbf{\roman*}, itemsep=1em]
+        \item الكلمة $01$ تتبع للغة $L_4$ لأن $\#_0(01) = 1$ و $\#_1(01) = 1$ (متساويان)، ولكنها لا تتبع للغة $L_3$ لأن عدد الأصفار والوحدات ليس 5.
+        \item الكلمة $111111$ تتبع للغة $L_1$ لأن $|111111| = 6 > 5$، ولكنها لا تتبع للغة $L_2$ لأن $\#_1(111111) = 6$ وهو ليس أصغر من 5.
+        \item الكلمة $11111$ تتبع للغة $L_5$ (يمكن اختيار $x=1$ و $y=111$)، ولكنها لا تتبع للغة $L_2$ لأن عدد الوحدات فيها 5 (والشرط يتطلب أقل من 5).
+    \end{enumerate}
+
+    \item
+    \begin{enumerate}[label=\textbf{\roman*}, itemsep=1em]
+        \item $\overline{L_2} = \{ w \in \Sigma^* \mid \#_1(w) \geq 5 \}$
+        \item $\overline{L_3} = \{ w \in \Sigma^* \mid \#_0(w) \neq 5 \text{أو} \#_1(w) \neq 5 \}$
+    \end{enumerate}
+
+    \item
+    \begin{enumerate}[label=\textbf{\roman*}, itemsep=1em]
+        \item \textbf{مثال مضاد:} الكلمة $000000$ موجودة في $L_1$ (طولها 6) وموجودة في $L_2$ (عدد الوحدات 0).
+
+        \item \textbf{مثال مضاد:} الكلمة $0$ تنتمي لـ $\overline{L_3}$ (لأن عدد الأصفار ليس 5)، ولكنها لا تنتمي لـ $L_4$ (لأن عدد الأصفار لا يساوي عدد الوحدات).
+
+        \item \textbf{التعليل:} بما أن الكلمة الفارغة $\varepsilon \in L_4$ (لأن 0 أصفار و 0 وحدات)، فإن لأي كلمة $w \in L_4$ يمكن كتابتها كـ $w \cdot \varepsilon$، مما يعني $L_4 \subseteq L_4 \cdot L_4$. وبما أن دمج أي كلمتين متوازنتين ينتج كلمة متوازنة، فإن $L_4 \cdot L_4 \subseteq L_4$.
+
+        \item \textbf{مثال مضاد:} الكلمة $0000011111$ (خمسة أصفار وخمسة وحدات). هي في $L_3$، وهي أيضًا في $L_5$ (باعتبار $x=00, y=011111$).
+    \end{enumerate}
+
+\end{enumerate}
+\end{boxSolution}
+% \clearpage
+\fi

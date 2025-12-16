@@ -1,0 +1,25 @@
+\subsection*{سؤال 15B امتحان 899205 سنة 2010}
+
+\insertFullImg{../../../bagrut_questions/computational_models/DFA_2010_899205_15B.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 15B امتحان 899205 سنة 2010]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item
+\begin{center}
+    \includegraphics[width=\textwidth]{../../../images/DFAs/aaa_once_no_more_aa.png}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{$q_0$}: حالة البداية أو لم نجد أي $aa$ حتى الآن.
+    \item \textbf{$q_1$}: وجدنا $a$ واحدة فقط (بداية محتملة للسلسلة المطلوبة).
+    \item \textbf{$q_2$}: وجدنا $aa$، يجب أن يأتي بعدها $a$ وإلا فإنّ الكلمة مرفوضة (لأنّها احتوت على $aa$ خارج السلسلة $aaa$)
+    \item \textbf{$q_3$}: (حالة قابلة) اكتملت الـ $aaa$، أو وجدنا $a$ واحدة بعد اكتمال الشرط سابقاً، يجب أن نرى $b$ بعدها.
+    \item \textbf{$q_4$}: (حالة قابلة) وجدنا $b$ بعد اكتمال الشرط.
+    \item \textbf{$q_5$}: حالة الخطأ؛ السلسلة احتوت على مخالفة (مثل $aa$ معزولة أو $aaaa$).
+\end{itemize}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
