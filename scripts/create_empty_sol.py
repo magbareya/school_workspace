@@ -8,23 +8,21 @@ FOLDERS = [
     "bagrut_questions/basics",
 ]
 
-TEMPLATE_FILE = "scripts/empty_sol_template.tex"
+TEMPLATE_CSHARP = "scripts/empty_sol_template_csharp.tex"
+TEMPLATE_DEFAULT = "scripts/empty_sol_template.tex"
+
+IMAGE_COMMAND_TEMPLATE = """\\noindent
+    \\makebox[\\textwidth][c]{
+        \\includegraphics[width=0.9\\paperwidth,keepaspectratio]{ {filepath} }%
+    }%"""
 
 # Map extension to LaTeX command
 EXTENSION_TEMPLATES = {
-    "pdf": "\\importpdfpage{{{filepath}}}{{1}}",
-    "png": "\\insertFullImg{{{filepath}}}",
-    "jpg": "\\insertFullImg{{{filepath}}}",
-    "jpeg": "\\insertFullImg{{{filepath}}}",
+    "pdf": "\\importpdfpage{ {filepath} }{1}",
+    "png": IMAGE_COMMAND_TEMPLATE,
+    "jpg": IMAGE_COMMAND_TEMPLATE,
+    "jpeg": IMAGE_COMMAND_TEMPLATE,
 }
-
-# === Load Template ===
-if not os.path.exists(TEMPLATE_FILE):
-    print(f"Error: Template file '{TEMPLATE_FILE}' not found!")
-    exit(1)
-
-with open(TEMPLATE_FILE, "r", encoding="utf-8") as t:
-    RAW_TEMPLATE = t.read()
 
 # Build Regex
 supported_extensions = "|".join(EXTENSION_TEMPLATES.keys())
@@ -67,14 +65,26 @@ def process_file(file_path):
     # Original logic: "../../../bagrut_questions/{folder_name}/{filename}"
     folder_name = os.path.basename(directory)
 
+    if folder_name == "basics":
+        template_file = TEMPLATE_CSHARP
+    else:
+        template_file = TEMPLATE_DEFAULT
+
+    if not os.path.exists(template_file):
+        print(f"Error: Template file '{template_file}' not found!")
+        return
+
+    with open(template_file, "r", encoding="utf-8") as t:
+        raw_template = t.read()
+
     # NOTE: This assumes the standard structure.
     # If you run this on a file outside 'bagrut_questions', you might want to change this logic.
     latex_relative_path = f"../../../bagrut_questions/{folder_name}/{filename}"
 
-    image_command = EXTENSION_TEMPLATES[extension].format(filepath=latex_relative_path)
+    image_command = EXTENSION_TEMPLATES[extension].replace("{filepath}", latex_relative_path)
 
     # 5. Fill Template
-    content = RAW_TEMPLATE.replace("[[NUMBER]]", number) \
+    content = raw_template.replace("[[NUMBER]]", number) \
                           .replace("[[MODEL]]", model) \
                           .replace("[[YEAR]]", year) \
                           .replace("[[IMAGE_COMMAND]]", image_command)
