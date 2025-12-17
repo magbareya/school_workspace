@@ -1,6 +1,12 @@
 import os
 import sys
 
+"""
+Renames files and updates references in LaTeX files throughout the project.
+
+Usage: python scripts/rename_file.py <old_filename> <new_filename>
+"""
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: python scripts/rename_file.py <old_filename> <new_filename>")

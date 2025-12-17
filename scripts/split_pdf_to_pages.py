@@ -4,6 +4,12 @@ import numpy as np
 from pdf2image import convert_from_path
 from PIL import Image, ImageEnhance
 
+"""
+Splits PDF files into individual pages or converts PDFs to cropped images.
+
+Usage: python scripts/split_pdf_to_pages.py
+"""
+
 def crop_bottom_pdf(pdf_path, output_folder="cropped_pages", crop=False, crop_amount=55):
     os.makedirs(output_folder, exist_ok=True)
     doc = fitz.open(pdf_path)

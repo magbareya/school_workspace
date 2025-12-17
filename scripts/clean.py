@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+Removes duplicate PDF files in the specified directory by comparing file sizes.
+
+Usage: python scripts/clean.py [directory]
+
+Example: python scripts/clean.py out
+"""
 import os
 import sys
 

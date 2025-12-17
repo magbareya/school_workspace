@@ -1,6 +1,12 @@
 import sys
 from nbconvert.exporters import ScriptExporter
 
+"""
+Exports code from Jupyter notebooks to C# script files with cell separators.
+
+Usage: python scripts/export_cs.py <notebook.ipynb> <output.cs>
+"""
+
 SEPARATOR = '\n\n/* ********************** */\n\n'
 
 notebook = sys.argv[1]

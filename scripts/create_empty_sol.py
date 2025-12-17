@@ -2,6 +2,15 @@ import os
 import re
 import sys
 
+"""
+Generates empty LaTeX solution files for question images / pdfs, selecting the appropriate template based on the folder.
+
+Usage: python scripts/create_empty_sol.py [file_path]
+
+Example: python scripts/create_empty_sol.py bagrut_questions/basics/if_2011_899222_3.pdf
+Example: python scripts/create_empty_sol.py bagrut_questions/basics/loops_both_2024_899371_6.png
+"""
+
 # === Configuration ===
 FOLDERS = [
     "bagrut_questions/computational_models",
