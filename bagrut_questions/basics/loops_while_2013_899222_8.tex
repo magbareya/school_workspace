@@ -1,0 +1,36 @@
+\subsection*{سؤال 8 امتحان 899222 سنة 2013}
+
+\noindent
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_while_2013_899222_8.png }%
+    }%
+
+\ifwithsols
+\begin{boxSolution}[سؤال 8 امتحان 899222 سنة 2013]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int availableSpaces = int.Parse(Console.ReadLine());
+while (availableSpaces > 0)
+{
+    string familyName = Console.ReadLine();
+    int familyMembers = int.Parse(Console.ReadLine());
+
+    if (familyMembers > availableSpaces)
+    {
+        Console.WriteLine(familyName + " no");
+    }
+    else
+    {
+        availableSpaces -= familyMembers;
+        Console.WriteLine(familyName + " " + (familyMembers * 100));
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

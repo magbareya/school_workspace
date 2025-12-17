@@ -1,0 +1,29 @@
+\subsection*{سؤال 5 امتحان 899222 سنة 2011}
+
+\insertFullImg{../../../bagrut_questions/basics/loops_for_2011_899222_5.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 5 امتحان 899222 سنة 2011]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int num1 = int.Parse(Console.ReadLine());
+int num2 = int.Parse(Console.ReadLine());
+int previousSum = num1 + num2;
+
+for (int i = 2; i <= 218; i++)
+{
+    int currentNum1 = int.Parse(Console.ReadLine());
+    int currentNum2 = int.Parse(Console.ReadLine());
+    int currentSum = currentNum1 + currentNum2;
+
+    if (currentSum < previousSum)
+        Console.WriteLine("smaller");
+
+    previousSum = currentSum;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi

@@ -1,0 +1,53 @@
+\subsection*{سؤال 6 امتحان 899222 سنة 2013}
+
+\insertFullImg{../../../bagrut_questions/basics/loops_for_2013_899222_6.png}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2013]
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int CountHighGrades(int g1, int g2, int g3)
+{
+    int count = 0;
+    if (g1 > 90)
+        count++;
+    if (g2 > 90)
+        count++;
+    if (g3 > 90)
+        count++;
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+ \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int totalParticipants = 0;
+int n = int.Parse(Console.ReadLine());
+for (int i = 0; i < n; i++)
+{
+    string name = Console.ReadLine();
+    int grade1 = int.Parse(Console.ReadLine());
+    int grade2 = int.Parse(Console.ReadLine());
+    int grade3 = int.Parse(Console.ReadLine());
+    if (CountHighGrades(grade1, grade2, grade3) == 3)
+    {
+        Console.WriteLine(name);
+        totalParticipants++;
+    }
+}
+Console.WriteLine(totalParticipants);
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

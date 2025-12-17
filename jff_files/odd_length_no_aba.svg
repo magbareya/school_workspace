@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="820"
+   height="450"
+   version="1.1"
+   id="svg114"
+   sodipodi:docname="automata.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:export-filename="C:\Users\magbareya\OneDrive\Desktop\odd_length_no_aba.png"
+   inkscape:export-xdpi="299.931"
+   inkscape:export-ydpi="299.931"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs118" />
+  <sodipodi:namedview
+     id="namedview116"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.0288404"
+     inkscape:cx="611.85391"
+     inkscape:cy="266.80524"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="547"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg114" />
+  <g
+     id="g1459"
+     transform="translate(46.137611)">
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="46.325397"
+       cy="190.06993"
+       id="ellipse2"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="34.41544"
+       y="197.21587"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text4"
+       style="stroke-width:1.191">q0</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="207.10994"
+       cy="115.0371"
+       id="ellipse6"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="195.20003"
+       y="122.18305"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text8"
+       style="stroke-width:1.191">q1</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="207.10994"
+       cy="115.0371"
+       id="ellipse10"
+       rx="28.583918"
+       ry="28.583933" />
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="173.76204"
+       cy="302.02365"
+       id="ellipse12"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="161.85211"
+       y="309.16956"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text14"
+       style="stroke-width:1.191">q2</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="173.76204"
+       cy="302.02365"
+       id="ellipse16"
+       rx="28.583918"
+       ry="28.583933" />
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="439.35428"
+       cy="115.0371"
+       id="ellipse18"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="427.44443"
+       y="122.18305"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text20"
+       style="stroke-width:1.191">q3</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="651.35168"
+       cy="169.82297"
+       id="ellipse22"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="639.44189"
+       y="176.96892"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text24"
+       style="stroke-width:1.191">q6</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="375.04047"
+       cy="306.78766"
+       id="ellipse26"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="363.13058"
+       y="313.93356"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text28"
+       style="stroke-width:1.191">q4</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="547.73499"
+       cy="302.02365"
+       id="ellipse30"
+       rx="35.729897"
+       ry="35.729916" />
+    <text
+       x="535.82513"
+       y="309.16956"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text32"
+       style="stroke-width:1.191">q5</text>
+    <ellipse
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       cx="547.73499"
+       cy="302.02365"
+       id="ellipse34"
+       rx="28.583918"
+       ry="28.583933" />
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="177.685,263.813 258.315,226.187 "
+       id="polygon36"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="248.951,225.039 253.179,234.101 258.315,226.187 "
+       id="polygon38"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="83.995285"
+       y="160.88431"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text40"
+       style="stroke-width:1.191">a</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="315.5,213.5 450.5,213.5 "
+       id="polygon42"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="442.5,208.5 442.5,218.5 450.5,213.5 "
+       id="polygon44"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="317.87271"
+       y="140.048"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text46"
+       style="stroke-width:1.191">b</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="509.546,221.006 629.454,251.994 "
+       id="polygon48"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="622.96,245.151 620.458,254.833 629.454,251.994 "
+       id="polygon50"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="532.25214"
+       y="168.63193"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text52"
+       style="stroke-width:1.191">a</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="m 683.26681,154.07204 a 26.797423,26.797437 0 1 1 0,31.50187"
+       id="path54" />
+    <text
+       x="738.29462"
+       y="176.96892"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text56"
+       style="stroke-width:1.191">a,b</text>
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="688.83,281.473 694.708,273.382 685.297,272.725 "
+       id="polygon58"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="590.006,346.888 639.994,283.112 "
+       id="polygon60"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="631.123,286.324 638.994,292.493 639.994,283.112 "
+       id="polygon62"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="606.09393"
+       y="260.33868"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text64"
+       style="stroke-width:1.191">a</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="456.489,373.673 541.511,371.327 "
+       id="polygon66"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="533.377,366.55 533.652,376.546 541.511,371.327 "
+       id="polygon68"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="456.02835"
+       y="329.4165"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text70"
+       style="stroke-width:1.191">b</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="M 141.48007,286.78247 A 245.7157,245.71582 0 0 1 65.596914,220.11879"
+       id="path72" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="225.886,349.417 220.971,358.126 230.395,357.703 "
+       id="polygon74"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="100.88206"
+       y="283.41376"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text76"
+       style="stroke-width:1.191">b</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="234.962,350.7 173.038,296.3 "
+       id="polygon78"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="175.748,305.336 182.348,297.823 173.038,296.3 "
+       id="polygon80"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="94.493256"
+       y="230.41643"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text82"
+       style="stroke-width:1.191">b</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="287.492,371.21 396.508,373.79 "
+       id="polygon84"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="388.629,368.602 388.392,378.599 396.508,373.79 "
+       id="polygon86"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="269.04184"
+       y="329.4165"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text88"
+       style="stroke-width:1.191">a</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="M 525.08936,329.62979 A 279.29347,279.29361 0 0 1 55.078032,224.68626"
+       id="path90" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="155.543,314.713 165.061,311.646 157.849,305.565 "
+       id="polygon92"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="246.41289"
+       y="437.79724"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text94"
+       style="stroke-width:1.191">b</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="m 234.32898,138.17818 a 750.08728,750.08765 0 0 1 121.36136,138.5761"
+       id="path96" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="409.899,339.856 401.624,345.471 410.253,349.283 "
+       id="polygon98"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="305.96274"
+       y="193.64287"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text100"
+       style="stroke-width:1.191">a</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="M 345.61927,286.52998 A 448.10532,448.10555 0 0 1 223.31107,146.87246"
+       id="path102" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="298.65,249.653 307.375,244.766 299.103,240.23 "
+       id="polygon104"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="260.70486"
+       y="247.23773"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text106"
+       style="stroke-width:1.191">a</text>
+    <path
+       stroke="#000000"
+       stroke-width="1.191"
+       fill="none"
+       d="M 153.72352,272.52862 A 163.10937,163.10945 0 0 1 418.34391,86.225689"
+       id="path108" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="241.347,336.325 232.511,341.007 240.675,345.735 "
+       id="polygon110"
+       transform="matrix(1.1909966,0,0,1.1909972,-132.91959,-139.2408)" />
+    <text
+       x="301.9682"
+       y="26.53904"
+       font-family="'Times New Roman'"
+       font-size="23.8199px"
+       id="text112"
+       style="stroke-width:1.191">b</text>
+    <polygon
+       stroke="#000000"
+       stroke-width="1"
+       points="450.5,213.5 315.5,213.5 "
+       id="polygon42-5"
+       transform="matrix(0.29687369,0,0,1.2463455,-129.80126,-76.06039)" />
+    <polygon
+       fill="#000000"
+       stroke-width="1"
+       points="442.5,208.5 442.5,218.5 450.5,213.5 "
+       id="polygon44-3"
+       transform="matrix(1.2463455,0,0,1.2463455,-551.45788,-76.060396)" />
+  </g>
+</svg>

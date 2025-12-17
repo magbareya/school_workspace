@@ -1,0 +1,75 @@
+\subsection*{سؤال 10 امتحان 899222 سنة 2013}
+
+\noindent
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_for_2013_899222_10.png }%
+    }%
+
+\ifwithsols
+\clearpage
+
+\begin{boxSolution}[سؤال 10 امتحان 899222 سنة 2013]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static double CalculateTwoBooksPrice(double p1, double p2)
+{
+    double minPrice = Math.Min(p1, p2);
+    double maxPrice = Math.Max(p1, p2);
+    return maxPrice + (minPrice / 2.0);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static double CalculateTotalPayment(int count)
+{
+    if (count == 2)
+    {
+        double p1 = double.Parse(Console.ReadLine());
+        double p2 = double.Parse(Console.ReadLine());
+        return CalculateTwoBooksPrice(p1, p2);
+    }
+    else
+    {
+        double p1 = double.Parse(Console.ReadLine());
+        double p2 = double.Parse(Console.ReadLine());
+        double p3 = double.Parse(Console.ReadLine());
+        return Sum2max(p1, p2, p3);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+\begin{boxSolution}[سؤال 10 امتحان 899222 سنة 2013 - تكملة]
+\begin{enumerate}[itemsep=1.5em, label=\alph*., start=3]
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+static void Main(string[] args)
+{
+    for (int i = 1; i <= 142; i++)
+    {
+        int bookCount = int.Parse(Console.ReadLine());
+        Console.WriteLine(CalculateTotalPayment(bookCount));
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

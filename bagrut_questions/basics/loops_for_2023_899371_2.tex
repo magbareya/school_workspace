@@ -1,12 +1,44 @@
 \subsection*{سؤال 2 امتحان 899371 سنة 2023}
 
-\insertFullImg{../../../bagrut_questions/basics/loops_for_2023_899371_2.png}
+\noindent
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_for_2023_899371_2.png }%
+    }%
 
 \ifwithsols
 \begin{boxSolution}[سؤال 2 امتحان 899371 سنة 2023]
-\begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
-\end{enumerate}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool Success(int num)
+{
+    int sum = 0;
+    int count6OrAbove = 0;
+    bool has10 = false;
+
+    for (int i = 0; i < num; i++)
+    {
+        int score = int.Parse(Console.ReadLine());
+        sum += score;
+
+        if (score >= 6)
+            count6OrAbove++;
+
+        if (score == 10)
+            has10 = true;
+    }
+
+    double average = (double)sum / num;
+
+    if (average > 5.0 || count6OrAbove > (num / 2.0) || has10)
+        return true;
+    else
+        return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
 \end{boxSolution}
 \clearpage
 \fi
