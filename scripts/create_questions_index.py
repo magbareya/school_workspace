@@ -5,8 +5,8 @@ import glob
 # -------------------------------
 # CONFIGURATION
 # -------------------------------
-QUESTIONS_DIR = "bagrut_questions"          # root directory with question PDFs
-SRC_DIR = "src"              # directory containing tex sources
+QUESTIONS_DIR = "bagrut_questions"
+SRC_DIR = "src"
 OUTPUT_FILE = "bagrut_questions/questions_index.csv"
 # -------------------------------
 
@@ -62,7 +62,7 @@ def main():
     for root, _, files in os.walk(QUESTIONS_DIR):
         folder_name = os.path.basename(root)  # only folder name
         for f in files:
-            if f.lower().endswith(".pdf"):
+            if f.lower().endswith((".pdf", ".png", ".jpg", ".jpeg")):
                 pdf_path = os.path.join(root, f)
 
                 topic, year, model, qnum = parse_filename(f)
@@ -77,6 +77,8 @@ def main():
     rows.sort(key=lambda x: (x[1], x[3], x[2], x[4]))
 
     # Write CSV
+    if os.path.exists(OUTPUT_FILE):
+        os.remove(OUTPUT_FILE)
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["Folder", "Topic", "Model", "Year", "Question Number",
