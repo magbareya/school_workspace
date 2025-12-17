@@ -212,7 +212,7 @@ public static bool CanPark(int weight, int height)
 static void Main(string[] args)
 {
     int available_parks = int.Parse(Console.ReadLine());
-    int weight, height, count = 0;
+    int weight, height, outCount = 0;
     while (available_parks > 0)
     {
         Console.WriteLine("Enter the car's weight (tons): ");
@@ -226,11 +226,11 @@ static void Main(string[] args)
         }
         else
         {
-            count++;
             Console.WriteLine("OUT");
+            outCount++;
         }
     }
-    Console.WriteLine(count);
+    Console.WriteLine(outCount);
 }
 \end{minted}
 \end{english}
