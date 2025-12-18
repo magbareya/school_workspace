@@ -5,7 +5,7 @@ import glob
 """
 Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
 
-Usage: python scripts/create_questions_index.py
+Usage: python scripts/bagrut_questions/create_questions_index.py
 """
 
 # -------------------------------
@@ -13,8 +13,8 @@ Usage: python scripts/create_questions_index.py
 # -------------------------------
 QUESTIONS_DIR = "bagrut_questions"
 SRC_DIR = "src"
-CSV_OUTPUT_FILE = os.path.join(QUESTIONS_DIR, "questions_index.csv")
-HTML_OUTPUT_FILE = os.path.join(QUESTIONS_DIR, "questions_index.html")
+CSV_OUTPUT_FILE = "out/bagrut_questions/questions_index.csv"
+HTML_OUTPUT_FILE = "out/bagrut_questions/questions_index.html"
 # -------------------------------
 
 def parse_filename(filename):
@@ -203,6 +203,39 @@ def main():
 
     # HTML Generation
     generate_html(rows_data, all_folders, all_topics, all_models, all_years, total_questions, solved_count, used_count, unused_count)
+
+    # Generate topic files
+    from collections import defaultdict
+    topic_files = defaultdict(list)
+    for row in rows_data:
+        folder, topic, model, year, qnum, solution, used, file_path, ext = row
+        if solution:  # Only include questions that have solutions
+            topic_files[(folder, topic)].append((year, model, qnum, file_path))
+
+    # Delete existing topic files
+    for folder in ["basics", "computational_models"]:
+        folder_path = os.path.join("src", "bagrut_questions", folder)
+        if os.path.exists(folder_path):
+            for file in os.listdir(folder_path):
+                if file.endswith(".tex"):
+                    os.remove(os.path.join(folder_path, file))
+
+    template_path = os.path.join(os.path.dirname(__file__), "bagrut_questions_by_topic_template.tex")
+    with open(template_path, "r", encoding="utf-8") as f:
+        template_content = f.read()
+
+    for (folder, topic), questions in topic_files.items():
+        questions.sort(key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
+        questions_list = "\n".join(f"\\input{{../../../bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex}}" for q in questions)
+
+        content = template_content.replace("[[QUESTIONS_LIST]]", questions_list)
+
+        output_dir = os.path.join("src", "bagrut_questions", folder)
+        os.makedirs(output_dir, exist_ok=True)
+        output_file = os.path.join(output_dir, f"{topic}.tex")
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"Generated topic file: {output_file}")
 
 
 if __name__ == "__main__":

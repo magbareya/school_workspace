@@ -17,8 +17,8 @@ FOLDERS = [
     "bagrut_questions/basics",
 ]
 
-TEMPLATE_CSHARP = "scripts/empty_sol_template_csharp.tex"
-TEMPLATE_DEFAULT = "scripts/empty_sol_template.tex"
+TEMPLATE_CSHARP = "scripts/bagrut_questions/empty_sol_template_csharp.tex"
+TEMPLATE_DEFAULT = "scripts/bagrut_questions/empty_sol_template.tex"
 
 IMAGE_COMMAND_TEMPLATE = """\\noindent
 \\makebox[\\textwidth][c]{\\includegraphics[width=0.9\\paperwidth,keepaspectratio]{ {filepath} }%}%"""
