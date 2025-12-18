@@ -52,7 +52,7 @@ export TEXMF_OUTPUT_DIRECTORY=.
 # Targets
 # -----------------------
 
-all: pdf printable sols sclean
+all: index pdf printable sols sclean
 
 pdf: ipynb md tex $(PDF_OUT) sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
@@ -68,8 +68,11 @@ cs: $(CSFILES)
 # Rules
 # -----------------------
 
+empty_sols:
+	python scripts/bagrut_questions/create_empty_sol.py
+
 index:
-	python scripts/create_questions_index.py
+	python scripts/bagrut_questions/create_questions_index.py
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: src/%.ipynb

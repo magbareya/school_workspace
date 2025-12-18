@@ -226,7 +226,7 @@ def main():
 
     for (folder, topic), questions in topic_files.items():
         questions.sort(key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
-        questions_list = "\n".join(f"\\input{{../../../bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex}}" for q in questions)
+        questions_list = "\n".join([f"\\input{{../../../bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex}}" for q in questions if os.path.exists(f"bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex")])
 
         content = template_content.replace("[[QUESTIONS_LIST]]", questions_list)
 
