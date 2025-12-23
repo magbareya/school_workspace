@@ -86,26 +86,34 @@ static void Main()
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-\textbf{n} & \textbf{i} & \textbf{x} & \textbf{x < 50} & \textbf{x \% 2 == 0} & \textbf{count} & \textbf{الطباعة} \\
+\textbf{i} & \textbf{x} & \textbf{count} & \textbf{x < 50} & \textbf{x \% 2 == 0} & \textbf{الطباعة} \\
 \hline
-6 &  &  &  &  & 0 &  \\
+ & & 0 & & &  \\
 \hline
- & 1 & 30 & T & T & 0 & \textenglish{hello} \\
+1 & 30 & & true & true & \textenglish{hello} \\
 \hline
- & 2 & 45 & T & F & 1 &  \\
+2 & 45 & 1 & true & false &  \\
 \hline
- & 3 & 60 & F & — & 1 &  \\
+3 & 60 &  & false & — &  \\
 \hline
- & 4 & 15 & T & F & 2 &  \\
+4 & 15 & 2 & true & false &  \\
 \hline
- & 5 & 22 & T & T & 2 & \textenglish{hello} \\
+5 & 22 &  & true & true & \textenglish{hello} \\
 \hline
- & 6 & 50 & F & — & 2 &  \\
+6 & 50 &  & false & — &  \\
 \hline
- &  &  &  &  & 2 & \textenglish{2} \\
+ &  &  &  & & \textenglish{2} \\
 \hline
 \end{tabular}
 \end{center}
+
+\textbf{ب.} هناك الكثير من الأمثلة، مثلًا:
+$20, 30, 31, 60$
+
+كل رقم زوجي أصغر من 50 يؤدي لطباعة \textenglish{hello}. \\
+كل رقم فردي أصغر من 50 يؤدي لزيادة \textenglish{count} \\
+كل رقم أكبر أو يساوي 50 لا يؤثّر على شيء.
+
 \end{boxSolution}
 \fi
 \end{enumerate}
@@ -261,7 +269,7 @@ static void Main(string[] args)
     يجب أن تستخدموا العملية من البند "أ" لحساب تكلفة كل طلبية. \\
     ينتهي الاستقبال عندما يتم إدخال 0 في عدد الشطائر. \\
 
-    \textbf{(بونوس +5 علامات)} بعد نهاية الاستقبال، على البرنامج أن يطبع عدد الطلبيّات الكلي التي تلقاها المطعم في ذلك اليوم.
+    \textbf{(بونوس +5 علامات)} بعد نهاية الاستقبال، على البرنامج أن يطبع عدد الوجبات الكلي التي تلقاها المطعم في ذلك اليوم.
 \end{enumerate}
 
 \ifwithsols
@@ -303,6 +311,8 @@ static void Main(string[] args)
 
 \end{enumerate}
 
+\ifwithsols
+\else
 
 \clearpage              % Push all content to the next page
 \thispagestyle{empty}   % Remove page numbers and headers for this specific page
@@ -348,4 +358,5 @@ static void Main(string[] args)
     \Large
     \textenglish{\underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}} , \underline{\hspace{1.5cm}}}
 \end{center}
+\fi
 \end{document}
