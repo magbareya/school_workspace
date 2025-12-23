@@ -1,0 +1,63 @@
+\subsection*{سؤال 8 امتحان 899222 سنة 2011}
+\addcontentsline{toc}{subsection}{سؤال 8 امتحان 899222 سنة 2011}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_for_2011_899222_8.png }%
+}%
+\begin{boxExample}
+    \begin{itemize}
+        \item زبون عدد سنوات عضويته 2، ونطاق مشترياته الشهري 3000 شيقل، لن يحصل على هدية لأنّ سنوات عضويته ليس أكثر من 3.
+        \item زبون عدد سنوات عضويته 4، ونطاق مشترياته الشهري 1000 شيقل، لن يحصل على هدية لأنّ نطاق مشترياته ليس أكثر من 1200.
+        \item زبون عدد سنوات عضويته 4، ونطاق مشترياته الشهري 1500 شيقل، سيحصل على قسيمة = $50 \times 4 = 200$.
+        \item زبون عدد سنوات عضويته 10، ونطاق مشترياته الشهري 3000 شيقل، سيحصل على قسيمة = $100 \times 10 = 1000$.
+
+    \end{itemize}
+\end{boxExample}
+\clearpage
+
+\ifwithsols
+\begin{boxSolution}[سؤال 8 امتحان 899222 سنة 2011 - فرع أ]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int CalculateGift(int years, int monthlyPurchase)
+{
+    if (years > 3 && monthlyPurchase > 1200)
+    {
+        if (years < 8)
+            return years * 50;
+        else
+            return years * 100;
+    }
+    return 0;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\begin{boxSolution}[سؤال 8 امتحان 899222 سنة 2011 - فرع ب]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+int totalGifts = 0;
+for (int i = 1; i <= 5000; i++)
+{
+    int years = int.Parse(Console.ReadLine());
+    int purchase = int.Parse(Console.ReadLine());
+    int giftAmount = CalculateGift(years, purchase);
+    if (giftAmount > 0)
+    {
+        count++;
+        totalGifts += giftAmount;
+    }
+}
+Console.WriteLine(count);
+Console.WriteLine(totalGifts);
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+\fi

@@ -1,0 +1,45 @@
+\subsection*{سؤال 6 امتحان 899222 سنة 2019}
+\addcontentsline{toc}{subsection}{سؤال 6 امتحان 899222 سنة 2019}
+
+\noindent
+%  \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_for_2019_899222_6.png }%}%
+
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{IsTeen} تتلقى عددًا صحيحًا وأكبر من 0، يمثل عمر شخص. \\
+    تُعيد العملية \textenglish{true} إذا كان العمر هو 15 حتّى 18 (بما في ذلك 15 و 18)، خلاف ذلك - تُعيد العملية \textenglish{false}.
+    \\ \textbf{مثال:} للعمر 16 تعيد \textenglish{true}، وللعمر 20 تعيد \textenglish{false}.
+
+    \item استمعَ في أحد الأيّام لقناة الأخبار 492 مُستمعاً. \\
+    اكتب قطعة برنامج تستقبل بالنسبة لكلّ واحد من المُستمعين عمرهُ وعدد الساعات التي استمعَ فيها لقناة الأخبار. \\
+    على البرنامج أن يطبع عدد المُستمعين أبناء 15-18 (بما في ذلك 15 و 18)، الذين استمعوا لقناة الأخبار \textbf{أكثر من 3 ساعات}. \\
+    عليك استعمال العملية التي كتبتها في البند "أ".
+\end{enumerate}
+\clearpage
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsTeen(int age)
+{
+    return age >= 15 && age <= 18;
+}
+
+static void Main(string[] args)
+{
+    int count = 0;
+    int age, hours;
+    for(int i = 1; i <= 492; i++)
+    {
+        age = int.Parse(Console.ReadLine());
+        hours = int.Parse(Console.ReadLine());
+        if (IsTeen(age) && hours > 3)
+            count++;
+    }
+    Console.WriteLine(count);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi

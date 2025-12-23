@@ -1,0 +1,67 @@
+\subsection*{سؤال 6 امتحان 899222 سنة 2007}
+\addcontentsline{toc}{subsection}{سؤال 6 امتحان 899222 سنة 2007}
+
+% \noindent
+% \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_while_2007_899222_6.png }%}%
+
+في معهد الأرصاد الجوّية يقيسون درجات الحرارة كلّ يوم.
+اكتب برنامجًا يستقبل درجات الحرارة التي قيست خلال عدة أيّام، يستقبل قياسًا واحدًا بالضبط عن كلّ يوم.
+
+نرمز بـ \textenglish{firstTemp} إلى درجة الحرارة التي استُقبلت عن أوّل يوم. \\
+يمكن لدرجة الحرارة في أيّام أخرى أن تكون مطابقة لـ \textenglish{firstTemp}، فيكون عناك عدة أيّام كانت درجة الحرارة فيها مطابقة لدرجة حرارة أول يوم.
+
+على البرنامج أن يحسب كم يومًا مرّ بين كلّ يومَين كانت درجة الحرارة في كل واحد منهما مطابقة لـ \textenglish{firstTemp} (لا يشمل الأيّام التي قيست فيها درجة حرارة مطابقة لـ \textenglish{firstTemp}).
+
+المطلوب:
+\begin{itemize}
+    \item يطبع البرنامج عدد الأيّام \textbf{الأكبر} الذي مرّ بين قياسَيْن لدرجة حرارة مطابقة لـ \textenglish{firstTemp}.
+    \item إذا لم تتكرّر درجة حرارة مطابقة لـ \textenglish{firstTemp} مرّة أخرى خلال القياسات، يطبع البرنامج $-1$.
+    \item ينتهي استقبال المعطيات عندما تُستقبل درجة حرارة أعلى من 100.
+    \item افترض أنّ درجة الحرارة \textenglish{firstTemp} ليست أعلى من 100.
+\end{itemize}
+
+\begin{boxExample}
+لنفرض أن المدخلات هي كالتالي (من اليسار لليمين):
+$$ 25, \quad 29, \quad 31, \quad 25, \quad 25, \quad 28, \quad 30, \quad 29, \quad 25, \quad 101 $$
+
+\begin{enumerate}
+    \item القيمة الأولى (\textenglish{firstTemp}) هي \textbf{25}.
+    \item يظهر الرقم 25 مرة أخرى بعد يومين (الأرقام 29, 31). \textbf{الفجوة الحالية = 2}.
+    \item يظهر الرقم 25 مرة تالية مباشرة. \textbf{الفجوة الحالية = 0}.
+    \item يظهر الرقم 25 مرة أخيرة بعد ثلاثة أيام (الأرقام 28, 30, 29). \textbf{الفجوة الحالية = 3}.
+    \item الرقم 101 ينهي البرنامج.
+\end{enumerate}
+أكبر فجوة تم تسجيلها بين يومين درجة حرارتهما $25$ هي \textbf{3}، لذا المخرج يكون: \textbf{3}.
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2007]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int firstTemp = int.Parse(Console.ReadLine());
+int maxGap = -1;
+int currentGap = 0;
+
+int currentTemp = firstTemp;
+
+while (currentTemp <= 100)
+{
+    currentTemp = int.Parse(Console.ReadLine());
+    if (currentTemp == firstTemp)
+    {
+        if (currentGap > maxGap)
+            maxGap = currentGap;
+        currentGap = 0;
+    }
+    else
+        currentGap++;
+}
+Console.WriteLine(maxGap);
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

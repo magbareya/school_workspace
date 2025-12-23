@@ -1,0 +1,92 @@
+\subsection*{سؤال 6 امتحان 899222 سنة 2008}
+\addcontentsline{toc}{subsection}{سؤال 6 امتحان 899222 سنة 2008}
+
+% \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_while_2008_899222_6.png }%}%
+أعلنت شبكة محلات الأزياء "لباس لي" عن حملات لزبائنها:
+\begin{itemize}
+    \item الزبون الذي يشتري بمبلغ 800 شيقل وما فوق، يحصل على تخفيض قدره 50 شيقل عن كلّ 800 شيقل من التي عليه دفعها في هذه المرّة من الشراء.
+    \item الزبون الذي يشتري 4 قطع ألبسة أو أكثر يحصل على كوبون (שובר) بقيمة 20 شيقل لاستعماله للشراء في المرّة القادمة.
+\end{itemize}
+
+\underline{أمثلة}:
+\begin{itemize}
+    \item الزبون الذي اشترى 3 قطع ألبسة ثمنها الكلّي 1100 شيقل، حصل على تخفيض قدره 50 شيقل ودفع مقابل مشترياته 1050 شيقل.
+    \item الزبون الذي اشترى 5 قطع ألبسة ثمنها الكلّي 500 شيقل، حصل على كوبون بقيمة 20 شيقل لاستعماله للشراء في المرّة القادمة.
+    \item الزبون الذي اشترى 9 قطع ألبسة ثمنها الكلّي 1800 شيقل، حصل على تخفيض قدره 100 شيقل، ودفع مقابل مشترياته 1700 شيقل. كذلك حصل الزبون على كوبون بقيمة 20 شيقل لاستعماله للشراء في المرّة القادمة.
+\end{itemize}
+
+اكتب عملية خارجية باسم \textenglish{CalculatePrice} تحسب السعر الذي على زبون واحد أن يدفعه.
+على العملية أن تستقبل سعر كلّ واحدة من قطع الألبسة التي اشتراها الزبون.
+الأسعار هي أعداد صحيحة.
+استقبال الأسعار ينتهي عندما يُستقبل 0 بالنسبة للسعر.
+بعد نهاية الاستقبال، على العملية أن:
+\begin{itemize}
+    \item تطبع عدد قطع الألبسة التي اشتراها الزبون ويحسب ثمنها الكلّي (بدون أي تخفيض).
+    \item يحسب البرنامج التخفيض الذي يستحقه الزبون مقابل مشترياته هذه المرّة ويطبعه.
+    \item يطبع البرنامج التخفيض والمبلغ الذي على الزبون دفعه مقابل مشترياته.
+    \item إذا كان الزبون يستحقّ كوبون لاستعماله للشراء في المرّة القادمة، يطبع البرنامج رسالة \\ \textenglish{'You got 20 NIS Coupon'}.
+\end{itemize}
+
+\textbf{ملاحظة}: لا حاجة لفحص صحّة المدخلات.
+
+\begin{boxExample}
+لنفرض أن الزبون اشترى قطعًا بالأسعار التالية: $600, 400, 200, 500$. \\
+عندها تكون المدخلات:
+$$ 600, \quad 400, \quad 200, \quad 500, \quad 0 $$
+(العدد 0 يشير إلى نهاية الاستقبال).
+
+\begin{itemize}
+    \item \textbf{عدد القطع:} 4 (بما أن العدد 4 أكبر أو يساوي 4، يستحق الزبون كوبون).
+    \item \textbf{المجموع الكلي:} $600 + 400 + 200 + 500 = 1700$.
+    \item \textbf{حساب التخفيض:} في المبلغ 1700 يوجد مرتان 800 (لأن $800 \times 2 = 1600$). \\
+    لذلك التخفيض هو: $50 \times 2 = 100$.
+    \item \textbf{المبلغ للدفع:} $1700 - 100 = 1600$.
+\end{itemize}
+
+\textbf{المخرجات التي سيطبعها البرنامج:}
+\begin{boxCode}
+\begin{english}
+Total Items: 4 \\
+Total Sum: 1700 \\
+Discount: 100 \\
+Final Payment: 1600 \\
+You got 20 NIS Coupon
+\end{english}
+\end{boxCode}
+\end{boxExample}
+
+\clearpage
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2008]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void CalculatePrice()
+{
+    int sum = 0;
+    int count = 0;
+    int price = int.Parse(Console.ReadLine());
+    while (price != 0)
+    {
+        sum += price;
+        count++;
+        price = int.Parse(Console.ReadLine());
+    }
+
+    int discount = (sum / 800) * 50;
+    int finalPayment = sum - discount;
+
+    Console.WriteLine("Total Items: " + count);
+    Console.WriteLine("Total Sum: " + sum);
+    Console.WriteLine("Discount: " + discount);
+    Console.WriteLine("Final Payment: " + finalPayment);
+    if (count >= 4)
+        Console.WriteLine("You got 20 NIS Coupon");
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi
