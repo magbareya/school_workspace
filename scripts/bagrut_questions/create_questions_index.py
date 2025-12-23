@@ -87,7 +87,7 @@ def generate_html(rows, folders_set, topics_set, models_set, years_set, total_qu
         folder, topic, model, year, qnum, has_sol, is_used_val, file_path, f_type = row
 
         try:
-            rel_path = os.path.relpath(file_path, QUESTIONS_DIR)
+            rel_path = os.path.relpath(file_path, os.path.dirname(HTML_OUTPUT_FILE))
             rel_path = rel_path.replace(os.sep, '/')
         except ValueError:
             rel_path = file_path
