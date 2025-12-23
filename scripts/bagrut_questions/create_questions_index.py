@@ -1,6 +1,7 @@
 import os
 import csv
 import glob
+import sys
 
 """
 Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
@@ -17,20 +18,8 @@ CSV_OUTPUT_FILE = "out/bagrut_questions/questions_index.csv"
 HTML_OUTPUT_FILE = "out/bagrut_questions/questions_index.html"
 # -------------------------------
 
-def parse_filename(filename):
-    """
-    Parse filename like: <topic_name>_<year>_<model>_<question_number>.pdf
-    """
-    base = os.path.splitext(os.path.basename(filename))[0]
-    parts = base.split("_")
-    if len(parts) < 4:
-        return ("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN")
-
-    topic = "_".join(parts[:-3])
-    year = parts[-3]
-    model = parts[-2]
-    qnum = parts[-1]
-    return topic, year, model, qnum
+sys.path.insert(0, os.path.dirname(__file__))
+from utils import parse_filename
 
 
 def has_solution(pdf_path):
@@ -160,7 +149,7 @@ def main():
             if ext in [".pdf", ".png", ".jpg", ".jpeg"]:
                 file_path = os.path.join(root, f)
 
-                topic, year, model, qnum = parse_filename(f)
+                topic, year, model, qnum, _ = parse_filename(f)
 
                 all_folders.add(folder_name)
                 if topic != "UNKNOWN": all_topics.add(topic)
@@ -209,7 +198,8 @@ def main():
     topic_files = defaultdict(list)
     for row in rows_data:
         folder, topic, model, year, qnum, solution, used, file_path, ext = row
-        if solution:  # Only include questions that have solutions
+        tex_file = f"{os.path.splitext(file_path)[0]}.tex"
+        if os.path.exists(tex_file):  # Include questions that have tex files
             topic_files[(folder, topic)].append((year, model, qnum, file_path))
 
     # Delete existing topic files

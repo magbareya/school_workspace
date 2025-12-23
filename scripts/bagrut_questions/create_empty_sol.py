@@ -33,9 +33,8 @@ EXTENSION_TEMPLATES = {
     "jpeg": IMAGE_COMMAND_TEMPLATE,
 }
 
-# Build Regex
-supported_extensions = "|".join(EXTENSION_TEMPLATES.keys())
-PATTERN = re.compile(rf"(.+?)_(\d{{4}}[A-Z]?)_(\d+)_(\d+[A-Z]?)\.({supported_extensions})$")
+sys.path.insert(0, os.path.dirname(__file__))
+from utils import parse_filename, SUPPORTED_EXTENSIONS
 
 def process_file(file_path):
     """
@@ -56,12 +55,11 @@ def process_file(file_path):
         return
 
     # 2. Validate Filename Format (Regex)
-    match = PATTERN.match(filename)
-    if not match:
+    topic, year, model, qnum, extension = parse_filename(filename)
+    if topic == "UNKNOWN":
         print(f"Skipping (bad format): {filename}")
         return
 
-    prefixes, year, model, number, extension = match.groups()
     tex_filename = filename.replace(f".{extension}", ".tex")
     full_tex_path = os.path.join(directory, tex_filename)
 
@@ -93,7 +91,7 @@ def process_file(file_path):
     image_command = EXTENSION_TEMPLATES[extension].replace("{filepath}", latex_relative_path)
 
     # 5. Fill Template
-    content = raw_template.replace("[[NUMBER]]", number) \
+    content = raw_template.replace("[[NUMBER]]", qnum) \
                           .replace("[[MODEL]]", model) \
                           .replace("[[YEAR]]", year) \
                           .replace("[[IMAGE_COMMAND]]", image_command)
