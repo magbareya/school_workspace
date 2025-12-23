@@ -202,7 +202,10 @@ def main():
         folder, topic, model, year, qnum, solution, used, file_path, ext = row
         tex_file = f"{os.path.splitext(file_path)[0]}.tex"
         if os.path.exists(tex_file):  # Include questions that have tex files
-            topic_files[(folder, topic)].append((year, model, qnum, file_path))
+            effective_topic = topic
+            if topic.startswith("loops_"):
+                effective_topic = "loops"
+            topic_files[(folder, effective_topic)].append((year, model, qnum, file_path))
 
     # Delete existing topic files
     for folder in ["basics", "computational_models"]:

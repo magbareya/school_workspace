@@ -52,7 +52,7 @@ export TEXMF_OUTPUT_DIRECTORY=.
 # Targets
 # -----------------------
 
-all: index pdf printable sols sclean
+all: pdf printable sols sclean
 
 pdf: ipynb md tex $(PDF_OUT) sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
