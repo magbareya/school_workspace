@@ -38,6 +38,8 @@ def has_solution(pdf_path):
 def is_used(qname):
     pattern = os.path.join(SRC_DIR, "**", "*.tex")
     for tex in glob.glob(pattern, recursive=True):
+        if "src\\bagrut_questions" in tex:
+            continue
         with open(tex, "r", encoding="utf-8", errors="ignore") as f:
             if qname in f.read():
                 return True
