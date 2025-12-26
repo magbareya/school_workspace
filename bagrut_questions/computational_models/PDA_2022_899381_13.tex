@@ -1,22 +1,24 @@
-\subsection*{سؤال 13B امتحان 899381 سنة 2022}
-\addcontentsline{toc}{subsection}{سؤال 13B امتحان 899381 سنة 2022}
+\subsection*{سؤال 13 امتحان 899381 سنة 2022}
+\addcontentsline{toc}{subsection}{سؤال 13 امتحان 899381 سنة 2022}
 
 \insertFullImg{../../../bagrut_questions/computational_models/PDA_2022_899381_13.png}
 
 \ifwithsols
-\begin{boxSolution}[سؤال 13B امتحان 899381 سنة 2022]
-\begin{enumerate}[label=\alph*., itemsep=2em]
-    \item
-    \begin{enumerate}[label=(\arabic*), itemsep=2em]
-    \item نحصل على أقصر كلمة عندما نعوّض أصغر قيمة لكل بارامتر، أي: $k = 1, n=1$. \\
+\begin{boxSolution}[سؤال 13 امتحان 899381 سنة 2022]
+    \textbf{أ.} \quad
+    \textbf{(1)} نحصل على أقصر كلمة عندما نعوّض أصغر قيمة لكل بارامتر، أي: $k = 1, n=1$. \\
     لذلك أقصر كلمة هي:
-    $$ c^{1+1+1} b^1 a^{2 \cdot 1} \rightarrow c^3 b^1 a^2 \rightarrow cccbaa $$ \\
+    $$ c^{1+1+1} b^1 a^{2 \cdot 1} \rightarrow c^3 b^1 a^2 \rightarrow cccbaa$$
     كي نحدد إذا كانت كلمة ما موجودة في $L_2$ يجب أن يظهر الحرف $d$ مرة واحدة في الوسط بالضبط. \\
     وأيضًا، القسم الذي قبل الحرف $d$ يجب أن يكون كلمة في $L_1$. \\
     والقسم الذي بعد الحرف $d$ يجب ان يكون مقلوب كلمة في $L_1$ (ليس بالضرورة نفس الكلمة التي كانت قبل الحرف $d$).
+\end{boxSolution}
+\clearpage
+\begin{boxSolution}[سؤال 13 امتحان 899381 سنة 2022 - تكملة]
+    \textbf{(2)} \\
+        \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/PDAs/c1PlusnPlusk_bk_a2n_nk_ge1.png}%
 
-    \item . % //TODO
-    \end{enumerate}
+\begin{enumerate}[label=\alph*., itemsep=2em, start=2]
 
     \item $L2 = L_1 \cdot d \cdot R(L_1) = \{ c^{1+k+n} b^k a^{2n} d a^{2m} b^q c^{1+q+m} \mid, m,n,k,q \geq 1 \}$
     \begin{itemize}

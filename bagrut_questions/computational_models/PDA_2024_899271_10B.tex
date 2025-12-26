@@ -5,12 +5,41 @@
 \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/computational_models/PDA_2024_899271_10B.png }%
 }%
 
-\clearpage
 \ifwithsols
 \begin{boxSolution}[سؤال 10B امتحان 899271 سنة 2024]
-\begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
-\end{enumerate}
+\textbf{ب.}
+\begin{center}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/PDAs/abk_cm_bmPlus3k_mk_geq0.png}%
+\end{center}
+\end{boxSolution}
+\clearpage
+\begin{boxSolution}[سؤال 10B امتحان 899271 سنة 2024 - شرح الأوتومات]
+يقوم الأوتومات بحساب المعادلة $(3k + m)$ باستخدام الراصة، حيث يضيف 3 رموز لكل زوج $ab$، ورمزاً واحداً لكل $c$، ثم يطابق المجموع مع عدد حروف $b$.
+
+\begin{itemize}
+    \item \textbf{الحالات $q_0, q_1, q_2$ (مرحلة التخزين المضاعف):}
+    \begin{itemize}
+        \item يتم هنا قراءة المقطع $(ab)^k$.
+        \item عند الانتقال من $q_0 \to q_1$ ومن $q_2 \to q_1$ (عند قراءة $a$)، نقوم بإدخال 3 رموز في \textbf{الراصة}.
+        \item الهدف: ضمان وجود 3 عناصر في الراصة مقابل كل تكرار لـ $ab$.
+        \item الحالة $q_2$ محورية: تتيح العودة للتكرار، أو الانتقال لقراءة $c$، أو البدء فوراً بقراءة $b$ (إذا لم توجد $c$).
+    \end{itemize}
+
+    \item \textbf{الحالة $q_3$ (مرحلة التخزين الفردي):}
+    \begin{itemize}
+        \item تختص بقراءة حروف $c^m$.
+        \item مقابل كل حرف $c$، يتم إدخال رمز واحد فقط في \textbf{الراصة}.
+    \end{itemize}
+
+    \item \textbf{الحالات $q_4, q_5$ (مرحلة التفريغ والمطابقة):}
+    \begin{itemize}
+        \item يتم هنا قراءة الجزء الأخير $b^{m+3k}$.
+        \item كل حرف $b$ يتم قراءته يقابله حذف رمز واحد من \textbf{الراصة}.
+        \item الوصول للحالة النهائية $q_5$ مع راصة فارغة يعني أن عدد الـ $b$ مساوٍ تماماً لمجموع ما تم تخزينه.
+    \end{itemize}
+\end{itemize}
+
+
 \end{boxSolution}
 \clearpage
 \fi

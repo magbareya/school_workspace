@@ -8,7 +8,27 @@
 \ifwithsols
 \begin{boxSolution}[سؤال 13 امتحان 899381B سنة 2021]
 \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
+    \item
+    \begin{enumerate}[label=(\arabic*)]
+        \item نحسب قيمة $k$ بناءً على الدالة $Foo(n)$:
+\begin{align*}
+    k &= (2 / 2) + (2 \% 2) \\
+    k &= 1 + 0 \\
+    k &= 1
+\end{align*}
+بما أن $n=2$ و $k=1$، فإن الكلمة هي $a^2 b^1 = aab$.
+
+\item نحسب قيمة $k$ بنفس الطريقة:
+\begin{align*}
+    k &= (5 / 2) + (5 \% 2) \\
+    k &= 2 + 1 \\
+    k &= 3
+\end{align*}
+بما أن $n=5$ و $k=3$، فإن الكلمة هي $a^5 b^3 = aaaaabbb$.
+    \end{enumerate}
+
+    \item . \\
+        \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/PDAs/an_bk_k_is_nDiv2_plus_nMod2.png}%
 \end{enumerate}
 \end{boxSolution}
 \clearpage

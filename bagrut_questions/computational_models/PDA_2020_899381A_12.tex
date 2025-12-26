@@ -7,9 +7,41 @@
 
 \ifwithsols
 \begin{boxSolution}[سؤال 12 امتحان 899381A سنة 2020]
-\begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
-\end{enumerate}
+    \textbf{أ.} \\
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/PDAs/an_bk_cn_b_nOdd_kMod3Is1_repeated.png}%
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}[سؤال 12 امتحان 899381A سنة 2020 - تكملة]
+    \textbf{ب.}
+لتحديد كلمات اللغة $L_3$، نجد القيم التي تحقق شروط اللغتين معاً:
+\begin{itemize}
+    \item في اللغة $L_1$، الرمز $a$ يجب أن يظهر عددًا فرديًّا من المرّات. \\
+    في اللغة $L_2$ الرمز $a$ يجب أن يظهر أقل من 5 مرات. \\
+    لذلك، في الكلمات المشتركة بين اللغتين، الرمز $a$ يمكن أن يظهر إمّا مرّة واحدة، أو 3 مرات.
+    أي: $k = 1 \text{ or } 3$
+    \item في اللغة $L_1$ عدد مرات ظهور الرمز $a$ مساو لعدد مرات ظهور الرمز $c$. \\
+    اعتمادًا على ما استنتجناه أعلاه، فإنّه في الكلمات المشتركة بين اللغتين، أيضًا $c$ يمكن أن يظهر مرة أو 3 مرات.
+    أي: $x = k = 1 \text{ or } 3$
+    \item في اللغة $L_1$، الرمز $b$ يجب أن يكون باقي قسمة عدد مرات ظهوره على 3 هو 1. \\
+    في اللغة $L_2$ الرمز $b$ يجب أن يظهر أقل من 5 مرات. \\
+    لذلك، في الكلمات المشتركة بين اللغتين، الرمز $b$ يمكن أن يظهر إمّا مرّة واحدة، أو 4 مرات.
+    أي: $m = 1 \text{ or } 4$
+\end{itemize}
+
+لذلك، الكلمات الناتجة هي:
+نعوض القيم في الصيغة $a^k b^m c^x$:
+\begin{align*}
+    1. \quad x=k=1, m=1 & \implies abc \\
+    2. \quad x=k=1, m=4 & \implies abbbbc \\
+    3. \quad x=k=3, m=1 & \implies aaabccc \\
+    4. \quad x=k=3, m=4 & \implies aaabbbbccc
+\end{align*}
+\textbf{النتيجة النهائية:}
+\[
+L_3 = \{ abc, \ abbbbc, \ aaabccc, \ aaabbbbccc \}
+\]
 \end{boxSolution}
 \clearpage
 \fi
