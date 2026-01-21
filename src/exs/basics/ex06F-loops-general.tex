@@ -2,9 +2,9 @@
 \input{../../../scripts/tex_preamble.tex}
 
 \ifwithsols
-\title{حل ورقة تمرن 6 للصف العاشر 10 - قسم 6 \\ أسئلة بجروت عن الحلقات}
+\title{حل ورقة تمرن 6 للصف العاشر 10 - قسم 6 \\ أسئلة عامّة عن الحلقات}
 \else
-\title{ورقة تمرن 6 للصف العاشر 10 - قسم 6 \\ أسئلة بجروت عن الحلقات}
+\title{ورقة تمرن 6 للصف العاشر 10 - قسم 6 \\ أسئلة عامّة عن الحلقات}
 \fi
 
 \begin{document}
@@ -14,14 +14,17 @@
 
 \begin{enumerate}[itemsep=1.5em]
 
-\item
-اكتب برنامجًا يستقبل 20 عددًا صحيحًا ويطبع مجموع كل عددين متتاليين.
-أي إذا كانت المدخلات: a1, a2, a3, ... فعليه أن يطبع:
-(a1 + a2), (a2 + a3), ... حتى النهاية.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+    % ------------------------------------------------------
+    % 1. Sum of adjacent pairs (Easy - state: prev)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل 20 عددًا صحيحًا ويطبع مجموع كل عددين متتاليين.
+    أي إذا كانت المدخلات: $a_1, a_2, a_3, \ldots$ فعليه أن يطبع:
+    $(a_1 + a_2), (a_2 + a_3), \ldots$
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
 int prev = int.Parse(Console.ReadLine());
 for(int i=1; i<20; i++)
 {
@@ -29,117 +32,45 @@ for(int i=1; i<20; i++)
     Console.WriteLine(prev + x);
     prev = x;
 }
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
-\item
-اكتب برنامجًا يستقبل من المستخدم 15 عددًا صحيحًا ويطبع عدد الأعداد التي تقسم على العدد الذي قبلها مباشرة بدون باقٍ.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int prev = int.Parse(Console.ReadLine());
-int cnt = 0;
-
-for(int i=1; i<15; i++)
+    % ------------------------------------------------------
+    % 2. Power of 2 (Function - Math logic, simple loop)
+    % ------------------------------------------------------
+    \item اكتب عملية خارجية تتلقى عددًا صحيحًا $x$.
+    على العملية أن تجد وتعيد أصغر عدد يكون من قوى العدد 2 ولكنه أكبر تمامًا من $x$. \\
+    مثال: إذا كان المدخل 10، المخرج هو 16. إذا كان المدخل 50، المخرج 64.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int NextPowerOf2(int x)
 {
-    int x = int.Parse(Console.ReadLine());
-    if (prev != 0 && x % prev == 0)
-        cnt++;
-    prev = x;
-}
-Console.WriteLine(cnt);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-
-    \item
-اكتب برنامجًا يستقبل 30 عددًا صحيحًا ويطبع عدد الأعداد السالبة المتتالية الأطول.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int maxSeq = 0, curr = 0;
-
-for (int i = 0; i < 30; i++)
-{
-    int x = int.Parse(Console.ReadLine());
-    if (x < 0)
+    int p = 1;
+    while (p <= x)
     {
-        curr++;
-        if (curr > maxSeq) maxSeq = curr;
+        p *= 2;
     }
-    else
-        curr = 0;
+    return p;
 }
-Console.WriteLine(maxSeq);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
-\item
-اكتب برنامجًا يستقبل 15 عددًا صحيحًا ويطبع أطول سلسلة متزايدة متتالية.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int prev = int.Parse(Console.ReadLine());
-int currLen = 1, maxLen = 1;
-
-for(int i = 1; i < 15; i++)
-{
-    int x = int.Parse(Console.ReadLine());
-    if (x > prev)
-        currLen++;
-    else
-        currLen = 1;
-    if (currLen > maxLen)
-        maxLen = currLen;
-    prev = x;
-}
-Console.WriteLine(maxLen);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-اكتب برنامجًا يستقبل 25 عددًا صحيحًا ويطبع عدد الأعداد التي تساوي مجموع الأرقام التي قبلها مباشرة (أي:
-$x_i = x_{i-1} + x_{i-2}$ ).
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int a = int.Parse(Console.ReadLine());
-int b = int.Parse(Console.ReadLine());
-int cnt = 0;
-
-for(int i = 2; i < 25; i++)
-{
-    int x = int.Parse(Console.ReadLine());
-    if (x == a + b)
-        cnt++;
-    a = b;
-    b = x;
-}
-Console.WriteLine(cnt);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-اكتب برنامجًا يستقبل 12 عددًا صحيحًا ويفحص إذا ظهر رقم 5 ثلاث مرات متتالية.
-في النهاية يطبع "نعم" أو "لا".
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+    % ------------------------------------------------------
+    % 3. Three consecutive 5s (Medium - state: counter + flag)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل 12 عددًا صحيحًا ويفحص هل ظهر رقم 5 ثلاث مرات متتالية.
+    في النهاية يطبع "نعم" أو "لا".
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
 int cnt = 0;
 bool ok = false;
 
@@ -154,38 +85,152 @@ for(int i=0; i<12; i++)
     else
         cnt = 0;
 }
+
 if(ok)
     Console.WriteLine("Yes");
 else
     Console.WriteLine("No");
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
 
-\item اكتب عملية تتلقى عددًا صحيحًا $x$. على العملية أن تجد وتعيد أصغر عدد يكون من قوى العدد 2 (Powers of 2) ولكنه أكبر تمامًا من $x$. \\
-مثال: إذا كان المدخل 10، المخرج هو 16. إذا كان المدخل 50، المخرج 64.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static int NextPowerOf2(int x)
+    % ------------------------------------------------------
+    % 4. Divisible by previous (Medium - state: prev + condition)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم 15 عددًا صحيحًا ويطبع عدد الأعداد التي تقسم على العدد الذي قبلها مباشرة بدون باقٍ.
+    \ifdetailed
+    \begin{boxExample}
+    إذا أدخل المستخدم: $4, 12, 5, 10$
+    \begin{itemize}
+        \item 12 تقسم على 4 $\leftarrow$ نعدّها.
+        \item 5 لا تقسم على 12.
+        \item 10 تقسم على 5 $\leftarrow$ نعدّها.
+    \end{itemize}
+    النتيجة: 2.
+    \end{boxExample}
+    \fi
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int cnt = 0;
+
+for(int i=1; i<15; i++)
 {
-    int p = 1;
-    while (p <= x)
-    {
-        p *= 2;
-    }
-    return p;
+    int x = int.Parse(Console.ReadLine());
+    // check prev != 0 to avoid division by zero
+    if (prev != 0 && x % prev == 0)
+        cnt++;
+    prev = x;
 }
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+Console.WriteLine(cnt);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ------------------------------------------------------
+    % 5. Longest Negative Sequence (Medium - Max algo)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل 30 عددًا صحيحًا ويطبع طول أطول سلسلة متتالية من الأعداد السالبة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int maxSeq = 0, curr = 0;
+
+for (int i = 0; i < 30; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x < 0)
+    {
+        curr++;
+        if (curr > maxSeq) maxSeq = curr;
+    }
+    else
+        curr = 0;
+}
+Console.WriteLine(maxSeq);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ------------------------------------------------------
+    % 6. Longest Increasing Sequence (Harder - Max algo + prev)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل 15 عددًا صحيحًا ويطبع طول أطول سلسلة تصاعدية متتالية.
+    (السلسلة التصاعدية هي التي يكون فيها كل عدد أكبر تمامًا من العدد الذي سبقه).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int currLen = 1, maxLen = 1;
+
+for(int i = 1; i < 15; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > prev)
+        currLen++;
+    else
+        currLen = 1;
+
+    if (currLen > maxLen)
+        maxLen = currLen;
+    prev = x;
+}
+Console.WriteLine(maxLen);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ------------------------------------------------------
+    % 7. Sum of previous two (Hard - state: a, b)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل 25 عددًا صحيحًا ويطبع عدد الأعداد التي تساوي مجموع العددين الذين سبقاها مباشرة (أي:
+    $x_i = x_{i-1} + x_{i-2}$ ).
+    \ifdetailed
+    \begin{boxExample}
+    المدخلات: $1, 4, 5, 20, 25 \ldots$ \\
+    العدد 5 يساوي $1+4$ $\leftarrow$ نعدّه. \\
+    العدد 25 يساوي $5+20$ $\leftarrow$ نعدّه.
+    \end{boxExample}
+    \fi
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int cnt = 0;
+// We start loop from 2 because we read 2 numbers already
+for(int i = 2; i < 25; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x == a + b)
+        cnt++;
+    a = b;
+    b = x;
+}
+Console.WriteLine(cnt);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
 \end{enumerate}
-
-\input{../../../bagrut_questions/basics/loops_while_2015_899222_7.tex}
 
 \vspace{1cm}
 \begin{flushleft}

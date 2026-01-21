@@ -14,38 +14,60 @@
 
 \begin{enumerate}[itemsep=1.5em]
 
-\item اطبع أول 20 عددًا من المتوالية: $3, 6, 9, 12,\dots$
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+    \item اطبع أول 20 عددًا من المتوالية: $3, 6, 9, 12,\dots$
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
 for (int i = 1; i <= 20; i++)
     Console.WriteLine(3 * i);
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
+    \item
+    اكتب عملية تتلقى عددًا $n$ وتطبع أوّل $n$ حدود من سلسلة الأعداد:
+    $$1,\; 2,\; 4,\; 7,\; 11,\; 16,\ldots$$
+    نحصل على هذه المتوالية بأن نبدأ بـ 1، ثم نضيف 1، ثم نضيف 2، ثم نضيف 3، ثم نضيف 4 \ldots
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintSequence(int n)
+{
+    int val = 1;
+    for(int i = 1 ; i <= n ; i++)
+    {
+        Console.WriteLine(val);
+        val += i;
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
 
-\item
-اكتب عملية تتلقى عددًا صحيحًا $n$، وتقوم بحساب وإرجاع مجموع السلسلة التالية: \\
-$Sum = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}$
-\begin{boxExample}
-\begin{itemize}
-\item
-إذا تلقّت 1 فإنّها تعيد 1.
-\item
-إذا تلقّت 2 فإنّها تعيد: $1 + \frac{1}{2} = 1.5$
-\item
-إذا تلقّت 3 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} = 1.833$
-\item
-إذا تلقّت 10 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} + \ldots + \frac{1}{10} = 2.9289$
-\end{itemize}
-\end{boxExample}
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+    \item
+    اكتب عملية تتلقى عددًا صحيحًا $n$، وتقوم بحساب وإرجاع مجموع السلسلة التالية: \\
+    $Sum = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}$
+    \begin{boxExample}
+    \begin{itemize}
+    \item
+    إذا تلقّت 1 فإنّها تعيد 1.
+    \item
+    إذا تلقّت 2 فإنّها تعيد: $1 + \frac{1}{2} = 1.5$
+    \item
+    إذا تلقّت 3 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} = 1.833$
+    \item
+    إذا تلقّت 10 فإنّها تعيد: $1 + \frac{1}{2} +  \frac{1}{3} + \ldots + \frac{1}{10} = 2.9289$
+    \end{itemize}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
 public static double SeriesSum(int n)
 {
     double sum = 0;
@@ -55,48 +77,48 @@ public static double SeriesSum(int n)
     }
     return sum;
 }
-\end{minted}
-\end{english}
-\end{boxSolution}
-\clearpage
-\fi
-
-
-\item متوالية فيبوناتشي معرفة بالشكل التالي:
-    \begin{english}
-        \begin{align*}
-            a_1 &= 1 \\
-            a_2 &= 1 \\
-            a_n &= a_{n-1} + a_{n-2} \text{ , for } n > 2
-        \end{align*}
+    \end{minted}
     \end{english}
-    مثلًا، أول 7 حدود من متوالية فيبوناتشي هي: $1, 1, 2, 3, 5, 8, 13$. \\
-    \begin{enumerate}
-      \item اكتب عملية خارجية تتلقى عددًا صحيحًا: $n$ وتعيد الحد الـ $n$-ي من متوالية فيبوناتشي.
-      مثلًا: إذا تلقت العدد 3، فإنّها تعيد 2.
+    \end{boxSolution}
+    \clearpage
+    \fi
 
-      \item اكتب عملية تتلقى عددًا صحيحًا $n$، وتطبع أول $n$ حدود من متوالية فيبوناتشي. \\
-      عليك استخدام العملية من البند السابق. \\
-      مثلًا، إذا تلقت العملية الرقم 8، فعليها أن يطبع أول 8 حدود من المتوالية، أي:
+    \clearpage
+    \item متوالية فيبوناتشي معرفة بالشكل التالي:
+        \begin{english}
+            \begin{align*}
+                a_1 &= 1 \\
+                a_2 &= 1 \\
+                a_n &= a_{n-1} + a_{n-2} \text{ , for } n > 2
+            \end{align*}
+        \end{english}
+        مثلًا، أول 7 حدود من متوالية فيبوناتشي هي: $1, 1, 2, 3, 5, 8, 13$. \\
+        \begin{enumerate}
+          \item اكتب عملية خارجية تتلقى عددًا صحيحًا: $n$ وتعيد الحد الـ $n$-ي من متوالية فيبوناتشي.
+          مثلًا: إذا تلقت العدد 3، فإنّها تعيد 2.
+
+          \item اكتب عملية تتلقى عددًا صحيحًا $n$، وتطبع أول $n$ حدود من متوالية فيبوناتشي. \\
+          عليك استخدام العملية من البند السابق. \\
+          مثلًا، إذا تلقت العملية الرقم 8، فعليها أن تطبع أول 8 حدود من المتوالية، أي:
+        \begin{english}
+        \begin{boxCode}
+1
+1
+2
+3
+5
+8
+13
+21
+        \end{boxCode}
+        \end{english}
+
+          \item اكتب برنامجًا رئيسيًّا يستقبل عددًا صحيحًا، ويستدعي العملية من البند ب مع الرقم الذي أدخله المستخدم.
+          \end{enumerate}
+    \ifwithsols
+    \begin{boxSolution}
     \begin{english}
-    \begin{boxCode}
-    1 \\
-    1 \\
-    2 \\
-    3 \\
-    5 \\
-    8 \\
-    13 \\
-    21
-    \end{boxCode}
-    \end{english}
-
-      \item اكتب برنامجًا رئيسيًّا يستقبل عددًا صحيحًا، ويستدعي العملية من البند ب مع الرقم الذي أدخله المستخدم.
-      \end{enumerate}
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+    \begin{minted}{csharp}
 public static int Fib(int n)
 {
     if (n <= 2)
@@ -110,6 +132,7 @@ public static int Fib(int n)
     }
     return b;
 }
+
 public static void PrintFirstNFibs(int n)
 {
     for (int i = 1; i <= n; i++)
@@ -121,34 +144,10 @@ private static void Main(string[] args)
     int n = int.Parse(Console.ReadLine());
     PrintFirstNFibs(n);
 }
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-اكتب عملية تتلقى عددًا $n$ وتطبع أوّل $n$ حدود من سلسلة الأعداد:
-$$1,\; 2,\; 4,\; 7,\; 11,\; 16,\ldots$$
-نحصل على هذه المتوالية بأنّ نبدأ بـ 1، ثم نضيف 1، ثم نضيف 2، ثم نضيف 3، ثم نضيف 4 \ldots
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-public static void PrintSequence(int n)
-{
-    int last = 1;
-    int add = 1;
-    for(int i = 1 ; i <= n ; i++)
-    {
-        Console.WriteLine(val);
-        val += i;
-    }
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
 \end{enumerate}
 
