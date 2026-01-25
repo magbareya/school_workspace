@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أساسيات في C# - النصوص</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-dark: #1e1e2e;
+            --bg-card: #252538;
+            --text-primary: #ffffff;
+            --text-secondary: #a6accd;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7;
+            --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8;
+            --accent-purple: #cba6f7;
+            --code-bg: #11111b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        /* --- Typography --- */
+        .main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(137, 180, 250, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .author {
+            font-size: 1.2rem;
+            background: var(--bg-card);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        /* --- Layouts --- */
+        .content-slide {
+            width: 90%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .content-full {
+            grid-template-columns: 1fr;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .slide-header {
+            position: absolute;
+            top: 2rem;
+            right: 3rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-yellow);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Code Blocks --- */
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: 12px;
+            padding: 0;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid #313244;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: left;
+            direction: ltr;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #181825;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #313244;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #f38ba8; }
+        .dot-yellow { background: #f9e2af; }
+        .dot-green { background: #a6e3a1; }
+
+        .lang-badge { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .code-content {
+            padding: 1.2rem;
+            color: #cdd6f4;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: var(--accent-pink); font-weight: bold; } /* Keyword */
+        .str { color: var(--accent-green); } /* String */
+        .char { color: var(--accent-yellow); } /* Char */
+        .num { color: var(--accent-purple); } /* Number */
+        .cls { color: var(--accent-blue); } /* Class */
+        .mtd { color: var(--accent-blue); } /* Method */
+        .com { color: #6c7086; font-style: italic; } /* Comment */
+
+        .output-box {
+            background: #1e1e2e;
+            border-left: 4px solid var(--accent-green);
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: left;
+            direction: ltr;
+        }
+
+        .output-label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--accent-green);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Visuals --- */
+        .train-container {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 2rem 0;
+            direction: ltr;
+        }
+
+        .train-car {
+            width: 70px;
+            height: 70px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .index-num {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.9rem;
+            color: var(--accent-pink);
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* --- Navigation --- */
+        .nav-controls {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: var(--accent-blue);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* --- List Styles --- */
+        .styled-list ul { list-style: none; }
+        .styled-list li {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .styled-list li i { color: var(--accent-purple); }
+
+        /* ========================================= */
+        /* === PRINT CSS FIX (THIS IS THE NEW PART) === */
+        /* ========================================= */
+        @media print {
+            /* Reset Body to scroll normally */
+            body {
+                overflow: visible !important;
+                height: auto !important;
+                display: block !important;
+                background-color: var(--bg-dark) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Reset Slider Container */
+            .slider-container {
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            /* Force all slides to show and stack vertically */
+            .slide {
+                position: relative !important; /* No longer on top of each other */
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: all !important;
+                width: 100% !important;
+                height: 100vh !important; /* Full page per slide */
+                page-break-after: always; /* Force new page */
+                break-after: page;
+                top: auto !important;
+                left: auto !important;
+                margin: 0 !important;
+                border-bottom: 1px solid #333; /* Optional separator */
+            }
+
+            /* Hide Navigation Controls */
+            .nav-controls, .progress-bar {
+                display: none !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <div class="progress-bar" id="progressBar"></div>
+
+        <div class="slide active title-slide">
+            <h1 class="main-title">رحلة في عالم النصوص (Strings)</h1>
+            <p class="subtitle">أساسيات التعامل مع النصوص في C#</p>
+            <div class="author"><i class="fas fa-chalkboard-teacher"></i> إعداد: الأستاذ محمود اغبارية</div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-list-ul"></i> محتويات الدرس</div>
+            <div class="content-slide">
+                <div class="styled-list">
+                    <ul>
+                        <li><i class="fas fa-print"></i> مراجعة: Write vs WriteLine</li>
+                        <li><i class="fas fa-font"></i> النوع char ومبنى النص string</li>
+                        <li><i class="fas fa-ruler"></i> خصائص النص (Length & Indexing)</li>
+                        <li><i class="fas fa-search"></i> عمليات البحث (Contains & IndexOf)</li>
+                        <li><i class="fas fa-cut"></i> عمليات القص (Substring)</li>
+                        <li><i class="fas fa-code-branch"></i> دوال خارجية (Static Functions)</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <i class="fas fa-code" style="font-size: 12rem; color: var(--accent-blue); opacity: 0.2;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-pen"></i> الطباعة</div>
+            <div class="content-slide">
+                <div class="text-content">
+                    <div style="margin-bottom:2rem;">
+                        <h3 style="color:var(--accent-pink);">Write</h3>
+                        <p>تطبع ويبقى المؤشر على نفس السطر.</p>
+                    </div>
+                    <div>
+                        <h3 style="color:var(--accent-blue);">WriteLine</h3>
+                        <p>تطبع وتنزل سطراً جديداً.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="code-block">
+                        <div class="code-header"><div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div></div>
+                        <div class="code-content">
+                            <span class="cls">Console</span>.<span class="mtd">Write</span>(<span class="str">"Hello "</span>);<br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(<span class="str">"World"</span>);<br>
+                            <span class="cls">Console</span>.<span class="mtd">Write</span>(<span class="str">"Done"</span>);
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <span class="output-label">Output</span>
+                        Hello World<br>
+                        Done
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-cubes"></i> بنية النص (String Structure)</div>
+            <div class="content-full">
+                <p style="font-size:1.5rem; margin-bottom:2rem;">النص هو سلسلة من الأحرف (<span style="color:var(--accent-yellow); font-family:'Fira Code';">char</span>).</p>
+
+                <div class="train-container">
+                    <div class="train-car">C<div class="index-num">0</div></div>
+                    <div class="train-car">o<div class="index-num">1</div></div>
+                    <div class="train-car">d<div class="index-num">2</div></div>
+                    <div class="train-car">e<div class="index-num">3</div></div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top:2rem; text-align:right;">
+                    <div>
+                        <h3 class="section-title">Indexing (الوصول)</h3>
+                        <p>نصل للحرف عن طريق رقمه (Index).</p>
+                        <div class="code-block" style="margin-top:1rem;">
+                            <div class="code-content">
+                                <span class="kw">string</span> s = <span class="str">"Code"</span>;<br>
+                                <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(s[<span class="num">2</span>]); <span class="com">// 'd'</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="section-title">Length (الطول)</h3>
+                        <p>عدد الحروف الكلي.</p>
+                        <div class="code-block" style="margin-top:1rem;">
+                            <div class="code-content">
+                                <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(s.Length); <span class="com">// 4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-text-height"></i> حالة الأحرف (Case)</div>
+            <div class="content-slide">
+                <div>
+                    <h3 class="section-title">ToUpper()</h3>
+                    <p style="margin-bottom:1rem;">تحويل النص بالكامل لحروف كبيرة.</p>
+                    <h3 class="section-title">ToLower()</h3>
+                    <p>تحويل النص بالكامل لحروف صغيرة.</p>
+                </div>
+                <div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang-badge">C# Example</span></div>
+                        <div class="code-content">
+                            <span class="kw">string</span> s = <span class="str">"MoHaMeD"</span>;<br><br>
+                            <span class="kw">string</span> upper = s.<span class="mtd">ToUpper</span>();<br>
+                            <span class="kw">string</span> lower = s.<span class="mtd">ToLower</span>();<br><br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(upper);<br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(lower);
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <span class="output-label">Output</span>
+                        MOHAMED<br>
+                        mohamed
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-question-circle"></i> البحث: Contains</div>
+            <div class="content-slide">
+                <div>
+                    <p style="font-size:1.3rem;">تفحص هل النص يحتوي على مقطع معين أو حرف معين.</p>
+                    <p style="color:var(--accent-green); margin-top:0.5rem;">النتيجة دائماً: <strong>True</strong> أو <strong>False</strong>.</p>
+                </div>
+                <div style="display:grid; gap:1rem;">
+                    <div class="code-block">
+                        <div class="code-content">
+                            <span class="com">// 1. البحث عن نص (String)</span><br>
+                            <span class="kw">string</span> txt = <span class="str">"Hello World"</span>;<br>
+                            <span class="kw">bool</span> hasWorld = txt.<span class="mtd">Contains</span>(<span class="str">"World"</span>);<br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(hasWorld); <span class="com">// True</span>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-content">
+                            <span class="com">// 2. البحث عن حرف (Char)</span><br>
+                            <span class="kw">string</span> email = <span class="str">"user@mail.com"</span>;<br>
+                            <span class="kw">if</span> (email.<span class="mtd">Contains</span>(<span class="char">'@'</span>))<br>
+                            &nbsp;&nbsp;<span class="cls">Console</span>.<span class="mtd">WriteLine</span>(<span class="str">"Valid Email"</span>);
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-map-marker-alt"></i> تحديد الموقع: IndexOf</div>
+            <div class="content-slide">
+                <div>
+                    <p style="font-size:1.3rem;">تعيد رقم الخانة (Index) لأول ظهور للنص أو الحرف.</p>
+                    <p style="color:var(--accent-red); margin-top:0.5rem;">إذا لم تجد النص، تعيد <strong>-1</strong>.</p>
+                </div>
+                <div style="display:grid; gap:1rem;">
+                    <div class="code-block">
+                        <div class="code-content">
+                            <span class="com">// 1. موقع نص داخل نص</span><br>
+                            <span class="kw">string</span> s = <span class="str">"Banana"</span>;<br>
+                            <span class="kw">int</span> idx1 = s.<span class="mtd">IndexOf</span>(<span class="str">"nan"</span>);<br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(idx1); <span class="com">// 2</span>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-content">
+                            <span class="com">// 2. موقع حرف</span><br>
+                            <span class="kw">string</span> date = <span class="str">"2024/05/20"</span>;<br>
+                            <span class="kw">int</span> idx2 = date.<span class="mtd">IndexOf</span>(<span class="char">'/'</span>);<br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(idx2); <span class="com">// 4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-cut"></i> القص: Substring (1)</div>
+            <div class="content-slide">
+                <div class="text-content">
+                    <h3 class="section-title">Substring(startIndex)</h3>
+                    <p>تقص النص ابتداءً من مكان محدد وحتى <strong>النهاية</strong>.</p>
+
+                    <div style="margin-top:2rem; direction:ltr; font-family:'Fira Code'; font-size:1.5rem;">
+                        "Un<span style="color:var(--accent-pink); font-weight:bold;">happy</span>"
+                        <br>
+                        <span style="font-size:1rem; color:var(--text-secondary);">&nbsp;01<span style="color:var(--accent-pink);">23456</span></span>
+                    </div>
+                </div>
+                <div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang-badge">قص حتى النهاية</span></div>
+                        <div class="code-content">
+                            <span class="kw">string</span> word = <span class="str">"Unhappy"</span>;<br><br>
+                            <span class="com">// ابدأ من الخانة 2 وحتى النهاية</span><br>
+                            <span class="kw">string</span> result = word.<span class="mtd">Substring</span>(<span class="num">2</span>);<br><br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(result);
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <span class="output-label">Output</span>
+                        happy
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-cut"></i> القص: Substring (2)</div>
+            <div class="content-slide">
+                <div class="text-content">
+                    <h3 class="section-title">Substring(start, length)</h3>
+                    <p>تقص النص ابتداءً من مكان محدد وبطول محدد (عدد حروف).</p>
+
+                    <div style="margin-top:2rem; direction:ltr; font-family:'Fira Code'; font-size:1.5rem;">
+                        "Sm<span style="color:var(--accent-green); font-weight:bold;">art</span>Phone"
+                        <br>
+                        <span style="font-size:1rem; color:var(--text-secondary);">&nbsp;01<span style="color:var(--accent-green);">234</span>56789</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang-badge">قص بطول محدد</span></div>
+                        <div class="code-content">
+                            <span class="kw">string</span> text = <span class="str">"SmartPhone"</span>;<br><br>
+                            <span class="com">// ابدأ من 2، وخذ 3 حروف</span><br>
+                            <span class="kw">string</span> sub = text.<span class="mtd">Substring</span>(<span class="num">2</span>, <span class="num">3</span>);<br><br>
+                            <span class="cls">Console</span>.<span class="mtd">WriteLine</span>(sub);
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <span class="output-label">Output</span>
+                        art
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-cogs"></i> دوال خارجية (Static Functions)</div>
+            <div class="content-full">
+                <p style="font-size:1.5rem; margin-bottom:2rem;">كيف نكتب دوال تتعامل مع النصوص؟</p>
+                <div class="code-block" style="display:inline-block; min-width:600px;">
+                    <div class="code-content">
+                        <span class="kw">public static</span> <span class="kw">string</span> CleanString(<span class="kw">string</span> input)<br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="kw">return</span> input.<span class="mtd">Trim</span>().<span class="mtd">ToLower</span>();<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-code"></i> مثال 1: طباعة الحرف الأول والأخير</div>
+            <div class="content-slide">
+                <div class="text-content">
+                    <p>دالة <code>PrintEnds</code> تستقبل نصاً وتطبع الحرف الأول والأخير منه.</p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="lang-badge">Code & Usage</span></div>
+                    <div class="code-content">
+                        <span class="com">// 1. تعريف العملية (Function)</span><br>
+                        <span class="kw">public static void</span> PrintEnds(<span class="kw">string</span> s)<br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="kw">if</span> (s.Length > <span class="num">0</span>)<br>
+                        &nbsp;&nbsp;{<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.<span class="mtd">WriteLine</span>(<span class="str">"First: "</span> + s[<span class="num">0</span>]);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.<span class="mtd">WriteLine</span>(<span class="str">"Last: "</span> + s[s.Length - <span class="num">1</span>]);<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br><br>
+                        <span class="com">// 2. الاستدعاء في Main</span><br>
+                        <span class="kw">static void</span> Main(<span class="kw">string</span>[] args)<br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="kw">string</span> myText = <span class="str">"Hello"</span>;<br>
+                        &nbsp;&nbsp;PrintEnds(myText); <span class="com">// First: H, Last: o</span><br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header"><i class="fas fa-code"></i> مثال 2: دالة تعيد قيمة (عدد تكرار الحرف)</div>
+            <div class="content-slide">
+                <div class="text-content">
+                    <p>دالة <code>CountChar</code> تستقبل نصاً وحرفاً، وتعيد عدد مرات ظهوره.</p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="lang-badge">Code & Usage</span></div>
+                    <div class="code-content">
+                        <span class="com">// 1. تعريف العملية (Function)</span><br>
+                        <span class="kw">public static int</span> CountChar(<span class="kw">string</span> str, <span class="kw">char</span> c)<br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="kw">int</span> count = <span class="num">0</span>;<br>
+                        &nbsp;&nbsp;<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < str.Length; i++)<br>
+                        &nbsp;&nbsp;{<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (str[i] == c) count++;<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;<span class="kw">return</span> count;<br>
+                        }<br><br>
+                        <span class="com">// 2. الاستدعاء في Main</span><br>
+                        <span class="kw">static void</span> Main(<span class="kw">string</span>[] args)<br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="kw">int</span> res = CountChar(<span class="str">"Banana"</span>, <span class="char">'a'</span>);<br>
+                        &nbsp;&nbsp;<span class="cls">Console</span>.<span class="mtd">WriteLine</span>(res); <span class="com">// Output: 3</span><br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-right"></i></button>
+            <span id="slide-counter" style="display:flex; align-items:center; font-family:'Fira Code';">1 / 12</span>
+            <button class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-left"></i></button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slide-counter');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+
+            // Update progress
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Update counter
+            slideCounter.innerText = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') nextSlide();
+            if (e.key === 'ArrowRight') prevSlide();
+            if (e.key === ' ') nextSlide();
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
