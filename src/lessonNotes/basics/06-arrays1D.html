@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المصفوفات الأحادية في C#</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            /* Screen Colors (Dark Mode) */
+            --bg-body: #1e1e2e;
+            --bg-card: #252538;
+            --text-primary: #ffffff;
+            --text-secondary: #a6accd;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7;
+            --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8;
+            --code-bg: #11111b;
+            --border-color: #313244;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            overflow: hidden; /* For Presentation Mode */
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Presentation Mode Styles --- */
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            pointer-events: none;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        /* --- Typography & Components --- */
+        h1 { font-size: 3.5rem; color: var(--accent-blue); margin-bottom: 1rem; text-align: center;}
+        h2 { font-size: 2.2rem; color: var(--accent-pink); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        h3 { font-size: 1.5rem; color: var(--accent-yellow); margin-bottom: 1rem; }
+        p, li { font-size: 1.2rem; line-height: 1.6; color: var(--text-primary); max-width: 900px; }
+        ul { list-style: none; padding: 0; margin-bottom: 20px;}
+        li { margin-bottom: 10px; position: relative; padding-right: 25px; }
+        li::before { content: "•"; color: var(--accent-green); position: absolute; right: 0; font-size: 1.5rem; top: -5px; }
+
+        .author { margin-top: 2rem; padding: 0.5rem 1.5rem; border: 1px solid var(--accent-blue); border-radius: 50px; color: var(--accent-blue); }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            direction: ltr;
+            text-align: left;
+            margin: 1rem 0;
+            width: 100%;
+            max-width: 850px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-size: 1.1rem;
+            page-break-inside: avoid; /* Prevent code splitting */
+            color: var(--text-primary);
+        }
+        .kw { color: var(--accent-pink); font-weight: bold; }
+        .type { color: var(--accent-blue); }
+        .str { color: var(--accent-green); }
+        .num { color: var(--accent-yellow); }
+        .cls { color: #4ec9b0; }
+        .com { color: #6c7086; font-style: italic; }
+
+        /* Box Styles (Note, Warning, Example) */
+        .box {
+            padding: 15px; border-radius: 8px; margin: 15px 0; width: 100%; max-width: 850px;
+            border-right: 5px solid;
+            page-break-inside: avoid;
+            color: var(--text-primary);
+        }
+        .box-note { background: rgba(137, 180, 250, 0.1); border-color: var(--accent-blue); }
+        .box-warning { background: rgba(243, 139, 168, 0.1); border-color: var(--accent-red); color: #ffcccc; }
+        .box-example { background: rgba(166, 227, 161, 0.1); border-color: var(--accent-green); }
+
+        /* Visual Arrays */
+        .array-visual {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            direction: ltr;
+            flex-wrap: wrap;
+            page-break-inside: avoid;
+        }
+        .cell {
+            width: 70px; height: 70px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            border-radius: 8px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            font-family: 'Fira Code', monospace;
+            position: relative;
+            transition: all 0.3s;
+            -webkit-print-color-adjust: exact;
+        }
+        .cell-val { font-size: 1.5rem; font-weight: bold; }
+        .cell-idx { position: absolute; bottom: -25px; font-size: 0.9rem; color: var(--accent-pink); }
+        .cell-addr { position: absolute; top: -25px; font-size: 0.7rem; color: #666; }
+
+        /* Animation & Active State */
+        .cell.active-head {
+            background-color: rgba(249, 234, 175, 0.2);
+            border-color: var(--accent-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(249, 234, 175, 0.3);
+        }
+
+        .arrow-indicator {
+            position: absolute; top: 110%; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center;
+            opacity: 0; transition: opacity 0.3s, top 0.3s; pointer-events: none; z-index: 20;
+        }
+        .cell.active-head .arrow-indicator { opacity: 1; top: 120%; }
+        .arrow-icon { color: var(--accent-yellow); font-size: 1.5rem; margin-bottom: 5px; animation: bounce 1s infinite; }
+        .arrow-label {
+            background-color: #333; color: #fff; padding: 5px 10px; border-radius: 5px;
+            font-size: 0.85rem; white-space: nowrap; font-family: 'Fira Code', monospace;
+            border: 1px solid var(--accent-yellow); text-align: left; direction: ltr;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+        /* Controls */
+        .simulation-panel {
+            background: #252538; padding: 10px; border-radius: 50px; border: 1px solid #444;
+            display: flex; gap: 10px; margin-top: 30px;
+        }
+        .sim-btn {
+            background: #333; color: white; border: 1px solid #555; padding: 8px 20px;
+            border-radius: 20px; cursor: pointer; font-family: 'Tajawal'; font-weight: bold;
+            display: flex; align-items: center; gap: 8px; transition: 0.2s;
+        }
+        .sim-btn:hover { background: #444; border-color: var(--accent-blue); }
+        .sim-btn.primary { background: var(--accent-blue); color: #1e1e2e; border: none; }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 1000;
+            background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 30px; backdrop-filter: blur(5px);
+        }
+        .nav-btn {
+            background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.2s;
+        }
+        .nav-btn:hover { color: var(--accent-blue); }
+        .slide-num { font-family: 'Fira Code'; font-size: 1.2rem; align-self: center; }
+
+        /* --- PRINT SETTINGS (Fix for PDF) --- */
+        @media print {
+            body, html {
+                height: auto !important;
+                overflow: visible !important;
+                background-color: var(--bg-body) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: white !important; /* Force global white text */
+            }
+
+            .slider-container {
+                height: auto !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                transform: none !important;
+                display: flex !important;
+                height: 100vh !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                border-bottom: 1px solid #333;
+                top: auto !important;
+                left: auto !important;
+                margin: 0 !important;
+            }
+
+            /* FORCE TEXT COLORS IN PRINT */
+            h1, h2, h3, p, li, .box, .code-block, .author, span {
+                color: #ffffff !important;
+                text-shadow: none !important;
+            }
+
+            /* Preserve Syntax Highlighting */
+            .kw { color: var(--accent-pink) !important; }
+            .type { color: var(--accent-blue) !important; }
+            .str { color: var(--accent-green) !important; }
+            .num { color: var(--accent-yellow) !important; }
+            .cls { color: #4ec9b0 !important; }
+            .com { color: #6c7086 !important; }
+
+            /* Fix Cell Colors */
+            .cell {
+                box-shadow: none !important;
+                border: 2px solid var(--accent-blue) !important;
+                background-color: var(--bg-card) !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .cell .cell-val { color: #ffffff !important; }
+            .cell .cell-idx { color: var(--accent-pink) !important; }
+
+            /* Hide Controls */
+            .nav-controls,
+            .simulation-panel,
+            .sim-btn,
+            .arrow-indicator {
+                display: none !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+
+    <!-- 1. Title -->
+    <div class="slide active">
+        <h1>المصفوفات الأحادية في C#</h1>
+        <h3>Single-Dimensional Arrays</h3>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">C#</span></div>
+            <div class="cell"><span class="cell-val">...</span></div>
+        </div>
+        <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+    </div>
+
+    <!-- 2. Introduction -->
+    <div class="slide">
+        <h2><i class="fas fa-info-circle"></i> مقدمة: ما هي المصفوفة؟</h2>
+        <div class="box box-note">
+            هي بنية معطيات تمكننا من تخزين مجموعة من القيم من <strong>نفس النوع</strong> تحت اسم واحد.
+        </div>
+        <ul>
+            <li>تخزين مجموعة كبيرة من البيانات بطريقة منظمة.</li>
+            <li>سهولة الوصول إلى العناصر عن طريق <strong>الفهرس (Index)</strong>.</li>
+            <li>تسهيل معالجة البيانات باستخدام الحلقات (Loops).</li>
+            <li>توفير في الكود وتجنب التكرار.</li>
+        </ul>
+    </div>
+
+    <!-- 3. Real Life Example -->
+    <div class="slide">
+        <h2><i class="fas fa-lightbulb"></i> مثال حياتي</h2>
+        <p>تخيّل أنك تريد تخزين درجات 30 طالباً. بدون المصفوفات:</p>
+        <div class="code-block">
+            <span class="type">int</span> grade1, grade2, grade3, ..., grade30;
+        </div>
+        <p>أما مع المصفوفات:</p>
+        <div class="code-block">
+            <span class="type">int</span>[] grades = <span class="kw">new</span> <span class="type">int</span>[<span class="num">30</span>];
+        </div>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">90</span></div>
+            <div class="cell"><span class="cell-val">85</span></div>
+            <div class="cell"><span class="cell-val">...</span></div>
+            <div class="cell"><span class="cell-val">70</span></div>
+        </div>
+    </div>
+
+    <!-- 4. Declaration Syntax -->
+    <div class="slide">
+        <h2><i class="fas fa-code"></i> التصريح عن المصفوفة وإنشاؤها</h2>
+        <p>الصيغة العامة:</p>
+        <div class="code-block">
+            <span class="type">type</span>[] arrayName;
+        </div>
+        <ul>
+            <li><span class="type">type</span>: نوع العناصر (int, double, string, ...).</li>
+            <li><span class="kw">[]</span>: تدل على أن المتغير مصفوفة.</li>
+        </ul>
+        <h3>إنشاء المصفوفة (Allocation)</h3>
+        <p>استخدام الكلمة المفتاحية <code>new</code> لتحديد الحجم.</p>
+        <div class="code-block">
+            <span class="com">// التصريح والإنشاء بخطوة واحدة</span><br>
+            <span class="type">int</span>[] numbers = <span class="kw">new</span> <span class="type">int</span>[<span class="num">5</span>];
+        </div>
+    </div>
+
+    <!-- 5. Default Values -->
+    <div class="slide">
+        <h2><i class="fas fa-eraser"></i> القيم الافتراضية</h2>
+        <p>عند إنشاء المصفوفة باستخدام <code>new</code>، يتم تصفير القيم تلقائياً:</p>
+        <table style="width: 80%; margin: 20px auto; border-collapse: collapse; text-align: center; font-size: 1.2rem;">
+            <tr style="border-bottom: 2px solid var(--accent-blue);">
+                <th style="padding: 10px; color: var(--accent-pink);">النوع</th>
+                <th style="padding: 10px; color: var(--accent-yellow);">القيمة الافتراضية</th>
+            </tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #444;">int, double</td><td style="padding: 10px; border-bottom: 1px solid #444;">0</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #444;">bool</td><td style="padding: 10px; border-bottom: 1px solid #444;">false</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #444;">string, object</td><td style="padding: 10px; border-bottom: 1px solid #444;">null</td></tr>
+            <tr><td style="padding: 10px;">char</td><td style="padding: 10px;">'\0'</td></tr>
+        </table>
+    </div>
+
+    <!-- 6. Initialization Methods -->
+    <div class="slide">
+        <h2><i class="fas fa-layer-group"></i> طرق التهيئة المباشرة</h2>
+        <p>يمكنك إعطاء قيم أولية للمصفوفة عند إنشائها:</p>
+        <div class="code-block">
+            <span class="com">// طريقة 1: مع تحديد الحجم</span><br>
+            <span class="type">int</span>[] n1 = <span class="kw">new</span> <span class="type">int</span>[<span class="num">3</span>] { <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span> };<br><br>
+            <span class="com">// طريقة 2: الحجم تلقائي</span><br>
+            <span class="type">int</span>[] n2 = <span class="kw">new</span> <span class="type">int</span>[] { <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span> };<br><br>
+            <span class="com">// طريقة 3: الأقصر (مفضلة)</span><br>
+            <span class="type">int</span>[] n3 = { <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span> };
+        </div>
+    </div>
+
+    <!-- 7. Accessing Elements -->
+    <div class="slide">
+        <h2><i class="fas fa-hand-pointer"></i> الوصول للعناصر (الفهرس)</h2>
+        <p>الفهرس (Index) يبدأ من <strong>0</strong> وينتهي عند <strong>Length - 1</strong>.</p>
+        <div class="code-block">
+            <span class="type">int</span>[] arr = { <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span> };<br><br>
+            <span class="type">int</span> first = arr[<span class="num">0</span>];   <span class="com">// 10</span><br>
+            <span class="type">int</span> third = arr[<span class="num">2</span>];   <span class="com">// 30</span><br>
+            arr[<span class="num">4</span>] = <span class="num">99</span>;          <span class="com">// تعديل العنصر الأخير</span>
+        </div>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">10</span><span class="cell-idx">0</span></div>
+            <div class="cell"><span class="cell-val">20</span><span class="cell-idx">1</span></div>
+            <div class="cell"><span class="cell-val">30</span><span class="cell-idx">2</span></div>
+            <div class="cell"><span class="cell-val">40</span><span class="cell-idx">3</span></div>
+            <div class="cell" style="border-color: var(--accent-green);"><span class="cell-val">99</span><span class="cell-idx">4</span></div>
+        </div>
+    </div>
+
+    <!-- 8. Length Property -->
+    <div class="slide">
+        <h2><i class="fas fa-ruler-horizontal"></i> خاصية الطول (Length)</h2>
+        <p>تُستخدم لمعرفة عدد عناصر المصفوفة.</p>
+        <div class="code-block">
+            <span class="type">int</span>[] nums = { <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span> };<br>
+            <span class="type">int</span> size = nums.Length;  <span class="com">// 5</span><br><br>
+            <span class="com">// الوصول للعنصر الأخير دائماً:</span><br>
+            <span class="type">int</span> last = nums[nums.Length - <span class="num">1</span>];
+        </div>
+        <div class="box box-warning">
+            <i class="fas fa-exclamation-triangle"></i> إذا حاولت الوصول للفهرس <code>nums[5]</code> ستحصل على خطأ <code>IndexOutOfRangeException</code> لأن الفهارس من 0 إلى 4 فقط.
+        </div>
+    </div>
+
+    <!-- 9. Looping (Simulation) -->
+    <div class="slide" id="slide-loop">
+        <h2><i class="fas fa-sync"></i> التعامل مع المصفوفة (الحلقات)</h2>
+        <p>طباعة جميع العناصر باستخدام <code>for</code>.</p>
+        <div class="code-block">
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(arr[i]);<br>
+            }
+        </div>
+        <div class="array-visual">
+            <div class="cell" data-val="10"><span class="cell-val">10</span><span class="cell-idx">0</span></div>
+            <div class="cell" data-val="20"><span class="cell-val">20</span><span class="cell-idx">1</span></div>
+            <div class="cell" data-val="30"><span class="cell-val">30</span><span class="cell-idx">2</span></div>
+            <div class="cell" data-val="40"><span class="cell-val">40</span><span class="cell-idx">3</span></div>
+        </div>
+        <div class="simulation-panel">
+            <button class="sim-btn primary" onclick="simStep('loop')"><i class="fas fa-step-forward"></i> خطوة</button>
+            <button class="sim-btn" onclick="simReset('loop')"><i class="fas fa-undo"></i> إعادة</button>
+        </div>
+    </div>
+
+    <!-- 10. User Input -->
+    <div class="slide">
+        <h2><i class="fas fa-keyboard"></i> قراءة القيم من المستخدم</h2>
+        <p>مثال لقراءة 5 درجات:</p>
+        <div class="code-block">
+            <span class="type">int</span>[] grades = <span class="kw">new</span> <span class="type">int</span>[<span class="num">5</span>];<br><br>
+            <span class="cls">Console</span>.WriteLine(<span class="str">"أدخل 5 درجات:"</span>);<br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < grades.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="cls">Console</span>.Write(<span class="str">$"الدرجة {i + 1}: "</span>);<br>
+            &nbsp;&nbsp;grades[i] = <span class="type">int</span>.Parse(<span class="cls">Console</span>.ReadLine());<br>
+            }
+        </div>
+    </div>
+
+    <!-- 11. Sum (Simulation) -->
+    <div class="slide" id="slide-sum">
+        <h2><i class="fas fa-calculator"></i> عمليات أساسية: المجموع</h2>
+        <p>جمع عناصر المصفوفة.</p>
+        <div class="code-block">
+            <span class="type">int</span> sum = <span class="num">0</span>;<br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < grades.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;sum += grades[i];<br>
+            }
+        </div>
+        <div class="array-visual">
+            <div class="cell" data-val="80"><span class="cell-val">80</span><span class="cell-idx">0</span></div>
+            <div class="cell" data-val="90"><span class="cell-val">90</span><span class="cell-idx">1</span></div>
+            <div class="cell" data-val="70"><span class="cell-val">70</span><span class="cell-idx">2</span></div>
+            <div class="cell" data-val="100"><span class="cell-val">100</span><span class="cell-idx">3</span></div>
+        </div>
+        <div class="simulation-panel">
+            <button class="sim-btn primary" onclick="simStep('sum')"><i class="fas fa-step-forward"></i> خطوة</button>
+            <button class="sim-btn" onclick="simReset('sum')"><i class="fas fa-undo"></i> إعادة</button>
+        </div>
+    </div>
+
+    <!-- 12. Counting -->
+    <div class="slide">
+        <h2><i class="fas fa-filter"></i> عمليات أساسية: العد</h2>
+        <p>مثال: عد الأعداد الزوجية في المصفوفة.</p>
+        <div class="code-block">
+            <span class="type">int</span> evenCount = <span class="num">0</span>;<br><br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < numbers.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (numbers[i] % <span class="num">2</span> == <span class="num">0</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;evenCount++;<br>
+            }
+        </div>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">5</span><span class="cell-idx">0</span></div>
+            <div class="cell" style="border-color:var(--accent-green)"><span class="cell-val">12</span><span class="cell-idx">1</span></div>
+            <div class="cell" style="border-color:var(--accent-green)"><span class="cell-val">8</span><span class="cell-idx">2</span></div>
+            <div class="cell"><span class="cell-val">3</span><span class="cell-idx">3</span></div>
+            <div class="cell" style="border-color:var(--accent-green)"><span class="cell-val">20</span><span class="cell-idx">4</span></div>
+        </div>
+    </div>
+
+    <!-- 13. Max (Simulation) -->
+    <div class="slide" id="slide-max">
+        <h2><i class="fas fa-trophy"></i> إيجاد العدد الأكبر</h2>
+        <p>نفترض أن الأول هو الأكبر (max)، ثم نقارن مع البقية.</p>
+        <div class="code-block">
+            <span class="type">int</span> max = nums[<span class="num">0</span>];<br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i < nums.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (nums[i] > max) max = nums[i];<br>
+            }
+        </div>
+        <div class="array-visual">
+            <div class="cell" data-val="12"><span class="cell-val">12</span><span class="cell-idx">0</span></div>
+            <div class="cell" data-val="50"><span class="cell-val">50</span><span class="cell-idx">1</span></div>
+            <div class="cell" data-val="7"><span class="cell-val">7</span><span class="cell-idx">2</span></div>
+            <div class="cell" data-val="90"><span class="cell-val">90</span><span class="cell-idx">3</span></div>
+            <div class="cell" data-val="20"><span class="cell-val">20</span><span class="cell-idx">4</span></div>
+        </div>
+        <div class="simulation-panel">
+            <button class="sim-btn primary" onclick="simStep('max')"><i class="fas fa-step-forward"></i> خطوة</button>
+            <button class="sim-btn" onclick="simReset('max')"><i class="fas fa-undo"></i> إعادة</button>
+        </div>
+    </div>
+
+    <!-- 14. Max Index -->
+    <div class="slide">
+        <h2><i class="fas fa-map-marker-alt"></i> إيجاد أكبر عنصر وموقعه</h2>
+        <p>نحفظ القيمة والموقع (Index) معاً.</p>
+        <div class="code-block">
+            <span class="type">int</span> max = numbers[<span class="num">0</span>];<br>
+            <span class="type">int</span> maxIndex = <span class="num">0</span>;<br><br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i < numbers.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (numbers[i] > max)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;max = numbers[i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;maxIndex = i;<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+    </div>
+
+    <!-- 15. Linear Search -->
+    <div class="slide">
+        <h2><i class="fas fa-search"></i> البحث الخطي (Linear Search)</h2>
+        <p>البحث عن عنصر والتوقف عند إيجاده.</p>
+        <div class="code-block">
+            <span class="type">int</span> searchFor = <span class="num">15</span>;<br>
+            <span class="type">bool</span> found = <span class="kw">false</span>;<br><br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (arr[i] == searchFor)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;found = <span class="kw">true</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(<span class="str">"Found at: "</span> + i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">break</span>; <span class="com">// توقف عند الإيجاد</span><br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+    </div>
+
+    <!-- 16. Search All -->
+    <div class="slide">
+        <h2><i class="fas fa-search-plus"></i> إيجاد جميع مواقع العنصر</h2>
+        <p>إذا كان العنصر مكرراً، لا نستخدم break.</p>
+        <div class="code-block">
+            <span class="type">int</span> searchFor = <span class="num">12</span>;<br>
+            <span class="type">int</span> count = <span class="num">0</span>;<br><br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (arr[i] == searchFor)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(<span class="str">"Index: "</span> + i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+    </div>
+
+    <!-- 17. Copy Trap -->
+    <div class="slide">
+        <h2><i class="fas fa-clone"></i> نسخ المصفوفات - انتبه!</h2>
+        <div class="box box-warning">
+            المصفوفة هي <strong>Reference Type</strong>. استخدام علامة <code>=</code> لا ينسخ القيم، بل ينسخ المرجع!
+        </div>
+        <div class="code-block">
+            <span class="type">int</span>[] arr1 = { <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span> };<br>
+            <span class="type">int</span>[] arr2 = arr1;  <span class="com">// كلاهما يشير لنفس المكان!</span><br><br>
+            arr2[<span class="num">0</span>] = <span class="num">100</span>;<br>
+            <span class="cls">Console</span>.WriteLine(arr1[<span class="num">0</span>]);  <span class="com">// يطبع 100!</span>
+        </div>
+        <div style="display: flex; gap: 20px; align-items: center; justify-content: center; margin-top: 20px;">
+            <div style="padding: 10px; border: 1px solid white; border-radius: 5px;">arr1</div>
+            <div style="padding: 10px; border: 1px solid white; border-radius: 5px;">arr2</div>
+            <i class="fas fa-arrow-right" style="color: var(--accent-red);"></i>
+            <div class="cell" style="width: auto; padding: 0 10px;">Memory: [100, 2, 3]</div>
+        </div>
+    </div>
+
+    <!-- 18. Correct Copy -->
+    <div class="slide">
+        <h2><i class="fas fa-copy"></i> النسخ الصحيح</h2>
+        <p>يجب إنشاء مصفوفة جديدة ونسخ القيم إليها.</p>
+        <div class="code-block">
+            <span class="com">// الطريقة اليدوية</span><br>
+            <span class="type">int</span>[] arr2 = <span class="kw">new</span> <span class="type">int</span>[arr1.Length];<br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr1.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;arr2[i] = arr1[i];<br>
+            }
+        </div>
+        <div class="code-block">
+            <span class="com">// استخدام دالة جاهزة</span><br>
+            <span class="cls">Array</span>.Copy(arr1, arr2, arr1.Length);
+        </div>
+    </div>
+
+    <!-- 19. Reverse -->
+    <div class="slide">
+        <h2><i class="fas fa-exchange-alt"></i> عكس المصفوفة (Reverse)</h2>
+        <p>تبديل العناصر من البداية والنهاية حتى المنتصف.</p>
+        <div class="code-block">
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length / <span class="num">2</span>; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span> temp = arr[i];<br>
+            &nbsp;&nbsp;arr[i] = arr[arr.Length - <span class="num">1</span> - i];<br>
+            &nbsp;&nbsp;arr[arr.Length - <span class="num">1</span> - i] = temp;<br>
+            }
+        </div>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">1</span></div>
+            <div class="cell"><span class="cell-val">2</span></div>
+            <div class="cell"><span class="cell-val">3</span></div>
+        </div>
+        <i class="fas fa-arrow-down" style="color:var(--accent-pink)"></i>
+        <div class="array-visual">
+            <div class="cell" style="border-color:var(--accent-pink)"><span class="cell-val">3</span></div>
+            <div class="cell"><span class="cell-val">2</span></div>
+            <div class="cell" style="border-color:var(--accent-pink)"><span class="cell-val">1</span></div>
+        </div>
+    </div>
+
+    <!-- 20. Shift Right -->
+    <div class="slide">
+        <h2><i class="fas fa-arrow-right"></i> إزاحة العناصر لليمين (Shift Right)</h2>
+        <div class="code-block">
+            <span class="type">int</span> last = arr[arr.Length - <span class="num">1</span>];<br><br>
+            <span class="kw">for</span> (<span class="type">int</span> i = arr.Length - <span class="num">1</span>; i > <span class="num">0</span>; i--)<br>
+            {<br>
+            &nbsp;&nbsp;arr[i] = arr[i - <span class="num">1</span>];<br>
+            }<br>
+            arr[<span class="num">0</span>] = last;
+        </div>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">5</span></div>
+            <div class="cell"><span class="cell-val">1</span></div>
+            <div class="cell"><span class="cell-val">2</span></div>
+            <div class="cell"><span class="cell-val">3</span></div>
+            <div class="cell"><span class="cell-val">4</span></div>
+        </div>
+    </div>
+
+    <!-- 21. Filtering -->
+    <div class="slide">
+        <h2><i class="fas fa-filter"></i> فلترة العناصر (Filter)</h2>
+        <p>نسخ عناصر محددة (مثلاً الزوجية) إلى مصفوفة جديدة.</p>
+        <ol style="font-size: 1.1rem; max-width: 800px; margin-right: 40px;">
+            <li>عد العناصر المطلوبة أولاً لتحديد حجم المصفوفة الجديدة.</li>
+            <li>إنشاء المصفوفة الجديدة.</li>
+            <li>نسخ القيم المناسبة.</li>
+        </ol>
+        <div class="code-block" style="font-size: 0.9rem;">
+            <span class="type">int</span> index = <span class="num">0</span>;<br>
+            <span class="type">int</span>[] evenNumbers = <span class="kw">new</span> <span class="type">int</span>[evenCount];<br>
+            <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < numbers.Length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">if</span> (numbers[i] % <span class="num">2</span> == <span class="num">0</span>)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;evenNumbers[index] = numbers[i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;index++;<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+    </div>
+
+    <!-- 22. Helper Methods 1 -->
+    <div class="slide">
+        <h2><i class="fas fa-tools"></i> دوال مساعدة: طباعة المصفوفة</h2>
+        <div class="code-block">
+            <span class="kw">public static void</span> PrintArray(<span class="type">int</span>[] arr)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="cls">Console</span>.Write(<span class="str">"[ "</span>);<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.Write(arr[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (i < arr.Length - <span class="num">1</span>) <span class="cls">Console</span>.Write(<span class="str">", "</span>);<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(<span class="str">" ]"</span>);<br>
+            }
+        </div>
+    </div>
+
+    <!-- 23. Helper Methods 2 -->
+    <div class="slide">
+        <h2><i class="fas fa-tools"></i> دوال مساعدة: الجمع والبحث</h2>
+        <div class="code-block" style="font-size: 0.85rem;">
+            <span class="kw">public static int</span> SumArray(<span class="type">int</span>[] arr)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span> sum = <span class="num">0</span>;<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++) sum += arr[i];<br>
+            &nbsp;&nbsp;<span class="kw">return</span> sum;<br>
+            }<br><br>
+            <span class="kw">public static int</span> FindElement(<span class="type">int</span>[] arr, <span class="type">int</span> val)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (arr[i] == val) <span class="kw">return</span> i;<br>
+            &nbsp;&nbsp;<span class="kw">return</span> -<span class="num">1</span>;<br>
+            }
+        </div>
+    </div>
+
+    <!-- 24. Common Errors -->
+    <div class="slide">
+        <h2><i class="fas fa-bug"></i> أخطاء شائعة</h2>
+        <div class="box box-warning">
+            <strong>1. الخروج عن حدود المصفوفة:</strong><br>
+            <code>arr[5] = 10;</code> لمصفوفة حجمها 5. (الصحيح أقصى حد هو 4).
+        </div>
+        <div class="box box-warning">
+            <strong>2. استخدام = بدلاً من == في الشرط:</strong><br>
+            <code>if (arr[i] = 10)</code> (هذا تعيين وليس مقارنة).
+        </div>
+        <div class="box box-warning">
+            <strong>3. نسيان تهيئة المصفوفة:</strong><br>
+            <code>int[] arr; arr[0]=5;</code> (يجب استخدام <code>new</code> أولاً).
+        </div>
+    </div>
+
+    <!-- 25. Exercises -->
+    <div class="slide">
+        <h2><i class="fas fa-dumbbell"></i> تمارين للتدريب</h2>
+        <ol style="font-size: 1.1rem; max-width: 900px; margin-right: 30px;">
+            <li>اقرأ 10 أعداد واطبع: المجموع، المعدل، الأكبر، والأصغر.</li>
+            <li>لمصفوفة من 8 أعداد، اطبع: الزوجية، الفردية، عدد الموجبة، عدد السالبة.</li>
+            <li>اكتب دالة تفحص هل المصفوفة <strong>متناظرة</strong> (Palindrome)؟ (مثل {1,2,1}).</li>
+            <li>اجمع عناصر مصفوفتين متقابلتين في مصفوفة ثالثة.</li>
+            <li>اكتب دالة لإزاحة عناصر المصفوفة <code>n</code> مرات لليمين.</li>
+        </ol>
+    </div>
+
+    <!-- 26. Summary -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle"></i> ملخص</h2>
+        <ul>
+            <li>المصفوفة حجمها ثابت ونوعها موحد.</li>
+            <li>يبدأ العد من <strong>0</strong> وينتهي عند <strong>Length - 1</strong>.</li>
+            <li>النسخ بـ <code>=</code> ينسخ المرجع فقط؛ استخدم حلقة نسخ للقيم.</li>
+            <li>الحلقة <code>for</code> هي الأداة الأساسية للتعامل مع المصفوفات.</li>
+        </ul>
+        <h3 style="margin-top:2rem; color:var(--accent-blue);">حظاً موفقاً!</h3>
+        <div class="author">الأستاذ محمود اغبارية</div>
+    </div>
+
+</div>
+
+<!-- Navigation Buttons -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="move(-1)"><i class="fas fa-chevron-right"></i></button>
+    <div class="slide-num" id="slideIndicator">1 / 26</div>
+    <button class="nav-btn" onclick="move(1)"><i class="fas fa-chevron-left"></i></button>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+    let activeInterval = null;
+
+    // Simulation states
+    const simState = {
+        loop: { i: -1, timer: null },
+        sum: { i: -1, sum: 0, timer: null },
+        max: { i: 0, max: 0, timer: null }
+    };
+
+    function initArrow() {
+        document.querySelectorAll('.cell').forEach(cell => {
+            if(!cell.querySelector('.arrow-indicator')) {
+                cell.innerHTML += `
+                    <div class="arrow-indicator">
+                        <i class="fas fa-arrow-up arrow-icon"></i>
+                        <div class="arrow-label"></div>
+                    </div>`;
+            }
+        });
+    }
+
+    // Initialize arrows on load
+    initArrow();
+
+    function updateSlide() {
+        slides.forEach((s, i) => {
+            s.classList.remove('active');
+            if (i === currentSlide) {
+                s.classList.add('active');
+                // Reset simulation when entering slide
+                if(s.id && s.id.startsWith('slide-')) {
+                    simReset(s.id.replace('slide-', ''));
+                }
+            }
+        });
+        indicator.innerText = `${currentSlide + 1} / ${slides.length}`;
+        if(activeInterval) clearInterval(activeInterval);
+    }
+
+    function move(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        updateSlide();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') move(-1);
+        if (e.key === 'ArrowLeft') move(1);
+    });
+
+    // --- Simulation Logic ---
+
+    function simReset(type) {
+        if(simState[type].timer) clearInterval(simState[type].timer);
+
+        let slide = document.getElementById(`slide-${type}`);
+        let cells = slide.querySelectorAll('.cell');
+
+        // Reset Visuals
+        cells.forEach(c => c.classList.remove('active-head'));
+
+        // Reset State
+        if(type === 'max') {
+             let firstVal = parseInt(cells[0].dataset.val);
+             simState.max.i = 0;
+             simState.max.max = firstVal;
+        } else {
+            simState[type].i = -1;
+        }
+
+        if(type === 'sum') simState.sum.sum = 0;
+    }
+
+    function simStep(type) {
+        let slide = document.getElementById(`slide-${type}`);
+        let cells = slide.querySelectorAll('.cell');
+        let state = simState[type];
+
+        state.i++;
+
+        if (state.i >= cells.length) {
+            if(state.timer) clearInterval(state.timer);
+            return;
+        }
+
+        cells.forEach(c => c.classList.remove('active-head'));
+
+        let currentCell = cells[state.i];
+        currentCell.classList.add('active-head');
+        let val = parseInt(currentCell.dataset.val || 0);
+
+        if (type === 'sum') {
+            state.sum += val;
+        }
+
+        let label = currentCell.querySelector('.arrow-label');
+        let content = `i=${state.i}`;
+
+        if (type === 'loop') {
+             content += `<br>arr[${state.i}]=${val}`;
+        }
+        else if (type === 'sum') {
+             content += `<br>sum=${state.sum}`;
+        }
+        else if (type === 'max') {
+             content += `<br>max=${state.max}`;
+             if(val > state.max) {
+                 state.max = val;
+                 content += ` &#8594; ${state.max} <br>(New!)`;
+             } else {
+                 content += `<br>(No)`;
+             }
+        }
+
+        label.innerHTML = content;
+    }
+</script>
+
+</body>
+</html>
