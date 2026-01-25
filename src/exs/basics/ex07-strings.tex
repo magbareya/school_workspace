@@ -1,0 +1,259 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن - النصوص (Strings)}
+\else
+\title{ورقة تمرن - النصوص (Strings)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    % ------------------------------------------------------
+    % 1. [New] Write vs WriteLine (Trace)
+    % ------------------------------------------------------
+    \item
+    ما هو ناتج مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+Console.Write("A");
+Console.WriteLine("B");
+Console.Write("C");
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{verbatim}
+AB
+C
+    \end{verbatim}
+    \end{english}
+    الشرح: "A" تطبع ويبقى المؤشر، "B" تطبع وينزل سطر، "C" تطبع في السطر الجديد.
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 2. [Old] Basics: Length and Indexing
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل كلمة من المستخدم، ويطبع ما يلي:
+    \begin{itemize}
+        \item طول الكلمة.
+        \item الحرف الأول من الكلمة.
+        \item الحرف الأخير من الكلمة.
+    \end{itemize}
+    \textbf{مثال:} إذا كانت الكلمة \textenglish{"Hello"}، يطبع الطول 5، الحرف الأول \textenglish{'H'}، والحرف الأخير \textenglish{'o'}.
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string s = Console.ReadLine();
+Console.WriteLine("Length: " + s.Length);
+Console.WriteLine("First: " + s[0]);
+Console.WriteLine("Last: " + s[s.Length - 1]);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 3. [New] Contains (char overload)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل كلمة سر، ويفحص هل تحتوي على الرمز \textenglish{'\#'}. \\
+    \textbf{مثال:} للمُدخل \textenglish{"pass\#123"} يطبع \textenglish{"Contains hash"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string pass = Console.ReadLine();
+if (pass.Contains('#'))
+{
+    Console.WriteLine("Contains hash");
+}
+else
+{
+    Console.WriteLine("No hash");
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 4. [Old] Contains (string overload) - Email
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل عنوان بريد إلكتروني، ويفحص هل يحتوي على \textenglish{"@"} وهل يحتوي على \textenglish{"."}. \\
+    \textbf{مثال:} للمدخل \textenglish{"student@school.com"} يطبع \textenglish{"Valid"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string email = Console.ReadLine();
+if (email.Contains("@") && email.Contains("."))
+    Console.WriteLine("Valid");
+else
+    Console.WriteLine("Invalid");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 5. [New] IndexOf (string overload)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل جملة، ويطبع الموقع (Index) الذي تبدأ عنده كلمة \textenglish{"cat"}.
+    إذا لم تكن موجودة يطبع $-1$. \\
+    \textbf{مثال:} للجملة \textenglish{"The cat sat"} يطبع \textenglish{4}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string sentence = Console.ReadLine();
+int index = sentence.IndexOf("cat");
+Console.WriteLine(index);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 6. [Old] ToLower/ToUpper
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يسأل المستخدم عن عاصمة مصر.
+    إذا أجاب \textenglish{"Cairo"} (بأي حالة أحرف، كبيرة أو صغيرة) يطبع \textenglish{"Correct"}. \\
+    \textbf{مثال:} إذا أدخل المستخدم \textenglish{"CAIRO"} أو \textenglish{"cairo"} تكون الإجابة صحيحة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string ans = Console.ReadLine();
+if (ans.ToLower() == "cairo")
+    Console.WriteLine("Correct");
+else
+    Console.WriteLine("Wrong");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 7. [Old] Substring (Start only - First Half)
+    % ------------------------------------------------------
+    \item
+    اكتب عملية خارجية تتلقى نصاً وتطبع النصف الأول منه. \\
+    \textbf{مثال:} إذا تلقت العملية \textenglish{"Computer"}، فإنها تطبع \textenglish{"Comp"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintFirstHalf(string text)
+{
+    Console.WriteLine(text.Substring(0, text.Length / 2));
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 8. [New] Substring (Start only - Last 3 chars)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل كلمة (طولها 3 على الأقل)، ويطبع آخر 3 حروف منها. \\
+    \textbf{مثال:} للكلمة \textenglish{"School"} يطبع \textenglish{"ool"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string s = Console.ReadLine();
+if (s.Length >= 3)
+{
+    string last3 = s.Substring(s.Length - 3);
+    Console.WriteLine(last3);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 9. [New] Substring (Start, Length)
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل رقم هاتف بصيغة \textenglish{050-1234567}.
+    على البرنامج استخراج وطباعة مقدمة الهاتف (أول 3 أرقام). \\
+    \textbf{مثال:} للمدخل \textenglish{052-9999999} يطبع \textenglish{052}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string phone = Console.ReadLine();
+string prefix = phone.Substring(0, 3);
+Console.WriteLine(prefix);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 11. [Old] Loop: Count specific char
+    % ------------------------------------------------------
+    \item
+    اكتب عملية خارجية تتلقى نصاً وحرفاً (\textenglish{char})، وتعيد عدد مرات ظهور هذا الحرف داخل النص. \\
+    \textbf{مثال:} إذا تلقت العملية النص \textenglish{"banana"} والحرف \textenglish{'a'}، فإنها تعيد 3.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountChar(string text, char c)
+{
+    int count = 0;
+    for (int i = 0; i < text.Length; i++)
+    {
+        if (text[i] == c)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 12. [Old] Parsing (IndexOf + Substring) - Challenge
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجاً يستقبل الاسم الكامل (الاسم الشخصي واسم العائلة بينهما مسافة)، ويطبع "أهلاً" مع الاسم الشخصي فقط. \\
+    \textbf{مثال:} للمدخل \textenglish{"Majd Ahmad"} يطبع \textenglish{"Hello Majd"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string fullName = Console.ReadLine();
+int spaceIndex = fullName.IndexOf(" ");
+if (spaceIndex != -1)
+{
+    string firstName = fullName.Substring(0, spaceIndex);
+    Console.WriteLine("Hello " + firstName);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\end{enumerate}
+
+\end{document}
