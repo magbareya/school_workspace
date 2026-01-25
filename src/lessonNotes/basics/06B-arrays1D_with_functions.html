@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المصفوفات والدوال (Methods) في C#</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            /* Screen Colors (Dark Mode) */
+            --bg-body: #1e1e2e;
+            --bg-card: #252538;
+            --text-primary: #ffffff;
+            --text-secondary: #a6accd;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7;
+            --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8;
+            --code-bg: #11111b;
+            --border-color: #313244;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Presentation Mode Styles --- */
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            pointer-events: none;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        /* --- Typography & Components --- */
+        h1 { font-size: 3.5rem; color: var(--accent-blue); margin-bottom: 1rem; text-align: center;}
+        h2 { font-size: 2.2rem; color: var(--accent-pink); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        h3 { font-size: 1.5rem; color: var(--accent-yellow); margin-bottom: 1rem; }
+        p, li { font-size: 1.2rem; line-height: 1.6; color: var(--text-primary); max-width: 900px; }
+        ul { list-style: none; padding: 0; margin-bottom: 20px;}
+        li { margin-bottom: 10px; position: relative; padding-right: 25px; }
+        li::before { content: "•"; color: var(--accent-green); position: absolute; right: 0; font-size: 1.5rem; top: -5px; }
+
+        .author { margin-top: 2rem; padding: 0.5rem 1.5rem; border: 1px solid var(--accent-blue); border-radius: 50px; color: var(--accent-blue); }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            direction: ltr;
+            text-align: left;
+            margin: 1rem 0;
+            width: 100%;
+            max-width: 850px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-size: 1.1rem;
+            page-break-inside: avoid;
+            color: var(--text-primary);
+        }
+        .kw { color: var(--accent-pink); font-weight: bold; }
+        .type { color: var(--accent-blue); }
+        .str { color: var(--accent-green); }
+        .num { color: var(--accent-yellow); }
+        .cls { color: #4ec9b0; }
+        .com { color: #6c7086; font-style: italic; }
+        .mth { color: #f9e2af; } /* Method names */
+
+        /* Box Styles */
+        .box {
+            padding: 15px; border-radius: 8px; margin: 15px 0; width: 100%; max-width: 850px;
+            border-right: 5px solid;
+            page-break-inside: avoid;
+            color: var(--text-primary);
+        }
+        .box-note { background: rgba(137, 180, 250, 0.1); border-color: var(--accent-blue); }
+        .box-warning { background: rgba(243, 139, 168, 0.1); border-color: var(--accent-red); color: #ffcccc; }
+        .box-example { background: rgba(166, 227, 161, 0.1); border-color: var(--accent-green); }
+
+        /* Details/Summary */
+        details {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 850px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        details:hover { background: rgba(255, 255, 255, 0.1); }
+        summary { color: var(--accent-yellow); font-weight: bold; font-size: 1.2rem; outline: none; user-select: none; }
+        .answer-content {
+            margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);
+            color: var(--accent-green); font-family: 'Fira Code', monospace; font-size: 1.3rem;
+            text-align: center; direction: ltr;
+        }
+
+        /* Visual Arrays & Diagrams */
+        .array-visual {
+            display: flex; justify-content: center; gap: 15px; margin: 30px 0; direction: ltr;
+            flex-wrap: wrap; page-break-inside: avoid;
+        }
+        .cell {
+            width: 70px; height: 70px; background: var(--bg-card);
+            border: 2px solid var(--accent-blue); border-radius: 8px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Fira Code', monospace; position: relative;
+            -webkit-print-color-adjust: exact;
+        }
+        .cell-val { font-size: 1.5rem; font-weight: bold; }
+        .cell-idx { position: absolute; bottom: -25px; font-size: 0.9rem; color: var(--accent-pink); }
+        
+        /* Reference Diagram */
+        .ref-diagram {
+            display: flex; justify-content: space-around; width: 80%; align-items: center; margin-top: 20px;
+        }
+        .var-box {
+            padding: 15px; border: 2px dashed var(--accent-pink); border-radius: 10px; text-align: center;
+        }
+        .arrow-pointer { font-size: 2rem; color: var(--accent-yellow); }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 1000;
+            background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 30px; backdrop-filter: blur(5px);
+        }
+        .nav-btn { background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
+        .nav-btn:hover { color: var(--accent-blue); }
+        .slide-num { font-family: 'Fira Code'; font-size: 1.2rem; align-self: center; }
+
+        /* Print Settings */
+        @media print {
+            body, html { height: auto !important; overflow: visible !important; background-color: var(--bg-body) !important; color: white !important; }
+            .slider-container { height: auto !important; display: block !important; }
+            .slide { position: relative !important; opacity: 1 !important; transform: none !important; display: flex !important; height: 100vh !important; page-break-after: always !important; border-bottom: 1px solid #333; margin: 0 !important; }
+            h1, h2, h3, p, li, .box, .code-block, .author, span, details, summary, .answer-content { color: #ffffff !important; text-shadow: none !important; }
+            .kw { color: var(--accent-pink) !important; } .type { color: var(--accent-blue) !important; }
+            .str { color: var(--accent-green) !important; } .num { color: var(--accent-yellow) !important; }
+            .cls { color: #4ec9b0 !important; } .com { color: #6c7086 !important; }
+            .cell { border: 2px solid var(--accent-blue) !important; background-color: var(--bg-card) !important; color: white !important; }
+            .nav-controls { display: none !important; }
+            details[open] .answer-content { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <h1>المصفوفات والعمليات (Methods)</h1>
+        <h3>Arrays as Parameters & Return Values</h3>
+        <div class="array-visual">
+            <div class="cell"><span class="cell-val">{ }</span></div>
+            <i class="fas fa-arrow-right arrow-pointer" style="align-self:center; color:var(--accent-pink);"></i>
+            <div class="cell" style="border-color:var(--accent-yellow)"><span class="cell-val">f(x)</span></div>
+            <i class="fas fa-arrow-right arrow-pointer" style="align-self:center; color:var(--accent-pink);"></i>
+            <div class="cell"><span class="cell-val">{ }</span></div>
+        </div>
+        <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+    </div>
+
+    <!-- Slide 2: Why? -->
+    <div class="slide">
+        <h2><i class="fas fa-lightbulb"></i> لماذا نستخدم المصفوفات مع الدوال؟</h2>
+        <p>بدلاً من كتابة كود معالجة المصفوفة (مثل الطباعة، البحث، الجمع) داخل <code>Main</code> وتكراره، نقوم بوضعه في عملية خارجية (Method).</p>
+        <div class="box box-note">
+            <strong>الفائدة:</strong>
+            <ul>
+                <li>تنظيم الكود وجعله أسهل للقراءة.</li>
+                <li>إعادة الاستخدام (Reusability).</li>
+                <li>تقليل الأخطاء.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3: Syntax - Array as Parameter -->
+    <div class="slide">
+        <h2><i class="fas fa-code"></i> أولاً: تمرير مصفوفة للدالة</h2>
+        <p>عند تعريف الدالة، نحدد أن البارامتر هو مصفوفة بإضافة <code>[]</code> بعد النوع.</p>
+        <div class="code-block">
+            <span class="kw">public static void</span> <span class="mth">PrintArray</span>(<span class="type">int</span>[] arr)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="com">// نتعامل مع arr كمصفوفة عادية هنا</span><br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(arr[i]);<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        <div class="box box-example">
+            لاحظ أننا استخدمنا <code>arr.Length</code> داخل الدالة، لأن المصفوفة تعرف طولها.
+        </div>
+    </div>
+
+    <!-- Slide 4: Calling from Main -->
+    <div class="slide">
+        <h2><i class="fas fa-phone-alt"></i> كيفية الاستدعاء من Main</h2>
+        <p>عند الاستدعاء، نرسل <strong>اسم المصفوفة فقط</strong> بدون أقواس مربعة.</p>
+        <div class="code-block">
+            <span class="kw">static void</span> <span class="mth">Main</span>(<span class="type">string</span>[] args)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] grades = { <span class="num">90</span>, <span class="num">85</span>, <span class="num">95</span> };<br><br>
+            &nbsp;&nbsp;<span class="com">// استدعاء الدالة</span><br>
+            &nbsp;&nbsp;<span class="mth">PrintArray</span>(grades);<br>
+            }
+        </div>
+        <div class="box box-warning">
+            <i class="fas fa-exclamation-triangle"></i> <strong>خطأ شائع:</strong><br>
+            لا تكتب <code>PrintArray(grades[])</code> أو <code>PrintArray(grades[3])</code>.<br>
+            أرسل الاسم فقط: <code>PrintArray(grades)</code>.
+        </div>
+    </div>
+
+    <!-- Slide 5: Reference Type Concept -->
+    <div class="slide">
+        <h2><i class="fas fa-link"></i> مفهوم المرجع (Reference)</h2>
+        <div class="box box-warning" style="border-color: var(--accent-red); background: rgba(243, 139, 168, 0.05);">
+            <strong>مهم جداً:</strong> المصفوفات هي Reference Types.<br>
+            عندما تمرر مصفوفة لدالة، أنت تمرر <strong>عنوانها في الذاكرة</strong>، لا نسخة منها.
+        </div>
+        <p>هذا يعني: إذا قامت الدالة بتغيير قيمة داخل المصفوفة، <strong>ستتغير المصفوفة الأصلية</strong> في Main أيضاً!</p>
+    </div>
+
+    <!-- Slide 6: Visualizing Reference -->
+    <div class="slide">
+        <h2><i class="fas fa-project-diagram"></i> توضيح بالرسم</h2>
+        <p>المتغير في Main والبارامتر في الدالة يشيران لنفس المكان.</p>
+        
+        <div class="ref-diagram">
+            <div class="var-box">
+                <div style="color:var(--accent-blue)">Main</div>
+                grades
+            </div>
+            
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                <i class="fas fa-long-arrow-alt-right arrow-pointer" style="transform: rotate(45deg);"></i>
+                <div class="array-visual" style="margin:10px;">
+                    <div class="cell"><span class="cell-val">90</span></div>
+                    <div class="cell"><span class="cell-val">85</span></div>
+                    <div class="cell"><span class="cell-val">...</span></div>
+                </div>
+                <i class="fas fa-long-arrow-alt-right arrow-pointer" style="transform: rotate(135deg); margin-top:-20px;"></i>
+            </div>
+
+            <div class="var-box">
+                <div style="color:var(--accent-yellow)">Function</div>
+                arr
+            </div>
+        </div>
+        <p style="font-size:1rem; color:var(--text-secondary);">أي تعديل على arr سيراه grades فوراً.</p>
+    </div>
+
+    <!-- Slide 7: Example - Changing Values -->
+    <div class="slide">
+        <h2><i class="fas fa-edit"></i> مثال: دالة تعدل المصفوفة</h2>
+        <p>دالة تقوم بزيادة كل عنصر بمقدار 5.</p>
+        <div class="code-block">
+            <span class="kw">public static void</span> <span class="mth">AddBonus</span>(<span class="type">int</span>[] arr)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < arr.Length; i++)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;arr[i] += <span class="num">5</span>; <span class="com">// التغيير يحدث في الأصل</span><br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        <div class="code-block">
+            <span class="com">// في Main</span><br>
+            <span class="type">int</span>[] marks = { <span class="num">50</span>, <span class="num">60</span> };<br>
+            <span class="mth">AddBonus</span>(marks);<br>
+            <span class="cls">Console</span>.WriteLine(marks[<span class="num">0</span>]); <span class="com">// سيطبع 55</span>
+        </div>
+    </div>
+
+    <!-- Slide 8: Returning Arrays -->
+    <div class="slide">
+        <h2><i class="fas fa-reply"></i> ثانياً: إرجاع مصفوفة من الدالة</h2>
+        <p>يمكن للدالة أن تُنشئ مصفوفة جديدة وتعيدها.<br>نوع الإرجاع يجب أن يكون <code>type[]</code>.</p>
+        <div class="code-block">
+            <span class="com">// لاحظ int[] بدل int</span><br>
+            <span class="kw">public static</span> <span class="type">int</span>[] <span class="mth">CreateArray</span>(<span class="type">int</span> size)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] newArr = <span class="kw">new</span> <span class="type">int</span>[size];<br>
+            &nbsp;&nbsp;<span class="com">// كود لتعبئة المصفوفة...</span><br>
+            &nbsp;&nbsp;<span class="kw">return</span> newArr; <span class="com">// إرجاع المصفوفة كاملة</span><br>
+            }
+        </div>
+    </div>
+
+    <!-- Slide 9: Full Example - Returning -->
+    <div class="slide">
+        <h2><i class="fas fa-file-code"></i> مثال: دالة تعيد الأعداد الزوجية</h2>
+        <div class="code-block" style="font-size:0.9rem;">
+            <span class="kw">public static</span> <span class="type">int</span>[] <span class="mth">GetEvens</span>(<span class="type">int</span> size)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] result = <span class="kw">new</span> <span class="type">int</span>[size];<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < size; i++)<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;result[i] = i * <span class="num">2</span>;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;<span class="kw">return</span> result;<br>
+            }
+        </div>
+        <p>الاستدعاء في Main:</p>
+        <div class="code-block">
+            <span class="type">int</span>[] myEvens = <span class="mth">GetEvens</span>(<span class="num">5</span>);<br>
+            <span class="com">// myEvens الآن تحتوي {0, 2, 4, 6, 8}</span>
+        </div>
+    </div>
+
+    <!-- Slide 10: Input and Output Array -->
+    <div class="slide">
+        <h2><i class="fas fa-exchange-alt"></i> دالة تستقبل وتعيد مصفوفة</h2>
+        <p>أحياناً نريد مصفوفة جديدة مبنية على القديمة دون تغيير القديمة.</p>
+        <div class="code-block">
+            <span class="kw">public static</span> <span class="type">int</span>[] <span class="mth">CopyAndDouble</span>(<span class="type">int</span>[] original)<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] copy = <span class="kw">new</span> <span class="type">int</span>[original.Length];<br>
+            &nbsp;&nbsp;<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < original.Length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;copy[i] = original[i] * <span class="num">2</span>;<br>
+            <br>
+            &nbsp;&nbsp;<span class="kw">return</span> copy; <span class="com">// نعيد النسخة الجديدة</span><br>
+            }
+        </div>
+    </div>
+
+    <!-- Slide 11: Common Mistakes 1 -->
+    <div class="slide">
+        <h2><i class="fas fa-bug"></i> أخطاء شائعة (1)</h2>
+        <div class="box box-warning">
+            <strong>الخطأ:</strong> تعريف نوع الإرجاع خطأ.
+        </div>
+        <div class="code-block">
+            <span class="com">// خطأ! لا يمكن إرجاع مصفوفة ونوع الدالة int</span><br>
+            <span class="kw">public static</span> <span class="type">int</span> <span class="mth">BadMethod</span>()<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] arr = {<span class="num">1</span>, <span class="num">2</span>};<br>
+            &nbsp;&nbsp;<span class="kw">return</span> arr; <span class="com">// Compile Error</span><br>
+            }
+        </div>
+        <p style="color:var(--accent-green)"><strong>التصحيح:</strong> يجب أن يكون النوع <code>int[]</code>.</p>
+    </div>
+
+    <!-- Slide 12: Common Mistakes 2 -->
+    <div class="slide">
+        <h2><i class="fas fa-bug"></i> أخطاء شائعة (2)</h2>
+        <div class="box box-warning">
+            <strong>الخطأ:</strong> محاولة طباعة المصفوفة مباشرة عند الاستدعاء.
+        </div>
+        <div class="code-block">
+            <span class="type">int</span>[] arr = <span class="mth">GetEvens</span>(<span class="num">5</span>);<br>
+            <br>
+            <span class="com">// هذا سيطبع "System.Int32[]" وليس القيم</span><br>
+            <span class="cls">Console</span>.WriteLine(arr);
+        </div>
+        <p><strong>الحل:</strong> يجب استخدام حلقة (Loop) لطباعة العناصر المسترجعة، أو دالة طباعة مساعدة.</p>
+    </div>
+
+    <!-- Slide 13: Quiz 1 -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> اختبار سريع (1)</h2>
+        <p>ما هو ناتج الكود التالي؟</p>
+        <div class="code-block">
+            <span class="kw">void</span> <span class="mth">Change</span>(<span class="type">int</span>[] a) { a[<span class="num">0</span>] = <span class="num">99</span>; }<br>
+            <br>
+            <span class="kw">void</span> <span class="mth">Main</span>() {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] x = { <span class="num">1</span>, <span class="num">2</span> };<br>
+            &nbsp;&nbsp;<span class="mth">Change</span>(x);<br>
+            &nbsp;&nbsp;<span class="cls">Console</span>.WriteLine(x[<span class="num">0</span>]);<br>
+            }
+        </div>
+        <details>
+            <summary>اضغط للإجابة</summary>
+            <div class="answer-content">
+                99<br>
+                <span style="font-size:0.8em; color:white;">(لأن المصفوفة مُررت بالمرجع، فالتعديل دائم)</span>
+            </div>
+        </details>
+    </div>
+
+    <!-- Slide 14: Quiz 2 -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> اختبار سريع (2)</h2>
+        <p>أين الخطأ في الكود التالي؟</p>
+        <div class="code-block">
+            <span class="kw">public static</span> <span class="type">int</span>[] <span class="mth">Test</span>()<br>
+            {<br>
+            &nbsp;&nbsp;<span class="type">int</span>[] nums = { <span class="num">10</span>, <span class="num">20</span> };<br>
+            &nbsp;&nbsp;<span class="kw">return</span> nums[<span class="num">0</span>];<br>
+            }
+        </div>
+        <details>
+            <summary>اضغط للإجابة</summary>
+            <div class="answer-content">
+                الخطأ في <code>return nums[0];</code><br>
+                <span style="font-size:0.8em; color:white;">الدالة تتوقع إرجاع مصفوفة كاملة <code>int[]</code>، لكنك أرجعت رقماً واحداً <code>int</code>. الصحيح: <code>return nums;</code></span>
+            </div>
+        </details>
+    </div>
+
+    <!-- Slide 15: Summary -->
+    <div class="slide">
+        <h2><i class="fas fa-clipboard-check"></i> ملخص</h2>
+        <ul>
+            <li>لتعريف بارامتر مصفوفة: استخدم <code>type[] name</code>.</li>
+            <li>للاستدعاء: مرر اسم المصفوفة فقط <code>Func(myArr)</code>.</li>
+            <li>المصفوفات تُمرر بالمرجع (Reference)، أي تعديل داخل الدالة يؤثر على الأصل.</li>
+            <li>لإرجاع مصفوفة: اجعل نوع الدالة <code>type[]</code> واستخدم <code>return arrName;</code>.</li>
+        </ul>
+        <div class="author">الأستاذ محمود اغبارية</div>
+    </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="move(-1)"><i class="fas fa-chevron-right"></i></button>
+    <div class="slide-num" id="slideIndicator">1 / 15</div>
+    <button class="nav-btn" onclick="move(1)"><i class="fas fa-chevron-left"></i></button>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+
+    function updateSlide() {
+        slides.forEach((s, i) => {
+            s.classList.remove('active');
+            if (i === currentSlide) s.classList.add('active');
+        });
+        indicator.innerText = `${currentSlide + 1} / ${slides.length}`;
+    }
+
+    function move(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        updateSlide();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') move(-1);
+        if (e.key === 'ArrowLeft') move(1);
+    });
+</script>
+
+</body>
+</html>
