@@ -1,0 +1,296 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرين 8 - المصفوفات الأحادية - قسم 1}
+\else
+\title{ورقة تمرين 8 - المصفوفات الأحادية - قسم 1}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    % ======================================================
+    % التعريف والتهيئة
+    % ======================================================
+
+    \item
+    أ) صرح عن مصفوفة أعداد صحيحة (\textenglish{int}) باسم \textenglish{numbers} تتسع لـ 10 عناصر.\\
+    ب) صرح عن مصفوفة نصوص (\textenglish{string}) باسم \textenglish{colors} وامنحها القيم الأولية: \textenglish{"Red", "Green", "Blue"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+// A
+int[] numbers = new int[10];
+
+// B
+string[] colors = { "Red", "Green", "Blue" };
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    عرف مصفوفة أعداد صحيحة طولها 10، ثم اكتب حلقة تكرار لملء جميع خاناتها بالقيمة $-1$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] arr = new int[10];
+for (int i = 0; i < arr.Length; i++)
+{
+    arr[i] = -1;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % الوصول والطباعة
+    % ======================================================
+
+    \item
+    لديك مصفوفة أعداد صحيحة باسم \textenglish{data}. اكتب مقطع برنامج يطبع العنصر الأول والعنصر الأخير فيها. (افترض أن المصفوفة ليست فارغة).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+Console.WriteLine("First: " + data[0]);
+Console.WriteLine("Last: " + data[data.Length - 1]);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب حلقة لطباعة عناصر مصفوفة النصوص \textenglish{names} بترتيب عكسي (من آخر عنصر إلى أول عنصر).\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{"A", "B", "C"\}} يطبع البرنامج \textenglish{C} ثم \textenglish{B} ثم \textenglish{A}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = names.Length - 1; i >= 0; i--)
+{
+    Console.WriteLine(names[i]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع القيم الموجودة في الخانات الزوجية فقط (0, 2, 4...) لمصفوفة أعداد صحيحة \textenglish{arr}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < arr.Length; i += 2)
+{
+    Console.WriteLine(arr[i]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % التعديل والعمليات الحسابية
+    % ======================================================
+
+    \item
+    لديك مصفوفة درجات طلاب \textenglish{scores} (أعداد صحيحة). اكتب مقطع برنامج يضيف 5 درجات لكل طالب في المصفوفة (تعديل القيم داخل نفس المصفوفة).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < scores.Length; i++)
+{
+    scores[i] += 5;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب مقطع برنامج يجمع عناصر مصفوفتين من الأعداد الصحيحة \textenglish{A} و \textenglish{B} (لهما نفس الطول) ويخزن الناتج في مصفوفة جديدة \textenglish{C}.\\
+    بحيث يكون: $C[i] = A[i] + B[i]$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] C = new int[A.Length];
+for (int i = 0; i < A.Length; i++)
+{
+    C[i] = A[i] + B[i];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % البحث والعد والإحصاء
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يحسب عدد العناصر الموجبة في مصفوفة الأعداد الصحيحة \textenglish{numbers}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int count = 0;
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] > 0)
+        count++;
+}
+Console.WriteLine("Positive count: " + count);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب مقطع برنامج يحسب مجموع العناصر الموجودة في الخانات الفردية لمصفوفة أعداد صحيحة \textenglish{arr}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int sum = 0;
+for (int i = 1; i < arr.Length; i += 2)
+{
+    sum += arr[i];
+}
+Console.WriteLine("Sum at odd indices: " + sum);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يعد كم عنصراً في مصفوفة العلامات \textenglish{grades} يقع ضمن المجال $[60, 80]$ (أي أكبر أو يساوي 60 وأصغر أو يساوي 80).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int count = 0;
+for (int i = 0; i < grades.Length; i++)
+{
+    if (grades[i] >= 60 && grades[i] <= 80)
+        count++;
+}
+Console.WriteLine("Count in range [60-80]: " + count);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب مقطع برنامج يبحث عن \textbf{أول} عدد سالب في مصفوفة أعداد صحيحة \textenglish{arr}.
+    إذا وجده يطبع قيمته وموقعه ثم يتوقف عن البحث.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < arr.Length; i++)
+{
+    if (arr[i] < 0)
+    {
+        Console.WriteLine($"Found negative {arr[i]} at index {i}");
+        break; // Stop loop
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يفحص هل العدد \textenglish{50} موجود داخل المصفوفة \textenglish{numbers} أم لا، ويطبع \textenglish{"Found"} أو \textenglish{"Not Found"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+bool found = false;
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] == 50)
+    {
+        found = true;
+        break;
+    }
+}
+if (found) Console.WriteLine("Found");
+else Console.WriteLine("Not Found");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يحسب ويطبع الفرق بين أكبر قيمة وأصغر قيمة في مصفوفة أعداد صحيحة \textenglish{data}.\\
+    \textbf{مثال:} إذا كانت المصفوفة تحتوي على \textenglish{\{3, 10, 6, 1\}}، الفرق هو $10 - 1 = 9$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+if (data.Length > 0) {
+    int max = data[0];
+    int min = data[0];
+    for (int i = 1; i < data.Length; i++)
+    {
+        if (data[i] > max) max = data[i];
+        if (data[i] < min) min = data[i];
+    }
+    Console.WriteLine("Difference: " + (max - min));
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب برنامجاً يقرأ 10 أعداد صحيحة من المستخدم ويطبع له كل الأعداد الأكبر من معدل الـ 10 أعداد كلها.\\
+    \textbf{مثال:} إذا أدخل المستخدم الأعداد: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50، يكون المعدل هو $27.5$، والأعداد الأكبر من المعدل هي: 30, 35, 40, 45, 50.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] userNums = new int[10];
+int sum = 0;
+
+for (int i = 0; i < userNums.Length; i++)
+{
+    userNums[i] = int.Parse(Console.ReadLine());
+    sum += userNums[i];
+}
+
+double avg = (double)sum / userNums.Length;
+
+for (int i = 0; i < userNums.Length; i++)
+{
+    if(userNums[i] > avg)
+        Console.WriteLine(userNums[i]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\end{document}
