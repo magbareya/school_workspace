@@ -1,0 +1,440 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 2 - أسئلة عكس، دمج، إزاحة}
+\else
+\title{ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 2 - أسئلة عكس، دمج، إزاحة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    % ======================================================
+    % 1. تبديل بسيط - أول وأخير
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يبدّل العنصر الأول مع العنصر الأخير في مصفوفة أعداد صحيحة \textenglish{arr}.\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, 10, 15, 20\}}، تصبح بعد التبديل \textenglish{\{20, 10, 15, 5\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int temp = arr[0];
+arr[0] = arr[arr.Length - 1];
+arr[arr.Length - 1] = temp;
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % 2. طباعة عكسية بسيطة
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يطبع عناصر مصفوفة أعداد صحيحة \textenglish{arr} بترتيب عكسي (من الأخير إلى الأول).\\
+    على البرنامج أن يطبع كل عنصر بسطر منفصل.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = arr.Length - 1; i >= 0; i--)
+{
+    Console.WriteLine(arr[i]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 9. فحص التساوي بين مصفوفتين
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يفحص هل مصفوفتان من الأعداد الصحيحة \textenglish{arr1} و\textenglish{arr2} متساويتان (نفس الطول ونفس العناصر بنفس الترتيب).\\
+    على البرنامج أن يطبع \textenglish{"Equal"} إذا كانتا متساويتين و\textenglish{"Not Equal"} خلاف ذلك.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+bool areEqual = true;
+
+if (arr1.Length != arr2.Length)
+    areEqual = false;
+else
+{
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        if (arr1[i] != arr2[i])
+        {
+            areEqual = false;
+            break;
+        }
+    }
+}
+
+if (areEqual)
+    Console.WriteLine("Equal");
+else
+    Console.WriteLine("Not Equal");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 3. مجموع مرحلي من النهاية إلى البداية
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يطبع المجموع المرحلي لعناصر مصفوفة أعداد صحيحة \textenglish{data} بترتيب عكسي (من الأخير إلى الأول).\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, 10, 15, 20\}}، يطبع البرنامج:
+    \begin{english}
+    \begin{boxCode}
+    20 \\
+    35 (20 + 15) \\
+    45 (20 + 15 + 10) \\
+    60 (20 + 15 + 10 + 5)
+    \end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int sum = 0;
+for (int i = data.Length - 1; i >= 0; i--)
+{
+    sum += data[i];
+    Console.WriteLine(sum);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % 4. نسخ بترتيب عكسي
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج ينسخ مصفوفة أعداد صحيحة \textenglish{source} إلى مصفوفة جديدة \textenglish{reversed} بترتيب عكسي.\\
+    \textbf{مثال:} إذا كانت \textenglish{source = \{10, 20, 30, 40\}}، تصبح \textenglish{reversed = \{40, 30, 20, 10\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] reversed = new int[source.Length];
+for (int i = 0; i < source.Length; i++)
+{
+    reversed[i] = source[source.Length - 1 - i];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 5. تبديل عناصر متجاورة
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يبدّل كل عنصرين متجاورين في مصفوفة أعداد صحيحة \textenglish{numbers} (افترض أن طول المصفوفة زوجي).\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{1, 2, 3, 4, 5, 6\}}، تصبح بعد التبديل \textenglish{\{2, 1, 4, 3, 6, 5\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < numbers.Length - 1; i += 2)
+{
+    int temp = numbers[i];
+    numbers[i] = numbers[i + 1];
+    numbers[i + 1] = temp;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 6. فحص التماثل - بسيط
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يفحص هل مصفوفة أعداد صحيحة \textenglish{arr} متماثلة (أي العنصر الأول يساوي العنصر الأخير، والثاني يساوي قبل الأخير، وهكذا).\\
+    على البرنامج أن يطبع \textenglish{"Palindrome"} إذا كانت متماثلة و\textenglish{"Not Palindrome"} خلاف ذلك.\\
+    \textbf{مثال:} \textenglish{\{1, 2, 3, 2, 1\}} متماثلة، لكن \textenglish{\{1, 2, 3, 4\}} ليست متماثلة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+bool isPalin = true;
+for (int i = 0; i < arr.Length / 2; i++)
+{
+    if (arr[i] != arr[arr.Length - 1 - i])
+    {
+        isPalin = false;
+        break;
+    }
+}
+
+if (isPalin)
+    Console.WriteLine("Palindrome");
+else
+    Console.WriteLine("Not Palindrome");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    لعب أمجد وسمير  عددًا من الجولات في لعبة فيديو. تم تسجيل نقاط كل جولة في مصفوفة \textenglish{amjadScores} لأمجد و\textenglish{samirScores} لسمير (كلاهما لعبا نفس عدد الجولات).\\
+    اكتب مقطع برنامج يُنشئ مصفوفة نصوص جديدة، \textenglish{roundWinners}، تحتوي على اسم الفائز في كل جولة: "Amjad" إذا كانت نقطة أمجد أعلى، "Samir" إذا كانت نقطة سمير أعلى، و"Tie" إذا تعادلا.\\
+    \textbf{مثال:} إذا كانت \textenglish{amjadScores = \{10, 20, 15\}} و\textenglish{samirScores = \{15, 15, 15\}}، تصبح \textenglish{roundWinners = \{"Samir", "Amjad", "Tie"\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+string[] roundWinners = new string[amjadScores.Length];
+for (int i = 0; i < amjadScores.Length; i++)
+{
+    if (amjadScores[i] > samirScores[i])
+        roundWinners[i] = "Amjad";
+    else if (amjadScores[i] < samirScores[i])
+        roundWinners[i] = "Samir";
+    else
+        roundWinners[i] = "Tie";
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 7. عكس ترتيب بدون مصفوفة إضافية
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يعكس ترتيب عناصر مصفوفة أعداد صحيحة \textenglish{arr} \textbf{داخل نفس المصفوفة} دون الاستعانة بمصفوفة إضافية (استخدم متغيراً مساعداً واحداً فقط للتبديل).\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5\}}، تصبح \textenglish{arr = \{5, 4, 3, 2, 1\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < arr.Length / 2; i++)
+{
+    int temp = arr[i];
+    arr[i] = arr[arr.Length - 1 - i];
+    arr[arr.Length - 1 - i] = temp;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % 10. إزاحة إلى اليمين
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يزيح جميع عناصر مصفوفة أعداد صحيحة \textenglish{arr} بمقدار خانة واحدة إلى اليمين.\\
+    العنصر الأخير ينتقل إلى الخانة الأولى.\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5\}}، تصبح \textenglish{arr = \{5, 1, 2, 3, 4\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int last = arr[arr.Length - 1];
+for (int i = arr.Length - 1; i > 0; i--)
+{
+    arr[i] = arr[i - 1];
+}
+arr[0] = last;
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % 11. دمج مصفوفتين - متتابع
+    % ======================================================
+
+    \clearpage
+    \item
+    اكتب مقطع برنامج يدمج مصفوفتين من الأعداد الصحيحة \textenglish{A} و\textenglish{B} في مصفوفة جديدة \textenglish{result} تحتوي على جميع عناصر \textenglish{A} متبوعة بجميع عناصر \textenglish{B}.\\
+    \textbf{مثال:} إذا كانت \textenglish{A = \{1, 2, 3\}} و\textenglish{B = \{4, 5\}}، تصبح \textenglish{result = \{1, 2, 3, 4, 5\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] result = new int[A.Length + B.Length];
+
+for (int i = 0; i < A.Length; i++)
+{
+    result[i] = A[i];
+}
+
+for (int i = 0; i < B.Length; i++)
+{
+    result[A.Length + i] = B[i];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 12. دمج مصفوفتين - بالتناوب
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يدمج مصفوفتين من الأعداد الصحيحة \textenglish{A} و\textenglish{B} (لهما نفس الطول) في مصفوفة جديدة \textenglish{result} تحتوي على عناصر من المصفوفتين بالتناوب (عنصر من \textenglish{A}، عنصر من \textenglish{B}، عنصر من \textenglish{A}، وهكذا).\\
+    \textbf{مثال:} إذا كانت \textenglish{A = \{1, 3, 5\}} و\textenglish{B = \{2, 4, 6\}}، تصبح \textenglish{result = \{1, 2, 3, 4, 5, 6\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] result = new int[A.Length + B.Length];
+
+for (int i = 0; i < A.Length; i++)
+{
+    result[2 * i] = A[i];
+    result[2 * i + 1] = B[i];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 13. إزاحة إلى اليسار n مرات
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يزيح جميع عناصر مصفوفة أعداد صحيحة \textenglish{arr} بمقدار \textenglish{n} خانة إلى اليسار داخل نفس المصفوفة.\\
+    العناصر التي تخرج من أول المصفوفة تنتقل إلى آخرها.\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{1, 2, 3, 4, 5\}} و \textenglish{n = 2}، تصبح \textenglish{\{3, 4, 5, 1, 2\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+n = n % arr.Length; // Handle cases where n > arr.Length
+for (int shift = 0; shift < n; shift++)
+{
+    int first = arr[0];
+    for (int i = 0; i < arr.Length - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    arr[arr.Length - 1] = first;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 14. نسخ عناصر بترتيب عكسي مع شرط
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج ينسخ فقط الأعداد الزوجية من مصفوفة أعداد صحيحة \textenglish{source} إلى مصفوفة جديدة بترتيب عكسي.\\
+    \textbf{مثال:} إذا كانت \textenglish{source = \{1, 2, 3, 4, 5, 6, 7, 8\}}، تحتوي المصفوفة الجديدة على \textenglish{\{8, 6, 4, 2\}}.\\
+    \textbf{تلميح:} أولاً عُدّ الأعداد الزوجية لتعرف حجم المصفوفة الجديدة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+// Count even numbers first
+int evenCount = 0;
+for (int i = 0; i < source.Length; i++)
+{
+    if (source[i] % 2 == 0)
+        evenCount++;
+}
+
+// Create new array and fill it in reverse
+int[] evenReversed = new int[evenCount];
+int index = 0;
+for (int i = source.Length - 1; i >= 0; i--)
+{
+    if (source[i] % 2 == 0)
+    {
+        evenReversed[index] = source[i];
+        index++;
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 15. عكس مصفوفة في مجالات محددة
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يعكس ترتيب عناصر مصفوفة أعداد صحيحة \textenglish{arr} فقط بين المؤشرين \textenglish{start} و\textenglish{end} (شامل الطرفين) داخل نفس المصفوفة.\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5, 6, 7\}} و\textenglish{start = 2} و\textenglish{end = 5}، تصبح \textenglish{arr = \{1, 2, 6, 5, 4, 3, 7\}}.\\
+    (العناصر من المؤشر 2 إلى 5 هي \textenglish{\{3, 4, 5, 6\}} وبعد العكس تصبح \textenglish{\{6, 5, 4, 3\}}).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int left = start;
+int right = end;
+
+while (left < right)
+{
+    int temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+    left++;
+    right--;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    في مسابقة رياضية، يتنافس فريقان: الفريق الأزرق والفريق الأحمر. نقاط كل واحد من الفريقين مخزنة في مصفوفة: \textenglish{blueScores} تحتوي على نقاط الفريق الأزرق في كل جولة، و\textenglish{redScores} تحتوي على نقاط الفريق الأحمر في كل جولة (كلا الفريقين لعبا نفس عدد الجولات).\\
+    يريد المنظمون إعداد تقرير يعرض النقاط بالتناوب: جولة الفريق الأزرق الأولى، ثم جولة الفريق الأحمر الأولى، ثم جولة الفريق الأزرق الثانية، وهكذا.\\
+    اكتب مقطع برنامج يدمج المصفوفتين في مصفوفة جديدة \textenglish{combinedScores} بهذا الترتيب المتناوب.\\
+    \textbf{مثال:} إذا كانت \textenglish{blueScores = \{10, 15, 20\}} و\textenglish{redScores = \{12, 18, 22\}}، تصبح \textenglish{combinedScores = \{10, 12, 15, 18, 20, 22\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] combinedScores = new int[blueScores.Length + redScores.Length];
+
+for (int i = 0; i < blueScores.Length; i++)
+{
+    combinedScores[2 * i] = blueScores[i];
+    combinedScores[2 * i + 1] = redScores[i];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\end{document}
