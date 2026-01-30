@@ -1,0 +1,254 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 12 - المصفوفات الأحادية - أساسيات}
+\else
+\title{وظيفة 12 - المصفوفات الأحادية - أساسيات}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    % ======================================================
+    % سؤال 1 - فكرة: طباعة مواقع العناصر الموجبة
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يطبع مواقع (الفهارس) جميع العناصر السالبة في مصفوفة أعداد صحيحة \textenglish{numbers}.\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, -3, 8, -1, 0, -7, 2\}}، يطبع البرنامج: 1, 3, 5.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] < 0)
+        Console.WriteLine(i);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % سؤال 2 - فكرة: استبدال قيم بشرط
+    % ======================================================
+
+    \item
+    لديك مصفوفة أعداد صحيحة \textenglish{scores} تمثل درجات طلاب.\\
+    اكتب مقطع برنامج يستبدل كل درجة أقل من 60 بالقيمة 60 (الحد الأدنى للنجاح).\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{75, 45, 88, 52, 90, 30\}}، تصبح \textenglish{\{75, 60, 88, 60, 90, 60\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 0; i < scores.Length; i++)
+{
+    if (scores[i] < 60)
+        scores[i] = 60;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 3 - فكرة: حساب عدد الانتقالات من موجب لسالب
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يعد كم مرة تغيرت الإشارة من موجب إلى سالب أو من سالب إلى موجب بين عنصرين متجاورين في مصفوفة أعداد صحيحة \textenglish{data}.\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, -3, -2, 4, -1, -6\}}، عدد التغييرات هو 3:
+    \begin{itemize}
+        \item من 5 (موجب) إلى $-3$ (سالب)
+        \item من $-2$ (سالب) إلى 4 (موجب)
+        \item من 4 (موجب) إلى $-1$ (سالب)
+    \end{itemize}
+    \textbf{ملاحظة:} افترض أنّه لا يوجد قيمة 0 في المصفوفة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int changes = 0;
+for (int i = 0; i < data.Length - 1; i++)
+{
+    if ((data[i] > 0 && data[i + 1] < 0) ||
+        (data[i] < 0 && data[i + 1] > 0))
+    {
+        changes++;
+    }
+}
+Console.WriteLine(changes);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+%     % ======================================================
+%     % سؤال 5 - فكرة: إنشاء مصفوفة الفروقات
+%     % ======================================================
+
+%     \item
+%     اكتب مقطع برنامج ينشئ مصفوفة جديدة \textenglish{differences} بطول أقل بواحد من مصفوفة أعداد صحيحة \textenglish{original}.\\
+%     كل عنصر في المصفوفة الجديدة يساوي الفرق المطلق بين عنصرين متجاورين في المصفوفة الأصلية.\\
+%     \textbf{مثال:} إذا كانت \textenglish{original = \{10, 3, 8, 12, 5\}}، تصبح \textenglish{differences = \{7, 5, 4, 7\}}.\\
+%     (لأن: $|10-3|=7$, $|3-8|=5$, $|8-12|=4$, $|12-5|=7$)
+%     \ifwithsols
+%     \begin{boxSolution}
+%     \begin{english}
+%     \begin{minted}{csharp}
+% int[] differences = new int[original.Length - 1];
+
+% for (int i = 0; i < differences.Length; i++)
+% {
+%     differences[i] = Math.Abs(original[i] - original[i + 1]);
+% }
+%     \end{minted}
+%     \end{english}
+%     \end{boxSolution}
+%     \clearpage
+%     \fi
+
+    % ======================================================
+    % سؤال 7 - فكرة: فحص هل المصفوفة مرتبة
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يفحص هل مصفوفة أعداد صحيحة \textenglish{arr} مرتبة تصاعدياً (كل عنصر أصغر من أو يساوي العنصر الذي يليه).\\
+    على البرنامج أن يطبع \textenglish{"Sorted"} إذا كانت مرتبة و\textenglish{"Not Sorted"} خلاف ذلك.\\
+    \textbf{مثال:} \\
+    - المصفوفة \textenglish{\{2, 5, 7, 7, 10\}} مرتبة.\\
+    - المصفوفة \textenglish{\{2, 5, 3, 7\}} غير مرتبة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+bool isSorted = true;
+
+for (int i = 0; i < arr.Length - 1; i++)
+{
+    if (arr[i] > arr[i + 1])
+    {
+        isSorted = false;
+        break;
+    }
+}
+
+if (isSorted)
+    Console.WriteLine("Sorted");
+else
+    Console.WriteLine("Not Sorted");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \clearpage
+
+    \item
+    اكتب مقطع برنامج ينشئ مصفوفة جديدة \textenglish{sums} بنفس طول مصفوفة أعداد صحيحة \textenglish{values}.\\
+    كل عنصر في المصفوفة الجديدة يساوي مجموع العنصر نفسه مع جيرانه (العنصر قبله والعنصر بعده في المصفوفة الأصلية).\\
+    العنصر الأول يُجمع مع نفسه والعنصر الذي بعده فقط. العنصر الأخير يُجمع مع نفسه والعنصر الذي قبله فقط.\\
+    \textbf{مثال:} إذا كانت \textenglish{values = \{5, 3, 8, 2\}}:
+    \begin{itemize}
+        \item \textenglish{sums[0] = 5 + 3 = 8}
+        \item \textenglish{sums[1] = 5 + 3 + 8 = 16}
+        \item \textenglish{sums[2] = 3 + 8 + 2 = 13}
+        \item \textenglish{sums[3] = 8 + 2 = 10}
+    \end{itemize}
+    النتيجة: \textenglish{sums = \{8, 16, 13, 10\}}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int[] sums = new int[values.Length];
+
+for (int i = 0; i < values.Length; i++)
+{
+    sums[i] = values[i];
+
+    if (i > 0)
+        sums[i] += values[i - 1];
+
+    if (i < values.Length - 1)
+        sums[i] += values[i + 1];
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 7 - المرور من النهاية للبداية
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج يطبع جميع الأعداد الأكبر من 50 في مصفوفة أعداد صحيحة \textenglish{prices} بترتيب عكسي (من الأخير إلى الأول).\\    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{30, 60, 45, 75, 55, 40, 80\}}، يطبع البرنامج: 80, 55, 75, 60 (بهذا الترتيب).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = prices.Length - 1; i >= 0; i--)
+{
+    if (prices[i] > 50)
+        Console.WriteLine(prices[i]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 8 - المرور من النهاية للبداية - نسخ العناصر الفردية بالعكس
+    % ======================================================
+
+    \item
+    اكتب مقطع برنامج ينشئ مصفوفة جديدة تحتوي فقط على الأعداد الفردية من مصفوفة أعداد صحيحة \textenglish{numbers}، لكن بترتيب عكسي (من الأخير إلى الأول). \\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{2, 7, 4, 9, 6, 3, 8, 5\}}، الأعداد الفردية بالترتيب الأصلي هي:\textenglish{7, 9, 3, 5} \\
+    لكن نريدها بترتيب عكسي، فتصبح المصفوفة الجديدة: \textenglish{\{5, 3, 9, 7\}}. \\
+    \textbf{تلميح:} أولاً عُدّ الأعداد الفردية، ثم امرر على المصفوفة من النهاية للبداية لملء المصفوفة الجديدة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int oddCount = 0;
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] % 2 != 0)
+        oddCount++;
+}
+
+int[] oddReversed = new int[oddCount];
+int index = 0;
+
+for (int i = numbers.Length - 1; i >= 0; i--)
+{
+    if (numbers[i] % 2 != 0)
+    {
+        oddReversed[index] = numbers[i];
+        index++;
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملا ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
