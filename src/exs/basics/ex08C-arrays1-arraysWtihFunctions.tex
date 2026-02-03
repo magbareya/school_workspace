@@ -2,9 +2,10 @@
 \input{../../../scripts/tex_preamble.tex}
 
 \ifwithsols
-\title{حل ورقة تمرن 8 - مصفوفات مع عمليات \\ قسم 3 - عمليات خارجية تتلقى وتعيد مصفوفة}
+\title{حل ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 3 - عمليات خارجية مع مصفوفات}
 \else
-\title{ورقة تمرن 8 - مصفوفات مع عمليات \\ قسم 3 - عمليات خارجية تتلقى وتعيد مصفوفة}
+\title{ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 3 - عمليات خارجية مع مصفوفات}
+\clearpage
 \fi
 
 \begin{document}
@@ -15,43 +16,130 @@
 \begin{enumerate}[itemsep=2em]
 
     % ======================================================
-    % الخوارزميات (Algorithms Snippets)
+    % 1. GetMax - إيجاد أكبر قيمة
     % ======================================================
 
     \item
-    اكتب مقطع برنامج لإيجاد \textbf{ثاني أكبر قيمة} في مصفوفة أعداد صحيحة.
-    (افترض أن المصفوفة تحتوي على الأقل على عنصرين مختلفين).
+    اكتب عملية خارجية \textenglish{int GetMax(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعيد أكبر قيمة فيها.\\
+    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, 12, 8, 20, 3\}}، تعيد العملية 20.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-int max = int.MinValue;
-int secondMax = int.MinValue;
-
-foreach (int num in arr)
+public static int GetMax(int[] arr)
 {
-    if (num > max)
+    int max = arr[0];
+    for (int i = 1; i < arr.Length; i++)
     {
-        secondMax = max;
-        max = num;
+        if (arr[i] > max)
+            max = arr[i];
     }
-    else if (num > secondMax && num != max)
-    {
-        secondMax = num;
-    }
+    return max;
 }
-Console.WriteLine("Second Max: " + secondMax);
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     % ======================================================
-    % كتابة الدوال (Writing Functions)
+    % 2. CountNegative - عد الأعداد السالبة
     % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{int FindIndex(int[] arr, int val)} تعيد رقم الخانة (Index) لأول ظهور للقيمة \textenglish{val} في المصفوفة. إذا لم تجدها تعيد -1.
+    اكتب عملية خارجية \textenglish{int CountNegative(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعيد عدد الأعداد السالبة فيها.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{5, -3, 8, -7, 0, -1\}} يوجد 3 أعداد سالبة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountNegative(int[] arr)
+{
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] < 0)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 3. CountOccurrences - عد تكرار عدد
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int CountOccurrences(int[] arr, int value)} تستقبل مصفوفة أعداد صحيحة وعدداً صحيحاً، وتعيد عدد مرات ظهور العدد في المصفوفة.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{5, 12, 8, 12, 3, 12\}}، العدد 12 يظهر 3 مرات.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountOccurrences(int[] arr, int value)
+{
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == value)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 4. AreArraysEqual - فحص تساوي مصفوفتين
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{bool AreArraysEqual(int[] arr1, int[] arr2)} تستقبل مصفوفتين من الأعداد الصحيحة وتعيد \textenglish{true} إذا كانتا متساويتين (نفس الطول ونفس العناصر بنفس الترتيب)، وإلا تعيد \textenglish{false}.\\
+    \textbf{مثال:}
+    \begin{itemize}
+        \item \textenglish{\{1, 2, 3\}} و \textenglish{\{1, 2, 3\}} $\rightarrow$ \textenglish{true}
+        \item \textenglish{\{1, 2, 3\}} و \textenglish{\{1, 2, 4\}} $\rightarrow$ \textenglish{false}
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool AreArraysEqual(int[] arr1, int[] arr2)
+{
+    if (arr1.Length != arr2.Length)
+        return false;
+
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        if (arr1[i] != arr2[i])
+            return false;
+    }
+
+    return true;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 5. FindIndex - بحث عن قيمة وإعادة موقعها
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int FindIndex(int[] arr, int val)} تعيد رقم الخانة (Index) لأول ظهور للقيمة \textenglish{val} في المصفوفة. إذا لم تجدها تعيد $-1$.\\    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{10, 20, 30, 40\}}:
+    \begin{itemize}
+        \item \textenglish{FindIndex(arr, 30)} تعيد 2
+        \item \textenglish{FindIndex(arr, 50)} تعيد $-1$
+    \end{itemize}
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
@@ -68,10 +156,15 @@ public static int FindIndex(int[] arr, int val)
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 6. ReplaceNegativeWithZero - استبدال السالب بالصفر
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{void ReplaceNegativeWithZero(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعدلها بحيث تستبدل كل عدد سالب فيها بالصفر.
+    اكتب عملية خارجية \textenglish{void ReplaceNegativeWithZero(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعدلها بحيث تستبدل كل عدد سالب فيها بالصفر.\\    \textbf{مثال:} إذا كانت المصفوفة \textenglish{\{5, -3, 0, -7, 2\}}، تصبح بعد استدعاء العملية \textenglish{\{5, 0, 0, 0, 2\}}.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
@@ -81,18 +174,167 @@ public static void ReplaceNegativeWithZero(int[] arr)
     for (int i = 0; i < arr.Length; i++)
     {
         if (arr[i] < 0)
-        {
             arr[i] = 0;
-        }
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 3. IsSorted - فحص الترتيب التصاعدي
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{bool IsSorted(int[] arr)} تعيد \textenglish{true} فقط إذا كانت عناصر المصفوفة مرتبة تصاعدياً بالكامل (من الأصغر للأكبر).\\    \textbf{مثال:}
+    \begin{itemize}
+        \item \textenglish{\{2, 5, 7, 9\}} $\leftarrow$ تعيد \textenglish{true}
+        \item \textenglish{\{2, 5, 3, 9\}} $\leftarrow$ تعيد \textenglish{false}
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool IsSorted(int[] arr)
+{
+    for (int i = 0; i < arr.Length - 1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+            return false;
+    }
+    return true;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 4. IsPalindrome - فحص التماثل
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{bool IsPalindrome(int[] arr)} تفحص هل مصفوفة الأعداد الصحيحة متناظرة (تقرأ من اليمين كاليسار).\\
+    \textbf{مثال:}
+    \begin{itemize}
+        \item \textenglish{\{1, 2, 3, 2, 1\}} متناظرة $\leftarrow$ تعيد \textenglish{true}
+        \item \textenglish{\{1, 2, 3, 4\}} غير متناظرة $\leftarrow$ تعيد \textenglish{false}
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool IsPalindrome(int[] arr)
+{
+    for (int i = 0; i < arr.Length / 2; i++)
+    {
+        if (arr[i] != arr[arr.Length - 1 - i])
+            return false;
+    }
+    return true;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 5. MergeArrays - دمج مصفوفتين متتابع
+    % (نقل من ex08B)
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] MergeArrays(int[] A, int[] B)} تستقبل مصفوفتين من الأعداد الصحيحة وتعيد مصفوفة جديدة تحتوي على جميع عناصر \textenglish{A} متبوعة بجميع عناصر \textenglish{B}.\\
+    \textbf{مثال:} إذا كانت \textenglish{A = \{1, 2, 3\}} و\textenglish{B = \{4, 5\}}، تعيد العملية \textenglish{\{1, 2, 3, 4, 5\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] MergeArrays(int[] A, int[] B)
+{
+    int[] result = new int[A.Length + B.Length];
+
+    for (int i = 0; i < A.Length; i++)
+        result[i] = A[i];
+
+    for (int i = 0; i < B.Length; i++)
+        result[A.Length + i] = B[i];
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 6. ReverseArray - عكس بدون مصفوفة إضافية
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{void ReverseArray(int[] arr)} لقلب ترتيب عناصر المصفوفة \textbf{بدون} استخدام مصفوفة إضافية.\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5\}}، تصبح بعد استدعاء العملية \textenglish{arr = \{5, 4, 3, 2, 1\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void ReverseArray(int[] arr)
+{
+    for (int i = 0; i < arr.Length / 2; i++)
+    {
+        int temp = arr[i];
+        arr[i] = arr[arr.Length - 1 - i];
+        arr[arr.Length - 1 - i] = temp;
     }
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
     \fi
+    \clearpage
+
+    % ======================================================
+    % 7. ReverseRange - عكس في مجال محدد
+    % (نقل من ex08B)
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{bool HasIncreasingSequence(int[] arr)} تعيد \textenglish{true} إذا وجدت في المصفوفة 3 أرقام متتالية (بجانب بعضها) مرتبة تصاعدياً بصرامة ($a < b < c$).
+    اكتب عملية خارجية \textenglish{void ReverseRange(int[] arr, int start, int end)} تعكس ترتيب عناصر المصفوفة فقط بين المؤشرين \textenglish{start} و\textenglish{end} (شامل الطرفين) داخل نفس المصفوفة.\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5, 6, 7\}} و\textenglish{start = 2} و\textenglish{end = 5}، تصبح \textenglish{arr = \{1, 2, 6, 5, 4, 3, 7\}}.\\
+    (العناصر من المؤشر 2 إلى 5 هي \textenglish{\{3, 4, 5, 6\}} وبعد العكس تصبح \textenglish{\{6, 5, 4, 3\}}).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void ReverseRange(int[] arr, int start, int end)
+{
+    while (start < end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 8. HasIncreasingSequence - فحص تسلسل متزايد
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{bool HasIncreasingSequence(int[] arr)} تعيد \textenglish{true} إذا وجدت في المصفوفة 3 أرقام متتالية (بجانب بعضها) مرتبة تصاعدياً بصرامة ($a < b < c$).\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{5, 2, 4, 6, 1\}} يوجد التسلسل \textenglish{\{2, 4, 6\}} فتعيد \textenglish{true}.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
@@ -100,23 +342,100 @@ public static void ReplaceNegativeWithZero(int[] arr)
 public static bool HasIncreasingSequence(int[] arr)
 {
     if (arr.Length < 3) return false;
+
     for (int i = 0; i < arr.Length - 2; i++)
     {
         if (arr[i] < arr[i + 1] && arr[i + 1] < arr[i + 2])
-        {
             return true;
-        }
     }
     return false;
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 9. CountSignChanges - عد تغيرات الإشارة
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int CountSignChanges(int[] arr)} تعد عدد المرات التي تتغير فيها إشارة الرقم (من موجب لسالب أو العكس) بين كل عنصر والعنصر الذي يليه.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{3, -2, -5, 4\}}:
+    \begin{itemize}
+        \item 3 و $-2$: موجب $\leftarrow$ سالب (تغيير)
+        \item $-2$ و $-5$: سالب $\leftarrow$ سالب
+        \item $-5$ و 4: سالب $\leftarrow$ موجب (تغيير)
+    \end{itemize}
+    عدد التغييرات هو 2.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountSignChanges(int[] arr)
+{
+    int changes = 0;
+    for (int i = 0; i < arr.Length - 1; i++)
+    {
+        if (arr[i] * arr[i + 1] < 0)
+            changes++;
+    }
+    return changes;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 10. LongestSequence - أطول تسلسل متكرر
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int LongestSequence(int[] arr)} تعيد طول أطول تسلسل متصل من عناصر لها نفس القيمة.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{1, 2, 2, 2, 3, 3\}} الناتج هو 3 (التسلسل \textenglish{\{2, 2, 2\}}).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int LongestSequence(int[] arr)
+{
+    if (arr.Length == 0) return 0;
+
+    int maxLen = 1;
+    int currentLen = 1;
+
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] == arr[i - 1])
+        {
+            currentLen++;
+            if (currentLen > maxLen)
+                maxLen = currentLen;
+        }
+        else
+        {
+            currentLen = 1;
+        }
+    }
+    return maxLen;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+\fi
+
+    % ======================================================
+    % 11. CenteredAverage - معدل بدون أكبر وأصغر
+    % ======================================================
 
     \item
     اكتب عملية خارجية \textenglish{double CenteredAverage(int[] arr)} تحسب معدل الأعداد في المصفوفة بعد استثناء أكبر قيمة وأصغر قيمة لمرة واحدة.
-    (افترض أن طول المصفوفة 3 على الأقل).
+    (افترض أن طول المصفوفة 3 على الأقل).\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{1, 5, 3, 8, 2\}} نستثني الأكبر (8) والأصغر (1)، فالمعدل هو $\frac{5+3+2}{3} = 3.33$.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
@@ -133,122 +452,131 @@ public static double CenteredAverage(int[] arr)
         if (arr[i] > max) max = arr[i];
         if (arr[i] < min) min = arr[i];
     }
-    // نستثني الماكس والمين من المجموع
+
     sum = sum - max - min;
-    // نقسم على العدد ناقص عنصرين
     return (double)sum / (arr.Length - 2);
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 12. MergeAlternating - دمج بالتناوب
+    % (نقل من ex08B)
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{bool IsSorted(int[] arr)} تعيد \textenglish{true} فقط إذا كانت عناصر المصفوفة مرتبة تصاعدياً بالكامل (من الأصغر للأكبر).
+    اكتب عملية خارجية \textenglish{int[] MergeAlternating(int[] A, int[] B)} تستقبل مصفوفتين من الأعداد الصحيحة (لهما نفس الطول) وتعيد مصفوفة جديدة تحتوي على عناصر من المصفوفتين بالتناوب (عنصر من \textenglish{A}، عنصر من \textenglish{B}، وهكذا).\\
+    \textbf{مثال:} إذا كانت \textenglish{A = \{1, 3, 5\}} و\textenglish{B = \{2, 4, 6\}}، تعيد العملية \textenglish{\{1, 2, 3, 4, 5, 6\}}.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-public static bool IsSorted(int[] arr)
+public static int[] MergeAlternating(int[] A, int[] B)
 {
-    for (int i = 0; i < arr.Length - 1; i++)
+    int[] result = new int[A.Length + B.Length];
+
+    for (int i = 0; i < A.Length; i++)
     {
-        if (arr[i] > arr[i + 1])
-            return false; // وجدنا عنصرا أكبر من الذي يليه
+        result[2 * i] = A[i];
+        result[2 * i + 1] = B[i];
     }
-    return true;
+
+    return result;
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 13. SecondMax - ثاني أكبر قيمة
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{bool IsPalindrome(int[] arr)} تفحص هل مصفوفة الأعداد الصحيحة متناظرة (تقرأ من اليمين كاليسار).
-    مثال: $\{1, 2, 3, 2, 1\}$ متناظرة.
+    اكتب عملية خارجية \textenglish{int SecondMax(int[] arr)} تعيد ثاني أكبر قيمة في مصفوفة أعداد صحيحة.\\
+    (افترض أن المصفوفة تحتوي على الأقل على عنصرين مختلفين).\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{3, 7, 2, 9, 5\}} ثاني أكبر قيمة هو 7.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-public static bool IsPalindrome(int[] arr)
+public static int SecondMax(int[] arr)
 {
-    for (int i = 0; i < arr.Length / 2; i++)
+    int max = int.MinValue;
+    int secondMax = int.MinValue;
+
+    for (int i = 0; i < arr.Length; i++)
     {
-        if (arr[i] != arr[arr.Length - 1 - i])
+        if (arr[i] > max)
         {
-            return false;
+            secondMax = max;
+            max = arr[i];
+        }
+        else if (arr[i] > secondMax && arr[i] != max)
+        {
+            secondMax = arr[i];
         }
     }
-    return true;
+    return secondMax;
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 14. GetEvenReversed - نسخ الأعداد الزوجية بالعكس
+    % (نقل من ex08B)
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{int CountSignChanges(int[] arr)} تعد عدد المرات التي تتغير فيها إشارة الرقم (من موجب لسالب أو العكس) بين كل عنصر والعنصر الذي يليه. (تجاهل الصفر).
+    اكتب عملية خارجية \textenglish{int[] GetEvenReversed(int[] source)} تستقبل مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة تحتوي فقط على الأعداد الزوجية منها بترتيب عكسي.\\
+    \textbf{مثال:} إذا كانت \textenglish{source = \{1, 2, 3, 4, 5, 6, 7, 8\}}، تعيد العملية \textenglish{\{8, 6, 4, 2\}}.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-public static int CountSignChanges(int[] arr)
+public static int[] GetEvenReversed(int[] source)
 {
-    int changes = 0;
-    for (int i = 0; i < arr.Length - 1; i++)
+    int evenCount = 0;
+    for (int i = 0; i < source.Length; i++)
     {
-        if (arr[i] == 0 || arr[i + 1] == 0) continue;
+        if (source[i] % 2 == 0)
+            evenCount++;
+    }
 
-        // فحص اختلاف الإشارة
-        bool currentPos = arr[i] > 0;
-        bool nextPos = arr[i + 1] > 0;
+    int[] evenReversed = new int[evenCount];
+    int index = 0;
 
-        if (currentPos != nextPos)
+    for (int i = source.Length - 1; i >= 0; i--)
+    {
+        if (source[i] % 2 == 0)
         {
-            changes++;
+            evenReversed[index] = source[i];
+            index++;
         }
     }
-    return changes;
+
+    return evenReversed;
 }
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \fi
+    \clearpage
+\fi
+
+    % ======================================================
+    % 15. ShiftRight - إزاحة دائرية إلى اليمين
+    % ======================================================
 
     \item
-    اكتب عملية خارجية \textenglish{int LongestSequence(int[] arr)} تعيد طول أطول تسلسل متصل من عناصر لها نفس القيمة.\\
-    \textbf{مثال:} \textenglish{\{1, 2, 2, 2, 3\}} الناتج 3.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static int LongestSequence(int[] arr)
-{
-    if (arr.Length == 0) return 0;
-    int maxLen = 1;
-    int currentLen = 1;
-
-    for (int i = 1; i < arr.Length; i++)
-    {
-        if (arr[i] == arr[i - 1])
-        {
-            currentLen++;
-            if (currentLen > maxLen) maxLen = currentLen;
-        }
-        else
-        {
-            currentLen = 1;
-        }
-    }
-    return maxLen;
-}
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
-    \item
-    اكتب عملية خارجية \textenglish{void ShiftRight(int[] arr, int n)} تقوم بإزاحة عناصر المصفوفة \textenglish{n} خطوات لليمين بشكل دائري (Circular Shift).
+    اكتب عملية خارجية \textenglish{void ShiftRight(int[] arr, int n)} تقوم بإزاحة عناصر المصفوفة \textenglish{n} خطوات لليمين بشكل دائري (العناصر التي تخرج من النهاية تنتقل إلى البداية).\\
+    \textbf{مثال:} إذا كانت \textenglish{arr = \{1, 2, 3, 4, 5\}} و\textenglish{n = 2}، تصبح \textenglish{arr = \{4, 5, 1, 2, 3\}}.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
@@ -257,13 +585,15 @@ public static void ShiftRight(int[] arr, int n)
 {
     int len = arr.Length;
     if (len == 0) return;
+
+    n = n % len;
     int[] temp = new int[len];
 
     for (int i = 0; i < len; i++)
     {
         temp[(i + n) % len] = arr[i];
     }
-    // نسخ القيم الجديدة
+
     for (int i = 0; i < len; i++)
     {
         arr[i] = temp[i];
@@ -273,31 +603,6 @@ public static void ShiftRight(int[] arr, int n)
     \end{english}
     \end{boxSolution}
     \fi
-
-    \item
-    اكتب عملية خارجية \textenglish{void ReverseArray(int[] arr)} لقلب ترتيب عناصر المصفوفة (Reverse) \textbf{بدون} استخدام مصفوفة إضافية.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static void ReverseArray(int[] arr)
-{
-    int start = 0;
-    int end = arr.Length - 1;
-    while (start < end)
-    {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        start++;
-        end--;
-    }
-}
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
 \end{enumerate}
 
 \end{document}

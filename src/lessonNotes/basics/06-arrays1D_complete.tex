@@ -1,0 +1,1333 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{المصفوفات الأحادية البعد \textenglish{(1D Arrays)} في لغة \textenglish{C\#}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\tableofcontents
+\clearpage
+
+\section{مقدمة}
+
+\subsection{ما هي المصفوفة؟}
+المصفوفة \textenglish{(Array)} هي بنية معطيات تمكننا من تخزين مجموعة من القيم من \textbf{نفس النوع} تحت اسم واحد.
+
+\subsection{لماذا نستخدم المصفوفات؟}
+\begin{itemize}
+    \item تخزين مجموعة كبيرة من البيانات بطريقة منظمة
+    \item سهولة الوصول إلى العناصر عن طريق الفهرس
+    \item تسهيل معالجة البيانات باستخدام الحلقات
+    \item توفير في الكود وتجنب التكرار
+\end{itemize}
+
+\begin{boxExample}[مثال توضيحي]
+تخيّل أنك تريد تخزين درجات 30 طالباً في امتحان. بدون المصفوفات، ستحتاج إلى:
+\begin{english}
+\begin{minted}{csharp}
+int grade1, grade2, grade3, ..., grade30;
+\end{minted}
+\end{english}
+أما مع المصفوفات:
+\begin{english}
+\begin{minted}{csharp}
+int[] grades = new int[30];
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{خصائص المصفوفة}
+\begin{itemize}
+    \item \textbf{الحجم الثابت:} حجم المصفوفة يُحدّد عند إنشائها ولا يمكن تغييره لاحقاً
+    \item \textbf{نوع واحد:} جميع العناصر يجب أن تكون من نفس النوع
+    \item \textbf{الفهرسة:} يبدأ الفهرس من 0 وينتهي عند \textenglish{Length - 1}
+    \item \textbf{التخزين المتجاور:} العناصر مخزنة في مواقع متجاورة في الذاكرة
+\end{itemize}
+
+\clearpage
+
+\section{التصريح والإنشاء}
+
+\subsection{التصريح عن المصفوفة}
+
+التصريح عن المصفوفة يتم بتحديد نوع العناصر ووضع الأقواس المربعة \textenglish{[]}.
+
+\begin{boxSymbol}
+\begin{english}
+\begin{minted}{csharp}
+type[] arrayName;
+\end{minted}
+\end{english}
+حيث:
+\begin{itemize}
+    \item \textenglish{type}: نوع العناصر (\textenglish{int, double, string, bool, char})
+    \item \textenglish{[]}: تدل على أن المتغير هو مصفوفة
+    \item \textenglish{arrayName}: اسم المصفوفة
+\end{itemize}
+\end{boxSymbol}
+
+\begin{boxExample}[أمثلة على التصريح]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers;
+double[] prices;
+string[] names;
+bool[] flags;
+char[] letters;
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxWarning}
+التصريح وحده لا يكفي! يجب إنشاء المصفوفة باستخدام \textenglish{new}.
+\end{boxWarning}
+
+\subsection{إنشاء المصفوفة}
+
+بعد التصريح، يجب إنشاء المصفوفة وتحديد حجمها باستخدام الكلمة المفتاحية \textenglish{new}.
+
+\begin{boxExample}[1 - إنشاء مصفوفة]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = new int[5];
+\end{minted}
+\end{english}
+تُنشئ مصفوفة من 5 أعداد صحيحة، جميع القيم تبدأ بـ 0.
+\end{boxExample}
+
+\begin{boxExample}[2 - التصريح والإنشاء بخطوتين]
+\begin{english}
+\begin{minted}{csharp}
+double[] scores;
+scores = new double[10];
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxNote}
+القيم الافتراضية للمصفوفات:
+\begin{itemize}
+    \item الأعداد (\textenglish{int, double}): 0
+    \item \textenglish{bool}: \textenglish{false}
+    \item \textenglish{string, object}: \textenglish{null}
+    \item \textenglish{char}: \textenglish{'\textbackslash 0'}
+\end{itemize}
+\end{boxNote}
+
+\subsection{التهيئة المباشرة}
+
+يمكن تهيئة المصفوفة بقيم مباشرة عند إنشائها:
+
+\begin{boxExample}[3 - طرق التهيئة]
+هناك ثلاث طرق للتهيئة، كلها تعطي نفس النتيجة:
+\begin{english}
+\begin{minted}{csharp}
+// الطريقة الأولى: نحدد الحجم والقيم معاً
+int[] numbers1 = new int[5] { 10, 20, 30, 40, 50 };
+
+// الطريقة الثانية: دون تحديد الحجم
+int[] numbers2 = new int[] { 10, 20, 30, 40, 50 };
+
+// الطريقة الثالثة: الأقصر والأسهل
+int[] numbers3 = { 10, 20, 30, 40, 50 };
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[أمثلة على التهيئة بأنوع مختلفة]
+\begin{english}
+\begin{minted}{csharp}
+string[] colors = { "Red", "Green", "Blue" };
+double[] grades = { 85.5, 92.0, 78.3, 95.7 };
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\section{الوصول إلى العناصر}
+
+\subsection{الفهرس \textenglish{(Index)}}
+
+كل عنصر في المصفوفة له رقم فهرس \textenglish{(Index)} يبدأ من 0.
+
+\begin{boxDef}
+\textbf{الفهرس} هو رقم يحدد موقع العنصر في المصفوفة:
+\begin{itemize}
+    \item الفهرس الأول: 0
+    \item الفهرس الأخير: \textenglish{Length - 1}
+\end{itemize}
+\end{boxDef}
+
+\begin{boxExample}[4 - الوصول للعناصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+
+int first = numbers[0];
+int second = numbers[1];
+int third = numbers[2];
+int fourth = numbers[3];
+int fifth = numbers[4];
+
+Console.WriteLine(first);
+Console.WriteLine(numbers[2]);
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+10 \\
+30
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\subsection{تعديل قيم العناصر}
+
+\begin{boxExample}[5 - التعديل]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+
+numbers[2] = 35;
+numbers[4] = 55;
+\end{minted}
+\end{english}
+الآن المصفوفة: \textenglish{\{10, 20, 35, 40, 55\}}
+\end{boxExample}
+
+\begin{boxWarning}
+إذا حاولت الوصول إلى فهرس خارج نطاق المصفوفة، ستحصل على خطأ:
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = new int[5];
+int x = arr[10];
+\end{minted}
+\end{english}
+خطأ: \textenglish{IndexOutOfRangeException}
+\\
+الفهارس الصحيحة هي من 0 إلى 4 فقط.
+\end{boxWarning}
+
+\subsection{خاصية الطول \textenglish{Length}}
+
+كل مصفوفة لها خاصية \textenglish{Length} تُعطينا عدد العناصر.
+
+\begin{boxExample}[6 - استخدام خاصية Length]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+int size = numbers.Length;
+
+Console.WriteLine(size);
+
+int lastElement = numbers[numbers.Length - 1];
+Console.WriteLine(lastElement);
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+5 \\
+50
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\section{المصفوفات والحلقات}
+
+\subsection{حلقة \textenglish{for}}
+
+حلقة \textenglish{for} هي الأكثر استخداماً مع المصفوفات لأنها توفر الفهرس.
+
+\begin{boxExample}[7 - طباعة جميع العناصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    Console.WriteLine(numbers[i]);
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+10 \\
+20 \\
+30 \\
+40 \\
+50
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[8 - طباعة مع الفهارس]
+\begin{english}
+\begin{minted}{csharp}
+string[] names = { "Ali", "Sara", "Omar" };
+
+for (int i = 0; i < names.Length; i++)
+{
+    Console.WriteLine($"[{i}]: {names[i]}");
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+{[}0{]}: Ali \\
+{[}1{]}: Sara \\
+{[}2{]}: Omar
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\subsection{قراءة قيم المصفوفة من المستخدم}
+
+\begin{boxExample}[9 - استقبال من المستخدم]
+\begin{english}
+\begin{minted}{csharp}
+int[] grades = new int[5];
+
+Console.WriteLine("Enter 5 grades:");
+for (int i = 0; i < grades.Length; i++)
+{
+    Console.Write($"Grade {i + 1}: ");
+    grades[i] = int.Parse(Console.ReadLine());
+}
+
+Console.WriteLine("Your grades:");
+for (int i = 0; i < grades.Length; i++)
+{
+    Console.WriteLine(grades[i]);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[10 - طباعة المصفوفة بسطر واحد]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (i > 0)
+        Console.Write(", ");
+    Console.Write(numbers[i]);
+}
+Console.WriteLine();
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+10, 20, 30, 40, 50
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\section{عمليات أساسية}
+
+\subsection{جمع عناصر المصفوفة}
+
+\begin{boxExample}[11 - حساب المجموع]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 10, 20, 30, 40, 50 };
+int sum = 0;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    sum += numbers[i];
+}
+
+Console.WriteLine("Sum = " + sum);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Sum = 150}
+\end{boxExample}
+
+\begin{boxExample}[12 - حساب المعدل]
+\begin{english}
+\begin{minted}{csharp}
+double[] grades = { 85.5, 92.0, 78.5, 88.0, 95.0 };
+double sum = 0;
+
+for (int i = 0; i < grades.Length; i++)
+{
+    sum += grades[i];
+}
+
+double average = sum / grades.Length;
+Console.WriteLine("Average = " + average);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Average = 87.8}
+\end{boxExample}
+
+\subsection{عد العناصر بشرط}
+
+\begin{boxExample}[13 - عد الأعداد الزوجية]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 3, 15, 20, 7 };
+int evenCount = 0;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] % 2 == 0)
+        evenCount++;
+}
+
+Console.WriteLine("Even numbers: " + evenCount);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Even numbers: 3}
+\end{boxExample}
+
+\begin{boxExample}[14 - عد العناصر الموجبة]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { -5, 12, -8, 3, -15, 20, 7 };
+int positiveCount = 0;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] > 0)
+        positiveCount++;
+}
+
+Console.WriteLine("Positive numbers: " + positiveCount);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Positive numbers: 4}
+\end{boxExample}
+
+\subsection{إيجاد الأكبر والأصغر}
+
+\begin{boxExample}[15 - إيجاد أكبر عنصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 3, 15, 20, 7 };
+int max = numbers[0];
+
+for (int i = 1; i < numbers.Length; i++)
+{
+    if (numbers[i] > max)
+        max = numbers[i];
+}
+
+Console.WriteLine("Maximum = " + max);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Maximum = 20}
+\end{boxExample}
+
+\begin{boxExample}[16 - إيجاد أصغر عنصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 3, 15, 20, 7 };
+int min = numbers[0];
+
+for (int i = 1; i < numbers.Length; i++)
+{
+    if (numbers[i] < min)
+        min = numbers[i];
+}
+
+Console.WriteLine("Minimum = " + min);
+\end{minted}
+\end{english}
+الناتج: \textenglish{Minimum = 3}
+\end{boxExample}
+
+\begin{boxExample}[17 - إيجاد الأكبر مع موقعه]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 20, 15, 3, 7 };
+int max = numbers[0];
+int maxIndex = 0;
+
+for (int i = 1; i < numbers.Length; i++)
+{
+    if (numbers[i] > max)
+    {
+        max = numbers[i];
+        maxIndex = i;
+    }
+}
+
+Console.WriteLine($"Max = {max} at index {maxIndex}");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Max = 20 at index 3}
+\end{boxExample}
+
+\clearpage
+
+\section{البحث في المصفوفات}
+
+\subsection{البحث الخطي \textenglish{(Linear Search)}}
+
+\begin{boxExample}[18 - البحث عن عنصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 3, 15, 20, 7 };
+int searchFor = 15;
+bool found = false;
+int position = -1;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] == searchFor)
+    {
+        found = true;
+        position = i;
+        break;
+    }
+}
+
+if (found)
+    Console.WriteLine($"Found at index {position}");
+else
+    Console.WriteLine("Not found");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Found at index 4}
+\end{boxExample}
+
+\begin{boxExample}[19 - عد تكرار العنصر]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 12, 15, 12, 7 };
+int searchFor = 12;
+int count = 0;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] == searchFor)
+        count++;
+}
+
+Console.WriteLine($"Element {searchFor} appears {count} times");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Element 12 appears 3 times}
+\end{boxExample}
+
+\begin{boxExample}[20 - إيجاد جميع المواقع]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 12, 15, 12, 7 };
+int searchFor = 12;
+
+Console.WriteLine($"Positions of {searchFor}:");
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] == searchFor)
+        Console.WriteLine($"Index: {i}");
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+Positions of 12: \\
+Index: 1 \\
+Index: 3 \\
+Index: 5
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\section{نسخ ومقارنة المصفوفات}
+
+\subsection{نسخ المصفوفات}
+
+\begin{boxWarning}
+\textbf{خطأ شائع!} هذا الكود لا ينسخ المصفوفة:
+\begin{english}
+\begin{minted}{csharp}
+int[] arr1 = { 1, 2, 3 };
+int[] arr2 = arr1;
+
+arr2[0] = 100;
+Console.WriteLine(arr1[0]);
+\end{minted}
+\end{english}
+الناتج: \textenglish{100} (تغيّر أيضاً!)
+\\
+\textenglish{arr2 = arr1} لا ينسخ المصفوفة، بل يجعل \textenglish{arr2} يشير لنفس المصفوفة.
+\end{boxWarning}
+
+\begin{boxExample}[21 - النسخ الصحيح يدوياً]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr1 = { 1, 2, 3, 4, 5 };
+int[] arr2 = new int[arr1.Length];
+
+for (int i = 0; i < arr1.Length; i++)
+{
+    arr2[i] = arr1[i];
+}
+
+arr2[0] = 100;
+Console.WriteLine(arr1[0]);
+Console.WriteLine(arr2[0]);
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+1 \\
+100
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[22 - النسخ باستخدام \textenglish{Array.Copy}]
+بدلاً من الحلقة يمكن استخدام عملية جاهزة:
+\begin{english}
+\begin{minted}{csharp}
+int[] arr1 = { 1, 2, 3, 4, 5 };
+int[] arr2 = new int[arr1.Length];
+
+// ينسخ من arr1 إلى arr2 عدد arr1.Length عنصر
+Array.Copy(arr1, arr2, arr1.Length);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{مقارنة المصفوفات}
+
+\begin{boxExample}[23 - فحص التساوي]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr1 = { 1, 2, 3, 4, 5 };
+int[] arr2 = { 1, 2, 3, 4, 5 };
+bool areEqual = true;
+
+if (arr1.Length != arr2.Length)
+{
+    areEqual = false;
+}
+else
+{
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        if (arr1[i] != arr2[i])
+        {
+            areEqual = false;
+            break;
+        }
+    }
+}
+
+Console.WriteLine(areEqual ? "Equal" : "Not Equal");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Equal}
+\end{boxExample}
+
+\clearpage
+
+\section{عمليات متقدمة}
+
+\subsection{عكس المصفوفة}
+
+\begin{boxExample}[24 - عكس ترتيب العناصر بالتبديل]
+الفكرة: نبدّل الأول مع الأخير، والثاني مع قبل الأخير، وهكذا حتى نصف المصفوفة.
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 1, 2, 3, 4, 5 };
+
+for (int i = 0; i < numbers.Length / 2; i++)
+{
+    int temp = numbers[i];
+    numbers[i] = numbers[numbers.Length - 1 - i];
+    numbers[numbers.Length - 1 - i] = temp;
+}
+\end{minted}
+\end{english}
+النتيجة: \textenglish{\{5, 4, 3, 2, 1\}}
+\end{boxExample}
+
+\begin{boxExample}[25 - نسخ بترتيب عكسي]
+\begin{english}
+\begin{minted}{csharp}
+int[] original = { 1, 2, 3, 4, 5 };
+int[] reversed = new int[original.Length];
+
+for (int i = 0; i < original.Length; i++)
+{
+    reversed[i] = original[original.Length - 1 - i];
+}
+\end{minted}
+\end{english}
+\textenglish{reversed} يحتوي على: \textenglish{\{5, 4, 3, 2, 1\}}
+\end{boxExample}
+
+\subsection{إزاحة العناصر}
+
+\begin{boxExample}[26 - إزاحة لليمين]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = { 1, 2, 3, 4, 5 };
+
+int last = arr[arr.Length - 1];
+
+for (int i = arr.Length - 1; i > 0; i--)
+{
+    arr[i] = arr[i - 1];
+}
+
+arr[0] = last;
+\end{minted}
+\end{english}
+النتيجة: \textenglish{\{5, 1, 2, 3, 4\}}
+\end{boxExample}
+
+\begin{boxExample}[27 - إزاحة لليسار]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = { 1, 2, 3, 4, 5 };
+
+int first = arr[0];
+
+for (int i = 0; i < arr.Length - 1; i++)
+{
+    arr[i] = arr[i + 1];
+}
+
+arr[arr.Length - 1] = first;
+\end{minted}
+\end{english}
+النتيجة: \textenglish{\{2, 3, 4, 5, 1\}}
+\end{boxExample}
+
+\subsection{تبديل عنصرين}
+
+\begin{boxExample}[28 - تبديل الأول والأخير]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = { 1, 2, 3, 4, 5 };
+
+int temp = arr[0];
+arr[0] = arr[arr.Length - 1];
+arr[arr.Length - 1] = temp;
+\end{minted}
+\end{english}
+النتيجة: \textenglish{\{5, 2, 3, 4, 1\}}
+\end{boxExample}
+
+\begin{boxExample}[29 - تبديل عنصرين متجاورين]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = { 1, 2, 3, 4, 5, 6 };
+
+for (int i = 0; i < arr.Length - 1; i += 2)
+{
+    int temp = arr[i];
+    arr[i] = arr[i + 1];
+    arr[i + 1] = temp;
+}
+\end{minted}
+\end{english}
+النتيجة: \textenglish{\{2, 1, 4, 3, 6, 5\}}
+\end{boxExample}
+
+\subsection{فلترة وإنشاء مصفوفة جديدة}
+
+\begin{boxExample}[30 - نسخ الأعداد الزوجية فقط]
+\begin{english}
+\begin{minted}{csharp}
+int[] numbers = { 5, 12, 8, 3, 15, 20, 7, 2 };
+
+int evenCount = 0;
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] % 2 == 0)
+        evenCount++;
+}
+
+int[] evenNumbers = new int[evenCount];
+int index = 0;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    if (numbers[i] % 2 == 0)
+    {
+        evenNumbers[index] = numbers[i];
+        index++;
+    }
+}
+\end{minted}
+\end{english}
+\begin{english}
+\begin{minted}{csharp}
+// طباعة النتيجة للتحقق
+for (int i = 0; i < evenNumbers.Length; i++)
+    Console.Write(evenNumbers[i] + " ");
+\end{minted}
+\end{english}
+الناتج: \textenglish{12 8 20 2}
+\end{boxExample}
+
+\clearpage
+
+\section{المصفوفات والعمليات الخارجية}
+
+\subsection{تمرير المصفوفة كبارامتر}
+
+\begin{boxExample}[31 - عملية لطباعة المصفوفة]
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintArray(int[] arr)
+{
+    Console.Write("[ ");
+    for (int i = 0; i < arr.Length; i++)
+    {
+        Console.Write(arr[i]);
+        if (i < arr.Length - 1)
+            Console.Write(", ");
+    }
+    Console.WriteLine(" ]");
+}
+
+public static void Main()
+{
+    int[] numbers = { 1, 2, 3, 4, 5 };
+    PrintArray(numbers);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{[ 1, 2, 3, 4, 5 ]}
+\end{boxExample}
+
+\begin{boxExample}[32 - عملية لحساب المجموع]
+\begin{english}
+\begin{minted}{csharp}
+public static int SumArray(int[] arr)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+public static void Main()
+{
+    int[] numbers = { 10, 20, 30, 40, 50 };
+    int total = SumArray(numbers);
+    Console.WriteLine("Total = " + total);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{Total = 150}
+\end{boxExample}
+
+\begin{boxExample}[33 - عملية لحساب المعدل]
+\begin{english}
+\begin{minted}{csharp}
+public static double GetAverage(double[] arr)
+{
+    double sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        sum += arr[i];
+    }
+    return sum / arr.Length;
+}
+
+public static void Main()
+{
+    double[] grades = { 85.5, 92.0, 78.5, 88.0 };
+    double avg = GetAverage(grades);
+    Console.WriteLine("Average = " + avg);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{Average = 86.0}
+\end{boxExample}
+
+\begin{boxExample}[34 - عملية للبحث]
+\begin{english}
+\begin{minted}{csharp}
+public static int FindElement(int[] arr, int value)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == value)
+            return i;
+    }
+    return -1;
+}
+
+public static void Main()
+{
+    int[] numbers = { 5, 12, 8, 3, 15 };
+    int pos = FindElement(numbers, 8);
+
+    if (pos != -1)
+        Console.WriteLine($"Found at index {pos}");
+    else
+        Console.WriteLine("Not found");
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{Found at index 2}
+\end{boxExample}
+
+\subsection{إرجاع مصفوفة من عملية}
+
+\begin{boxExample}[35 - عملية تُرجع مصفوفة]
+\begin{english}
+\begin{minted}{csharp}
+public static int[] CreateArray(int size, int value)
+{
+    int[] arr = new int[size];
+    for (int i = 0; i < arr.Length; i++)
+    {
+        arr[i] = value;
+    }
+    return arr;
+}
+
+public static void Main()
+{
+    int[] numbers = CreateArray(5, 10);
+    PrintArray(numbers);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{[ 10, 10, 10, 10, 10 ]}
+\end{boxExample}
+
+\begin{boxExample}[36 - عملية تُنشئ مصفوفة معكوسة]
+\begin{english}
+\begin{minted}{csharp}
+public static int[] ReverseArray(int[] arr)
+{
+    int[] reversed = new int[arr.Length];
+    for (int i = 0; i < arr.Length; i++)
+    {
+        reversed[i] = arr[arr.Length - 1 - i];
+    }
+    return reversed;
+}
+
+public static void Main()
+{
+    int[] original = { 1, 2, 3, 4, 5 };
+    int[] reversed = ReverseArray(original);
+
+    Console.Write("Original: ");
+    PrintArray(original);
+
+    Console.Write("Reversed: ");
+    PrintArray(reversed);
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+Original: [ 1, 2, 3, 4, 5 ] \\
+Reversed: [ 5, 4, 3, 2, 1 ]
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\begin{boxNote}
+\textbf{ملاحظة مهمة:} عند تمرير مصفوفة لعملية خارجية، التعديلات داخل العملية تؤثر على المصفوفة الأصلية.
+\end{boxNote}
+
+\begin{boxExample}[37 - التعديل داخل العملية]
+\begin{english}
+\begin{minted}{csharp}
+public static void DoubleValues(int[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        arr[i] *= 2;
+    }
+}
+
+public static void Main()
+{
+    int[] numbers = { 1, 2, 3, 4, 5 };
+
+    Console.Write("Before: ");
+    PrintArray(numbers);
+
+    DoubleValues(numbers);
+
+    Console.Write("After: ");
+    PrintArray(numbers);
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+Before: [ 1, 2, 3, 4, 5 ] \\
+After: [ 2, 4, 6, 8, 10 ]
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\section{عمليات إضافية متقدمة}
+
+\subsection{فحص التماثل \textenglish{(Palindrome)}}
+
+\begin{boxExample}[38 - فحص المصفوفة المتماثلة]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPalindrome(int[] arr)
+{
+    for (int i = 0; i < arr.Length / 2; i++)
+    {
+        if (arr[i] != arr[arr.Length - 1 - i])
+            return false;
+    }
+    return true;
+}
+
+public static void Main()
+{
+    int[] arr1 = { 1, 2, 3, 2, 1 };
+    int[] arr2 = { 1, 2, 3, 4, 5 };
+
+    Console.WriteLine(IsPalindrome(arr1));
+    Console.WriteLine(IsPalindrome(arr2));
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+True \\
+False
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\subsection{دمج مصفوفتين}
+
+\begin{boxExample}[39 - دمج مصفوفتين متتاليتين]
+\begin{english}
+\begin{minted}{csharp}
+public static int[] MergeArrays(int[] arr1, int[] arr2)
+{
+    int[] result = new int[arr1.Length + arr2.Length];
+
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        result[i] = arr1[i];
+    }
+
+    for (int i = 0; i < arr2.Length; i++)
+    {
+        result[arr1.Length + i] = arr2[i];
+    }
+
+    return result;
+}
+
+public static void Main()
+{
+    int[] A = { 1, 2, 3 };
+    int[] B = { 4, 5, 6 };
+    int[] merged = MergeArrays(A, B);
+
+    PrintArray(merged);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{[ 1, 2, 3, 4, 5, 6 ]}
+\end{boxExample}
+
+\begin{boxExample}[40 - دمج بالتناوب]
+عنصر من الأولى، عنصر من الثانية، وهكذا:
+\begin{english}
+\begin{minted}{csharp}
+public static int[] AlternateMerge(int[] arr1, int[] arr2)
+{
+    int[] result = new int[arr1.Length + arr2.Length];
+
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        result[2 * i] = arr1[i];
+        result[2 * i + 1] = arr2[i];
+    }
+
+    return result;
+}
+
+public static void Main()
+{
+    int[] A = { 10, 30, 50 };
+    int[] B = { 20, 40, 60 };
+    int[] merged = AlternateMerge(A, B);
+
+    PrintArray(merged);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{[ 10, 20, 30, 40, 50, 60 ]}
+\end{boxExample}
+
+\subsection{إيجاد ثاني أكبر عنصر}
+
+\begin{boxExample}[41 - إيجاد ثاني أكبر عنصر]
+\begin{english}
+\begin{minted}{csharp}
+public static int FindSecondMax(int[] arr)
+{
+    int max1 = int.MinValue;
+    int max2 = int.MinValue;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] > max1)
+        {
+            max2 = max1;
+            max1 = arr[i];
+        }
+        else if (arr[i] > max2 && arr[i] != max1)
+        {
+            max2 = arr[i];
+        }
+    }
+
+    return max2;
+}
+
+public static void Main()
+{
+    int[] numbers = { 5, 12, 8, 20, 15, 3, 7 };
+    int secondMax = FindSecondMax(numbers);
+    Console.WriteLine("Second Maximum = " + secondMax);
+}
+\end{minted}
+\end{english}
+الناتج: \textenglish{Second Maximum = 15}
+\end{boxExample}
+
+\clearpage
+
+\section{مصفوفات من أنواع أخرى}
+
+\subsection{مصفوفة نصوص}
+
+\begin{boxExample}[42 - مصفوفة أسماء]
+\begin{english}
+\begin{minted}{csharp}
+string[] names = { "Ali", "Sara", "Omar", "Mona" };
+
+for (int i = 0; i < names.Length; i++)
+{
+    Console.WriteLine($"Student {i + 1}: {names[i]}");
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+Student 1: Ali \\
+Student 2: Sara \\
+Student 3: Omar \\
+Student 4: Mona
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[43 - البحث في مصفوفة نصوص]
+\begin{english}
+\begin{minted}{csharp}
+string[] colors = { "Red", "Green", "Blue", "Yellow" };
+string search = "Blue";
+int position = -1;
+
+for (int i = 0; i < colors.Length; i++)
+{
+    if (colors[i] == search)
+    {
+        position = i;
+        break;
+    }
+}
+
+if (position != -1)
+    Console.WriteLine($"{search} found at index {position}");
+else
+    Console.WriteLine($"{search} not found");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Blue found at index 2}
+\end{boxExample}
+
+\subsection{مصفوفة حروف}
+
+\begin{boxExample}[44 - مصفوفة أحرف]
+\begin{english}
+\begin{minted}{csharp}
+char[] letters = { 'A', 'B', 'C', 'D', 'E' };
+
+for (int i = 0; i < letters.Length; i++)
+{
+    Console.WriteLine(letters[i]);
+}
+\end{minted}
+\end{english}
+الناتج:
+\begin{english}
+\begin{boxCode}
+A \\
+B \\
+C \\
+D \\
+E
+\end{boxCode}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[45 - عد حرف معين]
+\begin{english}
+\begin{minted}{csharp}
+char[] text = { 'H', 'e', 'l', 'l', 'o' };
+char search = 'l';
+int count = 0;
+
+for (int i = 0; i < text.Length; i++)
+{
+    if (text[i] == search)
+        count++;
+}
+
+Console.WriteLine($"Letter '{search}' appears {count} times");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Letter 'l' appears 2 times}
+\end{boxExample}
+
+\subsection{مصفوفة قيم منطقية}
+
+\begin{boxExample}[46 - عد القيم المنطقية الصحيحة]
+\begin{english}
+\begin{minted}{csharp}
+bool[] answers = { true, false, true, true, false };
+int correctCount = 0;
+
+for (int i = 0; i < answers.Length; i++)
+{
+    if (answers[i])
+        correctCount++;
+}
+
+Console.WriteLine($"Correct answers: {correctCount}");
+\end{minted}
+\end{english}
+الناتج: \textenglish{Correct answers: 3}
+\end{boxExample}
+
+\clearpage
+
+\section{أخطاء شائعة}
+
+\begin{boxAttention}[1 - نسيان أن الفهارس تبدأ من 0]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = new int[5];
+arr[5] = 10;
+\end{minted}
+\end{english}
+\textbf{خطأ!} الفهارس من 0 إلى 4 فقط.
+\\[0.5em]
+\textbf{الصحيح:}
+\begin{english}
+\begin{minted}{csharp}
+arr[4] = 10;
+\end{minted}
+\end{english}
+\end{boxAttention}
+
+\begin{boxAttention}[2 - استخدام = بدلاً من == في الشروط]
+\begin{english}
+\begin{minted}{csharp}
+if (arr[i] = 10)
+\end{minted}
+\end{english}
+\textbf{خطأ!} هذا تعيين وليس مقارنة.
+\\[0.5em]
+\textbf{الصحيح:}
+\begin{english}
+\begin{minted}{csharp}
+if (arr[i] == 10)
+\end{minted}
+\end{english}
+\end{boxAttention}
+
+\begin{boxAttention}[3 - نسيان تهيئة المصفوفة]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr;
+arr[0] = 10;
+\end{minted}
+\end{english}
+\textbf{خطأ!} المصفوفة غير مُنشأة.
+\\[0.5em]
+\textbf{الصحيح:}
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = new int[5];
+arr[0] = 10;
+\end{minted}
+\end{english}
+\end{boxAttention}
+
+\begin{boxAttention}[4 - استخدام \textenglish{Length} بدون أقواس صحيحة]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 0; i <= arr.Length; i++)
+\end{minted}
+\end{english}
+\textbf{خطأ!} سيتجاوز حدود المصفوفة.
+\\[0.5em]
+\textbf{الصحيح:}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 0; i < arr.Length; i++)
+\end{minted}
+\end{english}
+\end{boxAttention}
+
+\begin{boxAttention}[5 - محاولة تغيير الحجم]
+\begin{english}
+\begin{minted}{csharp}
+int[] arr = new int[5];
+arr.Length = 10;
+\end{minted}
+\end{english}
+\textbf{خطأ!} حجم المصفوفة ثابت ولا يمكن تغييره.
+\\[0.5em]
+\textbf{الحل:} إنشاء مصفوفة جديدة بالحجم المطلوب.
+\end{boxAttention}
+
+\end{document}
