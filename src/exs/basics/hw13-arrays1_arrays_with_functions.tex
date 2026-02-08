@@ -1,0 +1,227 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 13 - المصفوفات الأحادية - عمليات خارجية}
+\else
+\title{وظيفة 13 - المصفوفات الأحادية - عمليات خارجية}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    \item
+    اكتب عملية خارجية \textenglish{int GetMin(int[] arr)} تتلقى مصفوفة أعداد صحيحة وتعيد أصغر قيمة فيها.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{15, 3, 9, 21, 7\}} أصغر قيمة هي 3.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int GetMin(int[] arr)
+{
+    int min = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] < min)
+            min = arr[i];
+    }
+    return min;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{int SumInRange(int[] arr, int min, int max)} تتلقى مصفوفة أعداد صحيحة وقيمتين (\textenglish{min} و\textenglish{max})،
+    وتعيد مجموع جميع الأعداد التي تقع بين $[min, max]$، أي مجموع جميع الأعداد الأصغر أو تساوي \textenglish{max} وأيضًا أكبر أو تساوي \textenglish{min}.
+    \begin{boxExample}
+    في المصفوفة \textenglish{\{5, 15, 25, 8, 30, 12, 3\}} مع \textenglish{min = 10} و\textenglish{max = 20}:
+    \begin{itemize}[itemsep=1pt]
+        \item الأعداد في المجال: 15، 12
+        \item المجموع: $15 + 12 = 27$
+    \end{itemize}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int SumInRange(int[] arr, int min, int max)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] >= min && arr[i] <= max)
+            sum += arr[i];
+    }
+    return sum;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] GetMultiples(int[] arr, int factor)} تتلقى مصفوفة أعداد صحيحة وعدداً صحيحاً (\textenglish{factor})، وتعيد مصفوفة جديدة تحتوي فقط على الأعداد القابلة للقسمة على \textenglish{factor}.
+    \begin{boxExample}
+    في المصفوفة \textenglish{\{12, 14, 18, 22, 24\}} مع \textenglish{factor = 3}:
+    \begin{itemize}[itemsep=1pt]
+        \item العناصر القابلة للقسمة: 12، 18، 24
+        \item النتيجة: \textenglish{\{12, 18, 24\}}
+    \end{itemize}
+    \end{boxExample}
+    \begin{boxHint}
+    عليك أولاً عدّ العناصر القابلة للقسمة على \textenglish{factor} لبناء مصفوفة بالحجم المناسب، ثم ملء هذه المصفوفة بالعناصر المطلوبة.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] GetMultiples(int[] arr, int factor)
+{
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] % factor == 0)
+            count++;
+    }
+
+    int[] result = new int[count];
+    int index = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] % factor == 0)
+        {
+            result[index] = arr[i];
+            index++;
+        }
+    }
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \clearpage
+
+    \item
+    اكتب عملية خارجية \textenglish{bool HasConsecutivePair(int[] arr)} تتلقى مصفوفة أعداد صحيحة وتعيد \textenglish{true} إذا وجدت عنصرين متجاورين بحيث تكون قيمهما أعدادًا متتالية.
+    \begin{boxExample}
+    \begin{itemize}[itemsep=1pt]
+        \item في المصفوفة \textenglish{\{5, 3, 4, 8, 2\}} $\leftarrow$ \textenglish{true} (لأن 3 و4 متتاليان)
+        \item في المصفوفة \textenglish{\{10, 8, 6, 4\}} $\leftarrow$ \textenglish{false} (لا يوجد أعداد متتالية)
+        \item في المصفوفة \textenglish{\{2, 4, 6, 8\}} $\leftarrow$ \textenglish{false} (لا يوجد أعداد متتالية)
+    \end{itemize}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool HasConsecutivePair(int[] arr)
+{
+    for (int i = 0; i < arr.Length - 1; i++)
+    {
+        if (Math.Abs(arr[i + 1] - arr[i]) == 1)
+            return true;
+    }
+    return false;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{int FirstAboveAverage(int[] arr)} تتلقى مصفوفة أعداد صحيحة وتعيد موقع (index) أول عنصر أكبر أو يساوي معدل المصفوفة.
+    \begin{boxExample}
+    في المصفوفة \textenglish{\{10, 5, 20, 15, 8\}}:
+    \begin{itemize}[itemsep=1pt]
+        \item المعدل = $\frac{10+5+20+15+8}{5} = 11.6$
+        \item أول عنصر أكبر من المعدل هو 20 في الموقع 2 $\leftarrow$ العملية تعيد 2
+    \end{itemize}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int FirstAboveAverage(int[] arr)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        sum += arr[i];
+    }
+
+    double avg = (double)sum / arr.Length;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] > avg)
+            return i;
+    }
+
+    return -1;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] GetNumberDigits(int number)} تتلقى عددًا صحيحًا وتعيد مصفوفة تحتوي على خانات العدد: كل خانة في عنصر من عناصر المصفوفة.
+    \begin{boxExample}
+    للعدد 4729، المصفوفة الناتجة هي \textenglish{\{4, 7, 2, 9\}}.
+    \end{boxExample}
+    \begin{boxHint}
+    عليك معرفة عدد خانات العدد ثم بناء مصفوفة بحجم مناسب، ثم املأ المصفوفة من اليمين إلى اليسار بخانات العدد.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] GetNumberDigits(int number)
+{
+    int temp = number;
+    int count = 0;
+    while (temp > 0)
+    {
+        count++;
+        temp /= 10;
+    }
+
+    int[] digits = new int[count];
+    for (int i = count - 1; i >= 0; i--)
+    {
+        digits[i] = number % 10;
+        number /= 10;
+    }
+
+    return digits;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\ifwithsols
+\else
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملاً ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+\fi
+
+\end{document}
