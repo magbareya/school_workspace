@@ -8,3 +8,6 @@
 *.tmp
 out/
 out2/
+*pycache*
+*.pyc
+*.pyo
