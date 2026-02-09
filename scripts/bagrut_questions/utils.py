@@ -6,14 +6,14 @@ SUPPORTED_EXTENSIONS = ["pdf", "png", "jpg", "jpeg"]
 
 # Build Regex pattern
 supported_extensions_pattern = "|".join(SUPPORTED_EXTENSIONS)
-PATTERN = re.compile(rf"(.+?)_(\d{{4}}[A-Z]?)_(\d+[A-Z]?)_(\d+[A-Z]?)\.({supported_extensions_pattern})$")
+PATTERN = re.compile(rf"(.+?)_(\d{{4}}[a-z]?)_(\d+[a-z]?)_(\d+[a-z]?)\.({supported_extensions_pattern})$")
 
 def parse_filename(filename):
     """
     Parse filename like: <topic_name>_<year>_<model>_<question_number>.<ext>
     Returns: topic, year, model, qnum, extension
     """
-    match = PATTERN.match(filename)
+    match = PATTERN.match(filename.lower())
     if not match:
         return ("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN")
 
