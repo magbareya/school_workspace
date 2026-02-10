@@ -1,0 +1,365 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل اختبار مرحلي - النصوص والمصفوفات الأحادية}
+\else
+\title{اختبار مرحلي - النصوص والمصفوفات الأحادية}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{center}
+\textbf{الوقت: 90 دقيقة}
+\end{center}
+
+\vspace{1cm}
+
+\begin{enumerate}[itemsep=3em]
+
+    % ======================================================
+    % أسئلة سهلة (2 أسئلة)
+    % ======================================================
+
+    % ======================================================
+    % سؤال 1 - سهل: عملية تعيد عدد الأحرف الكبيرة
+    % ======================================================
+
+    \item
+    \textbf{(10 نقاط)}\\
+    اكتب عملية خارجية \textenglish{int CountUppercase(string text)} تستقبل نصاً وتعيد عدد الأحرف الكبيرة (\textenglish{A-Z}) الموجودة فيه.\\
+    \textbf{مثال:} إذا تلقت العملية النص \textenglish{"Hello World"}، تعيد 2 (لأن \textenglish{H} و\textenglish{W} حرفان كبيران).\\
+    \textbf{ملاحظة:} الحرف الكبير يقع بين \textenglish{'A'} و\textenglish{'Z'}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountUppercase(string text)
+{
+    int count = 0;
+    for (int i = 0; i < text.Length; i++)
+    {
+        if (text[i] >= 'A' && text[i] <= 'Z')
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 2 - سهل: حساب مجموع القيم الموجبة فقط
+    % ======================================================
+
+    \item
+    \textbf{(10 نقاط)}\\
+    اكتب عملية خارجية \textenglish{int SumPositive(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعيد مجموع الأعداد الموجبة فقط (الأكبر من صفر).\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{5, -3, 8, -2, 0, 10\}}، تعيد $5 + 8 + 10 = 23$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int SumPositive(int[] arr)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] > 0)
+            sum += arr[i];
+    }
+    return sum;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % أسئلة متوسطة (6 أسئلة)
+    % ======================================================
+
+    % ======================================================
+    % سؤال 3 - متوسط: دمج نصين بالتناوب (قصة)
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    أراد أحمد كتابة رسالة سرية لصديقه. قرر أن يكتب كلمتين: الأولى هي الرسالة الحقيقية والثانية هي رسالة زائفة للتمويه. ثم قام بدمج الكلمتين بحيث يأخذ حرفاً من الأولى ثم حرفاً من الثانية، وهكذا بالتناوب.\\
+    اكتب عملية خارجية \textenglish{string MergeAlternating(string s1, string s2)} تستقبل نصين \textbf{بنفس الطول} وتعيد نصاً جديداً يدمج الحرفين بالتناوب.\\
+    \textbf{مثال:} إذا تلقت \textenglish{"HELP"} و\textenglish{"XOXO"}، تعيد \textenglish{"HXEOLXPO"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static string MergeAlternating(string s1, string s2)
+{
+    string result = "";
+    for (int i = 0; i < s1.Length; i++)
+    {
+        result += s1[i];
+        result += s2[i];
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 4 - متوسط: المصفوفة مع التربيع
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    اكتب عملية خارجية \textenglish{int[] ExpandWithSquares(int[] arr)} تستقبل مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بحجم ضعف المصفوفة الأصلية، بحيث تضع بعد كل عنصر تربيعه.\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{1, 3, 4\}}، تعيد \textenglish{\{1, 1, 3, 9, 4, 16\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] ExpandWithSquares(int[] arr)
+{
+    int[] result = new int[arr.Length * 2];
+    int index = 0;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        result[index] = arr[i];
+        index++;
+        result[index] = arr[i] * arr[i];
+        index++;
+    }
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % سؤال 5 - متوسط: فحص تسلسل تنازلي
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    اكتب عملية خارجية \textenglish{bool HasDescendingSequence(int[] arr, int length)} تستقبل مصفوفة أعداد صحيحة وطول تسلسل مطلوب، وتعيد \textenglish{true} إذا وجدت تسلسلاً تنازلياً متصلاً بالطول المطلوب (كل عنصر أصغر من الذي قبله).\\
+    \textbf{مثال:}
+    \begin{itemize}
+        \item \textenglish{HasDescendingSequence(\{10, 5, 8, 7, 6, 2\}, 3)} $\rightarrow$ \textenglish{true} \\
+        (لأن 8، 7، 6 تسلسل تنازلي من 3 عناصر)
+        \item \textenglish{HasDescendingSequence(\{10, 5, 8, 7, 6, 2\}, 4)} $\rightarrow$ \textenglish{false}
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool HasDescendingSequence(int[] arr, int length)
+{
+    if (length <= 1) return true;
+    if (arr.Length < length) return false;
+
+    int count = 1;
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] < arr[i - 1])
+        {
+            count++;
+            if (count >= length)
+                return true;
+        }
+        else
+        {
+            count = 1;
+        }
+    }
+
+    return false;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 6 - متوسط: استخراج الأحرف في المواقع الزوجية
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    اكتب عملية خارجية \textenglish{string GetEvenPositionChars(string text)} تستقبل نصاً وتعيد نصاً جديداً يحتوي فقط على الأحرف الموجودة في المواقع الزوجية (0، 2، 4، ...).\\
+    \textbf{مثال:} إذا تلقت \textenglish{"COMPUTER"}، تعيد \textenglish{"CMUE"} (المواقع 0، 2، 4، 6).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static string GetEvenPositionChars(string text)
+{
+    string result = "";
+    for (int i = 0; i < text.Length; i += 2)
+    {
+        result += text[i];
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % سؤال 7 - متوسط: حساب القفزات (قصة)
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    في لعبة فيديو، يمشي اللاعب على مسار من الأرقام. كل رقم يمثل ارتفاع العقبة في تلك النقطة. عندما ينتقل اللاعب من عقبة لأخرى، يحتاج لقفزة إذا كان الفرق في الارتفاع أكبر من 5 وحدات (لأعلى أو لأسفل).\\
+    اكتب عملية خارجية \textenglish{int CountBigJumps(int[] heights)} تستقبل مصفوفة ارتفاعات وتعيد عدد القفزات الكبيرة المطلوبة.\\
+    \textbf{مثال:} في المسار \textenglish{\{10, 15, 8, 20, 19\}}:
+    \begin{itemize}
+        \item من 10 إلى 15: فرق = 5 (لا يحتاج قفزة)
+        \item من 15 إلى 8: فرق = 7 (يحتاج قفزة) ✓
+        \item من 8 إلى 20: فرق = 12 (يحتاج قفزة) ✓
+        \item من 20 إلى 19: فرق = 1 (لا يحتاج قفزة)
+        \item النتيجة: 2 قفزات
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountBigJumps(int[] heights)
+{
+    int count = 0;
+    for (int i = 0; i < heights.Length - 1; i++)
+    {
+        int diff = heights[i + 1] - heights[i];
+        if (diff > 5 || diff < -5)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \textbf{ملاحظة:} يمكن أيضاً استخدام \textenglish{Math.Abs(diff) > 5}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 8 - متوسط: إنشاء مصفوفة التكرارات
+    % ======================================================
+
+    \item
+    \textbf{(15 نقاط)}\\
+    اكتب عملية خارجية \textenglish{int[] CreateFrequencyArray(int[] arr)} تستقبل مصفوفة أعداد صحيحة (تحتوي فقط على الأرقام من 0 إلى 9) وتعيد مصفوفة بطول 10، كل خانة فيها تحتوي على عدد مرات ظهور الرقم المقابل لها.\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{5, 2, 5, 8, 2, 5, 0\}}، تعيد:\\
+    \textenglish{\{1, 0, 2, 0, 0, 3, 0, 0, 1, 0\}}\\
+    (الصفر ظهر مرة، الواحد لم يظهر، الاثنان ظهر مرتين، ..., الخمسة ظهرت 3 مرات، ..., الثمانية ظهرت مرة)
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] CreateFrequencyArray(int[] arr)
+{
+    int[] frequency = new int[10];
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        frequency[arr[i]]++;
+    }
+
+    return frequency;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ======================================================
+    % أسئلة صعبة (2 أسئلة)
+    % ======================================================
+
+    % ======================================================
+    % سؤال 9 - صعب: فك شيفرة أحمد
+    % ======================================================
+
+    \item
+    \textbf{(20 نقاط)}\\
+    تذكر رسالة أحمد السرية في السؤال 3؟ الآن صديقه تلقى الرسالة المشفرة ويريد فك الشيفرة لاستخراج الرسالة الحقيقية.\\
+    اكتب عملية خارجية \textenglish{string DecodeMessage(string encoded)} تستقبل نصاً مشفراً (تم دمجه بالتناوب) وتعيد الرسالة الحقيقية بأخذ الأحرف في المواقع الزوجية فقط (0، 2، 4، ...).\\
+    \textbf{مثال:} إذا تلقت \textenglish{"HXEOLXPO"}، تعيد \textenglish{"HELP"}.\\
+    \textbf{ملاحظة:} هذا السؤال مرتبط بالسؤال 3 والسؤال 6. فكّر كيف يمكن استخدام نفس الفكرة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static string DecodeMessage(string encoded)
+{
+    string result = "";
+    for (int i = 0; i < encoded.Length; i += 2)
+    {
+        result += encoded[i];
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \textbf{ملاحظة:} هذا الحل مطابق تماماً للسؤال 6!
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % سؤال 10 - صعب: إيجاد أول زوج متساوٍ في مصفوفتين
+    % ======================================================
+
+    \item
+    \textbf{(20 نقاط)}\\
+    لديك قائمتان بأسعار منتجات في متجرين مختلفين. تريد إيجاد أول منتج له نفس السعر في المتجرين.\\
+    اكتب عملية خارجية \textenglish{int FindFirstCommonPrice(int[] store1, int[] store2)} تستقبل مصفوفتين من الأسعار (الأعداد الصحيحة) وتعيد \textbf{موقع} أول سعر مشترك في المصفوفة الأولى. إذا لم يوجد سعر مشترك، تعيد $-1$.\\
+    \textbf{مثال:} إذا تلقت:
+    \begin{itemize}
+        \item \textenglish{store1 = \{10, 25, 30, 45, 60\}}
+        \item \textenglish{store2 = \{15, 30, 20, 10\}}
+        \item أول سعر مشترك هو 10 في الموقع 0 من \textenglish{store1}
+        \item النتيجة: 0
+    \end{itemize}
+    \textbf{ملاحظة:} ابحث في \textenglish{store1} بالترتيب، ولكل سعر تفحصه، ابحث عنه في \textenglish{store2} كاملة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int FindFirstCommonPrice(int[] store1, int[] store2)
+{
+    for (int i = 0; i < store1.Length; i++)
+    {
+        for (int j = 0; j < store2.Length; j++)
+        {
+            if (store1[i] == store2[j])
+                return i;
+        }
+    }
+    return -1;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\vspace{2cm}
+\begin{center}
+\textbf{بالتوفيق!}
+\end{center}
+
+\end{document}
