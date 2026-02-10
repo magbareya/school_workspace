@@ -11,3 +11,5 @@ out2/
 *pycache*
 *.pyc
 *.pyo
+
+src/bagrut_questions/**/*.tex
