@@ -1,0 +1,938 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows.meta, arrows}
+
+\title{آلة تيورينج}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\contentsname}{جدول المحتويات}
+\tableofcontents
+\clearpage
+
+\part{آلة تيورينج (\textenglish{Turing Machine})}
+
+\section{مقدّمة}
+
+\subsection{لماذا نحتاج إلى نموذج جديد؟}
+
+لقد درسنا سابقًا نموذجين حسابيين:
+\begin{itemize}
+    \item \textbf{الأوتومات النهائي} (\textenglish{Finite Automata - FA}) الذي يتعرف على \textbf{اللغات النظامية} (\textenglish{Regular Languages}).
+    \item \textbf{أوتومات الراصّة} (\textenglish{Pushdown Automata - PDA}) الذي يتعرف على \textbf{اللغات خالية السياق} (\textenglish{Context-Free Languages}).
+\end{itemize}
+
+لكن، هل هذه النماذج كافية؟
+
+\begin{boxAttention}
+هناك لغات بسيطة لا يستطيع أي من النموذجين السابقين التعرف عليها!
+\end{boxAttention}
+
+\textbf{مثال:} اللغة $L = \{a^n b^n c^n \mid n \geq 0\}$
+
+هذه اللغة تتكون من كلمات فيها نفس عدد الأحرف $a$ و $b$ و $c$.
+\begin{itemize}
+    \item كلمات في اللغة: $\varepsilon$, $abc$, $aabbcc$, $aaabbbccc$
+    \item كلمات ليست في اللغة: $ab$, $aabbc$, $abcc$
+\end{itemize}
+
+\begin{itemize}
+    \item الأوتومات النهائي لا يستطيع التعرف عليها لأنه لا يستطيع "عدّ" أو "تذكّر" كميات غير محدودة.
+    \item أوتومات الراصّة لا يستطيع التعرف عليها لأنه يحتاج مقارنة \textbf{ثلاثة} أعداد في نفس الوقت، والراصّة تسمح بمقارنة عددين فقط.
+\end{itemize}
+
+\textbf{السؤال:} هل يوجد نموذج حسابي أقوى يستطيع التعرف على هذه اللغات؟
+
+\textbf{الجواب:} نعم! \textbf{آلة تيورينج} (\textenglish{Turing Machine})
+
+\clearpage
+
+\subsection{من هو آلن تيورينج؟}
+
+\textbf{آلن ماثيسون تيورينج} (\textenglish{Alan Mathison Turing})\\
+(1912-1954)
+
+رياضي بريطاني، من مؤسسي علم الحاسوب. حقق إنجازات استثنائية في الجانب النظري والعملي لعلوم الحاسوب.
+
+\textbf{إنجازاته:}
+\begin{itemize}
+    \item \textbf{آلة تيورينج:} نموذج مجرد لآلة حاسوب شاملة، يصف طريقة عمل الحاسوب.
+    \item \textbf{اختبار تيورينج:} اختبار يفحص ما إذا كان للآلة ذكاء اصطناعي لا يمكن التمييز بينها وبين الإنسان.
+\end{itemize}
+
+\begin{boxAttention}
+\textbf{فرضية تشرتش-تيورينج} (\textenglish{Church-Turing Thesis}):
+
+كل حساب أو خوارزمية قابلة للتنفيذ، يمكن ترجمتها إلى آلة تيورينج. من هذا المنظور، آلة تيورينج مكافئة لأي حاسوب، ولذلك تُستخدم في علوم الحاسوب كأساس لدراسة قدرات وقيود الحاسوب النظرية.
+\end{boxAttention}
+
+اقترح آلن تيورينج هذا النموذج في عام \textbf{1936}، \textbf{قبل} اختراع الحاسوب الحديث، من أجل إنشاء تعريف رياضي دقيق لـ\textbf{خوارزمية} أو "عملية آلية" حسابية.
+
+\clearpage
+
+\section{ما هي آلة تيورينج؟}
+
+\begin{boxDef}[تعريف: آلة تيورينج]
+\textbf{آلة تيورينج} هي نموذج مجرد قادر على تنفيذ أي حساب أو خوارزمية يمكن تنفيذها على حاسوب.
+
+عظمة هذه الآلة في \textbf{بساطتها}، ومع ذلك فهي قادرة على تنفيذ أي حساب أو خوارزمية يمكن تنفيذها على حاسوب. وتُعتبر نموذجًا مجردًا لطريقة عمل الحاسوب.
+\end{boxDef}
+
+\subsection{ماذا تستطيع آلة تيورينج أن تفعل؟}
+
+\begin{itemize}
+    \item التعرف على \textbf{جميع} عائلات اللغات الصورية (بما في ذلك اللغات النظامية واللغات خالية السياق وأكثر)
+    \item تنفيذ حسابات على المدخل
+    \item عمليات البحث والترتيب على المدخل
+    \item تنفيذ أي خوارزمية
+\end{itemize}
+
+\begin{boxNote}
+آلة تيورينج هي \textbf{الأوتومات الأقوى} لتنفيذ الحسابات.
+\end{boxNote}
+
+\clearpage
+
+\section{مكونات آلة تيورينج}
+
+تتكون آلة تيورينج من المكونات التالية:
+
+\subsection{1. شريط الذاكرة (\textenglish{Tape})}
+
+\begin{itemize}
+    \item شريط \textbf{لا نهائي} إلى اليمين
+    \item \textbf{محدود من اليسار} بالرمز $\vdash$ (رأس الشريط)
+    \item مقسّم إلى \textbf{خانات} (\textenglish{Cells})
+    \item في كل خانة يمكن كتابة \textbf{حرف واحد}
+    \item الخانات الفارغة تحتوي على الرمز $\triangle$ (رمز الفراغ - \textenglish{Blank})
+\end{itemize}
+
+\textbf{مثال على شريط:}
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \foreach \i/\content in {0/$\vdash$, 1/a, 2/b, 3/a, 4/a, 5/$\triangle$, 6/$\triangle$, 7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\content};
+    }
+    \node at (8.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{2. الأبجدية المدخلة $\Sigma$ (\textenglish{Input Alphabet})}
+
+\begin{itemize}
+    \item مجموعة \textbf{نهائية} من أحرف المدخل للغة التي تتعرف عليها الآلة
+    \item \textbf{مثال:} $\Sigma = \{a, b\}$
+\end{itemize}
+
+\subsection{3. أبجدية الآلة $\Gamma$ (\textenglish{Machine Alphabet})}
+
+\begin{itemize}
+    \item مجموعة \textbf{نهائية} من الأحرف التي يمكن كتابتها على الشريط
+    \item يحددها \textbf{بانٍ الآلة}
+    \item تحتوي على أحرف المدخل $\Sigma \subseteq \Gamma$
+    \item تحتوي على رموز مساعدة للعمل الداخلي للآلة
+    \item \textbf{عادة:} نستخدم أحرفًا كبيرة لأبجدية الآلة، وأحرفًا صغيرة لأبجدية المدخل
+    \item \textbf{مثال:} $\Gamma = \{a, b, A, B, X, Y, \#, \triangle\}$
+\end{itemize}
+
+\subsection{4. الرأس القارئ/الكاتب (\textenglish{Read/Write Head})}
+
+\begin{itemize}
+    \item في كل لحظة يكون الرأس \textbf{فوق خانة واحدة} من الشريط
+    \item يستطيع \textbf{قراءة} الحرف المكتوب في الخانة الحالية
+    \item يستطيع \textbf{كتابة} حرف جديد مكان الحرف الحالي
+    \item يستطيع \textbf{التحرك} خانة واحدة إلى \textbf{اليمين} (\textenglish{R - Right}) أو إلى \textbf{اليسار} (\textenglish{L - Left})
+    \item \textbf{لا يستطيع} التحرك إلى يسار رأس الشريط $\vdash$
+\end{itemize}
+
+\textbf{رسم توضيحي:}
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \foreach \i/\content in {0/$\vdash$, 1/a, 2/b, 3/a, 4/a, 5/$\triangle$, 6/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\content};
+    }
+    \node at (7.5, 0.4) {$\ldots$};
+
+    % Arrow pointing to cell
+    \draw[->, thick, red] (2.5, 1.5) -- (2.5, 0.8);
+    \node[red] at (2.5, 2) {الرأس};
+\end{tikzpicture}
+\end{center}
+
+\subsection{5. مجموعة الحالات $Q$ (\textenglish{States})}
+
+\begin{itemize}
+    \item مجموعة \textbf{نهائية} من حالات الآلة
+    \item \textbf{مثال:} $Q = \{q_0, q_1, q_2, q_3\}$
+\end{itemize}
+
+\subsection{6. الحالة الابتدائية $q_0$ (\textenglish{Start State})}
+
+\begin{itemize}
+    \item الحالة التي تبدأ منها الآلة عملها
+    \item $q_0 \in Q$
+\end{itemize}
+
+\subsection{7. مجموعة الحالات القابلة $F$ (\textenglish{Accept States})}
+
+\begin{itemize}
+    \item مجموعة حالات القبول
+    \item $F \subseteq Q$
+    \item \textbf{يجب} أن يكون هناك \textbf{حالة قابلة واحدة} على الأقل
+\end{itemize}
+
+\subsection{8. دالة الانتقالات $\delta$ (\textenglish{Transition Function})}
+
+دالة الانتقال تحدد منطق عمل الآلة. لكل حالة حالية وحرف مقروء، تحدد الدالة:
+
+\begin{enumerate}
+    \item \textbf{الحالة التالية:} إلى أي حالة تنتقل الآلة
+    \item \textbf{الحرف الجديد:} ماذا يُكتب في الخانة الحالية (يمكن أن يبقى نفس الحرف)
+    \item \textbf{اتجاه الحركة:} هل يتحرك الرأس إلى اليمين (\textenglish{R}) أو اليسار (\textenglish{L})
+\end{enumerate}
+
+\begin{boxSymbol}
+نكتب دالة الانتقال بالشكل:
+$$q_i \xrightarrow{\alpha \mid \beta, D} q_j$$
+
+حيث:
+\begin{itemize}
+    \item $q_i$: الحالة الحالية
+    \item $\alpha$: الحرف المقروء من الشريط
+    \item $\beta$: الحرف الذي يُكتب على الشريط
+    \item $D$: اتجاه حركة الرأس (\textenglish{R} أو \textenglish{L})
+    \item $q_j$: الحالة التالية
+\end{itemize}
+
+\textbf{معنى الانتقال:}\\
+إذا كانت الآلة في الحالة $q_i$ وقرأت الحرف $\alpha$، فإنها:
+\begin{enumerate}
+    \item تكتب الحرف $\beta$ مكان $\alpha$
+    \item تحرك الرأس باتجاه $D$
+    \item تنتقل إلى الحالة $q_j$
+\end{enumerate}
+\end{boxSymbol}
+
+\clearpage
+
+\section{طريقة عمل آلة تيورينج}
+
+\subsection{البداية}
+
+\begin{enumerate}
+    \item كلمة المدخل $w$ مكتوبة على الشريط من بداية الشريط (بعد $\vdash$)
+    \item الرأس القارئ/الكاتب يكون فوق \textbf{أول حرف} من الكلمة
+    \item الآلة تكون في \textbf{الحالة الابتدائية} $q_0$
+    \item جميع الخانات الأخرى تحتوي على $\triangle$
+\end{enumerate}
+
+\textbf{مثال:} المدخل $w = aba$
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \foreach \i/\content in {0/$\vdash$, 1/a, 2/b, 3/a, 4/$\triangle$, 5/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\content};
+    }
+    \node at (6.5, 0.4) {$\ldots$};
+
+    \draw[->, thick, red] (1.5, 1.5) -- (1.5, 0.8);
+    \node[red] at (1.5, 2) {الرأس};
+
+    \node at (-1, 0.4) {$q_0$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{الخطوات}
+
+في كل خطوة:
+\begin{enumerate}
+    \item الآلة \textbf{تقرأ} الحرف الموجود تحت الرأس
+    \item حسب \textbf{الحالة الحالية} و\textbf{الحرف المقروء}، تبحث عن انتقال مناسب في دالة الانتقالات
+    \item إذا وُجد انتقال:
+    \begin{itemize}
+        \item تكتب حرفًا جديدًا في الخانة الحالية
+        \item تحرك الرأس يمينًا أو يسارًا
+        \item تنتقل إلى الحالة الجديدة
+    \end{itemize}
+    \item إذا \textbf{لم يوجد} انتقال: الآلة \textbf{تتوقف}
+\end{enumerate}
+
+\subsection{القبول والرفض}
+
+\begin{itemize}
+    \item إذا توقفت الآلة في \textbf{حالة قابلة} ($q \in F$): الكلمة \textbf{مقبولة}
+    \item إذا توقفت الآلة في حالة \textbf{غير قابلة} ($q \notin F$): الكلمة \textbf{مرفوضة}
+    \item إذا \textbf{لم تتوقف} الآلة أبدًا (حلقة لا نهائية): الكلمة \textbf{مرفوضة}
+\end{itemize}
+
+\begin{boxNote}
+\textbf{ملاحظة هامة:}
+\begin{itemize}
+    \item آلة تيورينج قد \textbf{لا تتوقف} أبدًا لبعض المداخل!
+    \item هذا يختلف عن الأوتومات النهائي وأوتومات الراصّة اللذين يتوقفان دائمًا
+\end{itemize}
+\end{boxNote}
+
+\clearpage
+
+\section{رسم آلة تيورينج}
+
+نرسم آلة تيورينج على شكل \textbf{مخطط حالات} مشابه للأوتومات السابقة.
+
+\textbf{مثال توضيحي بسيط:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3.5cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state,accepting] (q2) [right of=q1] {$q_2$};
+
+    \path (q0) edge node {$a \mid X, R$} (q1)
+          (q1) edge node {$b \mid Y, R$} (q2);
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح المخطط:}
+\begin{itemize}
+    \item الدوائر: الحالات
+    \item السهم القصير: الحالة الابتدائية
+    \item الدائرة المزدوجة: الحالة القابلة
+    \item الأسهم بين الحالات: الانتقالات
+    \item على كل سهم: $\text{الحرف المقروء} \mid \text{الحرف المكتوب}, \text{الاتجاه}$
+\end{itemize}
+
+\clearpage
+
+\section{أمثلة متدرجة}
+
+سنحل الآن مجموعة من الأمثلة المتدرجة. في كل مثال سنضيف فكرة جديدة واحدة.
+
+\subsection{مثال 1: آلة بسيطة جدًا - قبول كلمة واحدة فقط}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل الكلمة $w = a$ فقط.
+
+\textbf{اللغة:} $L = \{a\}$
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نبدأ من $q_0$ ونقرأ الحرف الأول
+    \item إذا كان $a$، نتحرك يمينًا ونفحص إذا كان الحرف التالي $\triangle$ (نهاية الكلمة)
+    \item إذا كان $\triangle$، نقبل
+\end{enumerate}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3.5cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state,accepting] (q2) [right of=q1] {$q_2$};
+
+    \path (q0) edge node {$a \mid a, R$} (q1)
+          (q1) edge node {$\triangle \mid \triangle, R$} (q2);
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح الانتقالات:}
+\begin{itemize}
+    \item $q_0 \xrightarrow{a \mid a, R} q_1$: إذا قرأنا $a$، نكتبه كما هو، نتحرك يمينًا، ننتقل إلى $q_1$
+    \item $q_1 \xrightarrow{\triangle \mid \triangle, R} q_2$: إذا قرأنا $\triangle$، نكتبه كما هو، نتحرك يمينًا، ننتقل إلى $q_2$ (قابلة)
+\end{itemize}
+
+\textbf{تتبع لكلمة مقبولة:} $w = a$
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, \triangle \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, \underline{\triangle} \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, a \, \triangle \, \underline{\triangle} \, \ldots \quad \checkmark \text{ (مقبولة)}
+\end{align*}
+
+\textbf{تتبع لكلمة مرفوضة:} $w = ab$
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, \underline{b} \, \triangle \, \ldots \quad \text{(لا يوجد انتقال)} \quad \times \text{ (مرفوضة)}
+\end{align*}
+
+\clearpage
+
+\subsection{مثال 2: التحرك يسارًا}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل الكلمة $w = ab$ فقط.
+
+\textbf{اللغة:} $L = \{ab\}$
+
+\textbf{الفكرة الجديدة:} سنتعلم كيف نستخدم الحركة إلى اليسار.
+
+\textbf{الاستراتيجية:}
+\begin{enumerate}
+    \item نقرأ $a$ ونتحرك يمينًا
+    \item نقرأ $b$ ونتحرك يمينًا
+    \item نتأكد أننا وصلنا إلى نهاية الكلمة ($\triangle$)
+    \item نتحرك يسارًا ونقبل
+\end{enumerate}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state] (q2) [right of=q1] {$q_2$};
+    \node[state,accepting] (q3) [below of=q2] {$q_3$};
+
+    \path (q0) edge node {$a \mid a, R$} (q1)
+          (q1) edge node {$b \mid b, R$} (q2)
+          (q2) edge node {$\triangle \mid \triangle, L$} (q3);
+\end{tikzpicture}
+\end{center}
+
+\textbf{تتبع:} $w = ab$
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, \underline{b} \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, a \, b \, \underline{\triangle} \, \ldots \\
+q_3 \quad &\vdash \, a \, \underline{b} \, \triangle \, \ldots \quad \checkmark \text{ (مقبولة)}
+\end{align*}
+
+\clearpage
+
+\subsection{مثال 3: استبدال حرف}
+
+\textbf{المطلوب:} بناء آلة تيورينج على شريط ذاكرتها مكتوبة كلمة $w$ من الأبجدية $\Sigma = \{a, b\}$، مكتوبة من بداية الشريط. الآلة تستبدل كل $a$ بـ $X$ وتترك $b$ كما هي.
+
+\textbf{الفكرة الجديدة:} نستخدم أحرفًا من أبجدية الآلة (أحرف كبيرة) لتمييز ما عالجناه.
+
+\textbf{الاستراتيجية:}
+\begin{enumerate}
+    \item نمر على الكلمة من اليسار إلى اليمين
+    \item كلما قرأنا $a$، نستبدلها بـ $X$
+    \item نترك $b$ كما هي
+    \item عندما نصل إلى $\triangle$، نقبل
+\end{enumerate}
+
+\textbf{مثال:}
+\begin{itemize}
+    \item قبل: $\vdash \, a \, b \, a \, b \, \triangle \, \ldots$
+    \item بعد: $\vdash \, X \, b \, X \, b \, \triangle \, \ldots$
+\end{itemize}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.5cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state,accepting] (q1) [right of=q0, xshift=1cm] {$q_1$};
+
+    \path (q0) edge[loop above] node {$a \mid X, R$} (q0)
+          (q0) edge[loop below] node {$b \mid b, R$} (q0)
+          (q0) edge node {$\triangle \mid \triangle, R$} (q1);
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح:}
+\begin{itemize}
+    \item نبقى في $q_0$ طالما نقرأ $a$ أو $b$
+    \item إذا قرأنا $a$: نستبدلها بـ $X$ ونتحرك يمينًا
+    \item إذا قرأنا $b$: نتركها كما هي ونتحرك يمينًا
+    \item إذا قرأنا $\triangle$: انتهينا، ننتقل إلى $q_1$ (قابلة)
+\end{itemize}
+
+\textbf{تتبع:} $w = aba$
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, b \, a \, \triangle \, \ldots \\
+q_0 \quad &\vdash \, X \, \underline{b} \, a \, \triangle \, \ldots \\
+q_0 \quad &\vdash \, X \, b \, \underline{a} \, \triangle \, \ldots \\
+q_0 \quad &\vdash \, X \, b \, X \, \underline{\triangle} \, \ldots \\
+q_1 \quad &\vdash \, X \, b \, X \, \triangle \, \underline{\triangle} \, \ldots \quad \checkmark
+\end{align*}
+
+\clearpage
+
+\subsection{مثال 4: الذهاب والعودة - حساب عدد الأحرف}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل اللغة $L = \{a^n \mid n \geq 1\}$ (كلمات تتكون من $a$ فقط، $a$ واحدة على الأقل).
+
+\textbf{الفكرة الجديدة:} نستخدم الذهاب والعودة على الشريط للتأكد من صحة الكلمة.
+
+\textbf{الاستراتيجية:}
+\begin{enumerate}
+    \item نتأكد أن الحرف الأول هو $a$
+    \item نمر على باقي الأحرف ونتأكد أنها كلها $a$
+    \item عندما نصل إلى $\triangle$، نكون قد تأكدنا أن الكلمة صحيحة
+\end{enumerate}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state,accepting] (q2) [right of=q1] {$q_2$};
+
+    \path (q0) edge node {$a \mid a, R$} (q1)
+          (q1) edge[loop above] node {$a \mid a, R$} (q1)
+          (q1) edge node {$\triangle \mid \triangle, L$} (q2);
+\end{tikzpicture}
+\end{center}
+
+\textbf{تتبع:} $w = aaa$
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, a \, a \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, \underline{a} \, a \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, a \, \underline{a} \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, a \, a \, a \, \underline{\triangle} \, \ldots \\
+q_2 \quad &\vdash \, a \, a \, \underline{a} \, \triangle \, \ldots \quad \checkmark
+\end{align*}
+
+\clearpage
+
+\subsection{مثال 5: مقارنة أعداد - اللغة $\{a^n b^n \mid n \geq 0\}$}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل اللغة $L = \{a^n b^n \mid n \geq 0\}$.
+
+\textbf{الفكرة الجديدة:} استراتيجية "الشطب" - نشطب $a$ واحدة و $b$ واحدة في كل دورة.
+
+\textbf{الاستراتيجية:}
+\begin{enumerate}
+    \item نشطب أول $a$ (نستبدلها بـ $X$)
+    \item نمر على باقي الـ $a$ حتى نصل إلى أول $b$
+    \item نشطب أول $b$ (نستبدلها بـ $Y$)
+    \item نرجع إلى بداية الشريط
+    \item نكرر العملية حتى لا يبقى $a$ و $b$
+    \item إذا انتهت الـ $a$ والـ $b$ معًا، نقبل
+\end{enumerate}
+
+\textbf{مثال على التنفيذ:}
+\begin{align*}
+&\vdash \, a \, a \, b \, b \, \triangle \\
+\to &\vdash \, X \, a \, b \, b \, \triangle \quad \text{(شطبنا $a$ الأولى)} \\
+\to &\vdash \, X \, a \, Y \, b \, \triangle \quad \text{(شطبنا $b$ الأولى)} \\
+\to &\vdash \, X \, X \, Y \, b \, \triangle \quad \text{(شطبنا $a$ الثانية)} \\
+\to &\vdash \, X \, X \, Y \, Y \, \triangle \quad \text{(شطبنا $b$ الثانية)} \\
+\to &\text{قبلنا!}
+\end{align*}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state] (q2) [right of=q1] {$q_2$};
+    \node[state] (q3) [below of=q0] {$q_3$};
+    \node[state,accepting] (q4) [below of=q1] {$q_4$};
+
+    \path (q0) edge node {$a \mid X, R$} (q1)
+          (q0) edge node[left] {$Y \mid Y, R$} (q3)
+          (q1) edge[loop above] node {$a \mid a, R$} (q1)
+          (q1) edge[loop below] node {$Y \mid Y, R$} (q1)
+          (q1) edge node {$b \mid Y, L$} (q2)
+          (q2) edge[loop above] node {$a \mid a, L$} (q2)
+          (q2) edge[loop right] node {$Y \mid Y, L$} (q2)
+          (q2) edge node[right] {$X \mid X, R$} (q0)
+          (q3) edge[loop left] node {$Y \mid Y, R$} (q3)
+          (q3) edge node {$\triangle \mid \triangle, R$} (q4);
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0$: نبحث عن $a$ لنشطبها (إذا وجدنا $Y$، نذهب إلى $q_3$ للتحقق من النهاية)
+    \item $q_1$: نمر على $a$ و $Y$ حتى نجد $b$
+    \item $q_2$: بعد شطب $b$، نرجع إلى بداية الشريط
+    \item $q_3$: نتأكد أننا وصلنا إلى نهاية الشريط
+    \item $q_4$: حالة القبول
+\end{itemize}
+
+\clearpage
+
+\textbf{تتبع كامل:} $w = aabb$
+
+\begin{align*}
+q_0 \quad &\vdash \, \underline{a} \, a \, b \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, X \, \underline{a} \, b \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, X \, a \, \underline{b} \, b \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, \underline{X} \, a \, Y \, b \, \triangle \, \ldots \\
+q_0 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, X \, X \, \underline{Y} \, b \, \triangle \, \ldots \\
+q_1 \quad &\vdash \, X \, X \, Y \, \underline{b} \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
+q_2 \quad &\vdash \, X \, \underline{X} \, Y \, Y \, \triangle \, \ldots \\
+q_0 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
+q_3 \quad &\vdash \, X \, X \, Y \, \underline{Y} \, \triangle \, \ldots \\
+q_3 \quad &\vdash \, X \, X \, Y \, Y \, \underline{\triangle} \, \ldots \\
+q_4 \quad &\vdash \, X \, X \, Y \, Y \, \triangle \, \underline{\triangle} \, \ldots \quad \checkmark
+\end{align*}
+
+\begin{boxNote}
+\textbf{لماذا هذه الاستراتيجية ناجحة؟}
+
+في كل دورة، نشطب $a$ واحدة و $b$ واحدة. إذا كان عدد الـ $a$ يساوي عدد الـ $b$، فسينتهيان معًا في نفس الوقت. إذا كان أحدهما أكثر من الآخر، ستتوقف الآلة في حالة غير قابلة (مرفوضة).
+\end{boxNote}
+
+\clearpage
+
+\subsection{مثال 6: اللغة $\{a^n b^n c^n \mid n \geq 0\}$}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل اللغة $L = \{a^n b^n c^n \mid n \geq 0\}$.
+
+\textbf{الفكرة:} نفس استراتيجية المثال السابق، لكن نشطب $a$ واحدة، ثم $b$ واحدة، ثم $c$ واحدة في كل دورة.
+
+\textbf{الاستراتيجية:}
+\begin{enumerate}
+    \item نشطب أول $a$ (نستبدلها بـ $X$)
+    \item نمر على باقي الـ $a$ حتى نصل إلى أول $b$
+    \item نشطب أول $b$ (نستبدلها بـ $Y$)
+    \item نمر على باقي الـ $b$ حتى نصل إلى أول $c$
+    \item نشطب أول $c$ (نستبدلها بـ $Z$)
+    \item نرجع إلى بداية الشريط
+    \item نكرر حتى تنتهي جميع الأحرف
+\end{enumerate}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,thick,scale=0.85, every node/.style={scale=0.85}]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state] (q2) [right of=q1] {$q_2$};
+    \node[state] (q3) [right of=q2] {$q_3$};
+    \node[state] (q4) [below of=q3] {$q_4$};
+    \node[state] (q5) [below of=q0] {$q_5$};
+    \node[state,accepting] (q6) [below of=q1] {$q_6$};
+
+    \path (q0) edge node[above] {$a \mid X, R$} (q1)
+          (q0) edge node[left] {$Y \mid Y, R$} (q5)
+          (q1) edge[loop above] node {$a \mid a, R$} (q1)
+          (q1) edge[loop below] node {$Y \mid Y, R$} (q1)
+          (q1) edge node[above] {$b \mid Y, R$} (q2)
+          (q2) edge[loop above] node {$b \mid b, R$} (q2)
+          (q2) edge[loop below] node {$Z \mid Z, R$} (q2)
+          (q2) edge node[above] {$c \mid Z, L$} (q3)
+          (q3) edge[loop above] node[align=center] {$a \mid a, L$ \\ $b \mid b, L$} (q3)
+          (q3) edge node[right, align=center] {$Y \mid Y, L$ \\ $Z \mid Z, L$} (q4)
+          (q4) edge[loop right] node[align=center] {$a \mid a, L$ \\ $b \mid b, L$ \\ $Y \mid Y, L$ \\ $Z \mid Z, L$} (q4)
+          (q4) edge[bend right=20] node[below] {$X \mid X, R$} (q0)
+          (q5) edge[loop left] node[align=center] {$Y \mid Y, R$ \\ $Z \mid Z, R$} (q5)
+          (q5) edge node[below] {$\triangle \mid \triangle, R$} (q6);
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح:}
+\begin{itemize}
+    \item $q_0$: نبحث عن أول $a$ لنشطبها
+    \item $q_1$: نمر على $a$ و $Y$ حتى نجد أول $b$
+    \item $q_2$: نمر على $b$ و $Z$ حتى نجد أول $c$
+    \item $q_3$: بعد شطب $c$، نرجع إلى الوراء
+    \item $q_4$: نواصل الرجوع حتى نصل إلى $X$
+    \item $q_5$: نتحقق من الوصول إلى نهاية الشريط
+    \item $q_6$: حالة القبول
+\end{itemize}
+
+\begin{boxAttention}
+\textbf{إنجاز مهم!}
+
+الآن نستطيع قبول اللغة $\{a^n b^n c^n \mid n \geq 0\}$ التي لم تكن ممكنة مع الأوتومات النهائي أو أوتومات الراصّة!
+\end{boxAttention}
+
+\clearpage
+
+\section{آلة تيورينج لحساب الدوال}
+
+حتى الآن، استخدمنا آلة تيورينج للتعرف على اللغات (قبول أو رفض). لكن يمكننا أيضًا استخدامها \textbf{لحساب دوال}.
+
+\subsection{تمثيل الأعداد}
+
+عندما نريد حساب دوال على أعداد، نحتاج إلى تمثيل الأعداد على الشريط.
+
+\textbf{التمثيل الأونَري} (\textenglish{Unary Representation}):
+\begin{itemize}
+    \item نمثل العدد $n$ بـ $n$ من الرمز $1$
+    \item العدد 0 نمثله بـ: لا شيء (أو نكتب $\#$ لتمييزه)
+    \item العدد 1 نمثله بـ: $1$
+    \item العدد 2 نمثله بـ: $11$
+    \item العدد 3 نمثله بـ: $111$
+    \item وهكذا...
+\end{itemize}
+
+\textbf{تمثيل عدة أعداد:}
+\begin{itemize}
+    \item نفصل بين الأعداد بالرمز $\#$
+    \item مثلاً: $(2, 3)$ نمثلها بـ: $11 \# 111$
+\end{itemize}
+
+\subsection{كتابة الناتج}
+
+\begin{itemize}
+    \item الناتج يُكتب على الشريط
+    \item عادة نحيط الناتج بالرمزين $\$$ من الطرفين للتمييز: $\$ \text{ناتج} \$$
+    \item ليس مهمًا ما هو محتوى الشريط يمين ويسار الناتج
+\end{itemize}
+
+\subsection{مثال 7: حساب دالة - الجمع}
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب دالة الجمع $f(x, y) = x + y$.
+
+\textbf{المدخل:} عددان $x$ و $y$ بالتمثيل الأونَري، مفصولان بـ $\#$
+
+مثلاً: $(2, 3)$ يُكتب: $\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle \, \ldots$
+
+\textbf{الناتج:} العدد $x + y$ بالتمثيل الأونَري، محاطًا بـ $\$$
+
+مثلاً: $5$ يُكتب: $\ldots \$ \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \ldots$
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نحذف الـ $\#$ الفاصلة
+    \item بهذا، جميع الـ $1$ ستكون متتالية
+    \item نحيط النتيجة بـ $\$$
+\end{enumerate}
+
+\textbf{مثال على التنفيذ:}
+\begin{align*}
+&\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle \quad \text{(المدخل: $2 + 3$)} \\
+\to &\vdash \, 1 \, 1 \, \triangle \, 1 \, 1 \, 1 \, \triangle \quad \text{(حذفنا $\#$)} \\
+\to &\vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \triangle \quad \text{(أزلنا الفراغ)} \\
+\to &\ldots \$ \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \ldots \quad \text{(الناتج: 5)}
+\end{align*}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+    \node[state] (q2) [right of=q1] {$q_2$};
+    \node[state] (q3) [below of=q1] {$q_3$};
+    \node[state] (q4) [below of=q2] {$q_4$};
+    \node[state,accepting] (q5) [below of=q3] {$q_5$};
+
+    \path (q0) edge[loop above] node {$1 \mid 1, R$} (q0)
+          (q0) edge node {$\# \mid 1, R$} (q1)
+          (q1) edge[loop above] node {$1 \mid 1, R$} (q1)
+          (q1) edge node {$\triangle \mid \triangle, L$} (q2)
+          (q2) edge node[right] {$1 \mid \$, L$} (q3)
+          (q3) edge[loop left] node {$1 \mid 1, L$} (q3)
+          (q3) edge node {$\vdash \mid \vdash, R$} (q4)
+          (q4) edge node[below] {$1 \mid \$, R$} (q5);
+\end{tikzpicture}
+\end{center}
+
+\clearpage
+
+\subsection{مثال 8: حساب دالة - الطرح}
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة:
+$$f(x, y) = \begin{cases}
+x - y, & x > y \\
+0, & x \leq y
+\end{cases}$$
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نشطب $1$ من $x$ و $1$ من $y$ في كل دورة
+    \item نكرر حتى ينتهي أحدهما
+    \item إذا انتهى $y$ أولاً: الباقي من $x$ هو الناتج
+    \item إذا انتهى $x$ أولاً أو انتهيا معًا: الناتج 0
+\end{enumerate}
+
+\textbf{مثال:}
+\begin{itemize}
+    \item $(5, 2)$: الناتج $3$
+    \item $(2, 5)$: الناتج $0$
+    \item $(3, 3)$: الناتج $0$
+\end{itemize}
+
+\textbf{الحل: (مبسط)}
+
+الآلة معقدة نسبيًا، لكن الفكرة الأساسية:
+\begin{enumerate}
+    \item نشطب أول $1$ من $x$ (نكتبها $X$)
+    \item نمر على $1$ المتبقية من $x$ حتى نصل إلى $\#$
+    \item نمر على $\#$ ونبحث عن أول $1$ من $y$
+    \item نشطب أول $1$ من $y$ (نكتبها $Y$)
+    \item نرجع إلى بداية الشريط
+    \item نكرر حتى لا يبقى $1$ غير مشطوبة من أحد الطرفين
+    \item نحسب الباقي ونكتب الناتج بين $\$$
+\end{enumerate}
+
+\clearpage
+
+\section{أمثلة إضافية}
+
+\subsection{مثال 9: كتابة $w \cdot R(w)$}
+
+\textbf{المطلوب:} بناء آلة تيورينج، على شريطها مكتوبة كلمة $w$ من الأبجدية $\Sigma = \{a, b\}$ من بداية الشريط. الآلة تكتب على الشريط من بدايته الكلمة $w \cdot R(w)$.
+
+$R(w)$ تعني الكلمة $w$ معكوسة.
+
+\textbf{مثال:}
+\begin{itemize}
+    \item قبل: $\vdash \, a \, b \, a \, \triangle \, \ldots$
+    \item بعد: $\vdash \, a \, b \, a \, a \, b \, a \, \triangle \, \ldots$
+\end{itemize}
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نضع علامة على الحرف الأول (لنعرف أين تنتهي $w$)
+    \item نذهب إلى نهاية الكلمة
+    \item نكتب الحرف الأخير من $w$ في النهاية
+    \item نشطب الحرف الأخير
+    \item نكرر حتى ننتهي من جميع أحرف $w$
+\end{enumerate}
+
+\subsection{مثال 10: قلب الكلمة $R(w)$}
+
+\textbf{المطلوب:} بناء آلة تيورينج، على شريطها مكتوبة كلمة $w$ من الأبجدية $\Sigma = \{a, b\}$ من بداية الشريط. الآلة تكتب على الشريط من بدايته الكلمة $R(w)$.
+
+\textbf{مثال:}
+\begin{itemize}
+    \item قبل: $\vdash \, a \, b \, a \, b \, \triangle \, \ldots$
+    \item بعد: $\vdash \, b \, a \, b \, a \, \triangle \, \ldots$
+\end{itemize}
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نقرأ الكلمة من اليسار إلى اليمين ونخزن الأحرف بطريقة ما
+    \item نكتبها من اليمين إلى اليسار
+\end{enumerate}
+
+\subsection{مثال 11: فحص كلمة متناظرة}
+
+\textbf{المطلوب:} بناء آلة تيورينج تقبل اللغة $L = \{w \mid w = R(w)\}$ (الكلمات المتناظرة) على الأبجدية $\Sigma = \{a, b\}$.
+
+\textbf{الفكرة:}
+\begin{enumerate}
+    \item نقارن الحرف الأول مع الحرف الأخير
+    \item إذا كانا متساويين، نشطبهما
+    \item نكرر على الأحرف المتبقية
+    \item إذا لم يبق شيء (أو بقي حرف واحد)، نقبل
+\end{enumerate}
+
+\textbf{الحل:}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+    \node[state,initial] (q0) {$q_0$};
+    \node[state] (q1) [above right of=q0, yshift=0.5cm] {$q_1$};
+    \node[state] (q2) [below right of=q0, yshift=-0.5cm] {$q_2$};
+    \node[state] (q3) [right of=q1, xshift=1cm] {$q_3$};
+    \node[state] (q4) [right of=q2, xshift=1cm] {$q_4$};
+    \node[state,accepting] (q5) [below of=q0, yshift=-1cm] {$q_5$};
+
+    \path (q0) edge node[above left] {$a \mid X, R$} (q1)
+          (q0) edge node[below left] {$b \mid X, R$} (q2)
+          (q0) edge node[left] {$X \mid X, R$} (q5)
+          (q1) edge[loop above] node[align=center] {$a \mid a, R$ \\ $b \mid b, R$} (q1)
+          (q1) edge node {$a \mid X, L$} (q3)
+          (q2) edge[loop below] node[align=center] {$a \mid a, R$ \\ $b \mid b, R$} (q2)
+          (q2) edge node {$b \mid X, L$} (q4)
+          (q3) edge[loop above] node[align=center] {$a \mid a, L$ \\ $b \mid b, L$} (q3)
+          (q3) edge[bend right=15] node[above] {$X \mid X, R$} (q0)
+          (q4) edge[loop below] node[align=center] {$a \mid a, L$ \\ $b \mid b, L$} (q4)
+          (q4) edge[bend left=15] node[below] {$X \mid X, R$} (q0);
+\end{tikzpicture}
+\end{center}
+
+\clearpage
+
+\section{ملاحظات هامة}
+
+\subsection{1. القوة الحسابية}
+
+\begin{boxAttention}
+آلة تيورينج هي \textbf{أقوى نموذج حسابي} درسناه:
+\begin{itemize}
+    \item تستطيع فعل كل ما يفعله الأوتومات النهائي
+    \item تستطيع فعل كل ما يفعله أوتومات الراصّة
+    \item تستطيع فعل أشياء لا يستطيعها أي منهما
+\end{itemize}
+\end{boxAttention}
+
+\subsection{2. مشكلة التوقف}
+
+\begin{boxNote}
+\textbf{مشكلة مهمة:}
+
+آلة تيورينج قد \textbf{لا تتوقف} أبدًا لبعض المداخل. هذا يعني أنه لا يوجد خوارزمية عامة تخبرنا إذا كانت آلة معينة ستتوقف لمدخل معين أم لا. هذه تسمى \textbf{مشكلة التوقف} (\textenglish{Halting Problem}).
+\end{boxNote}
+
+\subsection{3. بناء آلات معقدة}
+
+\begin{itemize}
+    \item يمكن بناء آلات تيورينج معقدة جدًا
+    \item عادة نبني آلات فرعية لمهام صغيرة
+    \item ثم نربطها معًا لبناء آلة كبيرة
+    \item هذا يشبه البرمجة بالدوال!
+\end{itemize}
+
+\subsection{4. تقنيات مفيدة}
+
+\textbf{عند بناء آلة تيورينج، يمكن استخدام:}
+\begin{enumerate}
+    \item \textbf{الشطب:} استبدال الأحرف المعالجة برموز مميزة ($X$, $Y$, إلخ)
+    \item \textbf{العلامات:} استخدام رموز خاصة للتمييز ($\#$, $\$$, إلخ)
+    \item \textbf{الذهاب والإياب:} المرور على الشريط عدة مرات
+    \item \textbf{الدورات:} تكرار عملية حتى انتهاء شرط معين
+\end{enumerate}
+
+\clearpage
+
+\section{تمارين}
+
+\subsection{تمارين أساسية}
+
+\begin{enumerate}
+    \item ابنِ آلة تيورينج تقبل اللغة $L = \{a^n b^{2n} \mid n \geq 0\}$.
+
+    \item ابنِ آلة تيورينج، على شريطها مكتوبة كلمة $w$ من $\Sigma = \{a, b\}$، تحسب عدد الأحرف $a$ في الكلمة وتكتب الناتج بالتمثيل الأونَري محاطًا بـ $\$$.
+
+    \item ابنِ آلة تيورينج تقبل اللغة $L = \{ww \mid w \in \{a, b\}^*\}$ (الكلمات التي تتكون من نسختين متطابقتين).
+\end{enumerate}
+
+\subsection{تمارين متقدمة}
+
+\begin{enumerate}[resume]
+    \item ابنِ آلة تيورينج تحسب دالة الضرب $f(x, y) = x \times y$ حيث $x, y$ معطيان بالتمثيل الأونَري.
+
+    \item ابنِ آلة تيورينج تقبل اللغة:
+    $$L = \{a^i b^j c^k \mid i, j, k \geq 0 \text{ و } i = j \text{ أو } j = k\}$$
+
+    \item ابنِ آلة تيورينج، على شريطها مكتوبة كلمة $w$ من $\Sigma = \{a, b, c\}$، تكتب على الشريط من بدايته الكلمة $\#_b(w)$ (عدد الأحرف $b$ فقط) بالتمثيل الأونَري.
+\end{enumerate}
+
+\clearpage
+
+\section{خلاصة}
+
+\begin{boxNote}
+\textbf{ما تعلمناه:}
+
+\begin{itemize}
+    \item \textbf{آلة تيورينج} هي نموذج حسابي قوي جدًا
+    \item تتكون من: شريط لا نهائي، رأس قارئ/كاتب، حالات، دالة انتقالات
+    \item تستطيع التعرف على لغات لا يستطيع الأوتومات النهائي أو أوتومات الراصّة التعرف عليها
+    \item تستطيع حساب دوال على أعداد
+    \item استراتيجيات مفيدة: الشطب، الذهاب والإياب، استخدام رموز مساعدة
+    \item آلة تيورينج قد لا تتوقف لبعض المداخل
+\end{itemize}
+\end{boxNote}
+
+\begin{boxAttention}
+\textbf{الأهمية النظرية:}
+
+آلة تيورينج ليست مجرد نموذج نظري، بل هي الأساس لفهم:
+\begin{itemize}
+    \item ما الذي يمكن حسابه وما الذي لا يمكن؟
+    \item حدود قدرة الحاسوب
+    \item تعقيد الخوارزميات
+    \item نظرية الحسابية (\textenglish{Computability Theory})
+\end{itemize}
+\end{boxAttention}
+
+\end{document}
