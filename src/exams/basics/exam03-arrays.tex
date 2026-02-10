@@ -42,6 +42,66 @@ for(int i = 0; i < middle; i++)
     \end{enumerate}
 
     \clearpage
+
+
+
+    \item
+    اكتب عملية خارجية \textenglish{CountMax} تتلقى مصفوفة أعداد صحيحة، وتعيد عدد مرات ظهور القيمة الكبرى في هذه المصفوفة. \\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{1, 5, 3, 5, 2\}}، تعيد 2 (لأن أكبر قيمة هي 5 وظهرت مرتين).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountMax(int[] arr)
+{
+    int maxVal = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] > maxVal)
+            maxVal = arr[i];
+    }
+
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == maxVal)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{ExpandWithSquares} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بحجم ضعف المصفوفة الأصلية، بحيث تضع بعد كل عنصر تربيعه.\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{1, 3, 4\}}، تعيد \textenglish{\{1, 1, 3, 9, 4, 16\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] ExpandWithSquares(int[] arr)
+{
+    int[] result = new int[arr.Length * 2];
+    int index = 0;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        result[index] = arr[i];
+        index++;
+        result[index] = arr[i] * arr[i];
+        index++;
+    }
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+
     \item
     لديك قائمتان بأسعار نفس المنتجات في متجرين مختلفين. لكل منتج من المنتجات نريد إيجاد المتجر الذي يبيعه بسعر أرخص.\\
     اكتب عملية خارجية \textenglish{FindCheaperStore} تتلقى مصفوفتين من الأسعار (الأعداد الصحيحة): \textenglish{store1} و \textenglish{store2}،
@@ -76,79 +136,6 @@ public static int[] FindCheaperStore(int[] store1, int[] store2)
             result[i] = 0;
     }
     return result;
-}
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
-
-    \item
-    اكتب عملية خارجية \textenglish{ExpandWithSquares} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بحجم ضعف المصفوفة الأصلية، بحيث تضع بعد كل عنصر تربيعه.\\
-    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{1, 3, 4\}}، تعيد \textenglish{\{1, 1, 3, 9, 4, 16\}}.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static int[] ExpandWithSquares(int[] arr)
-{
-    int[] result = new int[arr.Length * 2];
-    int index = 0;
-
-    for (int i = 0; i < arr.Length; i++)
-    {
-        result[index] = arr[i];
-        index++;
-        result[index] = arr[i] * arr[i];
-        index++;
-    }
-
-    return result;
-}
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
-    \clearpage
-    \item
-    في تطبيق للمطاعم، يقيّم الزبائن المطعم بتقييم من 0 إلى 5. \\
-    يعتبر المطعم "ممتازًا" إذا تحقق \textbf{أحد هذه الشروط على الأقل}:
-    \begin{itemize}
-        \item حصل على تقييم 5 من أحد الزبائن على الأقل، ولم يحصل على تقييم 0 أبدًا.
-        \item متوسط التقييمات هو $4.0$ أو أعلى.
-    \end{itemize}
-    \textbf{أمثلة:}
-    \begin{itemize}
-        \item إذا كانت التقييمات \textenglish{\{1, 2, 3, 4, 5\}}، يعتبر المطعم ممتازًا (لأن هناك تقييم 5 ولم يحصل على تقييم 0).
-        \item إذا كانت التقييمات \textenglish{\{5, 4, 4, 5, 5, 5, 5, 0\}}، يعتبر المطعم ممتازًا، لأنّ معدل التقييمات هو $\frac{5 + 4 + 4 + 5 + 5 + 5 + 5 + 0}{8} = 4.125$، وهو أعلى من 4.0.
-        \item إذا كانت التقييمات \textenglish{\{0, 5, 5, 4\}}، لا يعتبر المطعم ممتازًا لأنّه لم يتحقق أي من الشرطين (هناك تقييم 5، لكن هناك أيضًا تقييم 0).
-        \item إذا كانت التقييمات \textenglish{\{3, 3, 3\}}، لا يعتبر المطعم ممتازًا.
-    \end{itemize}
-
-    اكتبوا عملية خارجية \textenglish{IsExcellent} تتلقى مصفوفة أعداد صحيحة تمثل تقييمات الزبائن (من 0 إلى 5) وتعيد \textenglish{true} إذا كان المطعم ممتازًا، و\textenglish{false} خلاف ذلك.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static bool IsExcellent(int[] ratings)
-{
-    bool hasFive = false;
-    bool hasZero = false;
-    int sum = 0;
-    for (int i = 0; i < ratings.Length; i++)
-    {
-        if (ratings[i] == 5)
-            hasFive = true;
-        if (ratings[i] == 0)
-            hasZero = true;
-        sum += ratings[i];
-    }
-    double average = (double)sum / ratings.Length;
-    if ((hasFive && !hasZero) || average >= 4.0)
-        return true;
-    else
-        return false;
 }
     \end{minted}
     \end{english}

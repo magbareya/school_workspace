@@ -1,0 +1,259 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 4 - أسئلة عامة}
+\else
+\title{ورقة تمرين 8 - المصفوفات الأحادية \\ قسم 4 - أسئلة عامة}
+\clearpage
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    \item
+    اكتب عملية خارجية \textenglish{int SumPositive(int[] arr)} تتلقى مصفوفة أعداد صحيحة وتعيد مجموع الأعداد الموجبة فقط (الأكبر من صفر).\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{5, -3, 8, -2, 0, 10\}}، تعيد $5 + 8 + 10 = 23$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int SumPositive(int[] arr)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] > 0)
+            sum += arr[i];
+    }
+    return sum;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    أراد أحمد كتابة رسالة سرية لصديقه. قرر أن يكتب كلمتين: الأولى هي الرسالة الحقيقية والثانية هي رسالة زائفة للتمويه. ثم قام بدمج الكلمتين بحيث يأخذ حرفاً من الأولى ثم حرفاً من الثانية، وهكذا بالتناوب.\\
+    اكتب عملية خارجية \textenglish{string MergeAlternating(string s1, string s2)} تتلقى نصين \textbf{بنفس الطول} وتعيد نصاً جديداً يدمج الحرفين بالتناوب.\\
+    \textbf{مثال:} إذا تلقت \textenglish{"HELP"} و\textenglish{"XOXO"}، تعيد \textenglish{"HXEOLXPO"}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static string MergeAlternating(string s1, string s2)
+{
+    string result = "";
+    for (int i = 0; i < s1.Length; i++)
+    {
+        result += s1[i];
+        result += s2[i];
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] CreateFrequencyArray(int[] arr)} تتلقى مصفوفة أعداد صحيحة (تحتوي فقط على الأرقام من 0 إلى 9) وتعيد مصفوفة بطول 10، كل خانة فيها تحتوي على عدد مرات ظهور الرقم المقابل لها.\\
+    \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{5, 2, 5, 8, 2, 5, 0\}}، تعيد:\\
+    \textenglish{\{1, 0, 2, 0, 0, 3, 0, 0, 1, 0\}}\\
+    (الصفر ظهر مرة، الواحد لم يظهر، الاثنان ظهر مرتين، ..., الخمسة ظهرت 3 مرات، ..., الثمانية ظهرت مرة)
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] CreateFrequencyArray(int[] arr)
+{
+    int[] frequency = new int[10];
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        frequency[arr[i]]++;
+    }
+
+    return frequency;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب عملية خارجية تتلقى مصفوفة أعداد صحيحة، وتعيد عدد مرات ظهور القيمة الكبرى في هذه المصفوفة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountMax(int[] arr)
+{
+    int maxVal = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] > maxVal)
+            maxVal = arr[i];
+    }
+
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == maxVal)
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب برنامجاً لمكتب أرصاد جوية يستقبل 30 درجة حرارة (لمدة شهر).
+    على البرنامج حساب ومقارنة معدل درجات الحرارة في \textbf{النصف الأول} من الشهر (الأيام 0-14) مع معدل درجات الحرارة في \textbf{النصف الثاني} (الأيام 15-29)، وطباعة رسالة توضح أي النصفين كان معدله أعلى.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double sum1 = 0, sum2 = 0;
+int half = 15; // 30 / 2
+
+// Assuming array 'temps' is already filled
+for (int i = 0; i < 30; i++)
+{
+    if (i < half)
+        sum1 += temps[i]; // First half
+    else
+        sum2 += temps[i]; // Second half
+}
+
+double avg1 = sum1 / half;
+double avg2 = sum2 / half; // Or remaining days
+
+Console.WriteLine($"Avg1: {avg1}, Avg2: {avg2}");
+if (avg1 > avg2) Console.WriteLine("First half was hotter");
+else if (avg2 > avg1) Console.WriteLine("Second half was hotter");
+else Console.WriteLine("Both halves were equal");
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    في تطبيق للمطاعم، يقيّم الزبائن المطعم بتقييم من 0 إلى 5. \\
+    يعتبر المطعم "ممتازًا" إذا تحقق \textbf{أحد هذه الشروط على الأقل}:
+    \begin{itemize}
+        \item حصل على تقييم 5 من أحد الزبائن على الأقل، ولم يحصل على تقييم 0 أبدًا.
+        \item متوسط التقييمات هو $4.0$ أو أعلى.
+    \end{itemize}
+    \textbf{أمثلة:}
+    \begin{itemize}
+        \item إذا كانت التقييمات \textenglish{\{1, 2, 3, 4, 5\}}، يعتبر المطعم ممتازًا (لأن هناك تقييم 5 ولم يحصل على تقييم 0).
+        \item إذا كانت التقييمات \textenglish{\{5, 4, 4, 5, 5, 5, 5, 0\}}، يعتبر المطعم ممتازًا، لأنّ معدل التقييمات هو $\frac{5 + 4 + 4 + 5 + 5 + 5 + 5 + 0}{8} = 4.125$، وهو أعلى من 4.0.
+        \item إذا كانت التقييمات \textenglish{\{0, 5, 5, 4\}}، لا يعتبر المطعم ممتازًا لأنّه لم يتحقق أي من الشرطين (هناك تقييم 5، لكن هناك أيضًا تقييم 0).
+        \item إذا كانت التقييمات \textenglish{\{3, 3, 3\}}، لا يعتبر المطعم ممتازًا.
+    \end{itemize}
+
+    اكتبوا عملية خارجية \textenglish{IsExcellent} تتلقى مصفوفة أعداد صحيحة تمثل تقييمات الزبائن (من 0 إلى 5) وتعيد \textenglish{true} إذا كان المطعم ممتازًا، و\textenglish{false} خلاف ذلك.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool IsExcellent(int[] ratings)
+{
+    bool hasFive = false;
+    bool hasZero = false;
+    int sum = 0;
+    for (int i = 0; i < ratings.Length; i++)
+    {
+        if (ratings[i] == 5)
+            hasFive = true;
+        if (ratings[i] == 0)
+            hasZero = true;
+        sum += ratings[i];
+    }
+    double average = (double)sum / ratings.Length;
+    if ((hasFive && !hasZero) || average >= 4.0)
+        return true;
+    else
+        return false;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    معطى ثلاث مصفوفات تخزن بيانات كتب:
+    \begin{itemize}
+        \item \textenglish{names}: مصفوفة نصوص لأسماء الكتب.
+        \item \textenglish{prices}: مصفوفة أعداد عشرية تمثل سعر كل كتاب.
+        \item \textenglish{years}: مصفوفة أعداد صحيحة لسنة إصدار كل كتاب.
+    \end{itemize}
+    بحيث \textenglish{names[i]}، \textenglish{prices[i]}، و\textenglish{years[i]} تمثل بيانات نفس الكتاب \textenglish{i}.
+    \begin{enumerate}[label=\alph*.]
+        \item
+    اكتب دالة تتلقى هذه المصفوفات الثلاث، وتطبع \textbf{اسم} الكتاب الذي له أكبر سعر.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintMostExpensiveBook(string[] names, double[] prices)
+{
+    double maxPrice = prices[0];
+    int maxIndex = 0;
+
+    for (int i = 1; i < prices.Length; i++)
+    {
+        if (prices[i] > maxPrice)
+        {
+            maxPrice = prices[i];
+            maxIndex = i;
+        }
+    }
+
+    Console.WriteLine("Most expensive book: " + names[maxIndex]);
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \item
+    اكتب دالة تتلقى المصفوفات وسنة معينة \textenglish{year}، وتقوم بطباعة أسماء جميع الكتب التي صدرت \textbf{بعد} هذه السنة.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintRecentBooks(string[] names, int[] years, int year)
+{
+    Console.WriteLine($"Books published after {year}:");
+    bool found = false;
+
+    for (int i = 0; i < years.Length; i++)
+    {
+        if (years[i] > year)
+        {
+            Console.WriteLine(names[i]);
+            found = true;
+        }
+    }
+
+    if (!found) Console.WriteLine("No books found.");
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
