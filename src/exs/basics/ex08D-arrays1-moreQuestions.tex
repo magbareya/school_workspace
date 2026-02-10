@@ -35,6 +35,7 @@ public static int SumPositive(int[] arr)
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     \item
@@ -84,34 +85,40 @@ public static int[] CreateFrequencyArray(int[] arr)
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     \item
-    اكتب برنامجاً لمكتب أرصاد جوية يستقبل 30 درجة حرارة (لمدة شهر).
-    على البرنامج حساب ومقارنة معدل درجات الحرارة في \textbf{النصف الأول} من الشهر (الأيام 0-14) مع معدل درجات الحرارة في \textbf{النصف الثاني} (الأيام 15-29)، وطباعة رسالة توضح أي النصفين كان معدله أعلى.
+    اكتب عملية خارجية لمكتب أرصاد جوية تتلقى مصفوفةأعداد عشرية \textenglish{temps} تحتوي على 30 درجة حرارة (لمدة شهر).
+    على العملية حساب ومقارنة معدل درجات الحرارة في \textbf{النصف الأول} من الشهر (الأيام 0-14) مع معدل درجات الحرارة في \textbf{النصف الثاني} (الأيام 15-29)، وطباعة رسالة توضح أي النصفين كان معدله أعلى.
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-double sum1 = 0, sum2 = 0;
-int half = 15; // 30 / 2
-
-// Assuming array 'temps' is already filled
-for (int i = 0; i < 30; i++)
+static void CompareHalfMonthAverages(double[] temps)
 {
-    if (i < half)
-        sum1 += temps[i]; // First half
+    double sum1 = 0, sum2 = 0;
+    int half = temps.Length / 2;
+
+    for (int i = 0; i < temps.Length; i++)
+    {
+        if (i < half)
+            sum1 += temps[i];
+        else
+            sum2 += temps[i];
+    }
+
+    double avg1 = sum1 / half;
+    double avg2 = sum2 / half;
+
+    Console.WriteLine($"Avg1: {avg1}, Avg2: {avg2}");
+    if (avg1 > avg2)
+        Console.WriteLine("First half was hotter");
+    else if (avg2 > avg1)
+        Console.WriteLine("Second half was hotter");
     else
-        sum2 += temps[i]; // Second half
+        Console.WriteLine("Both halves were equal");
 }
-
-double avg1 = sum1 / half;
-double avg2 = sum2 / half; // Or remaining days
-
-Console.WriteLine($"Avg1: {avg1}, Avg2: {avg2}");
-if (avg1 > avg2) Console.WriteLine("First half was hotter");
-else if (avg2 > avg1) Console.WriteLine("Second half was hotter");
-else Console.WriteLine("Both halves were equal");
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -160,6 +167,7 @@ public static bool IsExcellent(int[] ratings)
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     \item
@@ -171,13 +179,16 @@ public static bool IsExcellent(int[] ratings)
     \end{itemize}
     بحيث \textenglish{names[i]}، \textenglish{prices[i]}، و\textenglish{years[i]} تمثل بيانات نفس الكتاب \textenglish{i}.
     \begin{enumerate}[label=\alph*.]
-        \item
-    اكتب دالة تتلقى هذه المصفوفات الثلاث، وتطبع \textbf{اسم} الكتاب الذي له أكبر سعر.
+    \item اكتب دالة تتلقى هذه المصفوفات الثلاث، وتطبع \textbf{اسم} الكتاب الذي له أكبر سعر.
+
+    \item اكتب دالة تتلقى المصفوفات وسنة معينة \textenglish{year}، وتقوم بطباعة أسماء جميع الكتب التي صدرت \textbf{بعد} هذه السنة.
+    \end{enumerate}
+
     \ifwithsols
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-public static void PrintMostExpensiveBook(string[] names, double[] prices)
+public static void ExpensiveBook(string[] names, double[] prices)
 {
     double maxPrice = prices[0];
     int maxIndex = 0;
@@ -193,38 +204,28 @@ public static void PrintMostExpensiveBook(string[] names, double[] prices)
 
     Console.WriteLine("Most expensive book: " + names[maxIndex]);
 }
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
-    \item
-    اكتب دالة تتلقى المصفوفات وسنة معينة \textenglish{year}، وتقوم بطباعة أسماء جميع الكتب التي صدرت \textbf{بعد} هذه السنة.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static void PrintRecentBooks(string[] names, int[] years, int year)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[فرع ب]
+\begin{english}
+\begin{minted}{csharp}
+public static void RecentBooks(string[] names, int[] years, int year)
 {
     Console.WriteLine($"Books published after {year}:");
-    bool found = false;
-
     for (int i = 0; i < years.Length; i++)
     {
         if (years[i] > year)
         {
             Console.WriteLine(names[i]);
-            found = true;
         }
     }
-
-    if (!found) Console.WriteLine("No books found.");
 }
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-\end{enumerate}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 
 \end{enumerate}
 
