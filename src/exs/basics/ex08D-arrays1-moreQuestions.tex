@@ -87,34 +87,6 @@ public static int[] CreateFrequencyArray(int[] arr)
     \fi
 
     \item
-    اكتب عملية خارجية تتلقى مصفوفة أعداد صحيحة، وتعيد عدد مرات ظهور القيمة الكبرى في هذه المصفوفة.
-    \ifwithsols
-    \begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-public static int CountMax(int[] arr)
-{
-    int maxVal = arr[0];
-    for (int i = 1; i < arr.Length; i++)
-    {
-        if (arr[i] > maxVal)
-            maxVal = arr[i];
-    }
-
-    int count = 0;
-    for (int i = 0; i < arr.Length; i++)
-    {
-        if (arr[i] == maxVal)
-            count++;
-    }
-    return count;
-}
-    \end{minted}
-    \end{english}
-    \end{boxSolution}
-    \fi
-
-    \item
     اكتب برنامجاً لمكتب أرصاد جوية يستقبل 30 درجة حرارة (لمدة شهر).
     على البرنامج حساب ومقارنة معدل درجات الحرارة في \textbf{النصف الأول} من الشهر (الأيام 0-14) مع معدل درجات الحرارة في \textbf{النصف الثاني} (الأيام 15-29)، وطباعة رسالة توضح أي النصفين كان معدله أعلى.
     \ifwithsols
