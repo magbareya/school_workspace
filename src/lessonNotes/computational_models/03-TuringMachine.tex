@@ -548,26 +548,26 @@ q_2 \quad &\vdash \, a \, a \, \underline{a} \, \triangle \, \ldots \quad \check
     \item $q_4$: حالة القبول
 \end{itemize}
 
-\clearpage
+% \clearpage
 
-\textbf{تتبع كامل:} $w = aabb$
+% \textbf{تتبع كامل:} $w = aabb$
 
-\begin{align*}
-q_0 \quad &\vdash \, \underline{a} \, a \, b \, b \, \triangle \, \ldots \\
-q_1 \quad &\vdash \, X \, \underline{a} \, b \, b \, \triangle \, \ldots \\
-q_1 \quad &\vdash \, X \, a \, \underline{b} \, b \, \triangle \, \ldots \\
-q_2 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
-q_2 \quad &\vdash \, \underline{X} \, a \, Y \, b \, \triangle \, \ldots \\
-q_0 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
-q_1 \quad &\vdash \, X \, X \, \underline{Y} \, b \, \triangle \, \ldots \\
-q_1 \quad &\vdash \, X \, X \, Y \, \underline{b} \, \triangle \, \ldots \\
-q_2 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
-q_2 \quad &\vdash \, X \, \underline{X} \, Y \, Y \, \triangle \, \ldots \\
-q_0 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
-q_3 \quad &\vdash \, X \, X \, Y \, \underline{Y} \, \triangle \, \ldots \\
-q_3 \quad &\vdash \, X \, X \, Y \, Y \, \underline{\triangle} \, \ldots \\
-q_4 \quad &\vdash \, X \, X \, Y \, Y \, \triangle \, \underline{\triangle} \, \ldots \quad \checkmark
-\end{align*}
+% \begin{align*}
+% q_0 \quad &\vdash \, \underline{a} \, a \, b \, b \, \triangle \, \ldots \\
+% q_1 \quad &\vdash \, X \, \underline{a} \, b \, b \, \triangle \, \ldots \\
+% q_1 \quad &\vdash \, X \, a \, \underline{b} \, b \, \triangle \, \ldots \\
+% q_2 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
+% q_2 \quad &\vdash \, \underline{X} \, a \, Y \, b \, \triangle \, \ldots \\
+% q_0 \quad &\vdash \, X \, \underline{a} \, Y \, b \, \triangle \, \ldots \\
+% q_1 \quad &\vdash \, X \, X \, \underline{Y} \, b \, \triangle \, \ldots \\
+% q_1 \quad &\vdash \, X \, X \, Y \, \underline{b} \, \triangle \, \ldots \\
+% q_2 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
+% q_2 \quad &\vdash \, X \, \underline{X} \, Y \, Y \, \triangle \, \ldots \\
+% q_0 \quad &\vdash \, X \, X \, \underline{Y} \, Y \, \triangle \, \ldots \\
+% q_3 \quad &\vdash \, X \, X \, Y \, \underline{Y} \, \triangle \, \ldots \\
+% q_3 \quad &\vdash \, X \, X \, Y \, Y \, \underline{\triangle} \, \ldots \\
+% q_4 \quad &\vdash \, X \, X \, Y \, Y \, \triangle \, \underline{\triangle} \, \ldots \quad \checkmark
+% \end{align*}
 
 \begin{boxNote}
 \textbf{لماذا هذه الاستراتيجية ناجحة؟}
@@ -719,9 +719,39 @@ q_4 \quad &\vdash \, X \, X \, Y \, Y \, \triangle \, \underline{\triangle} \, \
           (q2) edge node[right] {$1 \mid \$, L$} (q3)
           (q3) edge[loop left] node {$1 \mid 1, L$} (q3)
           (q3) edge node {$\vdash \mid \vdash, R$} (q4)
-          (q4) edge node[below] {$1 \mid \$, R$} (q5);
+          (q4) edge[loop above] node {$1 \mid 1, R$} (q4)
+          (q4) edge node[below] {$\$ \mid \$, R$} (q5)
+          (q5) edge node[above] {$\triangle \mid \$, R$} (q5);
 \end{tikzpicture}
 \end{center}
+
+\textbf{شرح الآلة:}
+\begin{itemize}
+    \item $q_0$: نمر على جميع $1$ الخاصة بـ $x$
+    \item $q_0 \to q_1$: نحذف الـ $\#$ ونكتب $1$ بدلها (بهذا يلتقي العددين)
+    \item $q_1$: نمر على جميع $1$ الخاصة بـ $y$ حتى نصل للنهاية
+    \item $q_1 \to q_2$: وصلنا للنهاية ($\triangle$)، نرجع لليسار
+    \item $q_2 \to q_3$: نبدأ في وضع علامات النهاية: نحول آخر $1$ إلى $\$$
+    \item $q_3$: نرجع لبداية الشريط (بعد $\vdash$)
+    \item $q_3 \to q_4$: نمر على جميع $1$ للأمام
+    \item $q_4$: نستمر في المرور على جميع $1$ حتى نصل للـ $\$$ الأولى
+    \item $q_4 \to q_5$: نمر فوق $\$$ الأولى
+    \item $q_5$: نكتب $\$$ مكان $\triangle$ وننهي
+\end{itemize}
+
+\textbf{تتبع المثال $(2, 3)$:}
+
+$\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle$ \quad (المدخل)
+
+$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, 1 \, \triangle$ \quad ($\#$ حولت إلى 1)
+
+$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \, \triangle$ \quad (آخر 1 تحولت إلى {\textdollar})
+
+$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \, \$$ \quad ($\triangle$ تحولت إلى {\textdollar})
+
+الناتج بين الـ \$: $1 \, 1 \, 1 \, 1 \, 1$ (= 5 = 2 + 3)
+
+\textbf{ملاحظة هامة:} الآلة لا تفقد أي $1$! النتيجة بين علامتي $\$$ تحتوي على جميع الـ $1$ الأصلية.
 
 \clearpage
 
