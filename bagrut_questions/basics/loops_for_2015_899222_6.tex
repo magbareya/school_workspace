@@ -3,20 +3,63 @@
 \subsection*{سؤال 6 امتحان 899222 سنة 2015}
 \addcontentsline{toc}{subsection}{سؤال 6 امتحان 899222 سنة 2015}
 
-\importpdfpage{ ../../../bagrut_questions/basics/loops_for_2015_899222_6.pdf }{1}
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/loops_for_2015_899222_6.png }%
+}%
 
 \clearpage
 \ifwithsols
-\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2015]
-\begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
-
-\end{enumerate}
+\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2015 - فرع أ]
 
 \begin{boxCode}
 \begin{english}
 \begin{minted}{csharp}
-    // TODO
+static char GetTwinGender(string firstGender, string secondGender)
+{
+    if (firstGender == "male" && secondGender == "male")
+        return 'm';
+    else if (firstGender == "female" && secondGender == "female")
+        return 'f';
+    else
+        return 'v';
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}[سؤال 6 امتحان 899222 سنة 2015 - فرع ب]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+static void Main(string[] args)
+{
+    int malesCnt = 0, femalesCnt = 0;
+    for(int i = 1; i <= 1371; i++)
+    {
+        string firstGender = Console.ReadLine();
+        string secondGender = Console.ReadLine();
+        char result = GetTwinGender(firstGender, secondGender);
+        if (result == 'm')
+            malesCnt+=2;
+        else if (result == 'f')
+            femalesCnt+=2;
+        else if (result == 'v')
+        {
+            malesCnt++;
+            femalesCnt++;
+        }
+    }
+    if (malesCnt > femalesCnt)
+        Console.WriteLine("MALES");
+    else if (femalesCnt > malesCnt)
+        Console.WriteLine("FEMALES");
+    else
+        Console.WriteLine("EQUAL");
+}
+
 \end{minted}
 \end{english}
 \end{boxCode}
