@@ -43,7 +43,83 @@ for(int i = 0; i < middle; i++)
 
     \clearpage
 
+        \item
+    معطاة المصفوفة التالية:
+    \begin{english}
+    \begin{minted}{csharp}
+int[] arr = {5, 4, 6, 12, 14, 5, 12};
+    \end{minted}
+    \end{english}
 
+    لكل واحد من أوامر الطباعة التالية اكتب ما هو المخرج الذي يطبعه:
+
+    \begin{english}
+    \begin{enumerate}[itemsep=1.5em]
+        \item \texttt{Console.WriteLine(arr.Length);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textenglish{7}\\
+        \textbf{السبب:} \textenglish{Length} تعيد عدد العناصر في المصفوفة، وهي تحتوي على 7 عناصر.
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[1]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textenglish{4}\\
+        \textbf{السبب:} العنصر في الموقع 1 هو 4. (تذكر: الترقيم يبدأ من 0)
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[6]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textenglish{12}\\
+        \textbf{السبب:} العنصر في الموقع 6 (آخر موقع) هو 12.
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[-1]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textbf{خطأ في وقت التشغيل} (\textenglish{IndexOutOfRangeException})\\
+        \textbf{السبب:} الفهرس $-1$ غير صالح. الفهارس الصالحة من 0 إلى \textenglish{arr.Length - 1}.
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[7]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textbf{خطأ في وقت التشغيل} (\textenglish{IndexOutOfRangeException})\\
+        \textbf{السبب:} الفهرس 7 خارج حدود المصفوفة. آخر فهرس صالح هو 6.
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[arr.Length]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textbf{خطأ في وقت التشغيل} (\textenglish{IndexOutOfRangeException})\\
+        \textbf{السبب:} \textenglish{arr.Length} يساوي 7، لكن آخر فهرس صالح هو 6. هذا خطأ شائع!
+        \end{boxSolution}
+        \fi
+
+        \item \texttt{Console.WriteLine(arr[arr.Length - 1]);}\\
+        \\ \underline{\hspace{10cm}}
+        \ifwithsols
+        \begin{boxSolution}
+        \textbf{الجواب:} \textenglish{12}\\
+        \textbf{السبب:} \textenglish{arr.Length - 1} يساوي $7 - 1 = 6$، والعنصر في الموقع 6 هو 12. هذه هي الطريقة الصحيحة للوصول إلى آخر عنصر!
+        \end{boxSolution}
+        \fi
+    \end{enumerate}
+    \end{english}
+    \clearpage
 
     \item
     اكتب عملية خارجية \textenglish{CountMax} تتلقى مصفوفة أعداد صحيحة، وتعيد عدد مرات ظهور القيمة الكبرى في هذه المصفوفة. \\
