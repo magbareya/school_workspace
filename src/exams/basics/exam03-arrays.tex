@@ -148,13 +148,34 @@ public static int CountMax(int[] arr)
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     \item
     اكتب عملية خارجية \textenglish{ExpandWithSquares} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بحجم ضعف المصفوفة الأصلية، بحيث تضع بعد كل عنصر تربيعه.\\
     \textbf{مثال:} إذا تلقت المصفوفة \textenglish{\{1, 3, 4\}}، تعيد \textenglish{\{1, 1, 3, 9, 4, 16\}}.
     \ifwithsols
-    \begin{boxSolution}
+    \begin{boxSolution}[1]
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] ExpandWithSquares(int[] arr)
+{
+    int[] result = new int[arr.Length * 2];
+    int index = 0;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        result[2*i] = arr[i];
+        result[2*i+1] = arr[i] * arr[i];
+    }
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \begin{boxSolution}[2]
     \begin{english}
     \begin{minted}{csharp}
 public static int[] ExpandWithSquares(int[] arr)
@@ -175,6 +196,7 @@ public static int[] ExpandWithSquares(int[] arr)
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 
     \item
