@@ -2,11 +2,12 @@ import os
 import csv
 import glob
 import sys
+import argparse
 
 """
 Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
 
-Usage: python scripts/bagrut_questions/create_questions_index.py
+Usage: python scripts/bagrut_questions/create_questions_index.py [--sort {year,question,model}]
 """
 
 # -------------------------------
@@ -132,6 +133,19 @@ def generate_html(rows, folders_set, topics_set, models_set, years_set, total_qu
 
 
 def main():
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(
+        description="Generate indexes and topic files for bagrut questions.",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--sort",
+        choices=["year", "question", "model"],
+        default="year",
+        help="Sorting strategy for questions in topic.tex files (default: year)"
+    )
+    args = parser.parse_args()
+
     rows_data = []
     csv_rows = []
 
@@ -220,7 +234,15 @@ def main():
         template_content = f.read()
 
     for (folder, topic), questions in topic_files.items():
-        questions.sort(key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
+        # Apply sorting strategy based on command line argument
+        # questions tuple: (year, model, qnum, file_path)
+        if args.sort == "year":
+            questions.sort(key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
+        elif args.sort == "question":
+            questions.sort(key=lambda x: (x[2], x[0], x[1]))  # qnum, year, model
+        elif args.sort == "model":
+            questions.sort(key=lambda x: (x[1], x[0], x[2]))  # model, year, qnum
+
         questions_list = "\n".join([f"\\input{{../../../bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex}}" for q in questions if os.path.exists(f"bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex")])
 
         content = template_content.replace("[[QUESTIONS_LIST]]", questions_list)
