@@ -1,0 +1,51 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 9: آلة تورينج}
+\else
+\title{وظيفة 9: آلة تورينج}
+\fi
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[itemsep=2em]
+\item صمّم آلة تيورنج تتلقى عددًا صحيحًا موجبًا $x$ على الشريط بالتمثيل الأوناري، وتحسب $x \% 3$، وتكتب النتيجة بالتمثيل الأوناري بين إشارتَي $\$$ في مكانٍ ما على الشريط.
+\textbf{مثال} إذا كان المدخل هو: $11111$ (أي $x=5$)، فيجب أن تكتب الآلة $\$11\$$ (أي $5 \% 3 = 2$) في مكانٍ ما على الشريط.
+
+\textbf{المدخل ($x=5$):}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (8.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+
+\vspace{0.5em}
+
+\textbf{الناتج ($5 \% 3 = 2$):}
+\hspace{0.5em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\ldots$,3/$\$$,4/1,5/1,6/$\$$,7/$\ldots$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\begin{boxNote}
+    يمكن حل السؤال بطريقتين:
+    \begin{enumerate}
+        \item الطريقة الأولى شطب 3 واحدات كل مرة، وما يتبقى هو الباقي.
+    \item الطريقة الثانية: لاحظ أنّها لغة نظامية! ابن أوتوماتًا نهائيًّا محدودًا لها ثم حوله إلى آلة تيورنج.
+    \end{enumerate}
+\end{boxNote}
+
+\item السؤال الثاني في الصفحة التالية - المطلوب حل أول 3 بنود فقط، والبند الرابع اختياريّ.
+\end{enumerate}
+
+\input{../../../bagrut_questions/computational_models/turing_2024_899271_11.tex}
+
+\end{document}
