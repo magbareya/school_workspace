@@ -640,7 +640,9 @@ q_2 \quad &\vdash \, a \, a \, \underline{a} \, \triangle \, \ldots \quad \check
 
 \clearpage
 
+%────────────────────────────────────────────────────────────
 \section{آلة تيورينج لحساب الدوال}
+%────────────────────────────────────────────────────────────
 
 حتى الآن، استخدمنا آلة تيورينج للتعرف على اللغات (قبول أو رفض). لكن يمكننا أيضًا استخدامها \textbf{لحساب دوال}.
 
@@ -672,128 +674,698 @@ q_2 \quad &\vdash \, a \, a \, \underline{a} \, \triangle \, \ldots \quad \check
     \item ليس مهمًا ما هو محتوى الشريط يمين ويسار الناتج
 \end{itemize}
 
-\subsection{مثال 7: حساب دالة - الجمع}
+\subsection{مثال 7: حساب دالة $f(x) = x - 2$}
 
-\textbf{المطلوب:} بناء آلة تيورينج تحسب دالة الجمع $f(x, y) = x + y$.
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة $f(x) = x - 2$ لـ $x \geq 2$.
 
-\textbf{المدخل:} عددان $x$ و $y$ بالتمثيل الأونَري، مفصولان بـ $\#$
-
-مثلاً: $(2, 3)$ يُكتب: $\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle \, \ldots$
-
-\textbf{الناتج:} العدد $x + y$ بالتمثيل الأونَري، محاطًا بـ $\$$
-
-مثلاً: $5$ يُكتب: $\ldots \$ \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \ldots$
-
+\medskip
 \textbf{الفكرة:}
-\begin{enumerate}
-    \item نحذف الـ $\#$ الفاصلة
-    \item بهذا، جميع الـ $1$ ستكون متتالية
-    \item نحيط النتيجة بـ $\$$
-\end{enumerate}
 
-\textbf{مثال على التنفيذ:}
-\begin{align*}
-&\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle \quad \text{(المدخل: $2 + 3$)} \\
-\to &\vdash \, 1 \, 1 \, \triangle \, 1 \, 1 \, 1 \, \triangle \quad \text{(حذفنا $\#$)} \\
-\to &\vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \triangle \quad \text{(أزلنا الفراغ)} \\
-\to &\ldots \$ \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \ldots \quad \text{(الناتج: 5)}
-\end{align*}
-
-\textbf{الحل:}
+نحوّل أول $1$ إلى $\$$ (بداية الناتج)، ثم نتجاوز باقي الـ $1$ حتى النهاية، نرجع يسارًا خطوة واحدة، ونحوّل آخر $1$ إلى $\$$ (نهاية الناتج). الوحدات بين الـ $\$$ هي $x - 2$.
 
 \begin{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
-    \node[state,initial] (q0) {$q_0$};
-    \node[state] (q1) [right of=q0] {$q_1$};
-    \node[state] (q2) [right of=q1] {$q_2$};
-    \node[state] (q3) [below of=q1] {$q_3$};
-    \node[state] (q4) [below of=q2] {$q_4$};
-    \node[state,accepting] (q5) [below of=q3] {$q_5$};
-
-    \path (q0) edge[loop above] node {$1 \mid 1, R$} (q0)
-          (q0) edge node {$\# \mid 1, R$} (q1)
-          (q1) edge[loop above] node {$1 \mid 1, R$} (q1)
-          (q1) edge node {$\triangle \mid \triangle, L$} (q2)
-          (q2) edge node[right] {$1 \mid \$, L$} (q3)
-          (q3) edge[loop left] node {$1 \mid 1, L$} (q3)
-          (q3) edge node {$\vdash \mid \vdash, R$} (q4)
-          (q4) edge[loop above] node {$1 \mid 1, R$} (q4)
-          (q4) edge node[below] {$\$ \mid \$, R$} (q5)
-          (q5) edge node[above] {$\triangle \mid \$, R$} (q5);
-\end{tikzpicture}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/turing/fx_x-2.png}%
 \end{center}
 
-\textbf{شرح الآلة:}
+\textbf{مثال على حالات الشريط ($x = 5$):}
+
+{\small
+\textbf{المدخل:}
+\hspace{1em}
+    \begin{tikzpicture}[scale=0.85]
+        \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/$\triangle$} {
+            \draw (\i,0) rectangle +(1,0.8);
+            \node at (\i+0.5,0.4) {\c};
+            }
+            \node at (8.5, 0.4) {$\ldots$};
+    \end{tikzpicture}
+
+\textbf{$q_0$: تحوّل أول $1$ إلى $\$$، تنتقل لـ $q_1$:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/1,6/1,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \draw[->, thick, red] (3.5,1.5) -- (3.5,0.8);
+    \node[red, font=\small] at (3.5,1.9) {$q_1$};
+\end{tikzpicture}
+
+\vspace{0.6em}
+\textbf{$q_1$: يتجاوز الـ $1$ حتى $\triangle$، يرجع $q_2$:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/1,6/1,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \draw[->, thick, blue] (6.5,1.5) -- (6.5,0.8);
+\end{tikzpicture}
+
+\vspace{0.6em}
+\textbf{$q_2$: تحوّل آخر $1$ إلى $\$$، نهاية الناتج:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/1,6/$\$$,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (8.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+} \\
+
+$\leftarrow$ الناتج بين الـ\$: $1\,1\,1 (= 3 = 5-2)$ \checkmark \\
+
+\textbf{شرح الحالات:}
 \begin{itemize}
-    \item $q_0$: نمر على جميع $1$ الخاصة بـ $x$
-    \item $q_0 \to q_1$: نحذف الـ $\#$ ونكتب $1$ بدلها (بهذا يلتقي العددين)
-    \item $q_1$: نمر على جميع $1$ الخاصة بـ $y$ حتى نصل للنهاية
-    \item $q_1 \to q_2$: وصلنا للنهاية ($\triangle$)، نرجع لليسار
-    \item $q_2 \to q_3$: نبدأ في وضع علامات النهاية: نحول آخر $1$ إلى $\$$
-    \item $q_3$: نرجع لبداية الشريط (بعد $\vdash$)
-    \item $q_3 \to q_4$: نمر على جميع $1$ للأمام
-    \item $q_4$: نستمر في المرور على جميع $1$ حتى نصل للـ $\$$ الأولى
-    \item $q_4 \to q_5$: نمر فوق $\$$ الأولى
-    \item $q_5$: نكتب $\$$ مكان $\triangle$ وننهي
+    \item $q_0$: حوّل أول $1$ إلى $\$$ (بداية الناتج) وانتقل لـ $q_1$.
+    \item $q_1$: تجاوز باقي الـ $1$ يمينًا. عند $\triangle$: ارجع خطوة يسارًا ($q_2$).
+    \item $q_2$: حوّل آخر $1$ إلى $\$$ (نهاية الناتج) واقبل.
+    \item $q_3$: حالة القبول.
 \end{itemize}
 
-\textbf{تتبع المثال $(2, 3)$:}
+\begin{boxNote}
+الآلة تعمل لـ $x \geq 2$ فقط. عند $x = 2$ يكون الناتج $\$\,\$$ (صفر وحدات بين الـ\$). عند $x < 2$ لا تتوقف الآلة بشكل صحيح لأنها غير مُعرَّفة لهذه الحالات.
+\end{boxNote}
 
-$\vdash \, 1 \, 1 \, \# \, 1 \, 1 \, 1 \, \triangle$ \quad (المدخل)
+\textbf{تتبع ($x = 4$):}
+\begin{align*}
+q_0 \quad &\vdash \; \underline{1} \; 1 \; 1 \; 1 \; \triangle \\
+q_1 \quad &\vdash \; \$ \; \underline{1} \; 1 \; 1 \; \triangle \quad \text{(حوّلنا $1$ الأولى إلى $\$$)} \\
+q_1 \quad &\vdash \; \$ \; 1 \; \underline{1} \; 1 \; \triangle \\
+q_1 \quad &\vdash \; \$ \; 1 \; 1 \; \underline{1} \; \triangle \\
+q_1 \quad &\vdash \; \$ \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(رأينا $\triangle$، رجعنا)} \\
+q_2 \quad &\vdash \; \$ \; 1 \; 1 \; \underline{1} \; \triangle \\
+q_3 \quad &\vdash \; \$ \; 1 \; 1 \; \$ \; \triangle \quad \checkmark \quad \text{(حوّلنا آخر $1$ إلى $\$$)}
+\end{align*}
 
-$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, 1 \, \triangle$ \quad ($\#$ حولت إلى 1)
+الناتج بين الـ\$: $1\,1$ (= 2 = 4-2) \checkmark
 
-$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \, \triangle$ \quad (آخر 1 تحولت إلى {\textdollar})
-
-$\to \vdash \, 1 \, 1 \, 1 \, 1 \, 1 \, \$ \, \$$ \quad ($\triangle$ تحولت إلى {\textdollar})
-
-الناتج بين الـ \$: $1 \, 1 \, 1 \, 1 \, 1$ (= 5 = 2 + 3)
-
-\textbf{ملاحظة هامة:} الآلة لا تفقد أي $1$! النتيجة بين علامتي $\$$ تحتوي على جميع الـ $1$ الأصلية.
+\textbf{تتبع ($x = 2$):}
+\begin{align*}
+q_0 \quad &\vdash \; \underline{1} \; 1 \; \triangle \\
+q_1 \quad &\vdash \; \$ \; \underline{1} \; \triangle \\
+q_1 \quad &\vdash \; \$ \; 1 \; \underline{\triangle} \quad \text{(رجعنا)} \\
+q_2 \quad &\vdash \; \$ \; \underline{1} \; \triangle \\
+q_3 \quad &\vdash \; \$ \; \$ \; \triangle \quad \checkmark \quad \text{(ناتج = 0)}
+\end{align*}
 
 \clearpage
 
-\subsection{مثال 8: حساب دالة - الطرح}
+\subsection{مثال 8: حساب دالة $f(x) = x + 1$}
 
-\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة:
-$$f(x, y) = \begin{cases}
-x - y, & x > y \\
-0, & x \leq y
-\end{cases}$$
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة $f(x) = x + 1$ لـ $x \geq 0$.
 
+\medskip
 \textbf{الفكرة:}
-\begin{enumerate}
-    \item نشطب $1$ من $x$ و $1$ من $y$ في كل دورة
-    \item نكرر حتى ينتهي أحدهما
-    \item إذا انتهى $y$ أولاً: الباقي من $x$ هو الناتج
-    \item إذا انتهى $x$ أولاً أو انتهيا معًا: الناتج 0
-\end{enumerate}
 
-\textbf{مثال:}
+نحوّل أول $1$ إلى $\$$ (بداية الناتج)، ثم نتجاوز باقي الـ $1$ يمينًا، ونضيف وحدتين ($1\,1$) في نهاية الشريط، ثم نكتب $\$$. الوحدات بين الـ$\$$ = $(x-1) + 2 = x+1$.
+
+\begin{center}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/turing/fx_xPlus1.png}%
+\end{center}
+
+\textbf{مثال على حالات الشريط ($x = 3$):} \\
+
+{ \small
+\textbf{المدخل:}
+\hspace{3em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (6.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+
+\textbf{$q_0 \to q_1$: أول $1$ تصبح $\$$:}
+\hspace{2em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \draw[->, thick, red] (3.5,1.5) -- (3.5,0.8);
+    \node[red, font=\small] at (3.5,1.9) {$q_1$};
+\end{tikzpicture}
+
+\textbf{$q_1 \to q_2 \to q_3$: تجاوز الـ$1$، إضافة $1\,1$:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/1,6/1,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \draw[->, thick, blue] (7.5,1.5) -- (7.5,0.8);
+    \node[blue, font=\small] at (7.5,1.9) {$q_3$};
+\end{tikzpicture}
+
+\vspace{0.6em}
+\textbf{$q_3 \to q_4$: كتابة $\$$ النهاية:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.85]
+    \foreach \i/\c in {1/$\vdash$,2/$\$$,3/1,4/1,5/1,6/1,7/$\$$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (8.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+} \\
+
+$\leftarrow$ الناتج بين الـ\$: $1\,1\,1\,1$ (= 4 = 3+1) \checkmark \\
+
+\textbf{شرح الحالات:}
 \begin{itemize}
-    \item $(5, 2)$: الناتج $3$
-    \item $(2, 5)$: الناتج $0$
-    \item $(3, 3)$: الناتج $0$
+    \item $q_0$: حوّل أول $1$ إلى $\$$ (بداية الناتج) وانتقل لـ $q_1$. إذا كان الشريط فارغًا (أي $x=0$)، عندها اكتب $\$$ وانتقل للحالة $q2$ (التي ستضيف $1$ ثم $\$$ ثم تقبل)
+    \item $q_1$: تجاوز باقي الـ $1$ يمينًا. عند $\triangle$: اكتب $1$ إضافية (أولى) وانتقل لـ $q_2$.
+    \item $q_2$: اكتب $1$ إضافية (ثانية) وانتقل لـ $q_3$.
+    \item $q_3$: اكتب $\$$ (نهاية الناتج) واقبل.
+    \item $q_4$: حالة القبول.
 \end{itemize}
 
-\textbf{الحل: (مبسط)}
+\begin{boxNote}
+الناتج = $(x-1)$ وحدة أصلية $+$ وحدتان مضافتان $x+1 =$. الآلة تعمل لـ $x \geq 0$.
+\end{boxNote}
 
-الآلة معقدة نسبيًا، لكن الفكرة الأساسية:
+\textbf{تتبع ($x = 3$):}
+\begin{align*}
+q_0 \quad &\vdash \; \underline{1} \; 1 \; 1 \; \triangle \\
+q_1 \quad &\vdash \; \$ \; \underline{1} \; 1 \; \triangle \quad \text{(أول $1$ أصبحت $\$$)} \\
+q_1 \quad &\vdash \; \$ \; 1 \; \underline{1} \; \triangle \\
+q_1 \quad &\vdash \; \$ \; 1 \; 1 \; \underline{\triangle} \\
+q_2 \quad &\vdash \; \$ \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(أضفنا $1$ أولى)} \\
+q_3 \quad &\vdash \; \$ \; 1 \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(أضفنا $1$ ثانية)} \\
+q_4 \quad &\vdash \; \$ \; 1 \; 1 \; 1 \; 1 \; \$ \quad \checkmark \quad \text{(الناتج $4 = 3+1$)}
+\end{align*}
+
+الناتج بين الـ\$: $1\,1\,1\,1$ (= 4 = 3+1) \checkmark
+
+\clearpage
+
+\subsection{مثال 9: حساب دالة $f(x) = 2x$}
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة $f(x) = 2x$.
+
+\medskip
+\textbf{الفكرة:}
+
 \begin{enumerate}
-    \item نشطب أول $1$ من $x$ (نكتبها $X$)
-    \item نمر على $1$ المتبقية من $x$ حتى نصل إلى $\#$
-    \item نمر على $\#$ ونبحث عن أول $1$ من $y$
-    \item نشطب أول $1$ من $y$ (نكتبها $Y$)
-    \item نرجع إلى بداية الشريط
-    \item نكرر حتى لا يبقى $1$ غير مشطوبة من أحد الطرفين
-    \item نحسب الباقي ونكتب الناتج بين $\$$
+    \item ضع علامة $\$$ في نهاية المدخل (فاصل بين المدخل ومنطقة الناتج)، وارجع لبداية الشريط.
+    \item في كل دورة: حوّل أول $1$ غير مُعالَجة إلى $X$، ثم اذهب لنهاية الناتج وأضف $1\,1$.
+    \item عندما لا تبقى $1$ في المدخل (وصلت إلى $\$$): اذهب لنهاية الناتج واكتب $\$$ (نهاية الناتج).
 \end{enumerate}
+
+الناتج النهائي: بين \$ الأولى و\$ الثانية.
+
+\begin{center}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/turing/fx_2x.png}%
+\end{center}
+
+\textbf{مثال على حالات الشريط ($x = 2$):} \\
+
+{ \small
+
+\textbf{المدخل:}
+\hspace{3em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (5.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+
+\textbf{$q_0$: تجاوز المدخل، كتابة $\$$ في النهاية، رجوع ($q_1 \to q_2$):}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/$\$$,5/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{دورة 1: $1 \to X$، إضافة $1\,1$ بعد $\$$:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/1,4/$\$$,5/1,6/1,7/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{دورة 2: $1 \to X$، إضافة $1\,1$ بعد $\$$:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/$\$$,5/1,6/1,7/1,8/1,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{الناتج النهائي ($q_2$ يرى $\$$، يكتب $\$$ في النهاية):}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/$\$$,5/1,6/1,7/1,8/1,9/$\$$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (10.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+} \\
+
+$\leftarrow$ الناتج بين الـ\$: $1\,1\,1\,1$ (= 4 = 2 \texttimes 2) \checkmark \\
+\clearpage
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0$: تجاوز المدخل يمينًا. عند $\triangle$: اكتب $\$$ (فاصل الناتج) وارجع يسارًا ($q_1$).
+    \item $q_1$: ارجع يسارًا حتى $\vdash$، ثم تقدم لـ $q_2$ (بداية دورة جديدة).
+    \item $q_2$: إذا $1$: حوّلها $X$ وانتقل لـ $q_3$ (كتابة $11$ في الناتج). إذا $\$$: انتهى المدخل، اذهب لـ $q_6$.
+    \item $q_3$: تجاوز $1$s و$\$$s يمينًا حتى $\triangle$، اكتب $1$ الأولى ($q_4$).
+    \item $q_4$: اكتب $1$ الثانية وارجع يسارًا ($q_5$).
+    \item $q_5$: ارجع يسارًا على $1$s و$\$$s حتى $X$، ثم تقدم لدورة جديدة ($q_2$).
+    \item $q_6$: تجاوز الناتج يمينًا حتى $\triangle$، اكتب $\$$ (نهاية الناتج) واقبل ($q_7$).
+\end{itemize}
+
+\textbf{تتبع ($x = 2$):}
+{\small
+\begin{align*}
+q_0 \quad &\vdash \; \underline{1} \; 1 \; \triangle \\
+q_0 \quad &\vdash \; 1 \; \underline{1} \; \triangle \\
+q_0 \quad &\vdash \; 1 \; 1 \; \underline{\triangle} \quad \text{(كتبنا $\$$، رجعنا)} \\
+q_1 \quad &\vdash \; 1 \; \underline{1} \; \$ \; \triangle \\
+q_1 \quad &\vdash \; \underline{1} \; 1 \; \$ \; \triangle \\
+q_1 \quad &\vdash \; \underline{\vdash} \; 1 \; 1 \; \$ \; \triangle \\
+q_2 \quad &\vdash \; \underline{1} \; 1 \; \$ \; \triangle \quad \text{($1 \to X$)} \\
+q_3 \quad &\vdash \; X \; \underline{1} \; \$ \; \triangle \quad \text{(تجاوز $1$, $\$$)} \\
+q_3 \quad &\vdash \; X \; 1 \; \underline{\$} \; \triangle \\
+q_3 \quad &\vdash \; X \; 1 \; \$ \; \underline{\triangle} \quad \text{(كتبنا $1$ أولى)} \\
+q_4 \quad &\vdash \; X \; 1 \; \$ \; 1 \; \underline{\triangle} \quad \text{(كتبنا $1$ ثانية، رجعنا)} \\
+q_5 \quad &\vdash \; X \; 1 \; \$ \; \underline{1} \; 1 \\
+q_5 \quad &\vdash \; X \; 1 \; \underline{\$} \; 1 \; 1 \\
+q_5 \quad &\vdash \; X \; \underline{1} \; \$ \; 1 \; 1 \\
+q_5 \quad &\vdash \; \underline{X} \; 1 \; \$ \; 1 \; 1 \quad \text{(وجدنا $X$، تقدمنا)} \\
+q_2 \quad &\vdash \; X \; \underline{1} \; \$ \; 1 \; 1 \quad \text{($1 \to X$)} \\
+q_3 \quad &\vdash \; X \; X \; \underline{\$} \; 1 \; 1 \; \triangle \\
+q_3 \quad &\vdash \; X \; X \; \$ \; \underline{1} \; 1 \; \triangle \\
+q_3 \quad &\vdash \; X \; X \; \$ \; 1 \; \underline{1} \; \triangle \\
+q_3 \quad &\vdash \; X \; X \; \$ \; 1 \; 1 \; \underline{\triangle} \quad \text{(كتبنا $1$ ثالثة)} \\
+q_4 \quad &\vdash \; X \; X \; \$ \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(كتبنا $1$ رابعة، رجعنا)} \\
+q_5 \quad &\vdash \; X \; \underline{X} \; \$ \; 1 \; 1 \; 1 \; 1 \quad \text{(وجدنا $X$، تقدمنا)} \\
+q_2 \quad &\vdash \; X \; X \; \underline{\$} \; 1 \; 1 \; 1 \; 1 \quad \text{($q_2$ يرى $\$$: المدخل انتهى)} \\
+q_6 \quad &\vdash \; X \; X \; \$ \; \underline{1} \; 1 \; 1 \; 1 \; \triangle \\
+q_6 \quad &\vdash \; X \; X \; \$ \; 1 \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(كتبنا $\$$ النهائية)} \\
+q_7 \quad &\vdash \; X \; X \; \$ \; 1 \; 1 \; 1 \; 1 \; \$ \quad \checkmark
+\end{align*}
+}
+الناتج بين الـ\$: $1\,1\,1\,1$ (= 4 = 2 \texttimes 2) \checkmark
+
+\clearpage
+
+%=============================================================
+\subsection{مثال 10: حساب دالة $f(x) = x/3$}
+%=============================================================
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة $f(x) = x/3$.
+
+\textbf{الفكرة:}
+
+نفس أسلوب مثال $2x$، لكن معكوسًا: بدلاً من كتابة $1\,1$ لكل $1$ مُعالَجة، نشطب $3$ وحدات لكتابة $1$ واحدة في الناتج.
+
+\begin{enumerate}
+    \item ضع $\$$ في نهاية المدخل (فاصل)، وارجع لبداية الشريط.
+    \item في كل دورة: حوّل ثلاث $1$ متتالية إلى $X\,X\,X$، ثم اذهب لنهاية الناتج وأضف $1$.
+    \item عندما لا تبقى $1$ في المدخل (وصلت $\$$): اكتب $\$$ نهاية الناتج واقبل.
+\end{enumerate}
+
+
+\begin{center}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/turing/fx_xDiv3.png}%
+\end{center}
+
+\textbf{مثال على حالات الشريط ($x = 6$):} \\
+
+{\small
+\textbf{المدخل:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/1,8/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{بعد الإعداد: $\$$ في النهاية:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/1,8/$\$$,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{دورة 1: شطب $3$، كتابة $1$ في الناتج:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/$X$,5/1,6/1,7/1,8/$\$$,9/1,10/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\textbf{الناتج النهائي:}
+\hspace{1em}
+\begin{tikzpicture}[scale=0.83]
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/$X$,5/$X$,6/$X$,7/$X$,8/$\$$,9/1,10/1,11/$\$$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (12.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+} \\
+
+$\leftarrow$ الناتج بين الـ\$: $1\,1$ (= 2 = 6/3) \checkmark \\
+
+\clearpage
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0$: تجاوز المدخل يمينًا. عند $\triangle$: اكتب $\$$ وارجع ($q_1$).
+    \item $q_1$: ارجع حتى $\vdash$، تقدم لـ $q_2$.
+    \item $q_2$: إذا $1$: ابدأ شطب ثلاث ($q_3$). إذا $\$$: المدخل انتهى ← $q_7$.
+    \item $q_3, q_4$: شطب الثانية والثالثة (كل منهما $1 \mid X, R$).
+    \item $q_5$: تجاوز الناتج حتى $\triangle$، اكتب $1$ واحدة في الناتج وارجع ($q_6$).
+    \item $q_6$: ارجع لبداية الشريط وابدأ دورة جديدة.
+    \item $q_7$: تجاوز الناتج حتى $\triangle$، اكتب $\$$ (نهاية الناتج) واقبل ($q_8$).
+\end{itemize}
+
+\textbf{تتبع ($x = 3$):}
+{ \small
+\begin{align*}
+q_0 \quad &\vdash \; \underline{1} \; 1 \; 1 \; \triangle \\
+q_0 \quad &\vdash \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(كتبنا $\$$، رجعنا)} \\
+q_1 \quad &\vdash \; \underline{\vdash} \; 1 \; 1 \; 1 \; \$ \; \triangle \\
+q_2 \quad &\vdash \; \underline{1} \; 1 \; 1 \; \$ \; \triangle \quad \text{($1 \to X$)} \\
+q_3 \quad &\vdash \; X \; \underline{1} \; 1 \; \$ \; \triangle \quad \text{($1 \to X$)} \\
+q_4 \quad &\vdash \; X \; X \; \underline{1} \; \$ \; \triangle \quad \text{($1 \to X$)} \\
+q_5 \quad &\vdash \; X \; X \; X \; \underline{\$} \; \triangle \quad \text{(تجاوز $\$$)} \\
+q_5 \quad &\vdash \; X \; X \; X \; \$ \; \underline{\triangle} \quad \text{(كتبنا $1$، رجعنا)} \\
+q_b \quad &\vdash \; \underline{\vdash} \; X \; X \; X \; \$ \; 1 \\
+q_2 \quad &\vdash \; X \; \underline{X} \; X \; \$ \; 1 \quad \text{... (يتجاوز Xs)} \\
+q_2 \quad &\vdash \; X \; X \; X \; \underline{\$} \; 1 \quad \text{($q_2$ يرى $\$$: انتهى)} \\
+q_6 \quad &\vdash \; X \; X \; X \; \$ \; \underline{1} \; \triangle \\
+q_6 \quad &\vdash \; X \; X \; X \; \$ \; 1 \; \underline{\triangle} \quad \text{(كتبنا $\$$)} \\
+q_7 \quad &\vdash \; X \; X \; X \; \$ \; 1 \; \$ \quad \checkmark
+\end{align*}
+}
+
+الناتج بين الـ\$: $1$ (= 1 = 3/3) \checkmark
+
+\clearpage
+
+%=============================================================
+\subsection{مثال 11: حساب دالة $f(x) = x \bmod 3$}
+%=============================================================
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة $f(x) = x \bmod 3$.
+
+\textbf{الناتج:} العدد $x \bmod 3 \in \{0, 1, 2\}$ بالتمثيل الأونَري، محاطًا بـ $\$$.
+
+\medskip
+\textbf{الفكرة (الأذكى حتى الآن):}
+
+بدلاً من الشطب والرجوع، نقرأ المدخل مرة واحدة ونستخدم \textbf{الحالات} لتتبع الباقي:
+\begin{itemize}
+    \item الآلة في $q_0$: عدد الـ $1$ المقروءة حتى الآن باقي قسمتها على $3$ يساوي $0$
+    \item الآلة في $q_1$: الباقي = $1$
+    \item الآلة في $q_2$: الباقي = $2$
+\end{itemize}
+
+عند وصول $\triangle$، الحالة الحالية تحدد الناتج مباشرة.
+
+\begin{center}
+\begin{tabular}{c|c|l}
+الحالة عند $\triangle$ & الباقي & الناتج \\
+\hline
+$q_0$ & 0 & $\$\,\$$ \\
+$q_1$ & 1 & $\$\,1\,\$$ \\
+$q_2$ & 2 & $\$\,1\,1\,\$$ \\
+\end{tabular}
+\end{center}
+
+\textbf{مثال على حالات الشريط ($x = 7$، الباقي = 1):}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{المدخل:}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/1,8/1,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{بعد قراءة المدخل كله (رأس على $\triangle$، حالة $q_1$):}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/1,8/1,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \draw[->, thick, red] (9.5, 1.5) -- (9.5, 0.8);
+    \node[red, font=\small] at (9.5, 1.9) {$q_1$, باقي=1};
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{الناتج النهائي (كتبنا $\$\,1\,\$$):}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/1,8/1,9/$\$$,10/1,11/$\$$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+    \node at (12.5, 0.4) {$\ldots$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0, q_1, q_2$: تتبع الباقي أثناء قراءة المدخل. كل $1$ مقروءة تُقدّم الحالة دوريًا.
+    \item $r_0$: باقي $0$ ← اكتب $\$\,\$$ (ناتج فارغ).
+    \item $r_1, r_{1b}$: باقي $1$ ← اكتب $\$\,1\,\$$.
+    \item $r_2, r_{2b}, r_{2c}$: باقي $2$ ← اكتب $\$\,1\,1\,\$$.
+\end{itemize}
+
+\begin{boxNote}
+\textbf{جمال هذه الآلة:} مرور واحد فقط على المدخل! الحالات تعمل كـ``ذاكرة'' تحفظ الباقي. هذه تقنية قوية: \textbf{تشفير المعلومات في الحالة}.
+\end{boxNote}
+
+\textbf{تتبع ($x = 7$، الباقي = 1):}
+\begin{align*}
+q_0 \; \underline{1} \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; \triangle \;\to\;
+q_1 \; 1 \; \underline{1} \; 1 \; 1 \; 1 \; 1 \; 1 \; \triangle \;\to\;
+q_2 \; 1 \; 1 \; \underline{1} \; \ldots \;\to\;
+q_0 \; \ldots \;\to\; q_1 \; \ldots \;\to\; q_2 \; \ldots \;\to\; q_0 \; \ldots \\
+\to\; q_1 \quad \vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; \underline{\triangle} \quad \text{(الباقي = 1)} \\
+r_1 \quad \vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; \$ \; \underline{\triangle} \\
+r_{1b} \quad \vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; \$ \; 1 \; \underline{\triangle} \\
+q_a \quad \vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; 1 \; \$ \; 1 \; \$ \quad \checkmark
+\end{align*}
+
+الناتج بين الـ\$: $1$ (= 1 = 7 mod 3) \checkmark
+
+\clearpage
+
+%=============================================================
+\subsection{مثال 12: حساب دالة $f(x,y) = x + y$}
+%=============================================================
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب $f(x, y) = x + y$.
+
+\textbf{المدخل:} $\vdash \underbrace{1\ldots1}_{x} \# \underbrace{1\ldots1}_{y} \triangle$
+
+\textbf{الناتج:} العدد $x+y$ بالتمثيل الأونَري بين $\vdash$ و $\$$.
+
+\medskip
+\textbf{الفكرة:}
+
+في كل دورة، ننقل وحدة واحدة من $y$ إلى $x$: نأخذ أول $1$ من $y$ ونضعها مكان $\#$، ونزيح $\#$ خطوة يمينًا. عندما يفرغ $y$، نكتب $\$$ مكان $\#$ الأخير.
+
+\textbf{مثال على حالات الشريط ($x=2, y=3$):}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{المدخل:}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/$\#$,5/1,6/1,7/1,8/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{دورة 1 ($x=3, y=2$): $\#$ تحرك خطوة يمينًا:}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/$\#$,6/1,7/1,8/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{دورة 3 ($x=5, y=0$): $\#$ بعد كل الـ$1$:}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/$\#$,8/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{الناتج ($y=0$، $\#$ يصبح $\$$):}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/1,7/$\$$,8/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+\end{center}
+
+الناتج (من $\vdash$ حتى $\$$): $1\,1\,1\,1\,1$ (= 5 = 2+3) \checkmark
+
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0$: تجاوز $1$s يمينًا حتى $\#$، ثم تقدم لـ $q_1$.
+    \item $q_1$: عند أول $1$ في $y$: اكتب $\#$ بدلها وارجع ($q_2$). ← $\#$ انتقل خطوة يمينًا. عند $\triangle$ ($y$ فارغ): ارجع لـ $q_d$.
+    \item $q_2$: على $\#$ القديم: اكتب $1$ (أضفنا لـ $x$) وانتقل لـ $q_0$.
+    \item $q_d$: $y$ انتهى. اكتب $\$$ بدل $\#$ الأخير واقبل.
+\end{itemize}
+
+\textbf{تتبع ($x=2, y=3$):}
+\begin{align*}
+q_0 \quad &\vdash \; 1 \; 1 \; \underline{\#} \; 1 \; 1 \; 1 \; \triangle \\
+q_1 \quad &\vdash \; 1 \; 1 \; \# \; \underline{1} \; 1 \; 1 \; \triangle \quad \text{(كتبنا $\#$ بدل $1$، رجعنا)} \\
+q_2 \quad &\vdash \; 1 \; 1 \; \underline{\#} \; \# \; 1 \; 1 \; \triangle \quad \text{(كتبنا $1$ بدل $\#$)} \quad x{=}3 \\
+q_0 \quad &\vdash \; 1 \; 1 \; 1 \; \underline{\#} \; 1 \; 1 \; \triangle \\
+& \quad \vdots \quad x{=}4,\; x{=}5 \\
+q_0 \quad &\vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; \underline{\#} \; \triangle \quad (y{=}0) \\
+q_1 \quad &\vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; \# \; \underline{\triangle} \quad \text{($y$ فارغ!)} \\
+q_d \quad &\vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; \underline{\#} \; \triangle \\
+q_a \quad &\vdash \; 1 \; 1 \; 1 \; 1 \; 1 \; \$ \; \triangle \quad \checkmark
+\end{align*}
+
+الناتج (من $\vdash$ حتى $\$$): $1\,1\,1\,1\,1$ (= 5 = 2+3) \checkmark
+
+\begin{boxNote}
+\textbf{جمال هذه الآلة:} فقط 4 حالات! في كل دورة، $\#$ يتحرك خطوة يمينًا: يُضاف $1$ لـ $x$ ويُنقص $1$ من $y$. المجموع ثابت دائمًا.
+\end{boxNote}
+
+\clearpage
+
+\subsection{مثال 13: حساب دالة $f(x,y) = x - y$ (الطرح)}
+
+\textbf{المطلوب:} بناء آلة تيورينج تحسب الدالة:
+$$f(x, y) = \begin{cases} x - y, & x \geq y \\ 0, & x < y \end{cases}$$
+
+\textbf{المدخل:} $\vdash \underbrace{1\ldots1}_{x} \# \underbrace{1\ldots1}_{y} \triangle$
+
+\medskip
+\textbf{الفكرة:}
+
+نشطب في كل دورة وحدة من $y$ (نضعها $Y$) ووحدة من $x$ (نضعها $X$). عندما يفرغ $y$، ما تبقى من $1$ في $x$ هو الناتج. إذا فرغ $x$ قبل $y$، الناتج $0$.
+
+\begin{enumerate}
+    \item تجاوز $x$ و $\#$ للوصول إلى $y$.
+    \item في $y$: اشطب أول $1$ غير مُعالَجة ($\to Y$) وارجع يسارًا.
+    \item في $x$: اشطب أول $1$ غير مُعالَجة ($\to X$) وانطلق لدورة جديدة.
+    \item إذا وجدنا $\triangle$ في خطوة 2 ($y$ فارغ): اكتب $\$$ بدل $\#$ واقبل.
+    \item إذا وجدنا $\#$ في خطوة 3 ($x$ فارغ قبل $y$): اكتب $\$$ ثم $\$$ ثانية (ناتج $= 0$) واقبل.
+\end{enumerate}
+
+\textbf{مثال على حالات الشريط ($x=4, y=2$):}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{المدخل:}};
+    \foreach \i/\c in {1/$\vdash$,2/1,3/1,4/1,5/1,6/$\#$,7/1,8/1,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{بعد الدورة الأولى ($X$11, $Y$1):}};
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/1,4/1,5/1,6/$\#$,7/$Y$,8/1,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{بعد الدورة الثانية ($y=0$، يتبقى $x=2$):}};
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/1,5/1,6/$\#$,7/$Y$,8/$Y$,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+
+\vspace{0.5em}
+\begin{tikzpicture}[scale=0.83]
+    \node[right] at (-0.2, 0.4) {\small\textbf{الناتج النهائي ($\#$ يصبح $\$$):}};
+    \foreach \i/\c in {1/$\vdash$,2/$X$,3/$X$,4/1,5/1,6/$\$$,7/$Y$,8/$Y$,9/$\triangle$} {
+        \draw (\i,0) rectangle +(1,0.8);
+        \node at (\i+0.5,0.4) {\c};
+    }
+\end{tikzpicture}
+\end{center}
+
+الناتج (الـ $1$ الباقية في $x$ قبل $\$$): $1\,1$ (= 2 = 4-2) \checkmark
+
+\medskip
+\textbf{شرح الحالات:}
+\begin{itemize}
+    \item $q_0$: تجاوز $1$s، $X$s، $\#$ يمينًا للوصول إلى منطقة $y$.
+    \item $q_1$: تجاوز $Y$s. عند $1$: اشطبها ($\to Y$) وارجع ($q_2$). عند $\triangle$: $y$ فارغ $\to q_{done}$.
+    \item $q_2$: ارجع يسارًا فوق $Y$s و $\#$ للوصول لمنطقة $x$ ($q_3$).
+    \item $q_3$: تجاوز $X$s. عند $1$: اشطبها ($\to X$) وانطلق لدورة جديدة ($q_0$). عند $\#$: $x$ فارغ $\to q_{zero}$.
+    \item $q_{done}$: ارجع فوق $Y$s حتى $\#$، اكتب $\$$ بدله واقبل.
+    \item $q_{zero}$: اكتب $\$$ بدل $\#$، تجاوز $Y$s حتى $\triangle$، اكتب $\$$ واقبل (ناتج $= 0$).
+\end{itemize}
+
+\textbf{تتبع ($x=3, y=2$):}
+\begin{align*}
+q_0 \quad &\vdash \; 1 \; 1 \; 1 \; \underline{\#} \; 1 \; 1 \; \triangle \quad \text{(تجاوزنا $x$)} \\
+q_1 \quad &\vdash \; 1 \; 1 \; 1 \; \# \; \underline{1} \; 1 \; \triangle \quad \text{($1 \to Y$، رجعنا)} \\
+q_2 \to q_3 \quad &\vdash \; 1 \; 1 \; \underline{1} \; \# \; Y \; 1 \; \triangle \quad \text{($1 \to X$)} \\
+q_0 \quad &\vdash \; X \; 1 \; 1 \; \underline{\#} \; Y \; 1 \; \triangle \\
+q_1 \quad &\vdash \; X \; 1 \; 1 \; \# \; Y \; \underline{1} \; \triangle \quad \text{(تجاوز $Y$، $1 \to Y$)} \\
+q_2 \to q_3 \quad &\vdash \; X \; 1 \; \underline{1} \; \# \; Y \; Y \; \triangle \quad \text{(تجاوز $X$، $1 \to X$)} \\
+q_0 \quad &\vdash \; X \; X \; 1 \; \underline{\#} \; Y \; Y \; \triangle \\
+q_1 \quad &\vdash \; X \; X \; 1 \; \# \; Y \; Y \; \underline{\triangle} \quad \text{($y$ فارغ! $\to q_{done}$)} \\
+q_{done} \quad &\vdash \; X \; X \; 1 \; \underline{\#} \; Y \; Y \; \triangle \quad \text{(رجعنا فوق $Y,Y$)} \\
+q_{acc} \quad &\vdash \; X \; X \; 1 \; \$ \; Y \; Y \; \triangle \quad \checkmark
+\end{align*}
+
+الناتج (الـ $1$ الباقية في $x$ قبل $\$$): $1$ (= 1 = 3-2) \checkmark
+
+\textbf{تتبع ($x=1, y=2$، نتوقع ناتج $= 0$):}
+\begin{align*}
+q_0 \quad &\vdash \; 1 \; \underline{\#} \; 1 \; 1 \; \triangle \\
+q_1 \quad &\vdash \; 1 \; \# \; \underline{1} \; 1 \; \triangle \quad \text{($1 \to Y$)} \\
+q_3 \quad &\vdash \; \underline{1} \; \# \; Y \; 1 \; \triangle \quad \text{($1 \to X$)} \\
+q_0 \quad &\vdash \; X \; \underline{\#} \; Y \; 1 \; \triangle \\
+q_1 \quad &\vdash \; X \; \# \; Y \; \underline{1} \; \triangle \quad \text{($1 \to Y$)} \\
+q_3 \quad &\vdash \; X \; \underline{\#} \; Y \; Y \; \triangle \quad \text{($x$ فارغ! $\to q_{zero}$)} \\
+q_{zero} \quad &\vdash \; X \; \$ \; \underline{Y} \; Y \; \triangle \quad \text{(تجاوز $Y,Y$ حتى $\triangle$)} \\
+q_{acc} \quad &\vdash \; X \; \$ \; Y \; Y \; \$ \quad \checkmark \quad \text{(ناتج = 0)}
+\end{align*}
+
+\begin{boxNote}
+\textbf{الطرح أعقد الدوال في هذا الفصل} لأنه يحتاج معالجة حالتين: $x \geq y$ (تبقى $1$s في $x$) و $x < y$ (ناتج $= 0$). الناتج هو الـ $1$ الباقية في منطقة $x$ قبل $\$$.
+\end{boxNote}
 
 \clearpage
 
 \section{أمثلة إضافية}
 
-\subsection{مثال 9: كتابة $w \cdot R(w)$}
+\subsection{مثال 14: كتابة $w \cdot R(w)$}
 
 \textbf{المطلوب:} بناء آلة تيورينج، على شريطها مكتوبة كلمة $w$ من الأبجدية $\Sigma = \{a, b\}$ من بداية الشريط. الآلة تكتب على الشريط من بدايته الكلمة $w \cdot R(w)$.
 
@@ -814,7 +1386,7 @@ $R(w)$ تعني الكلمة $w$ معكوسة.
     \item نكرر حتى ننتهي من جميع أحرف $w$
 \end{enumerate}
 
-\subsection{مثال 10: قلب الكلمة $R(w)$}
+\subsection{مثال 15: قلب الكلمة $R(w)$}
 
 \textbf{المطلوب:} بناء آلة تيورينج، على شريطها مكتوبة كلمة $w$ من الأبجدية $\Sigma = \{a, b\}$ من بداية الشريط. الآلة تكتب على الشريط من بدايته الكلمة $R(w)$.
 
@@ -830,7 +1402,7 @@ $R(w)$ تعني الكلمة $w$ معكوسة.
     \item نكتبها من اليمين إلى اليسار
 \end{enumerate}
 
-\subsection{مثال 11: فحص كلمة متناظرة}
+\subsection{مثال 16: فحص كلمة متناظرة}
 
 \textbf{المطلوب:} بناء آلة تيورينج تقبل اللغة $L = \{w \mid w = R(w)\}$ (الكلمات المتناظرة) على الأبجدية $\Sigma = \{a, b\}$.
 
@@ -869,48 +1441,6 @@ $R(w)$ تعني الكلمة $w$ معكوسة.
 
 \clearpage
 
-\section{ملاحظات هامة}
-
-\subsection{1. القوة الحسابية}
-
-\begin{boxAttention}
-آلة تيورينج هي \textbf{أقوى نموذج حسابي} درسناه:
-\begin{itemize}
-    \item تستطيع فعل كل ما يفعله الأوتومات النهائي
-    \item تستطيع فعل كل ما يفعله أوتومات الراصّة
-    \item تستطيع فعل أشياء لا يستطيعها أي منهما
-\end{itemize}
-\end{boxAttention}
-
-\subsection{2. مشكلة التوقف}
-
-\begin{boxNote}
-\textbf{مشكلة مهمة:}
-
-آلة تيورينج قد \textbf{لا تتوقف} أبدًا لبعض المداخل. هذا يعني أنه لا يوجد خوارزمية عامة تخبرنا إذا كانت آلة معينة ستتوقف لمدخل معين أم لا. هذه تسمى \textbf{مشكلة التوقف} (\textenglish{Halting Problem}).
-\end{boxNote}
-
-\subsection{3. بناء آلات معقدة}
-
-\begin{itemize}
-    \item يمكن بناء آلات تيورينج معقدة جدًا
-    \item عادة نبني آلات فرعية لمهام صغيرة
-    \item ثم نربطها معًا لبناء آلة كبيرة
-    \item هذا يشبه البرمجة بالدوال!
-\end{itemize}
-
-\subsection{4. تقنيات مفيدة}
-
-\textbf{عند بناء آلة تيورينج، يمكن استخدام:}
-\begin{enumerate}
-    \item \textbf{الشطب:} استبدال الأحرف المعالجة برموز مميزة ($X$, $Y$, إلخ)
-    \item \textbf{العلامات:} استخدام رموز خاصة للتمييز ($\#$, $\$$, إلخ)
-    \item \textbf{الذهاب والإياب:} المرور على الشريط عدة مرات
-    \item \textbf{الدورات:} تكرار عملية حتى انتهاء شرط معين
-\end{enumerate}
-
-\clearpage
-
 \section{تمارين}
 
 \subsection{تمارين أساسية}
@@ -933,34 +1463,5 @@ $R(w)$ تعني الكلمة $w$ معكوسة.
 
     \item ابنِ آلة تيورينج، على شريطها مكتوبة كلمة $w$ من $\Sigma = \{a, b, c\}$، تكتب على الشريط من بدايته الكلمة $\#_b(w)$ (عدد الأحرف $b$ فقط) بالتمثيل الأونَري.
 \end{enumerate}
-
-\clearpage
-
-\section{خلاصة}
-
-\begin{boxNote}
-\textbf{ما تعلمناه:}
-
-\begin{itemize}
-    \item \textbf{آلة تيورينج} هي نموذج حسابي قوي جدًا
-    \item تتكون من: شريط لا نهائي، رأس قارئ/كاتب، حالات، دالة انتقالات
-    \item تستطيع التعرف على لغات لا يستطيع الأوتومات النهائي أو أوتومات الراصّة التعرف عليها
-    \item تستطيع حساب دوال على أعداد
-    \item استراتيجيات مفيدة: الشطب، الذهاب والإياب، استخدام رموز مساعدة
-    \item آلة تيورينج قد لا تتوقف لبعض المداخل
-\end{itemize}
-\end{boxNote}
-
-\begin{boxAttention}
-\textbf{الأهمية النظرية:}
-
-آلة تيورينج ليست مجرد نموذج نظري، بل هي الأساس لفهم:
-\begin{itemize}
-    \item ما الذي يمكن حسابه وما الذي لا يمكن؟
-    \item حدود قدرة الحاسوب
-    \item تعقيد الخوارزميات
-    \item نظرية الحسابية (\textenglish{Computability Theory})
-\end{itemize}
-\end{boxAttention}
 
 \end{document}
