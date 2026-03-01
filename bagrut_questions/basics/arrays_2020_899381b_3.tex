@@ -1,0 +1,56 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 3 امتحان 899381b سنة 2020}
+\addcontentsline{toc}{subsection}{سؤال 3 امتحان 899381b سنة 2020}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2020_899381b_3.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 3 امتحان 899381b سنة 2020]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item عملية خارجية تستقبل مصفوفة أحادية الأبعاد وعددا يشير إلى مكان حد في المصفوفة، وتفحص هذه العملية إذا كان هذا الحد حد تكافؤ.
+    \item عملية خارجية تستقبل مصفوفة أحادية الأبعاد وتفحص إذا كانت المصفوفة مصفوفة تكافؤ (تحتوي على حد تكافؤ واحد على الأقل).
+\end{enumerate}
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// Part a: Check if a specific index is an equilibrium point
+public static bool IsEquilibrium(int[] arr, int index)
+{
+    int leftSum = 0;
+    int rightSum = 0;
+    for (int i = 0; i < index; i++)
+    {
+        leftSum += arr[i];
+    }
+    for (int i = index + 1; i < arr.Length; i++)
+    {
+        rightSum += arr[i];
+    }
+    return leftSum == rightSum;
+}
+
+// Part b: Check if array has at least one equilibrium point
+public static bool IsEquilibriumArray(int[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (IsEquilibrium(arr, i))
+            return true;
+    }
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

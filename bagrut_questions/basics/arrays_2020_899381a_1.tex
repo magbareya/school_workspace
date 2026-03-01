@@ -1,0 +1,36 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 1 امتحان 899381a سنة 2020}
+\addcontentsline{toc}{subsection}{سؤال 1 امتحان 899381a سنة 2020}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2020_899381a_1.png }%
+}%
+
+\ifwithsols
+\begin{boxSolution}[سؤال 1 امتحان 899381a سنة 2020]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int Above(int[] arr, int num)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        sum += arr[i];
+        if (sum > num)
+            return i;
+    }
+    return -1;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

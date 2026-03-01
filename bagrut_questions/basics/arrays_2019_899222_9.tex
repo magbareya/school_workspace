@@ -1,0 +1,63 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 9 امتحان 899222 سنة 2019}
+\addcontentsline{toc}{subsection}{سؤال 9 امتحان 899222 سنة 2019}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2019_899222_9.jpg }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 9 امتحان 899222 سنة 2019]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item عملية تستقبل علامات رضى الزبائن لشهر معين وتُعيد معدّل علامات الرضى لذلك الشهر.
+    \item عملية تستقبل مصفوفة أحادية الأبعاد بحجم 12 وتُعيد true إذا كان العاملون يستحقون "رحلة ممتعة"، وإلا false.
+\end{enumerate}
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// Part a: Calculate average satisfaction for a month
+public static double MonthlyAverage()
+{
+    int sum = 0;
+    int count = 0;
+    int grade = int.Parse(Console.ReadLine());
+
+    while (grade != -1)
+    {
+        sum += grade;
+        count++;
+        grade = int.Parse(Console.ReadLine());
+    }
+
+    if (count < 100)
+        return 0;
+
+    return (double)sum / count;
+}
+
+// Part b: Check if employees deserve an excellent trip
+public static bool ExcellentTrip(double[] monthlyAverages)
+{
+    for (int i = 0; i < monthlyAverages.Length - 1; i++)
+    {
+        if (monthlyAverages[i] > 8 && monthlyAverages[i + 1] > 8)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

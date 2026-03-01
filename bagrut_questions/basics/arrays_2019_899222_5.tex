@@ -1,0 +1,42 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 5 امتحان 899222 سنة 2019}
+\addcontentsline{toc}{subsection}{سؤال 5 امتحان 899222 سنة 2019}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2019_899222_5.jpg }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 5 امتحان 899222 سنة 2019]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int Biggest(int[] arr)
+{
+    int maxIndex = 0;
+    int maxValue = arr[0];
+
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] > maxValue)
+        {
+            maxValue = arr[i];
+            maxIndex = i;
+        }
+    }
+
+    return maxIndex;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

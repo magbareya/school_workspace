@@ -1,0 +1,48 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 1 امتحان 899381 سنة 2022}
+\addcontentsline{toc}{subsection}{سؤال 1 امتحان 899381 سنة 2022}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2022_899381_1.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 1 امتحان 899381 سنة 2022]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int[] Multiply(int[] arr1, int[] arr2)
+{
+    if(arr1.Length > arr2.Length)
+    {
+        int[] temp = arr1;
+        arr1 = arr2;
+        arr2 = temp;
+    }
+    // now we know arr1 is the shorter array
+    int m = arr2.Length;
+    int k = arr1.Length;
+    int[] result = new int[m];
+    for (int i = 0; i < k; i++)
+    {
+        result[i] = arr1[i] * arr2[i];
+    }
+    for (int i = k; i < m; i++)
+    {
+        result[i] = arr2[i];
+    }
+    return result;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi
