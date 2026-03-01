@@ -1,0 +1,138 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 14 - المصفوفات الأحادية - أسئلة متقدمة}
+\else
+\title{وظيفة 14 - المصفوفات الأحادية - أسئلة متقدمة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+
+    \item اكتب عملية خارجية \textenglish{CountGreaterThanPrevious} تتلقى مصفوفة أعداد صحيحة وتعيد عدد العناصر التي هي أكبر من العنصر السابق لها في المصفوفة. \\
+    \textbf{مثال:} في المصفوفة \textenglish{\{3, 5, 2, 8, 6\}} تعيد العملية 2 لأنّ:
+    \begin{itemize}[itemsep=1pt]
+        \item 5 أكبر من 3 (تحتسب)
+        \item 2 ليس أكبر من 5 (لا تحتسب)
+        \item 8 أكبر من 2 (تحتسب)
+        \item 6 ليس أكبر من 8 (لا تحتسب)
+    \end{itemize}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int CountGreaterThanPrevious(int[] arr)
+{
+    int count = 0;
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] > arr[i - 1])
+            count++;
+    }
+    return count;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{SumArraysReverse} تتلقى مصفوفتي أعداد صحيحة لهما نفس الحجم، وتعيد مصفوفة جديدة بنفس الحجم تحتوي على مجموع عناصر من المصفوفتين بالشكل التالي:
+    \begin{itemize}
+        \item العنصر الأول في المصفوفة الجديدة هو مجموع العنصر الأول من المصفوفة الأولى والعنصر الأخير من المصفوفة الثانية.
+        \item العنصر الثاني في المصفوفة الجديدة هو مجموع العنصر الثاني من المصفوفة الأولى والعنصر قبل الأخير من المصفوفة الثانية.
+        \item وهكذا...
+    \end{itemize}
+    \textbf{مثال:} إذا كانت المصفوفة الأولى \textenglish{\{1, 2, 3\}} والمصفوفة الثانية \textenglish{\{4, 5, 6\}}، فإن المصفوفة الجديدة ستكون \textenglish{\{1 + 6, 2 + 5, 3 + 4\}} أي \textenglish{\{7, 7, 7\}}.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] SumArraysReverse(int[] arr1, int[] arr2)
+{
+    int[] result = new int[arr1.Length];
+    for (int i = 0; i < arr1.Length; i++)
+    {
+        result[i] = arr1[i] + arr2[arr2.Length - 1 - i];
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item اكتب عملية خارجية \textenglish{MoveNegativesToEnd} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة تحتوي على نفس العناصر ولكن مع نقل جميع الأعداد السالبة إلى نهاية المصفوفة.
+    \textbf{مثال:} في المصفوفة \textenglish{\{3, -1, 4, -2, 5\}}، النتيجة ستكون \textenglish{\{3, 4, 5, -1, -2\}} أو أي ترتيب آخر للعناصر الموجبة في البداية والعناصر السالبة في النهاية.
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] MoveNegativesToEnd(int[] arr)
+{
+    int[] result = new int[arr.Length];
+    int index = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] >= 0)
+        {
+            result[index] = arr[i];
+            index++;
+        }
+    }
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] < 0)
+        {
+            result[index] = arr[i];
+            index++;
+        }
+    }
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    {\large\textbf{سؤال بونوس:}} قم بنفس المهمة لكن على نفس المصفوفة دون الاستعانة بمصفوفة جديدة، أي تكون العملية: \textenglish{void MoveNegativesToEnd(int[] arr)}.
+    \ifwithsols
+    \begin{boxSolution}[البونوس]
+    \begin{english}
+    \begin{minted}{csharp}
+public static void MoveNegativesToEnd(int[] arr)
+{
+    int pos = 0, neg = arr.Length - 1;
+    while(pos < neg)
+    {
+        if (arr[pos] >= 0)
+            pos++;
+        if (arr[neg] < 0)
+            neg--;
+        if(arr[pos] < 0 && arr[neg] >= 0)
+        {
+            int temp = arr[pos];
+            arr[pos] = arr[neg];
+            arr[neg] = temp;
+            neg--;
+            pos++;
+        }
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\end{enumerate}
+
+\end{document}
