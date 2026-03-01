@@ -1,0 +1,48 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 1 امتحان 899381b سنة 2021}
+\addcontentsline{toc}{subsection}{سؤال 1 امتحان 899381b سنة 2021}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/strings_2021_899381b_1.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 1 امتحان 899381b سنة 2021]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+static bool IsDouble(string s)
+{
+    if(s.Length % 2 != 0)
+        return false;
+    int mid = s.Length / 2;
+    string firstHalf = s.Substring(0, mid);
+    string secondHalf = s.Substring(mid, mid);
+    return firstHalf == secondHalf;
+}
+
+// Another solution using loops instead of Substring
+static bool IsDouble(string s)
+{
+    if(s.Length % 2 != 0)
+        return false;
+    int mid = s.Length / 2;
+    for(int i = 0; i < mid; i++)
+    {
+        if(s[i] != s[mid + i])
+            return false;
+    }
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi
