@@ -1,0 +1,43 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 2 امتحان 899371 سنة 2024}
+\addcontentsline{toc}{subsection}{سؤال 2 امتحان 899371 سنة 2024}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2024_899371_2.jpg }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 2 امتحان 899371 سنة 2024]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool GetPass(int[] arr, int password)
+{
+    // Check if password already exists in array
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == password)
+            return false;
+    }
+
+    // Password is new, shift all elements to the right
+    for (int i = arr.Length - 1; i > 0; i--)
+    {
+        arr[i] = arr[i - 1];
+    }
+    arr[0] = password;
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

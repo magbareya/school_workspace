@@ -1,0 +1,43 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 3 امتحان 899371 سنة 2024}
+\addcontentsline{toc}{subsection}{سؤال 3 امتحان 899371 سنة 2024}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2024_899371_3.jpg }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 3 امتحان 899371 سنة 2024]
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void Shuffle(int[] arr)
+{
+    Random rnd = new Random();
+    int cnt = 0;
+    while(cnt < 30)
+    {
+        int index1 = rnd.Next(arr.Length);
+        int index2 = rnd.Next(arr.Length);
+        if(index1 != index2)
+        {
+            int temp = arr[index1];
+            arr[index1] = arr[index2];
+            arr[index2] = temp;
+            cnt++;
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{boxSolution}
+\clearpage
+\fi

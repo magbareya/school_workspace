@@ -1,0 +1,79 @@
+\ifwithsols
+\else
+\clearpage
+\fi
+
+\subsection*{سؤال 6 امتحان 899371 سنة 2023}
+\addcontentsline{toc}{subsection}{سؤال 6 امتحان 899371 سنة 2023}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2023_899371_6.jpg }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899371 سنة 2023]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item مصفوفة فك التشفير بالنسبة للرسالة Study التي شُفِّرَت إلى الرسالة dyutS هي:
+
+    \begin{english}
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    3 & 4 & 2 & 1 & 0 \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \end{english}
+
+    \item عملية خارجية تستقبل نصاً مُشفَّراً ومصفوفة فك تشفير، وتُعيد النصّ الأصلي.
+\end{enumerate}
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static string OriginalText(string str, int[] arr)
+{
+    char[] result = new char[str.Length];
+    for (int i = 0; i < str.Length; i++)
+    {
+        result[arr[i]] = str[i];
+    }
+    return new string(result);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+\begin{boxSolution}[2]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+static int GetIndexOf(int[] arr, int num)
+{
+    for(int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == num)
+            return i;
+    }
+    return -1;
+}
+
+public static string OriginalText2(string str, int[] arr)
+{
+    string result = "";
+    for (int i = 0; i < str.Length; i++)
+    {
+        int idx = GetIndexOf(arr, i);
+        result += str[idx];
+    }
+
+    return result;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+\fi
