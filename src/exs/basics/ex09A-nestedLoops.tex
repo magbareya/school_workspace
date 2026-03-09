@@ -1,0 +1,508 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة 9 - الحلقات المتداخلة}
+\else
+\title{ورقة 9 - الحلقات المتداخلة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section{تحديد ناتج مقطع كود}
+\begin{enumerate}[itemsep=2em]
+
+    \item
+    ما هو ناتج مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 2; i++)
+{
+    for (int j = 1; j <= 3; j++)
+    {
+        Console.Write("*");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+***
+***
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \textbf{الشرح:} الحلقة الخارجية تدور مرتين (سطرين)، والحلقة الداخلية تطبع 3 نجوم في كل سطر.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    كم مرة يطبع مقطع الكود التالي كلمة \textenglish{"Hello"}؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 4; i++)
+{
+    for (int j = 1; j <= 3; j++)
+    {
+        Console.WriteLine("Hello");
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \textbf{الجواب:} 12 مرة\\
+    \textbf{الشرح:} $4 \times 3 = 12$ (الحلقة الخارجية 4 مرات × الحلقة الداخلية 3 مرات)
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    ما هو ناتج مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 3; i++)
+{
+    for (int j = 1; j <= 2; j++)
+    {
+        Console.Write(i);
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+11
+22
+33
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \textbf{الشرح:} في كل دورة للحلقة الخارجية، قيمة \textenglish{i} تطبع مرتين بسبب الحلقة الداخلية.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+        \item
+    ما هو ناتج مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 2; i++)
+{
+    for (int j = 1; j <= 3; j++)
+    {
+        Console.Write($"{i}{j} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+11 12 13
+21 22 23
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \textbf{الشرح:} في كل دورة، يطبع رقم الصف (\textenglish{i}) مع رقم العمود (\textenglish{j}).
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    ما هو ناتج مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 3; i++)
+{
+    for (int j = 1; j <= 4; j++)
+    {
+        Console.Write(j);
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1234
+1234
+1234
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \textbf{الشرح:} في كل دورة للحلقة الخارجية، الحلقة الداخلية تطبع 1234.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    ما هي قيمة المتغير \textenglish{sum} في نهاية تنفيذ مقطع الكود التالي؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+int sum = 0;
+for (int i = 1; i <= 3; i++)
+{
+    for (int j = 1; j <= 2; j++)
+    {
+        sum += i;
+    }
+}
+Console.WriteLine(sum);
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    \ifwithsols
+    \begin{boxSolution}
+    \textbf{الجواب:} 12\\
+    \textbf{التتبع:}
+    \begin{itemize}
+        \item عندما \textenglish{i = 1}: يضاف 1 مرتين $\rightarrow$ \textenglish{sum = 2}
+        \item عندما \textenglish{i = 2}: يضاف 2 مرتين $\rightarrow$ \textenglish{sum = 6}
+        \item عندما \textenglish{i = 3}: يضاف 3 مرتين $\rightarrow$ \textenglish{sum = 12}
+    \end{itemize}
+    \end{boxSolution}
+    \fi
+\end{enumerate}
+
+%%%======================================================
+
+\clearpage
+\section{أسئلة كود محلولة}
+\begin{enumerate}[itemsep=2em]
+    \item
+    اكتب مقطع برنامج يستقبل من المستخدم طول مستطيل وعرضه ويطبع مستطيلاً من النجوم بالطول والعرض اللذين استقبلهما. \\
+    مثلًا: إذا كان العرض 6 والطول 4 يكون هذا هو الناتج \\
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+* * * * * *
+* * * * * *
+* * * * * *
+* * * * * *
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int row = 1; row <= 4; row++)
+{
+    for (int col = 1; col <= 6; col++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع مثلثاً من النجوم كالتالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+*
+* *
+* * *
+* * * *
+* * * * *
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 5; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} في كل سطر \textenglish{i}، نطبع \textenglish{i} نجوم.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1 1 1
+2 2 2
+3 3 3
+4 4 4
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 4; i++)
+{
+    for (int j = 1; j <= 3; j++)
+    {
+        Console.Write($"{i} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+*
+* *
+* * *
+* *
+*
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \begin{boxHint}
+        ستحتاج إلى حلقتين منفصلتين - واحدة للجزء التصاعدي وأخرى للجزء التنازلي.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 3; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+
+for (int i = 2; i >= 1; i--)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+%%%======================================================
+
+\clearpage
+\section{تمارين}
+\begin{enumerate}[itemsep=2em]
+    \item
+    اكتب مقطع برنامج يطبع جدول الضرب من 1 إلى 4 بالشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1 2 3 4
+2 4 6 8
+3 6 9 12
+4 8 12 16
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 4; i++)
+{
+    for (int j = 1; j <= 4; j++)
+    {
+        Console.Write($"{i * j} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع مثلثاً معكوساً من النجوم كالتالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+* * * * *
+* * * *
+* * *
+* *
+*
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 5; i >= 1; i--)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} الحلقة الخارجية تبدأ من 5 وتنقص، في كل سطر نطبع \textenglish{i} نجوم.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 5; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write($"{j} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} في كل سطر \textenglish{i}، نطبع الأرقام من 1 إلى \textenglish{i}.
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    اكتب مقطع برنامج يطبع إطار مستطيل (فقط الحدود الخارجية) بعرض 6 وارتفاع 4:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+* * * * * *
+*         *
+*         *
+* * * * * *
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \begin{boxHint}
+         اطبع النجمة إذا كنا في السطر الأول، أو السطر الأخير، أو العمود الأول، أو العمود الأخير.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int row = 1; row <= 4; row++)
+{
+    for (int col = 1; col <= 6; col++)
+    {
+        if (row == 1 || row == 4 || col == 1 || col == 6)
+            Console.Write("* ");
+        else
+            Console.Write("  ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1
+2 2
+3 3 3
+4 4 4 4
+5 5 5 5 5
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 5; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write($"{i} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} في كل سطر \textenglish{i}، نطبع الرقم \textenglish{i} عدد \textenglish{i} مرات.
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+
+\end{document}

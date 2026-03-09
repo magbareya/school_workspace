@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحلقات المتداخلة (Nested Loops) في C#</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-body: #1e1e2e;
+            --bg-card: #252538;
+            --text-primary: #ffffff;
+            --text-secondary: #a6accd;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7;
+            --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8;
+            --accent-purple: #cba6f7;
+            --code-bg: #11111b;
+            --border-color: #313244;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+
+        body { background-color: var(--bg-body); color: var(--text-primary); display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+
+        .presentation { width: 90%; max-width: 1000px; height: 80vh; margin-top: 5vh; position: relative; background: var(--bg-card); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--border-color); overflow: hidden; }
+        .progress-container { width: 100%; height: 5px; background: var(--border-color); position: absolute; top: 0; left: 0; z-index: 10; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); width: 0%; transition: width 0.4s ease; }
+
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 50px; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(20px); display: flex; flex-direction: column; justify-content: center; }
+        .slide.active { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        h1 { font-size: 3em; color: var(--accent-blue); text-align: center; margin-bottom: 20px; }
+        h2 { font-size: 2.2em; color: var(--accent-pink); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        p, li { font-size: 1.4em; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
+        ul { margin-right: 40px; }
+
+        .highlight { color: var(--accent-yellow); font-weight: bold; }
+        .success { color: var(--accent-green); font-weight: bold; }
+
+        .code-block { background: var(--code-bg); padding: 20px; border-radius: 10px; font-family: 'Fira Code', monospace; font-size: 1.2em; color: var(--text-primary); border: 1px solid var(--border-color); direction: ltr; text-align: left; margin: 10px 0; overflow-x: auto; line-height: 1.5; white-space: pre; tab-size: 4; }
+        .code-block .keyword { color: var(--accent-pink); }
+        .code-block .type { color: var(--accent-blue); }
+        .code-block .string { color: var(--accent-green); }
+        .code-block .comment { color: #6c7086; font-style: italic; }
+
+        .box { background: var(--bg-body); border-left: 5px solid var(--accent-purple); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .question-box { background: rgba(249, 226, 175, 0.1); border: 2px dashed var(--accent-yellow); padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
+        .exercise-box { background: rgba(166, 227, 161, 0.1); border: 2px solid var(--accent-green); padding: 15px; border-radius: 10px; margin-top: 15px; }
+
+        .author { position: absolute; bottom: 20px; left: 30px; font-size: 1em; color: var(--text-secondary); opacity: 0.6; }
+
+        .nav-controls { display: flex; justify-content: center; gap: 20px; align-items: center; width: 100%; margin-top: 20px; }
+        .nav-btn { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 50px; cursor: pointer; font-size: 1.2em; transition: all 0.2s; display: flex; align-items: center; justify-content: center; min-width: 60px; }
+        .nav-btn:hover { background: var(--accent-blue); color: var(--bg-body); }
+        .slide-num { font-size: 1.2em; color: var(--text-secondary); font-weight: bold; min-width: 80px; text-align: center; }
+
+        /* إعدادات الطباعة إلى PDF */
+        @media print {
+            @page { size: landscape; margin: 0; }
+            body { height: auto; overflow: visible; background-color: var(--bg-body) !important; color: var(--text-primary); display: block; }
+            .presentation { width: 100% !important; height: auto !important; max-width: none !important; border: none !important; box-shadow: none !important; margin: 0 !important; background: var(--bg-card) !important; border-radius: 0 !important; }
+            .slide { position: relative !important; opacity: 1 !important; visibility: visible !important; transform: none !important; page-break-after: always; break-after: page; height: 100vh !important; padding: 50px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+            .nav-controls, .progress-container { display: none !important; }
+            .code-block { background-color: var(--code-bg) !important; color: var(--text-primary) !important; border: 1px solid var(--border-color) !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <h1>الحلقات المتداخلة <br> (Nested Loops) في C#</h1>
+        <p style="text-align: center; margin-top: 20px;">خطوة بخطوة لفهم المنطق البرمجي 🚀</p>
+        <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <h2>أولاً: عملية بحلقة واحدة (سطر من النجوم) 🌟</h2>
+        <p>لنبدأ بكتابة عملية بسيطة مهمتها طباعة <b>سطر واحد</b> يتكون من عدد معين من النجوم.</p>
+        <div class="code-block"><span class="keyword">static void</span> <span class="type">PrintRow</span>(<span class="type">int</span> n) {
+    <span class="keyword">for</span> (<span class="type">int</span> i = 1; i < = n; i++) {
+        Console.Write(<span class="string">"* "</span>);
+    }
+    Console.WriteLine();
+}</div>
+        <div class="box">
+            <p>هذه العملية تستقبل العدد <span class="highlight">n</span> وتنفذ حلقة تكرارية عادية من أجل طباعة النجوم بجانب بعضها.</p>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <h2>ثانياً: استدعاء العملية داخل حلقة (في Main) 🔄</h2>
+        <p>الآن، ماذا لو أردنا طباعة هذا السطر <b>عدة مرات</b>؟ سنستدعي العملية داخل حلقة أخرى في <code>Main</code>.</p>
+        <div class="code-block"><span class="keyword">static void</span> <span class="type">Main</span>() {
+    <span class="keyword">for</span> (<span class="type">int</span> row = 1; row < = 3; row++) {
+        PrintRow(5); <span class="comment">// طباعة سطر من 5 نجوم</span>
+    }
+}</div>
+        <div class="box">
+            <p>كررنا استدعاء العملية <b>ثلاث مرات</b>. النتيجة؟ ستتم طباعة 3 أسطر متتالية، كل سطر فيه 5 نجوم.</p>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <h2 style="border: none; text-align: center; font-size: 3em; margin-top: 10%;">لحظة إدراك.. 💡</h2>
+        <div class="question-box" style="margin-top: 30px;">
+            <p style="font-size: 1.5em; line-height: 2;">بما أننا وضعنا استدعاء لعملية تحتوي على <b>حلقة</b>، بداخل <b>حلقة</b> أخرى في الدالة الرئيسية...</p>
+            <h3 style="color: var(--accent-pink); font-size: 2em; margin: 30px 0;">فنحن في الواقع قد نفذنا حلقة بداخل حلقة!</h3>
+        </div>
+        <p style="text-align: center; margin-top: 30px;" class="success">وهذا بالضبط ما نسميه في البرمجة بالحلقات المتداخلة (Nested Loops).</p>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <h2>ثالثاً: الكود كاملاً (الدمج) 🧩</h2>
+        <p>بدلاً من كتابة عملية خارجية، يمكننا دمج الحلقتين معاً في مكان واحد:</p>
+        <div class="code-block"><span class="comment">// الحلقة الخارجية (للصفوف)</span>
+<span class="keyword">for</span> (<span class="type">int</span> row = 1; row < = 3; row++) {
+
+    <span class="comment">// الحلقة الداخلية (للأعمدة/أفقياً)</span>
+    <span class="keyword">for</span> (<span class="type">int</span> col = 1; col < = 5; col++) {
+        Console.Write(<span class="string">"* "</span>);
+    }
+
+    <span class="comment">// سطر جديد بعد انتهاء الحلقة الداخلية</span>
+    Console.WriteLine();
+}</div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <h2>سؤال تفاعلي سريع 🧠</h2>
+        <div class="exercise-box">
+            <p>في الكود السابق:</p>
+            <ul>
+                <li>الحلقة الخارجية دارت <b style="color: var(--accent-pink);">3 مرات</b> (3 صفوف).</li>
+                <li>في كل دورة للحلقة الخارجية، دارت الحلقة الداخلية دورتها كاملة <b style="color: var(--accent-pink);">5 مرات</b> (5 أعمدة).</li>
+            </ul>
+            <h3 style="color: var(--accent-blue); text-align: center; margin-top: 20px;">كم إجمالي عدد النجوم المطبوعة؟</h3>
+        </div>
+        <div class="box">
+            <p style="text-align: center; font-size: 1.8em;"><span class="highlight">3 × 5 = 15</span> أمر طباعة!</p>
+            <p style="font-size: 0.9em; text-align: center; margin-top: 10px;"><i>قاعدة ذهبية: لمعرفة عدد مرات تنفيذ الأمر الموجود داخل الحلقة الداخلية، نضرب عدد دورات الحلقة الخارجية في عدد دورات الحلقة الداخلية.</i></p>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <h2>كيف تعمل معاً؟ (تشبيه الساعة الرقمية ⏱️)</h2>
+        <p>تخيلوا <b>الساعة الرقمية</b> التي نلبسها، كيف تعمل الدقائق والثواني؟</p>
+        <br>
+        <ul>
+            <li style="margin-bottom: 20px;"><span class="highlight">الساعات (الحلقة الخارجية):</span> تتحرك ببطء شديد.</li>
+            <li style="margin-bottom: 20px;"><span class="success">الدقائق (الحلقة الوسطى):</span> تنتظر الثواني لتنهي دورتها كاملة لكي تزيد خطوة.</li>
+            <li><span style="color: var(--accent-pink); font-weight: bold;">الثواني (الحلقة الداخلية):</span> هي الأسرع! تكمل دورتها بالكامل مع كل خطوة للخارجية.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <h2>تطبيق قاعدة الوقت برمجياً ⚙️</h2>
+        <div class="box">
+            <p><span class="highlight" style="font-size: 1.2em;">القاعدة الذهبية للحلقات المتداخلة:</span></p>
+            <br>
+            <ul>
+                <li style="margin-bottom: 15px;">الحلقة الخارجية لا تزيد خطوة إلا بعد أن تنهي الحلقة الداخلية <b>دورتها كاااااملة</b>.</li>
+                <li style="margin-bottom: 15px;">الحلقة الداخلية سريعة وتعمل بجهد وتكرار أكبر.</li>
+                <li>البرنامج "يُعلق" داخل الحلقة الداخلية حتى ينكسر شرطها، ثم يعود لخطوة جديدة في الخارجية.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <h2 style="border: none; text-align: center; font-size: 3em; margin-top: 15%;">تمرين تفكير وتتبع 📝</h2>
+        <div class="exercise-box" style="text-align: center; margin-top: 40px; padding: 40px;">
+            <p style="font-size: 1.5em; margin-bottom: 20px;">لقد قمنا برسم مستطيل بفضل ثبات عدد النجوم..</p>
+            <p style="font-size: 1.5em; color: var(--accent-pink);">ماذا لو أردنا تغيير طول السطر في كل مرة لرسم أشكال هندسية مختلفة؟</p>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <h2>التحدي: رسم مثلث من النجوم 🔺</h2>
+        <p>المطلوب كتابة كود يطبع الشكل التالي بالضبط:</p>
+        <div class="code-block" style="text-align: left; font-size: 2em; line-height: 1.5; color: var(--accent-green); background: #000;">*
+* *
+* * *
+* * * *
+* * * * *</div>
+        <div class="question-box">
+            <p>السطر الأول فيه نجمة، والثاني نجمتان..<br><span class="highlight">كيف نجعل توقف الحلقة الداخلية يعتمد على رقم الحلقة الخارجية بدلاً من رقم ثابت؟</span></p>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <h2>الحل والشرح: كسر القاعدة الثابتة 💡</h2>
+        <ul>
+            <li>نجعل شرط توقف الحلقة الداخلية (الأعمدة) يعتمد بشكل مباشر على المتغير الخاص بالحلقة الخارجية (الصفوف).</li>
+            <li>بدلًا من الدوران حتى الرقم الثابت <code>5</code>، نطلب الدوران حتى المتغير <code>row</code>.</li>
+        </ul>
+        <div class="code-block"><span class="keyword">for</span> (<span class="type">int</span> row = 1; row < = 5; row++) {
+    <span class="comment">// التوقف يعتمد الآن على رقم السطر الحالي!</span>
+    <span class="keyword">for</span> (<span class="type">int</span> col = 1; col < = row; col++) {
+        Console.Write(<span class="string">"* "</span>);
+    }
+    Console.WriteLine();
+}</div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <h2 style="text-align: center; font-size: 2.5em; border: none; margin-top: 10%;">جاهزون للمزيد من التحديات البرمجية؟ 🚀</h2>
+        <div class="box" style="text-align: center; padding: 30px; margin-top: 30px;">
+            <p>الحلقات المتداخلة هي أداة قوية جداً.</p>
+            <p style="margin-top: 20px;"><b>تذكروا دائماً:</b> ابدأوا بفهم الحلقة الداخلية كعملية منفصلة، ثم تخيلوها تتكرر بشكل كامل بواسطة الحلقة الخارجية!</p>
+        </div>
+        <p style="text-align: center; margin-top: 40px; font-size: 1.5em;" class="highlight">هل من أسئلة إضافية حول التتبع؟ ✋</p>
+    </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="move(-1)" title="الشريحة التالية"><i class="fas fa-chevron-right"></i></button>
+    <div class="slide-num" id="slideIndicator">1 / 12</div>
+    <button class="nav-btn" onclick="move(1)" title="الشريحة السابقة"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-btn" onclick="window.print()" title="طباعة إلى PDF" style="background: var(--accent-pink); color: var(--bg-body); margin-right: 20px;"><i class="fas fa-print"></i></button>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+    const progressBar = document.getElementById('progressBar');
+
+    function updateSlide() {
+        slides.forEach((s, i) => {
+            s.classList.remove('active');
+            if (i === currentSlide) s.classList.add('active');
+        });
+        indicator.innerText = `${currentSlide + 1} / ${slides.length}`;
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    function move(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        updateSlide();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') move(1);
+        if (e.key === 'ArrowRight') move(-1);
+    });
+
+    updateSlide();
+</script>
+
+</body>
+</html>
