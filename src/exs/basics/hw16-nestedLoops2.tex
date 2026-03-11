@@ -1,0 +1,154 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 16 - الحلقات المتداخلة}
+\else
+\title{وظيفة 16 - الحلقات المتداخلة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+    \item
+    اكتب عملية خارجية \textenglish{PrintAllPairs} تتلقى مصفوفة أعداد صحيحة وتطبع جميع الأزواج الممكنة من عناصر المصفوفة.\\
+    \textbf{ملاحظة:} كل زوج يطبع مرة واحدة فقط (لا نطبع الزوج المعكوس).\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{5, 10, 15, 20\}}، النتيجة:
+    \begin{english}
+        \begin{boxCode}
+        \begin{verbatim}
+(5, 10)
+(5, 15)
+(5, 20)
+(10, 15)
+(10, 20)
+(15, 20)
+\end{verbatim}
+\end{boxCode}
+\end{english}
+
+    \begin{boxHint}
+        اكتب حلقتين متداخلتين، واطبع $(arr[i], arr[j])$ في الحلقة الداخلية. تأكد أن الحلقة الداخلية تبدأ من \textenglish{j = i + 1}.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintAllPairs(int[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = i + 1; j < arr.Length; j++)
+        {
+            Console.WriteLine($"({arr[i]}, {arr[j]})");
+        }
+    }
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} نفس المنطق من السؤال السابق - الحلقة الداخلية تبدأ من \textenglish{j = i + 1} لضمان عدم طباعة العنصر مع نفسه وعدم طباعة كل زوج مرة واحدة فقط.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب عملية خارجية \textenglish{PrintPairsWithSum} تتلقى مصفوفة أعداد صحيحة وعددًا صحيحًا، وتطبع جميع أزواج الأرقام في المصفوفة التي مجموعها يساوي العدد المعطى.\\
+    \textbf{مثال:} في المصفوفة \textenglish{\{2, 4, 3, 5, 7, 8, 1\}} مع \textenglish{target = 9}، النتيجة:
+    \begin{english}
+        \begin{boxCode}
+    \begin{verbatim}
+2 + 7 = 9
+4 + 5 = 9
+8 + 1 = 9
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void PrintPairsWithSum(int[] arr, int target)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = i + 1; j < arr.Length; j++)
+        {
+            if (arr[i] + arr[j] == target)
+            {
+                Console.WriteLine($"{arr[i]} + {arr[j]} = {target}");
+            }
+        }
+    }
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} الحلقة الداخلية تبدأ من \textenglish{j = i + 1} (وليس من 0) لتجنب مقارنة العنصر مع نفسه ولتجنب طباعة نفس الزوج مرتين.
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item \textbf{سؤال اختياري} \\
+    اكتب عملية خارجية \textenglish{CountGreaterAfter} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بنفس الطول. كل عنصر في المصفوفة الجديدة يحتوي على عدد العناصر الأكبر منه التي تظهر بعده في المصفوفة الأصلية.\\
+    \textbf{مثال 1:} في المصفوفة \textenglish{\{5, 3, 7, 2, 8\}}، النتيجة \textenglish{\{2, 2, 1, 1, 0\}} لأنّ:
+    \begin{itemize}[itemsep=1pt]
+        \item العنصر 5: بعده يوجد عددان أكبر منه (7 و8) $\rightarrow$ 2
+        \item العنصر 3: بعده يوجد عددان أكبر منه (7 و8) $\rightarrow$ 2
+        \item العنصر 7: بعده يوجد عدد واحد أكبر منه (8) $\rightarrow$ 1
+        \item العنصر 2: بعده يوجد عدد واحد أكبر منه (8) $\rightarrow$ 1
+        \item العنصر 8: لا يوجد شيء بعده $\rightarrow$ 0
+    \end{itemize}
+    \textbf{مثال 2:} في المصفوفة \textenglish{\{10, 8, 6, 4, 2\}}، النتيجة \textenglish{\{0, 0, 0, 0, 0\}} (مصفوفة تنازلية).\\
+    \textbf{مثال 3:} في المصفوفة \textenglish{\{1, 2, 3, 4, 5\}}، النتيجة \textenglish{\{4, 3, 2, 1, 0\}} (مصفوفة تصاعدية).
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] CountGreaterAfter(int[] arr)
+{
+    int[] result = new int[arr.Length];
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        int count = 0;
+
+        // نمر على جميع العناصر بعد الموقع i
+        for (int j = i + 1; j < arr.Length; j++)
+        {
+            if (arr[j] > arr[i])
+            {
+                count++;
+            }
+        }
+
+        result[i] = count;
+    }
+
+    return result;
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:}
+    \begin{itemize}[itemsep=1pt]
+        \item ننشئ مصفوفة جديدة \textenglish{result} بنفس طول المصفوفة الأصلية
+        \item الحلقة الخارجية تمر على كل عنصر في الموقع \textenglish{i}
+        \item لكل عنصر، ننشئ متغير عداد \textenglish{count = 0}
+        \item الحلقة الداخلية تبدأ من \textenglish{j = i + 1} (العناصر بعد الموقع \textenglish{i})
+        \item نفحص: هل \textenglish{arr[j] > arr[i]}؟ إذا نعم، نزيد العداد
+        \item نخزن قيمة العداد في \textenglish{result[i]}
+    \end{itemize}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

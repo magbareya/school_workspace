@@ -1,0 +1,186 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 15 - الحلقات المتداخلة - أسئلة أساسية}
+\else
+\title{وظيفة 15 - الحلقات المتداخلة - أسئلة أساسية}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+    \item
+    اكتب مقطع برنامج يطبع جدول الضرب من 1 إلى 4 بالشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1 2 3 4
+2 4 6 8
+3 6 9 12
+4 8 12 16
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 4; i++)
+{
+    for (int j = 1; j <= 4; j++)
+    {
+        Console.Write($"{i * j} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع مثلثاً معكوساً من النجوم كالتالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+* * * * *
+* * * *
+* * *
+* *
+*
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 5; i >= 1; i--)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write("* ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} الحلقة الخارجية تبدأ من 5 وتنقص، في كل سطر نطبع \textenglish{i} نجوم.
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 5; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write($"{j} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} في كل سطر \textenglish{i}، نطبع الأرقام من 1 إلى \textenglish{i}.
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+    \item
+    اكتب مقطع برنامج يطبع إطار مستطيل (فقط الحدود الخارجية) بعرض 6 وارتفاع 4:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+* * * * * *
+*         *
+*         *
+* * * * * *
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \begin{boxHint}
+         اطبع النجمة إذا كنا في السطر الأول، أو السطر الأخير، أو العمود الأول، أو العمود الأخير.
+    \end{boxHint}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int row = 1; row <= 4; row++)
+{
+    for (int col = 1; col <= 6; col++)
+    {
+        if (row == 1 || row == 4 || col == 1 || col == 6)
+            Console.Write("* ");
+        else
+            Console.Write("  ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    اكتب مقطع برنامج يطبع الشكل التالي:
+    \begin{english}
+    \begin{boxCode}
+\begin{verbatim}
+1
+2 2
+3 3 3
+4 4 4 4
+5 5 5 5 5
+    \end{verbatim}
+\end{boxCode}
+    \end{english}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+for (int i = 1; i <= 5; i++)
+{
+    for (int j = 1; j <= i; j++)
+    {
+        Console.Write($"{i} ");
+    }
+    Console.WriteLine();
+}
+    \end{minted}
+    \end{english}
+    \textbf{الشرح:} في كل سطر \textenglish{i}، نطبع الرقم \textenglish{i} عدد \textenglish{i} مرات.
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملاً ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
