@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترتيب الإدخال (Insertion Sort)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-body: #1e1e2e; --bg-card: #252538;
+            --text-primary: #ffffff; --text-secondary: #a6accd;
+            --accent-blue: #89b4fa; --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7; --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8; --accent-purple: #cba6f7;
+            --code-bg: #11111b; --border-color: #313244;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-primary); display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+
+        .presentation { width: 95%; max-width: 1100px; height: 85vh; margin-top: 3vh; position: relative; background: var(--bg-card); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--border-color); overflow: hidden; }
+        .progress-container { width: 100%; height: 5px; background: var(--border-color); position: absolute; top: 0; left: 0; z-index: 10; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-green), var(--accent-blue)); width: 0%; transition: width 0.4s ease; }
+
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 40px 50px; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; display: flex; flex-direction: column; justify-content: center; }
+        .slide.active { opacity: 1; visibility: visible; }
+
+        h1 { font-size: 3em; color: var(--accent-green); text-align: center; margin-bottom: 20px; }
+        h2 { font-size: 2.2em; color: var(--accent-yellow); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+        p, li { font-size: 1.4em; color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px; }
+        ul, ol { margin-right: 40px; }
+        .highlight { color: var(--accent-yellow); font-weight: bold; }
+        .key-hl { color: var(--accent-red); font-weight: bold; font-family: 'Fira Code'; }
+
+        /* لحل مشكلة اتجاه النصوص البرمجية داخل النص العربي */
+        .ltr-code { direction: ltr; display: inline-block; font-family: 'Fira Code', monospace; }
+
+        /* Code Block */
+        .code-block { background: var(--code-bg); padding: 15px 20px; border-radius: 10px; font-family: 'Fira Code', monospace; font-size: 1.2em; color: var(--text-primary); border: 1px solid var(--border-color); direction: ltr; text-align: left; margin: 10px 0; overflow-x: auto; line-height: 1.5; white-space: pre; tab-size: 4; }
+        .code-block .keyword { color: var(--accent-pink); }
+        .code-block .type { color: var(--accent-blue); }
+        .code-block .comment { color: #6c7086; font-style: italic; }
+
+        /* Boxes */
+        .box { background: var(--bg-body); border-right: 5px solid var(--accent-green); padding: 15px 20px; border-radius: 8px; margin-top: 15px; }
+        .question-box { background: rgba(137, 180, 250, 0.1); border: 2px dashed var(--accent-blue); padding: 30px; border-radius: 10px; text-align: center; margin-top: 20px; }
+        .answer-box { background: rgba(166, 227, 161, 0.1); border: 2px solid var(--accent-green); padding: 30px; border-radius: 10px; text-align: center; margin-top: 20px; }
+        .answer-box h3 { color: var(--accent-green); font-size: 1.8em; margin-bottom: 15px; }
+
+        .author { position: absolute; bottom: 20px; left: 30px; font-size: 1em; color: var(--text-secondary); opacity: 0.6; }
+
+        /* Arrays Tracing Styling */
+        .trace-array { display: flex; justify-content: center; gap: 10px; margin: 15px 0; direction: ltr; }
+        .trace-cell { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--code-bg); border: 2px solid var(--border-color); border-radius: 8px; font-family: 'Fira Code'; font-size: 1.3em; font-weight: bold; }
+        .trace-cell.active { border-color: var(--accent-red); color: var(--accent-red); }
+        .trace-cell.sorted { border-color: var(--accent-green); background: rgba(166, 227, 161, 0.1); }
+
+        /* Simulation Styles */
+        .sim-container { position: relative; width: 100%; height: 350px; background: var(--code-bg); border-radius: 15px; margin-top: 20px; padding: 20px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .sim-msg { text-align: center; margin-bottom: 30px; font-size: 1.4em; height: 60px; color: var(--accent-yellow); font-weight: bold; display: flex; align-items: center; justify-content: center;}
+
+        .slots-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; direction: ltr; }
+        .slot-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        /* المربعات تعرض الأرقام بلون باهت كخلفية */
+        .slot { width: 70px; height: 70px; border: 2px solid var(--border-color); border-radius: 10px; background: rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 1.8em; font-family: 'Fira Code', monospace; font-weight: bold; }
+        .slot.sorted-bg { background: rgba(166, 227, 161, 0.15); border-color: rgba(166, 227, 161, 0.5); }
+        .slot-label { color: var(--text-secondary); font-family: 'Fira Code'; font-size: 1.1em; }
+
+        .slot-key { border-color: var(--accent-red) !important; border-style: dashed !important; font-size: 1.2em; }
+
+        .sim-card { position: absolute; top: 0; left: 0; width: 70px; height: 70px; z-index: 10; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .card-inner { width: 100%; height: 100%; background: var(--accent-blue); color: var(--bg-body); font-weight: bold; font-size: 2em; font-family: 'Fira Code', monospace; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .card-inner.hl-compare { background: var(--accent-red); transform: scale(1.15); box-shadow: 0 0 20px var(--accent-red); color: white;}
+
+        .sim-controls { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        .sim-btn { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--accent-blue); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 1.1em; transition: all 0.2s; min-width: 120px; }
+        .sim-btn:hover:not(:disabled) { background: var(--accent-blue); color: var(--bg-body); }
+        .sim-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--border-color); }
+
+        .nav-controls { display: flex; justify-content: space-between; align-items: center; width: 350px; margin-top: 10px; }
+        .nav-btn { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 50px; cursor: pointer; font-size: 1.2em; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .nav-btn:hover { background: var(--accent-green); color: var(--bg-body); }
+        .slide-num { font-size: 1.2em; color: var(--text-secondary); font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <h1>ترتيب الإدخال <br> (Insertion Sort)</h1>
+        <p style="text-align: center; margin-top: 10px;">كيف نرتب البيانات خطوة بخطوة كما نرتب أوراق اللعب؟</p>
+        <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+    </div>
+
+    <!-- Slide 2: Shift Reminder -->
+    <div class="slide" id="slide-shift">
+        <h2><i class="fas fa-arrows-alt-h"></i> الأساسيات: النسخ والإزاحة (Shift Right)</h2>
+        <p>ملاحظة هامة: في البرمجة نحن لا "ننقل" القيمة فنترك مكانها فارغاً، بل <b>ننسخها (Copy)</b> ونكتب فوق الخانة المجاورة.</p>
+
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="flex: 1;">
+                <div class="code-block"><span class="comment">// إزاحة العناصر من الفهرس 1 حتى 3 خطوة لليمين</span>
+<span class="keyword">for</span> (<span class="type">int</span> j = 3; j >= 1; j--) {
+    arr[j + 1] = arr[j];
+}</div>
+                <div class="box" style="padding: 10px;">
+                    القاعدة الذهبية: عند الإزاحة لليمين، <b>نبدأ دائماً من الأخير</b> لتجنب طمس البيانات. الخانة الأصلية تحتفظ بنسخة من الرقم حتى نكتب فوقها!
+                </div>
+            </div>
+
+            <!-- Shift Simulation -->
+            <div style="flex: 1.5;" class="sim-container" id="sim-cont-shift">
+                <div class="sim-msg" id="msg-shift">نبدأ الإزاحة. الهدف: فتح الفهرس 1.</div>
+                <div class="slots-row">
+                    <div class="slot-wrapper"><div class="slot" id="sh-slot-0"></div><div class="slot-label">0</div></div>
+                    <div class="slot-wrapper"><div class="slot" id="sh-slot-1"></div><div class="slot-label">1</div></div>
+                    <div class="slot-wrapper"><div class="slot" id="sh-slot-2"></div><div class="slot-label">2</div></div>
+                    <div class="slot-wrapper"><div class="slot" id="sh-slot-3"></div><div class="slot-label">3</div></div>
+                    <div class="slot-wrapper"><div class="slot" id="sh-slot-4"></div><div class="slot-label">4</div></div>
+                </div>
+                <!-- Shift Cards -->
+                <div class="sim-card" id="sh-c0"><div class="card-inner">10</div></div>
+                <div class="sim-card" id="sh-c1"><div class="card-inner">20</div></div>
+                <div class="sim-card" id="sh-c2"><div class="card-inner">30</div></div>
+                <div class="sim-card" id="sh-c3"><div class="card-inner">40</div></div>
+            </div>
+        </div>
+
+        <div class="sim-controls">
+            <button onclick="shiftPrev()" class="sim-btn" id="btn-prev-sh" disabled><i class="fas fa-backward"></i> السابق</button>
+            <div id="step-cnt-sh" style="display: flex; align-items: center; font-family: 'Fira Code'; color: var(--accent-green);">1 / 1</div>
+            <button onclick="shiftNext()" class="sim-btn" id="btn-next-sh">التالي <i class="fas fa-forward"></i></button>
+        </div>
+    </div>
+
+    <!-- Slide 3: Analogy -->
+    <div class="slide">
+        <h2><i class="fas fa-clone"></i> تشبيه من الواقع: أوراق اللعب (الشدة)</h2>
+        <p>تخيل أن بيدك اليسرى أوراق مرتبة. يسحب لك صديقك ورقة جديدة بيدك اليمنى. كيف تدخلها في مكانها؟</p>
+        <ol>
+            <li>تمسك الورقة الجديدة وتقارنها بالأوراق المرتبة (من اليمين لليسار).</li>
+            <li>تقوم بـ <span class="highlight">إزاحة (نسخ)</span> الأوراق الأكبر منها خطوة لليمين لتفسح المجال.</li>
+            <li>عندما تجد ورقة أصغر منها، تتوقف وتقوم بـ <span class="highlight">الكتابة فوق</span> الخانة المطلوبة بالرقم الجديد.</li>
+        </ol>
+        <div class="box">
+            <p>هذا بالضبط ما يفعله الحاسوب! يقسم المصفوفة ذهنياً إلى <b>قسم أيسر مرتب</b> و <b>قسم أيمن غير مرتب</b>.</p>
+        </div>
+    </div>
+
+    <!-- Slide 4: Algorithm Concept -->
+    <div class="slide">
+        <h2><i class="fas fa-list-ol"></i> خطوات الخوارزمية برمجياً</h2>
+        <p>لتطبيق فكرة أوراق اللعب في المصفوفات، نقوم بالتالي:</p>
+        <ul>
+            <li>نعتبر أن <b>العنصر الأول</b> (الفهرس 0) مرتب بحد ذاته.</li>
+            <li>نبدأ حلقة (Loop) تمر على باقي العناصر ابتداءً من <b>الفهرس 1</b>.</li>
+            <li>في كل دورة، <b>ننسخ</b> العنصر الحالي إلى متغير جانبي يُسمى <span class="key-hl">key</span> (لحمايته من الطمس).</li>
+            <li>نقارن الـ <span class="key-hl">key</span> بالعناصر التي تسبقه واحدًا تلو الآخر.</li>
+            <li>طالما العنصر السابق <b>أكبر</b> من الـ <span class="key-hl">key</span>، ننسخه خطوة لليمين.</li>
+            <li>عندما نجد مكانًا مناسبًا، نضع الـ <span class="key-hl">key</span> فيه (نكتبه فوق القيمة الموجودة).</li>
+        </ul>
+    </div>
+
+    <!-- Slide 5: Insertion Sort SIMULATION -->
+    <div class="slide" id="slide-insert">
+        <h2><i class="fas fa-eye"></i> محاكاة بصرية للخوارزمية</h2>
+
+        <div class="sim-container" id="sim-cont-insert">
+            <div class="sim-msg" id="msg-insert">نبدأ الخوارزمية. نعتبر العنصر الأول دائماً مرتباً.</div>
+
+            <div class="slots-row">
+                <div class="slot-wrapper"><div class="slot" id="in-slot-0"></div><div class="slot-label">0</div></div>
+                <div class="slot-wrapper"><div class="slot" id="in-slot-1"></div><div class="slot-label">1</div></div>
+                <div class="slot-wrapper"><div class="slot" id="in-slot-2"></div><div class="slot-label">2</div></div>
+                <div class="slot-wrapper"><div class="slot" id="in-slot-3"></div><div class="slot-label">3</div></div>
+                <div class="slot-wrapper"><div class="slot" id="in-slot-4"></div><div class="slot-label">4</div></div>
+            </div>
+
+            <div class="slots-row" style="margin-bottom: 0;">
+                <div class="slot-wrapper"><div class="slot slot-key" id="in-slot-key"></div><div class="slot-label" style="color: var(--accent-red);">متغير الحفظ (Key)</div></div>
+            </div>
+
+            <!-- Insert Cards -->
+            <div class="sim-card" id="in-c0"><div class="card-inner">7</div></div>
+            <div class="sim-card" id="in-c1"><div class="card-inner">3</div></div>
+            <div class="sim-card" id="in-c2"><div class="card-inner">5</div></div>
+            <div class="sim-card" id="in-c3"><div class="card-inner">2</div></div>
+            <div class="sim-card" id="in-c4"><div class="card-inner">6</div></div>
+        </div>
+
+        <div class="sim-controls">
+            <button onclick="insPrev()" class="sim-btn" id="btn-prev-in" disabled><i class="fas fa-backward"></i> السابق</button>
+            <div id="step-cnt-in" style="display: flex; align-items: center; font-family: 'Fira Code'; color: var(--accent-green);">1 / 1</div>
+            <button onclick="insNext()" class="sim-btn" id="btn-next-in">التالي <i class="fas fa-forward"></i></button>
+        </div>
+    </div>
+
+    <!-- Slide 6: C# Code -->
+    <div class="slide">
+        <h2><i class="fas fa-code"></i> كود C# الكامل</h2>
+        <div class="code-block"><span class="keyword">for</span> (<span class="type">int</span> i = 1; i < arr.Length; i++) {
+    <span class="type">int</span> key = arr[i]; <span class="comment">// ننسخ العنصر للمتغير لكي لا يُطمس</span>
+    <span class="type">int</span> j = i - 1;    <span class="comment">// j يؤشر على العناصر المرتبة السابقة</span>
+
+    <span class="comment">// حلقة الإزاحة: طالما لم نصل للبداية والعنصر السابق أكبر من الـ key</span>
+    <span class="keyword">while</span> (j >= 0 && arr[j] > key) {
+        arr[j + 1] = arr[j]; <span class="comment">// ننسخ العنصر لليمين</span>
+        j--;                 <span class="comment">// نعود خطوة للخلف للمقارنة مع العنصر الذي يسبقه</span>
+    }
+
+    <span class="comment">// بعد خروجنا من حلقة while، نكتب المتغير فوق القيمة الموجودة</span>
+    arr[j + 1] = key;
+}</div>
+        <p style="text-align: center; font-size: 1.2em; color: var(--accent-yellow);">ركز جيداً على هذا الكود، فالأسئلة القادمة ستختبر فهمك العميق له!</p>
+    </div>
+
+    <!-- Slide 7: Question 1 (Tracing) -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> تمرين 1: متابعة (מעקב)</h2>
+        <div class="question-box">
+            <p>معطاة المصفوفة التالية:</p>
+            <div class="trace-array">
+                <div class="trace-cell">8</div>
+                <div class="trace-cell">4</div>
+                <div class="trace-cell">6</div>
+                <div class="trace-cell">2</div>
+            </div>
+            <br>
+            <h3 style="color: var(--accent-blue);">سؤال: كيف ستبدو المصفوفة <span class="highlight ltr-code">بعد انتهاء الدورة التي يكون فيها i = 2</span> تماماً؟</h3>
+            <p style="font-size: 1.1em; margin-top: 15px;">فكر في الإجابة، ثم انتقل للشريحة التالية لمعرفة الحل.</p>
+        </div>
+    </div>
+
+    <!-- Slide 8: Answer 1 (Tracing) - FIXED RTL ISSUE -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 1</h2>
+        <div class="answer-box">
+            <h3>الإجابة الصحيحة هي: <span class="ltr-code">{ 4, 6, 8, 2 }</span></h3>
+            <div style="text-align: right; margin-top: 20px;">
+                <p><b>الشرح خطوة بخطوة:</b></p>
+                <ul>
+                    <li><b>قبل البداية (<span class="ltr-code">i = 0</span>):</b> <span class="ltr-code">{ <span style="color:var(--accent-green)">8</span>, 4, 6, 2 }</span></li>
+                    <li><b>عندما <span class="ltr-code">i = 1</span> (الرقم 4):</b> ننسخ الـ 8 لليمين ونكتب الـ 4 مكانها.<br>تصبح: <span class="ltr-code">{ <span style="color:var(--accent-green)">4, 8</span>, 6, 2 }</span></li>
+                    <li><b>عندما <span class="ltr-code">i = 2</span> (الرقم 6):</b> نقارنه مع 8 (أكبر، ننسخه لليمين)، ثم مع 4 (أصغر، نتوقف). ونكتب الـ 6 في الفراغ.<br>تصبح: <span class="ltr-code">{ <span style="color:var(--accent-green)">4, 6, 8</span>, 2 }</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Question 2 (Edge Cases) -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> تمرين 2: حالة حافة (شرط التوقف)</h2>
+        <div class="question-box">
+            <p>في حلقة الـ while نكتب الشرط التالي:</p>
+            <div class="code-block" style="display: inline-block; padding: 10px; margin: 10px 0;"><span class="keyword">while</span> (<span class="highlight">j >= 0</span> && arr[j] > key)</div>
+            <br><br>
+            <h3 style="color: var(--accent-blue);">سؤال: ماذا يحدث للبرنامج إذا نسينا كتابة <code class="ltr-code">j >= 0</code> وتركنا الشرط <code class="ltr-code">arr[j] > key</code> فقط؟</h3>
+            <p style="font-size: 1.1em; margin-top: 15px;">تلميح: ماذا يحدث عندما يكون الـ key هو أصغر رقم في المصفوفة؟</p>
+        </div>
+    </div>
+
+    <!-- Slide 10: Answer 2 (Edge Cases) -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 2</h2>
+        <div class="answer-box">
+            <h3>خطأ وقت التشغيل (IndexOutOfRangeException)! 💥</h3>
+            <div style="text-align: right; margin-top: 20px;">
+                <p><b>التفسير:</b></p>
+                <p>إذا كان العنصر الذي نفحصه (الـ key) هو أصغر عنصر، فإن حلقة الـ while ستستمر في فحص العناصر وتُـنقص قيمة <code class="ltr-code">j</code> حتى تصبح <code class="ltr-code">-1</code>.</p>
+                <p>عندما يحاول الحاسوب فحص الشرط <code class="ltr-code">arr[-1] > key</code> سيؤدي ذلك إلى انهيار البرنامج لأنه لا يوجد فهرس سالب في المصفوفات المعتادة.</p>
+                <div class="box">الشرط <code class="ltr-code">j >= 0</code> هو "صمام الأمان" الذي يوقف الحلقة عند الوصول لبداية المصفوفة.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Question 3 (Best Case) -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> تمرين 3: كفاءة الخوارزمية</h2>
+        <div class="question-box">
+            <p>لنفترض أننا أعطينا الكود مصفوفة <b>مرتبة مسبقاً</b> لتصنيفها، مثل:</p>
+            <div class="trace-array">
+                <div class="trace-cell sorted">1</div><div class="trace-cell sorted">2</div><div class="trace-cell sorted">3</div><div class="trace-cell sorted">4</div><div class="trace-cell sorted">5</div>
+            </div>
+            <br>
+            <h3 style="color: var(--accent-blue);">سؤال: كم مرة سيتم تنفيذ الأوامر داخل حلقة الـ <code>while</code> (أوامر النسخ/الإزاحة)؟ ولماذا؟</h3>
+        </div>
+    </div>
+
+    <!-- Slide 12: Answer 3 (Best Case) -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 3</h2>
+        <div class="answer-box">
+            <h3>لن يتم الدخول لحلقة الـ while أبداً! (0 مرات)</h3>
+            <div style="text-align: right; margin-top: 20px;">
+                <p><b>التفسير:</b></p>
+                <p>في كل دورة <code class="ltr-code">i</code>، سيتم مقارنة الـ <code>key</code> مع العنصر الذي يسبقه مباشرة.</p>
+                <p>بما أن المصفوفة مرتبة، فالعنصر السابق سيكون دائماً <b>أصغر</b> من الـ <code>key</code>، وبالتالي الشرط <code class="ltr-code">arr[j] > key</code> سيُعطي <b>False</b> من الفحص الأول.</p>
+                <div class="box"><b>معلومة هامة:</b> حالة المصفوفة المرتبة تعتبر "أفضل حالة" (Best Case) لخوارزمية Insertion Sort، وتكون كفاءتها ممتازة جداً $$O(n)$$.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Question 4 (Challenge) -->
+    <div class="slide">
+        <h2><i class="fas fa-trophy"></i> تمرين 4: تحدي البرمجة</h2>
+        <div class="question-box">
+            <p>الكود الأساسي الذي تعلمناه يقوم بترتيب المصفوفة <b>تصاعدياً</b> (من الأصغر للأكبر).</p>
+            <br>
+            <h3 style="color: var(--accent-blue);">سؤال: ما هو التعديل <b>الوحيد</b> الذي يجب إجراؤه في شرط الـ <code>while</code> لكي ترتب الخوارزمية المصفوفة <b>تنازلياً</b> (من الأكبر للأصغر)؟</h3>
+            <div class="code-block" style="text-align: center; display: inline-block;"><span class="keyword">while</span> (j >= 0 && arr[j] <span class="highlight">???</span> key)</div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Answer 4 (Challenge) -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 4</h2>
+        <div class="answer-box">
+            <h3>نغير إشارة الأكبر <code>></code> إلى أصغر <code><</code></h3>
+            <div class="code-block" style="text-align: center;"><span class="keyword">while</span> (j >= 0 && arr[j] <span class="highlight"><</span> key)</div>
+            <div style="text-align: right; margin-top: 20px;">
+                <p><b>التفسير:</b></p>
+                <p>في الترتيب التصاعدي: كنا نزيح العناصر التي هي <b>أكبر</b> من المتغير الجديد لليمين.</p>
+                <p>في الترتيب التنازلي: نريد أن تكون العناصر الكبيرة في البداية، لذلك نزيح العناصر <b>الأصغر</b> من المتغير الجديد لليمين لإفساح المجال له.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: Conclusion -->
+    <div class="slide">
+        <div style="text-align: center; padding-top: 50px;">
+            <i class="fas fa-graduation-cap" style="font-size: 5em; color: var(--accent-yellow); margin-bottom: 20px;"></i>
+            <h1 style="color: var(--text-primary);">نهاية الدرس</h1>
+            <p style="font-size: 1.8em; color: var(--accent-green);">كل التوفيق والنجاح!</p>
+            <br>
+            <p style="font-size: 1.2em;">تذكر دائماً: البرمجة تحتاج لورقة وقلم وتتبع الكود خطوة بخطوة.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="move(-1)"><i class="fas fa-arrow-right"></i> السابق</button>
+    <div class="slide-num" id="slideIndicator">1 / 15</div>
+    <button class="nav-btn" onclick="move(1)">التالي <i class="fas fa-arrow-left"></i></button>
+</div>
+
+<script>
+    // --- Presentation Logic ---
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+    const progressBar = document.getElementById('progressBar');
+
+    function updateSlide() {
+        slides.forEach((s, i) => {
+            s.classList.remove('active');
+            if (i === currentSlide) s.classList.add('active');
+        });
+        indicator.innerText = `${currentSlide + 1} / ${slides.length}`;
+        progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+
+        // Refresh simulations to fix positions if active
+        if(currentSlide === 1) setTimeout(() => renderShiftStep(shStep), 50);
+        if(currentSlide === 4) setTimeout(() => renderInsStep(inStep), 50);
+    }
+
+    function move(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        updateSlide();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') move(1);
+        if (e.key === 'ArrowRight') move(-1);
+    });
+
+    // --- Shift Simulation Engine ---
+    let shSteps = [];
+    let shStep = 0;
+
+    function buildShiftSim() {
+        shSteps = [];
+        let vals = [10, 20, 30, 40, '?'];
+        let slots = ['sh-c0', 'sh-c1', 'sh-c2', 'sh-c3', null];
+
+        shSteps.push({ s: [...slots], vals: [...vals], msg: "لدينا مصفوفة، نريد إزاحة العناصر من الفهرس 1 إلى 3 لنكتب في الفهرس 1.", hl: [] });
+
+        slots[4] = slots[3]; slots[3] = null;
+        vals[4] = 40; // Copy the value!
+        shSteps.push({ s: [...slots], vals: [...vals], msg: "j=3: ننسخ العنصر 40 خطوة لليمين. (لاحظ أن الرقم 40 بقي أيضاً في مكانه الأصلي)", hl: [3, 4] });
+
+        slots[3] = slots[2]; slots[2] = null;
+        vals[3] = 30; // Copy the value!
+        shSteps.push({ s: [...slots], vals: [...vals], msg: "j=2: ننسخ العنصر 30 خطوة لليمين.", hl: [2, 3] });
+
+        slots[2] = slots[1]; slots[1] = null;
+        vals[2] = 20; // Copy the value!
+        shSteps.push({ s: [...slots], vals: [...vals], msg: "j=1: ننسخ العنصر 20 خطوة لليمين.", hl: [1, 2] });
+
+        shSteps.push({ s: [...slots], vals: [...vals], msg: "انتهت الإزاحة! الآن الفهرس 1 يحتوي على قيمة قديمة (20) يمكننا الكتابة فوقها بأمان بمتغير جديد.", hl: [1] });
+    }
+
+    function renderShiftStep(idx) {
+        if(idx < 0) idx = 0; if(idx >= shSteps.length) idx = shSteps.length - 1;
+        shStep = idx; let step = shSteps[idx];
+
+        document.getElementById('msg-shift').innerHTML = step.msg;
+        document.getElementById('step-cnt-sh').innerText = `${idx + 1} / ${shSteps.length}`;
+        document.querySelectorAll('#sim-cont-shift .card-inner').forEach(c => c.classList.remove('hl-compare'));
+
+        const cont = document.getElementById('sim-cont-shift');
+        if(!cont) return;
+        const cRect = cont.getBoundingClientRect();
+
+        for(let k=0; k<5; k++) {
+            // Update the underlying visual text of the array cell!
+            document.getElementById(`sh-slot-${k}`).innerText = step.vals[k];
+
+            let cardId = step.s[k];
+            if (cardId) {
+                let cardEl = document.getElementById(cardId);
+                let innerEl = cardEl.querySelector('.card-inner');
+                let slotRect = document.getElementById(`sh-slot-${k}`).getBoundingClientRect();
+                cardEl.style.transform = `translate(${slotRect.left - cRect.left}px, ${slotRect.top - cRect.top}px)`;
+                if (step.hl.includes(k)) innerEl.classList.add('hl-compare');
+            }
+        }
+        document.getElementById('btn-prev-sh').disabled = (idx === 0);
+        document.getElementById('btn-next-sh').disabled = (idx === shSteps.length - 1);
+    }
+
+    function shiftNext() { if(shStep < shSteps.length - 1) renderShiftStep(shStep + 1); }
+    function shiftPrev() { if(shStep > 0) renderShiftStep(shStep - 1); }
+
+    // --- Insertion Sort Simulation Engine ---
+    let inSteps = [];
+    let inStep = 0;
+
+    function buildInsertSim() {
+        inSteps = [];
+        let arr = [ {id:'in-c0', v:7}, {id:'in-c1', v:3}, {id:'in-c2', v:5}, {id:'in-c3', v:2}, {id:'in-c4', v:6} ];
+        let vals = [7, 3, 5, 2, 6];
+        let slots = ['in-c0', 'in-c1', 'in-c2', 'in-c3', 'in-c4'];
+        let sorted = [0];
+        let keyVal = '';
+
+        inSteps.push({ s: [...slots], vals: [...vals], k: null, keyVal: '', msg: "نعتبر العنصر الأول (7) مرتباً بحد ذاته (مربع أخضر خفيف).", hl: [], sorted: [...sorted] });
+
+        for(let i=1; i<arr.length; i++) {
+            let keyItem = arr[i];
+            slots[i] = null;
+            keyVal = keyItem.v;
+            inSteps.push({ s: [...slots], vals: [...vals], k: keyItem.id, keyVal: keyVal, msg: `i=${i}: ننسخ (${keyItem.v}) إلى المتغير Key. لاحظ أن القيمة الأصلية باقية ولم تُحذف.`, hl: [], sorted: [...sorted] });
+
+            let j = i - 1;
+            while(j >= 0 && arr[j].v > keyItem.v) {
+                inSteps.push({ s: [...slots], vals: [...vals], k: keyItem.id, keyVal: keyVal, msg: `نقارن (${arr[j].v}) مع الـ Key (${keyItem.v}). بما أنه أكبر، يجب نسخه لليمين.`, hl: [j], sorted: [...sorted] });
+
+                slots[j+1] = arr[j].id; slots[j] = null;
+                vals[j+1] = arr[j].v; // Copy value logically!
+
+                inSteps.push({ s: [...slots], vals: [...vals], k: keyItem.id, keyVal: keyVal, msg: `نسخنا (${arr[j].v}) خطوة لليمين. القيمة القديمة ما زالت موجودة مؤقتاً في الفهرس ${j}.`, hl: [j+1], sorted: [...sorted] });
+                arr[j + 1] = arr[j]; j--;
+            }
+
+            if (j >= 0) {
+                inSteps.push({ s: [...slots], vals: [...vals], k: keyItem.id, keyVal: keyVal, msg: `نقارن (${arr[j].v}) مع الـ Key (${keyItem.v}). أصغر منه! نتوقف عن الإزاحة.`, hl: [j], sorted: [...sorted] });
+            } else {
+                inSteps.push({ s: [...slots], vals: [...vals], k: keyItem.id, keyVal: keyVal, msg: `وصلنا لبداية المصفوفة (j < 0). نتوقف!`, hl: [], sorted: [...sorted] });
+            }
+
+            arr[j + 1] = keyItem; slots[j+1] = keyItem.id; vals[j+1] = keyItem.v; keyVal = ''; sorted.push(i);
+            inSteps.push({ s: [...slots], vals: [...vals], k: null, keyVal: keyVal, msg: `نكتب قيمة الـ Key (${keyItem.v}) في مكانها الصحيح (نكتب فوق القيمة القديمة).`, hl: [j+1], sorted: [...sorted] });
+        }
+        inSteps.push({ s: [...slots], vals: [...vals], k: null, keyVal: '', msg: "انتهت الخوارزمية! المصفوفة الآن مرتبة بالكامل 🎉.", hl: [], sorted: [...sorted] });
+    }
+
+    function renderInsStep(idx) {
+        if(idx < 0) idx = 0; if(idx >= inSteps.length) idx = inSteps.length - 1;
+        inStep = idx; let step = inSteps[idx];
+
+        document.getElementById('msg-insert').innerHTML = step.msg;
+        document.getElementById('step-cnt-in').innerText = `${idx + 1} / ${inSteps.length}`;
+        document.querySelectorAll('#sim-cont-insert .card-inner').forEach(c => c.classList.remove('hl-compare'));
+        document.querySelectorAll('#sim-cont-insert .slot').forEach(s => s.classList.remove('sorted-bg'));
+
+        const cont = document.getElementById('sim-cont-insert');
+        if(!cont) return;
+        const cRect = cont.getBoundingClientRect();
+
+        for(let k=0; k<5; k++) {
+            // Update background array slot text
+            let slotEl = document.getElementById(`in-slot-${k}`);
+            slotEl.innerText = step.vals[k];
+
+            if (step.sorted.includes(k)) slotEl.classList.add('sorted-bg');
+
+            let cardId = step.s[k];
+            if (cardId) {
+                let cardEl = document.getElementById(cardId);
+                let innerEl = cardEl.querySelector('.card-inner');
+                let slotRect = slotEl.getBoundingClientRect();
+                cardEl.style.transform = `translate(${slotRect.left - cRect.left}px, ${slotRect.top - cRect.top}px)`;
+                if (step.hl.includes(k)) innerEl.classList.add('hl-compare');
+            }
+        }
+
+        // Setup Key text
+        let keySlot = document.getElementById('in-slot-key');
+        keySlot.innerText = step.keyVal !== '' ? step.keyVal : 'Key';
+
+        if (step.k) {
+            let cardEl = document.getElementById(step.k);
+            let innerEl = cardEl.querySelector('.card-inner');
+            let slotRect = keySlot.getBoundingClientRect();
+            cardEl.style.transform = `translate(${slotRect.left - cRect.left}px, ${slotRect.top - cRect.top}px)`;
+            innerEl.classList.add('hl-compare');
+        }
+
+        document.getElementById('btn-prev-in').disabled = (idx === 0);
+        document.getElementById('btn-next-in').disabled = (idx === inSteps.length - 1);
+    }
+
+    function insNext() { if(inStep < inSteps.length - 1) renderInsStep(inStep + 1); }
+    function insPrev() { if(inStep > 0) renderInsStep(inStep - 1); }
+
+    // Initialize Everything
+    window.addEventListener('load', () => {
+        buildShiftSim();
+        buildInsertSim();
+        updateSlide();
+    });
+
+    window.addEventListener('resize', () => {
+        if(currentSlide === 1) renderShiftStep(shStep);
+        if(currentSlide === 4) renderInsStep(inStep);
+    });
+
+</script>
+
+</body>
+</html>
