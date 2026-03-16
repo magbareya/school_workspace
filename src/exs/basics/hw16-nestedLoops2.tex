@@ -94,11 +94,11 @@ public static void PrintPairsWithSum(int[] arr, int target)
     اكتب عملية خارجية \textenglish{CountGreaterAfter} تتلقى مصفوفة أعداد صحيحة وتعيد مصفوفة جديدة بنفس الطول. كل عنصر في المصفوفة الجديدة يحتوي على عدد العناصر الأكبر منه التي تظهر بعده في المصفوفة الأصلية.\\
     \textbf{مثال 1:} في المصفوفة \textenglish{\{5, 3, 7, 2, 8\}}، النتيجة \textenglish{\{2, 2, 1, 1, 0\}} لأنّ:
     \begin{itemize}[itemsep=1pt]
-        \item العنصر 5: بعده يوجد عددان أكبر منه (7 و8) $\rightarrow$ 2
-        \item العنصر 3: بعده يوجد عددان أكبر منه (7 و8) $\rightarrow$ 2
-        \item العنصر 7: بعده يوجد عدد واحد أكبر منه (8) $\rightarrow$ 1
-        \item العنصر 2: بعده يوجد عدد واحد أكبر منه (8) $\rightarrow$ 1
-        \item العنصر 8: لا يوجد شيء بعده $\rightarrow$ 0
+        \item العنصر 5: بعده يوجد عددان أكبر منه (7 و8) $\leftarrow$ 2
+        \item العنصر 3: بعده يوجد عددان أكبر منه (7 و8) $\leftarrow$ 2
+        \item العنصر 7: بعده يوجد عدد واحد أكبر منه (8) $\leftarrow$ 1
+        \item العنصر 2: بعده يوجد عدد واحد أكبر منه (8) $\leftarrow$ 1
+        \item العنصر 8: لا يوجد شيء بعده $\leftarrow$ 0
     \end{itemize}
     \textbf{مثال 2:} في المصفوفة \textenglish{\{10, 8, 6, 4, 2\}}، النتيجة \textenglish{\{0, 0, 0, 0, 0\}} (مصفوفة تنازلية).\\
     \textbf{مثال 3:} في المصفوفة \textenglish{\{1, 2, 3, 4, 5\}}، النتيجة \textenglish{\{4, 3, 2, 1, 0\}} (مصفوفة تصاعدية).
@@ -109,23 +109,16 @@ public static void PrintPairsWithSum(int[] arr, int target)
 public static int[] CountGreaterAfter(int[] arr)
 {
     int[] result = new int[arr.Length];
-
     for (int i = 0; i < arr.Length; i++)
     {
         int count = 0;
-
-        // نمر على جميع العناصر بعد الموقع i
         for (int j = i + 1; j < arr.Length; j++)
         {
             if (arr[j] > arr[i])
-            {
                 count++;
-            }
         }
-
         result[i] = count;
     }
-
     return result;
 }
     \end{minted}

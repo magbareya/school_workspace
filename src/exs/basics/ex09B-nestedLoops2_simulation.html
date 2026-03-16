@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تتبع خوارزميات المصفوفات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .code-line {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .code-line.active {
+            background-color: #fef08a; /* yellow-200 */
+            border-right: 4px solid #eab308; /* yellow-500 */
+            color: #111827; /* رمادي غامق جداً لتوضيح النص */
+            font-weight: bold; /* خط عريض */
+        }
+        .array-box {
+            transition: all 0.4s ease-in-out;
+        }
+        .highlight-check {
+            border-color: #3b82f6 !important; /* blue-500 */
+            background-color: #dbeafe !important; /* blue-100 */
+            transform: scale(1.05);
+        }
+        .highlight-shift {
+            border-color: #f59e0b !important; /* amber-500 */
+            background-color: #fef3c7 !important; /* amber-100 */
+        }
+        .highlight-insert {
+            border-color: #10b981 !important; /* emerald-500 */
+            background-color: #d1fae5 !important; /* emerald-100 */
+            transform: scale(1.1);
+        }
+        .tab-btn.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            border-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="p-6 text-gray-800">
+
+    <div class="max-w-6xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="loadScenario('insertAt')" id="tab-insertAt" class="tab-btn active px-6 py-3 rounded-lg font-bold text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition shadow-sm">
+                1. تتبع الإزاحة والإدخال (InsertAt)
+            </button>
+            <button onclick="loadScenario('sortLast')" id="tab-sortLast" class="tab-btn px-6 py-3 rounded-lg font-bold text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition shadow-sm">
+                2. تتبع ترتيب العنصر الأخير (SortLastItem)
+            </button>
+        </div>
+
+        <!-- زر إخفاء/إظهار الكود -->
+        <button onclick="toggleCode()" id="btn-toggle-code" class="px-5 py-3 rounded-lg font-bold text-md border-2 border-gray-700 bg-gray-700 text-white hover:bg-gray-800 transition shadow-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span id="toggle-code-text">إخفاء الكود</span>
+        </button>
+    </div>
+
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+
+        <!-- قسم الكود (يسار الشاشة) -->
+        <div id="code-section" class="w-full md:w-1/3 bg-gray-50 border-l border-gray-200 p-6 flex flex-col" dir="ltr">
+            <h2 class="text-xl font-bold mb-4 text-center text-gray-700 font-[Cairo]" dir="rtl">الكود (C#)</h2>
+            <div id="code-container" class="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-sm shadow-inner flex-grow overflow-x-auto leading-relaxed">
+                <!-- سيتم حقن الكود هنا -->
+            </div>
+        </div>
+
+        <!-- قسم التتبع والعرض (يمين الشاشة) -->
+        <div id="trace-section" class="w-full md:w-2/3 p-6 flex flex-col">
+            <h1 id="scenario-title" class="text-3xl font-bold text-blue-700 mb-2">تتبع الإزاحة والإدخال</h1>
+            <p id="scenario-desc" class="text-gray-600 mb-6 border-b pb-4">شاهد كيف يتم إزاحة العناصر لليمين لإفراغ مكان وإدخال قيمة جديدة.</p>
+
+            <!-- الشرح الحالي -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 min-h-[80px] flex items-center shadow-sm">
+                <p id="explanation-text" class="text-lg text-blue-800 font-semibold"></p>
+            </div>
+
+            <!-- المتغيرات -->
+            <div id="vars-container" class="flex justify-center gap-4 mb-8 text-center" dir="ltr">
+                <!-- سيتم حقن المتغيرات هنا -->
+            </div>
+
+            <!-- المصفوفة -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">المصفوفة (arr)</h3>
+                <div id="array-container" class="flex justify-center items-end gap-2 sm:gap-4" dir="ltr">
+                    <!-- سيتم تعبئة العناصر عبر جافاسكريبت -->
+                </div>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="mt-auto flex justify-center gap-4">
+                <button id="btn-next" onclick="nextStep()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition flex items-center gap-2">
+                    الخطوة التالية
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button id="btn-prev" onclick="prevStep()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl font-bold text-lg shadow transition flex items-center gap-2" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    السابق
+                </button>
+                <button onclick="reset()" class="bg-red-100 hover:bg-red-200 text-red-700 px-6 py-3 rounded-xl font-bold text-lg shadow transition">
+                    إعادة
+                </button>
+            </div>
+
+            <!-- شريط التقدم -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-8">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // دالة التحكم في إظهار وإخفاء الكود
+        let isCodeVisible = true;
+        function toggleCode() {
+            const codeSection = document.getElementById('code-section');
+            const traceSection = document.getElementById('trace-section');
+            const toggleText = document.getElementById('toggle-code-text');
+
+            if (isCodeVisible) {
+                codeSection.style.display = 'none'; // إخفاء الكود
+                traceSection.classList.remove('md:w-2/3'); // إزالة تحديد الثلثين ليتوسع للكل
+                toggleText.innerText = 'إظهار الكود';
+                isCodeVisible = false;
+            } else {
+                codeSection.style.display = ''; // إرجاع الكود
+                traceSection.classList.add('md:w-2/3'); // إرجاع العرض للثلثين
+                toggleText.innerText = 'إخفاء الكود';
+                isCodeVisible = true;
+            }
+        }
+
+        // تعريف السيناريوهات
+        const scenarios = {
+            insertAt: {
+                title: 'تتبع عملية الإزاحة والإدخال',
+                desc: 'شاهد كيف يتم إزاحة العناصر لليمين لإفراغ مكان (Index) محدد وإدخال قيمة جديدة فيه.',
+                code: `
+<div id="line-0" class="code-line pl-2 py-1">public static void InsertAt(int[] arr, int val, int idx)</div>
+<div id="line-1" class="code-line pl-2 py-1">{</div>
+<div id="line-2" class="code-line pl-6 py-1">for(int i = arr.Length - 2; i &gt;= idx; i--)</div>
+<div id="line-3" class="code-line pl-6 py-1">{</div>
+<div id="line-4" class="code-line pl-10 py-1">arr[i + 1] = arr[i];</div>
+<div id="line-5" class="code-line pl-6 py-1">}</div>
+<div id="line-6" class="code-line pl-6 py-1">arr[idx] = val;</div>
+<div id="line-7" class="code-line pl-2 py-1">}</div>`,
+                generateSteps: () => {
+                    let s = [];
+                    let arr = [10, 20, 30, 40, 50];
+                    let val = 99;
+                    let targetIdx = 2;
+                    let len = arr.length;
+
+                    const getVars = (i) => ({ val: val, idx: targetIdx, i: i });
+
+                    s.push({ line: 0, arr: [...arr], vars: getVars('-'), msg: `البداية: لدينا المصفوفة، ونريد إدخال القيمة ${val} في الإندكس ${targetIdx}.`, hl: [] });
+
+                    let i = len - 2;
+                    s.push({ line: 2, arr: [...arr], vars: getVars(i), msg: `لإفراغ المكان دون فقدان البيانات، نبدأ عملية الإزاحة من الخانة قبل الأخيرة (الإندكس ${i}).`, hl: [i] });
+
+                    while (true) {
+                        s.push({ line: 2, arr: [...arr], vars: getVars(i), msg: `نتحقق: هل وصلنا للمكان المطلوب إفراغه (${targetIdx})؟ طالما أن المؤشر الحالي (${i}) أكبر أو يساوي ${targetIdx}، سنستمر.`, hl: [] });
+
+                        if (i >= targetIdx) {
+                            arr[i + 1] = arr[i];
+                            s.push({ line: 4, arr: [...arr], vars: getVars(i), msg: `نقوم بنسخ القيمة ${arr[i]} خطوة واحدة إلى اليمين لتصبح في الإندكس ${i+1}.`, hl: [i, i+1], type: 'shift' });
+                            i--;
+                        } else {
+                            s.push({ line: 2, arr: [...arr], vars: getVars(i), msg: `وصلنا للمكان المطلوب (${targetIdx}). لم يعد هناك حاجة لمزيد من الإزاحة.`, hl: [] });
+                            break;
+                        }
+                    }
+
+                    arr[targetIdx] = val;
+                    s.push({ line: 6, arr: [...arr], vars: getVars(i), msg: `الآن، نضع القيمة الجديدة (${val}) في المكان الذي قمنا بإفراغه (الإندكس ${targetIdx}).`, hl: [targetIdx], type: 'insert' });
+                    s.push({ line: 7, arr: [...arr], vars: getVars(i), msg: `انتهت عملية الإزاحة والإدخال بنجاح!`, hl: [] });
+
+                    return s;
+                }
+            },
+            sortLast: {
+                title: 'تتبع ترتيب العنصر الأخير',
+                desc: 'شاهد كيف يبحث الكود عن المكان الصحيح أولاً، ثم يستخدم الإزاحة لإدخال العنصر فيه.',
+                code: `
+<div id="line-0" class="code-line pl-2 py-1">public static void SortLastItem(int[] arr)</div>
+<div id="line-1" class="code-line pl-2 py-1">{</div>
+<div id="line-2" class="code-line pl-6 py-1">int tmp = arr[arr.Length - 1];</div>
+<div id="line-3" class="code-line pl-6 py-1">int idx = 0;</div>
+<div id="line-4" class="code-line pl-6 py-1">while (idx &lt; arr.Length && arr[idx] &lt; tmp)</div>
+<div id="line-5" class="code-line pl-6 py-1">{</div>
+<div id="line-6" class="code-line pl-10 py-1">idx++;</div>
+<div id="line-7" class="code-line pl-6 py-1">}</div>
+<div id="line-8" class="code-line pl-6 py-1">for(int i = arr.Length - 2; i &gt;= idx; i--)</div>
+<div id="line-9" class="code-line pl-6 py-1">{</div>
+<div id="line-10" class="code-line pl-10 py-1">arr[i + 1] = arr[i];</div>
+<div id="line-11" class="code-line pl-6 py-1">}</div>
+<div id="line-12" class="code-line pl-6 py-1">arr[idx] = tmp;</div>
+<div id="line-13" class="code-line pl-2 py-1">}</div>`,
+                generateSteps: () => {
+                    let s = [];
+                    let arr = [3, 7, 10, 15, 6];
+                    let len = arr.length;
+
+                    const getVars = (t, d, i) => ({ tmp: t, idx: d, i: i });
+
+                    s.push({ line: 0, arr: [...arr], vars: getVars('-', '-', '-'), msg: 'البداية: نلاحظ أن العنصر الأخير (6) في المكان الخاطئ، ونريد وضعه في مكانه الصحيح.', hl: [] });
+
+                    let tmp = arr[len - 1];
+                    s.push({ line: 2, arr: [...arr], vars: getVars(tmp, '-', '-'), msg: `نقوم بحفظ قيمة العنصر الأخير (${tmp}) جانباً حتى لا تضيع أثناء إزاحة العناصر.`, hl: [len-1], type: 'check' });
+
+                    let idx = 0;
+                    s.push({ line: 3, arr: [...arr], vars: getVars(tmp, idx, '-'), msg: `نبدأ عملية البحث عن المكان الصحيح للقيمة (${tmp}) بدءاً من الخانة الأولى (الإندكس 0).`, hl: [] });
+
+                    while (true) {
+                        s.push({ line: 4, arr: [...arr], vars: getVars(tmp, idx, '-'), msg: `نقارن: هل العنصر الحالي (${arr[idx]}) أصغر من القيمة التي نريد ترتيبها (${tmp})؟`, hl: [idx], type: 'check' });
+
+                        if (idx < len && arr[idx] < tmp) {
+                            idx++;
+                            s.push({ line: 6, arr: [...arr], vars: getVars(tmp, idx, '-'), msg: `نعم، أصغر. إذن المكان الصحيح ليس هنا، ننتقل للخانة التالية لنستمر بالبحث.`, hl: [] });
+                        } else {
+                            s.push({ line: 4, arr: [...arr], vars: getVars(tmp, idx, '-'), msg: `لا، وجدنا عنصراً (${arr[idx]}) أكبر من (${tmp})! إذن المكان الصحيح للإدخال هو الإندكس الحالي: ${idx}.`, hl: [idx], type: 'insert' });
+                            break;
+                        }
+                    }
+
+                    let i = len - 2;
+                    s.push({ line: 8, arr: [...arr], vars: getVars(tmp, idx, i), msg: `حان وقت إفراغ المكان (${idx}). سنبدأ بإزاحة العناصر لليمين بدءاً من الخانة قبل الأخيرة (الإندكس ${i}).`, hl: [i] });
+
+                    while (true) {
+                        s.push({ line: 8, arr: [...arr], vars: getVars(tmp, idx, i), msg: `نتحقق: هل وصلنا للإندكس المطلوب إفراغه (${idx})؟`, hl: [] });
+
+                        if (i >= idx) {
+                            arr[i + 1] = arr[i];
+                            s.push({ line: 10, arr: [...arr], vars: getVars(tmp, idx, i), msg: `نقوم بنسخ القيمة ${arr[i]} خطوة إلى اليمين لتفريغ المكان.`, hl: [i, i+1], type: 'shift' });
+                            i--;
+                        } else {
+                            s.push({ line: 8, arr: [...arr], vars: getVars(tmp, idx, i), msg: `تمت إزاحة العناصر ووصلنا للمكان المطلوب (${idx}). نتوقف عن الإزاحة.`, hl: [] });
+                            break;
+                        }
+                    }
+
+                    arr[idx] = tmp;
+                    s.push({ line: 12, arr: [...arr], vars: getVars(tmp, idx, i), msg: `أخيراً، نضع القيمة التي حفظناها (${tmp}) في المكان الفارغ (الإندكس ${idx}).`, hl: [idx], type: 'insert' });
+                    s.push({ line: 13, arr: [...arr], vars: getVars(tmp, idx, i), msg: `تمت المهمة! المصفوفة الآن مرتبة بشكل صحيح.`, hl: [] });
+
+                    return s;
+                }
+            }
+        };
+
+        let currentScenario = 'insertAt';
+        let steps = [];
+        let currentStepIndex = 0;
+
+        function loadScenario(scenarioKey) {
+            // تحديث الأزرار
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${scenarioKey}`).classList.add('active');
+
+            currentScenario = scenarioKey;
+            const sc = scenarios[scenarioKey];
+
+            // تحديث العناوين والكود
+            document.getElementById('scenario-title').innerText = sc.title;
+            document.getElementById('scenario-desc').innerText = sc.desc;
+            document.getElementById('code-container').innerHTML = sc.code;
+
+            // توليد الخطوات
+            steps = sc.generateSteps();
+            currentStepIndex = 0;
+
+            updateUI();
+        }
+
+        // رسم المتغيرات ديناميكياً
+        function renderVars(varsObj) {
+            const container = document.getElementById('vars-container');
+            container.innerHTML = '';
+            for (const [key, value] of Object.entries(varsObj)) {
+                container.innerHTML += `
+                <div class="bg-gray-100 rounded-lg p-3 border border-gray-200 shadow-sm w-24">
+                    <div class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">${key}</div>
+                    <div class="text-2xl font-mono text-gray-800">${value}</div>
+                </div>`;
+            }
+        }
+
+        // رسم المصفوفة
+        function renderArray(arr, highlights = [], type = '') {
+            const container = document.getElementById('array-container');
+            container.innerHTML = '';
+
+            arr.forEach((val, index) => {
+                let isHighlighted = highlights.includes(index);
+                let extraClass = '';
+
+                if (isHighlighted) {
+                    if (type === 'check') extraClass = 'highlight-check text-blue-800 font-bold';
+                    else if (type === 'shift') extraClass = 'highlight-shift text-amber-800 font-bold';
+                    else if (type === 'insert') extraClass = 'highlight-insert text-emerald-800 font-bold';
+                }
+
+                const box = document.createElement('div');
+                box.className = `array-box w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-xl sm:text-2xl border-2 rounded-xl bg-white text-gray-700 shadow-sm relative ${extraClass}`;
+                if (!isHighlighted) box.style.borderColor = '#e5e7eb';
+
+                box.innerText = val;
+
+                const idxLabel = document.createElement('div');
+                idxLabel.className = 'absolute -bottom-6 text-xs sm:text-sm text-gray-500 font-mono';
+                idxLabel.innerText = index;
+
+                box.appendChild(idxLabel);
+                container.appendChild(box);
+            });
+        }
+
+        // تحديث واجهة المستخدم حسب الخطوة الحالية
+        function updateUI() {
+            const step = steps[currentStepIndex];
+
+            // 1. تحديث النص
+            document.getElementById('explanation-text').innerText = step.msg;
+
+            // 2. تحديث المتغيرات والمصفوفة
+            renderVars(step.vars);
+            renderArray(step.arr, step.hl, step.type);
+
+            // 3. تظليل السطر في الكود
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+            const activeCode = document.getElementById(`line-${step.line}`);
+            if(activeCode) {
+                activeCode.classList.add('active');
+                activeCode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // 4. حالة الأزرار وشريط التقدم
+            document.getElementById('btn-prev').disabled = currentStepIndex === 0;
+            document.getElementById('btn-next').disabled = currentStepIndex === steps.length - 1;
+
+            if (currentStepIndex === steps.length - 1) {
+                document.getElementById('btn-next').classList.replace('bg-blue-600', 'bg-gray-400');
+                document.getElementById('btn-next').classList.remove('hover:bg-blue-700');
+            } else {
+                document.getElementById('btn-next').classList.replace('bg-gray-400', 'bg-blue-600');
+                document.getElementById('btn-next').classList.add('hover:bg-blue-700');
+            }
+
+            const progress = ((currentStepIndex + 1) / steps.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function nextStep() {
+            if (currentStepIndex < steps.length - 1) {
+                currentStepIndex++;
+                updateUI();
+            }
+        }
+
+        function prevStep() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                updateUI();
+            }
+        }
+
+        function reset() {
+            currentStepIndex = 0;
+            updateUI();
+        }
+
+        // التهيئة عند التحميل
+        window.onload = () => {
+            loadScenario('insertAt'); // تحميل السيناريو الأول افتراضياً
+        };
+    </script>
+</body>
+</html>

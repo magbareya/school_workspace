@@ -1,0 +1,133 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرّن 10 - الحلقات المتداخلة \\ تحضير لترتيب الإدخال}
+\else
+\title{ورقة تمرّن 10 - الحلقات المتداخلة \\ تحضير لترتيب الإدخال}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+    \item
+    اكتب عملية خارجية \textenglish{InsertAt} تتلقى مصفوفة أعداد صحيحة \textenglish{arr}، عدداً صحيحاً \textenglish{val}، ومؤشراً \textenglish{idx}. \\
+    تقوم العملية بـ \textbf{إزاحة} جميع العناصر بدءاً من المؤشر \textenglish{idx} خطوة واحدة إلى اليمين (مما يؤدي إلى مسح العنصر الأخير في المصفوفة واستبداله)، ثم تضع العدد \textenglish{val} في الخانة \textenglish{idx}.
+
+    \begin{boxExample}
+    \begin{itemize}
+        \item المصفوفة قبل الاستدعاء: \textenglish{\{10, 20, 30, 40, 50\}}، العدد \textenglish{val = 99}، والمؤشر \textenglish{idx = 2}.
+        \item بعد استدعاء العملية تصبح: \textenglish{\{10, 20, \textbf{99}, 30, 40\}}.
+    \end{itemize}
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void InsertAt(int[] arr, int val, int idx)
+{
+    for(int i = arr.Length - 2; i >= idx; i--)
+    {
+        arr[i + 1] = arr[i];
+    }
+    arr[idx] = val;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    \item
+    نفس السؤال السابق، لكن العملية لا تتلقى المؤشر \textenglish{idx}، بل تتلقى مصفوفةً مرتبة تصاعديًّا وعدداً صحيحاً \textenglish{val} فقط \\
+    على العملية أن تجد المكان الصحيح لإدراج هذا العدد في المصفوفة بحيث تبقى المصفوفة مرتبة تصاعديًّا. \\
+    الحد الأخير في المصفوفة الأصلية سيحذف.
+
+    \begin{boxExample}
+    \begin{itemize}
+        \item المصفوفة قبل الاستدعاء: \textenglish{\{10, 20, 30, 40, 50\}}، العدد \textenglish{val = 25}.
+        \item بعد استدعاء العملية تصبح: \textenglish{\{10, 20, \textbf{25}, 30, 40\}}.
+    \end{itemize}
+    \end{boxExample}
+
+    \begin{boxHint}
+     اتبع نفس الخطوات السابقة، لكن بدلاً من تلقي المؤشر \textenglish{idx}، ابحث عن المكان الصحيح له أولاً من خلال حلقة، ثم قم بعملية الإزاحة والإدراج.
+     \end{boxHint}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void InsertInSortedArray(int[] arr, int val)
+{
+    int idx = 0;
+    while (idx < arr.Length && arr[idx] < val)
+    {
+        idx++;
+    }
+    for(int i = arr.Length - 2; i >= idx; i--)
+    {
+        arr[i + 1] = arr[i];
+    }
+    arr[idx] = val;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    \clearpage
+\item
+    معطاة مصفوفة أعداد صحيحة \textenglish{arr}، جميع عناصرها \textbf{مرتبة تصاعدياً} ما عدا \textbf{العنصر الأخير} الذي تمت إضافته للتو وقد يكون في المكان الخاطئ. \\
+    اكتب عملية خارجية \textenglish{SortLastItem} تتلقى هذه المصفوفة، وتقوم بإدراج هذا العنصر الأخير في مكانه الصحيح بحيث تصبح المصفوفة بأكملها مرتبة.
+
+    \begin{boxExample}
+    \begin{itemize}
+        \item المصفوفة قبل الاستدعاء: \textenglish{\{3, 7, 10, 15, \textbf{6}\}} (الرقم 6 ليس في مكانه).
+        \item بعد استدعاء العملية تصبح: \textenglish{\{3, \textbf{6}, 7, 10, 15\}}.
+    \end{itemize}
+\end{boxExample}
+
+    \begin{boxHint}
+    \begin{enumerate}
+        \item احفظ قيمة العنصر الأخير في متغير مساعد.
+        \item ابحث عن الخانة (الإندكس) الصحيحة التي يجب أن يوضع فيها هذا العنصر.
+        \item قم بإزاحة جميع العناصر الأكبر منه خطوة واحدة إلى اليمين لتفريغ مكان له.
+        \item ضع العنصر في مكانه الصحيح.
+    \end{enumerate}
+\end{boxHint}
+
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void SortLastItem(int[] arr)
+{
+    int tmp = arr[arr.Length - 1];
+
+    int idx = 0;
+    while (idx < arr.Length && arr[idx] < tmp)
+    {
+        idx++;
+    }
+
+    for(int i = arr.Length - 2; i >= idx; i--)
+    {
+        arr[i + 1] = arr[i];
+    }
+
+    arr[idx] = tmp;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+\end{enumerate}
+
+\end{document}
