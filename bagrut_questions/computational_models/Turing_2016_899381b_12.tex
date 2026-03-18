@@ -13,7 +13,69 @@
 \ifwithsols
 \begin{boxSolution}[سؤال 12 امتحان 899381b سنة 2016]
 \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-    \item // TODO:
+    \item
+    الانتقالات الناقصة هي:
+    \begin{itemize}[label=-, itemsep=0.8em]
+        \item \textbf{أ:} من الحالة $q_1$ إلى الحالة $q_2$ على الإشارة \#:
+        \[
+        \delta(q_1,\#)=(q_2,\#,\rightarrow)
+        \]
+
+        \item \textbf{ب:} من الحالة $q_0$ إلى الحالة $q_4$ عندما لا يبقى $1$ في العدد الأيسر (أي نصل إلى \#):
+        \[
+        \delta(q_0,\#)=(q_4,\$,\rightarrow)
+        \]
+
+        \item \textbf{ج:} من الحالة $q_2$ إلى الحالة $q_6$ عندما ينتهي الجزء الأيمن (نصل إلى فراغ):
+        \[
+        \delta(q_2,\Delta)=(q_6,\$,\leftarrow)
+        \]
+    \end{itemize}
+
+    بهذه الطريقة:
+    \begin{itemize}[label=-, itemsep=0.6em]
+        \item الانتقال \textbf{أ} ينقل رأس الآلة من الجزء الأيسر إلى الجزء الأيمن.
+        \item الانتقال \textbf{ب} يبدأ مرحلة إنهاء الناتج عندما يكون $m \le n$ (انتهت الواحدات في اليسار).
+        \item الانتقال \textbf{ج} يبدأ مرحلة إنهاء الناتج عندما يكون $n < m$ (انتهت الواحدات في اليمين).
+    \end{itemize}
+\end{enumerate}
+\end{boxSolution}
+\begin{boxSolution}[سؤال 12 امتحان 899381b سنة 2016 - فرع ب]
+\begin{enumerate}[itemsep=1.5em, label=\alph*., resume]
+    \item
+    بالنسبة للمدخلين $m=1,\;n=1$ يكون الشريط في البداية:
+    \[
+    \vdash\;1\;\#\;1\;\Delta\;\Delta\;\cdots
+    \]
+    والرأس على أول $1$، والحالة الابتدائية $q_0$.
+
+    \textbf{تتبع الحساب ($m=1,\, n=1$):}
+    \begin{align*}
+    q_0 \quad &\vdash\;\underline{1}\;\#\;1\;\Delta\;\cdots
+        \quad \text{($1 \to a$، يمين)} \\
+    q_1 \quad &\vdash\;a\;\underline{\#}\;1\;\Delta\;\cdots
+        \quad \text{($\# \to \#$، يمين)} \\
+    q_2 \quad &\vdash\;a\;\#\;\underline{1}\;\Delta\;\cdots
+        \quad \text{($1 \to b$، يسار)} \\
+    q_3 \quad &\vdash\;a\;\underline{\#}\;b\;\Delta\;\cdots
+        \quad \text{(تجاوز \# يسارًا)} \\
+    q_3 \quad &\vdash\;\underline{a}\;\#\;b\;\Delta\;\cdots
+        \quad \text{($a \to a$، يمين إلى $q_0$)} \\
+    q_0 \quad &\vdash\;a\;\underline{\#}\;b\;\Delta\;\cdots
+        \quad \text{($\# \to \$$، يمين إلى $q_4$)} \\
+    q_4 \quad &\vdash\;a\;\$\;\underline{b}\;\Delta\;\cdots
+        \quad \text{($b \to 1$، يمين)} \\
+    q_4 \quad &\vdash\;a\;\$\;1\;\underline{\Delta}\;\cdots
+        \quad \text{($\Delta \to \$$، قبول)} \\
+    q_5 \quad &\vdash\;a\;\$\;1\;\$\;\underline{\Delta}\;\cdots
+        \quad \checkmark
+    \end{align*}
+
+    إذن الآلة تتوقف في الحالة النهائية $q_5$، والناتج المسجل هو:
+    \[
+    \$\;1\;\$
+    \]
+    وهو بالفعل يمثل $\min(1,1)=1$.
 \end{enumerate}
 \end{boxSolution}
 
