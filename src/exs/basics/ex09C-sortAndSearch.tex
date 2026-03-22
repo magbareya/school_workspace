@@ -1,0 +1,281 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرّن 11 \\ ترتيب الإدخال والبحث الثنائي}
+\else
+\title{ورقة تمرّن 11 \\ ترتيب الإدخال والبحث الثنائي}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+% ----------------------------------------------------------------
+% سؤال 1 – متابعة
+% ----------------------------------------------------------------
+\item
+معطاة المصفوفة التالية:
+
+\begin{center}
+\textenglish{\{9, 3, 7, 1, 5\}}
+\end{center}
+
+طبّق خوارزمية \textenglish{Insertion Sort} خطوة بخطوة، واملأ الجدول التالي الذي يُبيّن حالة المصفوفة بعد انتهاء كل دورة \textenglish{i}:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{قيمة \textenglish{i}} & \textbf{المصفوفة بعد نهاية الدورة} \\
+\hline
+\textenglish{i = 1} & \hspace{6cm} \\[10pt]
+\hline
+\textenglish{i = 2} & \\[10pt]
+\hline
+\textenglish{i = 3} & \\[10pt]
+\hline
+\textenglish{i = 4} & \\[10pt]
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}[itemsep=1pt]
+    \item \textenglish{i = 1}: \textbf{key = 3}. نقارن مع 9 (أكبر ← نزيحه). المصفوفة: \textenglish{\{3, 9, 7, 1, 5\}}
+    \item \textenglish{i = 2}: \textbf{key = 7}. نقارن مع 9 (أكبر ← نزيحه)، ثم مع 3 (أصغر ← نتوقف). المصفوفة: \textenglish{\{3, 7, 9, 1, 5\}}
+    \item \textenglish{i = 3}: \textbf{key = 1}. نزيح 9، ثم 7، ثم 3، نصل للبداية. المصفوفة: \textenglish{\{1, 3, 7, 9, 5\}}
+    \item \textenglish{i = 4}: \textbf{key = 5}. نزيح 9، ثم 7، ثم نتوقف عند 3. المصفوفة: \textenglish{\{1, 3, 5, 7, 9\}}
+\end{itemize}
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 2 – كتابة كود
+% ----------------------------------------------------------------
+\item
+اكتب عملية خارجية \textenglish{InsertionSort} تتلقى مصفوفة أعداد صحيحة \textenglish{arr} وترتّبها \textbf{تنازلياً} (من الأكبر إلى الأصغر).
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+public static void InsertionSort(int[] arr)
+{
+    for (int i = 1; i < arr.Length; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] < key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+\end{minted}
+\end{boxCode}
+\end{english}
+\textbf{الشرح:} التغيير الوحيد عن الترتيب التصاعدي هو في شرط الـ \textenglish{while}: نغيّر \textenglish{arr[j] > key} إلى \textenglish{arr[j] < key}، لأننا نريد إزاحة العناصر \textbf{الأصغر} لليمين.
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 3 – تحليل: أفضل وأسوأ حالة
+% ----------------------------------------------------------------
+\item
+أجب على الأسئلة التالية بدون كتابة كود:
+
+\begin{enumerate}[itemsep=10pt]
+    \item معطاة المصفوفة \textenglish{\{1, 2, 3, 4, 5\}} (مرتبة تصاعدياً). كم مرة سيتم تنفيذ جسم حلقة الـ \textenglish{while} إجمالاً عند تطبيق \textenglish{Insertion Sort}؟ ولماذا؟
+    \item معطاة المصفوفة \textenglish{\{5, 4, 3, 2, 1\}} (مرتبة تنازلياً). كم مرة سيتم تنفيذ جسم حلقة الـ \textenglish{while} إجمالاً؟
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[itemsep=6pt]
+    \item \textbf{صفر مرات.} \\
+    \textbf{الشرح:} في كل دورة \textenglish{i}، العنصر الذي قبل الـ \textenglish{key} أصغر منه دائماً لأن المصفوفة مرتبة. لذلك الشرط \textenglish{arr[j] > key} يكون خاطئاً فوراً ولا ندخل الـ \textenglish{while} أبداً.
+
+    \item \textbf{10 مرات} (مجموع $1+2+3+4$). \\
+    \textbf{الشرح:}
+    \begin{itemize}[itemsep=1pt]
+        \item \textenglish{i = 1, key = 4}: إزاحة واحدة.
+        \item \textenglish{i = 2, key = 3}: إزاحتان.
+        \item \textenglish{i = 3, key = 2}: ثلاث إزاحات.
+        \item \textenglish{i = 4, key = 1}: أربع إزاحات.
+    \end{itemize}
+    المجموع: $1+2+3+4 = 10$.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\clearpage
+
+% ----------------------------------------------------------------
+% سؤال 4 – متابعة: عنصر موجود
+% ----------------------------------------------------------------
+\item
+معطاة المصفوفة المرتبة التالية:
+
+\begin{center}
+\textenglish{\{2, 6, 11, 15, 20, 28, 35, 42, 50, 60\}}
+\end{center}
+
+طبّق \textenglish{Binary Search} للبحث عن \textenglish{target = 28}، واملأ الجدول:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{خطوة} & \textenglish{\textbf{lo}} & \textenglish{\textbf{hi}} & \textenglish{\textbf{mid}} & \textenglish{\textbf{arr[mid]}} \\
+\hline
+1 & & & & \\[10pt]
+\hline
+2 & & & & \\[10pt]
+\hline
+3 & & & & \\[10pt]
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{خطوة} & \textenglish{lo} & \textenglish{hi} & \textenglish{mid} & \textenglish{arr[mid]} \\
+\hline
+1 & 0 & 9 & 4 & 20 \\
+\hline
+2 & 5 & 9 & 7 & 42 \\
+\hline
+3 & 5 & 6 & 5 & \textenglish{28 \checkmark} \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{الشرح:}
+\begin{itemize}[itemsep=1pt]
+    \item خطوة 1: \textenglish{arr[4] = 20 < 28} ← \textenglish{lo = 5}
+    \item خطوة 2: \textenglish{arr[7] = 42 > 28} ← \textenglish{hi = 6}
+    \item خطوة 3: \textenglish{arr[5] = 28 == 28} ← وجدناه! نُعيد 5.
+\end{itemize}
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 7 – متابعة: عنصر غير موجود
+% ----------------------------------------------------------------
+\item
+نفس المصفوفة من السؤال السابق:
+
+\begin{center}
+\textenglish{\{2, 6, 11, 15, 20, 28, 35, 42, 50, 60\}}
+\end{center}
+
+طبّق \textenglish{Binary Search} للبحث عن \textenglish{target = 30}. تتبّع الخطوات حتى نهايتها وحدّد:
+\begin{enumerate}
+    \item متى يصبح \textenglish{lo > hi}؟
+    \item ماذا تُعيد العملية؟
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}[itemsep=1pt]
+    \item خطوة 1: \textenglish{lo=0, hi=9, mid=4} ← \textenglish{arr[4]=20 < 30} ← \textenglish{lo=5}
+    \item خطوة 2: \textenglish{lo=5, hi=9, mid=7} ← \textenglish{arr[7]=42 > 30} ← \textenglish{hi=6}
+    \item خطوة 3: \textenglish{lo=5, hi=6, mid=5} ← \textenglish{arr[5]=28 < 30} ← \textenglish{lo=6}
+    \item خطوة 4: \textenglish{lo=6, hi=6, mid=6} ← \textenglish{arr[6]=35 > 30} ← \textenglish{hi=5}
+    \item الآن: \textenglish{lo=6 > hi=5} ← نخرج من الحلقة.
+\end{itemize}
+
+\textbf{العملية تُعيد \textenglish{-1}} (العنصر غير موجود). \\
+\textbf{الشرح:} الشرط \textenglish{lo <= hi} هو "صمام الأمان" الذي يوقف الحلقة عندما لا يتبقى نطاق للبحث.
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 8 – كتابة كود
+% ----------------------------------------------------------------
+\item
+اكتب عملية خارجية \textenglish{DescendingBinarySearch} تتلقى مصفوفة أعداد صحيحة \textbf{مرتبة تنازلياً} \textenglish{arr} وعدداً صحيحاً \textenglish{target}، وتُعيد مؤشر العنصر إذا كان العنصر موجوداً في المصفوفة، و $-1$ إذا لم يكن موجوداً.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+public static int DescendingBinarySearch(int[] arr, int target)
+{
+    int lo = 0;
+    int hi = arr.Length - 1;
+    while (lo <= hi)
+    {
+        int mid = (lo + hi) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] > target)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+    return -1;
+}
+\end{minted}{csharp}
+\end{boxCode}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب عملية خارجية \textenglish{BinarySearch} تتلقى مصفوفة أعداد صحيحة \textbf{مرتبة تصاعدياً} \textenglish{arr} وعدداً صحيحاً \textenglish{target}، وتُعيد \textenglish{true} إذا كان العنصر موجوداً في المصفوفة، و\textenglish{false} إذا لم يكن موجوداً.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+public static bool BinarySearch(int[] arr, int target)
+{
+    int lo = 0;
+    int hi = arr.Length - 1;
+
+    while (lo <= hi)
+    {
+        int mid = (lo + hi) / 2;
+
+        if (arr[mid] == target)
+            return true;
+        else if (arr[mid] < target)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+    return false;
+}
+\end{minted}
+\end{boxCode}
+\end{english}
+\textbf{الشرح:} الفرق الوحيد عن النسخة التي تُعيد الفهرس: بدلاً من \textenglish{return mid} نكتب \textenglish{return true}، وبدلاً من \textenglish{return -1} نكتب \textenglish{return false}.
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملا ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

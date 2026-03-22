@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث الثنائي (Binary Search)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-body: #1e1e2e; --bg-card: #252538;
+            --text-primary: #ffffff; --text-secondary: #a6accd;
+            --accent-blue: #89b4fa; --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7; --accent-yellow: #f9e2af;
+            --accent-red: #f38ba8; --accent-purple: #cba6f7;
+            --accent-teal: #94e2d5;
+            --code-bg: #11111b; --border-color: #313244;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-primary); display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+
+        .presentation { width: 95%; max-width: 1100px; height: 85vh; margin-top: 3vh; position: relative; background: var(--bg-card); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--border-color); overflow: hidden; }
+        .progress-container { width: 100%; height: 5px; background: var(--border-color); position: absolute; top: 0; left: 0; z-index: 10; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-teal), var(--accent-blue)); width: 0%; transition: width 0.4s ease; }
+
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 35px 50px; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; display: flex; flex-direction: column; justify-content: center; }
+        .slide.active { opacity: 1; visibility: visible; }
+
+        h1 { font-size: 2.9em; color: var(--accent-teal); text-align: center; margin-bottom: 20px; }
+        h2 { font-size: 2em; color: var(--accent-yellow); margin-bottom: 18px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+        p, li { font-size: 1.35em; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px; }
+        ul, ol { margin-right: 40px; }
+        .highlight { color: var(--accent-yellow); font-weight: bold; }
+        .hl-teal { color: var(--accent-teal); font-weight: bold; }
+        .hl-red  { color: var(--accent-red); font-weight: bold; }
+        .ltr-code { direction: ltr; display: inline-block; font-family: 'Fira Code', monospace; }
+
+        /* Code Block */
+        .code-block { background: var(--code-bg); padding: 14px 20px; border-radius: 10px; font-family: 'Fira Code', monospace; font-size: 1.12em; color: var(--text-primary); border: 1px solid var(--border-color); direction: ltr; text-align: left; margin: 10px 0; overflow-x: auto; line-height: 1.65; white-space: pre; tab-size: 4; }
+        .code-block .keyword { color: var(--accent-pink); }
+        .code-block .type    { color: var(--accent-blue); }
+        .code-block .comment { color: #6c7086; font-style: italic; }
+        .code-block .ret     { color: var(--accent-teal); }
+
+        /* Boxes */
+        .box        { background: var(--bg-body); border-right: 5px solid var(--accent-green);  padding: 14px 20px; border-radius: 8px; margin-top: 14px; }
+        .box-blue   { background: var(--bg-body); border-right: 5px solid var(--accent-blue);   padding: 14px 20px; border-radius: 8px; margin-top: 14px; }
+        .box-red    { background: var(--bg-body); border-right: 5px solid var(--accent-red);    padding: 14px 20px; border-radius: 8px; margin-top: 14px; }
+        .box-teal   { background: var(--bg-body); border-right: 5px solid var(--accent-teal);   padding: 14px 20px; border-radius: 8px; margin-top: 14px; }
+        .box-purple { background: var(--bg-body); border-right: 5px solid var(--accent-purple); padding: 14px 20px; border-radius: 8px; margin-top: 14px; }
+        .insight-box { background: rgba(148, 226, 213, 0.08); border: 2px solid var(--accent-teal);   padding: 16px 22px; border-radius: 10px; margin-top: 14px; }
+        .warn-box    { background: rgba(243, 139, 168, 0.08); border: 2px solid var(--accent-red);    padding: 16px 22px; border-radius: 10px; margin-top: 14px; }
+        .question-box{ background: rgba(137, 180, 250, 0.10); border: 2px dashed var(--accent-blue); padding: 25px 30px; border-radius: 10px; margin-top: 16px; }
+        .answer-box  { background: rgba(166, 227, 161, 0.10); border: 2px solid var(--accent-green);  padding: 25px 30px; border-radius: 10px; margin-top: 16px; }
+        .answer-box h3 { color: var(--accent-green); font-size: 1.6em; margin-bottom: 14px; }
+
+        .author { position: absolute; bottom: 20px; left: 30px; font-size: 1em; color: var(--text-secondary); opacity: 0.6; }
+
+        /* ===== BINARY SEARCH SIMULATION ===== */
+        #bs-sim-container {
+            width: 100%; background: var(--code-bg); border-radius: 15px;
+            padding: 20px 20px 14px; border: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; margin-top: 12px;
+        }
+        .bs-msg { text-align: center; min-height: 54px; font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+
+        .bs-array-row { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 8px; }
+        .bs-cell-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .bs-cell {
+            width: 62px; height: 62px; border: 2px solid var(--border-color); border-radius: 10px;
+            background: rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: center;
+            font-family: 'Fira Code', monospace; font-size: 1.6em; font-weight: bold; color: var(--text-primary);
+            transition: all 0.35s ease; position: relative;
+        }
+        .bs-cell.eliminated { background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.07); }
+        .bs-cell.in-range   { background: rgba(137, 180, 250, 0.12); border-color: rgba(137,180,250,0.4); }
+        .bs-cell.mid-cell   { background: rgba(249, 226, 175, 0.18); border-color: var(--accent-yellow); color: var(--accent-yellow); transform: scale(1.12); box-shadow: 0 0 18px rgba(249,226,175,0.3); }
+        .bs-cell.found-cell { background: rgba(166, 227, 161, 0.22); border-color: var(--accent-green); color: var(--accent-green); transform: scale(1.18); box-shadow: 0 0 22px rgba(166,227,161,0.4); }
+        .bs-cell.not-found  { background: rgba(243,139,168,0.18); border-color: var(--accent-red); color: var(--accent-red); }
+
+        .bs-idx-label { font-family: 'Fira Code'; font-size: 1em; color: var(--text-secondary); }
+        .bs-pointer-row { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 14px; min-height: 28px; }
+        .bs-pointer-cell { width: 62px; display: flex; justify-content: center; align-items: flex-start; }
+        .bs-ptr-lo  { font-family: 'Fira Code'; font-size: 0.9em; color: var(--accent-teal); font-weight: bold; }
+        .bs-ptr-hi  { font-family: 'Fira Code'; font-size: 0.9em; color: var(--accent-red); font-weight: bold; }
+        .bs-ptr-mid { font-family: 'Fira Code'; font-size: 0.9em; color: var(--accent-yellow); font-weight: bold; }
+        .bs-ptr-lo-hi { font-family: 'Fira Code'; font-size: 0.8em; color: var(--accent-purple); font-weight: bold; line-height: 1.2; text-align: center; }
+
+        .bs-vars-row { display: flex; gap: 30px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .bs-var-badge {
+            font-family: 'Fira Code'; font-size: 1.05em; padding: 5px 18px; border-radius: 20px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+        }
+        .bs-var-badge .vname { color: var(--text-secondary); }
+        .bs-var-badge .vval  { color: var(--accent-yellow); margin-right: 6px; font-weight: bold; }
+        .bs-var-badge.lo-badge  { border-color: rgba(148,226,213,0.4); }
+        .bs-var-badge.hi-badge  { border-color: rgba(243,139,168,0.4); }
+        .bs-var-badge.mid-badge { border-color: rgba(249,226,175,0.4); }
+        .bs-var-badge.tgt-badge { border-color: rgba(203,166,247,0.4); }
+        .bs-var-badge .vname.lo  { color: var(--accent-teal); }
+        .bs-var-badge .vname.hi  { color: var(--accent-red); }
+        .bs-var-badge .vname.mid { color: var(--accent-yellow); }
+        .bs-var-badge .vname.tgt { color: var(--accent-purple); }
+
+        /* ===== LINEAR SEARCH SIMULATION ===== */
+        #lin-sim-container {
+            width: 100%; background: var(--code-bg); border-radius: 15px;
+            padding: 18px 20px 14px; border: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; margin-top: 10px;
+        }
+        .lin-msg { text-align: center; min-height: 48px; font-size: 1.25em; color: var(--accent-yellow); font-weight: bold; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .lin-array-row { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 6px; }
+        .lin-cell { width: 58px; height: 58px; border: 2px solid var(--border-color); border-radius: 10px; background: rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: center; font-family: 'Fira Code', monospace; font-size: 1.5em; font-weight: bold; color: var(--text-primary); transition: all 0.3s; }
+        .lin-cell.checked   { background: rgba(243,139,168,0.12); border-color: rgba(243,139,168,0.4); color: rgba(255,255,255,0.4); }
+        .lin-cell.current   { background: rgba(249,226,175,0.2); border-color: var(--accent-yellow); color: var(--accent-yellow); transform: scale(1.1); }
+        .lin-cell.found-lin { background: rgba(166,227,161,0.22); border-color: var(--accent-green); color: var(--accent-green); transform: scale(1.15); }
+
+        /* Shared sim controls */
+        .sim-controls { display: flex; justify-content: center; gap: 15px; margin-top: 12px; }
+        .sim-btn { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--accent-blue); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 1.1em; transition: all 0.2s; min-width: 120px; font-family: 'Tajawal', sans-serif; }
+        .sim-btn:hover:not(:disabled) { background: var(--accent-blue); color: var(--bg-body); }
+        .sim-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--border-color); }
+        .step-cnt { display: flex; align-items: center; font-family: 'Fira Code'; color: var(--accent-green); font-size: 1.1em; }
+
+        /* Comparison table */
+        .cmp-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 1.2em; }
+        .cmp-table th { padding: 12px 16px; text-align: center; font-size: 1.1em; }
+        .cmp-table td { padding: 11px 16px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); }
+        .cmp-table th:first-child, .cmp-table td:first-child { text-align: right; }
+        .cmp-table tr:last-child td { border-bottom: 1px solid var(--border-color); }
+        .th-lin  { color: var(--accent-red); }
+        .th-bin  { color: var(--accent-teal); }
+        .th-prop { color: var(--text-primary); }
+        td.good  { color: var(--accent-green); font-weight: bold; }
+        td.bad   { color: var(--accent-red); }
+
+        /* Trace array */
+        .trace-array { display: flex; justify-content: center; gap: 10px; margin: 12px 0; direction: ltr; }
+        .trace-cell { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: var(--code-bg); border: 2px solid var(--border-color); border-radius: 8px; font-family: 'Fira Code'; font-size: 1.3em; font-weight: bold; }
+        .trace-cell.sorted { border-color: var(--accent-green); background: rgba(166,227,161,0.1); }
+        .trace-cell.active { border-color: var(--accent-red); color: var(--accent-red); }
+
+        /* Navigation */
+        .nav-controls { display: flex; justify-content: space-between; align-items: center; width: 350px; margin-top: 10px; }
+        .nav-btn { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 50px; cursor: pointer; font-size: 1.2em; transition: all 0.2s; display: flex; align-items: center; gap: 10px; font-family: 'Tajawal', sans-serif; }
+        .nav-btn:hover { background: var(--accent-teal); color: var(--bg-body); }
+        .slide-num { font-size: 1.2em; color: var(--text-secondary); font-weight: bold; }
+
+        /* Print */
+        @media print {
+            body { height: auto; overflow: visible; background: white; }
+            .presentation { width: 100%; max-width: 100%; height: auto; margin: 0; border-radius: 0; box-shadow: none; border: none; overflow: visible; }
+            .slide { position: relative; opacity: 1 !important; visibility: visible !important; height: 85vh; page-break-after: always; border-bottom: 1px solid #ccc; }
+            .nav-controls, .progress-container { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 1: Title                                               -->
+    <!-- ============================================================ -->
+    <div class="slide active">
+        <h1>البحث الثنائي<br>(Binary Search)</h1>
+        <p style="text-align:center; font-size:1.5em; margin-top:10px;">
+            كيف نبحث بذكاء في نصف الوقت؟
+        </p>
+        <div style="text-align:center; margin-top: 28px; font-size: 1.25em; color: var(--text-secondary);">
+            <i class="fas fa-search" style="color: var(--accent-teal); margin-left: 10px;"></i>
+            مرتكزٌ على فكرة واحدة: <span class="hl-teal">التخلّص من نصف المصفوفة في كل خطوة</span>
+        </div>
+        <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 2: Motivation – phone book analogy                     -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-book-open"></i> فكرة من الحياة اليومية</h2>
+        <p>تخيّل أنك تبحث عن كلمة في قاموس يحتوي على <b>1000 صفحة</b>. هل تبدأ من الصفحة الأولى وتقرأ صفحة صفحة؟</p>
+        <p>بالطبع لا! أنت تفتح القاموس من <b>المنتصف</b>، وتقرر:</p>
+        <ul>
+            <li>إذا الكلمة التي تبحث عنها تأتي بعد الصفحة المفتوحة → تتجاهل <b>النصف الأيسر</b> كله.</li>
+            <li>إذا تأتي قبلها → تتجاهل <b>النصف الأيمن</b> كله.</li>
+            <li>تكرر هذا حتى تجد الكلمة.</li>
+        </ul>
+        <div class="insight-box">
+            <p>
+                <b><i class="fas fa-lightbulb"></i> هذا بالضبط هو البحث الثنائي!</b><br>
+                في كل خطوة تحذف <b>نصف</b> العناصر المتبقية. فبدلاً من فحص 1000 عنصر واحداً واحداً، تحتاج فقط إلى <b>10 خطوات</b> (لأن 2¹⁰ = 1024).
+            </p>
+        </div>
+        <div class="warn-box" style="margin-top: 12px;">
+            <p><b><i class="fas fa-exclamation-triangle"></i> شرط أساسي:</b> هذه الفكرة تعمل فقط لأن القاموس <b>مرتّب أبجدياً</b>. بدون ترتيب، لا يمكن أن نقرر أي نصف نتجاهله!</p>
+        </div>
+    </div>
+
+
+
+    <!-- ============================================================ -->
+    <!-- Slide 4: Algorithm Steps                                     -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-list-ol"></i> خطوات الخوارزمية</h2>
+        <p>البحث الثنائي يعمل على مصفوفة <b>مرتبة تصاعدياً</b> كالتالي:</p>
+        <ol>
+            <li>نُعرّف ثلاثة متغيرات: <span class="ltr-code" style="color:var(--accent-teal);">lo = 0</span>، <span class="ltr-code" style="color:var(--accent-red);">hi = arr.Length - 1</span>، <span class="ltr-code" style="color:var(--accent-yellow);">mid</span>.</li>
+            <li>طالما <span class="ltr-code">lo &lt;= hi</span>، نحسب الوسط: <span class="ltr-code" style="color:var(--accent-yellow);">mid = (lo + hi) / 2</span></li>
+            <li>نقارن <span class="ltr-code">arr[mid]</span> مع القيمة المطلوبة <span class="ltr-code" style="color:var(--accent-purple);">target</span>:
+                <ul style="margin-top: 6px;">
+                    <li>إذا <span class="ltr-code">arr[mid] == target</span> → <span class="hl-teal">وجدنا! نُعيد mid.</span></li>
+                    <li>إذا <span class="ltr-code">arr[mid] &lt; target</span> → نرفع الحد الأدنى: <span class="ltr-code" style="color:var(--accent-teal);">lo = mid + 1</span></li>
+                    <li>إذا <span class="ltr-code">arr[mid] &gt; target</span> → نخفض الحد الأعلى: <span class="ltr-code" style="color:var(--accent-red);">hi = mid - 1</span></li>
+                </ul>
+            </li>
+            <li>إذا خرجنا من الحلقة بدون إيجاد → <span class="hl-red">نُعيد ‎-1.</span></li>
+        </ol>
+        <div class="box-teal" style="margin-top:12px;">
+            <b>اللون الأخضر =</b> <span style="color:var(--accent-teal);">lo</span> &nbsp;|&nbsp;
+            <b>اللون الأحمر =</b> <span style="color:var(--accent-red);">hi</span> &nbsp;|&nbsp;
+            <b>اللون الأصفر =</b> <span style="color:var(--accent-yellow);">mid</span> &nbsp;|&nbsp;
+            <b>رمادي باهت =</b> نطاق محذوف
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 5: Binary Search SIMULATION                            -->
+    <!-- ============================================================ -->
+    <div class="slide" id="slide-bs">
+        <h2><i class="fas fa-eye"></i> محاكاة: ابحث عن <span class="ltr-code" style="color:var(--accent-purple); font-size:0.85em;">target = 33</span> في المصفوفة</h2>
+
+        <div id="bs-sim-container">
+            <div class="bs-msg" id="bs-msg">نبدأ: lo=0، hi=9. المصفوفة مرتبة وجاهزة للبحث.</div>
+            <div class="bs-vars-row" id="bs-vars-row">
+                <div class="bs-var-badge lo-badge"><span class="vname lo">lo</span> = <span class="vval" id="bv-lo">0</span></div>
+                <div class="bs-var-badge hi-badge"><span class="vname hi">hi</span> = <span class="vval" id="bv-hi">9</span></div>
+                <div class="bs-var-badge mid-badge"><span class="vname mid">mid</span> = <span class="vval" id="bv-mid">–</span></div>
+                <div class="bs-var-badge tgt-badge"><span class="vname tgt">target</span> = <span class="vval" id="bv-tgt">33</span></div>
+            </div>
+            <div class="bs-array-row" id="bs-arr-row"></div>
+            <div class="bs-pointer-row" id="bs-ptr-row"></div>
+            <div class="bs-array-row" id="bs-idx-row"></div>
+        </div>
+
+        <div class="sim-controls">
+            <button class="sim-btn" onclick="bsPrev()" id="btn-prev-bs" disabled><i class="fas fa-backward"></i> السابق</button>
+            <div class="step-cnt" id="step-cnt-bs">1 / 1</div>
+            <button class="sim-btn" onclick="bsNext()" id="btn-next-bs">التالي <i class="fas fa-forward"></i></button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 6: C# Code                                             -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-code"></i> كود C# الكامل</h2>
+        <div class="code-block"><span class="keyword">public static</span> <span class="type">int</span> BinarySearch(<span class="type">int</span>[] arr, <span class="type">int</span> target)
+{
+    <span class="type">int</span> lo  = 0;
+    <span class="type">int</span> hi  = arr.Length - 1;
+
+    <span class="keyword">while</span> (lo &lt;= hi)
+    {
+        <span class="type">int</span> mid = (lo + hi) / 2;
+
+        <span class="keyword">if</span> (arr[mid] == target)
+            <span class="keyword">return</span> <span class="ret">mid</span>;        <span class="comment">// وجدنا → نُعيد الفهرس</span>
+
+        <span class="keyword">else if</span> (arr[mid] &lt; target)
+            lo = mid + 1;     <span class="comment">// المطلوب في النصف الأيمن</span>
+
+        <span class="keyword">else</span>
+            hi = mid - 1;     <span class="comment">// المطلوب في النصف الأيسر</span>
+    }
+
+    <span class="keyword">return</span> <span class="ret">-1</span>;             <span class="comment">// لم نجده</span>
+}</div>
+        <div class="insight-box" style="margin-top: 10px;">
+            <p><b>ماذا تُعيد العملية؟</b> إذا وُجد العنصر تُعيد <b>فهرسه</b> (index). إذا لم يُوجد تُعيد <b>‎-1</b> — وهي الاتفاقية المعيارية للدلالة على "غير موجود".</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 7: Comparison – Binary vs Linear                       -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-balance-scale"></i> مقارنة: البحث الثنائي مقابل البحث الخطي</h2>
+
+        <div id="lin-sim-container">
+            <div class="lin-msg" id="lin-msg">البحث الخطي: نفحص العناصر واحداً واحداً. target = 33</div>
+            <div class="lin-array-row" id="lin-arr-row"></div>
+            <div class="lin-array-row" id="lin-idx-row" style="gap:8px; direction:ltr; justify-content:center; margin-bottom:6px;"></div>
+        </div>
+        <div class="sim-controls" style="margin-bottom: 10px;">
+            <button class="sim-btn" onclick="linPrev()" id="btn-prev-lin" disabled><i class="fas fa-backward"></i> السابق</button>
+            <div class="step-cnt" id="step-cnt-lin">1 / 1</div>
+            <button class="sim-btn" onclick="linNext()" id="btn-next-lin">التالي <i class="fas fa-forward"></i></button>
+        </div>
+
+        <table class="cmp-table">
+            <thead>
+                <tr>
+                    <th class="th-prop">المعيار</th>
+                    <th class="th-lin"><i class="fas fa-minus-circle"></i> بحث خطي</th>
+                    <th class="th-bin"><i class="fas fa-search"></i> بحث ثنائي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>شرط الاستخدام</td><td class="good">أي مصفوفة</td><td class="bad">مرتبة فقط</td></tr>
+                <tr><td>أسوأ حالة (100 عنصر)</td><td class="bad">100 مقارنة</td><td class="good">7 مقارنات</td></tr>
+                <tr><td>أسوأ حالة (1,000,000)</td><td class="bad">مليون مقارنة</td><td class="good">20 مقارنة</td></tr>
+                <tr><td>السرعة</td><td class="bad">بطيء على المصفوفات الكبيرة</td><td class="good">سريع جداً</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 8: Exercise 1 – Tracing                               -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> تمرين 1: متابعة</h2>
+        <div class="question-box">
+            <p>معطاة المصفوفة المرتبة التالية:</p>
+            <div class="trace-array">
+                <div class="trace-cell sorted">2</div>
+                <div class="trace-cell sorted">5</div>
+                <div class="trace-cell sorted">8</div>
+                <div class="trace-cell sorted">12</div>
+                <div class="trace-cell sorted">16</div>
+                <div class="trace-cell sorted">23</div>
+                <div class="trace-cell sorted">38</div>
+            </div>
+            <p style="text-align:center; margin-top:8px;">الفهارس:&nbsp;&nbsp;
+                <span class="ltr-code" style="font-size:0.85em; color:var(--text-secondary);">&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6</span>
+            </p>
+            <br>
+            <h3 style="color:var(--accent-blue);">نبحث عن <span class="ltr-code">target = 23</span>.
+            كم مقارنة يحتاجها البحث الثنائي حتى يجد العنصر؟ وما هو الفهرس الذي سيُعاد؟</h3>
+            <p style="font-size:1.1em; margin-top:14px;">تتبع الخطوات يدوياً، ثم انتقل للشريحة التالية.</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 9: Answer 1                                            -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 1</h2>
+        <div class="answer-box">
+            <h3>3 مقارنات فقط، يُعاد الفهرس 5</h3>
+            <div style="text-align:right; margin-top:14px;">
+                <p><b>التتبع:</b></p>
+                <ul>
+                    <li><b>الخطوة 1:</b> lo=0، hi=6 → mid=3 → arr[3]=12 &lt; 23 → <span class="ltr-code" style="color:var(--accent-teal);">lo = 4</span></li>
+                    <li><b>الخطوة 2:</b> lo=4، hi=6 → mid=5 → arr[5]=23 == 23 → <span class="hl-teal">وجدناه! نُعيد 5 ✔</span></li>
+                </ul>
+                <div class="box">في الواقع احتجنا مقارنتين فقط للوصول إليه. البحث الخطي كان سيحتاج <b>6 مقارنات</b> للوصول للعنصر نفسه.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 10: Exercise 2 – Not Found                            -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-question-circle"></i> تمرين 2: حالة "غير موجود"</h2>
+        <div class="question-box">
+            <p>نفس المصفوفة:</p>
+            <div class="trace-array">
+                <div class="trace-cell sorted">2</div>
+                <div class="trace-cell sorted">5</div>
+                <div class="trace-cell sorted">8</div>
+                <div class="trace-cell sorted">12</div>
+                <div class="trace-cell sorted">16</div>
+                <div class="trace-cell sorted">23</div>
+                <div class="trace-cell sorted">38</div>
+            </div>
+            <br>
+            <h3 style="color:var(--accent-blue);">
+                سؤال: ماذا ستُعيد العملية إذا بحثنا عن <span class="ltr-code">target = 10</span>؟ وكيف نعرف أن العنصر غير موجود؟
+            </h3>
+            <p style="font-size:1.1em; margin-top:14px;">تتبع الخطوات وراقب متى يصبح <span class="ltr-code" style="color:var(--accent-teal);">lo</span> أكبر من <span class="ltr-code" style="color:var(--accent-red);">hi</span>.</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 11: Answer 2                                           -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 2</h2>
+        <div class="answer-box">
+            <h3>العملية تُعيد <span class="ltr-code">-1</span></h3>
+            <div style="text-align:right; margin-top:14px;">
+                <p><b>التتبع:</b></p>
+                <ul>
+                    <li><b>الخطوة 1:</b> lo=0، hi=6 → mid=3 → arr[3]=12 &gt; 10 → <span class="ltr-code" style="color:var(--accent-red);">hi = 2</span></li>
+                    <li><b>الخطوة 2:</b> lo=0، hi=2 → mid=1 → arr[1]=5 &lt; 10 → <span class="ltr-code" style="color:var(--accent-teal);">lo = 2</span></li>
+                    <li><b>الخطوة 3:</b> lo=2، hi=2 → mid=2 → arr[2]=8 &lt; 10 → <span class="ltr-code" style="color:var(--accent-teal);">lo = 3</span></li>
+                    <li><b>الآن:</b> lo=3 &gt; hi=2 → نخرج من الحلقة → <span class="hl-red">نُعيد -1</span></li>
+                </ul>
+                <div class="box">شرط <span class="ltr-code">lo &lt;= hi</span> هو "صمام الأمان" الذي يوقف الحلقة عندما يضيق النطاق ونُدرك أن العنصر غير موجود.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 12: Exercise 3 – Challenge                            -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-trophy"></i> تمرين 3: تحدي البرمجة</h2>
+        <div class="question-box">
+            <p>الكود الأساسي يبحث في مصفوفة مرتبة <b>تصاعدياً</b>.</p>
+            <br>
+            <h3 style="color:var(--accent-blue);">
+                ما هو التعديل المطلوب في الكود لكي يعمل مع مصفوفة مرتبة <b>تنازلياً</b>؟
+            </h3>
+            <div class="code-block" style="display:inline-block; margin-top:14px;"><span class="keyword">else if</span> (arr[mid] <span class="highlight">???</span> target)
+    lo = mid + 1;
+<span class="keyword">else</span>
+    hi = mid - 1;</div>
+            <p style="font-size:1.1em; margin-top:14px;">تلميح: في الترتيب التنازلي، العناصر الأكبر تكون في اليسار. كيف يؤثر ذلك على قرارنا؟</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 13: Answer 3                                           -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 3</h2>
+        <div class="answer-box">
+            <h3>نعكس الشرط: نغير <code>&lt;</code> إلى <code>&gt;</code></h3>
+            <div class="code-block" style="margin-top:12px;"><span class="keyword">else if</span> (arr[mid] <span style="color:var(--accent-green); font-weight:bold;">&gt;</span> target)
+    lo = mid + 1;  <span class="comment">// المطلوب في النصف الأيمن (الأصغر)</span>
+<span class="keyword">else</span>
+    hi = mid - 1;  <span class="comment">// المطلوب في النصف الأيسر (الأكبر)</span></div>
+            <div style="text-align:right; margin-top:14px;">
+                <p><b>التفسير:</b></p>
+                <p>في الترتيب التصاعدي: إذا arr[mid] أصغر من target → نتجه يميناً (نرفع lo).</p>
+                <p>في الترتيب التنازلي: إذا arr[mid] أكبر من target → نتجه يميناً أيضاً (لأن اليمين أصغر الآن).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Slide 14: Conclusion                                         -->
+    <!-- ============================================================ -->
+    <div class="slide">
+        <div style="text-align:center; padding-top:30px;">
+            <i class="fas fa-graduation-cap" style="font-size:5em; color:var(--accent-yellow); margin-bottom:20px;"></i>
+            <h1 style="color:var(--text-primary);">نهاية الدرس</h1>
+            <p style="font-size:1.8em; color:var(--accent-teal); margin-top:10px;">كل التوفيق والنجاح!</p>
+            <br>
+            <div style="display:flex; gap:20px; justify-content:center; margin-top:10px; flex-wrap:wrap;">
+                <div class="box-teal" style="flex:1; min-width:200px; text-align:right;">
+                    <p><b>✔ البحث الثنائي:</b> في كل خطوة يُقلّص مساحة البحث إلى النصف، مما يجعله سريعاً جداً حتى على مصفوفات ضخمة.</p>
+                </div>
+                <div class="warn-box" style="flex:1; min-width:200px; text-align:right;">
+                    <p><b>⚠ الشرط:</b> المصفوفة <b>يجب</b> أن تكون مرتبة.</p>
+                </div>
+            </div>
+            <p style="font-size:1.1em; color:var(--text-secondary); margin-top:20px;">أرجو لكم عملاً ممتعاً! / الأستاذ محمود اغبارية</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="move(-1)"><i class="fas fa-arrow-right"></i> السابق</button>
+    <div class="slide-num" id="slideIndicator">1 / 14</div>
+    <button class="nav-btn" onclick="move(1)">التالي <i class="fas fa-arrow-left"></i></button>
+</div>
+
+<script>
+// ====================================================================
+// Presentation Engine
+// ====================================================================
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const indicator = document.getElementById('slideIndicator');
+const progressBar = document.getElementById('progressBar');
+
+function updateSlide() {
+    slides.forEach((s, i) => { s.classList.remove('active'); if (i === currentSlide) s.classList.add('active'); });
+    indicator.innerText = `${currentSlide + 1} / ${slides.length}`;
+    progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+    // Slide indices (0-based): 3=bs sim, 5=linear+comparison
+    if (currentSlide === 3) setTimeout(() => renderBsStep(bsStep), 50);
+    if (currentSlide === 5) setTimeout(() => renderLinStep(linStep), 50);
+}
+
+function move(dir) {
+    currentSlide = (currentSlide + dir + slides.length) % slides.length;
+    updateSlide();
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') move(1);
+    if (e.key === 'ArrowRight') move(-1);
+});
+
+// ====================================================================
+// Binary Search Simulation (Slide 5)
+// ====================================================================
+const BS_ARR    = [4, 8, 12, 17, 22, 28, 33, 41, 50, 60];
+const BS_TARGET = 33;
+let bsSteps = [], bsStep = 0;
+
+function buildBsSim() {
+    bsSteps = [];
+    let lo = 0, hi = BS_ARR.length - 1;
+    const N = BS_ARR.length;
+
+    function snap(lo, hi, mid, msg, foundIdx, notFound) {
+        const cells = BS_ARR.map((v, i) => {
+            if (foundIdx !== null && i === foundIdx) return { v, cls: 'found-cell' };
+            if (notFound) return { v, cls: 'eliminated' };
+            if (i < lo || i > hi) return { v, cls: 'eliminated' };
+            if (mid !== null && i === mid) return { v, cls: 'mid-cell' };
+            return { v, cls: 'in-range' };
+        });
+        const ptrs = Array.from({ length: N }, () => []);
+        if (lo !== null && lo <= N-1) ptrs[lo].push('lo');
+        if (hi !== null && hi >= 0)   ptrs[hi].push('hi');
+        if (mid !== null)              ptrs[mid].push('mid');
+        bsSteps.push({ cells, ptrs, lo, hi, mid: mid !== null ? mid : '–', msg, foundIdx });
+    }
+
+    snap(lo, hi, null, `نبدأ: lo=${lo}، hi=${hi}. المصفوفة جاهزة.`, null, false);
+
+    while (lo <= hi) {
+        let mid = Math.floor((lo + hi) / 2);
+        snap(lo, hi, mid, `نحسب mid = (${lo}+${hi})/2 = ${mid} → arr[${mid}] = ${BS_ARR[mid]}. نقارنه مع target=${BS_TARGET}.`, null, false);
+
+        if (BS_ARR[mid] === BS_TARGET) {
+            snap(lo, hi, mid, `🎉 arr[${mid}] = ${BS_ARR[mid]} == ${BS_TARGET}. وجدناه! نُعيد الفهرس ${mid}.`, mid, false);
+            return;
+        } else if (BS_ARR[mid] < BS_TARGET) {
+            snap(lo, hi, mid, `arr[${mid}]=${BS_ARR[mid]} < target=${BS_TARGET} → نتجه يميناً: lo = ${mid+1}.`, null, false);
+            lo = mid + 1;
+        } else {
+            snap(lo, hi, mid, `arr[${mid}]=${BS_ARR[mid]} > target=${BS_TARGET} → نتجه يساراً: hi = ${mid-1}.`, null, false);
+            hi = mid - 1;
+        }
+        if (lo <= hi) snap(lo, hi, null, `النطاق الجديد: lo=${lo}، hi=${hi}.`, null, false);
+    }
+    snap(lo, hi, null, `lo=${lo} > hi=${hi} → العنصر غير موجود. نُعيد -1.`, null, true);
+}
+
+function renderBsStep(idx) {
+    if (idx < 0) idx = 0; if (idx >= bsSteps.length) idx = bsSteps.length - 1;
+    bsStep = idx; const step = bsSteps[idx];
+
+    document.getElementById('bs-msg').innerHTML = step.msg;
+    document.getElementById('step-cnt-bs').innerText = `${idx+1} / ${bsSteps.length}`;
+    document.getElementById('bv-lo').innerText  = step.lo  !== null ? step.lo  : '–';
+    document.getElementById('bv-hi').innerText  = step.hi  !== null ? step.hi  : '–';
+    document.getElementById('bv-mid').innerText = step.mid !== undefined ? step.mid : '–';
+
+    const arrRow = document.getElementById('bs-arr-row');
+    const ptrRow = document.getElementById('bs-ptr-row');
+    const idxRow = document.getElementById('bs-idx-row');
+    arrRow.innerHTML = ''; ptrRow.innerHTML = ''; idxRow.innerHTML = '';
+
+    step.cells.forEach((c, i) => {
+        const wrap = document.createElement('div'); wrap.className = 'bs-cell-wrap';
+        const cell = document.createElement('div'); cell.className = `bs-cell ${c.cls}`; cell.innerText = c.v;
+        wrap.appendChild(cell); arrRow.appendChild(wrap);
+
+        const pw = document.createElement('div'); pw.className = 'bs-pointer-cell';
+        if (step.ptrs[i] && step.ptrs[i].length) {
+            const labels = step.ptrs[i];
+            if (labels.length === 1) {
+                const sp = document.createElement('span');
+                sp.className = labels[0] === 'lo' ? 'bs-ptr-lo' : labels[0] === 'hi' ? 'bs-ptr-hi' : 'bs-ptr-mid';
+                sp.innerText = '▲ ' + labels[0]; pw.appendChild(sp);
+            } else {
+                const sp = document.createElement('span'); sp.className = 'bs-ptr-lo-hi';
+                sp.innerHTML = labels.map(l => `▲${l}`).join('<br>'); pw.appendChild(sp);
+            }
+        }
+        ptrRow.appendChild(pw);
+
+        const il = document.createElement('div'); il.className = 'bs-idx-label'; il.innerText = i;
+        il.style.width = '62px'; il.style.textAlign = 'center'; idxRow.appendChild(il);
+    });
+
+    document.getElementById('btn-prev-bs').disabled = idx === 0;
+    document.getElementById('btn-next-bs').disabled = idx === bsSteps.length - 1;
+}
+function bsNext() { if (bsStep < bsSteps.length-1) renderBsStep(bsStep+1); }
+function bsPrev() { if (bsStep > 0) renderBsStep(bsStep-1); }
+
+// ====================================================================
+// Linear Search Simulation (Slide 7)
+// ====================================================================
+const LIN_ARR    = [4, 8, 12, 17, 22, 28, 33, 41, 50, 60];
+const LIN_TARGET = 33;
+let linSteps = [], linStep = 0;
+
+function buildLinSim() {
+    linSteps = [];
+    const N = LIN_ARR.length;
+    linSteps.push({ cells: LIN_ARR.map(v=>({v,cls:''})), msg: `البحث الخطي عن ${LIN_TARGET}: نبدأ من الفهرس 0.` });
+    for (let i = 0; i < N; i++) {
+        let cells = LIN_ARR.map((v, j) => ({ v, cls: j < i ? 'checked' : j === i ? 'current' : '' }));
+        linSteps.push({ cells, msg: `نفحص arr[${i}] = ${LIN_ARR[i]}. ${LIN_ARR[i] === LIN_TARGET ? '✔ وجدناه!' : `${LIN_ARR[i]} ≠ ${LIN_TARGET}. ننتقل للتالي.`}` });
+        if (LIN_ARR[i] === LIN_TARGET) {
+            let fc = LIN_ARR.map((v, j) => ({ v, cls: j < i ? 'checked' : j === i ? 'found-lin' : '' }));
+            linSteps.push({ cells: fc, msg: `🎉 وجدنا ${LIN_TARGET} في الفهرس ${i} — بعد ${i+1} مقارنات. البحث الثنائي احتاج 3 مقارنات فقط!` });
+            break;
+        }
+    }
+}
+
+function renderLinStep(idx) {
+    if (idx < 0) idx = 0; if (idx >= linSteps.length) idx = linSteps.length - 1;
+    linStep = idx; const step = linSteps[idx];
+    document.getElementById('lin-msg').innerHTML = step.msg;
+    document.getElementById('step-cnt-lin').innerText = `${idx+1} / ${linSteps.length}`;
+    const arrRow = document.getElementById('lin-arr-row');
+    const idxRow = document.getElementById('lin-idx-row');
+    arrRow.innerHTML = ''; idxRow.innerHTML = '';
+    step.cells.forEach((c, i) => {
+        const cell = document.createElement('div'); cell.className = `lin-cell ${c.cls}`; cell.innerText = c.v;
+        arrRow.appendChild(cell);
+        const il = document.createElement('div'); il.className = 'bs-idx-label'; il.innerText = i;
+        il.style.width = '58px'; il.style.textAlign = 'center'; idxRow.appendChild(il);
+    });
+    document.getElementById('btn-prev-lin').disabled = idx === 0;
+    document.getElementById('btn-next-lin').disabled = idx === linSteps.length - 1;
+}
+function linNext() { if (linStep < linSteps.length-1) renderLinStep(linStep+1); }
+function linPrev() { if (linStep > 0) renderLinStep(linStep-1); }
+
+// ====================================================================
+// Initialize
+// ====================================================================
+window.addEventListener('load', () => {
+    buildBsSim();
+    buildLinSim();
+    updateSlide();
+});
+
+window.addEventListener('resize', () => {
+    if (currentSlide === 3) renderBsStep(bsStep);
+    if (currentSlide === 5) renderLinStep(linStep);
+});
+</script>
+</body>
+</html>
