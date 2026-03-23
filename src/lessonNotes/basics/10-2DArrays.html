@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المصفوفة ثنائية الأبعاد</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+:root {
+  --bg-body:#1e1e2e; --bg-card:#252538; --text-primary:#ffffff; --text-secondary:#a6accd;
+  --accent-blue:#89b4fa; --accent-green:#a6e3a1; --accent-pink:#f5c2e7;
+  --accent-yellow:#f9e2af; --accent-red:#f38ba8; --accent-purple:#cba6f7;
+  --accent-teal:#94e2d5; --accent-orange:#fab387;
+  --code-bg:#11111b; --border-color:#313244;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;}
+body{background:var(--bg-body);color:var(--text-primary);display:flex;flex-direction:column;align-items:center;height:100vh;overflow:hidden;}
+.presentation{width:95%;max-width:1100px;height:85vh;margin-top:3vh;position:relative;background:var(--bg-card);border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,.3);border:1px solid var(--border-color);overflow:hidden;}
+.progress-container{width:100%;height:5px;background:var(--border-color);position:absolute;top:0;left:0;z-index:10;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent-orange),var(--accent-yellow));width:0%;transition:width .4s ease;}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;padding:32px 50px;opacity:0;visibility:hidden;transition:opacity .4s ease;display:flex;flex-direction:column;justify-content:center;}
+.slide.active{opacity:1;visibility:visible;}
+h1{font-size:2.8em;color:var(--accent-orange);text-align:center;margin-bottom:16px;}
+h2{font-size:1.95em;color:var(--accent-yellow);margin-bottom:16px;border-bottom:2px solid var(--border-color);padding-bottom:10px;display:flex;align-items:center;gap:12px;}
+p,li{font-size:1.32em;color:var(--text-secondary);line-height:1.8;margin-bottom:10px;}
+ul,ol{margin-right:36px;}
+.hl{color:var(--accent-yellow);font-weight:bold;}
+.hl-teal{color:var(--accent-teal);font-weight:bold;}
+.hl-red{color:var(--accent-red);font-weight:bold;}
+.hl-blue{color:var(--accent-blue);font-weight:bold;}
+.hl-orange{color:var(--accent-orange);font-weight:bold;}
+.ltr{direction:ltr;display:inline-block;font-family:'Fira Code',monospace;}
+/* Code */
+.code-block{background:var(--code-bg);padding:13px 18px;border-radius:10px;font-family:'Fira Code',monospace;font-size:1.1em;color:var(--text-primary);border:1px solid var(--border-color);direction:ltr;text-align:left;margin:8px 0;overflow-x:auto;line-height:1.65;white-space:pre;tab-size:4;}
+.kw{color:var(--accent-pink);}
+.ty{color:var(--accent-blue);}
+.cm{color:#6c7086;font-style:italic;}
+.str{color:var(--accent-green);}
+/* Boxes */
+.box{background:var(--bg-body);border-right:5px solid var(--accent-green);padding:12px 18px;border-radius:8px;margin-top:12px;}
+.box-blue{background:var(--bg-body);border-right:5px solid var(--accent-blue);padding:12px 18px;border-radius:8px;margin-top:12px;}
+.box-orange{background:var(--bg-body);border-right:5px solid var(--accent-orange);padding:12px 18px;border-radius:8px;margin-top:12px;}
+.insight{background:rgba(148,226,213,.07);border:2px solid var(--accent-teal);padding:14px 20px;border-radius:10px;margin-top:12px;}
+.warn{background:rgba(243,139,168,.07);border:2px solid var(--accent-red);padding:14px 20px;border-radius:10px;margin-top:12px;}
+.question-box{background:rgba(137,180,250,.09);border:2px dashed var(--accent-blue);padding:22px 26px;border-radius:10px;margin-top:14px;}
+.answer-box{background:rgba(166,227,161,.09);border:2px solid var(--accent-green);padding:22px 26px;border-radius:10px;margin-top:14px;}
+.answer-box h3{color:var(--accent-green);font-size:1.5em;margin-bottom:12px;}
+/* ── 2D GRID ── */
+.grid-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;direction:ltr;margin:10px 0;}
+.grid-row{display:flex;gap:4px;}
+.grid-cell{width:56px;height:56px;display:flex;align-items:center;justify-content:center;border:2px solid var(--border-color);border-radius:8px;font-family:'Fira Code',monospace;font-size:1.3em;font-weight:bold;background:rgba(255,255,255,.04);transition:all .3s ease;position:relative;}
+.grid-cell.active-row{background:rgba(249,226,175,.15);border-color:rgba(249,226,175,.5);}
+.grid-cell.active-col{background:rgba(148,226,213,.15);border-color:rgba(148,226,213,.5);}
+.grid-cell.current{background:rgba(250,179,135,.25);border-color:var(--accent-orange);color:var(--accent-orange);transform:scale(1.15);box-shadow:0 0 16px rgba(250,179,135,.4);z-index:2;}
+.grid-cell.visited{background:rgba(166,227,161,.12);border-color:rgba(166,227,161,.4);color:var(--accent-green);}
+.grid-cell.highlighted{background:rgba(137,180,250,.2);border-color:var(--accent-blue);color:var(--accent-blue);}
+.grid-cell.result-cell{background:rgba(203,166,247,.2);border-color:var(--accent-purple);color:var(--accent-purple);transform:scale(1.1);box-shadow:0 0 14px rgba(203,166,247,.3);}
+.row-label,.col-label{font-family:'Fira Code';font-size:.95em;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;width:56px;height:56px;}
+/* sim shared */
+.sim-box{background:var(--code-bg);border:1px solid var(--border-color);border-radius:14px;padding:16px 18px;margin-top:10px;display:flex;flex-direction:column;align-items:center;}
+.sim-msg{min-height:50px;font-size:1.25em;font-weight:bold;color:var(--accent-yellow);text-align:center;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.sim-vars{display:flex;gap:20px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
+.var-badge{font-family:'Fira Code';font-size:1em;padding:4px 16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--border-color);}
+.var-badge .vn{color:var(--text-secondary);}
+.var-badge .vv{color:var(--accent-yellow);font-weight:bold;margin-right:4px;}
+.sim-controls{display:flex;gap:14px;margin-top:12px;justify-content:center;}
+.sim-btn{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--accent-blue);padding:9px 18px;border-radius:8px;cursor:pointer;font-size:1.05em;transition:all .2s;min-width:110px;font-family:'Tajawal',sans-serif;}
+.sim-btn:hover:not(:disabled){background:var(--accent-blue);color:var(--bg-body);}
+.sim-btn:disabled{opacity:.4;cursor:not-allowed;border-color:var(--border-color);}
+.step-cnt{font-family:'Fira Code';color:var(--accent-green);font-size:1.05em;display:flex;align-items:center;}
+/* layout helpers */
+.two-col{display:flex;gap:20px;align-items:flex-start;margin-top:6px;}
+.two-col>*{flex:1;}
+/* nav */
+.nav-controls{display:flex;justify-content:space-between;align-items:center;width:350px;margin-top:10px;}
+.nav-btn{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);padding:14px 24px;border-radius:50px;cursor:pointer;font-size:1.15em;transition:all .2s;display:flex;align-items:center;gap:10px;font-family:'Tajawal',sans-serif;}
+.nav-btn:hover{background:var(--accent-orange);color:var(--bg-body);}
+.slide-num{font-size:1.15em;color:var(--text-secondary);font-weight:bold;}
+.author{position:absolute;bottom:18px;left:28px;font-size:.95em;color:var(--text-secondary);opacity:.55;}
+@media print{
+  body{height:auto;overflow:visible;}
+  .presentation{width:100%;max-width:100%;height:auto;margin:0;border-radius:0;box-shadow:none;border:none;overflow:visible;}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;height:85vh;page-break-after:always;border-bottom:1px solid #ccc;}
+  .nav-controls,.progress-container{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="presentation">
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 1 – Title                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide active">
+  <h1>المصفوفة ثنائية الأبعاد<br><span style="font-size:.65em;color:var(--accent-yellow);">Two-Dimensional Array</span></h1>
+  <p style="text-align:center;font-size:1.4em;margin-top:8px;">من الصف إلى الجدول — تنظيم البيانات في صفوف وأعمدة</p>
+  <div style="display:flex;justify-content:center;margin-top:22px;" id="title-grid"></div>
+  <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 2 – ما هي المصفوفة ثنائية الأبعاد؟               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-table"></i> ما هي المصفوفة ثنائية الأبعاد؟</h2>
+  <p>المصفوفة الأحادية تُشبه <b>صفاً واحداً</b> من الخانات. المصفوفة ثنائية الأبعاد تُشبه <b>جدولاً</b> — لها صفوف (rows) وأعمدة (columns).</p>
+  <div class="two-col" style="align-items:center;">
+    <div>
+      <p style="text-align:center;margin-bottom:6px;color:var(--accent-teal);">مصفوفة أحادية (5 عناصر)</p>
+      <div style="display:flex;justify-content:center;gap:4px;direction:ltr;">
+        <div class="grid-cell">10</div><div class="grid-cell">20</div><div class="grid-cell">30</div><div class="grid-cell">40</div><div class="grid-cell">50</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:2em;color:var(--accent-yellow);">→</div>
+    <div>
+      <p style="text-align:center;margin-bottom:6px;color:var(--accent-orange);">مصفوفة ثنائية (3×4)</p>
+      <div class="grid-wrap" id="intro-grid"></div>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:10px;">
+    <p><b><i class="fas fa-lightbulb"></i> التعريف:</b> المصفوفة ثنائية الأبعاد هي <b>مصفوفة من المصفوفات</b> — كل عنصر فيها هو صف (مصفوفة أحادية).</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 3 – الإعلان والتهيئة                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-code"></i> الإعلان والتهيئة</h2>
+  <div class="two-col">
+    <div>
+      <p style="color:var(--accent-teal);margin-bottom:4px;"><b>1. إعلان فارغ ثم تخصيص:</b></p>
+      <div class="code-block"><span class="ty">int</span>[,] mat;
+mat = <span class="kw">new</span> <span class="ty">int</span>[3, 4]; <span class="cm">// 3 صفوف، 4 أعمدة</span></div>
+      <p style="color:var(--accent-teal);margin-bottom:4px;margin-top:10px;"><b>2. إعلان وتخصيص في سطر واحد:</b></p>
+      <div class="code-block"><span class="ty">int</span>[,] mat = <span class="kw">new</span> <span class="ty">int</span>[3, 4];</div>
+      <p style="color:var(--accent-teal);margin-bottom:4px;margin-top:10px;"><b>3. إعلان بقيم مباشرة:</b></p>
+      <div class="code-block"><span class="ty">int</span>[,] mat = {
+  { 1,  2,  3,  4 },
+  { 5,  6,  7,  8 },
+  { 9, 10, 11, 12 }
+};</div>
+    </div>
+    <div>
+      <p style="color:var(--accent-orange);margin-bottom:4px;"><b>الجدول الناتج:</b></p>
+      <div id="decl-grid-wrap" style="display:flex;flex-direction:column;align-items:center;gap:4px;direction:ltr;margin-top:4px;">
+        <div style="display:flex;gap:4px;">
+          <div style="width:30px;"></div>
+          <div class="col-label" style="color:var(--accent-teal);">[0]</div>
+          <div class="col-label" style="color:var(--accent-teal);">[1]</div>
+          <div class="col-label" style="color:var(--accent-teal);">[2]</div>
+          <div class="col-label" style="color:var(--accent-teal);">[3]</div>
+        </div>
+      </div>
+      <div class="box-orange" style="margin-top:10px;">
+        <p><b>عدد الصفوف:</b> <span class="ltr">mat.GetLength(0)</span> → 3</p>
+        <p style="margin-bottom:0"><b>عدد الأعمدة:</b> <span class="ltr">mat.GetLength(1)</span> → 4</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 4 – الوصول إلى العناصر (تفاعلي)                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-access">
+  <h2><i class="fas fa-mouse-pointer"></i> الوصول إلى العناصر</h2>
+  <p>للوصول إلى عنصر نكتب: <span class="ltr" style="color:var(--accent-orange);">mat[row, col]</span> — صف أولاً، ثم عمود.</p>
+  <div class="two-col" style="align-items:flex-start;margin-top:4px;">
+    <div>
+      <div class="code-block"><span class="cm">// قراءة</span>
+<span class="ty">int</span> x = mat[<span style="color:var(--accent-yellow);">1</span>, <span style="color:var(--accent-teal);">2</span>]; <span class="cm">// = 7</span>
+
+<span class="cm">// كتابة</span>
+mat[<span style="color:var(--accent-yellow);">0</span>, <span style="color:var(--accent-teal);">3</span>] = 99;</div>
+      <div class="box" style="margin-top:10px;">
+        <p style="margin-bottom:4px;"><b>انقر على أي خلية لمعرفة فهرسها:</b></p>
+        <p id="access-feedback" style="font-family:'Fira Code';font-size:1.1em;color:var(--accent-orange);min-height:28px;margin-bottom:0;"></p>
+      </div>
+      <div class="warn" style="margin-top:10px;">
+        <p style="margin-bottom:0;"><b><i class="fas fa-exclamation-triangle"></i> تنبيه:</b> الفهارس تبدأ من <span class="ltr">0</span>. الصف 3 في مصفوفة 3 صفوف → <span class="ltr" style="color:var(--accent-red);">IndexOutOfRangeException</span>!</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div id="access-grid-wrap" style="direction:ltr;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 5 – المرور على المصفوفة (حلقات متداخلة)           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-traverse">
+  <h2><i class="fas fa-route"></i> المرور على المصفوفة — حلقات متداخلة</h2>
+  <div class="two-col" style="align-items:flex-start;">
+    <div>
+      <div class="code-block"><span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; mat.GetLength(0); i++)
+{
+  <span class="kw">for</span> (<span class="ty">int</span> j = 0; j &lt; mat.GetLength(1); j++)
+  {
+    <span class="cm">// معالجة mat[i, j]</span>
+    Console.Write(mat[i, j] + <span class="str">" "</span>);
+  }
+  Console.WriteLine();
+}</div>
+      <div class="box-blue" style="margin-top:8px;">
+        <p style="margin-bottom:2px;"><span class="ltr" style="color:var(--accent-yellow);">i</span> = رقم الصف &nbsp;|&nbsp; <span class="ltr" style="color:var(--accent-teal);">j</span> = رقم العمود</p>
+        <p style="margin-bottom:0;">الحلقة الخارجية تمر على الصفوف، الداخلية على الأعمدة.</p>
+      </div>
+    </div>
+    <div>
+      <div class="sim-box" id="sim-trav-box">
+        <div class="sim-msg" id="trav-msg">اضغط "التالي" لبدء المرور خلية خلية</div>
+        <div class="sim-vars">
+          <div class="var-badge"><span class="vn">i =</span><span class="vv" id="tv-i">–</span></div>
+          <div class="var-badge"><span class="vn">j =</span><span class="vv" id="tv-j">–</span></div>
+          <div class="var-badge"><span class="vn">mat[i,j] =</span><span class="vv" id="tv-val">–</span></div>
+        </div>
+        <div id="trav-grid-wrap" style="direction:ltr;"></div>
+      </div>
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="travPrev()" id="btn-prev-tv" disabled><i class="fas fa-backward"></i> السابق</button>
+        <div class="step-cnt" id="step-cnt-tv">1 / 1</div>
+        <button class="sim-btn" onclick="travNext()" id="btn-next-tv">التالي <i class="fas fa-forward"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 6 – تمرين 1                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-question-circle"></i> تمرين 1</h2>
+  <div class="question-box">
+    <p>معطاة المصفوفة:</p>
+    <div style="display:flex;justify-content:center;gap:4px;direction:ltr;margin:10px 0;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;gap:4px;"><div class="grid-cell">1</div><div class="grid-cell">2</div><div class="grid-cell">3</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">4</div><div class="grid-cell">5</div><div class="grid-cell">6</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">7</div><div class="grid-cell">8</div><div class="grid-cell">9</div></div>
+      </div>
+    </div>
+    <ol style="margin-top:8px;">
+      <li>ما قيمة <span class="ltr">mat[2, 1]</span>؟</li>
+      <li>ما الفهرس <span class="ltr">[row, col]</span> للقيمة 6؟</li>
+      <li>ما ناتج <span class="ltr">mat.GetLength(0)</span>؟ وما ناتج <span class="ltr">mat.GetLength(1)</span>؟</li>
+      <li>أكتب سطر كود يضع القيمة 99 في الزاوية اليمنى السفلى.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 7 – إجابة تمرين 1                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 1</h2>
+  <div class="answer-box">
+    <ol style="margin-top:4px;">
+      <li><span class="ltr">mat[2, 1]</span> = <b style="color:var(--accent-orange);">8</b> &nbsp;(الصف 2، العمود 1)</li>
+      <li>القيمة 6 في الفهرس <b style="color:var(--accent-orange);">[1, 2]</b> &nbsp;(الصف 1، العمود 2)</li>
+      <li><span class="ltr">mat.GetLength(0)</span> = <b>3</b> &nbsp;(عدد الصفوف) &nbsp;|&nbsp; <span class="ltr">mat.GetLength(1)</span> = <b>3</b> &nbsp;(عدد الأعمدة)</li>
+      <li><div class="code-block" style="display:inline-block;padding:6px 12px;margin-top:4px;">mat[2, 2] = 99;</div><br>لأن الزاوية السفلى اليمنى هي الفهرس <span class="ltr">[rows-1, cols-1] = [2, 2]</span></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 8 – تمرير المصفوفة لعملية خارجية                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-share-square"></i> تمرير المصفوفة لعملية خارجية</h2>
+  <p>نُمرِّر المصفوفة ثنائية الأبعاد تماماً كالأحادية — نكتب النوع مع <span class="ltr" style="color:var(--accent-orange);">[,]</span>:</p>
+  <div class="two-col" style="align-items:flex-start;margin-top:4px;">
+    <div>
+      <div class="code-block"><span class="cm">// عملية تحسب مجموع كل عناصر المصفوفة</span>
+<span class="kw">public static</span> <span class="ty">int</span> Sum(<span class="ty">int</span>[,] mat)
+{
+    <span class="ty">int</span> total = 0;
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; mat.GetLength(0); i++)
+        <span class="kw">for</span> (<span class="ty">int</span> j = 0; j &lt; mat.GetLength(1); j++)
+            total += mat[i, j];
+    <span class="kw">return</span> total;
+}
+
+<span class="cm">// الاستدعاء:</span>
+<span class="ty">int</span> s = Sum(mat);</div>
+    </div>
+    <div>
+      <div class="insight">
+        <p><b><i class="fas fa-lightbulb"></i> ملاحظات مهمة:</b></p>
+        <ul style="margin-top:6px;">
+          <li>المصفوفة تُمرَّر <b>بالمرجع</b> — أي تعديل داخل العملية يؤثر على الأصل.</li>
+          <li>لا نحتاج لتمرير أبعاد المصفوفة — نستخدم <span class="ltr">GetLength()</span> داخل العملية مباشرةً.</li>
+        </ul>
+      </div>
+      <div class="box-orange" style="margin-top:10px;">
+        <p style="margin-bottom:2px;"><b>مقارنة مع الأحادية:</b></p>
+        <p class="ltr" style="font-family:'Fira Code';font-size:1em;margin-bottom:2px;">int[]  arr  → int[] arr</p>
+        <p class="ltr" style="font-family:'Fira Code';font-size:1em;margin-bottom:0;">int[,] mat  → int[,] mat</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 9 – محاكاة: مجموع كل صف                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-rowsum">
+  <h2><i class="fas fa-eye"></i> محاكاة: حساب مجموع كل صف</h2>
+  <div class="two-col" style="align-items:flex-start;">
+    <div>
+      <div class="code-block"><span class="kw">public static void</span> PrintRowSums(<span class="ty">int</span>[,] mat)
+{
+  <span class="kw">for</span> (<span class="ty">int</span> i=0; i&lt;mat.GetLength(0); i++)
+  {
+    <span class="ty">int</span> sum = 0;
+    <span class="kw">for</span> (<span class="ty">int</span> j=0; j&lt;mat.GetLength(1); j++)
+      sum += mat[i, j];
+    Console.WriteLine(<span class="str">"Row "</span>+i+<span class="str">": "</span>+sum);
+  }
+}</div>
+    </div>
+    <div>
+      <div class="sim-box" id="sim-rowsum-box">
+        <div class="sim-msg" id="rs-msg">اضغط "التالي" لبدء حساب مجموع كل صف</div>
+        <div class="sim-vars">
+          <div class="var-badge"><span class="vn">i =</span><span class="vv" id="rs-i">–</span></div>
+          <div class="var-badge"><span class="vn">j =</span><span class="vv" id="rs-j">–</span></div>
+          <div class="var-badge"><span class="vn">sum =</span><span class="vv" id="rs-sum">–</span></div>
+        </div>
+        <div id="rowsum-grid-wrap" style="direction:ltr;"></div>
+      </div>
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="rsPrev()" id="btn-prev-rs" disabled><i class="fas fa-backward"></i> السابق</button>
+        <div class="step-cnt" id="step-cnt-rs">1 / 1</div>
+        <button class="sim-btn" onclick="rsNext()" id="btn-next-rs">التالي <i class="fas fa-forward"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 10 – إعادة مصفوفة ثنائية من عملية خارجية          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-undo-alt"></i> إعادة مصفوفة ثنائية من عملية خارجية</h2>
+  <p>نكتب النوع المُعاد <span class="ltr" style="color:var(--accent-orange);">int[,]</span> قبل اسم العملية، ونستخدم <span class="ltr">return</span> كالمعتاد:</p>
+  <div class="code-block"><span class="cm">// عملية تُنشئ مصفوفة هويّة (1 على القطر، 0 في بقية المواضع)</span>
+<span class="kw">public static</span> <span class="ty">int</span>[,] CreateIdentity(<span class="ty">int</span> n)
+{
+    <span class="ty">int</span>[,] mat = <span class="kw">new</span> <span class="ty">int</span>[n, n];
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; n; i++)
+        mat[i, i] = 1;          <span class="cm">// القطر الرئيسي</span>
+    <span class="kw">return</span> mat;
+}
+
+<span class="cm">// الاستدعاء:</span>
+<span class="ty">int</span>[,] identity = CreateIdentity(3);</div>
+  <div class="two-col" style="margin-top:10px;align-items:center;">
+    <div class="insight">
+      <p><b>نفس الفكرة كالمصفوفة الأحادية:</b></p>
+      <ul style="margin-top:4px;">
+        <li>نُنشئ المصفوفة داخل العملية بـ <span class="ltr">new</span></li>
+        <li>نملأها بالقيم المطلوبة</li>
+        <li>نُعيدها بـ <span class="ltr">return</span></li>
+      </ul>
+    </div>
+    <div>
+      <p style="text-align:center;color:var(--accent-orange);margin-bottom:6px;"><b>الناتج CreateIdentity(3):</b></p>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;direction:ltr;">
+        <div style="display:flex;gap:4px;"><div class="grid-cell highlighted">1</div><div class="grid-cell">0</div><div class="grid-cell">0</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">0</div><div class="grid-cell highlighted">1</div><div class="grid-cell">0</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">0</div><div class="grid-cell">0</div><div class="grid-cell highlighted">1</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 11 – محاكاة: نسخ مصفوفة                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-copy">
+  <h2><i class="fas fa-copy"></i> محاكاة: عملية تُنشئ نسخة من المصفوفة</h2>
+  <div class="two-col" style="align-items:flex-start;">
+    <div>
+      <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span>[,] CopyMatrix(<span class="ty">int</span>[,] src)
+{
+  <span class="ty">int</span> rows = src.GetLength(0);
+  <span class="ty">int</span> cols = src.GetLength(1);
+  <span class="ty">int</span>[,] dst = <span class="kw">new</span> <span class="ty">int</span>[rows, cols];
+
+  <span class="kw">for</span> (<span class="ty">int</span> i=0; i&lt;rows; i++)
+    <span class="kw">for</span> (<span class="ty">int</span> j=0; j&lt;cols; j++)
+      dst[i,j] = src[i,j];
+
+  <span class="kw">return</span> dst;
+}</div>
+      <div class="box" style="margin-top:8px;">
+        <p style="margin-bottom:0;">في المحاكاة: كل خلية تُنسخ من <span style="color:var(--accent-yellow);">src</span> إلى <span style="color:var(--accent-purple);">dst</span> واحدةً تلو الأخرى.</p>
+      </div>
+    </div>
+    <div>
+      <div class="sim-box">
+        <div class="sim-msg" id="copy-msg">اضغط "التالي" لمشاهدة عملية النسخ خلية بخلية</div>
+        <div style="display:flex;gap:24px;align-items:flex-start;direction:ltr;">
+          <div>
+            <p style="text-align:center;color:var(--accent-yellow);font-size:.95em;margin-bottom:4px;">src</p>
+            <div id="copy-src-wrap" style="display:flex;flex-direction:column;gap:4px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:1.8em;color:var(--accent-green);padding-top:16px;">→</div>
+          <div>
+            <p style="text-align:center;color:var(--accent-purple);font-size:.95em;margin-bottom:4px;">dst</p>
+            <div id="copy-dst-wrap" style="display:flex;flex-direction:column;gap:4px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="copyPrev()" id="btn-prev-cp" disabled><i class="fas fa-backward"></i> السابق</button>
+        <div class="step-cnt" id="step-cnt-cp">1 / 1</div>
+        <button class="sim-btn" onclick="copyNext()" id="btn-next-cp">التالي <i class="fas fa-forward"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 12 – تمرين 2                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-question-circle"></i> تمرين 2 — كتابة كود</h2>
+  <div class="question-box">
+    <p>اكتب عملية خارجية <span class="ltr" style="color:var(--accent-orange);">FindMax</span> تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد <span class="ltr">mat</span>، وتُعيد أكبر قيمة فيها.</p>
+    <div style="display:flex;justify-content:center;margin-top:10px;gap:4px;direction:ltr;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;gap:4px;"><div class="grid-cell">3</div><div class="grid-cell">7</div><div class="grid-cell">1</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">9</div><div class="grid-cell">2</div><div class="grid-cell">5</div></div>
+        <div style="display:flex;gap:4px;"><div class="grid-cell">4</div><div class="grid-cell">8</div><div class="grid-cell">6</div></div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.8em;color:var(--accent-yellow);padding:0 16px;">→</div>
+      <div style="display:flex;align-items:center;font-size:1.5em;">تُعيد <span style="color:var(--accent-orange);margin-right:8px;font-family:'Fira Code';">9</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 13 – إجابة تمرين 2                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 2</h2>
+  <div class="answer-box">
+    <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span> FindMax(<span class="ty">int</span>[,] mat)
+{
+    <span class="ty">int</span> max = mat[0, 0]; <span class="cm">// نبدأ بافتراض أن أول عنصر هو الأكبر</span>
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; mat.GetLength(0); i++)
+        <span class="kw">for</span> (<span class="ty">int</span> j = 0; j &lt; mat.GetLength(1); j++)
+            <span class="kw">if</span> (mat[i, j] &gt; max)
+                max = mat[i, j];
+
+    <span class="kw">return</span> max;
+}</div>
+    <div class="box" style="margin-top:10px;">
+      <p style="margin-bottom:0;"><b>الفكرة:</b> نفس فكرة إيجاد الأكبر في مصفوفة أحادية — لكن بحلقتين متداخلتين بدلاً من واحدة.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 14 – تمرين 3: عملية تُعيد مصفوفة                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-question-circle"></i> تمرين 3 — عملية تُعيد مصفوفة</h2>
+  <div class="question-box">
+    <p>اكتب عملية خارجية <span class="ltr" style="color:var(--accent-orange);">Transpose</span> تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد <b>مربّعة</b> (n×n)، وتُعيد <b>منقولتها</b> — أي تبديل الصفوف بالأعمدة.</p>
+    <div style="display:flex;justify-content:center;margin-top:10px;gap:20px;direction:ltr;align-items:center;">
+      <div>
+        <p style="text-align:center;color:var(--accent-yellow);margin-bottom:4px;">المصفوفة الأصلية</p>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;gap:4px;"><div class="grid-cell">1</div><div class="grid-cell">2</div><div class="grid-cell">3</div></div>
+          <div style="display:flex;gap:4px;"><div class="grid-cell">4</div><div class="grid-cell">5</div><div class="grid-cell">6</div></div>
+          <div style="display:flex;gap:4px;"><div class="grid-cell">7</div><div class="grid-cell">8</div><div class="grid-cell">9</div></div>
+        </div>
+      </div>
+      <div style="font-size:2em;color:var(--accent-green);">→</div>
+      <div>
+        <p style="text-align:center;color:var(--accent-orange);margin-bottom:4px;">بعد النقل</p>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;gap:4px;"><div class="grid-cell result-cell">1</div><div class="grid-cell result-cell">4</div><div class="grid-cell result-cell">7</div></div>
+          <div style="display:flex;gap:4px;"><div class="grid-cell result-cell">2</div><div class="grid-cell result-cell">5</div><div class="grid-cell result-cell">8</div></div>
+          <div style="display:flex;gap:4px;"><div class="grid-cell result-cell">3</div><div class="grid-cell result-cell">6</div><div class="grid-cell result-cell">9</div></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:8px;font-size:1.1em;">لاحظ: العنصر الذي كان في <span class="ltr">[i, j]</span> أصبح في <span class="ltr">[j, i]</span>.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 15 – إجابة تمرين 3                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 3</h2>
+  <div class="answer-box">
+    <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span>[,] Transpose(<span class="ty">int</span>[,] mat)
+{
+    <span class="ty">int</span> n = mat.GetLength(0); <span class="cm">// مصفوفة مربّعة → نفس البُعدين</span>
+    <span class="ty">int</span>[,] result = <span class="kw">new</span> <span class="ty">int</span>[n, n];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; n; i++)
+        <span class="kw">for</span> (<span class="ty">int</span> j = 0; j &lt; n; j++)
+            result[j, i] = mat[i, j]; <span class="cm">// نقلب الفهارس</span>
+
+    <span class="kw">return</span> result;
+}</div>
+    <div class="box" style="margin-top:10px;">
+      <p style="margin-bottom:0;"><b>المفتاح:</b> السطر <span class="ltr">result[j, i] = mat[i, j]</span> — ببساطة نعكس الفهرسين عند النسخ.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 16 – تمرين 4: مجموع الأسطر                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <h2><i class="fas fa-question-circle"></i> تمرين 4 — عملية تُعيد مصفوفة أحادية</h2>
+  <div class="question-box">
+    <p>
+      اكتب عملية خارجية <span class="ltr" style="color:var(--accent-orange);">RowSums</span> تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد <span class="ltr">mat</span>،
+      وتُعيد <b>مصفوفة أحادية</b> بحيث يحتوي العنصر <span class="ltr">i</span> على مجموع عناصر الصف <span class="ltr">i</span> في المصفوفة الثنائية.
+    </p>
+    <div style="display:flex;justify-content:center;margin-top:12px;gap:24px;direction:ltr;align-items:center;flex-wrap:wrap;">
+      <div>
+        <p style="text-align:center;color:var(--accent-yellow);margin-bottom:6px;">mat (3×4)</p>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;gap:4px;">
+            <div class="grid-cell active-row">1</div><div class="grid-cell active-row">2</div>
+            <div class="grid-cell active-row">3</div><div class="grid-cell active-row">4</div>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <div class="grid-cell">5</div><div class="grid-cell">6</div>
+            <div class="grid-cell">7</div><div class="grid-cell">8</div>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <div class="grid-cell">9</div><div class="grid-cell">10</div>
+            <div class="grid-cell">11</div><div class="grid-cell">12</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:2em;color:var(--accent-green);">→</div>
+      <div>
+        <p style="text-align:center;color:var(--accent-orange);margin-bottom:6px;">النتيجة (مصفوفة أحادية)</p>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div class="grid-cell result-cell" style="width:60px;">10</div>
+            <span style="color:var(--text-secondary);">← 1+2+3+4</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div class="grid-cell" style="width:60px;border-color:var(--border-color);">26</div>
+            <span style="color:var(--text-secondary);">← 5+6+7+8</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div class="grid-cell" style="width:60px;border-color:var(--border-color);">42</div>
+            <span style="color:var(--text-secondary);">← 9+10+11+12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 17 – إجابة + محاكاة تمرين 4                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-rowsums-sim">
+  <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 4 — مع محاكاة</h2>
+  <div class="two-col" style="align-items:flex-start;">
+    <div>
+      <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span>[] RowSums(<span class="ty">int</span>[,] mat)
+{
+    <span class="ty">int</span> rows = mat.GetLength(0);
+    <span class="ty">int</span> cols = mat.GetLength(1);
+    <span class="ty">int</span>[] sums = <span class="kw">new</span> <span class="ty">int</span>[rows];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i &lt; rows; i++)
+        <span class="kw">for</span> (<span class="ty">int</span> j = 0; j &lt; cols; j++)
+            sums[i] += mat[i, j];
+
+    <span class="kw">return</span> sums;
+}</div>
+      <div class="insight" style="margin-top:8px;">
+        <p style="margin-bottom:4px;"><b>نقاط مهمة:</b></p>
+        <ul style="margin-top:4px;">
+          <li>العملية تُعيد <span class="ltr" style="color:var(--accent-orange);">int[]</span> (أحادية) وليس <span class="ltr">int[,]</span></li>
+          <li>حجم المصفوفة المُعادة = عدد الصفوف فقط</li>
+          <li><span class="ltr">sums[i]</span> يتراكم مع كل عنصر في الصف <span class="ltr">i</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sim-box">
+        <div class="sim-msg" id="rsa-msg">اضغط "التالي" لمشاهدة بناء المصفوفة الأحادية</div>
+        <div class="sim-vars">
+          <div class="var-badge"><span class="vn">i =</span><span class="vv" id="rsa-i">–</span></div>
+          <div class="var-badge"><span class="vn">j =</span><span class="vv" id="rsa-j">–</span></div>
+          <div class="var-badge"><span class="vn">sums[i] =</span><span class="vv" id="rsa-sum">–</span></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;direction:ltr;">
+          <div>
+            <p style="text-align:center;color:var(--accent-yellow);font-size:.9em;margin-bottom:4px;">mat</p>
+            <div id="rsa-mat-wrap" style="display:flex;flex-direction:column;gap:4px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:1.6em;color:var(--accent-green);padding-top:12px;">→</div>
+          <div>
+            <p style="text-align:center;color:var(--accent-orange);font-size:.9em;margin-bottom:4px;">sums[]</p>
+            <div id="rsa-arr-wrap" style="display:flex;flex-direction:column;gap:4px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="rsaPrev()" id="btn-prev-rsa" disabled><i class="fas fa-backward"></i> السابق</button>
+        <div class="step-cnt" id="step-cnt-rsa">1 / 1</div>
+        <button class="sim-btn" onclick="rsaNext()" id="btn-next-rsa">التالي <i class="fas fa-forward"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- Slide 18 – ملخص                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div style="text-align:center;padding-top:20px;">
+    <i class="fas fa-graduation-cap" style="font-size:4em;color:var(--accent-yellow);margin-bottom:16px;"></i>
+    <h1 style="color:var(--text-primary);">ملخص الدرس</h1>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap;">
+    <div class="box-orange" style="flex:1;min-width:200px;">
+      <p style="margin-bottom:4px;"><b>الإعلان</b></p>
+      <p class="ltr" style="font-family:'Fira Code';font-size:.95em;margin-bottom:0;">int[,] mat = new int[r, c];</p>
+    </div>
+    <div class="box-blue" style="flex:1;min-width:200px;">
+      <p style="margin-bottom:4px;"><b>الوصول</b></p>
+      <p class="ltr" style="font-family:'Fira Code';font-size:.95em;margin-bottom:0;">mat[i, j]</p>
+    </div>
+    <div class="box" style="flex:1;min-width:200px;">
+      <p style="margin-bottom:4px;"><b>الأبعاد</b></p>
+      <p class="ltr" style="font-family:'Fira Code';font-size:.9em;margin-bottom:0;">GetLength(0) → صفوف<br>GetLength(1) → أعمدة</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;">
+    <div class="box" style="flex:1;min-width:200px;border-color:var(--accent-purple);">
+      <p style="margin-bottom:4px;"><b>التمرير</b></p>
+      <p class="ltr" style="font-family:'Fira Code';font-size:.9em;margin-bottom:0;">Method(int[,] mat)</p>
+    </div>
+    <div class="box" style="flex:1;min-width:200px;border-color:var(--accent-orange);">
+      <p style="margin-bottom:4px;"><b>الإعادة</b></p>
+      <p class="ltr" style="font-family:'Fira Code';font-size:.9em;margin-bottom:0;">public static int[,] Method(...)</p>
+    </div>
+    <div class="box" style="flex:1;min-width:200px;">
+      <p style="margin-bottom:4px;"><b>المرور</b></p>
+      <p style="font-size:1em;margin-bottom:0;">حلقتان متداخلتان — خارجية للصفوف، داخلية للأعمدة</p>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:1.1em;color:var(--text-secondary);margin-top:18px;">أرجو لكم عملاً ممتعاً! / الأستاذ محمود اغبارية</p>
+</div>
+
+</div><!-- end .presentation -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="move(-1)"><i class="fas fa-arrow-right"></i> السابق</button>
+  <div class="slide-num" id="slideIndicator">1 / 16</div>
+  <button class="nav-btn" onclick="move(1)">التالي <i class="fas fa-arrow-left"></i></button>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// Presentation engine
+// ─────────────────────────────────────────
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const indicator = document.getElementById('slideIndicator');
+const progressBar = document.getElementById('progressBar');
+
+const SLIDE_TRAVERSE = 4;  // 0-based
+const SLIDE_ROWSUM   = 8;
+const SLIDE_COPY     = 10;
+const SLIDE_ACCESS   = 3;
+const SLIDE_RSA      = 16; // new: RowSums sim slide
+
+function updateSlide() {
+  slides.forEach((s,i)=>{ s.classList.remove('active'); if(i===currentSlide) s.classList.add('active'); });
+  indicator.innerText = `${currentSlide+1} / ${slides.length}`;
+  progressBar.style.width = `${((currentSlide+1)/slides.length)*100}%`;
+  if(currentSlide===SLIDE_TRAVERSE) setTimeout(()=>renderTrav(travStep),60);
+  if(currentSlide===SLIDE_ROWSUM)   setTimeout(()=>renderRs(rsStep),60);
+  if(currentSlide===SLIDE_COPY)     setTimeout(()=>renderCopy(copyStep),60);
+  if(currentSlide===SLIDE_RSA)      setTimeout(()=>renderRsa(rsaStep),60);
+}
+function move(dir){
+  currentSlide=(currentSlide+dir+slides.length)%slides.length;
+  updateSlide();
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')move(1);
+  if(e.key==='ArrowRight')move(-1);
+});
+
+// ─────────────────────────────────────────
+// Shared matrix data
+// ─────────────────────────────────────────
+const MAT3x4 = [[1,2,3,4],[5,6,7,8],[9,10,11,12]];
+const MAT3x3_RS = [[2,4,1],[3,5,2],[1,3,4]];
+const MAT3x3_CP = [[7,2,5],[1,8,3],[4,6,9]];
+
+// ─────────────────────────────────────────
+// Helper: build grid HTML into a container
+// ─────────────────────────────────────────
+function buildGrid(container, mat, cellCls){
+  container.innerHTML='';
+  mat.forEach((row,i)=>{
+    const rowEl=document.createElement('div');
+    rowEl.style.cssText='display:flex;gap:4px;';
+    row.forEach((val,j)=>{
+      const c=document.createElement('div');
+      c.className='grid-cell'+(cellCls?' '+cellCls:'');
+      c.id=`${container.id}-r${i}c${j}`;
+      c.innerText=val;
+      rowEl.appendChild(c);
+    });
+    container.appendChild(rowEl);
+  });
+}
+
+// ─────────────────────────────────────────
+// Slide 1: title decorative grid
+// ─────────────────────────────────────────
+(function(){
+  const g=document.getElementById('title-grid');
+  const data=[[4,8,3,1],[7,2,9,5],[6,11,14,2]];
+  const colors=['var(--accent-orange)','var(--accent-yellow)','var(--accent-teal)','var(--accent-blue)','var(--accent-purple)','var(--accent-green)','var(--accent-pink)'];
+  const wrap=document.createElement('div');
+  wrap.style.cssText='display:flex;flex-direction:column;gap:4px;direction:ltr;';
+  data.forEach(row=>{
+    const r=document.createElement('div'); r.style.cssText='display:flex;gap:4px;';
+    row.forEach(v=>{
+      const c=document.createElement('div'); c.className='grid-cell';
+      c.style.borderColor=colors[Math.floor(Math.random()*colors.length)];
+      c.style.color='rgba(255,255,255,0.7)'; c.innerText=v;
+      r.appendChild(c);
+    });
+    wrap.appendChild(r);
+  });
+  g.appendChild(wrap);
+})();
+
+// ─────────────────────────────────────────
+// Slide 2: intro grid
+// ─────────────────────────────────────────
+(function(){
+  const g=document.getElementById('intro-grid');
+  MAT3x4.forEach(row=>{
+    const r=document.createElement('div'); r.style.cssText='display:flex;gap:4px;';
+    row.forEach(v=>{
+      const c=document.createElement('div'); c.className='grid-cell'; c.innerText=v;
+      r.appendChild(c);
+    });
+    g.appendChild(r);
+  });
+})();
+
+// ─────────────────────────────────────────
+// Slide 3: declaration grid with labels
+// ─────────────────────────────────────────
+(function(){
+  const w=document.getElementById('decl-grid-wrap');
+  MAT3x4.forEach((row,i)=>{
+    const r=document.createElement('div'); r.style.cssText='display:flex;gap:4px;';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='width:30px;display:flex;align-items:center;justify-content:flex-end;padding-left:4px;font-family:"Fira Code";font-size:.9em;color:var(--accent-yellow);';
+    lbl.innerText=`[${i}]`; r.appendChild(lbl);
+    row.forEach(v=>{ const c=document.createElement('div'); c.className='grid-cell'; c.innerText=v; r.appendChild(c); });
+    w.appendChild(r);
+  });
+})();
+
+// ─────────────────────────────────────────
+// Slide 4: clickable access grid
+// ─────────────────────────────────────────
+(function(){
+  const w=document.getElementById('access-grid-wrap');
+  // col headers
+  const hdr=document.createElement('div'); hdr.style.cssText='display:flex;gap:4px;margin-bottom:2px;direction:ltr;';
+  const sp=document.createElement('div'); sp.style.width='30px'; hdr.appendChild(sp);
+  [0,1,2,3].forEach(j=>{ const c=document.createElement('div'); c.className='col-label'; c.style.color='var(--accent-teal)'; c.innerText=`[${j}]`; hdr.appendChild(c); });
+  w.appendChild(hdr);
+  MAT3x4.forEach((row,i)=>{
+    const r=document.createElement('div'); r.style.cssText='display:flex;gap:4px;';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='width:30px;display:flex;align-items:center;justify-content:flex-end;padding-left:4px;font-family:"Fira Code";font-size:.9em;color:var(--accent-yellow);';
+    lbl.innerText=`[${i}]`; r.appendChild(lbl);
+    row.forEach((v,j)=>{
+      const c=document.createElement('div'); c.className='grid-cell'; c.innerText=v;
+      c.style.cursor='pointer';
+      c.addEventListener('mouseenter',()=>c.style.transform='scale(1.1)');
+      c.addEventListener('mouseleave',()=>c.style.transform='');
+      c.addEventListener('click',()=>{
+        document.getElementById('access-feedback').innerText=`mat[${i}, ${j}] = ${v}`;
+        document.querySelectorAll('#access-grid-wrap .grid-cell').forEach(x=>x.classList.remove('current'));
+        c.classList.add('current');
+      });
+      r.appendChild(c);
+    });
+    w.appendChild(r);
+  });
+})();
+
+// ─────────────────────────────────────────
+// Slide 5: traversal simulation
+// ─────────────────────────────────────────
+let travSteps=[], travStep=0;
+function buildTrav(){
+  travSteps=[];
+  const M=MAT3x4;
+  // build grid once
+  const wrap=document.getElementById('trav-grid-wrap');
+  buildGrid(wrap, M, '');
+  // initial state
+  travSteps.push({i:null,j:null,val:null,visited:[],msg:'المصفوفة جاهزة. سنمر على كل خلية بحلقتين متداخلتين.'});
+  for(let i=0;i<M.length;i++){
+    for(let j=0;j<M[i].length;j++){
+      travSteps.push({i,j,val:M[i][j],visited:[],msg:`i=${i}, j=${j}: نفحص mat[${i},${j}] = ${M[i][j]}`});
+    }
+  }
+  travSteps.push({i:null,j:null,val:null,visited:'all',msg:'انتهينا من المرور على جميع العناصر ✔'});
+}
+function renderTrav(idx){
+  if(idx<0)idx=0; if(idx>=travSteps.length)idx=travSteps.length-1;
+  travStep=idx; const s=travSteps[idx];
+  document.getElementById('trav-msg').innerText=s.msg;
+  document.getElementById('tv-i').innerText=s.i!==null?s.i:'–';
+  document.getElementById('tv-j').innerText=s.j!==null?s.j:'–';
+  document.getElementById('tv-val').innerText=s.val!==null?s.val:'–';
+  document.getElementById('step-cnt-tv').innerText=`${idx+1} / ${travSteps.length}`;
+  // color cells
+  const M=MAT3x4;
+  M.forEach((row,i)=>row.forEach((v,j)=>{
+    const el=document.querySelector(`#trav-grid-wrap .grid-cell:nth-child(${j+1})`) ||
+             document.getElementById(`trav-grid-wrap-r${i}c${j}`);
+    // find by position
+  }));
+  // reset all
+  document.querySelectorAll('#trav-grid-wrap .grid-cell').forEach(c=>{
+    c.classList.remove('current','visited','active-row');
+  });
+  if(s.visited==='all'){
+    document.querySelectorAll('#trav-grid-wrap .grid-cell').forEach(c=>c.classList.add('visited'));
+  } else if(s.i!==null){
+    // mark current row lightly
+    const allRows=document.querySelectorAll('#trav-grid-wrap > div');
+    allRows.forEach((row,ri)=>{
+      row.querySelectorAll('.grid-cell').forEach(c=>{ if(ri===s.i) c.classList.add('active-row'); });
+    });
+    // mark cells before current as visited
+    let found=false;
+    document.querySelectorAll('#trav-grid-wrap > div').forEach((row,ri)=>{
+      row.querySelectorAll('.grid-cell').forEach((c,ci)=>{
+        if(ri===s.i && ci===s.j){ c.classList.add('current'); c.classList.remove('active-row'); found=true; }
+        else if(!found){ c.classList.add('visited'); c.classList.remove('active-row'); }
+      });
+    });
+  }
+  document.getElementById('btn-prev-tv').disabled=idx===0;
+  document.getElementById('btn-next-tv').disabled=idx===travSteps.length-1;
+}
+function travNext(){if(travStep<travSteps.length-1)renderTrav(travStep+1);}
+function travPrev(){if(travStep>0)renderTrav(travStep-1);}
+
+// ─────────────────────────────────────────
+// Slide 9: row sum simulation
+// ─────────────────────────────────────────
+let rsSteps=[], rsStep=0;
+function buildRs(){
+  rsSteps=[];
+  const M=MAT3x3_RS;
+  const wrap=document.getElementById('rowsum-grid-wrap');
+  buildGrid(wrap, M, '');
+  rsSteps.push({i:null,j:null,sum:null,msg:'نبدأ: سنحسب مجموع كل صف.',activeRow:null,activeCell:null});
+  for(let i=0;i<M.length;i++){
+    rsSteps.push({i,j:null,sum:0,msg:`صف ${i}: sum = 0. نبدأ جمع عناصره.`,activeRow:i,activeCell:null});
+    let s=0;
+    for(let j=0;j<M[i].length;j++){
+      s+=M[i][j];
+      rsSteps.push({i,j,sum:s,msg:`sum += mat[${i},${j}] = ${M[i][j]}  →  sum = ${s}`,activeRow:i,activeCell:j});
+    }
+    rsSteps.push({i,j:null,sum:s,msg:`انتهى الصف ${i}: المجموع = ${s}`,activeRow:i,activeCell:null,rowDone:i});
+  }
+  rsSteps.push({i:null,j:null,sum:null,msg:'انتهينا من جميع الصفوف ✔',activeRow:null,activeCell:null});
+}
+function renderRs(idx){
+  if(idx<0)idx=0; if(idx>=rsSteps.length)idx=rsSteps.length-1;
+  rsStep=idx; const s=rsSteps[idx];
+  document.getElementById('rs-msg').innerText=s.msg;
+  document.getElementById('rs-i').innerText=s.i!==null?s.i:'–';
+  document.getElementById('rs-j').innerText=s.j!==null?s.j:'–';
+  document.getElementById('rs-sum').innerText=s.sum!==null?s.sum:'–';
+  document.getElementById('step-cnt-rs').innerText=`${idx+1} / ${rsSteps.length}`;
+  const allRows=document.querySelectorAll('#rowsum-grid-wrap > div');
+  allRows.forEach((row,ri)=>{
+    row.querySelectorAll('.grid-cell').forEach((c,ci)=>{
+      c.classList.remove('current','active-row','visited');
+      if(s.rowDone!==undefined && ri<=s.rowDone) c.classList.add('visited');
+      else if(s.activeRow===ri){
+        c.classList.add('active-row');
+        if(s.activeCell===ci){ c.classList.add('current'); c.classList.remove('active-row'); }
+      }
+    });
+  });
+  document.getElementById('btn-prev-rs').disabled=idx===0;
+  document.getElementById('btn-next-rs').disabled=idx===rsSteps.length-1;
+}
+function rsNext(){if(rsStep<rsSteps.length-1)renderRs(rsStep+1);}
+function rsPrev(){if(rsStep>0)renderRs(rsStep-1);}
+
+// ─────────────────────────────────────────
+// Slide 11: copy simulation
+// ─────────────────────────────────────────
+let copySteps=[], copyStep=0;
+function buildCopy(){
+  copySteps=[];
+  const M=MAT3x3_CP;
+  const empty=M.map(r=>r.map(()=>null));
+  let dst=M.map(r=>r.map(()=>null));
+  copySteps.push({src_hl:null,dst_hl:null,dst:M.map(r=>r.map(()=>null)),msg:'src جاهزة. dst فارغة. نبدأ النسخ.'});
+  for(let i=0;i<M.length;i++){
+    for(let j=0;j<M[i].length;j++){
+      dst=dst.map((r,ri)=>r.map((v,ci)=>ri<i||(ri===i&&ci<=j)?M[ri][ci]:v));
+      copySteps.push({src_hl:{i,j},dst_hl:{i,j},dst:dst.map(r=>[...r]),msg:`dst[${i},${j}] = src[${i},${j}] = ${M[i][j]}`});
+    }
+  }
+  copySteps.push({src_hl:null,dst_hl:null,dst:M.map(r=>[...r]),msg:'النسخ اكتمل! dst الآن تطابق src تماماً ✔'});
+
+  // build grids
+  const srcWrap=document.getElementById('copy-src-wrap');
+  const dstWrap=document.getElementById('copy-dst-wrap');
+  buildGrid(srcWrap, M, '');
+  buildGrid(dstWrap, M.map(r=>r.map(()=>'·')), '');
+}
+function renderCopy(idx){
+  if(idx<0)idx=0; if(idx>=copySteps.length)idx=copySteps.length-1;
+  copyStep=idx; const s=copySteps[idx];
+  document.getElementById('copy-msg').innerText=s.msg;
+  document.getElementById('step-cnt-cp').innerText=`${idx+1} / ${copySteps.length}`;
+  const M=MAT3x3_CP;
+  // update src highlight
+  document.querySelectorAll('#copy-src-wrap .grid-cell').forEach(c=>c.classList.remove('current','visited'));
+  document.querySelectorAll('#copy-dst-wrap .grid-cell').forEach(c=>c.classList.remove('result-cell','visited'));
+  let srcIdx=0;
+  document.querySelectorAll('#copy-src-wrap > div').forEach((row,ri)=>{
+    row.querySelectorAll('.grid-cell').forEach((c,ci)=>{
+      if(s.src_hl&&s.src_hl.i===ri&&s.src_hl.j===ci) c.classList.add('current');
+    });
+  });
+  // update dst values
+  const dstRows=document.querySelectorAll('#copy-dst-wrap > div');
+  dstRows.forEach((row,ri)=>{
+    row.querySelectorAll('.grid-cell').forEach((c,ci)=>{
+      const v=s.dst[ri][ci];
+      c.innerText = v!==null ? v : '·';
+      if(v!==null){
+        if(s.dst_hl&&s.dst_hl.i===ri&&s.dst_hl.j===ci) c.classList.add('result-cell');
+        else c.classList.add('visited');
+      }
+    });
+  });
+  document.getElementById('btn-prev-cp').disabled=idx===0;
+  document.getElementById('btn-next-cp').disabled=idx===copySteps.length-1;
+}
+function copyNext(){if(copyStep<copySteps.length-1)renderCopy(copyStep+1);}
+function copyPrev(){if(copyStep>0)renderCopy(copyStep-1);}
+
+// ─────────────────────────────────────────
+// Slide 17: RowSums simulation
+// ─────────────────────────────────────────
+let rsaSteps=[], rsaStep=0;
+const MAT_RSA = [[1,2,3,4],[5,6,7,8],[9,10,11,12]];
+
+function buildRsa(){
+  rsaSteps=[];
+  const M=MAT_RSA;
+  const rows=M.length, cols=M[0].length;
+  let sums=Array(rows).fill(null);
+
+  // build mat grid
+  const matWrap=document.getElementById('rsa-mat-wrap');
+  buildGrid(matWrap, M, '');
+
+  // build sums array display
+  const arrWrap=document.getElementById('rsa-arr-wrap');
+  arrWrap.innerHTML='';
+  for(let i=0;i<rows;i++){
+    const c=document.createElement('div');
+    c.className='grid-cell'; c.id=`rsa-sum-${i}`;
+    c.style.cssText='width:60px;height:56px;'; c.innerText='0';
+    arrWrap.appendChild(c);
+  }
+
+  rsaSteps.push({i:null,j:null,sums:[...sums],activeRow:null,activeCell:null,msg:'نُنشئ مصفوفة sums بحجم عدد الصفوف. كل قيمة تبدأ بـ 0.'});
+
+  for(let i=0;i<rows;i++){
+    for(let j=0;j<cols;j++){
+      sums=sums.map((v,k)=>k<i? MAT_RSA[k].reduce((a,b)=>a+b,0) : k===i? MAT_RSA[i].slice(0,j+1).reduce((a,b)=>a+b,0) : 0);
+      rsaSteps.push({
+        i,j,sums:[...sums],activeRow:i,activeCell:j,
+        msg:`sums[${i}] += mat[${i},${j}] = ${M[i][j]}  →  sums[${i}] = ${sums[i]}`
+      });
+    }
+  }
+  // final
+  const finalSums=M.map(row=>row.reduce((a,b)=>a+b,0));
+  rsaSteps.push({i:null,j:null,sums:finalSums,activeRow:null,activeCell:null,msg:`انتهت العملية! sums = [${finalSums.join(', ')}] ✔`});
+}
+
+function renderRsa(idx){
+  if(idx<0)idx=0; if(idx>=rsaSteps.length)idx=rsaSteps.length-1;
+  rsaStep=idx; const s=rsaSteps[idx];
+  document.getElementById('rsa-msg').innerText=s.msg;
+  document.getElementById('rsa-i').innerText=s.i!==null?s.i:'–';
+  document.getElementById('rsa-j').innerText=s.j!==null?s.j:'–';
+  document.getElementById('rsa-sum').innerText=s.i!==null?s.sums[s.i]:'–';
+  document.getElementById('step-cnt-rsa').innerText=`${idx+1} / ${rsaSteps.length}`;
+
+  // update mat grid colors
+  const allRows=document.querySelectorAll('#rsa-mat-wrap > div');
+  allRows.forEach((row,ri)=>{
+    row.querySelectorAll('.grid-cell').forEach((c,ci)=>{
+      c.classList.remove('current','active-row','visited');
+      if(s.activeRow===null){
+        // final state or init — show all visited if sums are filled
+        if(s.sums[ri]>0) c.classList.add('visited');
+      } else if(ri<s.activeRow){
+        c.classList.add('visited');
+      } else if(ri===s.activeRow){
+        if(ci<s.activeCell) c.classList.add('visited');
+        else if(ci===s.activeCell){ c.classList.add('current'); }
+        else c.classList.add('active-row');
+      }
+    });
+  });
+
+  // update sums array display
+  const M=MAT_RSA;
+  M.forEach((_,i)=>{
+    const el=document.getElementById(`rsa-sum-${i}`);
+    if(!el) return;
+    el.innerText=s.sums[i]!==null?s.sums[i]:0;
+    el.classList.remove('result-cell','visited','current');
+    if(s.activeRow===null && s.sums[i]>0){
+      el.classList.add('result-cell');
+    } else if(s.i!==null){
+      if(i<s.activeRow){ el.classList.add('result-cell'); }
+      else if(i===s.activeRow){ el.classList.add('current'); el.style.borderColor='var(--accent-orange)'; el.style.color='var(--accent-orange)'; return; }
+    }
+    el.style.borderColor=''; el.style.color='';
+  });
+
+  document.getElementById('btn-prev-rsa').disabled=idx===0;
+  document.getElementById('btn-next-rsa').disabled=idx===rsaSteps.length-1;
+}
+function rsaNext(){if(rsaStep<rsaSteps.length-1)renderRsa(rsaStep+1);}
+function rsaPrev(){if(rsaStep>0)renderRsa(rsaStep-1);}
+
+// ─────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────
+window.addEventListener('load',()=>{
+  buildTrav();
+  buildRs();
+  buildCopy();
+  buildRsa();
+  updateSlide();
+});
+window.addEventListener('resize',()=>{
+  if(currentSlide===SLIDE_TRAVERSE)renderTrav(travStep);
+  if(currentSlide===SLIDE_ROWSUM)  renderRs(rsStep);
+  if(currentSlide===SLIDE_COPY)    renderCopy(copyStep);
+  if(currentSlide===SLIDE_RSA)     renderRsa(rsaStep);
+});
+</script>
+</body>
+</html>

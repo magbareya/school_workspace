@@ -148,12 +148,51 @@
         .nav-btn:hover { background: var(--accent-teal); color: var(--bg-body); }
         .slide-num { font-size: 1.2em; color: var(--text-secondary); font-weight: bold; }
 
-        /* Print */
+        /* --- إعدادات الطباعة (Print Media Queries) --- */
         @media print {
-            body { height: auto; overflow: visible; background: white; }
-            .presentation { width: 100%; max-width: 100%; height: auto; margin: 0; border-radius: 0; box-shadow: none; border: none; overflow: visible; }
-            .slide { position: relative; opacity: 1 !important; visibility: visible !important; height: 85vh; page-break-after: always; border-bottom: 1px solid #ccc; }
-            .nav-controls, .progress-container { display: none; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body {
+                height: auto !important;
+                overflow: visible !important;
+                background: var(--bg-body) !important;
+                display: block !important;
+            }
+            .presentation {
+                width: 100% !important;
+                max-width: none !important;
+                height: auto !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                overflow: visible !important;
+                background: transparent !important;
+            }
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                page-break-after: always !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                padding: 20px !important;
+            }
+            .nav-controls, .progress-container, .sim-controls {
+                display: none !important;
+            }
+            .code-block {
+                white-space: pre-wrap !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                overflow-x: visible !important;
+                max-width: 100% !important;
+            }
         }
     </style>
 </head>
@@ -162,9 +201,6 @@
 <div class="presentation">
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 1: Title                                               -->
-    <!-- ============================================================ -->
     <div class="slide active">
         <h1>البحث الثنائي<br>(Binary Search)</h1>
         <p style="text-align:center; font-size:1.5em; margin-top:10px;">
@@ -177,9 +213,6 @@
         <div class="author">إعداد: الأستاذ محمود اغبارية</div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 2: Motivation – phone book analogy                     -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-book-open"></i> فكرة من الحياة اليومية</h2>
         <p>تخيّل أنك تبحث عن كلمة في قاموس يحتوي على <b>1000 صفحة</b>. هل تبدأ من الصفحة الأولى وتقرأ صفحة صفحة؟</p>
@@ -202,9 +235,6 @@
 
 
 
-    <!-- ============================================================ -->
-    <!-- Slide 4: Algorithm Steps                                     -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-list-ol"></i> خطوات الخوارزمية</h2>
         <p>البحث الثنائي يعمل على مصفوفة <b>مرتبة تصاعدياً</b> كالتالي:</p>
@@ -228,9 +258,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 5: Binary Search SIMULATION                            -->
-    <!-- ============================================================ -->
     <div class="slide" id="slide-bs">
         <h2><i class="fas fa-eye"></i> محاكاة: ابحث عن <span class="ltr-code" style="color:var(--accent-purple); font-size:0.85em;">target = 33</span> في المصفوفة</h2>
 
@@ -254,9 +281,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 6: C# Code                                             -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-code"></i> كود C# الكامل</h2>
         <div class="code-block"><span class="keyword">public static</span> <span class="type">int</span> BinarySearch(<span class="type">int</span>[] arr, <span class="type">int</span> target)
@@ -285,9 +309,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 7: Comparison – Binary vs Linear                       -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-balance-scale"></i> مقارنة: البحث الثنائي مقابل البحث الخطي</h2>
 
@@ -319,9 +340,6 @@
         </table>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 8: Exercise 1 – Tracing                               -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-question-circle"></i> تمرين 1: متابعة</h2>
         <div class="question-box">
@@ -345,9 +363,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 9: Answer 1                                            -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 1</h2>
         <div class="answer-box">
@@ -363,9 +378,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 10: Exercise 2 – Not Found                            -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-question-circle"></i> تمرين 2: حالة "غير موجود"</h2>
         <div class="question-box">
@@ -387,9 +399,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 11: Answer 2                                           -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 2</h2>
         <div class="answer-box">
@@ -407,9 +416,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 12: Exercise 3 – Challenge                            -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-trophy"></i> تمرين 3: تحدي البرمجة</h2>
         <div class="question-box">
@@ -426,9 +432,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 13: Answer 3                                           -->
-    <!-- ============================================================ -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color:var(--accent-green);"></i> إجابة تمرين 3</h2>
         <div class="answer-box">
@@ -445,9 +448,6 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- Slide 14: Conclusion                                         -->
-    <!-- ============================================================ -->
     <div class="slide">
         <div style="text-align:center; padding-top:30px;">
             <i class="fas fa-graduation-cap" style="font-size:5em; color:var(--accent-yellow); margin-bottom:20px;"></i>
@@ -468,7 +468,6 @@
 
 </div>
 
-<!-- Navigation Controls -->
 <div class="nav-controls">
     <button class="nav-btn" onclick="move(-1)"><i class="fas fa-arrow-right"></i> السابق</button>
     <div class="slide-num" id="slideIndicator">1 / 14</div>

@@ -1,0 +1,136 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 17 - ترتيب الإدخال}
+\else
+\title{وظيفة 17 - ترتيب الإدخال}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\textbf{للتذكير، هذا هو كود ترتيب الإدخال:}
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+public static void InsertionSort(int[] arr)
+{
+    for (int i = 1; i < arr.Length; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+\end{minted}
+\end{boxCode}
+\end{english}
+
+\clearpage
+
+\begin{enumerate}[itemsep=3em]
+    \item نعرّف المصفوفات التالية:
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+int[] arr1 = {9, 3, 7, 1, 5};
+int[] arr2 = {1, 2, 3, 4, 5};
+int[] arr3 = {10, 9, 8, 7, 6};
+\end{minted}
+\end{boxCode}
+\end{english}
+لكل واحدة من المصفوفات أعلاه طبّق خوارزمية \textenglish{InsertionSort}
+ خطوة بخطوة، واملأ الجدول التالي الذي يُبيّن حالة كل مصفوفة بعد انتهاء كل دورة \textenglish{i}:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ & \multicolumn{3}{c|}{\textbf{قيمة المصفوفة في نهاية الدورة \textenglish{i}}} \\
+\cline{2-4}
+\textbf{قيمة \textenglish{i}} & \textbf{المصفوفة \textenglish{arr1}} & \textbf{المصفوفة \textenglish{arr2}} & \textbf{المصفوفة \textenglish{arr3}} \\
+\hline
+\textenglish{i = 1} & \hspace{3.5cm} & \hspace{3.5cm} & \hspace{3.5cm} \\[15pt]
+\hline
+\textenglish{i = 2} & & & \\[15pt]
+\hline
+\textenglish{i = 3} & & & \\[15pt]
+\hline
+\textenglish{i = 4} & & & \\[15pt]
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ & \multicolumn{3}{c|}{\textbf{قيمة المصفوفة في نهاية الدورة \textenglish{i}}} \\
+\cline{2-4}
+\textbf{قيمة \textenglish{i}} & \textbf{المصفوفة \textenglish{arr1}} & \textbf{المصفوفة \textenglish{arr2}} & \textbf{المصفوفة \textenglish{arr3}} \\
+\hline
+\textenglish{i = 1} & \textenglish{\{3, 9, 7, 1, 5\}} & \textenglish{\{1, 2, 3, 4, 5\}} & \textenglish{\{9, 10, 8, 7, 6\}} \\
+\hline
+\textenglish{i = 2} & \textenglish{\{3, 7, 9, 1, 5\}} & \textenglish{\{1, 2, 3, 4, 5\}} & \textenglish{\{8, 9, 10, 7, 6\}} \\
+\hline
+\textenglish{i = 3} & \textenglish{\{1, 3, 7, 9, 5\}} & \textenglish{\{1, 2, 3, 4, 5\}} & \textenglish{\{7, 8, 9, 10, 6\}} \\
+\hline
+\textenglish{i = 4} & \textenglish{\{1, 3, 5, 7, 9\}} & \textenglish{\{1, 2, 3, 4, 5\}} & \textenglish{\{6, 7, 8, 9, 10\}} \\
+\hline
+\end{tabular}
+\end{center}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب عملية خارجية \textenglish{InsertionSortDescending} تتلقى مصفوفة أعداد صحيحة \textenglish{arr} وترتّبها \textbf{تنازلياً} (من الأكبر إلى الأصغر).
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{boxCode}
+\begin{minted}{csharp}
+public static void InsertionSortDescending(int[] arr)
+{
+    for (int i = 1; i < arr.Length; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        // we change the condition here to arr[j] < key
+        while (j >= 0 && arr[j] < key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+\end{minted}
+\end{boxCode}
+\end{english}
+\textbf{الشرح:} التغيير الوحيد عن الترتيب التصاعدي هو في شرط الـ \textenglish{while}: \\
+ نغيّر \textenglish{arr[j] > key} إلى \textenglish{arr[j] < key}، لأننا نريد إزاحة العناصر \textbf{الأصغر} لليمين.
+\end{boxSolution}
+\clearpage
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

@@ -63,7 +63,6 @@
 
         .slots-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; direction: ltr; }
         .slot-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        /* المربعات تعرض الأرقام بلون باهت كخلفية */
         .slot { width: 70px; height: 70px; border: 2px solid var(--border-color); border-radius: 10px; background: rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 1.8em; font-family: 'Fira Code', monospace; font-weight: bold; }
         .slot.sorted-bg { background: rgba(166, 227, 161, 0.15); border-color: rgba(166, 227, 161, 0.5); }
         .slot-label { color: var(--text-secondary); font-family: 'Fira Code'; font-size: 1.1em; }
@@ -84,6 +83,77 @@
         .nav-btn:hover { background: var(--accent-green); color: var(--bg-body); }
         .slide-num { font-size: 1.2em; color: var(--text-secondary); font-weight: bold; }
 
+        /* --- إعدادات الطباعة (Print Media Queries) --- */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body {
+                height: auto !important;
+                overflow: visible !important;
+                background-color: var(--bg-body) !important;
+                display: block !important;
+            }
+            .presentation {
+                height: auto !important;
+                overflow: visible !important;
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                background: transparent !important;
+            }
+            .progress-container,
+            .nav-controls,
+            .sim-controls {
+                display: none !important;
+            }
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                min-height: 100vh !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                padding: 20px !important;
+            }
+            .code-block {
+                white-space: pre-wrap !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                overflow-x: visible !important;
+                border: 1px solid var(--border-color) !important;
+                max-width: 100% !important;
+            }
+            .sim-card {
+                display: none !important; /* إخفاء البطاقات المتحركة في الطباعة */
+            }
+            .slot {
+                background-color: var(--accent-blue) !important;
+                color: var(--bg-body) !important;
+                opacity: 1 !important;
+                border: none !important;
+            }
+            .slot.sorted-bg {
+                background-color: var(--accent-green) !important;
+                color: var(--bg-body) !important;
+            }
+            .slot-key {
+                background-color: transparent !important;
+                border: 2px dashed var(--accent-red) !important;
+                color: var(--accent-red) !important;
+            }
+            h1 { font-size: 2.5em !important; }
+            h2 { font-size: 1.8em !important; }
+            p, li { font-size: 1.2em !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -91,20 +161,18 @@
 <div class="presentation">
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
-    <!-- Slide 1: Title -->
     <div class="slide active">
         <h1>ترتيب الإدخال <br> (Insertion Sort)</h1>
         <p style="text-align: center; margin-top: 10px;">كيف نرتب البيانات خطوة بخطوة كما نرتب أوراق اللعب؟</p>
         <div class="author">إعداد: الأستاذ محمود اغبارية</div>
     </div>
 
-    <!-- Slide 2: Shift Reminder -->
     <div class="slide" id="slide-shift">
         <h2><i class="fas fa-arrows-alt-h"></i> الأساسيات: النسخ والإزاحة (Shift Right)</h2>
         <p>ملاحظة هامة: في البرمجة نحن لا "ننقل" القيمة فنترك مكانها فارغاً، بل <b>ننسخها (Copy)</b> ونكتب فوق الخانة المجاورة.</p>
 
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <div style="flex: 1;">
+        <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
                 <div class="code-block"><span class="comment">// إزاحة العناصر من الفهرس 1 حتى 3 خطوة لليمين</span>
 <span class="keyword">for</span> (<span class="type">int</span> j = 3; j >= 1; j--) {
     arr[j + 1] = arr[j];
@@ -114,8 +182,7 @@
                 </div>
             </div>
 
-            <!-- Shift Simulation -->
-            <div style="flex: 1.5;" class="sim-container" id="sim-cont-shift">
+            <div style="flex: 1.5; min-width: 300px;" class="sim-container" id="sim-cont-shift">
                 <div class="sim-msg" id="msg-shift">نبدأ الإزاحة. الهدف: فتح الفهرس 1.</div>
                 <div class="slots-row">
                     <div class="slot-wrapper"><div class="slot" id="sh-slot-0"></div><div class="slot-label">0</div></div>
@@ -124,7 +191,6 @@
                     <div class="slot-wrapper"><div class="slot" id="sh-slot-3"></div><div class="slot-label">3</div></div>
                     <div class="slot-wrapper"><div class="slot" id="sh-slot-4"></div><div class="slot-label">4</div></div>
                 </div>
-                <!-- Shift Cards -->
                 <div class="sim-card" id="sh-c0"><div class="card-inner">10</div></div>
                 <div class="sim-card" id="sh-c1"><div class="card-inner">20</div></div>
                 <div class="sim-card" id="sh-c2"><div class="card-inner">30</div></div>
@@ -139,7 +205,6 @@
         </div>
     </div>
 
-    <!-- Slide 3: Analogy -->
     <div class="slide">
         <h2><i class="fas fa-clone"></i> تشبيه من الواقع: أوراق اللعب (الشدة)</h2>
         <p>تخيل أن بيدك اليسرى أوراق مرتبة. يسحب لك صديقك ورقة جديدة بيدك اليمنى. كيف تدخلها في مكانها؟</p>
@@ -153,7 +218,6 @@
         </div>
     </div>
 
-    <!-- Slide 4: Algorithm Concept -->
     <div class="slide">
         <h2><i class="fas fa-list-ol"></i> خطوات الخوارزمية برمجياً</h2>
         <p>لتطبيق فكرة أوراق اللعب في المصفوفات، نقوم بالتالي:</p>
@@ -167,7 +231,6 @@
         </ul>
     </div>
 
-    <!-- Slide 5: Insertion Sort SIMULATION -->
     <div class="slide" id="slide-insert">
         <h2><i class="fas fa-eye"></i> محاكاة بصرية للخوارزمية</h2>
 
@@ -186,7 +249,6 @@
                 <div class="slot-wrapper"><div class="slot slot-key" id="in-slot-key"></div><div class="slot-label" style="color: var(--accent-red);">متغير الحفظ (Key)</div></div>
             </div>
 
-            <!-- Insert Cards -->
             <div class="sim-card" id="in-c0"><div class="card-inner">7</div></div>
             <div class="sim-card" id="in-c1"><div class="card-inner">3</div></div>
             <div class="sim-card" id="in-c2"><div class="card-inner">5</div></div>
@@ -201,7 +263,6 @@
         </div>
     </div>
 
-    <!-- Slide 6: C# Code -->
     <div class="slide">
         <h2><i class="fas fa-code"></i> كود C# الكامل</h2>
         <div class="code-block"><span class="keyword">for</span> (<span class="type">int</span> i = 1; i < arr.Length; i++) {
@@ -220,7 +281,6 @@
         <p style="text-align: center; font-size: 1.2em; color: var(--accent-yellow);">ركز جيداً على هذا الكود، فالأسئلة القادمة ستختبر فهمك العميق له!</p>
     </div>
 
-    <!-- Slide 7: Question 1 (Tracing) -->
     <div class="slide">
         <h2><i class="fas fa-question-circle"></i> تمرين 1: متابعة (מעקב)</h2>
         <div class="question-box">
@@ -237,7 +297,6 @@
         </div>
     </div>
 
-    <!-- Slide 8: Answer 1 (Tracing) - FIXED RTL ISSUE -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 1</h2>
         <div class="answer-box">
@@ -253,7 +312,6 @@
         </div>
     </div>
 
-    <!-- Slide 9: Question 2 (Edge Cases) -->
     <div class="slide">
         <h2><i class="fas fa-question-circle"></i> تمرين 2: حالة حافة (شرط التوقف)</h2>
         <div class="question-box">
@@ -265,7 +323,6 @@
         </div>
     </div>
 
-    <!-- Slide 10: Answer 2 (Edge Cases) -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 2</h2>
         <div class="answer-box">
@@ -279,7 +336,6 @@
         </div>
     </div>
 
-    <!-- Slide 11: Question 3 (Best Case) -->
     <div class="slide">
         <h2><i class="fas fa-question-circle"></i> تمرين 3: كفاءة الخوارزمية</h2>
         <div class="question-box">
@@ -292,7 +348,6 @@
         </div>
     </div>
 
-    <!-- Slide 12: Answer 3 (Best Case) -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 3</h2>
         <div class="answer-box">
@@ -306,7 +361,6 @@
         </div>
     </div>
 
-    <!-- Slide 13: Question 4 (Challenge) -->
     <div class="slide">
         <h2><i class="fas fa-trophy"></i> تمرين 4: تحدي البرمجة</h2>
         <div class="question-box">
@@ -317,7 +371,6 @@
         </div>
     </div>
 
-    <!-- Slide 14: Answer 4 (Challenge) -->
     <div class="slide">
         <h2><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> إجابة تمرين 4</h2>
         <div class="answer-box">
@@ -331,7 +384,6 @@
         </div>
     </div>
 
-    <!-- Slide 15: Conclusion -->
     <div class="slide">
         <div style="text-align: center; padding-top: 50px;">
             <i class="fas fa-graduation-cap" style="font-size: 5em; color: var(--accent-yellow); margin-bottom: 20px;"></i>
@@ -344,7 +396,6 @@
 
 </div>
 
-<!-- Navigation Controls -->
 <div class="nav-controls">
     <button class="nav-btn" onclick="move(-1)"><i class="fas fa-arrow-right"></i> السابق</button>
     <div class="slide-num" id="slideIndicator">1 / 15</div>
