@@ -29,117 +29,6 @@
 \begin{enumerate}[itemsep=2em]
 
 % ----------------------------------------------------------------
-% سؤال 1 – قراءة القيم والأبعاد
-% ----------------------------------------------------------------
-\item
-ما قيمة كل تعبير من التعبيرات التالية؟
-
-\begin{enumerate}[itemsep=6pt]
-    \item \textenglish{mat[1, 2]}
-    \item \textenglish{mat[2, 0]}
-    \item \textenglish{mat[0, 3]}
-    \item \textenglish{mat.GetLength(0)}
-    \item \textenglish{mat.GetLength(1)}
-    \item \textenglish{mat[mat.GetLength(0)-1, mat.GetLength(1)-1]}
-\end{enumerate}
-
-\ifwithsols
-\begin{boxSolution}
-\begin{enumerate}[itemsep=4pt]
-    \item \textenglish{mat[1, 2] = 9}
-    \item \textenglish{mat[2, 0] = 7}
-    \item \textenglish{mat[0, 3] = 6}
-    \item \textenglish{mat.GetLength(0) = 3} \quad (عدد الصفوف)
-    \item \textenglish{mat.GetLength(1) = 4} \quad (عدد الأعمدة)
-    \item \textenglish{mat[2, 3] = 11} \quad (الزاوية اليمنى السفلى)
-\end{enumerate}
-\end{boxSolution}
-\clearpage
-\fi
-
-% ----------------------------------------------------------------
-% سؤال 2 – متابعة: ماذا يطبع الكود؟
-% ----------------------------------------------------------------
-\item
-ما الناتج الذي يطبعه الكود التالي على المصفوفة \textenglish{mat}؟
-
-\begin{boxCode}
-\begin{english}
-\begin{minted}{csharp}
-for (int j = 0; j < mat.GetLength(1); j++)
-    Console.Write(mat[0, j] + " ");
-\end{minted}
-\end{english}
-\end{boxCode}
-
-\ifwithsols
-\begin{boxSolution}
-\textenglish{4  8  2  6}
-
-\textbf{الشرح:} الكود يُثبّت \textenglish{i = 0} ويتغير \textenglish{j} فقط — أي يطبع جميع عناصر \textbf{الصف الأول} فقط.
-\end{boxSolution}
-\clearpage
-\fi
-
-% ----------------------------------------------------------------
-% سؤال 3 – متابعة: ماذا يطبع الكود؟
-% ----------------------------------------------------------------
-\item
-ما الناتج الذي يطبعه الكود التالي؟
-
-\begin{boxCode}
-\begin{english}
-\begin{minted}{csharp}
-for (int i = 0; i < mat.GetLength(0); i++)
-    Console.Write(mat[i, 2] + " ");
-\end{minted}
-\end{english}
-\end{boxCode}
-
-\ifwithsols
-\begin{boxSolution}
-\textenglish{2  9  3}
-
-\textbf{الشرح:} الكود يُثبّت \textenglish{j = 2} ويتغير \textenglish{i} فقط — أي يطبع جميع عناصر \textbf{العمود الثالث} (\textenglish{col = 2}) من أعلى لأسفل.
-\end{boxSolution}
-\clearpage
-\fi
-
-% ----------------------------------------------------------------
-% سؤال 4 – متابعة: ماذا يطبع الكود؟
-% ----------------------------------------------------------------
-\item
-ما الناتج الذي يطبعه الكود التالي؟
-
-\begin{boxCode}
-\begin{english}
-\begin{minted}{csharp}
-int result = 0;
-for (int i = 0; i < mat.GetLength(0); i++)
-    for (int j = 0; j < mat.GetLength(1); j++)
-        if (mat[i, j] % 2 == 0)
-            result++;
-Console.WriteLine(result);
-\end{minted}
-\end{english}
-\end{boxCode}
-
-\ifwithsols
-\begin{boxSolution}
-الناتج: \textenglish{5}
-
-\textbf{الشرح:} نحسب عدد العناصر \textbf{الزوجية} في المصفوفة:
-\begin{itemize}[itemsep=1pt]
-    \item الصف 0: 4 ✔، 8 ✔، 2 ✔، 6 ✔ ← أربعة
-    \item الصف 1: 1، 5، 9، 3 ← لا يوجد
-    \item الصف 2: 7، 0 ✔، 3، 11 ← واحد
-\end{itemize}
-المجموع: $4 + 0 + 1 = 5$
-\end{boxSolution}
-\clearpage
-\fi
-
-% ----------------------------------------------------------------
 % سؤال 5 – كتابة كود: أصغر قيمة
 % ----------------------------------------------------------------
 \item
@@ -201,8 +90,8 @@ public static double Average(int[,] mat)
 \end{boxCode}
 \textbf{الشرح:} عدد العناصر الكلي = صفوف × أعمدة. نستخدم \textenglish{(double)} لضمان قسمة حقيقية وليس قسمة صحيحة.
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 
 % ----------------------------------------------------------------
 % سؤال 7 – كتابة كود: مجموع الأعمدة
@@ -241,40 +130,6 @@ public static int[] ColSums(int[,] mat)
 \end{english}
 \end{boxCode}
 \textbf{الشرح:} الفرق عن \textenglish{RowSums}: المصفوفة المُعادة حجمها عدد \textbf{الأعمدة}، ونجمع في \textenglish{sums[j]} بدلاً من \textenglish{sums[i]}.
-\end{boxSolution}
-\clearpage
-\fi
-
-% ----------------------------------------------------------------
-% سؤال 8 – كتابة كود: عدد العناصر الأكبر من قيمة
-% ----------------------------------------------------------------
-\item
-اكتب عملية خارجية \textenglish{CountGreaterThan} تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد \textenglish{mat} وعدداً صحيحاً \textenglish{val}، وتُعيد عدد العناصر الأكبر تماماً من \textenglish{val}.
-
-\begin{boxExample}
-\begin{itemize}[itemsep=1pt]
-    \item \textenglish{CountGreaterThan(mat, 5)} تُعيد \textenglish{5} \quad (القيم: 8، 9، 7، 6، 11)
-    \item \textenglish{CountGreaterThan(mat, 0)} تُعيد \textenglish{11}
-\end{itemize}
-\end{boxExample}
-
-\ifwithsols
-\begin{boxSolution}
-\begin{boxCode}
-\begin{english}
-\begin{minted}{csharp}
-public static int CountGreaterThan(int[,] mat, int val)
-{
-    int count = 0;
-    for (int i = 0; i < mat.GetLength(0); i++)
-        for (int j = 0; j < mat.GetLength(1); j++)
-            if (mat[i, j] > val)
-                count++;
-    return count;
-}
-\end{minted}
-\end{english}
-\end{boxCode}
 \end{boxSolution}
 \clearpage
 \fi
@@ -322,8 +177,8 @@ public static int[,] CreateZigZag(int n)
 \end{boxCode}
 \textbf{الشرح:} نستخدم \textenglish{i \% 2 == 0} للتحقق هل الصف زوجي. قيمة \textenglish{j} لا تؤثر لأن جميع عناصر نفس الصف تحمل نفس القيمة.
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 
 % ----------------------------------------------------------------
 % سؤال 10 – كتابة كود: رقم الصف ذو أكبر مجموع
@@ -397,39 +252,8 @@ public static void Negate(int[,] mat)
 \end{boxCode}
 \textbf{الشرح:} العملية من نوع \textenglish{void} لأنها تُعدّل المصفوفة الأصلية مباشرةً — المصفوفات تُمرَّر بالمرجع في \textenglish{C\#} لذا لا حاجة لـ \textenglish{return}.
 \end{boxSolution}
-\clearpage
 \fi
-
-% ----------------------------------------------------------------
-% سؤال 12 – كتابة كود: استخراج صف كمصفوفة أحادية
-% ----------------------------------------------------------------
-\item
-اكتب عملية خارجية \textenglish{GetRow} تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد \textenglish{mat} ورقم صف \textenglish{row}، وتُعيد مصفوفة أحادية تحتوي على عناصر ذلك الصف.
-
-\begin{boxExample}
-\textenglish{GetRow(mat, 2)} تُعيد \textenglish{\{7, 0, 3, 11\}}.
-\end{boxExample}
-
-\ifwithsols
-\begin{boxSolution}
-\begin{boxCode}
-\begin{english}
-\begin{minted}{csharp}
-public static int[] GetRow(int[,] mat, int row)
-{
-    int cols = mat.GetLength(1);
-    int[] result = new int[cols];
-    for (int j = 0; j < cols; j++)
-        result[j] = mat[row, j];
-    return result;
-}
-\end{minted}
-\end{english}
-\end{boxCode}
-\textbf{الشرح:} نُثبّت \textenglish{i = row} ونتغير في \textenglish{j} فقط. المصفوفة المُعادة أحادية وحجمها يساوي عدد الأعمدة.
-\end{boxSolution}
 \clearpage
-\fi
 
 % ----------------------------------------------------------------
 % سؤال 13 – متابعة: تحليل كود معطى
@@ -507,8 +331,8 @@ public static bool AreRowsEqual(int[,] mat, int r1, int r2)
 \end{boxCode}
 \textbf{الشرح:} حالما نجد اختلافاً بين عنصرَين في نفس العمود نُعيد \textenglish{false} فوراً. إذا انتهت الحلقة بدون اختلاف نُعيد \textenglish{true}.
 \end{boxSolution}
-\clearpage
 \fi
+\clearpage
 
 % ----------------------------------------------------------------
 % سؤال 15 – كتابة كود: تحويل ثنائية إلى أحادية (Flatten)
@@ -556,9 +380,12 @@ public static int[] Flatten(int[,] mat)
 
 \end{enumerate}
 
-\vspace{20pt}
-\begin{center}
-    أرجو لكم عملاً ممتعاً! / الأستاذ محمود اغبارية
-\end{center}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملا ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
 
 \end{document}

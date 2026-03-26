@@ -1,0 +1,216 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 23 - المصفوفة ثنائية الأبعاد}
+\else
+\title{وظيفة 23 - المصفوفة ثنائية الأبعاد}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+في جميع الأسئلة التالية نعمل على المصفوفة \textenglish{mat} التالية:
+
+\begin{center}
+\begin{english}
+\begin{tabular}{c|cccc}
+ & \textbf{[,0]} & \textbf{[,1]} & \textbf{[,2]} & \textbf{[,3]} \\
+\hline
+\textbf{[0,]} & 4  & 8  & 2  & 6  \\
+\textbf{[1,]} & 1  & 5  & 9  & 3  \\
+\textbf{[2,]} & 7  & 0  & 3  & 11 \\
+\end{tabular}
+\end{english}
+\end{center}
+
+\begin{enumerate}[itemsep=2em]
+
+% ----------------------------------------------------------------
+% سؤال 1 – قراءة القيم والأبعاد
+% ----------------------------------------------------------------
+\item
+ما قيمة كل تعبير من التعبيرات التالية؟
+
+\begin{enumerate}[itemsep=6pt]
+    \item \textenglish{mat[1, 2]}
+    \item \textenglish{mat[2, 0]}
+    \item \textenglish{mat[0, 3]}
+    \item \textenglish{mat.GetLength(0)}
+    \item \textenglish{mat.GetLength(1)}
+    \item \textenglish{mat[mat.GetLength(0)-1, mat.GetLength(1)-1]}
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[itemsep=4pt]
+    \item \textenglish{mat[1, 2] = 9}
+    \item \textenglish{mat[2, 0] = 7}
+    \item \textenglish{mat[0, 3] = 6}
+    \item \textenglish{mat.GetLength(0) = 3} \quad (عدد الصفوف)
+    \item \textenglish{mat.GetLength(1) = 4} \quad (عدد الأعمدة)
+    \item \textenglish{mat[2, 3] = 11} \quad (الزاوية اليمنى السفلى)
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 2 – متابعة: ماذا يطبع الكود؟
+% ----------------------------------------------------------------
+\item
+ما الناتج الذي يطبعه الكود التالي على المصفوفة \textenglish{mat}؟
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+for (int j = 0; j < mat.GetLength(1); j++)
+    Console.Write(mat[0, j] + " ");
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\textenglish{4  8  2  6}
+
+\textbf{الشرح:} الكود يُثبّت \textenglish{i = 0} ويتغير \textenglish{j} فقط — أي يطبع جميع عناصر \textbf{الصف الأول} فقط.
+\end{boxSolution}
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 3 – متابعة: ماذا يطبع الكود؟
+% ----------------------------------------------------------------
+\item
+ما الناتج الذي يطبعه الكود التالي؟
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 0; i < mat.GetLength(0); i++)
+    Console.Write(mat[i, 2] + " ");
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\textenglish{2  9  3}
+
+\textbf{الشرح:} الكود يُثبّت \textenglish{j = 2} ويتغير \textenglish{i} فقط — أي يطبع جميع عناصر \textbf{العمود الثالث} (\textenglish{col = 2}) من أعلى لأسفل.
+\end{boxSolution}
+\fi
+\clearpage
+
+% ----------------------------------------------------------------
+% سؤال 4 – متابعة: ماذا يطبع الكود؟
+% ----------------------------------------------------------------
+\item
+ما الناتج الذي يطبعه الكود التالي؟
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int result = 0;
+for (int i = 0; i < mat.GetLength(0); i++)
+    for (int j = 0; j < mat.GetLength(1); j++)
+        if (mat[i, j] % 2 == 0)
+            result++;
+Console.WriteLine(result);
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+الناتج: \textenglish{5}
+
+\textbf{الشرح:} نحسب عدد العناصر \textbf{الزوجية} في المصفوفة:
+\begin{itemize}[itemsep=1pt]
+    \item الصف 0: 4 ✔، 8 ✔، 2 ✔، 6 ✔ ← أربعة
+    \item الصف 1: 1، 5، 9، 3 ← لا يوجد
+    \item الصف 2: 7، 0 ✔، 3، 11 ← واحد
+\end{itemize}
+المجموع: $4 + 0 + 1 = 5$
+\end{boxSolution}
+\clearpage
+\fi
+
+
+% ----------------------------------------------------------------
+% سؤال 8 – كتابة كود: عدد العناصر الأكبر من قيمة
+% ----------------------------------------------------------------
+\item
+اكتب عملية خارجية \textenglish{CountGreaterThan} تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد \textenglish{mat} وعدداً صحيحاً \textenglish{val}، وتُعيد عدد العناصر الأكبر تماماً من \textenglish{val}.
+
+\begin{boxExample}
+\begin{itemize}[itemsep=1pt]
+    \item \textenglish{CountGreaterThan(mat, 5)} تُعيد \textenglish{5} \quad (القيم: 8، 9، 7، 6، 11)
+    \item \textenglish{CountGreaterThan(mat, 0)} تُعيد \textenglish{11}
+\end{itemize}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int CountGreaterThan(int[,] mat, int val)
+{
+    int count = 0;
+    for (int i = 0; i < mat.GetLength(0); i++)
+        for (int j = 0; j < mat.GetLength(1); j++)
+            if (mat[i, j] > val)
+                count++;
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+\fi
+
+% ----------------------------------------------------------------
+% سؤال 12 – كتابة كود: استخراج صف كمصفوفة أحادية
+% ----------------------------------------------------------------
+\item
+اكتب عملية خارجية \textenglish{GetRow} تتلقى مصفوفة أعداد صحيحة ثنائية الأبعاد \textenglish{mat} ورقم صف \textenglish{row}، وتُعيد مصفوفة أحادية تحتوي على عناصر ذلك الصف.
+
+\begin{boxExample}
+\textenglish{GetRow(mat, 2)} تُعيد \textenglish{\{7, 0, 3, 11\}}.
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int[] GetRow(int[,] mat, int row)
+{
+    int cols = mat.GetLength(1);
+    int[] result = new int[cols];
+    for (int j = 0; j < cols; j++)
+        result[j] = mat[row, j];
+    return result;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\textbf{الشرح:} نُثبّت \textenglish{i = row} ونتغير في \textenglish{j} فقط. المصفوفة المُعادة أحادية وحجمها يساوي عدد الأعمدة.
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم عملا ممتعًا!
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
