@@ -23,6 +23,110 @@ sys.path.insert(0, os.path.dirname(__file__))
 from utils import parse_filename
 
 
+# Ordered topic config and Arabic section titles for aggregate files.
+AGGREGATE_TOPIC_CONFIG = {
+    "basics": [
+        ("if", "الشرط"),
+        ("loops", "الحلقات"),
+        ("strings", "النص"),
+        ("arrays", "المصفوفات"),
+    ],
+    "computational_models": [
+        ("languages", "اللغات"),
+        ("dfa", "الأوتومات النهائي المحدد"),
+        ("nfa", "الأوتومات النهائي غير المحدد"),
+        ("regularity", "اللغات النظامية"),
+        ("irregularity", "إثبات عدم النظامية"),
+        ("pda", "أوتومات الراصة"),
+        ("turing", "آلة تورينج"),
+    ],
+}
+
+AGGREGATE_FILE_NAMES = {
+    "basics": "all_basics.tex",
+    "computational_models": "all_computational_models.tex",
+}
+
+
+AGGREGATE_TITLES = {
+    "basics": "أسئلة بجروت - أساسيات",
+    "computational_models": "أسئلة بجروت - موديلات حسابية",
+}
+
+
+def sort_questions_list(questions, sort_key):
+    """Sort questions by the selected strategy."""
+    if sort_key == "year":
+        return sorted(questions, key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
+    if sort_key == "question":
+        return sorted(questions, key=lambda x: (x[2], x[0], x[1]))  # qnum, year, model
+    return sorted(questions, key=lambda x: (x[1], x[0], x[2]))  # model, year, qnum
+
+
+def topic_title_ar(folder, topic):
+    """Return Arabic title for topic, fallback to topic key if missing."""
+    for topic_key, arabic_title in AGGREGATE_TOPIC_CONFIG.get(folder, []):
+        if topic_key == topic:
+            return arabic_title
+    return topic
+
+
+def ordered_topics(folder, available_topics):
+    """Return topics ordered by config first, then any remaining topics alphabetically."""
+    ordered = []
+    configured = [k for k, _ in AGGREGATE_TOPIC_CONFIG.get(folder, [])]
+
+    for topic in configured:
+        if topic in available_topics:
+            ordered.append(topic)
+
+    for topic in sorted(available_topics):
+        if topic not in ordered:
+            ordered.append(topic)
+
+    return ordered
+
+
+def build_aggregate_tex(folder, folder_topics):
+    """Build a complete TeX document with sections per topic."""
+    title = AGGREGATE_TITLES.get(folder, f"أسئلة بجروت - {folder}")
+    sections = []
+
+    for topic in ordered_topics(folder, set(folder_topics.keys())):
+        section_title = topic_title_ar(folder, topic)
+        questions = folder_topics[topic]
+
+        lines = [f"\\clearpage", f"\\section{{{section_title}}}"]
+        for _, _, _, file_path in questions:
+            stem = os.path.splitext(os.path.basename(file_path))[0]
+            lines.append(f"\\input{{../../../bagrut_questions/{folder}/{stem}.tex}}")
+
+        sections.append("\n".join(lines))
+
+    sections_content = "\n\n".join(sections)
+
+    return f"""\\documentclass[12pt]{{article}}
+\\input{{../../../scripts/tex_preamble.tex}}
+
+\\ifwithsols
+\\title{{حل {title}}}
+\\else
+\\title{{{title}}}
+\\fi
+
+\\begin{{document}}
+
+\\maketitle
+\\renewcommand{{\\contentsname}}{{جدول المحتويات}}
+\\tableofcontents
+\\clearpage
+
+{sections_content}
+
+\\end{{document}}
+"""
+
+
 def has_solution(pdf_path):
     base, _ = os.path.splitext(pdf_path)
     tex_file = f"{base}.tex"
@@ -234,14 +338,8 @@ def main():
         template_content = f.read()
 
     for (folder, topic), questions in topic_files.items():
-        # Apply sorting strategy based on command line argument
         # questions tuple: (year, model, qnum, file_path)
-        if args.sort == "year":
-            questions.sort(key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
-        elif args.sort == "question":
-            questions.sort(key=lambda x: (x[2], x[0], x[1]))  # qnum, year, model
-        elif args.sort == "model":
-            questions.sort(key=lambda x: (x[1], x[0], x[2]))  # model, year, qnum
+        questions = sort_questions_list(questions, args.sort)
 
         questions_list = "\n".join([f"\\input{{../../../bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex}}" for q in questions if os.path.exists(f"bagrut_questions/{folder}/{os.path.splitext(os.path.basename(q[3]))[0]}.tex")])
 
@@ -253,6 +351,30 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(content)
         print(f"Generated topic file: {output_file}")
+
+    # Generate aggregate files (all topics in one file per folder)
+    for folder in ["basics", "computational_models"]:
+        folder_topics = {}
+
+        for (f_name, topic), questions in topic_files.items():
+            if f_name != folder:
+                continue
+            folder_topics[topic] = sort_questions_list(questions, args.sort)
+
+        if not folder_topics:
+            continue
+
+        output_dir = os.path.join("src", "bagrut_questions", folder)
+        os.makedirs(output_dir, exist_ok=True)
+
+        aggregate_name = AGGREGATE_FILE_NAMES[folder]
+        aggregate_path = os.path.join(output_dir, aggregate_name)
+        aggregate_content = build_aggregate_tex(folder, folder_topics)
+
+        with open(aggregate_path, "w", encoding="utf-8") as f:
+            f.write(aggregate_content)
+
+        print(f"Generated aggregate file: {aggregate_path}")
 
 
 if __name__ == "__main__":
