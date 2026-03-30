@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مصفوفة التكرار و Count Sort</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&display=swap');
+:root {
+  --bg-body:#1e1e2e; --bg-card:#252538; --text-primary:#ffffff; --text-secondary:#a6accd;
+  --accent-blue:#89b4fa; --accent-green:#a6e3a1; --accent-pink:#f5c2e7;
+  --accent-yellow:#f9e2af; --accent-red:#f38ba8; --accent-purple:#cba6f7;
+  --accent-teal:#94e2d5; --accent-orange:#fab387;
+  --code-bg:#11111b; --border-color:#313244;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;}
+body{background:var(--bg-body);color:var(--text-primary);display:flex;flex-direction:column;align-items:center;height:100vh;overflow:hidden;}
+.presentation{width:95%;max-width:1100px;height:85vh;margin-top:3vh;position:relative;background:var(--bg-card);border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,.3);border:1px solid var(--border-color);overflow:hidden;}
+.progress-container{width:100%;height:5px;background:var(--border-color);position:absolute;top:0;left:0;z-index:10;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent-blue),var(--accent-teal));width:0%;transition:width .4s ease;}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;padding:32px 50px;opacity:0;visibility:hidden;transition:opacity .4s ease;display:flex;flex-direction:column;justify-content:center;}
+.slide.active{opacity:1;visibility:visible;}
+h1{font-size:2.8em;color:var(--accent-blue);text-align:center;margin-bottom:16px;}
+h2{font-size:1.95em;color:var(--accent-teal);margin-bottom:16px;border-bottom:2px solid var(--border-color);padding-bottom:10px;display:flex;align-items:center;gap:12px;}
+p,li{font-size:1.32em;color:var(--text-secondary);line-height:1.8;margin-bottom:10px;}
+ul,ol{margin-right:36px;}
+.hl       {color:var(--accent-yellow);font-weight:bold;}
+.hl-teal  {color:var(--accent-teal);font-weight:bold;}
+.hl-red   {color:var(--accent-red);font-weight:bold;}
+.hl-blue  {color:var(--accent-blue);font-weight:bold;}
+.hl-green {color:var(--accent-green);font-weight:bold;}
+.hl-orange{color:var(--accent-orange);font-weight:bold;}
+.ltr{direction:ltr;display:inline-block;font-family:'Fira Code',monospace;}
+
+/* Code */
+.code-block{background:var(--code-bg);padding:13px 18px;border-radius:10px;font-family:'Fira Code',monospace;font-size:1.1em;color:var(--text-primary);border:1px solid var(--border-color);direction:ltr;text-align:left;margin:8px 0;overflow-x:auto;line-height:1.65;white-space:pre;tab-size:4;}
+.kw {color:var(--accent-pink);}
+.ty {color:var(--accent-blue);}
+.cm {color:#6c7086;font-style:italic;}
+.str{color:var(--accent-green);}
+.num{color:var(--accent-orange);}
+
+/* Boxes */
+.box       {background:var(--bg-body);border-right:5px solid var(--accent-green); padding:12px 18px;border-radius:8px;margin-top:12px;}
+.box-blue  {background:var(--bg-body);border-right:5px solid var(--accent-blue);  padding:12px 18px;border-radius:8px;margin-top:12px;}
+.box-orange{background:var(--bg-body);border-right:5px solid var(--accent-orange);padding:12px 18px;border-radius:8px;margin-top:12px;}
+.box-teal  {background:var(--bg-body);border-right:5px solid var(--accent-teal);  padding:12px 18px;border-radius:8px;margin-top:12px;}
+.insight{background:rgba(148,226,213,.07);border:2px solid var(--accent-teal);  padding:14px 20px;border-radius:10px;margin-top:12px;}
+.warn   {background:rgba(243,139,168,.07);border:2px solid var(--accent-red);    padding:14px 20px;border-radius:10px;margin-top:12px;}
+.question-box{background:rgba(137,180,250,.09);border:2px dashed var(--accent-blue);padding:22px 26px;border-radius:10px;margin-top:14px;}
+.answer-box  {background:rgba(166,227,161,.09);border:2px solid var(--accent-green);padding:22px 26px;border-radius:10px;margin-top:14px;}
+.answer-box h3{color:var(--accent-green);font-size:1.5em;margin-bottom:12px;}
+
+/* Freq cells */
+.freq-wrap{display:flex;gap:6px;direction:ltr;align-items:flex-end;margin:10px 0;flex-wrap:wrap;}
+.freq-cell{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.freq-cell .fidx{font-family:'Fira Code';font-size:.95em;color:var(--text-secondary);}
+.freq-cell .fval{width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:2px solid var(--border-color);border-radius:8px;font-family:'Fira Code';font-size:1.25em;font-weight:bold;background:rgba(255,255,255,.04);transition:all .3s ease;}
+.fval.hi-blue  {background:rgba(137,180,250,.2); border-color:var(--accent-blue);  color:var(--accent-blue);}
+.fval.hi-green {background:rgba(166,227,161,.18);border-color:var(--accent-green); color:var(--accent-green);}
+.fval.hi-yellow{background:rgba(249,226,175,.18);border-color:var(--accent-yellow);color:var(--accent-yellow);}
+.fval.hi-orange{background:rgba(250,179,135,.22);border-color:var(--accent-orange);color:var(--accent-orange);transform:scale(1.1);box-shadow:0 0 14px rgba(250,179,135,.35);}
+.fval.hi-teal  {background:rgba(148,226,213,.18);border-color:var(--accent-teal);  color:var(--accent-teal);}
+
+/* Sim */
+.sim-box{background:var(--code-bg);border:1px solid var(--border-color);border-radius:14px;padding:16px 18px;margin-top:10px;display:flex;flex-direction:column;align-items:center;}
+.sim-msg{min-height:50px;font-size:1.25em;font-weight:bold;color:var(--accent-yellow);text-align:center;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.sim-vars{display:flex;gap:20px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
+.var-badge{font-family:'Fira Code';font-size:1em;padding:4px 16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--border-color);}
+.var-badge .vn{color:var(--text-secondary);}
+.var-badge .vv{color:var(--accent-yellow);font-weight:bold;margin-right:4px;}
+.sim-controls{display:flex;gap:14px;margin-top:12px;justify-content:center;}
+.sim-btn{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--accent-blue);padding:9px 18px;border-radius:8px;cursor:pointer;font-size:1.05em;transition:all .2s;min-width:110px;font-family:'Tajawal',sans-serif;}
+.sim-btn:hover:not(:disabled){background:var(--accent-blue);color:var(--bg-body);}
+.sim-btn:disabled{opacity:.4;cursor:not-allowed;border-color:var(--border-color);}
+.step-cnt{font-family:'Fira Code';color:var(--accent-green);font-size:1.05em;display:flex;align-items:center;}
+
+/* Layout */
+.two-col{display:flex;gap:20px;align-items:flex-start;margin-top:6px;}
+.two-col>*{flex:1;}
+
+/* Nav */
+.nav-controls{display:flex;justify-content:space-between;align-items:center;width:350px;margin-top:10px;}
+.nav-btn{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);padding:14px 24px;border-radius:50px;cursor:pointer;font-size:1.15em;transition:all .2s;display:flex;align-items:center;gap:10px;font-family:'Tajawal',sans-serif;}
+.nav-btn:hover{background:var(--accent-blue);color:var(--bg-body);}
+.slide-num{font-size:1.15em;color:var(--text-secondary);font-weight:bold;}
+.author{position:absolute;bottom:18px;left:28px;font-size:.95em;color:var(--text-secondary);opacity:.55;}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:1.1em;margin-top:12px;}
+th{background:var(--border-color);padding:10px 14px;text-align:center;color:var(--accent-teal);font-size:1.1em;}
+td{padding:10px 14px;border-bottom:1px solid var(--border-color);text-align:center;color:var(--text-secondary);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.03);}
+
+@media print{
+  body{height:auto;overflow:visible;}
+  .presentation{width:100%;max-width:100%;height:auto;margin:0;border-radius:0;box-shadow:none;border:none;overflow:visible;}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;height:85vh;page-break-after:always;border-bottom:1px solid #ccc;}
+  .nav-controls,.progress-container{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="presentation">
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- ══ SLIDE 1 – Title ══ -->
+<div class="slide active">
+  <h1>مصفوفة التكرار<br><span style="font-size:.6em;color:var(--accent-teal);">Frequency Array &amp; Count Sort</span></h1>
+  <p style="text-align:center;font-size:1.4em;margin-top:8px;">كيف نحوّل مصفوفة أرقام إلى جدول تكرار؟ وكيف نستخدمه في الترتيب؟</p>
+  <div style="display:flex;justify-content:center;gap:16px;margin-top:26px;flex-wrap:wrap;">
+    <span style="background:rgba(137,180,250,.15);border:1px solid var(--accent-blue);padding:6px 20px;border-radius:20px;font-size:1.1em;color:var(--accent-blue);">مصفوفات 1D</span>
+    <span style="background:rgba(148,226,213,.15);border:1px solid var(--accent-teal);padding:6px 20px;border-radius:20px;font-size:1.1em;color:var(--accent-teal);">مصفوفة التكرار</span>
+    <span style="background:rgba(166,227,161,.15);border:1px solid var(--accent-green);padding:6px 20px;border-radius:20px;font-size:1.1em;color:var(--accent-green);">Count Sort</span>
+  </div>
+  <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+</div>
+
+<!-- ══ SLIDE 2 – الفكرة الأساسية ══ -->
+<div class="slide">
+  <h2><i class="fas fa-lightbulb"></i> الفكرة الأساسية</h2>
+  <p>عندنا مصفوفة تحتوي أرقامًا بين <span class="hl-blue">0</span> و<span class="hl-blue">9</span>. نريد أن نعرف: <span class="hl">كم مرة ظهر كل رقم؟</span></p>
+  <p><b>الفكرة الذكية:</b> نُنشئ مصفوفة طولها <span class="hl-teal">10</span> دائمًا، <span class="hl">رقم القيمة = فهرس الخانة.</span></p>
+
+  <div style="display:flex;align-items:center;gap:28px;margin-top:16px;flex-wrap:wrap;">
+    <div>
+      <p style="color:var(--accent-blue);margin-bottom:6px;font-size:1.1em;">المصفوفة الأصلية</p>
+      <div class="freq-wrap">
+        <div class="freq-cell"><div class="fidx">0</div><div class="fval hi-blue">5</div></div>
+        <div class="freq-cell"><div class="fidx">1</div><div class="fval hi-green">2</div></div>
+        <div class="freq-cell"><div class="fidx">2</div><div class="fval hi-blue">5</div></div>
+        <div class="freq-cell"><div class="fidx">3</div><div class="fval hi-teal">8</div></div>
+        <div class="freq-cell"><div class="fidx">4</div><div class="fval hi-green">2</div></div>
+        <div class="freq-cell"><div class="fidx">5</div><div class="fval hi-blue">5</div></div>
+        <div class="freq-cell"><div class="fidx">6</div><div class="fval hi-yellow">0</div></div>
+      </div>
+    </div>
+    <div style="font-size:2em;color:var(--accent-yellow);">→</div>
+    <div>
+      <p style="color:var(--accent-teal);margin-bottom:6px;font-size:1.1em;">مصفوفة التكرار (طولها 10 دائمًا)</p>
+      <div class="freq-wrap">
+        <div class="freq-cell"><div class="fidx">0</div><div class="fval hi-yellow">1</div></div>
+        <div class="freq-cell"><div class="fidx">1</div><div class="fval">0</div></div>
+        <div class="freq-cell"><div class="fidx">2</div><div class="fval hi-green">2</div></div>
+        <div class="freq-cell"><div class="fidx">3</div><div class="fval">0</div></div>
+        <div class="freq-cell"><div class="fidx">4</div><div class="fval">0</div></div>
+        <div class="freq-cell"><div class="fidx">5</div><div class="fval hi-blue">3</div></div>
+        <div class="freq-cell"><div class="fidx">6</div><div class="fval">0</div></div>
+        <div class="freq-cell"><div class="fidx">7</div><div class="fval">0</div></div>
+        <div class="freq-cell"><div class="fidx">8</div><div class="fval hi-teal">1</div></div>
+        <div class="freq-cell"><div class="fidx">9</div><div class="fval">0</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:14px;">
+    <p><b><i class="fas fa-code"></i> السطر الجوهري:</b> <span class="ltr">frequency[arr[i]]++</span> — قيمة العنصر تُستخدم كـ <span class="hl">فهرس</span> في مصفوفة التكرار.</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 3 – الكود ══ -->
+<div class="slide">
+  <h2><i class="fas fa-code"></i> CreateFrequencyArray — الكود</h2>
+  <div class="two-col">
+    <div>
+      <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span>[] CreateFrequencyArray(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span>[] frequency = <span class="kw">new</span> <span class="ty">int</span>[<span class="num">10</span>];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.Length; i++)
+    {
+        frequency[arr[i]]++;  <span class="cm">// القيمة = الفهرس</span>
+    }
+
+    <span class="kw">return</span> frequency;
+}</div>
+    </div>
+    <div>
+      <div class="box-blue">
+        <p><b>السطر المهم:</b></p>
+        <p><span class="ltr">frequency[arr[i]]++</span></p>
+        <p><span class="hl-teal">arr[i]</span> هي القيمة الحالية (مثلاً 5).</p>
+        <p>نذهب إلى الخانة رقم <span class="hl-teal">5</span> في <span class="ltr">frequency</span> ونزيدها.</p>
+      </div>
+      <div class="box" style="margin-top:14px;">
+        <p><b><i class="fas fa-info-circle"></i> ملاحظة:</b> المصفوفة <span class="ltr">frequency</span> تُهيَّأ تلقائيًا بأصفار في C#.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 4 – محاكاة CreateFrequencyArray ══ -->
+<div class="slide">
+  <h2><i class="fas fa-play-circle"></i> تتبع خطوة بخطوة — CreateFrequencyArray</h2>
+  <div class="sim-box">
+    <div class="sim-msg" id="freq-msg">اضغط "التالي" لبدء المحاكاة</div>
+    <div class="sim-vars">
+      <div class="var-badge"><span class="vn">i =</span><span class="vv" id="freq-i">–</span></div>
+      <div class="var-badge"><span class="vn">arr[i] =</span><span class="vv" id="freq-val">–</span></div>
+      <div class="var-badge"><span class="vn">frequency[arr[i]] =</span><span class="vv" id="freq-count">–</span></div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <p style="font-size:1em;color:var(--text-secondary);margin-bottom:6px;text-align:center;">arr = {5, 2, 5, 8, 2, 5, 0}</p>
+      <div class="freq-wrap" style="justify-content:center;" id="orig-arr-wrap"></div>
+    </div>
+    <div>
+      <p style="font-size:1em;color:var(--text-secondary);margin-bottom:6px;text-align:center;">frequency (طولها 10)</p>
+      <div class="freq-wrap" style="justify-content:center;" id="freq-arr-wrap"></div>
+    </div>
+    <div class="sim-controls">
+      <button class="sim-btn" id="btn-prev-freq" onclick="freqPrev()" disabled>&#9664; السابق</button>
+      <span class="step-cnt" id="step-cnt-freq">0 / 0</span>
+      <button class="sim-btn" id="btn-next-freq" onclick="freqNext()">التالي &#9654;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 5 – تمرين 1 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-pencil-alt"></i> تمرين ١ — الأكثر تكرارًا</h2>
+  <div class="question-box">
+    <p>اكتب عملية خارجية <span class="ltr">int FindMostFrequent(int[] arr)</span> تتلقى مصفوفة أعداد صحيحة (تحتوي فقط على الأرقام من 0 إلى 9) وتعيد الرقم الأكثر تكرارًا فيها.</p>
+    <p style="margin-top:10px;"><b>مثال:</b></p>
+    <p class="ltr" style="font-size:1.15em;">arr = {3, 1, 3, 7, 1, 3, 7, 7, 3}
+<span style="color:var(--accent-green);">// الناتج: 3  (ظهر 4 مرات)</span></p>
+    <p style="margin-top:6px;color:var(--text-secondary);">إذا تساوى عددان في التكرار، أعد الأصغر منهما.</p>
+  </div>
+  <div class="box" style="margin-top:16px;">
+    <p><b><i class="fas fa-lightbulb"></i> تلميح:</b></p>
+    <ul>
+      <li>ابنِ أولًا مصفوفة التكرار.</li>
+      <li>ابحث عن الخانة التي فيها أكبر قيمة.</li>
+      <li>فهرس تلك الخانة هو الناتج.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ SLIDE 6 – حل تمرين 1 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle"></i> حل تمرين ١ — FindMostFrequent</h2>
+  <div class="answer-box">
+    <h3><i class="fas fa-check"></i> الحل</h3>
+    <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span> FindMostFrequent(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span>[] frequency = CreateFrequencyArray(arr);
+
+    <span class="ty">int</span> maxIdx = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; frequency.Length; i++)
+    {
+        <span class="kw">if</span> (frequency[i] &gt; frequency[maxIdx])  <span class="cm">// > وليس >= للحصول على الأصغر عند التساوي</span>
+            maxIdx = i;
+    }
+
+    <span class="kw">return</span> maxIdx;
+}</div>
+  </div>
+  <div class="box-blue" style="margin-top:10px;">
+    <p><b>ملاحظة:</b> نبدأ من <span class="ltr">i = 1</span> ونقارن بـ <span class="ltr">frequency[maxIdx]</span> وليس بقيمة عددية — هذا النمط مفيد دائمًا عند البحث عن الأكبر في مصفوفة.</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 7 – تمرين 2 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-pencil-alt"></i> تمرين ٢ — هل كل رقم ظهر مرة واحدة فقط؟</h2>
+  <div class="question-box">
+    <p>اكتب عملية خارجية <span class="ltr">bool AllUnique(int[] arr)</span> تتلقى مصفوفة أعداد صحيحة (من 0 إلى 9) وتعيد <span class="hl-green">true</span> إذا كانت جميع الأرقام الموجودة لا تتكرر (كل رقم يظهر مرة واحدة على الأكثر)، وإلا تعيد <span class="hl-red">false</span>.</p>
+    <p style="margin-top:10px;"><b>أمثلة:</b></p>
+    <p class="ltr" style="font-size:1.15em;">{3, 1, 7, 5, 9}  →  <span style="color:var(--accent-green);">true</span>
+{3, 1, 7, 3, 9}  →  <span style="color:var(--accent-red);">false</span>  <span style="color:var(--text-secondary);font-size:.9em;">// الرقم 3 تكرّر</span></p>
+  </div>
+  <div class="insight" style="margin-top:14px;">
+    <p><b>تحدٍّ للتفكير:</b> كيف تحل المسألة <span class="hl">بدون</span> مصفوفة تكرار؟ وأي الحلين أسرع؟</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 8 – حل تمرين 2 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle"></i> حل تمرين ٢ — AllUnique</h2>
+  <div class="answer-box">
+    <h3><i class="fas fa-check"></i> الحل</h3>
+    <div class="code-block"><span class="kw">public static</span> <span class="ty">bool</span> AllUnique(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span>[] frequency = CreateFrequencyArray(arr);
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; frequency.Length; i++)
+    {
+        <span class="kw">if</span> (frequency[i] &gt; <span class="num">1</span>)
+            <span class="kw">return false</span>;
+    }
+
+    <span class="kw">return true</span>;
+}</div>
+  </div>
+  <div class="box" style="margin-top:10px;">
+    <p><b>لماذا هذا أفضل من حلقة مضاعفة؟</b> الحل بمصفوفة التكرار يمر على المصفوفة <span class="hl">مرتين فقط</span>، بينما الحلقة المضاعفة تمر <span class="hl-red">n × n</span> مرة.</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 9 – تمرين 3 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-pencil-alt"></i> تمرين ٣ — كم رقمًا مختلفًا؟</h2>
+  <div class="question-box">
+    <p>اكتب عملية خارجية <span class="ltr">int CountDistinct(int[] arr)</span> تتلقى مصفوفة أعداد صحيحة (من 0 إلى 9) وتعيد عدد الأرقام المختلفة (المتمايزة) الموجودة فيها.</p>
+    <p style="margin-top:10px;"><b>مثال:</b></p>
+    <p class="ltr" style="font-size:1.15em;">{5, 2, 5, 8, 2, 5, 0}  →  <span style="color:var(--accent-green);">4</span>
+<span style="color:var(--text-secondary);font-size:.9em;">// الأرقام المختلفة: 0, 2, 5, 8</span></p>
+  </div>
+  <div class="box" style="margin-top:16px;">
+    <p><b><i class="fas fa-lightbulb"></i> تلميح:</b> بعد بناء مصفوفة التكرار، عدّ كم خانة قيمتها <span class="hl">أكبر من صفر.</span></p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 10 – حل تمرين 3 ══ -->
+<div class="slide">
+  <h2><i class="fas fa-check-circle"></i> حل تمرين ٣ — CountDistinct</h2>
+  <div class="answer-box">
+    <h3><i class="fas fa-check"></i> الحل</h3>
+    <div class="code-block"><span class="kw">public static</span> <span class="ty">int</span> CountDistinct(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span>[] frequency = CreateFrequencyArray(arr);
+
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; frequency.Length; i++)
+    {
+        <span class="kw">if</span> (frequency[i] &gt; <span class="num">0</span>)
+            count++;
+    }
+
+    <span class="kw">return</span> count;
+}</div>
+  </div>
+  <div class="box-blue" style="margin-top:10px;">
+    <p><b>النمط المشترك في كل التمارين:</b><br>
+    <span class="hl">١. ابنِ مصفوفة التكرار.</span><br>
+    <span class="hl-teal">٢. عالج مصفوفة التكرار للإجابة على السؤال.</span></p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 11 – الانتقال ══ -->
+<div class="slide">
+  <h2><i class="fas fa-exchange-alt"></i> من التكرار إلى الترتيب</h2>
+  <p><b>سؤال للتفكير:</b> إذا كانت عندنا مصفوفة التكرار، هل يمكننا ترتيب المصفوفة الأصلية <span class="hl">دون أن نقارن عنصرين ببعض؟</span></p>
+  <div style="margin-top:14px;">
+    <p style="font-size:1.1em;color:var(--text-secondary);">مصفوفة التكرار لـ <span class="ltr">{3, 1, 3, 2, 1, 3}</span></p>
+    <div class="freq-wrap" style="margin-top:8px;">
+      <div class="freq-cell"><div class="fidx">0</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">1</div><div class="fval hi-green">2</div></div>
+      <div class="freq-cell"><div class="fidx">2</div><div class="fval hi-blue">1</div></div>
+      <div class="freq-cell"><div class="fidx">3</div><div class="fval hi-orange">3</div></div>
+      <div class="freq-cell"><div class="fidx">4</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">5</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">6</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">7</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">8</div><div class="fval">0</div></div>
+      <div class="freq-cell"><div class="fidx">9</div><div class="fval">0</div></div>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:14px;">
+    <p>مصفوفة التكرار تقول:<br>
+    الرقم <span class="hl-green">1</span> ظهر <span class="hl-green">مرتين</span> → اكتب 1، 1<br>
+    الرقم <span class="hl-blue">2</span> ظهر <span class="hl-blue">مرة</span> → اكتب 2<br>
+    الرقم <span class="hl-orange">3</span> ظهر <span class="hl-orange">ثلاثًا</span> → اكتب 3، 3، 3<br>
+    النتيجة: <span class="ltr" style="color:var(--accent-green);font-size:1.1em;">{1, 1, 2, 3, 3, 3}</span> — مرتّبة تصاعديًا!</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 12 – Count Sort كود ══ -->
+<div class="slide">
+  <h2><i class="fas fa-sort-amount-up"></i> Count Sort — الكود</h2>
+  <div class="two-col">
+    <div>
+      <div class="code-block"><span class="kw">public static void</span> CountSort(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span>[] frequency = CreateFrequencyArray(arr);
+
+    <span class="ty">int</span> idx = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> digit = <span class="num">0</span>; digit &lt;= <span class="num">9</span>; digit++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; frequency[digit]; j++)
+        {
+            arr[idx] = digit;
+            idx++;
+        }
+    }
+}</div>
+    </div>
+    <div>
+      <div class="box-blue">
+        <p><b><span class="ltr">frequency[digit]</span></b></p>
+        <p>كم مرة نكتب الرقم <span class="ltr">digit</span> في المصفوفة؟</p>
+      </div>
+      <div class="box-teal" style="margin-top:12px;">
+        <p><b>الخطوات:</b></p>
+        <ol style="font-size:1.15em;">
+          <li>ابنِ مصفوفة التكرار.</li>
+          <li>لكل رقم من 0 إلى 9، اكتبه بقدر عدد تكراره.</li>
+          <li>المصفوفة الأصلية مرتّبة الآن.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 13 – محاكاة Count Sort ══ -->
+<div class="slide">
+  <h2><i class="fas fa-play-circle"></i> محاكاة Count Sort</h2>
+  <div class="sim-box">
+    <div class="sim-msg" id="cs-msg">اضغط "التالي" لبدء المحاكاة</div>
+    <div class="sim-vars">
+      <div class="var-badge"><span class="vn">digit =</span><span class="vv" id="cs-digit">–</span></div>
+      <div class="var-badge"><span class="vn">idx =</span><span class="vv" id="cs-idx">–</span></div>
+      <div class="var-badge"><span class="vn">frequency[digit] =</span><span class="vv" id="cs-fdv">–</span></div>
+    </div>
+    <div style="margin-bottom:8px;">
+      <p style="font-size:1em;color:var(--text-secondary);margin-bottom:6px;text-align:center;">arr (يتغير أثناء الترتيب)</p>
+      <div class="freq-wrap" style="justify-content:center;" id="cs-arr-wrap"></div>
+    </div>
+    <div>
+      <p style="font-size:1em;color:var(--text-secondary);margin-bottom:6px;text-align:center;">frequency</p>
+      <div class="freq-wrap" style="justify-content:center;" id="cs-freq-wrap"></div>
+    </div>
+    <div class="sim-controls">
+      <button class="sim-btn" id="btn-prev-cs" onclick="csPrev()" disabled>&#9664; السابق</button>
+      <span class="step-cnt" id="step-cnt-cs">0 / 0</span>
+      <button class="sim-btn" id="btn-next-cs" onclick="csNext()">التالي &#9654;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 14 – مقارنة ══ -->
+<div class="slide">
+  <h2><i class="fas fa-balance-scale"></i> Count Sort مقارنةً بـ Insertion Sort</h2>
+  <table>
+    <thead>
+      <tr><th>الخاصية</th><th>Insertion Sort</th><th>Count Sort</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>طريقة العمل</b></td><td>مقارنة ونقل عناصر</td><td>عدّ ثم إعادة كتابة</td></tr>
+      <tr><td><b>القيود</b></td><td>يعمل مع أي أعداد</td><td>يحتاج نطاقًا معروفًا ومحدودًا</td></tr>
+      <tr><td><b>السرعة</b></td><td>بطيء مع مصفوفات كبيرة</td><td>سريع جدًا عندما النطاق صغير</td></tr>
+      <tr><td><b>الذاكرة الإضافية</b></td><td>لا يحتاج</td><td>يحتاج مصفوفة التكرار</td></tr>
+    </tbody>
+  </table>
+  <div class="insight" style="margin-top:14px;">
+    <p><b>Count Sort مثالي عندما:</b> القيم محدودة ومعروفة مسبقًا (مثل 0–9، أو درجات 0–100).</p>
+  </div>
+  <div class="warn" style="margin-top:10px;">
+    <p><b>لا يصلح إذا:</b> كانت القيم كبيرة جدًا (بالملايين)، لأن مصفوفة التكرار ستكون ضخمة.</p>
+  </div>
+</div>
+
+<!-- ══ SLIDE 15 – ملخص ══ -->
+<div class="slide">
+  <h2><i class="fas fa-list-alt"></i> ملخص الدرس</h2>
+  <div class="two-col">
+    <div>
+      <div class="box-blue">
+        <p><b>مصفوفة التكرار</b></p>
+        <ul>
+          <li>طولها ثابت (10 في مسائلنا)</li>
+          <li>الفهرس = قيمة الرقم</li>
+          <li>المحتوى = عدد مرات الظهور</li>
+          <li>السطر الجوهري: <span class="ltr">frequency[arr[i]]++</span></li>
+        </ul>
+      </div>
+      <div class="box-orange" style="margin-top:12px;">
+        <p><b>استخدامات مصفوفة التكرار</b></p>
+        <ul>
+          <li>الرقم الأكثر تكرارًا</li>
+          <li>التحقق من التفرد</li>
+          <li>عدد الأرقام المتمايزة</li>
+          <li>الترتيب (Count Sort)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="box">
+        <p><b>Count Sort — الخطوات</b></p>
+        <ol>
+          <li>ابنِ مصفوفة التكرار.</li>
+          <li>لكل رقم، اكتبه بقدر تكراره.</li>
+          <li>المصفوفة مرتّبة تصاعديًا.</li>
+        </ol>
+      </div>
+      <div class="insight" style="margin-top:12px;">
+        <p><b>النمط العام:</b><br>
+        <span class="hl">١. ابنِ مصفوفة التكرار.</span><br>
+        <span class="hl-teal">٢. اعمل عليها لحل المسألة.</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="author">إعداد: الأستاذ محمود اغبارية</div>
+</div>
+
+</div><!-- end .presentation -->
+
+<div class="nav-controls" style="margin-top:14px;">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+    <i class="fas fa-chevron-right"></i> السابق
+  </button>
+  <span class="slide-num" id="slideNum">1 / 15</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+    التالي <i class="fas fa-chevron-left"></i>
+  </button>
+</div>
+
+<script>
+// ── Navigation ──────────────────────────────────────────
+const slides  = document.querySelectorAll('.slide');
+const TOTAL   = slides.length;
+let current   = 0;
+
+function changeSlide(dir) {
+  const next = current + dir;
+  if (next < 0 || next >= TOTAL) return;
+  slides[current].classList.remove('active');
+  current = next;
+  slides[current].classList.add('active');
+  document.getElementById('slideNum').textContent = `${current + 1} / ${TOTAL}`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+  document.getElementById('progressBar').style.width = `${((current + 1) / TOTAL) * 100}%`;
+  if (current === 3)  freqReset();
+  if (current === 12) csReset();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') changeSlide(-1);
+  if (e.key === 'ArrowLeft')  changeSlide(1);
+});
+
+// ── Helper ──────────────────────────────────────────────
+function makeCell(idx, val, cls) {
+  return `<div class="freq-cell">
+    <div class="fidx">${idx}</div>
+    <div class="fval${cls ? ' ' + cls : ''}">${val}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// SLIDE 4: CreateFrequencyArray simulation
+// ══════════════════════════════════════════════════════════
+const FREQ_ARR = [5, 2, 5, 8, 2, 5, 0];
+let freqSteps = [], freqStep = 0;
+
+function buildFreqSim() {
+  freqSteps = [];
+  let freq = Array(10).fill(0);
+  freqSteps.push({ i: null, val: null, freq: [...freq],
+    msg: 'نُنشئ مصفوفة frequency طولها 10، كل قيمة تبدأ بـ 0.' });
+  for (let i = 0; i < FREQ_ARR.length; i++) {
+    const v = FREQ_ARR[i];
+    freq[v]++;
+    freqSteps.push({ i, val: v, freq: [...freq],
+      msg: `i=${i}  →  arr[${i}] = ${v}  →  frequency[${v}]++ = ${freq[v]}` });
+  }
+  freqSteps.push({ i: null, val: null, freq: [...freq],
+    msg: `✔ انتهت العملية! frequency = [${freq.join(', ')}]` });
+}
+
+function renderFreqSim(idx) {
+  if (idx < 0) idx = 0;
+  if (idx >= freqSteps.length) idx = freqSteps.length - 1;
+  freqStep = idx;
+  const s = freqSteps[idx];
+  document.getElementById('freq-msg').textContent   = s.msg;
+  document.getElementById('freq-i').textContent     = s.i !== null ? s.i : '–';
+  document.getElementById('freq-val').textContent   = s.val !== null ? s.val : '–';
+  document.getElementById('freq-count').textContent = s.i !== null ? s.freq[s.val] : '–';
+  document.getElementById('step-cnt-freq').textContent = `${idx + 1} / ${freqSteps.length}`;
+  document.getElementById('orig-arr-wrap').innerHTML = FREQ_ARR.map((v, i) =>
+    makeCell(i, v, s.i !== null && i === s.i ? 'hi-orange' : s.i !== null && i < s.i ? 'hi-teal' : '')
+  ).join('');
+  document.getElementById('freq-arr-wrap').innerHTML = s.freq.map((v, i) =>
+    makeCell(i, v, s.val !== null && i === s.val ? 'hi-orange' : v > 0 ? 'hi-green' : '')
+  ).join('');
+  document.getElementById('btn-prev-freq').disabled = idx === 0;
+  document.getElementById('btn-next-freq').disabled = idx === freqSteps.length - 1;
+}
+
+function freqNext()  { renderFreqSim(freqStep + 1); }
+function freqPrev()  { renderFreqSim(freqStep - 1); }
+function freqReset() { buildFreqSim(); renderFreqSim(0); }
+
+// ══════════════════════════════════════════════════════════
+// SLIDE 13: Count Sort simulation
+// ══════════════════════════════════════════════════════════
+const CS_ORIG = [3, 1, 3, 2, 1, 3, 0, 2];
+let csSteps = [], csStep = 0;
+
+function buildCsSim() {
+  csSteps = [];
+  let arr  = [...CS_ORIG];
+  let freq = Array(10).fill(0);
+
+  csSteps.push({ arr: [...arr], freq: [...freq], digit: null, idx: null,
+    msg: 'نُنشئ مصفوفة التكرار من arr.', phase: 0,
+    activeFreqIdx: null, activeArrIdx: null });
+
+  for (let i = 0; i < CS_ORIG.length; i++) {
+    freq[CS_ORIG[i]]++;
+    csSteps.push({ arr: [...arr], freq: [...freq], digit: null, idx: i,
+      msg: `arr[${i}] = ${CS_ORIG[i]}  →  frequency[${CS_ORIG[i]}]++ = ${freq[CS_ORIG[i]]}`,
+      phase: 0, activeFreqIdx: CS_ORIG[i], activeArrIdx: i });
+  }
+
+  let idx = 0;
+  for (let digit = 0; digit <= 9; digit++) {
+    for (let j = 0; j < freq[digit]; j++) {
+      arr[idx] = digit;
+      csSteps.push({ arr: [...arr], freq: [...freq], digit, idx,
+        msg: `digit=${digit}: نكتب ${digit} في arr[${idx}]  (مرة ${j+1} من ${freq[digit]})`,
+        phase: 1, activeFreqIdx: digit, activeArrIdx: idx });
+      idx++;
+    }
+  }
+  csSteps.push({ arr: [...arr], freq: [...freq], digit: null, idx: null,
+    msg: '✔ انتهى Count Sort! المصفوفة مرتّبة.', phase: 2,
+    activeFreqIdx: null, activeArrIdx: null });
+}
+
+function renderCsSim(idx) {
+  if (idx < 0) idx = 0;
+  if (idx >= csSteps.length) idx = csSteps.length - 1;
+  csStep = idx;
+  const s = csSteps[idx];
+  document.getElementById('cs-msg').textContent   = s.msg;
+  document.getElementById('cs-digit').textContent = s.digit !== null ? s.digit : '–';
+  document.getElementById('cs-idx').textContent   = s.idx !== null ? s.idx : '–';
+  document.getElementById('cs-fdv').textContent   = s.digit !== null ? s.freq[s.digit] : '–';
+  document.getElementById('step-cnt-cs').textContent = `${idx + 1} / ${csSteps.length}`;
+  document.getElementById('cs-arr-wrap').innerHTML = s.arr.map((v, i) => {
+    let cls = '';
+    if (s.phase === 0)      cls = i === s.activeArrIdx ? 'hi-orange' : i < (s.activeArrIdx ?? 0) ? 'hi-teal' : '';
+    else if (s.phase === 1) cls = i === s.activeArrIdx ? 'hi-orange' : i < (s.activeArrIdx ?? 0) ? 'hi-green' : '';
+    else                    cls = 'hi-green';
+    return makeCell(i, v, cls);
+  }).join('');
+  document.getElementById('cs-freq-wrap').innerHTML = s.freq.map((v, i) =>
+    makeCell(i, v, i === s.activeFreqIdx ? 'hi-orange' : v > 0 ? 'hi-blue' : '')
+  ).join('');
+  document.getElementById('btn-prev-cs').disabled = idx === 0;
+  document.getElementById('btn-next-cs').disabled = idx === csSteps.length - 1;
+}
+
+function csNext()  { renderCsSim(csStep + 1); }
+function csPrev()  { renderCsSim(csStep - 1); }
+function csReset() { buildCsSim(); renderCsSim(0); }
+
+// ── Init ────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  freqReset();
+  csReset();
+  document.getElementById('progressBar').style.width = `${(1 / TOTAL) * 100}%`;
+  document.getElementById('prevBtn').disabled = true;
+});
+</script>
+</body>
+</html>

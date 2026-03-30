@@ -1,0 +1,272 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرّن 12 - ترتيب العدّ}
+\else
+\title{ورقة تمرّن 12 - ترتيب العدّ}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+    % ======================================================
+    % 1. GetFrequencies0To16 - مصفوفة تكرار عادية (0-16)
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] GetFrequencies0To16(int[] arr)} تستقبل مصفوفة أعداد صحيحة، جميع قيمها محصورة في المجال من 0 إلى 16 (شامل). تقوم العملية بإنشاء وإرجاع مصفوفة تكرار (\textenglish{Frequency Array}) تحسب عدد مرات ظهور كل رقم في المصفوفة.
+
+    \begin{boxExample}
+    إذا كانت المصفوفة المُدخلة: \textenglish{\{5, 16, 0, 5, 2, 16\}} \\
+    فإن العملية تعيد مصفوفة تكرار طولها 17، بحيث تكون:
+    \begin{itemize}
+        \item قيمة الخانة في الفهرس 5 هي 2 (لأن الرقم 5 ظهر مرتين).
+        \item قيمة الخانة في الفهرس 16 هي 2.
+        \item قيمة الخانة في الفهرس 0 هي 1.
+        \item باقي الخانات قيمتها 0.
+    \end{itemize}
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] GetFrequencies0To16(int[] arr)
+{
+    int[] freq = new int[17]; // من 0 إلى 16 يتطلب 17 خانة
+    for (int i = 0; i < arr.Length; i++)
+    {
+        freq[arr[i]]++; // زيادة التكرار في الفهرس المطابق للرقم
+    }
+    return freq;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 2. GetFrequencies5To13 - مصفوفة تكرار مزاحة (5-13)
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] GetFrequencies5To13(int[] arr)} تستقبل مصفوفة أعداد صحيحة جميع قيمها محصورة في المجال من 5 إلى 13 (شامل). لكي نوفر في مساحة الذاكرة، قم بإنشاء مصفوفة تكرار بأصغر حجم ممكن، وقم بربط كل قيمة بالفهرس المناسب لها.
+
+    \begin{boxHint}
+    للحصول على أصغر حجم ممكن، اطرح الحد الأدنى (5) من كل قيمة في المصفوفة. بالتالي، حجم مصفوفة التكرار سيكون $13 - 5 + 1 = 9$.
+    \end{boxHint}
+
+    \begin{boxExample}
+    إذا كانت المصفوفة المُدخلة: \textenglish{\{5, 13, 8, 5, 10\}} \\
+    فإن العملية تعيد مصفوفة تكرار طولها 9، بحيث يكون:
+    \begin{itemize}
+        \item الفهرس 0 (الذي يمثل الرقم 5) قيمته 2.
+        \item الفهرس 8 (الذي يمثل الرقم 13) قيمته 1.
+    \end{itemize}
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] GetFrequencies5To13(int[] arr)
+{
+    int[] freq = new int[9]; // الحجم هو 9 خانات
+    for (int i = 0; i < arr.Length; i++)
+    {
+        int index = arr[i] - 5; // طرح 5 للحصول على الفهرس
+        freq[index]++;
+    }
+    return freq;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 3. GetEvenFrequencies0To20 - تكرار الأرقام الزوجية
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int[] GetEvenFrequencies0To20(int[] arr)} تستقبل مصفوفة أعداد صحيحة تحتوي فقط على أرقام \textbf{زوجية} محصورة في المجال من 0 إلى 20 (شامل). أنشئ مصفوفة تكرار بأصغر حجم ممكن لحساب تكرار هذه الأرقام الزوجية.
+
+    \begin{boxHint}
+    بما أن الأرقام المتوقعة هي (0، 2، 4، ... 20)، فإن عددها هو 11 رقماً. يمكنك قسمة كل رقم زوجي على 2 لتحصل على فهرسه المتسلسل في مصفوفة التكرار.
+    \end{boxHint}
+
+    \begin{boxExample}
+    إذا كانت المصفوفة المُدخلة: \textenglish{\{2, 20, 0, 14, 2\}} \\
+    فإن العملية تعيد مصفوفة طولها 11، بحيث يكون:
+    \begin{itemize}
+        \item الفهرس 1 (الذي يمثل الرقم 2) قيمته 2.
+        \item الفهرس 10 (الذي يمثل الرقم 20) قيمته 1.
+    \end{itemize}
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int[] GetEvenFrequencies0To20(int[] arr)
+{
+    int[] freq = new int[11]; // 20 / 2 + 1 = 11
+    for (int i = 0; i < arr.Length; i++)
+    {
+        int index = arr[i] / 2; // القسمة على 2 تعطي الفهرس
+        freq[index]++;
+    }
+    return freq;
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 4. HasDuplicates - فحص التكرار (استخدام Bool Array)
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{bool HasDuplicates(int[] arr, int maxVal)} تستقبل مصفوفة أعداد صحيحة جميع قيمها محصورة من 0 إلى \textenglish{maxVal}. تعيد العملية \textenglish{true} إذا وُجد على الأقل رقم واحد مكرر في المصفوفة، وتعيد \textenglish{false} إذا كانت جميع الأرقام مميزة (لا يوجد أي تكرار).
+
+    \begin{boxHint}
+    استخدم مصفوفة من نوع \textenglish{bool} لتعقب الأرقام التي مررت عليها سابقاً. إذا صادفت رقماً مسجلاً مسبقاً كـ \textenglish{true}، يمكنك إرجاع الجواب فوراً دون الحاجة لإكمال الفحص.
+    \end{boxHint}
+
+    \begin{boxExample}
+    \begin{itemize}
+        \item إذا كانت المصفوفة: \textenglish{\{1, 5, 3, 9, 5\}} و \textenglish{maxVal = 9}، تعيد العملية \textenglish{true} (لأن الرقم 5 مكرر).
+        \item إذا كانت المصفوفة: \textenglish{\{1, 2, 3, 4\}} و \textenglish{maxVal = 5}، تعيد العملية \textenglish{false}.
+    \end{itemize}
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static bool HasDuplicates(int[] arr, int maxVal)
+{
+    bool[] seen = new bool[maxVal + 1];
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (seen[arr[i]] == true) // إذا رأينا الرقم مسبقاً
+            return true;
+
+        seen[arr[i]] = true; // نسجل رؤيتنا للرقم
+    }
+    return false; // إذا انتهت الحلقة ولم نجد تكراراً
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \clearpage
+
+    % ======================================================
+    % 5. CountingSort - ترتيب العد
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{void CountingSort(int[] arr)} تستقبل مصفوفة أعداد صحيحة قيمها محصورة بين 0 و 99. تقوم العملية بترتيب عناصر المصفوفة \textbf{تصاعدياً} باستخدام خوارزمية "ترتيب العد" (\textenglish{Count Sort}).
+
+    \begin{boxHint}
+    خوارزمية ترتيب العد تعتمد على خطوتين:
+    \begin{enumerate}
+        \item بناء مصفوفة التكرار لحساب مرات ظهور كل رقم.
+        \item المرور على مصفوفة التكرار واستخدامها لإعادة كتابة الأرقام في المصفوفة الأصلية بشكل مرتب.
+    \end{enumerate}
+    \end{boxHint}
+
+    \begin{boxExample}
+    إذا كانت المصفوفة المُدخلة: \textenglish{\{4, 2, 2, 8, 3, 3, 1\}} \\
+    فإنها تصبح بعد استدعاء العملية: \textenglish{\{1, 2, 2, 3, 3, 4, 8\}}.
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static void CountingSort(int[] arr)
+{
+    int[] freq = new int[100]; // مجال الأرقام من 0 إلى 99
+
+    // 1. بناء مصفوفة التكرار
+    for (int i = 0; i < arr.Length; i++)
+    {
+        freq[arr[i]]++;
+    }
+
+    // 2. إعادة كتابة المصفوفة الأصلية
+    int index = 0;
+    for (int i = 0; i < freq.Length; i++)
+    {
+        while (freq[i] > 0)
+        {
+            arr[index] = i;
+            index++;
+            freq[i]--;
+        }
+    }
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+    % ======================================================
+    % 6. FindMissingNumber - إيجاد الرقم المفقود
+    % ======================================================
+
+    \item
+    اكتب عملية خارجية \textenglish{int FindMissingNumber(int[] arr, int n)} تستقبل مصفوفة طولها $n$ تحتوي على أرقام غير مكررة محصورة في المجال من 0 إلى $n$. بما أن طول المصفوفة $n$ والمجال يحتوي على $n+1$ رقماً (من 0 إلى $n$)، فهناك حتماً رقم واحد مفقود. ابحث عن هذا الرقم وأرجعه.
+
+    \begin{boxHint}
+    يمكنك استخدام مصفوفة من نوع \textenglish{bool} بحجم $n+1$ لتسجيل الأرقام الموجودة. بعد الانتهاء، الفهرس الوحيد الذي يحمل القيمة \textenglish{false} سيكون هو الرقم المفقود.
+    \end{boxHint}
+
+    \begin{boxExample}
+    إذا كانت المصفوفة: \textenglish{\{3, 0, 1\}}، وقيمة $n$ هي 3 (أي المجال من 0 إلى 3): \\
+    الأرقام التي يجب أن تكون موجودة هي (0، 1، 2، 3). نلاحظ أن الرقم المفقود هو 2، لذا تعيد العملية 2.
+    \end{boxExample}
+
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+public static int FindMissingNumber(int[] arr, int n)
+{
+    bool[] found = new bool[n + 1]; // حجم المصفوفة n+1
+
+    // تسجيل الأرقام الموجودة في المصفوفة
+    for (int i = 0; i < arr.Length; i++)
+    {
+        found[arr[i]] = true;
+    }
+
+    // البحث عن الفهرس الذي لم نعثر عليه
+    for (int i = 0; i <= n; i++)
+    {
+        if (found[i] == false)
+            return i;
+    }
+
+    return -1; // افتراضي في حال لم يتم إيجاد الرقم المفقود
+}
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+
+\end{enumerate}
+\end{document}
