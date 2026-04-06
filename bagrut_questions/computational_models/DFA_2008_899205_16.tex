@@ -1,0 +1,35 @@
+\subsection*{سؤال 16 امتحان 899205 سنة 2008}
+\addcontentsline{toc}{subsection}{سؤال 16 امتحان 899205 سنة 2008}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/computational_models/DFA_2008_899205_16.png }%
+}%
+
+\ifwithsols
+\begin{boxSolution}[سؤال 16 امتحان 899205 سنة 2008]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item .
+    \begin{center}
+    \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/DFAs/dogs_cats_mice_arabic_version.png}%
+\end{center}
+
+\item
+لمعرفة القوانين، نلاحظ أن كل الحالات هي حالات قابلة ما عدا الحالة التي في أقصى اليمين ($q_3$ مع أن اسمها لا يظهر في الرسم.) \\
+لذلك، المسيرات المسموحة هي كل المسيرات ما عدا تلك التي توصلنا إلى حالة الفخ هذه ($q_3$). \\
+هناك طريقتان للوصول إلى هذه الحالة هما:
+\begin{enumerate}
+\item $q_0 \rightarrow q_1 \rightarrow q_3$ وهذا يحصل عندما نرى \textbf{قطّ فأر}
+\item $q_0 \rightarrow q_2 \rightarrow q_3$ وهذا يحصل عندما نرى \textbf{فأر قطّ}
+\end{enumerate}
+
+لذلك القواعد التي يصفها الأوتومات:
+\begin{itemize}
+    \item المسيرة يمكن أن تبدأ بأي حيوان، ويمكن أن تكون فارغة.
+    \item لا يمكن أن يظهر فأر وقط متجاورين في المسيرة.
+    \item لا توجد قيود على الكلب فيمكنه الظهور في كل مكان في المسيرة.
+\end{itemize}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+\fi
