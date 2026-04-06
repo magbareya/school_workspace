@@ -1,0 +1,143 @@
+\subsection*{سؤال 14 امتحان 899205 سنة 2017}
+\addcontentsline{toc}{subsection}{سؤال 14 امتحان 899205 سنة 2017}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/computational_models/DFA_2017_899205_14.jpg }%
+}%
+
+\ifwithsols
+\begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2017]
+ لكل بند أوتوماتًا نهائيًّا محددًا. (القراءة من رقم الآحاد، ثم العشرات، ثم المئات...)
+%     \begin{enumerate}[itemsep=2.2em, label=\textbf{\arabic*)}]
+%        \item \textbf{أعداد زوجية فقط.} \\
+%        الفكرة: الزوجيّة تحددها خانة الآحاد فقط (أول رمز نقرأه)، مع رفض العدد $0$ نفسه.
+%        \begin{center}
+%        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.6cm,semithick]
+%           \node[state,initial] (q0) {$q_0$};
+%           \node[state,right=of q0] (qz) {$q_z$};
+%           \node[state,accepting,above right=1.2cm and 2.1cm of q0] (qe) {$q_e$};
+%           \node[state,below right=1.2cm and 2.1cm of q0] (qr) {$q_r$};
+
+%           \path
+%           (q0) edge node {0} (qz)
+%               edge[bend left=12] node[above] {2,4,6,8} (qe)
+%               edge[bend right=12] node[below] {1,3,5,7,9} (qr)
+%           (qz) edge[loop above] node {0} ()
+%               edge node[right] {1,2,3,4,5,6,7,8,9} (qe)
+%           (qe) edge[loop right] node {0--9} ()
+%           (qr) edge[loop right] node {0--9} ();
+%        \end{tikzpicture}
+%        \end{center}
+
+%        \item \textbf{أعداد فردية أصغر من $1000$.} \\
+%        الفكرة: الآحاد يجب أن تكون فردية، ثم نسمح حتى 3 خانات فقط.
+%        \begin{center}
+%        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm,semithick]
+%           \node[state,initial] (q0) {$q_0$};
+%           \node[state,accepting,right=of q0] (q1) {$q_1$};
+%           \node[state,accepting,right=of q1] (q2) {$q_2$};
+%           \node[state,accepting,right=of q2] (q3) {$q_3$};
+%           \node[state,below=1.5cm of q2] (qr) {$q_r$};
+
+%           \path
+%           (q0) edge node[above] {1,3,5,7,9} (q1)
+%               edge[bend right=18] node[left] {0,2,4,6,8} (qr)
+%           (q1) edge node[above] {0--9} (q2)
+%           (q2) edge node[above] {0--9} (q3)
+%           (q3) edge node[right] {0--9} (qr)
+%           (qr) edge[loop below] node {0--9} ();
+%        \end{tikzpicture}
+%        \end{center}
+
+% \end{enumerate}
+% \end{boxSolution}
+% \clearpage
+% \begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2017 - تكملة]
+% \begin{enumerate}[itemsep=2.2em, label=\textbf{\arabic*)}, start=3]
+
+%        \item \textbf{أعداد تقسم على $5$، ورقم الآلاف فيها (إن وُجد) زوجي.} \\
+%        الفكرة: أول خانة يجب أن تكون $0$ أو $5$، وإذا وصلنا للخانة الرابعة فلابد أن تكون زوجية.
+%        \begin{center}
+%        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.15cm,semithick]
+%           \node[state,initial] (q0) {$q_0$};
+%           \node[state,accepting,right=of q0] (q1) {$q_1$};
+%           \node[state,accepting,right=of q1] (q2) {$q_2$};
+%           \node[state,accepting,right=of q2] (q3) {$q_3$};
+%           \node[state,accepting,right=of q3] (q4) {$q_4$};
+%           \node[state,below=1.7cm of q2] (qr) {$q_r$};
+
+%           \path
+%           (q0) edge node[above] {0,5} (q1)
+%               edge[bend right=16] node[left] {1,2,3,4,6,7,8,9} (qr)
+%           (q1) edge node[above] {0--9} (q2)
+%           (q2) edge node[above] {0--9} (q3)
+%           (q3) edge[bend left=16] node[above] {0,2,4,6,8} (q4)
+%               edge[bend right=16] node[right] {1,3,5,7,9} (qr)
+%           (q4) edge[loop right] node {0--9} ()
+%           (qr) edge[loop below] node {0--9} ();
+%        \end{tikzpicture}
+%        \end{center}
+
+%        \item \textbf{أعداد تقسم على $1000$ بدون باقٍ.} \\
+%        الفكرة: أول ثلاث خانات يجب أن تكون $0$، ثم يجب أن يظهر رقم غير صفري لاحقًا حتى يكون العدد أكبر من $0$.
+%        \begin{center}
+%        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.1cm,semithick]
+%           \node[state,initial] (q0) {$q_0$};
+%           \node[state,right=of q0] (q1) {$q_1$};
+%           \node[state,right=of q1] (q2) {$q_2$};
+%           \node[state,right=of q2] (q3) {$q_3$};
+%           \node[state,accepting,right=of q3] (q4) {$q_4$};
+%           \node[state,below=1.7cm of q2] (qr) {$q_r$};
+
+%           \path
+%           (q0) edge node[above] {0} (q1)
+%               edge[bend right=20] node[left] {1--9} (qr)
+%           (q1) edge node[above] {0} (q2)
+%               edge[bend right=14] node[left] {1--9} (qr)
+%           (q2) edge node[above] {0} (q3)
+%               edge[bend right=14] node[right] {1--9} (qr)
+%           (q3) edge[loop above] node {0} ()
+%               edge node[above] {1--9} (q4)
+%           (q4) edge[loop right] node {0--9} ()
+%           (qr) edge[loop below] node {0--9} ();
+%        \end{tikzpicture}
+%        \end{center}
+
+% \end{enumerate}
+% \end{boxSolution}
+% \clearpage
+% \begin{boxSolution}[سؤال 14 امتحان 899205 سنة 2017 - تكملة]
+% \begin{enumerate}[itemsep=2.2em, label=\textbf{\arabic*)}, start=5]
+
+%        \item \textbf{أعداد تقسم على $9$، وأصغر من $30$.} \\
+%        الأعداد الممكنة فقط هي: $9,18,27$، لذلك نبني أوتوماتًا يقبل بالضبط الكلمات المعكوسة: $9,81,72$.
+%        \begin{center}
+%        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.25cm,semithick]
+%           \node[state,initial] (q0) {$q_0$};
+%           \node[state,accepting,above right=1.0cm and 1.9cm of q0] (q9) {$q_9$};
+%           \node[state,right=of q0] (q8) {$q_8$};
+%           \node[state,below right=1.0cm and 1.9cm of q0] (q7) {$q_7$};
+%           \node[state,accepting,right=of q8] (q18) {$q_{18}$};
+%           \node[state,accepting,right=of q7] (q27) {$q_{27}$};
+%           \node[state,below=2.0cm of q8] (qr) {$q_r$};
+
+%           \path
+%           (q0) edge node[above] {9} (q9)
+%               edge node[above] {8} (q8)
+%               edge node[below] {7} (q7)
+%               edge[bend right=18] node[left] {0,1,2,3,4,5,6} (qr)
+%           (q8) edge node[above] {1} (q18)
+%               edge[bend right=16] node[right] {0,2,3,4,5,6,7,8,9} (qr)
+%           (q7) edge node[below] {2} (q27)
+%               edge[bend left=14] node[right] {0,1,3,4,5,6,7,8,9} (qr)
+%           (q9) edge[bend left=14] node[right] {0--9} (qr)
+%           (q18) edge[bend left=12] node[above] {0--9} (qr)
+%           (q27) edge[bend right=12] node[below] {0--9} (qr)
+%           (qr) edge[loop below] node {0--9} ();
+%        \end{tikzpicture}
+%        \end{center}
+%     \end{enumerate}
+\end{boxSolution}
+
+\clearpage
+\fi

@@ -1,0 +1,58 @@
+\subsection*{سؤال 8a امتحان 899271 سنة 2025}
+\addcontentsline{toc}{subsection}{سؤال 8a امتحان 899271 سنة 2025}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/computational_models/languages_2025_899271_8A.png }%
+}%
+
+\ifwithsols
+\begin{boxSolution}[سؤال 8a امتحان 899271 سنة 2025]
+\begin{enumerate}[itemsep=1.5em, label=\alph*.]
+    \item
+    \begin{enumerate}[itemsep=1.5em, label=\textbf{(\arabic*)}]
+        \item \textbf{غير صحيح.} \\
+        مثال مناقض: نأخذ $L_1=\{a\}$ و $L_2=\{b\}$. عندها:
+        \[R(R(L_1)\cdot R(L_2))=\{ba\},\qquad L_1\cdot L_2=\{ab\}\]
+        وبالتالي الادّعاء غير صحيح. \\
+
+        \begin{boxNote}[للإثراء]
+        عملية العكس تحقق الخاصيتين التاليتين:
+        \[R(X \cdot Y)=R(Y)\cdot R(X)\]
+        و
+        \[ R(R(X))=X \]
+        لذلك:
+        \[R(R(L_1)\cdot R(L_2))=R(R(L_2))\cdot R(R(L_1))=L_2\cdot L_1\]
+        وهذا ليس دائمًا مساويًا لـ $L_1\cdot L_2$. \\
+        \end{boxNote}
+\end{enumerate}
+\end{enumerate}
+\end{boxSolution}
+
+\clearpage
+
+\begin{boxSolution}[سؤال 8a امتحان 899271 سنة 2025 - تكملة]
+\begin{enumerate}[itemsep=1.5em, label=\textbf{(\arabic*)}, start=2]
+        \item \textbf{صحيح.} \\
+        اللغة \(L_1\cdot (L_2\cup L_3)\) هي كل الكلمات الناتجة من إلصاق كلمة من \(L_1\) مع كلمة من \(L_2\) أو مع كلمة من \(L_3\). \\
+        اللغة \((L_1\cdot L_2)\cup (L_1\cdot L_3)\) هي كل الكلمات الناتجة من إلصاق كلمة من \(L_1\) مع كلمة من \(L_2\) أو من إلصاق كلمة من \(L_1\) مع كلمة من \(L_3\). \\
+        وهذا يعني أن كلا الطرفين يصفان نفس المجموعة من الكلما. \\
+        الإثبات: لاحظ أنّ الإلصاق يتوزّع على الاتحاد من اليسار:
+        \[L_1\cdot (L_2\cup L_3)=(L_1\cdot L_2)\cup (L_1\cdot L_3)\]
+        فكل كلمة في الطرف الأيسر هي من الشكل $xy$ حيث $x\in L_1$ و $y\in L_2\cup L_3$؛
+        أي إمّا $y\in L_2$ أو $y\in L_3$، وهذا يعطي تمامًا الطرف الأيمن.
+
+        \item \textbf{غير صحيح.} \\
+        مثال مناقض: نأخذ
+        \[L_1=\{ab\},\quad L_2=\{a\},\quad L_3=\{b\}\]
+        عندها:
+        \[L_2\cdot L_3=\{ab\}\Rightarrow L_1\cap (L_2\cdot L_3)=\{ab\}\]
+        بينما:
+        \[L_1\cap L_2=\emptyset,\qquad L_1\cap L_3=\emptyset\]
+        وبالتالي:
+        \[(L_1\cap L_2)\cdot (L_1\cap L_3)=\emptyset\cdot\emptyset=\emptyset\]
+        إذًا الطرفان غير متساويين، فالادّعاء غير صحيح.
+    \end{enumerate}
+\end{boxSolution}
+
+\clearpage
+\fi
