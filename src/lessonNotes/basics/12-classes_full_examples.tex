@@ -1,0 +1,659 @@
+\documentclass[11pt]{article}
+
+\input{../../../scripts/tex_preamble.tex}
+
+\title{أمثلة شاملة: الفئات والكائنات في \textenglish{C\#}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{الخطوة 1 - تعريف الفئة وإنشاء كائن}
+\begin{boxExample}[الخطوة 1 - تعريف الفئة وإنشاء كائن]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b = new Book();
+        b.Title = "Algebra";
+        b.Author = "Teacher";
+        b.Year = 2020;
+        b.Price = 100.0;
+
+        Book b2 = new Book();
+        b2.Title = "Geometry";
+        b2.Author = "Teacher";
+        b2.Year = 2022;
+        b2.Price = 150.0;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 2 - العمليات الداخلية بدون معاملات}
+\begin{boxExample}[الخطوة 2 - العمليات الداخلية بدون معاملات]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+}
+internal class Program
+{
+    public static void PrintBook(Book b)
+    {
+        Console.WriteLine($"{b.Author}: {b.Title} ({b.Year})");
+    }
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book();
+        b1.Title = "Algebra";
+        b1.Author = "Teacher";
+        b1.Year = 2020;
+        b1.Price = 100.0;
+        b1.Print();
+
+        Book b2 = new Book();
+        b2.Title = "Geometry";
+        b2.Author = "Teacher";
+        b2.Year = 2022;
+        b2.Price = 150.0;
+        PrintBook(b2);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 3 - العمليات الداخلية بمعاملات}
+\begin{boxExample}[الخطوة 3 - العمليات الداخلية بمعاملات]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 3 - العمليات الداخلية بمعاملات]
+\begin{english}
+\begin{minted}{csharp}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book();
+        b1.Title = "Algebra";
+        b1.Author = "Teacher";
+        b1.Year = 2020;
+        b1.Price = 100.0;
+        b1.Print();
+        if(b1.WasPublishedBefore(2021))
+            Console.WriteLine("The book was published before 2021.");
+
+        Book b2 = new Book();
+        b2.Title = "Geometry";
+        b2.Author = "Teacher";
+        b2.Year = 2022;
+        b2.Price = 150.0;
+        b2.Print();
+        if (b2.WasPublishedBefore(2021))
+            Console.WriteLine("The book was published before 2021.");
+        else
+            Console.WriteLine("The book was published in 2021 or later.");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 3.1 - مقارنة كائنين: \textenglish{IsEqualTo} مقابل \textenglish{==}}
+\begin{boxExample}[الخطوة 3.1 - مقارنة كائنين: \textenglish{IsEqualTo} مقابل \textenglish{==}]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        return Title == other.Title
+            && Author == other.Author
+            && Year == other.Year;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 3 - العمليات الداخلية بمعاملات]
+\begin{english}
+\begin{minted}{csharp}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book();
+        b1.Title = "Algebra";
+        b1.Author = "Teacher";
+        b1.Year = 2020;
+        b1.Price = 100.0;
+
+        Book b2 = new Book();
+        b2.Title = "Algebra";
+        b2.Author = "Teacher";
+        b2.Year = 2020;
+        b2.Price = 100.0;
+
+        if (b1 == b2)
+            Console.WriteLine("b1 == b2");
+        else
+            Console.WriteLine("b1 != b2");
+
+        if(b1.IsEqualTo(b2))
+            Console.WriteLine("b1 is equal to b2");
+        else
+            Console.WriteLine("b1 is not equal to b2");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 3.2 - الكلمة المفتاحية \textenglish{this}}
+\begin{boxExample}[الخطوة 3.2 - الكلمة المفتاحية \textenglish{this}]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 3 - العمليات الداخلية بمعاملات]
+\begin{english}
+\begin{minted}{csharp}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book();
+        b1.Title = "Algebra";
+        b1.Author = "Teacher";
+        b1.Year = 2020;
+        b1.Price = 100.0;
+
+        Book b2 = new Book();
+        b2.Title = "Algebra";
+        b2.Author = "Teacher";
+        b2.Year = 2020;
+        b2.Price = 100.0;
+
+        if (b1 == b2)
+            Console.WriteLine("b1 == b2");
+        else
+            Console.WriteLine("b1 != b2");
+
+        if(b1.IsEqualTo(b2))
+            Console.WriteLine("b1 is equal to b2");
+        else
+            Console.WriteLine("b1 is not equal to b2");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 3.3 - القيمة \textenglish{null} والتحقق منها}
+\begin{boxExample}[الخطوة 3.3 - القيمة \textenglish{null} والتحقق منها]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        if(other == null)
+            return false;
+
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 3 - العمليات الداخلية بمعاملات]
+\begin{english}
+\begin{minted}{csharp}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book();
+        b1.Title = "Algebra";
+        b1.Author = "Teacher";
+        b1.Year = 2020;
+        b1.Price = 100.0;
+
+        Book b2 = new Book();
+        b2.Title = "Algebra";
+        b2.Author = "Teacher";
+        b2.Year = 2020;
+        b2.Price = 100.0;
+
+        Book b3 = null;
+
+        if(b1.IsEqualTo(b3))
+            Console.WriteLine("b1 is equal to b3");
+        else
+            Console.WriteLine("b1 is not equal to b3");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 4 - العملية البنّاءة (\textenglish{Constructor})}
+\begin{boxExample}[الخطوة 4 - العملية البنّاءة (\textenglish{Constructor})]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    public string Title;
+    public string Author;
+    public int Year;
+    public double Price;
+
+    public Book(string title, string author, int year, double price)
+    {
+        this.Title = title;
+        this.Author = author;
+        this.Year = year;
+        this.Price = price;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        if (other == null)
+            return false;
+
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 4 - العملية البنّاءة (\textenglish{Constructor})]
+\begin{english}
+\begin{minted}{csharp}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book("Algebra", "Teacher", 2020, 100.0);
+        Book b2 = new Book("Geometry", "Teacher", 2022, 150.0);
+        b1.Print();
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 5.1 - عمليات الاسترجاع (\textenglish{Getters})}
+\begin{boxExample}[الخطوة 5.1 - عمليات الاسترجاع (\textenglish{Getters})]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    private string Title;
+    private string Author;
+    private int Year;
+    private double Price;
+
+    public Book(string title, string author, int year, double price)
+    {
+        this.Title = title;
+        this.Author = author;
+        this.Year = year;
+        this.Price = price;
+    }
+
+    public string GetTitle()
+    {
+        return Title;
+    }
+    public string GetAuthor()
+    {
+        return Author;
+    }
+
+    public int GetYear()
+    {
+        return Year;
+    }
+
+    public double GetPrice()
+    {
+        return Price;
+    }
+
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 5.1 - عمليات الاسترجاع (\textenglish{Getters})]
+\begin{english}
+\begin{minted}{csharp}
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        if (other == null)
+            return false;
+
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book("Algebra", "Teacher", 2020, 100.0);
+        Book b2 = new Book("Geometry", "Teacher", 2022, 150.0);
+        b1.Print();
+        Console.WriteLine(b2.GetTitle());
+        Console.WriteLine(b2.GetAuthor());
+        Console.WriteLine(b2.Author); // ERROR
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+\section*{الخطوة 5.2 - عمليات التعديل (\textenglish{Setters})}
+\begin{boxExample}[الخطوة 5.2 - عمليات التعديل (\textenglish{Setters})]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    private string Title;
+    private string Author;
+    private int Year;
+    private double Price;
+
+    public Book(string title, string author, int year, double price)
+    {
+        this.Title = title;
+        this.Author = author;
+        this.Year = year;
+        this.Price = price;
+    }
+
+    public string GetTitle()
+    {
+        return Title;
+    }
+    public string GetAuthor()
+    {
+        return Author;
+    }
+
+    public int GetYear()
+    {
+        return Year;
+    }
+
+    public double GetPrice()
+    {
+        return Price;
+    }
+
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 5.2 - عمليات التعديل (\textenglish{Setters})]
+\begin{english}
+\begin{minted}{csharp}
+    public void SetPrice(double newPrice)
+    {
+        if(newPrice > 0)
+            Price = newPrice;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        if (other == null)
+            return false;
+
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book("Algebra", "Teacher", 2020, 100.0);
+        Book b2 = new Book("Geometry", "Teacher", 2022, 150.0);
+        Console.WriteLine(b2.GetPrice()); // 150.0
+        b2.SetPrice(120.0);
+        Console.WriteLine(b2.GetPrice()); // 120.0
+        b2.SetPrice(-100); // will do nothing
+        Console.WriteLine(b2.GetPrice()); // 120.0
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+
+\section*{الخطوة 6 - عمليات داخلية إضافية}
+\begin{boxExample}[الخطوة 6 - عمليات داخلية إضافية]
+\begin{english}
+\begin{minted}{csharp}
+class Book
+{
+    private string Title;
+    private string Author;
+    private int Year;
+    private double Price;
+
+    public Book(string title, string author, int year, double price)
+    {
+        this.Title = title;
+        this.Author = author;
+        this.Year = year;
+        this.Price = price;
+    }
+
+    public string GetTitle()
+    {
+        return Title;
+    }
+    public string GetAuthor()
+    {
+        return Author;
+    }
+
+    public int GetYear()
+    {
+        return Year;
+    }
+
+    public double GetPrice()
+    {
+        return Price;
+    }
+
+    public void SetPrice(double newPrice)
+    {
+        if(newPrice > 0)
+            Price = newPrice;
+    }
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[تتمة - الخطوة 6 - عمليات داخلية إضافية]
+\begin{english}
+\begin{minted}{csharp}
+    public void Print()
+    {
+        Console.WriteLine($"{Author}: {Title} ({Year})");
+    }
+
+    public bool WasPublishedBefore(int year)
+    {
+        return Year < year;
+    }
+
+    public bool IsEqualTo(Book other)
+    {
+        if (other == null)
+            return false;
+
+        return this.Title == other.Title
+            && this.Author == other.Author
+            && this.Year == other.Year;
+    }
+
+    public void ApplyDiscount(int ratio)
+    {
+        this.Price = this.Price * (100 - ratio) / 100;
+    }
+}
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        Book b1 = new Book("Algebra", "Teacher", 2020, 100.0);
+        Console.WriteLine(b1.GetPrice()); // 100.0
+        b1.ApplyDiscount(20);
+        Console.WriteLine(b1.GetPrice()); // 80.0
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\end{document}
