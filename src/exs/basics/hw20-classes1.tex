@@ -60,7 +60,10 @@ class BankAccount
     public BankAccount(string owner, double balance)
     {
         this.Owner   = owner;
-        this.Balance = (balance >= 0) ? balance : 0;
+        if(balance < 0)
+            this.Balance = 0;
+        else
+            this.Balance = balance;
     }
 
     public string GetOwner()   { return Owner;   }

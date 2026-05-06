@@ -1,0 +1,287 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ملخّص الدرس: الفئات والكائنات المتقدّمة في \textenglish{C\#}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section{مصفوفة من الكائنات}
+%=============================================================
+
+تمامًا كما نُعرِّف مصفوفة من الأعداد أو النصوص، يمكننا تعريف مصفوفة من الكائنات.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Book[] library = new Book[3];
+library[0] = new Book("Algebra",   "Teacher", 2020, 100.0);
+library[1] = new Book("Geometry",  "Teacher", 2022, 150.0);
+library[2] = new Book("Physics",   "Teacher", 2021, 120.0);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{itemize}[itemsep=1pt]
+    \item السطر الأول يُنشئ المصفوفة فقط — خاناتها تحتوي \textenglish{null} في البداية.
+    \item كل عنصر يحتاج \textenglish{new Book(...)} منفصلًا لإنشاء الكائن الفعلي.
+\end{itemize}
+
+للمرور على المصفوفة نستخدم حلقة \textenglish{for} عادية:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+for (int i = 0; i < library.Length; i++)
+    library[i].Print();
+\end{minted}
+\end{english}
+\end{boxExample}
+
+يمكن أيضًا استخدام حلقة \textenglish{foreach}:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+foreach (Book b in library)
+    b.Print();
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+مثال كامل — إيجاد الكتاب الأغلى في المصفوفة:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Book mostExpensive = library[0];
+for (int i = 1; i < library.Length; i++)
+{
+    if (library[i].GetPrice() > mostExpensive.GetPrice())
+        mostExpensive = library[i];
+}
+mostExpensive.Print();
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{itemize}[itemsep=1pt]
+    \item \textenglish{mostExpensive} هو متغير من نوع \textenglish{Book} يُشير إلى أحد عناصر المصفوفة.
+    \item لا ننسخ الكائن، بل نُحدِّث المتغير ليُشير إلى العنصر الأغلى حتى الآن.
+\end{itemize}
+
+\clearpage
+%=============================================================
+\section{خاصية من نوع مصفوفة داخل فئة}
+%=============================================================
+
+يمكن أن يكون أحد حقول الفئة مصفوفةً من القيم البسيطة (\textenglish{int}, \textenglish{string}, \ldots).
+
+\begin{boxNote}
+مثال: فئة \textenglish{Student} تحتوي على مصفوفة من الدرجات.
+\end{boxNote}
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    public string Name;
+    public int[]  Grades;
+
+    public Student(string name, int[] grades)
+    {
+        this.Name   = name;
+        this.Grades = grades;
+    }
+
+    public double GetAverage()
+    {
+        int sum = 0;
+        for (int i = 0; i < Grades.Length; i++)
+            sum += Grades[i];
+        return (double)sum / Grades.Length;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine($"{Name}: avg = {GetAverage()}");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+int[] g1 = { 90, 85, 92 };
+Student s1 = new Student("Ali", g1);
+s1.Print(); // Ali: avg = 89
+
+int[] g2 = { 70, 80, 75 };
+Student s2 = new Student("Sara", g2);
+s2.Print(); // Sara: avg = 75
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{itemize}[itemsep=1pt]
+    \item المصفوفة \textenglish{Grades} هي خاصية عادية داخل الكائن.
+    \item العمليات الداخلية تصل إليها مباشرةً دون الحاجة لتمريرها كمعامل.
+\end{itemize}
+
+\clearpage
+%=============================================================
+\section{خاصية من نوع فئة أخرى}
+%=============================================================
+
+يمكن أن يكون أحد حقول الفئة كائنًا من فئة أخرى.
+
+\begin{boxNote}
+مثال: فئة \textenglish{Order} (طلب شراء) تحتوي على خاصية من نوع \textenglish{Book}.
+\end{boxNote}
+
+{\small
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Order
+{
+    public Book    Item;
+    public int     Quantity;
+    public string  CustomerName;
+
+    public Order(Book item, int quantity, string customerName)
+    {
+        this.Item         = item;
+        this.Quantity     = quantity;
+        this.CustomerName = customerName;
+    }
+
+    public double GetTotal()
+    {
+        return Item.GetPrice() * Quantity;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine(
+            $"{CustomerName} ordered {Quantity} x {Item.GetTitle()}" +
+            $" = {GetTotal()} NIS");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Book b = new Book("Algebra", "Teacher", 2020, 100.0);
+Order o = new Order(b, 3, "Ahmad");
+o.Print(); // Ahmad ordered 3 x Algebra = 300 NIS
+\end{minted}
+\end{english}
+\end{boxExample}
+}
+
+\begin{itemize}[itemsep=1pt]
+    \item للوصول إلى خاصية داخل الكائن المُضمَّن نستخدم نقطتين: \textenglish{o.Item.GetTitle()}.
+    \item لو كانت \textenglish{Item} قيمتها \textenglish{null} وحاولنا الوصول إليها سيحدث خطأ — احرص على التهيئة دائمًا.
+\end{itemize}
+
+\clearpage
+%=============================================================
+\section{خاصية من نوع مصفوفة كائنات من فئة أخرى}
+%=============================================================
+
+يمكن الجمع بين المفهومين: خاصية هي مصفوفة كائنات من فئة أخرى.
+
+\begin{boxNote}
+مثال: فئة \textenglish{Library} (مكتبة) تحتوي على مصفوفة من الكتب.
+\end{boxNote}
+
+{\small
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Library
+{
+    public string Name;
+    public Book[] Books;
+
+    public Library(string name, Book[] books)
+    {
+        this.Name  = name;
+        this.Books = books;
+    }
+
+    public void PrintAll()
+    {
+        Console.WriteLine($"=== {Name} ===");
+        for (int i = 0; i < Books.Length; i++)
+            Books[i].Print();
+    }
+
+    public Book FindMostExpensive()
+    {
+        Book result = Books[0];
+        for (int i = 1; i < Books.Length; i++)
+        {
+            if (Books[i].GetPrice() > result.GetPrice())
+                result = Books[i];
+        }
+        return result;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Book[] books = new Book[3];
+books[0] = new Book("Algebra",  "Teacher", 2020, 100.0);
+books[1] = new Book("Geometry", "Teacher", 2022, 150.0);
+books[2] = new Book("Physics",  "Teacher", 2021, 120.0);
+
+Library lib = new Library("School Library", books);
+lib.PrintAll();
+
+Book expensive = lib.FindMostExpensive();
+Console.Write("Most expensive: ");
+expensive.Print();
+\end{minted}
+\end{english}
+\end{boxExample}
+}
+
+\begin{itemize}[itemsep=1pt]
+    \item \textenglish{Books} هي خاصية داخل \textenglish{Library} — كل عنصر فيها كائن \textenglish{Book} مستقل.
+    \item العمليات الداخلية تصل إلى المصفوفة مباشرةً وتستطيع استدعاء عمليات \textenglish{Book} على كل عنصر.
+    \item هذا النمط شائع جدًا: كائن يحتوي على مجموعة من كائنات أخرى ويُدير العمليات عليها.
+\end{itemize}
+
+\vspace{1em}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

@@ -1,0 +1,346 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة عمل: مصفوفة الكائنات في \textenglish{C\#}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section*{ملاحظة}
+%=============================================================
+
+جميع الأسئلة في هذه الورقة تعتمد على الفئة \textenglish{Student} التالية:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    private string Name;
+    private int    ID;
+    private double Grade;
+
+    public Student(string name, int id, double grade)
+    {
+        this.Name  = name;
+        this.ID    = id;
+        this.Grade = grade;
+    }
+
+    public string GetName()  { return Name;  }
+    public int    GetID()    { return ID;    }
+    public double GetGrade() { return Grade; }
+
+    public void SetGrade(double newGrade)
+    {
+        if (newGrade >= 0 && newGrade <= 100)
+            Grade = newGrade;
+    }
+
+    public bool IsPassing()
+    {
+        return Grade >= 55;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine($"[{ID}] {Name}: {Grade}");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+%=============================================================
+\section*{الأسئلة}
+%=============================================================
+
+\begin{enumerate}
+
+%-------------------------------------------------------------
+\item % سؤال 1 — مراجعة: إنشاء كائنات في Main
+%-------------------------------------------------------------
+
+أنشئ في \textenglish{Main} ثلاثة كائنات من نوع \textenglish{Student} بالبيانات التالية، ثم اطبع كل منها باستخدام \textenglish{Print()}:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{الاسم} & \textbf{الرقم} & \textbf{الدرجة} \\
+\hline
+\textenglish{Ali}  & \textenglish{101} & \textenglish{78.5} \\
+\textenglish{Sara} & \textenglish{102} & \textenglish{91.0} \\
+\textenglish{Omar} & \textenglish{103} & \textenglish{50.0} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Student s1 = new Student("Ali",  101, 78.5);
+Student s2 = new Student("Sara", 102, 91.0);
+Student s3 = new Student("Omar", 103, 50.0);
+
+s1.Print();
+s2.Print();
+s3.Print();
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 2 — مراجعة: استخدام عمليات الفئة
+%-------------------------------------------------------------
+
+أنشئ كائنَين من نوع \textenglish{Student}:
+
+\begin{english}
+\begin{minted}{csharp}
+Student s1 = new Student("Lina", 201, 48.0);
+Student s2 = new Student("Nour", 202, 62.5);
+\end{minted}
+\end{english}
+
+ثم اكتب كودًا يطبع لكل طالب رسالة تقول إن كان ناجحًا أم راسبًا، باستخدام العملية \textenglish{IsPassing()}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Student s1 = new Student("Lina", 201, 48.0);
+Student s2 = new Student("Nour", 202, 62.5);
+
+if (s1.IsPassing())
+    Console.WriteLine(s1.GetName() + " is passing.");
+else
+    Console.WriteLine(s1.GetName() + " is failing.");
+
+if (s2.IsPassing())
+    Console.WriteLine(s2.GetName() + " is passing.");
+else
+    Console.WriteLine(s2.GetName() + " is failing.");
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 3 — تعريف مصفوفة كائنات وطباعتها
+%-------------------------------------------------------------
+
+عرِّف في \textenglish{Main} مصفوفة \textenglish{students} من نوع \textenglish{Student} بحجم 4 عناصر، وملئها بالبيانات التالية، ثم اطبع جميع الطلاب باستخدام حلقة \textenglish{for}:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{الاسم} & \textbf{الرقم} & \textbf{الدرجة} \\
+\hline
+\textenglish{Ahmad} & \textenglish{301} & \textenglish{85.0} \\
+\textenglish{Dina}  & \textenglish{302} & \textenglish{73.5} \\
+\textenglish{Yara}  & \textenglish{303} & \textenglish{90.0} \\
+\textenglish{Karim} & \textenglish{304} & \textenglish{52.0} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Student[] students = new Student[4];
+students[0] = new Student("Ahmad", 301, 85.0);
+students[1] = new Student("Dina",  302, 73.5);
+students[2] = new Student("Yara",  303, 90.0);
+students[3] = new Student("Karim", 304, 52.0);
+
+for (int i = 0; i < students.Length; i++)
+    students[i].Print();
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 4 — عدّ العناصر في المصفوفة
+%-------------------------------------------------------------
+
+بافتراض وجود المصفوفة \textenglish{students} من السؤال السابق، اكتب كودًا في \textenglish{Main} يطبع:
+\begin{itemize}
+    \item عدد الطلاب الناجحين.
+    \item عدد الطلاب الراسبين.
+\end{itemize}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+int passing = 0;
+int failing = 0;
+
+for (int i = 0; i < students.Length; i++)
+{
+    if (students[i].IsPassing())
+        passing++;
+    else
+        failing++;
+}
+
+Console.WriteLine("Passing: " + passing);
+Console.WriteLine("Failing: " + failing);
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 5 — إيجاد القيمة العظمى
+%-------------------------------------------------------------
+
+بافتراض وجود المصفوفة \textenglish{students}، اكتب كودًا في \textenglish{Main} يجد ويطبع الطالب صاحب أعلى درجة في المصفوفة.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+Student best = students[0];
+for (int i = 1; i < students.Length; i++)
+{
+    if (students[i].GetGrade() > best.GetGrade())
+        best = students[i];
+}
+
+Console.Write("Top student: ");
+best.Print();
+\end{minted}
+\end{english}
+\begin{boxNote}
+\textenglish{best} لا ينسخ الكائن — بل يُشير إليه. عند تحديث \textenglish{best} نحوّل الإشارة فقط.
+\end{boxNote}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 6 — تعديل عناصر المصفوفة
+%-------------------------------------------------------------
+
+بافتراض وجود المصفوفة \textenglish{students}، اكتب كودًا في \textenglish{Main} يُضيف 5 نقاط لكل طالب راسب (درجته أقل من 55)، باستخدام \textenglish{SetGrade()}، ثم يطبع المصفوفة كاملةً بعد التعديل.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
+for (int i = 0; i < students.Length; i++)
+{
+    if (!students[i].IsPassing())
+        students[i].SetGrade(students[i].GetGrade() + 5);
+}
+
+for (int i = 0; i < students.Length; i++)
+    students[i].Print();
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 7 — عملية خارجية تتلقى مصفوفة كائنات
+%-------------------------------------------------------------
+
+اكتب عملية خارجية (\textenglish{static}) باسم \textenglish{PrintPassing} تتلقى مصفوفة \textenglish{Student[]} وتطبع فقط الطلاب الناجحين منها.
+
+ثم استدعِها في \textenglish{Main} على مصفوفة \textenglish{students}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintPassing(Student[] students)
+{
+    for (int i = 0; i < students.Length; i++)
+    {
+        if (students[i].IsPassing())
+            students[i].Print();
+    }
+}
+
+// In Main
+PrintPassing(students);
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+%-------------------------------------------------------------
+\item % سؤال 8 — عملية خارجية تعيد مصفوفة كائنات
+%-------------------------------------------------------------
+
+اكتب عملية خارجية (\textenglish{static}) باسم \textenglish{GetTopStudents} تتلقى مصفوفة \textenglish{Student[]} وتُعيد مصفوفة جديدة تحتوي فقط على الطلاب الذين درجتهم أكبر من أو تساوي 80.
+
+ثم استدعِها في \textenglish{Main} واطبع المصفوفة المُعادة.
+
+\begin{boxNote}
+\textbf{تلميح:} مرّ على المصفوفة مرتين — مرة لحساب الحجم الصحيح للمصفوفة الجديدة، ومرة لملئها.
+\end{boxNote}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+\begin{minted}{csharp}
+public static Student[] GetTopStudents(Student[] students)
+{
+    // First pass: count how many qualify
+    int count = 0;
+    for (int i = 0; i < students.Length; i++)
+    {
+        if (students[i].GetGrade() >= 80)
+            count++;
+    }
+
+    // Create result array of exact size
+    Student[] result = new Student[count];
+
+    // Second pass: fill result array
+    int j = 0;
+    for (int i = 0; i < students.Length; i++)
+    {
+        if (students[i].GetGrade() >= 80)
+        {
+            result[j] = students[i];
+            j++;
+        }
+    }
+
+    return result;
+}
+
+// In Main
+Student[] top = GetTopStudents(students);
+for (int i = 0; i < top.Length; i++)
+    top[i].Print();
+\end{minted}
+\end{english}
+\clearpage
+\fi
+
+\end{enumerate}
+
+\vspace{1em}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً! / الأستاذ محمود اغبارية
+\end{flushleft}
+
+\end{document}
