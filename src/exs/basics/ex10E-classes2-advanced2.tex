@@ -1,0 +1,471 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرّن شاملة: الفئات والكائنات المتقدّمة}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section{فئة تحتوي على خاصية من نوع فئة أخرى}
+%=============================================================
+
+تستخدم هذه الأسئلة الفئتين \textenglish{Department} و\textenglish{Employee}:
+
+\begin{boxExample}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Department
+{
+    private string Name;
+    private int    Floor;
+
+    public Department(string name, int floor)
+    {
+        this.Name  = name;
+        this.Floor = floor;
+    }
+    public string GetName()  { return Name;  }
+    public int    GetFloor() { return Floor; }
+    public void Print()
+    {
+        Console.WriteLine($"Dept: {Name}, Floor {Floor}");
+    }
+}
+
+class Employee
+{
+    private string     Name;
+    private double     Salary;
+    private Department Dept;
+
+    public Employee(string name, double salary, Department dept)
+    {
+        this.Name   = name;
+        this.Salary = salary;
+        this.Dept   = dept;
+    }
+    public string     GetName()   { return Name;   }
+    public double     GetSalary() { return Salary; }
+    public Department GetDept()   { return Dept;   }
+    public void SetSalary(double s) { if (s > 0) Salary = s; }
+    public void Print()
+    {
+        Console.WriteLine(
+            $"{Name} | Salary: {Salary} | {Dept.GetName()}");
+    }
+}
+\end{minted}
+}
+\end{english}
+\end{boxExample}
+
+\begin{enumerate}
+
+%--- سؤال 3.1 ---
+\item
+أنشئ في \textenglish{Main} قسمًا (\textenglish{Department}) وموظفَين يعملان فيه،
+ثم اطبع كل موظف:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{الموظف} & \textbf{الراتب} & \textbf{القسم / الطابق} \\
+\hline
+\textenglish{Hana}  & \textenglish{8000} & \textenglish{HR, Floor 2} \\
+\textenglish{Tariq} & \textenglish{9500} & \textenglish{HR, Floor 2} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Department hr = new Department("HR", 2);
+
+Employee e1 = new Employee("Hana",  8000, hr);
+Employee e2 = new Employee("Tariq", 9500, hr);
+
+e1.Print();
+e2.Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 3.2 ---
+\item
+بافتراض وجود \textenglish{e1} و\textenglish{e2} من السؤال السابق،
+اكتب كودًا يطبع اسم القسم الذي يعمل فيه \textenglish{e1} ورقم طابقه.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Console.WriteLine("Department: " + e1.GetDept().GetName());
+Console.WriteLine("Floor: " + e1.GetDept().GetFloor());
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 3.3 ---
+\item
+أضِف إلى الفئة \textenglish{Employee} عملية \textenglish{IsInSameDept(Employee other)}
+تُعيد \textenglish{true} إذا كان الموظفان في نفس القسم (نفس اسم القسم).
+
+اختبِرها في \textenglish{Main}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Employee
+public bool IsInSameDept(Employee other)
+{
+    return this.Dept.GetName() == other.Dept.GetName();
+}
+
+// In Main
+if (e1.IsInSameDept(e2))
+    Console.WriteLine("Same department.");
+else
+    Console.WriteLine("Different departments.");
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 3.4 ---
+\item
+أنشئ في \textenglish{Main} موظفَين من قسمَين مختلفَين:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{الموظف} & \textbf{الراتب} & \textbf{القسم / الطابق} \\
+\hline
+\textenglish{Mona}  & \textenglish{7200} & \textenglish{Sales, Floor 1} \\
+\textenglish{Ziad}  & \textenglish{8800} & \textenglish{IT, Floor 3} \\
+\hline
+\end{tabular}
+\end{center}
+
+ثم اكتب كودًا يطبع اسم الموظف الأعلى راتبًا واسم قسمه.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Department sales = new Department("Sales", 1);
+Department it    = new Department("IT", 3);
+
+Employee m1 = new Employee("Mona", 7200, sales);
+Employee m2 = new Employee("Ziad", 8800, it);
+
+Employee higher = (m1.GetSalary() > m2.GetSalary()) ? m1 : m2;
+Console.WriteLine(higher.GetName()
+    + " - " + higher.GetDept().GetName());
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 3.5 ---
+\item
+أضِف إلى الفئة \textenglish{Employee} عملية بنّاءة ثانية تتلقى الاسم والراتب فقط،
+وتُهيّئ \textenglish{Dept} بكائن افتراضي اسمه \textenglish{"Unassigned"} وطابقه \textenglish{0}.
+
+أضِف أيضًا عملية \textenglish{SetDept(Department d)} تسمح بتعيين القسم لاحقًا.
+
+اختبِرها في \textenglish{Main} بإنشاء موظف بدون قسم، ثم تعيين قسم له وطباعته.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Employee — second constructor
+public Employee(string name, double salary)
+{
+    this.Name   = name;
+    this.Salary = salary;
+    this.Dept   = new Department("Unassigned", 0);
+}
+
+// Inside class Employee — SetDept
+public void SetDept(Department d)
+{
+    if (d != null)
+        this.Dept = d;
+}
+
+// In Main
+Employee e3 = new Employee("Layla", 7500);
+e3.Print(); // Layla | Salary: 7500 | Unassigned
+
+Department dev = new Department("Development", 4);
+e3.SetDept(dev);
+e3.Print(); // Layla | Salary: 7500 | Development
+\end{minted}
+}
+\end{english}
+\fi
+
+\end{enumerate}
+
+\clearpage
+%=============================================================
+\section{فئة تحتوي على مصفوفة كائنات من فئة أخرى}
+%=============================================================
+
+تستخدم هذه الأسئلة الفئتين \textenglish{Product} و\textenglish{Store}:
+
+\begin{boxExample}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Product
+{
+    private string Name;
+    private double Price;
+    private int    Stock; // quantity in storage
+
+    public Product(string name, double price, int stock)
+    {
+        this.Name  = name;
+        this.Price = price;
+        this.Stock = stock;
+    }
+    public string GetName()  { return Name;  }
+    public double GetPrice() { return Price; }
+    public int    GetStock() { return Stock; }
+    public bool IsAvailable() { return Stock > 0; }
+    public void Print()
+    {
+        Console.WriteLine($"{Name} | {Price} NIS | Stock: {Stock}");
+    }
+}
+
+class Store
+{
+    private string    Name;
+    private Product[] Products;
+
+    public Store(string name, Product[] products)
+    {
+        this.Name     = name;
+        this.Products = products;
+    }
+    public string    GetName()     { return Name;     }
+    public Product[] GetProducts() { return Products; }
+    public void PrintAll()
+    {
+        Console.WriteLine($"=== {Name} ===");
+        for (int i = 0; i < Products.Length; i++)
+            Products[i].Print();
+    }
+}
+\end{minted}
+}
+\end{english}
+\end{boxExample}
+
+\begin{enumerate}
+
+%--- سؤال 4.1 ---
+\item
+أنشئ في \textenglish{Main} مصفوفة منتجات \textenglish{products} بالبيانات التالية،
+ثم أنشئ متجرًا باسم \textenglish{"Tech Shop"} وملئه بها، واطبع جميع منتجاته:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{المنتج} & \textbf{السعر} & \textbf{الكمية} \\
+\hline
+\textenglish{Keyboard} & \textenglish{120} & \textenglish{5} \\
+\textenglish{Mouse}    & \textenglish{80}  & \textenglish{0} \\
+\textenglish{Monitor}  & \textenglish{950} & \textenglish{3} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Product[] products = new Product[3];
+products[0] = new Product("Keyboard", 120, 5);
+products[1] = new Product("Mouse",    80,  0);
+products[2] = new Product("Monitor",  950, 3);
+
+Store store = new Store("Tech Shop", products);
+store.PrintAll();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 4.2 ---
+\item
+أضِف إلى الفئة \textenglish{Store} عملية \textenglish{CountAvailable()} تُعيد عدد
+المنتجات المتوفرة في المخزن (\textenglish{Stock > 0}).
+
+اطبع النتيجة في \textenglish{Main}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Store
+public int CountAvailable()
+{
+    int count = 0;
+    for (int i = 0; i < Products.Length; i++)
+        if (Products[i].IsAvailable())
+            count++;
+    return count;
+}
+
+// In Main
+Console.WriteLine("Available products: " + store.CountAvailable());
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 4.3 ---
+\item
+أضِف إلى الفئة \textenglish{Store} عملية \textenglish{GetTotalValue()} تُعيد
+القيمة الإجمالية للمخزن (\textenglish{Price * Stock} لكل منتج).
+
+اطبع النتيجة في \textenglish{Main}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Store
+public double GetTotalValue()
+{
+    double total = 0;
+    for (int i = 0; i < Products.Length; i++)
+        total += Products[i].GetPrice() * Products[i].GetStock();
+    return total;
+}
+
+// In Main
+Console.WriteLine("Store value: " + store.GetTotalValue() + " NIS");
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 4.4 ---
+\item
+أضِف إلى الفئة \textenglish{Store} عملية \textenglish{FindMostExpensive()}
+تُعيد المنتج الأغلى سعرًا في المتجر.
+
+اطبع المنتج المُعاد في \textenglish{Main}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Store
+public Product FindMostExpensive()
+{
+    Product result = Products[0];
+    for (int i = 1; i < Products.Length; i++)
+        if (Products[i].GetPrice() > result.GetPrice())
+            result = Products[i];
+    return result;
+}
+
+// In Main
+Product top = store.FindMostExpensive();
+Console.Write("Most expensive: ");
+top.Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 4.5 ---
+\item
+أضِف إلى الفئة \textenglish{Store} عملية \textenglish{GetAvailableProducts()}
+تُعيد مصفوفة جديدة تحتوي فقط المنتجات المتوفرة في المخزن.
+
+اطبع المصفوفة المُعادة في \textenglish{Main}.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Store
+public Product[] GetAvailableProducts()
+{
+    int count = 0;
+    for (int i = 0; i < Products.Length; i++)
+        if (Products[i].IsAvailable())
+            count++;
+
+    Product[] result = new Product[count];
+    int j = 0;
+    for (int i = 0; i < Products.Length; i++)
+    {
+        if (Products[i].IsAvailable())
+        {
+            result[j] = Products[i];
+            j++;
+        }
+    }
+    return result;
+}
+
+// In Main
+Product[] available = store.GetAvailableProducts();
+Console.WriteLine("Available:");
+for (int i = 0; i < available.Length; i++)
+    available[i].Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+\end{enumerate}
+
+\vspace{1em}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً!
+
+الأستاذ محمود اغبارية
+\end{flushleft}
+
+\end{document}

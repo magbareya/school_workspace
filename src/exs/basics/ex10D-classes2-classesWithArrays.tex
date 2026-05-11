@@ -1,0 +1,425 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرّن شاملة: الفئات والكائنات المتقدّمة}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section{مصفوفة كائنات}
+%=============================================================
+
+تستخدم هذه الأسئلة الفئة \textenglish{Car} التالية:
+
+\begin{boxExample}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Car
+{
+    private string Brand;
+    private int    Year;
+    private double Price;
+
+    public Car(string brand, int year, double price)
+    {
+        this.Brand = brand;
+        this.Year  = year;
+        this.Price = price;
+    }
+
+    public string GetBrand() { return Brand; }
+    public int    GetYear()  { return Year;  }
+    public double GetPrice() { return Price; }
+
+    public void SetPrice(double p) { if (p > 0) Price = p; }
+
+    public bool IsNew() { return Year >= 2022; }
+
+    public void Print()
+    {
+        Console.WriteLine($"{Brand} ({Year}) - {Price} NIS");
+    }
+}
+\end{minted}
+}
+\end{english}
+\end{boxExample}
+
+\begin{enumerate}
+
+\clearpage
+%--- سؤال 1.1 ---
+\item
+عرِّف في \textenglish{Main} مصفوفة \textenglish{cars} من نوع \textenglish{Car} بحجم 3،
+واملأها بالبيانات التالية، ثم اطبع جميع السيارات:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{الماركة} & \textbf{السنة} & \textbf{السعر} \\
+\hline
+\textenglish{Toyota} & \textenglish{2021} & \textenglish{80000} \\
+\textenglish{Honda}  & \textenglish{2023} & \textenglish{95000} \\
+\textenglish{Kia}    & \textenglish{2019} & \textenglish{65000} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Car[] cars = new Car[3];
+cars[0] = new Car("Toyota", 2021, 80000);
+cars[1] = new Car("Honda",  2023, 95000);
+cars[2] = new Car("Kia",    2019, 65000);
+
+for (int i = 0; i < cars.Length; i++)
+    cars[i].Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 1.2 ---
+\item
+بافتراض وجود المصفوفة \textenglish{cars}، اكتب كودًا يطبع فقط السيارات الجديدة
+(باستخدام العملية \textenglish{IsNew()}).
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+for (int i = 0; i < cars.Length; i++)
+{
+    if (cars[i].IsNew())
+        cars[i].Print();
+}
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 1.3 ---
+\item
+بافتراض وجود المصفوفة \textenglish{cars}، اكتب كودًا يحسب ويطبع مجموع أسعار
+جميع السيارات.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+double total = 0;
+for (int i = 0; i < cars.Length; i++)
+    total += cars[i].GetPrice();
+
+Console.WriteLine("Total: " + total + " NIS");
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 1.4 ---
+\item
+بافتراض وجود المصفوفة \textenglish{cars}، اكتب كودًا يجد السيارة الأرخص ويطبعها.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+Car cheapest = cars[0];
+for (int i = 1; i < cars.Length; i++)
+{
+    if (cars[i].GetPrice() < cheapest.GetPrice())
+        cheapest = cars[i];
+}
+
+Console.Write("Cheapest: ");
+cheapest.Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 1.5 ---
+\item
+اكتب عملية خارجية (\textenglish{static}) باسم \textenglish{GetAffordable}
+تتلقى مصفوفة \textenglish{Car[]} وعددًا \textenglish{double budget}،
+وتُعيد مصفوفة جديدة تحتوي فقط السيارات التي سعرها أقل من أو يساوي \textenglish{budget}.
+
+ثم استدعِها في \textenglish{Main} بميزانية \textenglish{85000} واطبع النتيجة.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+public static Car[] GetAffordable(Car[] cars, double budget)
+{
+    int count = 0;
+    for (int i = 0; i < cars.Length; i++)
+        if (cars[i].GetPrice() <= budget)
+            count++;
+
+    Car[] result = new Car[count];
+    int j = 0;
+    for (int i = 0; i < cars.Length; i++)
+    {
+        if (cars[i].GetPrice() <= budget)
+        {
+            result[j] = cars[i];
+            j++;
+        }
+    }
+    return result;
+}
+
+// In Main
+Car[] affordable = GetAffordable(cars, 85000);
+for (int i = 0; i < affordable.Length; i++)
+    affordable[i].Print();
+\end{minted}
+}
+\end{english}
+\fi
+
+\end{enumerate}
+
+\clearpage
+%=============================================================
+\section{فئة تحتوي على مصفوفة كخاصية}
+%=============================================================
+
+تستخدم هذه الأسئلة الفئة \textenglish{Player} التالية:
+
+\begin{boxExample}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Player
+{
+    private string Name;
+    private int[]  Scores; // scores in each game
+
+    public Player(string name, int[] scores)
+    {
+        this.Name   = name;
+        this.Scores = scores;
+    }
+
+    public string GetName()   { return Name;   }
+    public int[]  GetScores() { return Scores; }
+
+    public void Print()
+    {
+        Console.Write(Name + ": ");
+        for (int i = 0; i < Scores.Length; i++)
+            Console.Write(Scores[i] + " ");
+        Console.WriteLine();
+    }
+}
+\end{minted}
+}
+\end{english}
+\end{boxExample}
+
+\begin{enumerate}
+
+%--- سؤال 2.1 ---
+\item
+أنشئ في \textenglish{Main} كائنَين من نوع \textenglish{Player} بالبيانات التالية
+واطبع كل منهما:
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+\textbf{الاسم} & \textbf{النقاط} \\
+\hline
+\textenglish{Ali}  & \textenglish{10, 20, 15} \\
+\textenglish{Rami} & \textenglish{8, 25, 12, 18} \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// In Main
+int[] s1 = { 10, 20, 15 };
+Player p1 = new Player("Ali", s1);
+
+int[] s2 = { 8, 25, 12, 18 };
+Player p2 = new Player("Rami", s2);
+
+p1.Print();
+p2.Print();
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 2.2 ---
+\item
+أضِف إلى الفئة \textenglish{Player} عملية \textenglish{GetTotal()} تُعيد مجموع نقاطه
+في كل المباريات.
+ثم استدعِها في \textenglish{Main} واطبع المجموع لكلا اللاعبَين.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Player
+public int GetTotal()
+{
+    int sum = 0;
+    for (int i = 0; i < Scores.Length; i++)
+        sum += Scores[i];
+    return sum;
+}
+
+// In Main
+Console.WriteLine(p1.GetName() + " total: " + p1.GetTotal());
+Console.WriteLine(p2.GetName() + " total: " + p2.GetTotal());
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 2.3 ---
+\item
+أضِف إلى الفئة \textenglish{Player} عملية \textenglish{GetBest()} تُعيد أعلى نقطة
+حصل عليها اللاعب في مباراة واحدة.
+ثم استدعِها في \textenglish{Main} واطبع النتيجة لكلا اللاعبَين.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Player
+public int GetBest()
+{
+    int best = Scores[0];
+    for (int i = 1; i < Scores.Length; i++)
+        if (Scores[i] > best)
+            best = Scores[i];
+    return best;
+}
+
+// In Main
+Console.WriteLine(p1.GetName() + " best: " + p1.GetBest());
+Console.WriteLine(p2.GetName() + " best: " + p2.GetBest());
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 2.4 ---
+\item
+أضِف إلى الفئة \textenglish{Player} عملية \textenglish{GetAverage()} تُعيد متوسط نقاطه.
+ثم أضِف عملية \textenglish{IsBetter(Player other)} تُعيد \textenglish{true} إذا كان
+متوسط هذا اللاعب أعلى من متوسط اللاعب الآخر.
+
+استخدمها في \textenglish{Main} لطباعة اسم اللاعب الأفضل من الاثنين.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Player
+public double GetAverage()
+{
+    return (double)GetTotal() / Scores.Length;
+}
+
+public bool IsBetter(Player other)
+{
+    return this.GetAverage() > other.GetAverage();
+}
+
+// In Main
+if (p1.IsBetter(p2))
+    Console.WriteLine(p1.GetName() + " is better.");
+else
+    Console.WriteLine(p2.GetName() + " is better.");
+\end{minted}
+}
+\end{english}
+\clearpage
+\fi
+
+%--- سؤال 2.5 ---
+\item
+أضِف إلى الفئة \textenglish{Player} عملية بنّاءة ثانية تتلقى الاسم فقط
+وتُهيّئ مصفوفة نقاط فارغة بحجم \textenglish{5} (جميع قيمها صفر).
+
+ثم أضِف عملية \textenglish{SetScore(int index, int value)} تُعيّن نقطة
+في مباراة معيّنة (تحقّق أن \textenglish{index} ضمن الحدود وأن \textenglish{value >= 0}).
+
+اختبِر في \textenglish{Main} بإنشاء لاعب بالاسم فقط ثم تعيين نقاطه واحدة واحدة وطباعته.
+
+\ifwithsols
+\textbf{الشرح:}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+// Inside class Player — second constructor
+public Player(string name)
+{
+    this.Name   = name;
+    this.Scores = new int[5]; // all zeros by default
+}
+
+// Inside class Player — SetScore
+public void SetScore(int index, int value)
+{
+    if (index >= 0 && index < Scores.Length && value >= 0)
+        Scores[index] = value;
+}
+
+// In Main
+Player p3 = new Player("Sami");
+p3.SetScore(0, 14);
+p3.SetScore(1, 22);
+p3.SetScore(2, 9);
+p3.SetScore(3, 17);
+p3.SetScore(4, 11);
+p3.Print();
+\end{minted}
+}
+\end{english}
+\fi
+
+\end{enumerate}
+
+\vspace{1em}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً!
+
+الأستاذ محمود اغبارية
+\end{flushleft}
+
+\end{document}

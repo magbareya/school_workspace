@@ -48,6 +48,7 @@
 \end{enumerate}
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
@@ -57,7 +58,6 @@ class Student
     private int Grade;
     private double Average;
 
-    // a
     public Student(string name, int grade, double average)
     {
         this.Name    = name;
@@ -65,31 +65,26 @@ class Student
         this.Average = average;
     }
 
-    // b
     public string GetName()    { return Name;    }
     public int    GetGrade()   { return Grade;   }
     public double GetAverage() { return Average; }
 
-    // c
     public void SetAverage(double newAverage)
     {
         if (newAverage >= 0 && newAverage <= 100)
             Average = newAverage;
     }
 
-    // d
     public void Print()
     {
         Console.WriteLine($"Name: {Name} | Grade: {Grade} | Average: {Average}");
     }
 
-    // e
     public bool IsPassing()
     {
         return Average >= 55.0;
     }
 
-    // f
     public bool HasHigherAverageThan(Student other)
     {
         if (other == null)
@@ -97,8 +92,13 @@ class Student
         return this.Average > other.Average;
     }
 }
-
-// In Main: (g)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// In Main
 Student s1 = new Student("Sara", 10, 91.5);
 Student s2 = new Student("Khalil", 11, 85.0);
 
@@ -110,6 +110,7 @@ Console.WriteLine("Is Khalil passing? " + s2.IsPassing());
 \end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 \clearpage
 
@@ -149,6 +150,7 @@ Console.WriteLine("Is Khalil passing? " + s2.IsPassing());
 \end{enumerate}
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
@@ -189,8 +191,13 @@ class Movie
         Console.WriteLine($"\"{Title}\" by {Director} ({Year}) - Rating: {Rating}");
     }
 }
-
-// In Main: (g)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// In Main:
 Movie m1 = new Movie("Inception", "Nolan", 2010, 9.3);
 Movie m2 = new Movie("The Room", "Wiseau", 2003, 3.7);
 
@@ -202,6 +209,7 @@ Console.WriteLine("Is m1 highly rated? " + m1.IsHighlyRated());
 \end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 \clearpage
 
@@ -247,6 +255,7 @@ Console.WriteLine("Is m1 highly rated? " + m1.IsHighlyRated());
 \end{enumerate}
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
@@ -289,7 +298,12 @@ class Temperature
         return this.Celsius > other.Celsius;
     }
 }
-
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
 // In Main:
 Temperature t1 = new Temperature(25.0);
 Temperature t2 = new Temperature(-5.0);
@@ -300,9 +314,8 @@ Console.WriteLine("Is t1 warmer than t2? " + t1.IsWarmerThan(t2));
 \end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
-\clearpage
-
 
 \end{enumerate}
 
