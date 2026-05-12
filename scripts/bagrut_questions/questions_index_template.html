@@ -85,20 +85,6 @@
 
         <div class="row g-2">
 
-            <div class="col-md-2">
-                 <div class="filter-label">📂 المجلد</div>
-                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-end text-truncate" type="button" id="folderBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        كل المجلدات
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="folderBtn">
-                        <li><button class="btn btn-sm btn-link text-decoration-none w-100 text-end" onclick="clearChecks('folder-checkbox')">❌ إلغاء الكل</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        {folders_html}
-                    </ul>
-                 </div>
-            </div>
-
             <div class="col-md-3">
                  <div class="filter-label">📖 الموضوع</div>
                  <div class="dropdown">
@@ -223,12 +209,10 @@
         const searchText = searchInput.value.toLowerCase();
         const selectedUsed = usedFilter.value;
 
-        const checkedFolders = getCheckedValues('folder-checkbox');
         const checkedTopics = getCheckedValues('topic-checkbox');
         const checkedModels = getCheckedValues('model-checkbox');
         const checkedYears = getCheckedValues('year-checkbox');
 
-        updateButtonText('folderBtn', checkedFolders.length, 'كل المجلدات');
         updateButtonText('topicBtn', checkedTopics.length, 'كل المواضيع');
         updateButtonText('modelBtn', checkedModels.length, 'كل النماذج');
         updateButtonText('yearBtn', checkedYears.length, 'كل السنوات');
@@ -239,13 +223,11 @@
             let row = rows[i];
             let text = row.innerText.toLowerCase();
 
-            let dFolder = row.getAttribute('data-folder');
             let dTopic = row.getAttribute('data-topic');
             let dModel = row.getAttribute('data-model');
             let dYear = row.getAttribute('data-year');
             let dUsed = row.getAttribute('data-used');
 
-            let matchFolder = (checkedFolders.length === 0) || checkedFolders.includes(dFolder);
             let matchTopic = (checkedTopics.length === 0) || checkedTopics.includes(dTopic);
             let matchModel = (checkedModels.length === 0) || checkedModels.includes(dModel);
             let matchYear = (checkedYears.length === 0) || checkedYears.includes(dYear);
@@ -253,7 +235,7 @@
             let matchUsed = (selectedUsed === "") || (dUsed === selectedUsed);
             let matchSearch = text.includes(searchText);
 
-            if (matchSearch && matchUsed && matchFolder && matchTopic && matchModel && matchYear) {{
+            if (matchSearch && matchUsed && matchTopic && matchModel && matchYear) {{
                 row.style.display = "";
                 visibleCount++;
             }} else {{

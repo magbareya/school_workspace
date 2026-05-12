@@ -74,8 +74,8 @@ empty_sols:
 index:
 	python scripts/bagrut_questions/create_questions_index.py
 	@make \
-		$$(find src/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#.pdf#') \
-		$$(find src/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#_sols.pdf#')
+		$$(find src/*/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#.pdf#') \
+		$$(find src/*/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#_sols.pdf#')
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: src/%.ipynb
@@ -155,9 +155,10 @@ clean:
 	rm -rf out
 	find . -type d -name "_minted*" -exec rm -rf {} +
 
-CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz
+CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz pyc pyo pyd
 sclean:
 	find out -type f -empty -delete
+	find . -type d -name "__pycache__" -exec rm -rf {} +
 	@for ext in $(CLEAN_EXTS); do \
 		find . -type f -name "*.$$ext" -delete; \
 	done
