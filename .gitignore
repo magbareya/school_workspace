@@ -12,4 +12,4 @@ out2/
 *.pyc
 *.pyo
 
-src/bagrut_questions/**/*.tex
+src/**/bagrut_questions/*.tex
