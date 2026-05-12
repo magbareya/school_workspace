@@ -1,7 +1,11 @@
 \documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{ورقة عمل: مصفوفة الكائنات في \textenglish{C\#}}
+\ifwithsols
+\title{حل ورقة تمرّن 18: مصفوفة كائنات}
+\else
+\title{ورقة تمرّن 18: مصفوفة كائنات}
+\fi
 
 \begin{document}
 
@@ -78,7 +82,8 @@ class Student
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -91,6 +96,8 @@ s2.Print();
 s3.Print();
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -110,7 +117,8 @@ Student s2 = new Student("Nour", 202, 62.5);
 ثم اكتب كودًا يطبع لكل طالب رسالة تقول إن كان ناجحًا أم راسبًا، باستخدام العملية \textenglish{IsPassing()}.
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -128,6 +136,8 @@ else
     Console.WriteLine(s2.GetName() + " is failing.");
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -151,7 +161,8 @@ else
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -165,6 +176,8 @@ for (int i = 0; i < students.Length; i++)
     students[i].Print();
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -179,7 +192,8 @@ for (int i = 0; i < students.Length; i++)
 \end{itemize}
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -198,6 +212,8 @@ Console.WriteLine("Passing: " + passing);
 Console.WriteLine("Failing: " + failing);
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -208,7 +224,8 @@ Console.WriteLine("Failing: " + failing);
 بافتراض وجود المصفوفة \textenglish{students}، اكتب كودًا في \textenglish{Main} يجد ويطبع الطالب صاحب أعلى درجة في المصفوفة.
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -223,6 +240,8 @@ Console.Write("Top student: ");
 best.Print();
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \begin{boxNote}
 \textenglish{best} لا ينسخ الكائن — بل يُشير إليه. عند تحديث \textenglish{best} نحوّل الإشارة فقط.
 \end{boxNote}
@@ -236,7 +255,8 @@ best.Print();
 بافتراض وجود المصفوفة \textenglish{students}، اكتب كودًا في \textenglish{Main} يُضيف 5 نقاط لكل طالب راسب (درجته أقل من 55)، باستخدام \textenglish{SetGrade()}، ثم يطبع المصفوفة كاملةً بعد التعديل.
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 // In Main
@@ -250,6 +270,8 @@ for (int i = 0; i < students.Length; i++)
     students[i].Print();
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -262,7 +284,8 @@ for (int i = 0; i < students.Length; i++)
 ثم استدعِها في \textenglish{Main} على مصفوفة \textenglish{students}.
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 public static void PrintPassing(Student[] students)
@@ -278,6 +301,8 @@ public static void PrintPassing(Student[] students)
 PrintPassing(students);
 \end{minted}
 \end{english}
+\end{boxSolution}
+}
 \clearpage
 \fi
 
@@ -289,12 +314,16 @@ PrintPassing(students);
 
 ثم استدعِها في \textenglish{Main} واطبع المصفوفة المُعادة.
 
+\ifwithsols
+\else
 \begin{boxNote}
 \textbf{تلميح:} مرّ على المصفوفة مرتين — مرة لحساب الحجم الصحيح للمصفوفة الجديدة، ومرة لملئها.
 \end{boxNote}
+\fi
 
 \ifwithsols
-\textbf{الشرح:}
+{\small
+\begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 public static Student[] GetTopStudents(Student[] students)
@@ -330,16 +359,20 @@ for (int i = 0; i < top.Length; i++)
     top[i].Print();
 \end{minted}
 \end{english}
-\clearpage
+\end{boxSolution}
+}
 \fi
 
 \end{enumerate}
 
+\ifwithsols
+\else
 \vspace{1em}
 \begin{flushleft}
 أرجو لكم عملاً ممتعاً!
 
 الأستاذ محمود اغبارية
 \end{flushleft}
+\fi
 
 \end{document}

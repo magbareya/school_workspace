@@ -1,7 +1,11 @@
 \documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{ورقة تمرّن شاملة: الفئات والكائنات المتقدّمة}
+\ifwithsols
+\title{حل ورقة تمرّن 19 \\ مصفوفة كائنات + فئات مع مصفوفة}
+\else
+\title{ورقة تمرّن 19 \\ مصفوفة كائنات + فئات مع مصفوفة}
+\fi
 
 \begin{document}
 
@@ -70,7 +74,7 @@ class Car
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -85,6 +89,7 @@ for (int i = 0; i < cars.Length; i++)
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -94,7 +99,7 @@ for (int i = 0; i < cars.Length; i++)
 (باستخدام العملية \textenglish{IsNew()}).
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -107,6 +112,7 @@ for (int i = 0; i < cars.Length; i++)
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -116,7 +122,7 @@ for (int i = 0; i < cars.Length; i++)
 جميع السيارات.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -129,6 +135,7 @@ Console.WriteLine("Total: " + total + " NIS");
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -137,7 +144,7 @@ Console.WriteLine("Total: " + total + " NIS");
 بافتراض وجود المصفوفة \textenglish{cars}، اكتب كودًا يجد السيارة الأرخص ويطبعها.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -154,6 +161,7 @@ cheapest.Print();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -166,7 +174,7 @@ cheapest.Print();
 ثم استدعِها في \textenglish{Main} بميزانية \textenglish{85000} واطبع النتيجة.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -197,6 +205,7 @@ for (int i = 0; i < affordable.Length; i++)
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \fi
 
 \end{enumerate}
@@ -258,7 +267,7 @@ class Player
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -274,6 +283,7 @@ p2.Print();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -284,7 +294,7 @@ p2.Print();
 ثم استدعِها في \textenglish{Main} واطبع المجموع لكلا اللاعبَين.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -303,6 +313,7 @@ Console.WriteLine(p2.GetName() + " total: " + p2.GetTotal());
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -313,7 +324,7 @@ Console.WriteLine(p2.GetName() + " total: " + p2.GetTotal());
 ثم استدعِها في \textenglish{Main} واطبع النتيجة لكلا اللاعبَين.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -333,6 +344,7 @@ Console.WriteLine(p2.GetName() + " best: " + p2.GetBest());
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -345,7 +357,7 @@ Console.WriteLine(p2.GetName() + " best: " + p2.GetBest());
 استخدمها في \textenglish{Main} لطباعة اسم اللاعب الأفضل من الاثنين.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -368,6 +380,7 @@ else
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -382,7 +395,7 @@ else
 اختبِر في \textenglish{Main} بإنشاء لاعب بالاسم فقط ثم تعيين نقاطه واحدة واحدة وطباعته.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -411,6 +424,7 @@ p3.Print();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \fi
 
 \end{enumerate}

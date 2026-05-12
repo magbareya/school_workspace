@@ -176,10 +176,10 @@ class Scoreboard
 
     public Scoreboard(string teamA, string teamB)
     {
-        this.TeamA      = teamA;
-        this.TeamB      = teamB;
-        this.ScoreA     = 0;
-        this.ScoreB     = 0;
+        this.TeamA = teamA;
+        this.TeamB = teamB;
+        this.ScoreA = 0;
+        this.ScoreB = 0;
     }
 
     public int GetScoreA()     { return ScoreA;     }
@@ -204,12 +204,16 @@ class Scoreboard
 
     public int GetDifference()
     {
-        int diff = ScoreA - ScoreB;
-        if (diff < 0)
-            return -diff;
-        return diff;
+        return Math.Abs(ScoreA - ScoreB);
     }
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
 
+    // Continuation of Scoreboard class...
     public void Print()
     {
         Console.WriteLine(
@@ -217,12 +221,7 @@ class Scoreboard
         );
     }
 }
-\end{minted}
-\end{english}
-\end{boxSolution}
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
+
 public static void Main()
 {
     Scoreboard sb = new Scoreboard("Haifa", "Nazareth");

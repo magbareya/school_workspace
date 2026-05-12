@@ -1,7 +1,11 @@
 \documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{ورقة تمرّن شاملة: الفئات والكائنات المتقدّمة}
+\ifwithsols
+\title{حل ورقة تمرّن 20: فئات مركّبة}
+\else
+\title{ورقة تمرّن 20: فئات مركّبة}
+\fi
 
 \begin{document}
 
@@ -82,7 +86,7 @@ class Employee
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -97,6 +101,7 @@ e2.Print();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -106,7 +111,7 @@ e2.Print();
 اكتب كودًا يطبع اسم القسم الذي يعمل فيه \textenglish{e1} ورقم طابقه.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -116,6 +121,7 @@ Console.WriteLine("Floor: " + e1.GetDept().GetFloor());
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -127,7 +133,7 @@ Console.WriteLine("Floor: " + e1.GetDept().GetFloor());
 اختبِرها في \textenglish{Main}.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -145,6 +151,7 @@ else
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -166,7 +173,7 @@ else
 ثم اكتب كودًا يطبع اسم الموظف الأعلى راتبًا واسم قسمه.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -183,6 +190,7 @@ Console.WriteLine(higher.GetName()
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -196,7 +204,7 @@ Console.WriteLine(higher.GetName()
 اختبِرها في \textenglish{Main} بإنشاء موظف بدون قسم، ثم تعيين قسم له وطباعته.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -225,6 +233,7 @@ e3.Print(); // Layla | Salary: 7500 | Development
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \fi
 
 \end{enumerate}
@@ -306,7 +315,7 @@ class Store
 \end{center}
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -321,6 +330,7 @@ store.PrintAll();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -332,7 +342,7 @@ store.PrintAll();
 اطبع النتيجة في \textenglish{Main}.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -351,6 +361,7 @@ Console.WriteLine("Available products: " + store.CountAvailable());
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -362,7 +373,7 @@ Console.WriteLine("Available products: " + store.CountAvailable());
 اطبع النتيجة في \textenglish{Main}.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -380,6 +391,7 @@ Console.WriteLine("Store value: " + store.GetTotalValue() + " NIS");
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -391,7 +403,7 @@ Console.WriteLine("Store value: " + store.GetTotalValue() + " NIS");
 اطبع المنتج المُعاد في \textenglish{Main}.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -412,6 +424,7 @@ top.Print();
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
@@ -423,7 +436,7 @@ top.Print();
 اطبع المصفوفة المُعادة في \textenglish{Main}.
 
 \ifwithsols
-\textbf{الشرح:}
+\begin{boxSolution}
 \begin{english}
 {\small
 \begin{minted}{csharp}
@@ -456,6 +469,7 @@ for (int i = 0; i < available.Length; i++)
 \end{minted}
 }
 \end{english}
+\end{boxSolution}
 \clearpage
 \fi
 
