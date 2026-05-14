@@ -6,11 +6,55 @@
 \pagestyle{empty}
 \thispagestyle{empty}
 
+\section*{لغات}
+\begin{enumerate}[label=(\Alph*)]
+    \item
+    نعرّف عملية "عكس" المشار إليها بالحرف $X$ على الكلمات واللغات فوق الأبجدية $\{0,1\}$ كما يلي:
 \begin{itemize}
-    \item \textbf{أوتومات راصة:}
+    \item لكل كلمة $w$ نعرّف $X(w)$: هي الكلمة الناتجة عن استبدال كل حرف $0$ في الكلمة $w$ بحرف $1$ وكل حرف $1$ بحرف $0$. \\
+    \textbf{مثال:} إذا كانت $w = 1010$، فإنّ $X(w) = 0101$.
+    \item لكل لغة $L$ نعرّف $X(L)$: هي اللغة الناتجة عن تطبيق عملية $X$ على كل كلمة في اللغة $L$. \\
+    \textbf{مثال:} إذا كانت $L = \{1010, 111\}$، فإنّ $X(L) = \{0101, 000\}$.
+\end{itemize}
+\begin{enumerate}[label=(\Roman*)]
+    \item نعرّف اللغة: $L = \{0^n | n \geq 0\}$ فوق الأبجدية $\{0,1\}$:
+    \begin{enumerate}[label=(\arabic*)]
+        \item ما هي اللغة $X(L)$؟
+        \item ما هي اللغة $\overline{L}$؟
+        \item ما هو ناتج $X(L) \cap \overline{L}$؟
+    \end{enumerate}
+    \item
+بالنسبة لكلّ ادّعاء من الادعاءات التالية، اذكروا إذا كان صحيحًا أم غير صحيح. \\
+إذا كان الادّعاء صحيحًا - علّلوا لماذا.
+وإذا كان غير صحيح - أعطوا مثالًا يُناقضه.
+\begin{enumerate}[label=(\arabic*)]
+    \item $R(X(L)) = X(R(L))$ لكلّ لغة $L$ فوق الأبجدية $\{0,1\}$.
+    \item $\overline{X(L)} = X(\overline{L})$ لكلّ لغة $L$ فوق الأبجدية $\{0,1\}$.
+    \item إذا كانت $L$ نظاميّة، فإنّ $X(L)$ نظاميّة بالضرورة.
+    \item إذا كانت $L_1 \cdot L_2 = L_1 \cdot L_3$، فإنّ $L_2 = L_3$ بالضرورة.
+\end{enumerate}
+\item أعطِ مثالًا للغة $L$ فوق الأبجدية $\{0,1\}$ بحيث يتحقّق $L = X(L)$.
+
+\end{enumerate}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section*{أوتومات راصة:}
     \begin{enumerate}
         \item
-        معطاة اللغة $L$ فوق الأبجدية $\{a, b, c\}$:$$L = \{ a^{2n} b^{n+m} c^{m} \mid n \ge 1, m \ge 1 \}$$أ. (1) ما هي أقصر كلمة تنتمي للغة $L$؟(2) اكتب كلمة تنتمي للغة $L$ طولها 15 حرفًا.ب. ابنِ أوتومات راصة يتلقى اللغة $L$.
+        معطاة اللغة $L$ فوق الأبجدية $\{a, b, c\}$:
+        $$L = \{ (ab)^{2n} c^{n+m} a^{2m} \mid n,m \ge 1, m\%2=1 \}$$
+        \begin{enumerate}[label=\alph*.]
+        \item
+        \begin{enumerate}[label=(\arabic*)]
+        \item ما هي أقصر كلمة تنتمي للغة $L$؟
+        \item اكتب كلمتين تنتميان للغة $L$ بحيث يكون طول كل منهما أكثر من 10 أحرف.
+        \item اكتب كلمتين لا تنتميان للغة $L$ بأي طولٍ كان.
+        \end{enumerate}
+        \item
+        ابنِ أوتومات راصة يتلقى اللغة $L$.
+        \end{enumerate}
 
         \item
         أمامك اللغتان $L_1$ وَ $L_2$ فوق الأبجدية $\{a, b, c\}$:
@@ -25,7 +69,9 @@
 
     \end{enumerate}
 
-\item \textbf{آلة تيورنج:}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \clearpage
+\section*{آلة تيورنج:}
 
     \begin{enumerate}
         \item
@@ -36,11 +82,111 @@
 تقوم الآلة بتعديل الكلمة بحيث تُضاعِف كل حرف $a$ (أي تستبدل كل $a$ بـ $aa$) وتترك حرف $b$ كما هو. على سبيل المثال، إذا كانت الكلمة المدخلة هي $w = aab$, فإن الكلمة الناتجة ستكون $w' = aaaab$.
 
 \item
-ابنِ آلة تيورنج تتلقى في بداية الشريط عددين صحيحين موجبين $x$ وَ $y$، مسجلين كعددين أوناريّين (بواسطة الرمز 1). تفصل بين العددين الإشارة #.تحسب الآلة الدالة التالية:$$f(x, y) = 2x + y$$يُسجَّل المُخرَج النهائي على الشريط كعدد أوناري بين إشارتي `$$.على سبيل المثال: إذا تلقت الآلة $x=2$ (أي 11) وَ $y=3$ (أي 111)، يجب أن تعيد الآلة القيمة 7 (أي 7 رموز من 1 بين إشارتي $$).توجيهات:لا حاجة للحفاظ على المُدخلات الأصلية (يمكن شطبها أو تغييرها).العدد المُعاد يظهر في مكان ما في الشريط، وباقي الخلايا المجاورة تحتوي على فراغات ($\Delta$).
+ابنِ آلة تيورنج تتلقى في بداية الشريط عددين صحيحين موجبين $x$ وَ $y$، مسجلين كعددين أوناريّين (بواسطة الرمز 1).
+تفصل بين العددين الإشارة $\#$تحسب الآلة الدالة التالية:$$f(x, y) = 2x + y$$يُسجَّل المُخرَج النهائي على الشريط كعدد أوناري بين إشارتي \$ \$.
+على سبيل المثال: إذا تلقت الآلة $x=2$ (أي 11) وَ $y=3$ (أي 111)، يجب أن تعيد الآلة القيمة 7 (أي 7 رموز من 1 بين إشارتي \$ \$).
+توجيهات:لا حاجة للحفاظ على المُدخلات الأصلية (يمكن شطبها أو تغييرها).العدد المُعاد يظهر في مكان ما في الشريط، وباقي الخلايا المجاورة تحتوي على فراغات ($\Delta$).
 
-\item سؤال بناء آلة تيورنج بناء على عملية C#.
+\item ابن آلة تيورنج تحسب الدالة التالية:
+\[
+f(x, y) =
+\begin{cases}
+1 & \quad if \quad x = y \\
+x-y & \quad if \quad x > y \\
+y-x & \quad if \quad x < y
+\end{cases}
+\]
+
+\item
+معطاة العملية الخارجية التالية بلغة C\#:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int Foo(int x, int y)
+{
+    if(x % 2 == y % 2)
+        return (x + y) / 2;
+    else
+        return (x + y) + 1;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+تتلقّى آلة تيورينج في بداية الشريط عددين أوناريّين $x$ و $y$ بينهما الرّمز \#،
+وتُعيد قيمة العملية $Foo(x, y)$ بين إشارتَي \$ على مكان ما في الشريط.
+
+\begin{enumerate}
+
+\item[أ.] اكتبوا ماذا سيكون الناتج على الشريط في نهاية تشغيل الآلة على المدخل التالي:
+
+\begin{center}
+\begin{english}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$\vdash$ & 1 & 1 & \# & 1 & 1 & 1 & 1 & $\triangle$ \ldots \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\item[ب.] اكتبوا ماذا سيكون الناتج على الشريط في نهاية تشغيل الآلة على المدخل التالي:
+
+\begin{center}
+\begin{english}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+$\vdash$ & 1 & 1 & \# & 1 & 1 & 1 & $\triangle$ \ldots \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\item[ج.] اكتبوا آلة تيورينج تُنفّذ العمليّة \textenglish{Foo(x, y)} الموصوفة أعلاه.
+
+توجيهات:
+\begin{itemize}
+    \item لا حاجة للحفاظ على المُدخَلات (يمكن تغيير المُدخَل إلى إشارات مختلفة).
+    \item العدد المُعاد يظهر في مكان ما في الشريط بين إشارتَي \$.
+    \item لا حاجة لفحص سلامة المُدخَلات.
+\end{itemize}
+
+\end{enumerate}
 \end{enumerate}
 
-\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+
+\begin{enumerate}[label=\alph*.]
+    \item .
+    \begin{center}
+    \begin{english}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\vdash$ & \$ & 1 & 1 & 1 & \$ \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item .
+    \begin{center}
+    \begin{english}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $\vdash$ & \$ & 1 & 1 & 1 & 1 & 1 & 1 & \$ \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item .
+    \begin{center}
+        \includegraphics[width=0.7\paperwidth,keepaspectratio]{../../../images/turing/xPyEven_div2_else_plus1.png}%
+    \end{center}
+\end{enumerate}
+
+\end{boxSolution}
+\fi
+
+\end{enumerate}
 
 \end{document}

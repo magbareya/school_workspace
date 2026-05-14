@@ -23,6 +23,7 @@
 \usepackage[onehalfspacing]{setspace}
 \usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
 \usepackage{tikz}
+\usepackage{datetime2}
 
 \usetikzlibrary{automata, positioning, arrows.meta, arrows}
 
@@ -32,7 +33,6 @@
 
 \setmainlanguage[numerals=western]{arabic}
 \setotherlanguage{english}
-% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
 \newfontfamily\arabicfont[Script=Arabic]{Calibri}
 \newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
 
@@ -85,6 +85,14 @@
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
+\makeatletter
+\DTMnewdatestyle{dotted}{%
+  \renewcommand{\DTMdisplaydate}[4]{\two@digits{##3}.\two@digits{##2}.##1}%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\makeatother
+\DTMsetdatestyle{dotted}
+
 % redefine spaces after titles
 \makeatletter
 \renewcommand{\@maketitle}{%
@@ -94,7 +102,7 @@
     {\large \@author \par}%
     % \vskip 0.2em % space between author and date
     % {\normalsize \@date \par}%
-    {\small \@date \par}
+    {\small \hfill \begin{english}\DTMtoday\end{english} \par}%
   \end{center}
 }
 \makeatother
@@ -111,7 +119,6 @@
 \fancyhead[L]{مدرسة التسامح الشاملة}
 \fancyhead[R]{الأستاذ محمود اغبارية}
 \fancyfoot[C]{\thepage}
-% \date{\today}
 
 \setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
 
