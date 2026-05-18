@@ -1,0 +1,629 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرّن 19 - قسم 2 \\ مصفوفة كائنات + فئات مع مصفوفة}
+\else
+\title{ورقة تمرّن 19 - قسم 2 \\ مصفوفة كائنات + فئات مع مصفوفة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% %=============================================================
+% \section{مثال توضيحي -- حجوزات رحلة طائرة}
+% %=============================================================
+
+% في هذا المثال نُعرِّف فئة \textenglish{Flight} تمثل رحلة جوية.
+% تتلقى العملية البناءة رقم الرحلة وعدد المقاعد، وتُنشئ مصفوفة منطقية بحجم مساوٍ لعدد المقاعد،
+% حيث تعني القيمة \textenglish{false} أن المقعد شاغر، و\textenglish{true} أنه محجوز.
+
+% {\small
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{csharp}
+% class Flight
+% {
+%     private int    flightCode;
+%     private bool[] seatsStatus;
+
+%     public Flight(int flightCode, int seatsCount)
+%     {
+%         this.flightCode  = flightCode;
+%         this.seatsStatus = new bool[seatsCount]; // false = available
+%     }
+
+%     public bool BookSeat(int seatIndex)
+%     {
+%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length
+%                           || seatsStatus[seatIndex])
+%             return false;
+%         seatsStatus[seatIndex] = true;
+%         return true;
+%     }
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{csharp}
+%     public bool CancelBooking(int seatIndex)
+%     {
+%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
+%             return false;
+%         seatsStatus[seatIndex] = false;
+%         return true;
+%     }
+
+%     public bool IsSeatBooked(int seatIndex)
+%     {
+%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
+%             return false;
+%         return seatsStatus[seatIndex];
+%     }
+
+%     public int AvailableSeats()
+%     {
+%         int count = 0;
+%         for (int i = 0; i < seatsStatus.Length; i++)
+%             if (!seatsStatus[i])
+%                 count++;
+%         return count;
+%     }
+
+%     public int TotalSeats()
+%     {
+%         return seatsStatus.Length;
+%     }
+% }
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% }
+
+% \clearpage
+
+%=============================================================
+\section{أسئلة}
+%=============================================================
+
+\begin{enumerate}
+
+%=============================================================
+%--- سؤال 1 ---
+%=============================================================
+\item \textbf{مرآب سيارات}
+
+اكتب فئة \textenglish{Parking} تمثل مرآباً للسيارات.
+تتلقى العملية البناءة رقم المرآب (\textenglish{int}) وعدد أماكن الوقوف (\textenglish{int})،
+وتُنشئ مصفوفة منطقية بنفس الحجم (القيمة الابتدائية \textenglish{false} تعني أن المكان فارغ).
+على الفئة أن تدعم العمليات التالية:
+
+\begin{itemize}
+  \item \textenglish{ParkCar(int spotIndex) : bool} --
+        تحجز المكان ذا الرقم \textenglish{spotIndex}،
+        وتُعيد \textenglish{true} إذا نجحت العملية،
+        أو \textenglish{false} إذا كان الرقم خارج النطاق أو المكان مشغولاً.
+
+  \item \textenglish{RemoveCar(int spotIndex) : bool} --
+        تُفرغ المكان ذا الرقم \textenglish{spotIndex}،
+        وتُعيد \textenglish{true} إذا نجحت العملية،
+        أو \textenglish{false} إذا كان الرقم خارج النطاق أو المكان فارغاً أصلاً.
+
+  \item \textenglish{IsSpotFree(int spotIndex) : bool} --
+        تتلقى رقم مكان وتُعيد \textenglish{true} إذا كان فارغاً،
+        و\textenglish{false} إذا كان مشغولاً أو كان الرقم خارج النطاق.
+
+  \item \textenglish{FreeSpots() : int} --
+        تُعيد عدد الأماكن الفارغة حالياً.
+
+  \item \textenglish{TotalSpots() : int} --
+        تُعيد العدد الكلي للأماكن في المرآب.
+\end{itemize}
+
+اكتب في \textenglish{Main} كوداً ينشئ مرآباً برقم 5 وفيه 4 أماكن،
+ثم يُوقف سيارات في الأماكن 0 و1 و3،
+ثم يطبع عدد الأماكن الفارغة والكلية.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Parking
+{
+    private int    parkingId;
+    private bool[] spots;
+
+    public Parking(int parkingId, int spotsCount)
+    {
+        this.parkingId = parkingId;
+        this.spots     = new bool[spotsCount]; // false = free
+    }
+
+    public bool ParkCar(int spotIndex)
+    {
+        if (spotIndex < 0 || spotIndex >= spots.Length
+                          || spots[spotIndex])
+            return false;
+        spots[spotIndex] = true;
+        return true;
+    }
+
+    public bool RemoveCar(int spotIndex)
+    {
+        if (spotIndex < 0 || spotIndex >= spots.Length
+                          || !spots[spotIndex])
+            return false;
+        spots[spotIndex] = false;
+        return true;
+    }
+
+    public bool IsSpotFree(int spotIndex)
+    {
+        if (spotIndex < 0 || spotIndex >= spots.Length)
+            return false;
+        return !spots[spotIndex];
+    }
+
+    public int FreeSpots()
+    {
+        int count = 0;
+        for (int i = 0; i < spots.Length; i++)
+            if (!spots[i]) count++;
+        return count;
+    }
+
+    public int TotalSpots()
+    {
+        return spots.Length;
+    }
+}
+
+// In Main
+Parking p = new Parking(5, 4);
+p.ParkCar(0);
+p.ParkCar(1);
+p.ParkCar(3);
+Console.WriteLine("Free: "  + p.FreeSpots());   // 1
+Console.WriteLine("Total: " + p.TotalSpots());   // 4
+\end{minted}
+}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+%=============================================================
+%--- سؤال 2 ---
+%=============================================================
+\item \textbf{تقييم الطلاب}
+
+اكتب فئة \textenglish{Classroom} تمثل صفاً دراسياً.
+تتلقى العملية البناءة رقم الصف (\textenglish{int}) وعدد الطلاب (\textenglish{int})،
+وتُنشئ مصفوفة من نوع \textenglish{double} بنفس الحجم وتُهيئ جميع قيمها بالصفر.
+على الفئة أن تدعم العمليات التالية:
+
+\begin{itemize}
+  \item \textenglish{SetGrade(int studentIndex, double grade) : void} --
+        تُسجّل العلامة \textenglish{grade} للطالب ذي الرقم \textenglish{studentIndex}.
+        لا تأثير إذا كان الرقم خارج النطاق أو كانت العلامة خارج المجال $[0, 100]$.
+
+  \item \textenglish{GetGrade(int studentIndex) : double} --
+        تُعيد علامة الطالب ذي الرقم \textenglish{studentIndex}،
+        أو $-1$ إذا كان الرقم خارج النطاق.
+
+  \item \textenglish{Average() : double} --
+        تُعيد معدل علامات جميع طلاب الصف.
+
+  \item \textenglish{PassCount() : int} --
+        تُعيد عدد الطلاب الذين علامتهم 60 أو أكثر.
+
+  \item \textenglish{StudentCount() : int} --
+        تُعيد العدد الكلي للطلاب في الصف.
+\end{itemize}
+
+اكتب في \textenglish{Main} كوداً ينشئ صفاً برقم 10 وفيه 5 طلاب،
+يُسجّل لهم العلامات: 55، 70، 90، 45، 80،
+ثم يطبع معدل الصف وعدد الناجحين.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Classroom
+{
+    private int      classId;
+    private double[] grades;
+
+    public Classroom(int classId, int studentCount)
+    {
+        this.classId = classId;
+        this.grades  = new double[studentCount]; // 0.0 by default
+    }
+
+    public void SetGrade(int studentIndex, double grade)
+    {
+        if (studentIndex < 0 || studentIndex >= grades.Length
+                             || grade < 0 || grade > 100)
+            return;
+        grades[studentIndex] = grade;
+    }
+
+    public double GetGrade(int studentIndex)
+    {
+        if (studentIndex < 0 || studentIndex >= grades.Length)
+            return -1;
+        return grades[studentIndex];
+    }
+
+    public double Average()
+    {
+        double sum = 0;
+        for (int i = 0; i < grades.Length; i++)
+            sum += grades[i];
+        return sum / grades.Length;
+    }
+
+    public int PassCount()
+    {
+        int count = 0;
+        for (int i = 0; i < grades.Length; i++)
+            if (grades[i] >= 60) count++;
+        return count;
+    }
+
+    public int StudentCount()
+    {
+        return grades.Length;
+    }
+}
+
+// In Main
+Classroom cls = new Classroom(10, 5);
+cls.SetGrade(0, 55);
+cls.SetGrade(1, 70);
+cls.SetGrade(2, 90);
+cls.SetGrade(3, 45);
+cls.SetGrade(4, 80);
+Console.WriteLine("Average: "    + cls.Average());    // 68.0
+Console.WriteLine("Passed: "     + cls.PassCount());  // 3
+\end{minted}
+}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+%=============================================================
+%--- سؤال 3 ---
+%=============================================================
+\item \textbf{مخزون صيدلية}
+
+اكتب فئة \textenglish{Pharmacy} تمثل مخزون صيدلية.
+تتلقى العملية البناءة اسم الصيدلية (\textenglish{string}) وعدد أنواع الأدوية (\textenglish{int})،
+وتُنشئ مصفوفة من نوع \textenglish{int} بنفس الحجم وتُهيئ جميع قيمها بالصفر.
+على الفئة أن تدعم العمليات التالية:
+
+\begin{itemize}
+  \item \textenglish{AddStock(int medicineIndex, int amount) : void} --
+        تُضيف الكمية \textenglish{amount} إلى مخزون الدواء ذي الرقم \textenglish{medicineIndex}.
+        لا تأثير إذا كان الرقم خارج النطاق أو كانت الكمية أصغر من 1.
+
+  \item \textenglish{Dispense(int medicineIndex, int amount) : bool} --
+        تُنقص الكمية \textenglish{amount} من مخزون الدواء ذي الرقم \textenglish{medicineIndex}،
+        وتُعيد \textenglish{true} إذا نجحت العملية،
+        أو \textenglish{false} إذا كان الرقم خارج النطاق أو الكمية المطلوبة غير متوفرة.
+
+  \item \textenglish{GetStock(int medicineIndex) : int} --
+        تُعيد كمية الدواء ذي الرقم \textenglish{medicineIndex}،
+        أو $-1$ إذا كان الرقم خارج النطاق.
+
+  \item \textenglish{OutOfStockCount() : int} --
+        تُعيد عدد أنواع الأدوية التي نفدت (كميتها صفر).
+
+  \item \textenglish{TotalUnits() : int} --
+        تُعيد مجموع جميع الوحدات الموجودة في المخزون.
+\end{itemize}
+
+اكتب في \textenglish{Main} كوداً ينشئ صيدلية باسم \textenglish{"CityPharm"} وفيها 3 أنواع أدوية،
+يُضيف 20 وحدة من الدواء 0، و15 من الدواء 2،
+يصرف 8 وحدات من الدواء 0،
+ثم يطبع عدد الأنواع التي نفدت وإجمالي الوحدات.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Pharmacy
+{
+    private string pharmacyName;
+    private int[]  stock;
+
+    public Pharmacy(string pharmacyName, int medicineCount)
+    {
+        this.pharmacyName = pharmacyName;
+        this.stock        = new int[medicineCount]; // 0 by default
+    }
+
+    public void AddStock(int medicineIndex, int amount)
+    {
+        if (medicineIndex < 0 || medicineIndex >= stock.Length
+                              || amount <= 0)
+            return;
+        stock[medicineIndex] += amount;
+    }
+
+    public bool Dispense(int medicineIndex, int amount)
+    {
+        if (medicineIndex < 0 || medicineIndex >= stock.Length
+                              || amount <= 0
+                              || stock[medicineIndex] < amount)
+            return false;
+        stock[medicineIndex] -= amount;
+        return true;
+    }
+
+    public int GetStock(int medicineIndex)
+    {
+        if (medicineIndex < 0 || medicineIndex >= stock.Length)
+            return -1;
+        return stock[medicineIndex];
+    }
+
+    public int OutOfStockCount()
+    {
+        int count = 0;
+        for (int i = 0; i < stock.Length; i++)
+            if (stock[i] == 0) count++;
+        return count;
+    }
+
+    public int TotalUnits()
+    {
+        int total = 0;
+        for (int i = 0; i < stock.Length; i++)
+            total += stock[i];
+        return total;
+    }
+}
+
+// In Main
+Pharmacy ph = new Pharmacy("CityPharm", 3);
+ph.AddStock(0, 20);
+ph.AddStock(2, 15);
+ph.Dispense(0, 8);
+Console.WriteLine("Out of stock: " + ph.OutOfStockCount()); // 1
+Console.WriteLine("Total units: "  + ph.TotalUnits());      // 27
+\end{minted}
+}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+% %=============================================================
+% %--- سؤال 4 ---
+% %=============================================================
+% \item \textbf{محطة أرصاد جوية}
+
+% اكتب فئة \textenglish{WeatherStation} تمثل محطة رصد مناخي.
+% تتلقى العملية البناءة اسم المحطة (\textenglish{string}) وعدد أيام الشهر (\textenglish{int})،
+% وتُنشئ مصفوفة من نوع \textenglish{double} بنفس الحجم وتُهيئ جميع قيمها بـ\textenglish{-999}
+% للدلالة على أن درجة حرارة ذلك اليوم لم تُسجَّل بعد.
+% على الفئة أن تدعم العمليات التالية:
+
+% \begin{itemize}
+%   \item \textenglish{RecordTemp(int dayIndex, double temp) : void} --
+%         تُسجّل درجة الحرارة \textenglish{temp} لليوم ذي الرقم \textenglish{dayIndex}.
+%         لا تأثير إذا كان الرقم خارج النطاق.
+
+%   \item \textenglish{MaxTemp() : double} --
+%         تُعيد أعلى درجة حرارة مسجّلة في الشهر،
+%         أو \textenglish{-999} إذا لم يُسجَّل أي يوم بعد.
+
+%   \item \textenglish{AverageTemp() : double} --
+%         تُعيد معدل درجات الحرارة للأيام المسجّلة فقط،
+%         أو \textenglish{-999} إذا لم يُسجَّل أي يوم بعد.
+
+%   \item \textenglish{DaysAbove(double threshold) : int} --
+%         تتلقى حداً معيناً وتُعيد عدد الأيام المسجّلة التي تجاوزت درجة حرارتها هذا الحد.
+% \end{itemize}
+
+% اكتب في \textenglish{Main} كوداً ينشئ محطة باسم \textenglish{"Haifa"} لشهر مدته 5 أيام،
+% يُسجّل الدرجات: 28، 31، 25، 35، 29،
+% ثم يطبع أعلى درجة والمعدل وعدد الأيام فوق 30 درجة.
+
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% {\small
+% \begin{minted}{csharp}
+% class WeatherStation
+% {
+%     private string   stationName;
+%     private double[] temps;
+
+%     private const double NOT_RECORDED = -999;
+
+%     public WeatherStation(string stationName, int daysInMonth)
+%     {
+%         this.stationName = stationName;
+%         this.temps       = new double[daysInMonth];
+%         for (int i = 0; i < temps.Length; i++)
+%             temps[i] = NOT_RECORDED;
+%     }
+
+%     public void RecordTemp(int dayIndex, double temp)
+%     {
+%         if (dayIndex < 0 || dayIndex >= temps.Length)
+%             return;
+%         temps[dayIndex] = temp;
+%     }
+
+%     public double MaxTemp()
+%     {
+%         double max = NOT_RECORDED;
+%         for (int i = 0; i < temps.Length; i++)
+%             if (temps[i] != NOT_RECORDED && temps[i] > max)
+%                 max = temps[i];
+%         return max;
+%     }
+
+%     public double AverageTemp()
+%     {
+%         double sum   = 0;
+%         int    count = 0;
+%         for (int i = 0; i < temps.Length; i++)
+%             if (temps[i] != NOT_RECORDED)
+%             {
+%                 sum += temps[i];
+%                 count++;
+%             }
+%         if (count == 0) return NOT_RECORDED;
+%         return sum / count;
+%     }
+
+%     public int DaysAbove(double threshold)
+%     {
+%         int count = 0;
+%         for (int i = 0; i < temps.Length; i++)
+%             if (temps[i] != NOT_RECORDED && temps[i] > threshold)
+%                 count++;
+%         return count;
+%     }
+% }
+
+% // In Main
+% WeatherStation ws = new WeatherStation("Haifa", 5);
+% ws.RecordTemp(0, 28);
+% ws.RecordTemp(1, 31);
+% ws.RecordTemp(2, 25);
+% ws.RecordTemp(3, 35);
+% ws.RecordTemp(4, 29);
+% Console.WriteLine("Max: "        + ws.MaxTemp());        // 35
+% Console.WriteLine("Average: "    + ws.AverageTemp());    // 29.6
+% Console.WriteLine("Days > 30: "  + ws.DaysAbove(30));    // 2
+% \end{minted}
+% }
+% \end{english}
+% \end{boxSolution}
+% \fi
+% \clearpage
+
+%=============================================================
+%--- سؤال 5 ---
+%=============================================================
+\item \textbf{نظام تصويت}
+
+اكتب فئة \textenglish{Election} تمثل عملية انتخابية.
+تتلقى العملية البناءة مصفوفة أسماء المرشحين \textenglish{string[]}.
+الفئة تخزّن الأسماء وتُنشئ مصفوفة أصوات موازية لها مُهيأة بالصفر.
+على الفئة أن تدعم العمليات التالية:
+
+\begin{itemize}
+  \item \textenglish{Vote(string name) : void} --
+        تُضيف صوتاً واحداً للمرشح الذي اسمه \textenglish{name}.
+        لا تأثير إذا لم يكن الاسم موجوداً في قائمة المرشحين.
+
+  \item \textenglish{GetVotes(string name) : int} --
+        تُعيد عدد أصوات المرشح الذي اسمه \textenglish{name}،
+        أو $-1$ إذا لم يكن الاسم موجوداً.
+
+  \item \textenglish{Winner() : string} --
+        تُعيد اسم المرشح الحاصل على أعلى عدد من الأصوات.
+
+  \item \textenglish{TotalVotes() : int} --
+        تُعيد إجمالي عدد الأصوات التي أُدلي بها.
+\end{itemize}
+
+اكتب في \textenglish{Main} كوداً ينشئ انتخابات بين ثلاثة مرشحين:
+\textenglish{"Ali"}، \textenglish{"Hanan"}، \textenglish{"Omar"}،
+يُدلي بـ 4 أصوات لـ\textenglish{"Ali"}، و6 لـ\textenglish{"Hanan"}، و3 لـ\textenglish{"Omar"}،
+ثم يطبع اسم الفائز وإجمالي الأصوات.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+{\small
+\begin{minted}{csharp}
+class Election
+{
+    private string[] candidates;
+    private int[]    votes;
+
+    public Election(string[] candidates)
+    {
+        this.candidates = candidates;
+        this.votes      = new int[candidates.Length]; // 0 by default
+    }
+
+    private int FindIndex(string name)
+    {
+        for (int i = 0; i < candidates.Length; i++)
+            if (candidates[i] == name) return i;
+        return -1;
+    }
+
+    public void Vote(string name)
+    {
+        int idx = FindIndex(name);
+        if (idx != -1)
+            votes[idx]++;
+    }
+
+    public int GetVotes(string name)
+    {
+        int idx = FindIndex(name);
+        if (idx == -1) return -1;
+        return votes[idx];
+    }
+
+    public string Winner()
+    {
+        int maxIdx = 0;
+        for (int i = 1; i < votes.Length; i++)
+            if (votes[i] > votes[maxIdx])
+                maxIdx = i;
+        return candidates[maxIdx];
+    }
+
+    public int TotalVotes()
+    {
+        int total = 0;
+        for (int i = 0; i < votes.Length; i++)
+            total += votes[i];
+        return total;
+    }
+}
+
+// In Main
+string[]  names = { "Ali", "Hanan", "Omar" };
+Election  elec  = new Election(names);
+
+for (int i = 0; i < 4; i++) elec.Vote("Ali");
+for (int i = 0; i < 6; i++) elec.Vote("Hanan");
+for (int i = 0; i < 3; i++) elec.Vote("Omar");
+
+Console.WriteLine("Winner: "      + elec.Winner());      // Hanan
+Console.WriteLine("Total votes: " + elec.TotalVotes());  // 13
+\end{minted}
+}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1em}
+\begin{flushleft}
+أرجو لكم عملاً ممتعاً!
+
+الأستاذ محمود اغبارية
+\end{flushleft}
+
+\end{document}
