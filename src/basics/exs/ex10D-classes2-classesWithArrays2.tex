@@ -12,83 +12,6 @@
 \maketitle
 \thispagestyle{fancy}
 
-% %=============================================================
-% \section{مثال توضيحي -- حجوزات رحلة طائرة}
-% %=============================================================
-
-% في هذا المثال نُعرِّف فئة \textenglish{Flight} تمثل رحلة جوية.
-% تتلقى العملية البناءة رقم الرحلة وعدد المقاعد، وتُنشئ مصفوفة منطقية بحجم مساوٍ لعدد المقاعد،
-% حيث تعني القيمة \textenglish{false} أن المقعد شاغر، و\textenglish{true} أنه محجوز.
-
-% {\small
-% \begin{boxExample}
-% \begin{english}
-% \begin{minted}{csharp}
-% class Flight
-% {
-%     private int    flightCode;
-%     private bool[] seatsStatus;
-
-%     public Flight(int flightCode, int seatsCount)
-%     {
-%         this.flightCode  = flightCode;
-%         this.seatsStatus = new bool[seatsCount]; // false = available
-%     }
-
-%     public bool BookSeat(int seatIndex)
-%     {
-%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length
-%                           || seatsStatus[seatIndex])
-%             return false;
-%         seatsStatus[seatIndex] = true;
-%         return true;
-%     }
-% \end{minted}
-% \end{english}
-% \end{boxExample}
-% \begin{boxExample}
-% \begin{english}
-% \begin{minted}{csharp}
-%     public bool CancelBooking(int seatIndex)
-%     {
-%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
-%             return false;
-%         seatsStatus[seatIndex] = false;
-%         return true;
-%     }
-
-%     public bool IsSeatBooked(int seatIndex)
-%     {
-%         if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
-%             return false;
-%         return seatsStatus[seatIndex];
-%     }
-
-%     public int AvailableSeats()
-%     {
-%         int count = 0;
-%         for (int i = 0; i < seatsStatus.Length; i++)
-%             if (!seatsStatus[i])
-%                 count++;
-%         return count;
-%     }
-
-%     public int TotalSeats()
-%     {
-%         return seatsStatus.Length;
-%     }
-% }
-% \end{minted}
-% \end{english}
-% \end{boxExample}
-% }
-
-% \clearpage
-
-%=============================================================
-\section{أسئلة}
-%=============================================================
-
 \begin{enumerate}
 
 %=============================================================
@@ -128,9 +51,9 @@
 ثم يطبع عدد الأماكن الفارغة والكلية.
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
-{\small
 \begin{minted}{csharp}
 class Parking
 {
@@ -167,7 +90,12 @@ class Parking
             return false;
         return !spots[spotIndex];
     }
-
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
     public int FreeSpots()
     {
         int count = 0;
@@ -182,17 +110,19 @@ class Parking
     }
 }
 
-// In Main
-Parking p = new Parking(5, 4);
-p.ParkCar(0);
-p.ParkCar(1);
-p.ParkCar(3);
-Console.WriteLine("Free: "  + p.FreeSpots());   // 1
-Console.WriteLine("Total: " + p.TotalSpots());   // 4
-\end{minted}
+public static void Main(string[] args)
+{
+    Parking p = new Parking(5, 4);
+    p.ParkCar(0);
+    p.ParkCar(1);
+    p.ParkCar(3);
+    Console.WriteLine("Free: "  + p.FreeSpots());   // 1
+    Console.WriteLine("Total: " + p.TotalSpots());   // 4
 }
+\end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 \clearpage
 
@@ -230,9 +160,9 @@ Console.WriteLine("Total: " + p.TotalSpots());   // 4
 ثم يطبع معدل الصف وعدد الناجحين.
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
-{\small
 \begin{minted}{csharp}
 class Classroom
 {
@@ -267,7 +197,12 @@ class Classroom
             sum += grades[i];
         return sum / grades.Length;
     }
-
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
     public int PassCount()
     {
         int count = 0;
@@ -282,19 +217,21 @@ class Classroom
     }
 }
 
-// In Main
-Classroom cls = new Classroom(10, 5);
-cls.SetGrade(0, 55);
-cls.SetGrade(1, 70);
-cls.SetGrade(2, 90);
-cls.SetGrade(3, 45);
-cls.SetGrade(4, 80);
-Console.WriteLine("Average: "    + cls.Average());    // 68.0
-Console.WriteLine("Passed: "     + cls.PassCount());  // 3
-\end{minted}
+public static void Main(string[] args)
+{
+    Classroom cls = new Classroom(10, 5);
+    cls.SetGrade(0, 55);
+    cls.SetGrade(1, 70);
+    cls.SetGrade(2, 90);
+    cls.SetGrade(3, 45);
+    cls.SetGrade(4, 80);
+    Console.WriteLine("Average: "    + cls.Average());    // 68.0
+    Console.WriteLine("Passed: "     + cls.PassCount());  // 3
 }
+\end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 \clearpage
 
@@ -335,9 +272,9 @@ Console.WriteLine("Passed: "     + cls.PassCount());  // 3
 ثم يطبع عدد الأنواع التي نفدت وإجمالي الوحدات.
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
-{\small
 \begin{minted}{csharp}
 class Pharmacy
 {
@@ -374,7 +311,12 @@ class Pharmacy
             return -1;
         return stock[medicineIndex];
     }
-
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
     public int OutOfStockCount()
     {
         int count = 0;
@@ -392,128 +334,21 @@ class Pharmacy
     }
 }
 
-// In Main
-Pharmacy ph = new Pharmacy("CityPharm", 3);
-ph.AddStock(0, 20);
-ph.AddStock(2, 15);
-ph.Dispense(0, 8);
-Console.WriteLine("Out of stock: " + ph.OutOfStockCount()); // 1
-Console.WriteLine("Total units: "  + ph.TotalUnits());      // 27
-\end{minted}
+public static void Main(string[] args)
+{
+    Pharmacy ph = new Pharmacy("CityPharm", 3);
+    ph.AddStock(0, 20);
+    ph.AddStock(2, 15);
+    ph.Dispense(0, 8);
+    Console.WriteLine("Out of stock: " + ph.OutOfStockCount()); // 1
+    Console.WriteLine("Total units: "  + ph.TotalUnits());      // 27
 }
+\end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 \clearpage
-
-% %=============================================================
-% %--- سؤال 4 ---
-% %=============================================================
-% \item \textbf{محطة أرصاد جوية}
-
-% اكتب فئة \textenglish{WeatherStation} تمثل محطة رصد مناخي.
-% تتلقى العملية البناءة اسم المحطة (\textenglish{string}) وعدد أيام الشهر (\textenglish{int})،
-% وتُنشئ مصفوفة من نوع \textenglish{double} بنفس الحجم وتُهيئ جميع قيمها بـ\textenglish{-999}
-% للدلالة على أن درجة حرارة ذلك اليوم لم تُسجَّل بعد.
-% على الفئة أن تدعم العمليات التالية:
-
-% \begin{itemize}
-%   \item \textenglish{RecordTemp(int dayIndex, double temp) : void} --
-%         تُسجّل درجة الحرارة \textenglish{temp} لليوم ذي الرقم \textenglish{dayIndex}.
-%         لا تأثير إذا كان الرقم خارج النطاق.
-
-%   \item \textenglish{MaxTemp() : double} --
-%         تُعيد أعلى درجة حرارة مسجّلة في الشهر،
-%         أو \textenglish{-999} إذا لم يُسجَّل أي يوم بعد.
-
-%   \item \textenglish{AverageTemp() : double} --
-%         تُعيد معدل درجات الحرارة للأيام المسجّلة فقط،
-%         أو \textenglish{-999} إذا لم يُسجَّل أي يوم بعد.
-
-%   \item \textenglish{DaysAbove(double threshold) : int} --
-%         تتلقى حداً معيناً وتُعيد عدد الأيام المسجّلة التي تجاوزت درجة حرارتها هذا الحد.
-% \end{itemize}
-
-% اكتب في \textenglish{Main} كوداً ينشئ محطة باسم \textenglish{"Haifa"} لشهر مدته 5 أيام،
-% يُسجّل الدرجات: 28، 31، 25، 35، 29،
-% ثم يطبع أعلى درجة والمعدل وعدد الأيام فوق 30 درجة.
-
-% \ifwithsols
-% \begin{boxSolution}
-% \begin{english}
-% {\small
-% \begin{minted}{csharp}
-% class WeatherStation
-% {
-%     private string   stationName;
-%     private double[] temps;
-
-%     private const double NOT_RECORDED = -999;
-
-%     public WeatherStation(string stationName, int daysInMonth)
-%     {
-%         this.stationName = stationName;
-%         this.temps       = new double[daysInMonth];
-%         for (int i = 0; i < temps.Length; i++)
-%             temps[i] = NOT_RECORDED;
-%     }
-
-%     public void RecordTemp(int dayIndex, double temp)
-%     {
-%         if (dayIndex < 0 || dayIndex >= temps.Length)
-%             return;
-%         temps[dayIndex] = temp;
-%     }
-
-%     public double MaxTemp()
-%     {
-%         double max = NOT_RECORDED;
-%         for (int i = 0; i < temps.Length; i++)
-%             if (temps[i] != NOT_RECORDED && temps[i] > max)
-%                 max = temps[i];
-%         return max;
-%     }
-
-%     public double AverageTemp()
-%     {
-%         double sum   = 0;
-%         int    count = 0;
-%         for (int i = 0; i < temps.Length; i++)
-%             if (temps[i] != NOT_RECORDED)
-%             {
-%                 sum += temps[i];
-%                 count++;
-%             }
-%         if (count == 0) return NOT_RECORDED;
-%         return sum / count;
-%     }
-
-%     public int DaysAbove(double threshold)
-%     {
-%         int count = 0;
-%         for (int i = 0; i < temps.Length; i++)
-%             if (temps[i] != NOT_RECORDED && temps[i] > threshold)
-%                 count++;
-%         return count;
-%     }
-% }
-
-% // In Main
-% WeatherStation ws = new WeatherStation("Haifa", 5);
-% ws.RecordTemp(0, 28);
-% ws.RecordTemp(1, 31);
-% ws.RecordTemp(2, 25);
-% ws.RecordTemp(3, 35);
-% ws.RecordTemp(4, 29);
-% Console.WriteLine("Max: "        + ws.MaxTemp());        // 35
-% Console.WriteLine("Average: "    + ws.AverageTemp());    // 29.6
-% Console.WriteLine("Days > 30: "  + ws.DaysAbove(30));    // 2
-% \end{minted}
-% }
-% \end{english}
-% \end{boxSolution}
-% \fi
-% \clearpage
 
 %=============================================================
 %--- سؤال 5 ---
@@ -547,9 +382,9 @@ Console.WriteLine("Total units: "  + ph.TotalUnits());      // 27
 ثم يطبع اسم الفائز وإجمالي الأصوات.
 
 \ifwithsols
+{\small
 \begin{boxSolution}
 \begin{english}
-{\small
 \begin{minted}{csharp}
 class Election
 {
@@ -591,7 +426,12 @@ class Election
                 maxIdx = i;
         return candidates[maxIdx];
     }
-
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
     public int TotalVotes()
     {
         int total = 0;
@@ -601,20 +441,22 @@ class Election
     }
 }
 
-// In Main
-string[]  names = { "Ali", "Hanan", "Omar" };
-Election  elec  = new Election(names);
+public static void Main(string[] args)
+{
+    string[]  names = { "Ali", "Hanan", "Omar" };
+    Election  elec  = new Election(names);
 
-for (int i = 0; i < 4; i++) elec.Vote("Ali");
-for (int i = 0; i < 6; i++) elec.Vote("Hanan");
-for (int i = 0; i < 3; i++) elec.Vote("Omar");
+    for (int i = 0; i < 4; i++) elec.Vote("Ali");
+    for (int i = 0; i < 6; i++) elec.Vote("Hanan");
+    for (int i = 0; i < 3; i++) elec.Vote("Omar");
 
-Console.WriteLine("Winner: "      + elec.Winner());      // Hanan
-Console.WriteLine("Total votes: " + elec.TotalVotes());  // 13
-\end{minted}
+    Console.WriteLine("Winner: "      + elec.Winner());      // Hanan
+    Console.WriteLine("Total votes: " + elec.TotalVotes());  // 13
 }
+\end{minted}
 \end{english}
 \end{boxSolution}
+}
 \fi
 
 \end{enumerate}

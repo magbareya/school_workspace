@@ -80,6 +80,79 @@ mostExpensive.Print();
 \end{itemize}
 
 \clearpage
+
+%=============================================================
+\subsection{مثال إضافي - حجز مقاعد رحلة طيرات}
+%=============================================================
+
+في هذا المثال نُعرِّف فئة \textenglish{Flight} تمثل رحلة جوية.
+تتلقى العملية البناءة رقم الرحلة وعدد المقاعد، وتُنشئ مصفوفة منطقية بحجم مساوٍ لعدد المقاعد،
+حيث تعني القيمة \textenglish{false} أن المقعد شاغر، و\textenglish{true} أنه محجوز.
+
+{\small
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Flight
+{
+    private int    flightCode;
+    private bool[] seatsStatus;
+
+    public Flight(int flightCode, int seatsCount)
+    {
+        this.flightCode  = flightCode;
+        this.seatsStatus = new bool[seatsCount]; // false = available
+    }
+
+    public bool BookSeat(int seatIndex)
+    {
+        if (seatIndex < 0 || seatIndex >= seatsStatus.Length
+                          || seatsStatus[seatIndex])
+            return false;
+        seatsStatus[seatIndex] = true;
+        return true;
+    }
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+    public bool CancelBooking(int seatIndex)
+    {
+        if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
+            return false;
+        seatsStatus[seatIndex] = false;
+        return true;
+    }
+
+    public bool IsSeatBooked(int seatIndex)
+    {
+        if (seatIndex < 0 || seatIndex >= seatsStatus.Length)
+            return false;
+        return seatsStatus[seatIndex];
+    }
+
+    public int AvailableSeats()
+    {
+        int count = 0;
+        for (int i = 0; i < seatsStatus.Length; i++)
+            if (!seatsStatus[i])
+                count++;
+        return count;
+    }
+
+    public int TotalSeats()
+    {
+        return seatsStatus.Length;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+}
+
+\clearpage
 %=============================================================
 \section{خاصية من نوع مصفوفة داخل فئة}
 %=============================================================
