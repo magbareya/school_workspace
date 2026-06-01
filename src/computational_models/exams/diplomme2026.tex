@@ -90,7 +90,7 @@
 إذا كان الادّعاء صحيحًا - علّلوا لماذا.
 وإذا كان غير صحيح - أعطوا مثالًا يُناقضه.
 \begin{enumerate}[label=(\arabic*)]
-    \item $\overline{L_1} \cap L_2 = \overline{L_1 \cap \overline{L_2}} $
+    \item $(L_1 \cap L_2) \bullet L_3 = (L_1 \bullet L3) \cap (L_2 \bullet L_3)$
     \item $R(L_1 \bullet R(L_1)) = L_1 \bullet R(L_1)$
     \item إذا كانت $L_1 \bullet L_2 = L_1 \bullet L_3$، فإنّ $L_2 = L_3$ بالضرورة.
 \end{enumerate}
@@ -111,9 +111,7 @@ $$L = \{ (ab)^n c^{n+m} a^{2m} \mid n,m \ge 1, m\%2=1 \}$$
 \begin{enumerate}[label=\alph*.]
     \item
 \begin{enumerate}[label=(\arabic*)]
-    \item غير صحيح. مثال: $L_1=\{a\}$، و$L_2=\{b\}$. عندها: \\
-    $\overline{L_1} \cap L_2 = \{b\}$، بينما $\overline{L_1 \cap \overline{L_2}} = \overline{\{a\}}$. \\
-    وهاتان لغتان غير متساويتين. مثلًا: $ab \in \overline{\{a\}}$، بينما $ab \notin \{b\}$.
+    \item صحيح. لأنّ كل كلمة من $(L_1 \cap L_2) \bullet L_3$ هي عبارة عن دمج لكلمة من $L_1 \cap L_2$ مع كلمة من $L_3$. وكذلك كل كلمة من $(L_1 \bullet L3) \cap (L_2 \bullet L_3)$ هي عبارة عن دمج لكلمة من $L_1$ مع كلمة من $L_3$ أو كلمة من $L_2$ مع كلمة من $L_3$.
     \item صحيح. لأنّ $R(X\bullet Y)=R(Y)\bullet R(X)$، وبالتالي
     \[
     R(L_1\bullet R(L_1)) = R(R(L_1)) \bullet R(L_1) = L_1 \bullet R(L_1).
