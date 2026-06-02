@@ -6,21 +6,77 @@
 }%
 
 
-% \ifwithsols
+\ifwithsols
+{\small
 % \begin{boxSolution}[سؤال 2 امتحان 899381b سنة 2021]
-% \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-%     \item // TODO:
-
-% \end{enumerate}
-
 % \begin{boxCode}
 % \begin{english}
 % \begin{minted}{csharp}
-%     // TODO
+% public class PairOfNums
+% {
+%     private int num1;
+%     private int num2;
+
+%     public PairOfNums(int num1, int num2)
+%     {
+%         this.num1 = num1;
+%         this.num2 = num2;
+%     }
+
+%     public bool EndStart()
+%     {
+%         int last1 = this.num1 % 10;
+%         int last2 = this.num2 % 10;
+
+%         int first1 = this.num1;
+%         while (first1 >= 10)
+%         {
+%             first1 /= 10;
+%         }
+
+%         int first2 = this.num2;
+%         while (first2 >= 10)
+%         {
+%             first2 /= 10;
+%         }
+
+%         return (first1 == last2) || (last1 == first2);
+%     }
+% }
 % \end{minted}
 % \end{english}
 % \end{boxCode}
-
 % \end{boxSolution}
-% \clearpage
-% \fi
+
+\begin{boxSolution}[سؤال 2 امتحان 899381b سنة 2021]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Program
+{
+    public static PairOfNums[] Generate(int n)
+    {
+        PairOfNums[] arr = new PairOfNums[n];
+        Random rnd = new Random();
+        int cnt = 0;
+        while (cnt < n)
+        {
+            int n1 = rnd.Next(1, 1001);
+            int n2 = rnd.Next(1, 1001);
+            PairOfNums p = new PairOfNums(n1, n2);
+            if (p.EndStart())
+            {
+                arr[cnt] = p;
+                cnt++;
+            }
+        }
+        return arr;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

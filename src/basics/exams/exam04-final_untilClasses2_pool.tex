@@ -1,0 +1,328 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل اختبار فصلي \\ الصف العاشر 10}
+\else
+\title{اختبار فصلي \\ الصف العاشر 10}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%% 1. متابعة أساسي - 10 علامات
+%% 2. متابعة مصفوفة كائنات + كتابة كود اساسي لتعريفها - 25 علامة
+%% 3. سؤال مصفوفات جيد - 20 علامة
+%% 4. سؤال مصفوفة كائنات - 25 علامة
+%% 5. سؤال فئات جامد - 30 علامة
+
+\section{الفصل الأول}
+\input{../../../bagrut_questions/basics/arrays_2025_899371_1.tex}
+\input{../../../bagrut_questions/basics/classes0_2020_899381b_1.tex}
+% \input{../../../bagrut_questions/basics/loops_for_2008_899222_10.tex}
+% \input{../../../bagrut_questions/basics/loops_for_2010_899222_7.tex}
+
+\section{الفصل الثاني}
+% \input{../../../bagrut_questions/basics/classes0_2017_899222_2.tex}
+\input{../../../bagrut_questions/basics/arrays_2014_899222_10.tex}
+\input{../../../bagrut_questions/basics/classes1_2017_899222_8.tex}
+\input{../../../bagrut_questions/basics/classes2_2017_899222_9.tex}
+% \input{../../../bagrut_questions/basics/classes2_2020_899381b_2.tex}
+
+\end{document}
+
+
+
+% \documentclass[14pt]{extarticle}
+% \input{../../../scripts/tex_preamble.tex}
+
+% \ifwithsols
+% \title{حل اختبار فصلي \\ الصف العاشر 10}
+% \else
+% \title{اختبار فصلي \\ الصف العاشر 10}
+% \fi
+
+% \begin{document}
+
+% \maketitle
+
+% \begin{flushleft}
+%     $02.06.2026$
+% \end{flushleft}
+
+% \ifwithsols
+% \else
+% \begin{boxCode}
+%     \begin{itemize}
+%         \item \textbf{الاختبار مكوّن من فصلين:}
+%         \begin{itemize}
+%             \item \textbf{الفصل الأول:} يحتوي على سؤالين 1 و2 - أجب عن كلا السؤالين.
+%             \item \textbf{الفصل الثاني:} يحتوي على ثلاثة أسئلة 3-5 - أجب عن سؤالين فقط.
+%         \end{itemize}
+%         \item الوقت المخصص: ساعتان.
+%         \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
+%         \item اكتب بقلم حبر فقط، وبخط واضح.
+%         \item الحل على ورقة خارجية، لا تنسَ كتابة اسمك.
+%         \item مرفق ورقة خاصة لتسليم حل السؤالين الأول والثاني (جدول المتابعة)
+%     \end{itemize}
+% \end{boxCode}
+
+% \begin{center}
+%   \includegraphics[width=0.4\textwidth]{../../../images/logoTasamoh.png}
+% \end{center}
+
+% \vspace{2cm}
+% \begin{flushleft}
+%     أرجو لكم التفوّق.
+
+%     الأستاذ محمود اغبارية.
+% \end{flushleft}
+% \clearpage
+% \fi
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section*{الفصل الأول}
+
+% \textbf{السؤال الأول} (15 علامة) \\
+% أمامك العملية \textenglish{What} التالية:
+
+% \begin{boxCode}
+% \begin{english}
+% \begin{minted}{csharp}
+% public static int What(int[] arr)
+% {
+%     int y = 0;
+%     int x = arr[0];
+%     for (int i = 0; i < arr.Length; i++)
+%     {
+%         y += arr[i];
+%         x = Math.Max(x, y);
+%         y = Math.Max(y, 0);
+%     }
+%     return x;
+% }
+% \end{minted}
+% \end{english}
+% \end{boxCode}
+
+% معطاة المصفوفة \textenglish{arr}:
+
+% {\small
+% \begin{english}
+% \begin{center}
+% \renewcommand{\arraystretch}{1.5}
+% \setlength{\tabcolsep}{12pt}
+% \begin{tabular}{c | c | c | c | c | c | c |}
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} \\
+% \cline{2-7}
+% \textenglish{arr} & $3$ & $4$ & $-8$ & $10$ & $-6$ & $8$ \\
+% \cline{2-7}
+% \end{tabular}
+% \end{center}
+% \end{english}
+% }
+
+% \begin{enumerate}
+%     \item تتبّعوا، بواسطة جدول متابعة، العمليّة \textenglish{What(arr)}، واكتبوا ماذا تُعيد العمليّة. \\
+%     يجب أن يشمل جدول المتابعة عمودًا لكلّ واحد من المتغيّرات التّالية: \textenglish{i, y, x}.
+% \end{enumerate}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \clearpage
+% \textbf{السؤال الثاني} (25 علامة) \\
+
+% \noindent
+% \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{../../../bagrut_questions/basics/classes0_2020_899381b_1.png }%
+% }%
+
+% % \item \textbf{السؤال الثاني} \\
+% % أمامك الفئة قلم رصاص \textenglish{Pencil}.
+
+% % \begin{center}
+% % \renewcommand{\arraystretch}{1.5}
+% % \begin{tabular}{|p{9.5cm}|l|}
+% % \hline
+% % \multicolumn{2}{|c|}{\textbf{\textenglish{Pencil}}} \\
+% % \hline
+% % صفة طول القلم & \textenglish{private int length} \\
+% % \hline
+% % صفة قيمتها \textenglish{true} إذا كان القلم مبريًّا، خلاف ذلك قيمتها \textenglish{false}. & \textenglish{private bool sharpened} \\
+% % \hline
+% % عمليّة بنائية تتلقّى قيمًا بالنسبة لكلّ صفات القلم. & \textenglish{public Pencil(int length, bool sharpened)} \\
+% % \hline
+% % عمليّة تتلقّى كائنًا آخر من نمط \textenglish{Pencil} وتُعيد \textenglish{true} إذا كان القلم الحالي أطول من القلم الآخر - \textenglish{other}، خلاف ذلك تُعيد العمليّة \textenglish{false}. \newline افترض أنّ \textenglish{other} ليس \textenglish{null}. & \textenglish{public bool IsLonger(Pencil other)} \\
+% % \hline
+% % عمليّة تُعيد \textenglish{true} إذا كان القلم مبريًّا، خلاف ذلك تُعيد العمليّة \textenglish{false}. & \textenglish{public bool IsSharpened()} \\
+% % \hline
+% % \end{tabular}
+% % \end{center}
+
+% % \begin{enumerate}
+% %     \item طبّق العمليّتين \textenglish{IsLonger} وَ \textenglish{IsSharpened}.
+% %     \item أمامك قطعة برنامج مكتوبة في العمليّة \textenglish{Main} للفئة الرئيسيّة:
+% % \end{enumerate}
+
+% % \begin{boxCode}
+% % \begin{english}
+% % \begin{minted}{csharp}
+% % Pencil pencil1 = new Pencil(12, true);
+% % Pencil pencil2 = new Pencil(13, false);
+
+% % if (pencil1.IsLonger(pencil2) && pencil1.IsSharpened())
+% %     Console.WriteLine("I choose pencil1");
+% % else
+% % {
+% %     if (pencil2.IsSharpened())
+% %         Console.WriteLine("I choose pencil2");
+% %     else
+% %         Console.WriteLine("pencil2 need to be sharpened");
+% % }
+% % \end{minted}
+% % \end{english}
+% % \end{boxCode}
+
+% % تتبّع تنفيذ قطعة البرنامج، واعرض الكائنات التي تكوّنت، واكتب المُخْرَج.
+
+% % \vspace{1cm}
+
+% % % ================= مساحة الكائنات وجدول المتابعة (يمكن نقله لصفحة الإجابات) =================
+% % \textbf{\large الكائنات التي تكوّنت:}
+% % \vspace{3cm} % مساحة فارغة لرسم الكائنات
+
+% % \textbf{\large جدول المتابعة:}
+% % \begin{center}
+% %     \renewcommand{\arraystretch}{1.5}
+% %     \begin{tabular}{|c|c|c|}
+% %         \hline
+% %         \textbf{\textenglish{pencil1.IsLonger(pencil2)}} & \textbf{\textenglish{pencil1.IsSharpened()}} & \textbf{\textenglish{pencil2.IsSharpened()}} \\
+% %         \hline
+% %         \hspace{3.5cm} & \hspace{3.5cm} & \hspace{3.5cm} \\ \hline
+% %          & & \\ \hline
+% %          & & \\ \hline
+% %          & & \\ \hline
+% %     \end{tabular}
+% % \end{center}
+
+% % \vspace{1cm}
+% % \noindent \textbf{\large المُخْرَج (الطباعة):} \underline{\hspace{6cm}}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \clearpage
+% \section*{الفصل الثاني}
+
+% \textbf{السؤال الثالث} (30 علامة) \\
+% يضمّ مجلس إقليميّ معيّن 10 بلدات، يُشار إليها بالأعداد الترتيبيّة من 0 حتّى 9. \\
+% في المجلس الإقليميّ نوعان من التخفيضات في دفع الضرائب:
+% \begin{itemize}
+%     \item إذا كان عدد الأفراد في العائلة أكبر من 6، فإنّها تحصل على تخفيض بقيمة 100 شيكل.
+%     \item إذا كان في العائلة طلّاب ثانويّون، فإنّها تحصل على تخفيض بقيمة 40 شيكل مقابل كلّ طالب ثانويّ.
+% \end{itemize}
+% العائلة التي تستحقّ الحصول على نوعي التخفيضات، تحصل فقط على نوع التخفيض الأعلى من بينهما.
+
+% \begin{enumerate}
+%     \item[\textbf{أ.}] اكتب عمليّة خارجيّة تتلقّى بالنسبة لعائلة معيّنة عدد الأفراد وعدد الطلاب الثانويّين في العائلة. \\
+%     تُعيد العمليّة مبلغ التخفيض الذي تستحقّ هذه العائلة الحصول عليه. إذا كانت العائلة لا تستحقّ الحصول على تخفيض -- تُعيد العمليّة 0.
+
+%     \item[\textbf{ب.}] اكتب عمليّة خارجيّة تتلقّى عدد العائلات في بلدة معيّنة في المجلس الإقليميّ. \\
+%     بالنسبة لكلّ عائلة، تستقبل العمليّة عدد الأفراد وعدد الطلاب الثانويّين فيها. \\
+%     تُعيد العمليّة مجموع كلّ التخفيضات التي مُنِحت في البلدة. \\
+%     عليك استعمال العمليّة التي كتبتها في البند "أ".
+
+%     \item[\textbf{ج.}] معطاة مصفوفة أحادية الأبعاد \textenglish{rdc} بكبَر 10، يحوي كلّ واحد من حدودها المبلغ الذي يخصّصه المجلس الإقليميّ للتخفيضات لبلدة واحدة. على سبيل المثال، الحدّ في المصفوفة الذي مؤشّره 5 يحوي المبلغ الذي خصّصه المجلس الإقليميّ للتخفيضات للبلدة التي عددها الترتيبيّ 5. \\
+%     اكتب برنامجًا (عمليّة رئيسيّة \textenglish{Main}) يستقبل بالنسبة لكلّ بلدة، عدد العائلات التي فيها. \\
+%     يطبع البرنامج الأعداد الترتيبيّة للبلدات التي فيها مجموع التخفيضات التي مُنِحت في البلدة أكبر من المبلغ الذي خصّصه المجلس الإقليميّ للتخفيضات للبلدة. \\
+%     عليك استعمال العمليّة التي كتبتها في البند "ب".
+% \end{enumerate}
+
+% \textbf{\underline{ملاحظات:}}
+% \begin{itemize}[itemsep=0em]
+%     \item لا حاجة لفحص سلامة المدخلات.
+%     \item لا حاجة لاستقبال المصفوفة.
+%     \item لا حاجة لفحص سلامة المصفوفة.
+% \end{itemize}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \clearpage
+% \textbf{السؤال الرابع} (30 علامة) \\
+% % \input{../../../bagrut_questions/basics/classes1_2017_899222_8.tex}
+% أجر العامل الجديد في مصنع معيّن هو 45 شيكلاً في الساعة. العامل الذي أقدميّته في العمل 5 سنوات أو أكثر يُعتبر عاملًا كبيرًا، وأجره هو 55 شيكلاً في الساعة.
+
+% \begin{enumerate}
+%     \item[\textbf{أ.}] تمّ تعريف الفئة \textenglish{Worker}، التي صفاتها:
+%     \begin{itemize}
+%         \item رقم هويّة العامل - \textenglish{id} من نمط صحيح.
+%         \item نوع العامل - \textenglish{senior} من نمط بولياني (\textenglish{true} - إذا كان العامل عاملًا كبيرًا، خلاف ذلك - \textenglish{false}).
+%         \item عدد الساعات التي عملها في الشهر - \textenglish{numHours} من نمط صحيح.
+%     \end{itemize}
+%     اكتب عنوان الفئة \textenglish{Worker} وصفاتها.
+
+%     \item[\textbf{ب.}] اكتب في الفئة \textenglish{Worker} العمليّات التالية:
+%     \begin{enumerate}
+%         \item[\textbf{i.}] عمليّة بنائية تتلقّى رقم هويّة وعدد سنوات الأقدميّة للعامل. تبتدئ العمليّة عدد الساعات التي عملها في الشهر بـ 0، ونوع العامل بحسب عدد سنوات الأقدميّة. \\
+%         في نهاية كلّ شهر يُجري المصنع تحديثًا لعدد ساعات العمل التي عملها العامل خلال الشهر.
+%         \item[\textbf{ii.}] اكتب عمليّة باسم \textenglish{Salary} تحسب وتُعيد الراتب الشهريّ للعامل.
+%         \item[\textbf{iii.}] اكتب عمليّة باسم \textenglish{Print} تعرض كمُخْرَج رقم الهويّة والراتب الشهريّ للعامل.
+%     \end{enumerate}
+%     افترض أنّه تمّ لكلّ صفة تعريف عمليّات \textenglish{Get} وَ \textenglish{Set} .
+
+%     \item[\textbf{ج.}] اكتب في الفئة \textenglish{Program} عمليّة رئيسيّة تستقبل معطيات لـ 251 عاملًا لشهر معيّن. \\
+%     تعرض العمليّة الرئيسيّة كمُخْرَج:
+%     \begin{enumerate}
+%         \item[\textbf{i.}] بالنسبة لكلّ عامل رقم هويّته وراتبه الشهريّ.
+%         \item[\textbf{ii.}] معدّل الرواتب الشهريّة لجميع العاملين.
+%         \item[\textbf{iii.}] عدد العاملين \underline{غير الكبار} الذين تقاضوا راتبًا شهريًّا أعلى من معدّل رواتب جميع العاملين.
+%     \end{enumerate}
+% \end{enumerate}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \clearpage
+% \textbf{السؤال الخامس} (30 علامة)
+% % \input{../../../bagrut_questions/basics/classes2_2017_899222_9.tex}
+
+% معطى عدد صحيح وأكبر من 0. \\
+% \textbf{خَلْط} عدد هو عدد \underline{آخر} بنفس الطول، مكوّن من نفس الأرقام المكوّن منها العدد الحاليّ، لكن بترتيب آخر. عدد مرّات ظهور كلّ رقم في العدد الحاليّ يساوي عدد مرّات ظهور نفس الرقم في العدد الآخر. \\
+% مثال: العدد 21611. \\
+% \textbf{خَلْطان} ممكنان له هما العددان: 62111 ، 12116.
+
+% معطاة الفئة \textenglish{DigitStorage} التي تمثّل عددًا صحيحًا وأكبر من 0. للفئة صفة واحدة: \\
+% مصفوفة \textenglish{count} بكِبَر 10 من نمط صحيح. كلّ خليّة في المصفوفة تحوي عدد مرّات ظهور الرقم في العدد الذي قيمة هذا الرقم فيه مساوية لقيمة مؤشّر (إندكس) الخليّة. \\
+% مثال: بالنسبة للعدد 21611 تبدو المصفوفة \textenglish{count} على النحو التالي:
+
+% {\small
+% \begin{english}
+% \begin{center}
+% \renewcommand{\arraystretch}{1.5}
+% \setlength{\tabcolsep}{10pt}
+% \begin{tabular}{c | c | c | c | c | c | c | c | c | c | c |}
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} \\
+% \cline{2-11}
+% \textenglish{count} & 0 & 3 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+% \cline{2-11}
+% \end{tabular}
+% \end{center}
+% \end{english}
+% }
+% أمامك جزء من الفئة \textenglish{DigitStorage}:
+
+% \begin{english}
+% \begin{minted}{csharp}
+% public class DigitStorage
+% {
+%     private int[] count = new int[10];
+% }
+% \end{minted}
+% \end{english}
+
+% \begin{enumerate}
+%     \item[\textbf{أ.}] اكتب في الفئة \textenglish{DigitStorage}، عمليّة بنائيّة تتلقّى عددًا صحيحًا وأكبر من 0 وتبتدئ المصفوفة \textenglish{count} بحسب ذلك.
+
+%     \item[\textbf{ب.}] اكتب في الفئة \textenglish{DigitStorage}، عمليّة داخليّة تتلقّى كائنًا \textenglish{other} من نمط \\ \textenglish{DigitStorage}. تُعيد العمليّة \textenglish{true} - إذا كان الكائن \textenglish{other} مطابقًا للكائن الحاليّ، خلاف ذلك - تُعيد العمليّة \textenglish{false}.
+
+%     \item[\textbf{ج.}] اكتب عمليّة خارجيّة تتلقّى عددين صحيحين وأكبر من 0 ومختلفين. تُعيد العمليّة \textenglish{true} - إذا كان العددان \textbf{خَلْطَين}، خلاف ذلك - تُعيد العمليّة \textenglish{false}. عليك استعمال العمليّتين اللتين كتبتهما في البندين "أ" وَ "ب".
+% \end{enumerate}
+
+% \end{document}

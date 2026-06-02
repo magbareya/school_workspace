@@ -6,21 +6,91 @@
 }%
 
 
-% \ifwithsols
-% \begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2024]
-% \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-%     \item // TODO:
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2024]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class TourPackage
+{
+    private int id;
+    private int price;
+    private int maxTime;
+    private int maxData;
+    private int extra;
 
-% \end{enumerate}
+    public TourPackage(int id, int price, int maxTime, int maxData)
+    {
+        this.id = id;
+        this.price = price;
+        this.maxTime = maxTime;
+        this.maxData = maxData;
+        this.extra = 0;
+    }
 
-% \begin{boxCode}
-% \begin{english}
-% \begin{minted}{csharp}
-%     // TODO
-% \end{minted}
-% \end{english}
-% \end{boxCode}
+    public void SetExtra(int minutes, int usage)
+    {
+        this.extra = 0;
+        if (minutes > this.maxTime)
+        {
+            this.extra += (minutes - this.maxTime) * 1;
+        }
+        if (usage > this.maxData)
+        {
+            this.extra += (usage - this.maxData) * 2;
+        }
+    }
+    
+    public int GetExtra() { return this.extra; }
+    public int GetId() { return this.id; }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
 
-% \end{boxSolution}
-% \clearpage
-% \fi
+\begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2024 - تكملة]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Program
+{
+    public static int Calculate(TourPackage[] packages)
+    {
+        int count = 0;
+        for (int i = 0; i < packages.Length; i++)
+        {
+            if (packages[i].GetExtra() > 0)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int[] Customers(TourPackage[] packages)
+    {
+        int count = Calculate(packages);
+        int[] result = new int[count];
+        int index = 0;
+        
+        for (int i = 0; i < packages.Length; i++)
+        {
+            if (packages[i].GetExtra() > 0)
+            {
+                result[index] = packages[i].GetId();
+                index++;
+            }
+        }
+        
+        return result;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

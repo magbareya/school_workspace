@@ -6,21 +6,58 @@
 }%
 
 
-% \ifwithsols
-% \begin{boxSolution}[سؤال 2 امتحان 899381a سنة 2016]
-% \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-%     \item // TODO:
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 2 امتحان 899381a سنة 2016]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Actor
+{
+    private string id;
+    private string gender;
+    private int numFilms;
 
-% \end{enumerate}
+    public Actor(string id, string gender, int numFilms)
+    {
+        this.id = id;
+        this.gender = gender;
+        this.numFilms = numFilms;
+    }
 
-% \begin{boxCode}
-% \begin{english}
-% \begin{minted}{csharp}
-%     // TODO
-% \end{minted}
-% \end{english}
-% \end{boxCode}
+    public void AddFilm()
+    {
+        this.numFilms++;
+    }
 
-% \end{boxSolution}
-% \clearpage
-% \fi
+    public int Compare(Actor other)
+    {
+        if (this.numFilms > other.numFilms)
+            return 1;
+        if (this.numFilms < other.numFilms)
+            return 2;
+        return 3;
+    }
+
+    public int GetNumFilms() { return this.numFilms; }
+}
+public class Program
+{
+    public static void PrintActiveActors(Actor[] actArr, int num)
+    {
+        int count = 0;
+        for (int i = 0; i < actArr.Length; i++)
+        {
+            if (actArr[i].GetNumFilms() > num)
+                count++;
+        }
+        Console.WriteLine(count);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

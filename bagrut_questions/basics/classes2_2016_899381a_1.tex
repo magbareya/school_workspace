@@ -6,21 +6,31 @@
 }%
 
 
-% \ifwithsols
-% \begin{boxSolution}[سؤال 1 امتحان 899381a سنة 2016]
-% \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-%     \item // TODO:
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 1 امتحان 899381a سنة 2016]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    private string name;
+    private int[] arrTest = new int[3];
 
-% \end{enumerate}
-
-% \begin{boxCode}
-% \begin{english}
-% \begin{minted}{csharp}
-%     // TODO
-% \end{minted}
-% \end{english}
-% \end{boxCode}
-
-% \end{boxSolution}
-% \clearpage
-% \fi
+    public double GetAverage()
+    {
+        int sum = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            sum += this.arrTest[i];
+        }
+        return (double)sum / 3;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

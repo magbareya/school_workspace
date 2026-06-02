@@ -1,0 +1,58 @@
+\subsection*{سؤال 10 امتحان 899222 سنة 2014}
+\addcontentsline{toc}{subsection}{سؤال 10 امتحان 899222 سنة 2014}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2014_899222_10.jpg }%
+}%
+
+
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 10 امتحان 899222 سنة 2014]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Program
+{
+    public static int Discount(int members, int students)
+    {
+        int d1 = 0;
+        int d2 = students * 40;
+        if (members > 6)
+            d1 = 100;
+        if (d1 > d2)
+            return d1;
+        return d2;
+    }
+
+    public static int TownDiscount(int numFamilies)
+    {
+        int total = 0;
+        for (int i = 0; i < numFamilies; i++)
+        {
+            int members = int.Parse(Console.ReadLine());
+            int students = int.Parse(Console.ReadLine());
+            total += Discount(members, students);
+        }
+        return total;
+    }
+
+    public static void Main(string[] args)
+    {
+        int[] rdc = new int[10];
+        for (int i = 0; i < 10; i++)
+        {
+            int numFamilies = int.Parse(Console.ReadLine());
+            int total = TownDiscount(numFamilies);
+            if (total > rdc[i])
+                Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

@@ -1,0 +1,94 @@
+\subsection*{سؤال 8 امتحان 899222 سنة 2017}
+\addcontentsline{toc}{subsection}{سؤال 8 امتحان 899222 سنة 2017}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/classes1_2017_899222_8.jpg }%
+}%
+
+
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 8 امتحان 899222 سنة 2017]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Worker
+{
+    private int id;
+    private bool senior;
+    private int numHours;
+
+    public Worker(int id, int years)
+    {
+        this.id = id;
+        if (years >= 5)
+            this.senior = true;
+        else
+            this.senior = false;
+        this.numHours = 0;
+    }
+
+    public int Salary()
+    {
+        if (this.senior)
+            return this.numHours * 55;
+        return this.numHours * 45;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine(this.id + " " + this.Salary());
+    }
+    public void SetNumHours(int numHours) { this.numHours = numHours; }
+    public bool GetSenior() { return this.senior; }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\begin{boxSolution}[سؤال 8 امتحان 899222 سنة 2017 - تكملة]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+class Program
+{
+    public static void Main(string[] args)
+    {
+        Worker[] arr = new Worker[251];
+        int sum = 0;
+
+        for (int i = 0; i < 251; i++)
+        {
+            int id = int.Parse(Console.ReadLine());
+            int years = int.Parse(Console.ReadLine());
+            int hours = int.Parse(Console.ReadLine());
+
+            arr[i] = new Worker(id, years);
+            arr[i].SetNumHours(hours);
+
+            arr[i].Print();
+            sum += arr[i].Salary();
+        }
+
+        double avg = (double)sum / 251;
+        Console.WriteLine(avg);
+
+        int count = 0;
+        for (int i = 0; i < 251; i++)
+        {
+            if (!arr[i].GetSenior() && arr[i].Salary() > avg)
+            {
+                count++;
+            }
+        }
+        Console.WriteLine(count);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

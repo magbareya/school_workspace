@@ -1,0 +1,55 @@
+\subsection*{سؤال 9 امتحان 899222 سنة 2017}
+\addcontentsline{toc}{subsection}{سؤال 9 امتحان 899222 سنة 2017}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/classes2_2017_899222_9.jpg }%
+}%
+
+
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 9 امتحان 899222 سنة 2017]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class DigitStorage
+{
+    private int[] count = new int[10];
+
+    public DigitStorage(int num)
+    {
+        while (num > 0)
+        {
+            this.count[num % 10]++;
+            num = num / 10;
+        }
+    }
+
+    public bool IsIdentical(DigitStorage other)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (this.count[i] != other.count[i])
+                return false;
+        }
+        return true;
+    }
+}
+
+class Program
+{
+    public static bool IsMix(int num1, int num2)
+    {
+        DigitStorage d1 = new DigitStorage(num1);
+        DigitStorage d2 = new DigitStorage(num2);
+
+        return d1.IsIdentical(d2);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

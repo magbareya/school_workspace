@@ -6,21 +6,47 @@
 }%
 
 
-% \ifwithsols
-% \begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2023]
-% \begin{enumerate}[itemsep=1.5em, label=\alph*.]
-%     \item // TODO:
+\ifwithsols
+{\small
+\begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2023]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Results
+{
+    private int[] arr;
+    private string name;
 
-% \end{enumerate}
+    public int Deltas(bool isLonger)
+    {
+        int sum = 0;
+        for (int i = 1; i < this.arr.Length; i++)
+        {
+            int diff = this.arr[i] - this.arr[i - 1];
+            if (isLonger && diff > 0)
+            {
+                sum += diff;
+            }
+            else if (!isLonger && diff < 0)
+            {
+                sum += Math.Abs(diff);
+            }
+        }
+        return sum;
+    }
 
-% \begin{boxCode}
-% \begin{english}
-% \begin{minted}{csharp}
-%     // TODO
-% \end{minted}
-% \end{english}
-% \end{boxCode}
-
-% \end{boxSolution}
-% \clearpage
-% \fi
+    public bool Improving()
+    {
+        int improvementSum = Deltas(false);
+        int declineSum = Deltas(true);
+        
+        return improvementSum > declineSum;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+}
+\clearpage
+\fi

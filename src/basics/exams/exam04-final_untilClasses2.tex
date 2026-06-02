@@ -1,0 +1,221 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل اختبار فصلي \\ الصف العاشر 10}
+\else
+\title{اختبار فصلي \\ الصف العاشر 10}
+\fi
+
+\begin{document}
+
+\maketitle
+
+\begin{flushleft}
+    $02.06.2026$
+\end{flushleft}
+
+\ifwithsols
+\else
+\begin{boxCode}
+    \begin{itemize}
+        \item يحتوي الاختبار على 4 أسئلة، \textbf{أجب عنها كلّها} $(4 \times 25 = 100)$.
+        \item الوقت المخصص: ساعتان.
+        \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
+        \item اكتب بقلم حبر فقط، وبخط واضح.
+        \item الحل على ورقة خارجية، لا تنسَ كتابة اسمك.
+    \end{itemize}
+\end{boxCode}
+
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{../../../images/logoTasamoh.png}
+\end{center}
+
+\vspace{2cm}
+\begin{flushleft}
+    أرجو لكم التفوّق.
+
+    الأستاذ محمود اغبارية.
+\end{flushleft}
+\clearpage
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{السؤال الأول}
+أمامك العملية \textenglish{What} التالية:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int What(int[] arr)
+{
+    int y = 0;
+    int x = arr[0];
+    for (int i = 0; i < arr.Length; i++)
+    {
+        y += arr[i];
+        x = Math.Max(x, y);
+        y = Math.Max(y, 0);
+    }
+    return x;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+معطاة المصفوفة \textenglish{arr}:
+
+{\small
+\begin{english}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{c | c | c | c | c | c | c |}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} \\
+\cline{2-7}
+\textenglish{arr} & $3$ & $4$ & $-8$ & $10$ & $-6$ & $8$ \\
+\cline{2-7}
+\end{tabular}
+\end{center}
+\end{english}
+}
+
+تتبّعوا، بواسطة جدول متابعة، العمليّة \textenglish{What(arr)}، واكتبوا ماذا تُعيد العمليّة. \\
+يجب أن يشمل جدول المتابعة عمودًا لكلّ واحد من المتغيّرات التّالية: \textenglish{i, y, x}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection*{السؤال الثاني} (25 علامة) \\
+تُعرّف "\textbf{المصفوفة المتموجة}" بأنها مصفوفة تتناوب فيها حالة الترتيب بين كل حدين متجاورين باستمرار، صعوداً وهبوطاً:
+\begin{itemize}
+  \item إذا بدأت المصفوفة \textbf{بتصاعد} (الحد الأول أصغر من الحد الثاني)، فيجب أن يتبعه \textbf{هبوط} (الحد الثاني أكبر من الثالث)، ثم \textbf{تصاعد} (الثالث أصغر من الرابع)، وهكذا دواليك.
+  \item أما إذا بدأت المصفوفة \textbf{بهبوط} (الحد الأول أكبر من الثاني)، فيجب أن يتبعه \textbf{تصاعد} (الثاني أصغر من الثالث)، ثم \textbf{هبوط} (الثالث أكبر من الرابع)، وهكذا.
+  \item يُمنع وجود حدين متجاورين متساويين، ويُمنع وجود حالتي صعود متتاليتين أو حالتي هبوط متتاليتين.
+\end{itemize}
+
+اكتب عملية خارجية باسم \textenglish{IsWavy}، تتلقى مصفوفة من نمط صحيح \textenglish{arr}.
+وتعيد العملية \textenglish{true} إذا كانت المصفوفة المتلقاة "متموجة"، وخلاف ذلك تعيد \textenglish{false}. \\
+افترض أن كبر المصفوفة هو 3 على الأقل.
+
+\textbf{أمثلة:}
+\begin{itemize}
+  \item بالنسبة للمصفوفة \textenglish{[2, 7, 4, 8, 3, 5]}، تعيد العملية \textenglish{true}.\\
+  \textbf{الشرح:} العلاقة بين الحدود تتناوب باستمرار: تصاعد (2 أصغر من 7)، هبوط (7 أكبر من 4)، تصاعد (4 أصغر من 8)، هبوط، تصاعد.
+
+  \item بالنسبة للمصفوفة \textenglish{[9, 5, 8, 1, 4]}، تعيد العملية \textenglish{true}.\\
+  \textbf{الشرح:} العلاقة بين الحدود تتناوب باستمرار: هبوط (9 أكبر من 5)، تصاعد (5 أصغر من 8)، هبوط، تصاعد.
+
+  \item بالنسبة للمصفوفة \textenglish{[2, 5, 7, 3]}، تعيد العملية \textenglish{false}.\\
+  \textbf{الشرح:} المسار المتموج ينكسر في البداية بسبب وجود حالتي تصاعد متتاليتين (2 أصغر من 5، و 5 أصغر من 7).
+
+  \item بالنسبة للمصفوفة \textenglish{[4, 4, 2, 5]}، تعيد العملية \textenglish{false}.\\
+  \textbf{الشرح:} يوجد حدان متجاوران متساويان (4 و 4).
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection*{السؤال الثالث} (25 علامة)
+
+معطى عدد صحيح وأكبر من 0. \\
+\textbf{خَلْط} عدد هو عدد \underline{آخر} بنفس الطول، مكوّن من نفس الأرقام المكوّن منها العدد الحاليّ، لكن بترتيب آخر. عدد مرّات ظهور كلّ رقم في العدد الحاليّ يساوي عدد مرّات ظهور نفس الرقم في العدد الآخر. \\
+مثال: العدد 21611. \\
+\textbf{خَلْطان} ممكنان له هما العددان: 62111 ، 12116.
+
+معطاة الفئة \textenglish{DigitStorage} التي تمثّل عددًا صحيحًا وأكبر من 0. للفئة صفة واحدة: \\
+مصفوفة \textenglish{count} بكِبَر 10 من نمط صحيح. كلّ خليّة في المصفوفة تحوي عدد مرّات ظهور الرقم في العدد الذي قيمة هذا الرقم فيه مساوية لقيمة مؤشّر (إندكس) الخليّة. \\
+مثال: بالنسبة للعدد 21611 تبدو المصفوفة \textenglish{count} على النحو التالي:
+
+{\small
+\begin{english}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{c | c | c | c | c | c | c | c | c | c | c |}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} \\
+\cline{2-11}
+\textenglish{count} & 0 & 3 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+\cline{2-11}
+\end{tabular}
+\end{center}
+\end{english}
+}
+أمامك جزء من الفئة \textenglish{DigitStorage}:
+
+\begin{english}
+\begin{minted}{csharp}
+public class DigitStorage
+{
+    private int[] count = new int[10];
+}
+\end{minted}
+\end{english}
+
+\begin{enumerate}[label=\textbf{(\Alph*)}]
+    \item اكتب في الفئة \textenglish{DigitStorage}، عمليّة بنائيّة تتلقّى عددًا صحيحًا وأكبر من 0 وتبتدئ المصفوفة \textenglish{count} بحسب ذلك.
+
+    \item اكتب في الفئة \textenglish{DigitStorage}، عمليّة داخليّة تتلقّى كائنًا \textenglish{other} من نمط \\ \textenglish{DigitStorage}. تُعيد العمليّة \textenglish{true} - إذا كان الكائن \textenglish{other} مطابقًا للكائن الحاليّ، خلاف ذلك - تُعيد العمليّة \textenglish{false}.
+
+    \item اكتب عمليّة خارجيّة تتلقّى عددين صحيحين وأكبر من 0 ومختلفين. تُعيد العمليّة \textenglish{true} - إذا كان العددان \textbf{خَلْطَين}، خلاف ذلك - تُعيد العمليّة \textenglish{false}. عليك استعمال العمليّتين اللتين كتبتهما في البندين "أ" وَ "ب".
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection*{السؤال الرابع} (25 علامة + 10 علامات)
+
+أمامك واجهة الفئة \textenglish{Point} التي تمثّل نقطة في هيئة المحاور:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+{\small
+\begin{tabular}{|p{0.5\textwidth}|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{\textenglish{Point}}} \\
+\hline
+صفة تُمثّل الإحداثي $x$ للنقطة في المستوى. & \textenglish{private double x} \\
+\hline
+صفة تُمثّل الإحداثي $y$ للنقطة في المستوى. & \textenglish{private double y} \\
+\hline
+عمليّة بنائيّة تتلقّى قيمًا لجميع صفات الكائن. & \textenglish{public Point(double x, double y)} \\
+\hline
+عمليّة تُعيد قيمة الإحداثي $x$. & \textenglish{public double GetX()} \\
+\hline
+عمليّة تُعيد قيمة الإحداثي $y$. & \textenglish{public double GetY()} \\
+\hline
+عمليّة تتلقّى كائنًا آخر من نمط \textenglish{Point} وتُعيد المسافة بين النقطة الحالية والنقطة الأخرى \textenglish{other}. \newline
+(قانون المسافة: $d = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$) \newline
+افترض أنّ \textenglish{other} ليس \textenglish{null}. & \textenglish{public double GetDistanceFrom(Point other)} \\
+\hline
+عمليّة تتلقّى كائنًا آخر من نمط \textenglish{Point} وتُعيد كائنًا \textbf{جديدًا} من نمط \textenglish{Point} يُمثّل نقطة المنتصف بين النقطة الحالية والنقطة الأخرى \textenglish{other}. \newline
+(قانون نقطة المنتصف: $M = (\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2})$) & \textenglish{public Point GetMiddlePoint(Point other)} \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\begin{enumerate}[label=\textbf{(\Alph*)}]
+    \item اكتب تطبيقًا كاملاً للفئة \textenglish{Point}:
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item اكتب تعريف الفئة مع الخصائص \textenglish{x} وَ \textenglish{y}.
+    \item العمليّة البنائيّة وعمليّتي \textenglish{GetX} وَ \textenglish{GetY}.
+    \item العمليّة \textenglish{GetDistanceFrom}.
+    \item العمليّة \textenglish{GetMiddlePoint}.
+\end{enumerate}
+\begin{flushleft}
+    انتبه: تكملة السؤال في الصفحة التالية
+\end{flushleft}
+\clearpage
+\item اكتب عمليّة خارجية باسم \textenglish{GetMostRightPoint} تتلقى مصفوفة من نوع \textenglish{Point[]}.
+تعيد العملية مؤشرًا من نوع \textenglish{Point} يُشير إلى النقطة الموجودة في أقصى اليمين في المستوى من بين النقاط التي في المصفوفة (أي النقطة التي لها أكبر إحداثي $x$ في المصفوفة).
+
+% باسم \textenglish{IsValidTriangle}، تتلقى مصفوفة من نوع \textenglish{Point[]} تحتوي على ثلاث نقاط (أي بحجم 3).
+%     تُعيد العملية \textenglish{true} إذا كانت هذه النقاط الثلاث يمكن أن تشكل رؤوس مثلث في المستوى، وخلاف ذلك تعيد \textenglish{false}.\\
+%     تذكير رياضي: تشكل ثلاث نقاط مثلثاً إذا كان مجموع طولي أي ضلعين فيه أكبر من طول الضلع الثالث ($a+b>c$ وَ $a+c>b$ وَ $b+c>a$).
+
+\item \textbf{(بونوس 10 علامات)} عمليّة باسم \textenglish{FindClosestPair}، تتلقى مصفوفة من نوع \textenglish{Point[]}.
+    تقوم العملية بإيجاد أقرب نقطتين على بعضهما البعض في المصفوفة، وتطبع إحداثياتهما على الشاشة. \\
+    افترض أن المصفوفة تحتوي على نقطتين على الأقل. \\
+    \textbf{تلميح:} عليك استخدام حلقتين متداخلتين.
+
+\end{enumerate}
+
+\end{document}
