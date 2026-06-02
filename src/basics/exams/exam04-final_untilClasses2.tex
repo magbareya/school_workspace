@@ -83,9 +83,36 @@ public static int What(int[] arr)
 تتبّعوا، بواسطة جدول متابعة، العمليّة \textenglish{What(arr)}، واكتبوا ماذا تُعيد العمليّة. \\
 يجب أن يشمل جدول المتابعة عمودًا لكلّ واحد من المتغيّرات التّالية: \textenglish{i, y, x}.
 
+\ifwithsols
+\begin{boxSolution}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textenglish{i} & \textenglish{y} & \textenglish{x} \\
+\hline
+ & 0 & 3 \\
+\hline
+0 & 3 & 3 \\
+\hline
+1 & 7 & 7 \\
+\hline
+2 & 0 & 7 \\
+\hline
+3 & 10 & 10 \\
+\hline
+4 & 4 & 10 \\
+\hline
+5 & 12 & 12 \\
+\hline
+\end{tabular}
+\vspace{1em} \\
+\textbf{تعيد العملية:} \textenglish{12}
+\end{boxSolution}
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\subsection*{السؤال الثاني} (25 علامة) \\
+\subsection*{السؤال الثاني}
 تُعرّف "\textbf{المصفوفة المتموجة}" بأنها مصفوفة تتناوب فيها حالة الترتيب بين كل حدين متجاورين باستمرار، صعوداً وهبوطاً:
 \begin{itemize}
   \item إذا بدأت المصفوفة \textbf{بتصاعد} (الحد الأول أصغر من الحد الثاني)، فيجب أن يتبعه \textbf{هبوط} (الحد الثاني أكبر من الثالث)، ثم \textbf{تصاعد} (الثالث أصغر من الرابع)، وهكذا دواليك.
@@ -112,9 +139,64 @@ public static int What(int[] arr)
   \textbf{الشرح:} يوجد حدان متجاوران متساويان (4 و 4).
 \end{itemize}
 
+\ifwithsols
+يمكن حل هذا السؤال بعدة طرق، لأنّه يمكن التعبير عن الشرط المطلوب بعدة طرق مكافئة
+\begin{boxSolution}[الطريقة الأولى]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsWavy(int[] arr)
+{
+    if (arr[0] == arr[1])
+        return false;
+
+    bool isGoingUp = arr[0] < arr[1];
+
+    for (int i = 1; i < arr.Length - 1; i++)
+    {
+        if (isGoingUp)
+        {
+            if (arr[i] <= arr[i+1])
+                return false;
+            isGoingUp = false;
+        }
+        else
+        {
+            if (arr[i] >= arr[i+1])
+                return false;
+            isGoingUp = true;
+        }
+    }
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[الطريقة الثانية]
+    يمكننا التأكد من الشرط المطلوب عن طريق التأكد أنّه لا يوجد حد معين أصغر من جاريه أو أكبر من جارَيه المجاورين. \\
+    أو بكلمات أخرى: لا يوجد 3 حدود متتالية تمثل متوالية تصاعدية أو تنازلية. \\
+    انتبه لحدود $i$ في الحلقة.
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsWavy(int[] arr)
+{
+    for (int i = 1; i < arr.Length - 1; i++)
+    {
+        if ((arr[i] >= arr[i - 1] && arr[i+1] >= arr[i]) ||
+            (arr[i] <= arr[i - 1] && arr[i+1] <= arr[i]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\subsection*{السؤال الثالث} (25 علامة)
+\subsection*{السؤال الثالث}
 
 معطى عدد صحيح وأكبر من 0. \\
 \textbf{خَلْط} عدد هو عدد \underline{آخر} بنفس الطول، مكوّن من نفس الأرقام المكوّن منها العدد الحاليّ، لكن بترتيب آخر. عدد مرّات ظهور كلّ رقم في العدد الحاليّ يساوي عدد مرّات ظهور نفس الرقم في العدد الآخر. \\
@@ -158,9 +240,53 @@ public class DigitStorage
     \item اكتب عمليّة خارجيّة تتلقّى عددين صحيحين وأكبر من 0 ومختلفين. تُعيد العمليّة \textenglish{true} - إذا كان العددان \textbf{خَلْطَين}، خلاف ذلك - تُعيد العمليّة \textenglish{false}. عليك استعمال العمليّتين اللتين كتبتهما في البندين "أ" وَ "ب".
 \end{enumerate}
 
+\ifwithsols
+{\small
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+class DigitStorage
+{
+    private int[] count = new int[10];
+
+    // A
+    public DigitStorage(int n)
+    {
+        while (n > 0)
+        {
+            this.count[n % 10]++;
+            n /= 10;
+        }
+    }
+
+    // B
+    public bool IsIdentical(DigitStorage other)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (this.count[i] != other.count[i])
+                return false;
+        }
+        return true;
+    }
+}
+
+// C
+public static bool IsPermutation(int n1, int n2)
+{
+    DigitStorage ds1 = new DigitStorage(n1);
+    DigitStorage ds2 = new DigitStorage(n2);
+    return ds1.IsIdentical(ds2);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+}
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\subsection*{السؤال الرابع} (25 علامة + 10 علامات)
+\subsection*{السؤال الرابع}
 
 أمامك واجهة الفئة \textenglish{Point} التي تمثّل نقطة في هيئة المحاور:
 
@@ -217,5 +343,92 @@ public class DigitStorage
     \textbf{تلميح:} عليك استخدام حلقتين متداخلتين.
 
 \end{enumerate}
+
+\ifwithsols
+{\small
+\begin{boxSolution}[فرع أ]
+\begin{english}
+\begin{minted}{csharp}
+public class Point
+{
+    private double x;
+    private double y;
+
+    public Point(double x, double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double GetX()
+    {
+        return this.x;
+    }
+
+    public double GetY()
+    {
+        return this.y;
+    }
+
+    public double GetDistanceFrom(Point other)
+    {
+        return Math.Sqrt(Math.Pow(this.GetX() - other.GetX(), 2)
+                       + Math.Pow(this.GetY() - other.GetY(), 2));
+    }
+
+    public Point GetMiddlePoint(Point other)
+    {
+        double midX = (this.GetX() + other.GetX()) / 2;
+        double midY = (this.GetY() + other.GetY()) / 2;
+        Point middlePoint = new Point(midX, midY);
+        return middlePoint;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\begin{boxSolution}[فرع ب + ج]
+\begin{english}
+\begin{minted}{csharp}
+// B
+public static Point GetMostRightPoint(Point[] arr)
+{
+    Point max = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i].GetX() > max.GetX())
+            max = arr[i];
+    }
+    return max;
+}
+
+// Bonus
+public static void FindClosestPair(Point[] arr)
+{
+    double minDistance = double.MaxValue;
+    Point p1 = null;
+    Point p2 = null;
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = i + 1; j < arr.Length; j++)
+        {
+            double dist = arr[i].GetDistanceFrom(arr[j]);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                p1 = arr[i];
+                p2 = arr[j];
+            }
+        }
+    }
+    Console.WriteLine($"({p1.GetX()}, {p1.GetY()}) and ({p2.GetX()}, {p2.GetY()})");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+}
+\fi
 
 \end{document}
