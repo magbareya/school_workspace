@@ -1,5 +1,6 @@
 *.cs
 *.qodo
+.kilo/
 *.vscode
 *.log
 *.fls

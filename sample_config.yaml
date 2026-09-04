@@ -1,0 +1,49 @@
+# Configuration file for custom Bagrut question documents.
+# 
+# Available Document Options:
+# - filename: Name of the generated .tex file (without extension)
+# - title: The title that will appear in the document
+# - subject: The subject folder (e.g., "computational_models", "basics")
+# - sort: "year" (default), "question", "model", "exam", or "random"
+# - group_by: Create sections grouped by "year", "model", or "topic"
+# - limit: Maximum number of questions to include (useful with random)
+#
+# Available Filters (under the 'filters' section):
+# - min_year: Minimum year (e.g., 2015)
+# - max_year: Maximum year (e.g., 2023)
+# - years: List of specific years to include (e.g., [2021, 2022])
+# - exclude_years: List of specific years to exclude
+# - models: List of specific exam models (e.g., ["899381", "899382"])
+# - topics: List of specific topics to include (e.g., ["automata", "turing_machines"])
+# - exclude_topics: List of topics to exclude
+# - has_solution: true or false
+# - is_used: true or false (if you track usage in your index)
+
+documents:
+  - filename: "sample_random_exam"
+    title: "أسئلة عشوائية"
+    subject: "computational_models"
+    filters:
+      min_year: 2018
+    sort: "random"
+    limit: 3
+
+  - filename: "sample_grouped"
+    title: "مجمعة حسب الموديل"
+    subject: "basics"
+    sort: "year"
+    group_by: "model"
+
+  - filename: "comprehensive_example"
+    title: "امتحان شامل مع خيارات متعددة"
+    subject: "computational_models"
+    sort: "exam"
+    group_by: "topic"
+    limit: 10
+    filters:
+      min_year: 2015
+      max_year: 2023
+      exclude_years: [2020]
+      models: ["899381", "899382"]
+      has_solution: true
+      exclude_topics: ["context_free_grammar"]

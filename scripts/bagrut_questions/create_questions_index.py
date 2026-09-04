@@ -3,6 +3,13 @@ import csv
 import glob
 import sys
 import argparse
+import random
+import json
+
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 """
 Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
@@ -56,11 +63,16 @@ AGGREGATE_TITLES = {
 
 def sort_questions_list(questions, sort_key):
     """Sort questions by the selected strategy."""
-    if sort_key == "year":
+    if sort_key == "random":
+        shuffled = list(questions)
+        random.shuffle(shuffled)
+        return shuffled
+    if sort_key == "exam" or sort_key == "year":
         return sorted(questions, key=lambda x: (x[0], x[1], x[2]))  # year, model, qnum
     if sort_key == "question":
         return sorted(questions, key=lambda x: (x[2], x[0], x[1]))  # qnum, year, model
     return sorted(questions, key=lambda x: (x[1], x[0], x[2]))  # model, year, qnum
+
 
 
 def topic_title_ar(folder, topic):
@@ -125,6 +137,141 @@ def build_aggregate_tex(folder, folder_topics):
 
 \\end{{document}}
 """
+
+
+def load_config(config_path):
+    with open(config_path, 'r', encoding='utf-8') as f:
+        if config_path.endswith('.yaml') or config_path.endswith('.yml'):
+            if yaml is None:
+                raise ImportError("PyYAML is not installed. Please install it or use JSON.")
+            return yaml.safe_load(f)
+        return json.load(f)
+
+
+def filter_questions(rows_data, filters):
+    filtered = []
+    for row in rows_data:
+        folder, topic, model, year_str, qnum, has_sol, is_used_val, file_path, ext = row
+        
+        # Only include questions that have a .tex file
+        tex_file = f"{os.path.splitext(file_path)[0]}.tex"
+        if not os.path.exists(tex_file):
+            continue
+
+        try:
+            year_int = int(year_str) if year_str.isdigit() else None
+        except ValueError:
+            year_int = None
+
+        if "min_year" in filters and year_int is not None and year_int < filters["min_year"]:
+            continue
+        if "max_year" in filters and year_int is not None and year_int > filters["max_year"]:
+            continue
+        if "years" in filters and year_int not in filters["years"] and year_str not in [str(y) for y in filters["years"]]:
+            continue
+        if "models" in filters and model not in [str(m) for m in filters["models"]]:
+            continue
+        if "topics" in filters and topic not in filters["topics"]:
+            continue
+        if "exclude_topics" in filters and topic in filters["exclude_topics"]:
+            continue
+        if "exclude_years" in filters and (year_int in filters["exclude_years"] or year_str in [str(y) for y in filters["exclude_years"]]):
+            continue
+        if "has_solution" in filters and has_sol != filters["has_solution"]:
+            continue
+        if "is_used" in filters and is_used_val != filters["is_used"]:
+            continue
+
+        filtered.append(row)
+    return filtered
+
+
+def build_custom_document(subject, doc_config, filtered_rows):
+    filename = doc_config.get("filename", "custom_document")
+    title = doc_config.get("title", "أسئلة بجروت مخصصة")
+    sort_strategy = doc_config.get("sort", "year")
+    group_by = doc_config.get("group_by") # "year", "model", "topic"
+    limit = doc_config.get("limit")
+
+    if sort_strategy == "exam" or sort_strategy == "year":
+        sort_key = lambda x: (x[3], x[2], x[4]) # year, model, qnum
+    elif sort_strategy == "question":
+        sort_key = lambda x: (x[4], x[3], x[2]) # qnum, year, model
+    elif sort_strategy == "model":
+        sort_key = lambda x: (x[2], x[3], x[4]) # model, year, qnum
+    else: # default year
+        sort_key = lambda x: (x[3], x[2], x[4])
+        
+    if sort_strategy == "random":
+        random.shuffle(filtered_rows)
+    else:
+        filtered_rows.sort(key=sort_key)
+        
+    if limit is not None:
+        filtered_rows = filtered_rows[:limit]
+        
+    sections = []
+    
+    if group_by:
+        from collections import defaultdict
+        grouped = defaultdict(list)
+        for row in filtered_rows:
+            if group_by == "year":
+                key = row[3]
+            elif group_by == "model":
+                key = row[2]
+            elif group_by == "topic":
+                key = topic_title_ar(subject, row[1])
+            else:
+                key = "Group"
+            grouped[key].append(row)
+            
+        for key, rows in grouped.items():
+            lines = [f"\\clearpage", f"\\section{{{key}}}"]
+            for r in rows:
+                folder = r[0]
+                stem = os.path.splitext(os.path.basename(r[7]))[0]
+                lines.append(f"\\input{{../../../bagrut_questions/{folder}/{stem}.tex}}")
+            sections.append("\n".join(lines))
+    else:
+        lines = []
+        for r in filtered_rows:
+            folder = r[0]
+            stem = os.path.splitext(os.path.basename(r[7]))[0]
+            lines.append(f"\\input{{../../../bagrut_questions/{folder}/{stem}.tex}}")
+        sections.append("\n".join(lines))
+
+    sections_content = "\n\n".join(sections)
+
+    content = f"""\\documentclass[12pt]{{article}}
+\\input{{../../../scripts/tex_preamble.tex}}
+
+\\ifwithsols
+\\title{{حل {title}}}
+\\else
+\\title{{{title}}}
+\\fi
+
+\\begin{{document}}
+
+\\maketitle
+\\renewcommand{{\\contentsname}}{{جدول المحتويات}}
+\\tableofcontents
+\\clearpage
+
+{sections_content}
+
+\\end{{document}}
+"""
+
+    output_dir = os.path.join(SRC_DIR, subject, "bagrut_questions", "custom")
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, f"{filename}.tex")
+    
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(content)
+    
+    print(f"  Generated custom document: {output_file} ({len(filtered_rows)} questions)")
 
 
 def has_solution(pdf_path):
@@ -245,11 +392,25 @@ def main():
     )
     parser.add_argument(
         "--sort",
-        choices=["year", "question", "model"],
+        choices=["year", "question", "model", "exam", "random"],
         default="year",
         help="Sorting strategy for questions in topic.tex files (default: year)"
     )
+    parser.add_argument(
+        "--config",
+        help="Path to YAML/JSON configuration file for custom documents."
+    )
     args = parser.parse_args()
+
+    config_docs = []
+    if args.config:
+        try:
+            config_data = load_config(args.config)
+            config_docs = config_data.get("documents", [])
+            print(f"Loaded {len(config_docs)} document configuration(s) from {args.config}")
+        except Exception as e:
+            print(f"Error loading config file: {e}")
+            return
 
     # Find all subject directories in bagrut_questions/
     questions_base_dir = "bagrut_questions"
@@ -406,6 +567,15 @@ def main():
                 f.write(aggregate_content)
 
             print(f"  Generated aggregate file: {aggregate_path}")
+
+        # Generate custom documents from config for this subject
+        subject_docs = [doc for doc in config_docs if doc.get("subject") == subject or not doc.get("subject")]
+        for doc_config in subject_docs:
+            filtered_rows = filter_questions(rows_data, doc_config.get("filters", {}))
+            if not filtered_rows:
+                print(f"  Warning: No questions matched filters for custom document '{doc_config.get('filename', 'custom')}' in subject {subject}")
+                continue
+            build_custom_document(subject, doc_config, filtered_rows)
 
         print(f"[OK] Completed processing for subject: {subject}\n")
 
