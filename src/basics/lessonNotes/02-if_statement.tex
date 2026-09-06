@@ -1,0 +1,194 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{تعليم جملة الشرط \textenglish{if} في \textenglish{C\#}}
+
+\begin{document}
+\maketitle
+
+\section{المتغير المنطقي \textenglish{bool} والقيم \textenglish{True} / \textenglish{False}}
+
+في لغة \textenglish{C\#}، النوع \textbf{\textenglish{bool}} يُستخدم لتخزين قيمتين فقط:
+\begin{itemize}
+    \item \textbf{\textenglish{true}} (صحيح)
+    \item \textbf{\textenglish{false}} (خاطئ)
+\end{itemize}
+
+هذه القيم تُستخدم في القرارات الشرطية. مثال:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+bool isRaining = true;
+bool hasUmbrella = false;
+
+Console.WriteLine(isRaining);   // True
+Console.WriteLine(hasUmbrella); // False
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{العمليات البوليانية (المقارنات)}
+
+يمكننا استخدام المقارنات المنطقية لإنتاج قيم \textbf{\textenglish{bool}}:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+العملية & المعنى & مثال & النتيجة \\
+\hline
+\textenglish{>} & أكبر من & \textenglish{5 > 3} & \textenglish{true} \\
+\hline
+\textenglish{<} & أصغر من & \textenglish{2 < 1} & \textenglish{false} \\
+\hline
+\textenglish{==} & يساوي & \textenglish{4 == 4} & \textenglish{true} \\
+\hline
+\textenglish{!=} & لا يساوي & \textenglish{7 != 5} & \textenglish{true} \\
+\hline
+\textenglish{>=} & أكبر أو يساوي & \textenglish{5 >= 5} & \textenglish{true} \\
+\hline
+\textenglish{<=} & أصغر أو يساوي & \textenglish{3 <= 2} & \textenglish{false} \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{جملة \textenglish{if-else} الكاملة بالأقواس}
+
+نستخدم \textbf{\textenglish{if}} لاتخاذ قرار عندما يكون الشرط صحيحًا (\textbf{\textenglish{true}}). ويمكننا استخدام \textbf{\textenglish{else}} لتنفيذ كود آخر إذا كان الشرط خاطئًا (\textbf{\textenglish{false}}).
+
+الصيغة العامة:
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+if (condition)
+{
+    // Code executed if the condition is true
+}
+else
+{
+    // Code executed if the condition is false
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+int age = 20;
+
+if (age >= 18)
+{
+    Console.WriteLine("You are allowed to enter.");
+}
+else
+{
+    Console.WriteLine("You must be over 18.");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\section{يمكن حذف \textenglish{else} إذا كانت فارغة}
+
+ليس من الضروري دائمًا استخدام \textbf{\textenglish{else}}. إذا لم يكن هناك شيء نريد فعله عندما يكون الشرط خاطئًا، يمكننا ببساطة حذفها:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+bool isStudent = true;
+
+if (isStudent)
+{
+    Console.WriteLine("Welcome, student!");
+}
+// No need for else here
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\section{العمليات المنطقية \textenglish{\&\&} و \textenglish{||}}
+
+\begin{itemize}
+    \item \textbf{\textenglish{\&\&}} تعني (و): الشرطان يجب أن يكونا \textbf{صحيحين} معًا.
+    \item \textbf{\textenglish{||}} تعني (أو): يكفي أن يكون \textbf{واحد} من الشرطين صحيحًا.
+\end{itemize}
+
+أمثلة:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+bool hasTicket = true;
+bool isVIP = false;
+
+// Example of &&
+if (hasTicket && isVIP)
+{
+    Console.WriteLine("Welcome to the VIP seat!");
+}
+else
+{
+    Console.WriteLine("Regular seat.");
+}
+
+// Example of ||
+bool hasInvitation = false;
+
+if (hasTicket || hasInvitation)
+{
+    Console.WriteLine("You can enter the party.");
+}
+else
+{
+    Console.WriteLine("Entry is not allowed without a ticket or invitation.");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\section{الجمل الشرطية المتداخلة (\textenglish{Nested if statements})}
+
+يمكننا وضع \textbf{\textenglish{if}} داخل \textbf{\textenglish{if}} أخرى عندما نحتاج التحقق من أكثر من شرط بطريقة متسلسلة.
+
+مثال:
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+int score = 85;
+
+if (score >= 50)
+{
+    Console.WriteLine("Passed.");
+
+    if (score >= 90)
+    {
+        Console.WriteLine("Excellent!");
+    }
+    else if (score >= 75)
+    {
+        Console.WriteLine("Very good.");
+    }
+    else
+    {
+        Console.WriteLine("Good.");
+    }
+}
+else
+{
+    Console.WriteLine("Failed.");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\section{خلاصة}
+\begin{itemize}
+    \item \textbf{\textenglish{bool}} نوع لتخزين القيم المنطقية (\textenglish{true/false})
+    \item \textbf{\textenglish{if-else}} تُستخدم لاتخاذ قرارات في الكود
+    \item يمكن حذف \textbf{\textenglish{else}} إذا لم نكن بحاجة إليها
+    \item نستخدم \textbf{\textenglish{\&\&}} (و) و \textbf{\textenglish{||}} (أو) للجمع بين أكثر من شرط
+    \item يمكن تداخل الجمل الشرطية لمعالجة حالات متعددة بشكل متسلسل
+\end{itemize}
+\end{document}
