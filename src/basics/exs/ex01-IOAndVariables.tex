@@ -1,74 +1,368 @@
-﻿\documentclass[14pt]{extarticle}
+\documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
+\ifwithsols
+\title{حل ورقة تمرن 1 للصف العاشر 10}
+\else
 \title{ورقة تمرن 1 للصف العاشر 10}
+\fi
 
 \begin{document}
 
 \maketitle
 \thispagestyle{fancy}
 
-\begin{enumerate}
+\begin{enumerate}[itemsep=2em]
 
-\item
-اكتب برنامجًا يستقبل من المستخدم أطوال أضلاع مثلث ويطبع له محيط المثلث. \\
-(محيط المثلث = مجموع أطوال الأضلاع)
+    % ------------------------------------------------------
+    % 1. [New] Read and print
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم رقمًا صحيحًا، ويطبع له نفس الرقم الذي أدخله. \\
+    \textbf{مثال:} إذا أدخل المستخدم $5$، يطبع البرنامج $5$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+Console.WriteLine(num);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 2. [New] Multiply by 2
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم رقمًا، ويطبع له ضعف هذا الرقم (أي الرقم مضروبًا بـ 2). \\
+    \textbf{مثال:} إذا أدخل المستخدم $4$، يطبع البرنامج $8$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+Console.WriteLine(num * 2);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 3. [New] Previous and Next
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم رقمًا صحيحًا، ويطبع له العدد الذي يسبقه والعدد الذي يليه. \\
+    \textbf{مثال:} إذا أدخل المستخدم $10$، يطبع البرنامج $9$ ثم $11$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+Console.WriteLine(num - 1);
+Console.WriteLine(num + 1);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 4. [New] Square
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم رقمًا، ويطبع له مربّع هذا الرقم (أي الرقم مضروبًا بنفسه). \\
+    \textbf{مثال:} إذا أدخل المستخدم $5$، يطبع البرنامج $25$.
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+Console.WriteLine(num * num);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+
+    % ------------------------------------------------------
+    % 5. [Old] Triangle Perimeter
+    % ------------------------------------------------------
+    \item
+    اكتب برنامجًا يستقبل من المستخدم أطوال أضلاع مثلث ويطبع له محيط المثلث. \\
+    (محيط المثلث = مجموع أطوال الأضلاع)
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+Console.WriteLine(a + b + c);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم طول ضلع مربّع ويطبع له مساحة المربّع ومحيطه.
 $$ \text{Area} = side ^ 2 $$
 $$ \text{Perimeter} = 4 \cdot side $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int side = int.Parse(Console.ReadLine());
+int area = side * side;
+int perimeter = 4 * side;
+Console.WriteLine(area);
+Console.WriteLine(perimeter);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجا يستقبل من المستخدم طول قاعدة المثلث والارتفاع ويطبع له مساحة المثلث.
 $$ \text{Area} = width \cdot height $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int width = int.Parse(Console.ReadLine());
+int height = int.Parse(Console.ReadLine());
+int area = width * height;
+Console.WriteLine(area);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم طول مستطيل وعرضه ويطبع له مساحة المستطيل ومحيطه.
 $$ \text{Area} = width \cdot height $$
 $$ \text{Perimeter} = 2 \cdot width + 2 \cdot height $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int width = int.Parse(Console.ReadLine());
+int height = int.Parse(Console.ReadLine());
+int area = width * height;
+int perimeter = 2 * width + 2 * height;
+Console.WriteLine(area);
+Console.WriteLine(perimeter);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم طول نصف قطر دائرة، ويطبع له محيطها ومساحتها.
 $$ \text{Area} = 3.14 \cdot r^2 $$
 $$ \text{Perimeter} = 2 \cdot 3.14 \cdot r $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int r = int.Parse(Console.ReadLine());
+double area = 3.14 * r * r;
+double perimeter = 2 * 3.14 * r;
+Console.WriteLine(area);
+Console.WriteLine(perimeter);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم علامات 3 مواضيع: اللغة العربية، الرياضيات والحاسوب، ويطبع له معدّل العلامات الثلاث.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int arabic = int.Parse(Console.ReadLine());
+int math = int.Parse(Console.ReadLine());
+int cs = int.Parse(Console.ReadLine());
+double average = (arabic + math + cs) / 3.0;
+Console.WriteLine(average);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم علامات 3 مواضيع: اللغة العربية، الرياضيات والحاسوب، ثم يستقبل منه عدد الوحدات لكل موضوع، ويطبع له معدّل العلامات الثلاث.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int arabic = int.Parse(Console.ReadLine());
+int math = int.Parse(Console.ReadLine());
+int cs = int.Parse(Console.ReadLine());
+
+int unitsArabic = int.Parse(Console.ReadLine());
+int unitsMath = int.Parse(Console.ReadLine());
+int unitsCs = int.Parse(Console.ReadLine());
+
+int totalGrades = arabic * unitsArabic + math * unitsMath + cs * unitsCs;
+int totalUnits = unitsArabic + unitsMath + unitsCs;
+double average = (double)totalGrades / totalUnits;
+Console.WriteLine(average);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم طوله بالمتر، ووزنه بالكغم، ويحسب له درجة الـ BMI حسب المعادلة التالية:
 $$ \text{BMI} = \frac{weight}{height^2} $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double height = double.Parse(Console.ReadLine());
+int weight = int.Parse(Console.ReadLine());
+double bmi = weight / (height * height);
+Console.WriteLine(bmi);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة بالدرجة المئوية، ويطبع له الدرجة بالفهرنهايت وبالكلفن حسب المعادلات التالية:
 $$ F = \frac{9}{5} \times C + 32 $$
 $$ K = C + 273.15 $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int c = int.Parse(Console.ReadLine());
+double f = (9.0 / 5.0) * c + 32;
+double k = c + 273.15;
+Console.WriteLine(f);
+Console.WriteLine(k);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة بالفهرنهايت، ويطبع له الدرجة بالدرجة المئوية حسب المعادلة التالية:
 $$ C = \frac{5}{9} \times (F - 32) $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int f = int.Parse(Console.ReadLine());
+double c = (5.0 / 9.0) * (f - 32);
+Console.WriteLine(c);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة بالكلفن، ويطبع له الدرجة بالدرجة المئوية حسب المعادلة التالية:
 $$ C = K - 273.15 $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int k = int.Parse(Console.ReadLine());
+double c = k - 273.15;
+Console.WriteLine(c);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة بالفهرنهايت، ويطبع له الدرجة بالكلفن حسب المعادلة التالية:
 $$ K = \frac{5}{9} \times (F - 32) + 273.15 $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int f = int.Parse(Console.ReadLine());
+double k = (5.0 / 9.0) * (f - 32) + 273.15;
+Console.WriteLine(k);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم درجة الحرارة بالكلفن، ويطبع له الدرجة بالفهرنهايت حسب المعادلة التالية:
 $$ F = \frac{9}{5} \times (K - 273.15) + 32 $$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int k = int.Parse(Console.ReadLine());
+double f = (9.0 / 5.0) * (k - 273.15) + 32;
+Console.WriteLine(f);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 اكتب برنامجًا يستقبل من المستخدم 5 أرقام، واحدًا تلوَ الآخر. في كل مرة يدخل المستخدم رقمًا جديدًا، يطبع له البرنامج مجموع الأرقام التي أدخلها المستخدم حتى الآن.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n1 = int.Parse(Console.ReadLine());
+Console.WriteLine(n1);
+
+int n2 = int.Parse(Console.ReadLine());
+Console.WriteLine(n1 + n2);
+
+int n3 = int.Parse(Console.ReadLine());
+Console.WriteLine(n1 + n2 + n3);
+
+int n4 = int.Parse(Console.ReadLine());
+Console.WriteLine(n1 + n2 + n3 + n4);
+
+int n5 = int.Parse(Console.ReadLine());
+Console.WriteLine(n1 + n2 + n3 + n4 + n5);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \item
 حل السؤال السابق باستخدام متغيّرين فقط.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int num;
+
+num = int.Parse(Console.ReadLine());
+sum = sum + num;
+Console.WriteLine(sum);
+
+num = int.Parse(Console.ReadLine());
+sum = sum + num;
+Console.WriteLine(sum);
+
+num = int.Parse(Console.ReadLine());
+sum = sum + num;
+Console.WriteLine(sum);
+
+num = int.Parse(Console.ReadLine());
+sum = sum + num;
+Console.WriteLine(sum);
+
+num = int.Parse(Console.ReadLine());
+sum = sum + num;
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
 
 \end{enumerate}
 
