@@ -21,7 +21,16 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[onehalfspacing]{setspace}
-\usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
+\newif\ifcolorblind
+\ifdefined\setcolorblind
+  \setcolorblind
+\fi
+
+\ifcolorblind
+  \usepackage[a4paper, landscape, top=1cm, bottom=1cm, left=1cm, right=1cm, headheight=1.5cm, headsep=0.5cm]{geometry}
+\else
+  \usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
+\fi
 \usepackage{tikz}
 \usepackage{datetime2}
 
@@ -36,6 +45,21 @@
 \newfontfamily\arabicfont[Script=Arabic]{Calibri}
 \newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
 
+
+
+\ifcolorblind
+\lstset{
+  language=[Sharp]C,
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  stringstyle=\ttfamily,
+  commentstyle=\itshape
+}
+\else
 \lstset{
   language=[Sharp]C,
   numbers=left,
@@ -47,6 +71,7 @@
   stringstyle=\color{red},
   commentstyle=\color{green!50!black}
 }
+\fi
 
 \newif\ifdetailed
 \ifdefined\setdetailed
@@ -58,7 +83,26 @@
   \setwithsols
 \fi
 
+\ifcolorblind
+  \AtBeginDocument{
+    \LARGE
+    \usemintedstyle{bw}
+  }
+\fi
+
 % unified tcolorboxes for articles
+\ifcolorblind
+\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=1pt}
+\newtcolorbox{boxDef}[1][]{title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExercise}[1][]{title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExample}[1][]{title={{\emoji📝} مثال\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxNote}[1][]{title={{\emoji✨} ملاحظة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxAttention}[1][]{title={{\emoji🔔} تنبيه\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxWarning}[1][]{title={{\emoji⚡} ملاحظة هامة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSolution}[1][]{title={{\emoji✅} حل\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSymbol}[1][]{title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxHint}[1][]{title={{\emoji💡} تلميح\ifx\\#1\\\else ~#1\fi :}}
+\else
 \tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
 \newtcolorbox{boxDef}[1][]{colback=blue!5!white,colframe=blue!75!black,
   title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
@@ -78,9 +122,14 @@
   title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
 \newtcolorbox{boxHint}[1][]{colback=teal!5!white,colframe=teal!60!black,
   title={{\emoji💡} تلميح\ifx\\#1\\\else ~#1\fi :}}
+\fi
 
 
+\ifcolorblind
+\tcbset{simplecode/.style={ colback=white, colframe=black, boxrule=1pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
+\else
 \tcbset{simplecode/.style={ colback=gray!5, colframe=black!50, boxrule=0.4pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
+\fi
 \newenvironment{boxCode}{\begin{tcolorbox}[simplecode]}{\end{tcolorbox}}
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: all pdf printable sols ipynb md cs tex clean sclean
+.PHONY: all pdf printable sols ipynb md cs tex clean sclean cb cbsols
 
 # -----------------------
 # Sources
@@ -44,6 +44,9 @@ TEX_WITH_SOLS := $(shell for f in $(TEX); do \
 done)
 SOLS_TEX := $(patsubst %.tex,out/%_sols.pdf,$(TEX_WITH_SOLS))
 
+CB_TEX := $(patsubst %.tex,out/%_cb.pdf,$(TEX_REL))
+CBSOLS_TEX := $(patsubst %.tex,out/%_cb_sols.pdf,$(TEX_WITH_SOLS))
+
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
 export TEXMF_OUTPUT_DIRECTORY=.
@@ -57,6 +60,8 @@ all: pdf printable sols sclean
 pdf: ipynb md tex $(PDF_OUT) sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
 sols: $(SOLS_TEX)
+cb: $(CB_TEX)
+cbsols: $(CBSOLS_TEX)
 
 ipynb: $(IPYNB)
 md: $(MDS)
@@ -142,6 +147,20 @@ out/%_sols.pdf: src/%.tex
 	@mkdir -p $(dir $@)
 	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
 	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \input{$<}"
+
+# tex → cb pdf
+out/%_cb.pdf: src/%.tex
+	@echo "Building colorblind PDF for $< -> $@"
+	@mkdir -p $(dir $@)
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \def\setcolorblind{\colorblindtrue} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolsfalse} \def\setcolorblind{\colorblindtrue} \input{$<}"
+
+# tex → cbsols pdf
+out/%_cb_sols.pdf: src/%.tex
+	@echo "Building colorblind solutions PDF for $< -> $@"
+	@mkdir -p $(dir $@)
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \def\setcolorblind{\colorblindtrue} \input{$<}"
+	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \def\setcolorblind{\colorblindtrue} \input{$<}"
 
 out/%.pdf: src/%.pdf
 	@mkdir -p $(dir $@)
