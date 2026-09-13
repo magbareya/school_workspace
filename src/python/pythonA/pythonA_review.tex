@@ -1,0 +1,171 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة مراجعة بايتون (أ)}
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+num1 = int(input("Enter first number: "))
+num2 = int(input("Enter second number: "))
+
+print("Sum:", num1 + num2)
+print("Floor Division:", num1 // num2)
+print("Modulo:", num1 % num2)
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    ما هي المخرجات (الطباعة) التي ستظهر على الشاشة إذا أدخل المستخدم الأرقام 17 و 5 بالترتيب؟
+
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+grade = int(input("Enter your grade: "))
+
+if grade >= 90:
+    print("Excellent")
+elif grade >= 70:
+    print("Good")
+else:
+    print("Needs improvement")
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    ماذا سيطبع البرنامج في كل من الحالات التالية:
+    \begin{enumerate}[label=(\alph*)]
+        \item إذا أدخل المستخدم 95.
+        \item إذا أدخل المستخدم 75.
+        \item إذا أدخل المستخدم 65.
+    \end{enumerate}
+
+    \item
+    تتبع الكود التالي واكتب ماذا سيطبع إذا أدخل المستخدم الرقم 15:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+num = int(input("Enter a number: "))
+if num > 10 and num % 2 == 0:
+    print("Condition A")
+elif num > 10 and num % 2 != 0:
+    print("Condition B")
+else:
+    print("Condition C")
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+for i in range(1, 11):
+    if i % 2 == 0:
+        print(i, "is even")
+    else:
+        print(i, "is odd")
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    اكتب المخرجات (الطباعة) التي ستظهر على الشاشة عند تشغيل الكود، واشرح باختصار ماذا يفعل هذا البرنامج.
+
+    \clearpage
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+num = 345
+hundreds = num // 100
+tens = (num // 10) % 10
+ones = num % 10
+
+print("H:", hundreds)
+print("T:", tens)
+print("O:", ones)
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    ما هي المخرجات التي ستظهر على الشاشة؟ اشرح باختصار كيف تم استخراج منازل العدد باستخدام \texttt{//} و \texttt{\%}.
+
+    \item
+    تتبع الكود التالي واكتب ما هي المخرجات التي ستظهر على الشاشة. ما هو دور المتغير \texttt{sum}؟
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+sum = 0
+for i in range(1, 5):
+    sum = sum + i
+print("The result is:", sum)
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+
+    \item
+    معطى المتغير التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+text = "Python is Fun"
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    ما هو ناتج تنفيذ الأوامر التالية؟
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{print(len(text))}
+        \item \texttt{print(text[0:6])}
+        \item \texttt{print(text.upper())}
+        \item \texttt{print(text.find("i"))}
+    \end{enumerate}
+
+    \clearpage
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+num = 78643934
+while num > 0:
+    pair = num % 100
+    print(pair)
+    num = num // 100
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    تتبع الكود أعلاه واكتب المخرجات التي ستظهر على الشاشة. اشرح باختصار الفكرة من استخدام حلقة \texttt{while} مع \texttt{\%\ 100} و \texttt{//\ 100}.
+
+    \item
+    معطى مقطع الكود التالي:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{python}
+import random
+
+count_six = 0
+for i in range(10):
+    dice = random.randint(1, 6)
+    if dice == 6:
+        count_six = count_six + 1
+
+print("Number of 6s:", count_six)
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    إذا افترضنا أن الأرقام العشوائية التي تم سحبها بالترتيب هي (من اليسار إلى اليمين): \\
+    $3, 6, 1, 6, 4, 6, 2, 5, 6, 1$ \\
+    ماذا ستكون المخرجات (الطباعة) التي ستظهر على الشاشة في هذه الحالة؟ وما هو دور المتغير \texttt{count\_six}؟
+\end{enumerate}
+
+
+\end{document}
