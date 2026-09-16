@@ -122,14 +122,14 @@ Console.WriteLine(perimeter);
 
 \item
 اكتب برنامجا يستقبل من المستخدم طول قاعدة المثلث والارتفاع ويطبع له مساحة المثلث.
-$$ \text{Area} = width \cdot height $$
+$$ \text{Area} = \frac{width \cdot height}{2} $$
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 int width = int.Parse(Console.ReadLine());
 int height = int.Parse(Console.ReadLine());
-int area = width * height;
+double area = width * height / 2.0;
 Console.WriteLine(area);
 \end{minted}
 \end{english}
