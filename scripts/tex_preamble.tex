@@ -21,12 +21,12 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[onehalfspacing]{setspace}
-\newif\ifcolorblind
-\ifdefined\setcolorblind
-  \setcolorblind
+\newif\ifwhiteblack
+\ifdefined\setwhiteblack
+  \setwhiteblack
 \fi
 
-\ifcolorblind
+\ifwhiteblack
   \usepackage[a4paper, landscape, top=1cm, bottom=1cm, left=1cm, right=1cm, headheight=1.5cm, headsep=0.5cm]{geometry}
 \else
   \usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
@@ -47,7 +47,7 @@
 
 
 
-\ifcolorblind
+\ifwhiteblack
 \lstset{
   language=[Sharp]C,
   numbers=left,
@@ -83,7 +83,7 @@
   \setwithsols
 \fi
 
-\ifcolorblind
+\ifwhiteblack
   \AtBeginDocument{
     \LARGE
     \usemintedstyle{bw}
@@ -91,7 +91,7 @@
 \fi
 
 % unified tcolorboxes for articles
-\ifcolorblind
+\ifwhiteblack
 \tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=1pt}
 \newtcolorbox{boxDef}[1][]{title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
 \newtcolorbox{boxExercise}[1][]{title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
@@ -125,7 +125,7 @@
 \fi
 
 
-\ifcolorblind
+\ifwhiteblack
 \tcbset{simplecode/.style={ colback=white, colframe=black, boxrule=1pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
 \else
 \tcbset{simplecode/.style={ colback=gray!5, colframe=black!50, boxrule=0.4pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
