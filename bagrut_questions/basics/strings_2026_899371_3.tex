@@ -1,0 +1,114 @@
+\subsection*{سؤال 3 امتحان 899371 سنة 2026}
+\addcontentsline{toc}{subsection}{سؤال 3 امتحان 899371 سنة 2026}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/strings_2026_899371_3.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 3 امتحان 899371 سنة 2026 - حل 1]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void Guess(string secretStr, string playerStr)
+{
+    if (secretStr.Length != playerStr.Length)
+    {
+        Console.WriteLine("Size Error");
+        return;
+    }
+
+    int dakik = 0, isaba = 0, tadyea = 0;
+    for (int i = 0; i < playerStr.Length; i++)
+    {
+        if (playerStr[i] == secretStr[i])
+            dakik++;
+        else if (secretStr.Contains(playerStr[i]))
+            isaba++;
+        else
+            tadyea++;
+    }
+    Console.WriteLine(dakik);
+    Console.WriteLine(isaba);
+    Console.WriteLine(tadyea);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+
+\begin{boxSolution}[سؤال 3 امتحان 899371 سنة 2026 - حل 2]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void Guess(string secretStr, string playerStr)
+{
+    if (secretStr.Length != playerStr.Length)
+    {
+        Console.WriteLine("Size Error");
+        return;
+    }
+
+    int dakik = 0, isaba = 0, tadyea = 0;
+    for (int i = 0; i < playerStr.Length; i++)
+    {
+        int idx = secretStr.IndexOf(playerStr[i]);
+        if (idx == i)
+            dakik++;
+        else if (idx == -1)
+            tadyea++;
+        else
+            isaba++;
+    }
+    Console.WriteLine(dakik);
+    Console.WriteLine(isaba);
+    Console.WriteLine(tadyea);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+
+\begin{boxSolution}[سؤال 3 امتحان 899371 سنة 2026 - حل 3]
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void Guess(string secretStr, string playerStr)
+{
+    if (secretStr.Length != playerStr.Length)
+    {
+        Console.WriteLine("Size Error");
+        return;
+    }
+
+    int dakik = 0, isaba = 0, tadyea = 0;
+    for (int i = 0; i < playerStr.Length; i++)
+    {
+        bool isFound = False;
+        for(int j = 0; j < secretStr.Length; j++)
+        {
+            if(playerStr[i] == secretStr[j])
+            {
+                isFound = true;
+                if(i == j)
+                    dakik++;
+                else
+                    isaba++;
+            }
+        }
+        if(!isFound)
+            tadyea++;
+    }
+    Console.WriteLine(dakik);
+    Console.WriteLine(isaba);
+    Console.WriteLine(tadyea);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\clearpage
+\fi

@@ -1,0 +1,92 @@
+\subsection*{سؤال 5 امتحان 899371 سنة 2026}
+\addcontentsline{toc}{subsection}{سؤال 5 امتحان 899371 سنة 2026}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/classes2_2026_899371_5.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 5 امتحان 899371 سنة 2026]
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// في الفئة Birthdate
+public bool SameDate(Birthdate other)
+{
+    return this.day == other.GetDay() &&
+           this.month == other.GetMonth() &&
+           this.year == other.GetYear();
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item
+    \begin{enumerate}[label=(\arabic*)]
+        \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// في الفئة Client
+public bool SameInitials(Client other)
+{
+    return this.firstNameInitial == other.GetFirstNameInitial() &&
+           this.lastNameInitial == other.GetLastNameInitial();
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+        \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public bool AreSame(Client other)
+{
+    return this.SameInitials(other) && this.birthdate.SameDate(other.GetBirthdate());
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+    \end{enumerate}
+    \end{enumerate}
+\end{boxSolution}
+\clearpage
+
+\begin{boxSolution}[سؤال 5 امتحان 899371 سنة 2026 - تكملة]
+\begin{enumerate}[label=\alph*., resume]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// عملية خارجية
+public static void Uniques(Client[] clients)
+{
+    for (int i = 0; i < clients.Length; i++)
+    {
+        bool isUnique = true;
+        for (int j = 0; j < clients.Length; j++)
+        {
+            if (i != j && clients[i].AreSame(clients[j]))
+            {
+                isUnique = false;
+                break;
+            }
+        }
+        if (isUnique)
+        {
+            Console.WriteLine(clients[i].GetFirstNameInitial());
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

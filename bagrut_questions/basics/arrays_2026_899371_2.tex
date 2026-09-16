@@ -1,0 +1,67 @@
+\subsection*{سؤال 2 امتحان 899371 سنة 2026}
+\addcontentsline{toc}{subsection}{سؤال 2 امتحان 899371 سنة 2026}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/arrays_2026_899371_2.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 2 امتحان 899371 سنة 2026]
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int GetStatus(int speed, int max, int min)
+{
+    if (speed >= max + 10)
+        return 1;
+    if (speed <= min - 10)
+        return -1;
+    return 0;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int[] GetAllStatus(int[] speeds, int max, int min)
+{
+    int[] status = new int[speeds.Length];
+    for (int i = 0; i < speeds.Length; i++)
+    {
+        status[i] = GetStatus(speeds[i], max, min);
+    }
+    return status;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool MostFined(int[] speeds, int max, int min)
+{
+    int[] status = GetAllStatus(speeds, max, min);
+    int count = 0;
+    for (int i = 0; i < status.Length; i++)
+    {
+        if (status[i] == 1 || status[i] == -1)
+            count++;
+    }
+    return count >= speeds.Length / 2.0;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

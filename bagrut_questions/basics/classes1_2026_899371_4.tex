@@ -1,0 +1,76 @@
+\subsection*{سؤال 4 امتحان 899371 سنة 2026}
+\addcontentsline{toc}{subsection}{سؤال 4 امتحان 899371 سنة 2026}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/classes1_2026_899371_4.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 4 امتحان 899371 سنة 2026]
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public Order(int productId, double price)
+{
+    this.productId = productId;
+    this.price = price;
+    this.quantity = 1;
+    this.delivery = true;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item
+    \begin{enumerate}[label=(\arabic*)]
+        \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public double TotalPrice()
+{
+    return this.quantity * this.price;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+        \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public double TotalCost()
+{
+    double cost = TotalPrice();
+    if (this.delivery && !(this.quantity >= 10 && cost > 170.00))
+        cost += 100;
+    return cost;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+    \end{enumerate}
+
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int[] SumQuantity(Order[] allOrders)
+{
+    int[] sums = new int[100];
+    for (int i = 0; i < allOrders.Length; i++)
+        sums[allOrders[i].GetProductId()] += allOrders[i].GetQuantity();
+
+    return sums;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi

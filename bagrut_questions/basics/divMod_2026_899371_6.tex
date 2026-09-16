@@ -1,0 +1,101 @@
+\subsection*{سؤال 6 امتحان 899371 سنة 2026}
+\addcontentsline{toc}{subsection}{سؤال 6 امتحان 899371 سنة 2026}
+
+\noindent
+\makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{ ../../../bagrut_questions/basics/divMod_2026_899371_6.png }%
+}%
+
+
+\ifwithsols
+\begin{boxSolution}[سؤال 6 امتحان 899371 سنة 2026]
+في البداية نعرّف عملية مساعدة تحسب عدد خانات العدد المتلقى:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int GetDigitsCount(int num)
+{
+    int len = 0;
+    while (num > 0)
+    {
+        len++;
+        num /= 10;
+    }
+    return len;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+
+\begin{enumerate}[label=\alph*.]
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int LeftDigits(int num, int k)
+{
+    int len = GetDigitsCount(num);
+    return num / (int)Math.Pow(10, len - k);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+طريقة أخرى:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int LeftDigits(int num, int k)
+{
+    int len = GetDigitsCount(num);
+    for (int i = 0; i < len - k; i++)
+    {
+        num /= 10;
+    }
+    return num;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\begin{boxSolution}[سؤال 6 امتحان 899371 سنة 2026 - تكملة]
+\begin{enumerate}[label=\alph*., start=2]
+
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static int RightDigits(int num, int k)
+{
+    return num % (int)Math.Pow(10, k);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsKaprekar(int num)
+{
+    int squared = num * num;
+    int len = GetDigitsCount(squared);
+    int k = len / 2;
+    int left = LeftDigits(squared, k);
+    int right = RightDigits(squared, k);
+    return (left + right) == num;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\end{enumerate}
+\end{boxSolution}
+\clearpage
+\fi
