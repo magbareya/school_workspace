@@ -18,8 +18,8 @@
 \begin{enumerate}[itemsep=2em]
 
 % 1. Declare twice
-\begin{english}
 \item
+\begin{english}
 \begin{minted}{csharp}
 int num = 5;
 int num = 10;
@@ -34,8 +34,8 @@ Console.WriteLine(num);
 \fi
 
 % 2. Mismatched type
+\item
 \begin{english}
-    \item
 \begin{minted}{csharp}
 int age = 15.5;
 Console.WriteLine(age);
@@ -48,9 +48,12 @@ Console.WriteLine(age);
 \end{boxSolution}
 \fi
 
+\ifwhiteblack
+\clearpage
+\fi
 % 3. Use without declaration
+\item
 \begin{english}
-    \item
 \begin{minted}{csharp}
 sum = 10 + 20;
 Console.WriteLine(sum);
@@ -64,8 +67,8 @@ Console.WriteLine(sum);
 \fi
 
 % 4. Illegal name (number)
+\item
 \begin{english}
-    \item
 \begin{minted}{csharp}
 int 1number = 5;
 Console.WriteLine(1number);
@@ -79,8 +82,8 @@ Console.WriteLine(1number);
 \fi
 
 % 5. Illegal name (space)
+\item
 \begin{english}
-    \item
 \begin{minted}{csharp}
 int my age = 15;
 Console.WriteLine(my age);
@@ -184,6 +187,7 @@ Console.WriteLine(x);
 \end{boxSolution}
 \fi
 
+\clearpage
 \item
 بافتراض أن المستخدم أدخل الأرقام: $3$، $4$، $5$ بالتوالي:
 \begin{english}
@@ -208,102 +212,5 @@ Console.WriteLine(sum / 3.0);
 \fi
 
 \end{enumerate}
-
-\clearpage
-
-\section*{القسم الثالث: أسئلة مفاهيمية أساسية}
-
-\begin{enumerate}[resume, itemsep=2em]
-
-\item
-حدّد ما إذا كانت الجمل التالية صحيحة أم خاطئة:
-\begin{enumerate}
-    \item يمكن تغيير قيمة المتغيّر بعد تعريفه في لغة \textenglish{C\#}.
-    \item يمكن تغيير نوع المتغيّر (مثلاً من \textenglish{int} إلى \textenglish{string}) بعد تعريفه.
-    \item يمكن تعريف متغيرين مختلفين بنفس الاسم في نفس البرنامج.
-\end{enumerate}
-\ifwithsols
-\begin{boxSolution}
-\begin{enumerate}
-    \item صحيحة (تسمى متغيّرات لأن قيمتها يمكن أن تتغيّر).
-    \item خاطئة (نوع المتغيّر ثابت بمجرد تعريفه ولا يمكن تغييره).
-    \item خاطئة (يجب أن يكون لكل متغيّر اسم فريد خاص به في نفس النطاق).
-\end{enumerate}
-\end{boxSolution}
-\fi
-
-\item
-ما هو نوع المتغيّر المناسب لحفظ كلّ من البيانات التالية؟ (\textenglish{int} أم \textenglish{double})
-\begin{enumerate}
-    \item عدد الطلاب في الصف.
-    \item وزن الإنسان بالكيلوغرام.
-    \item علامة الطالب في الامتحان (مثلاً 95.5).
-    \item عدد أيام الأسبوع.
-\end{enumerate}
-\ifwithsols
-\begin{boxSolution}
-\begin{enumerate}
-    \item \textenglish{int}
-    \item \textenglish{double}
-    \item \textenglish{double}
-    \item \textenglish{int}
-\end{enumerate}
-\end{boxSolution}
-\fi
-
-\item
-اكتب أمرًا برمجيًا لتعريف متغيّر باسم \textenglish{score} من نوع عدد صحيح، وأعطه القيمة البدائية $100$.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-int score = 100;
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-اكتب أمرًا برمجيًا لتعريف متغيّر باسم \textenglish{price} من نوع عدد عشري، وأعطه القيمة البدائية $45.99$.
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-double price = 45.99;
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\item
-لديك المتغيّرات التالية:
-\begin{english}
-\begin{minted}{csharp}
-int x = 5;
-int y = 10;
-\end{minted}
-\end{english}
-اكتب أوامر برمجية لتبديل القيم بين المتغيّرين \textenglish{x} و \textenglish{y} (بحيث تصبح قيمة \textenglish{x} تساوي $10$ وقيمة \textenglish{y} تساوي $5$).
-\ifwithsols
-\begin{boxSolution}
-نحتاج إلى استخدام متغيّر وسيط (ثالث) لحفظ القيمة مؤقتًا:
-\begin{english}
-\begin{minted}{csharp}
-int temp = x;
-x = y;
-y = temp;
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-
-\end{enumerate}
-
-\vspace{3cm}
-\begin{flushleft}
-أرجو لكم وقتًا ممتعًا.
-
-الأستاذ محمود اغبارية.
-\end{flushleft}
 
 \end{document}
