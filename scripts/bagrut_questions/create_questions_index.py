@@ -264,7 +264,7 @@ def build_custom_document(subject, doc_config, filtered_rows):
 \\end{{document}}
 """
 
-    output_dir = os.path.join(SRC_DIR, subject, "bagrut_questions", "custom")
+    output_dir = os.path.join(SRC_DIR, subject, "bagrut_questions")
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{filename}.tex")
     
