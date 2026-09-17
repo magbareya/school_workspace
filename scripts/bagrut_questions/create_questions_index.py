@@ -150,13 +150,25 @@ def load_config(config_path):
 
 def filter_questions(rows_data, filters):
     filtered = []
+    requested_files = {
+        os.path.normpath(path).replace("\\", "/").lstrip("./")
+        for path in filters.get("files", [])
+    }
     for row in rows_data:
         folder, topic, model, year_str, qnum, has_sol, is_used_val, file_path, ext = row
-        
+
         # Only include questions that have a .tex file
         tex_file = f"{os.path.splitext(file_path)[0]}.tex"
         if not os.path.exists(tex_file):
             continue
+
+        if requested_files:
+            question_file = os.path.join(
+                "bagrut_questions", folder, os.path.basename(tex_file)
+            ).replace("\\", "/")
+            question_name = os.path.basename(tex_file)
+            if question_file not in requested_files and question_name not in requested_files:
+                continue
 
         try:
             year_int = int(year_str) if year_str.isdigit() else None
@@ -201,17 +213,17 @@ def build_custom_document(subject, doc_config, filtered_rows):
         sort_key = lambda x: (x[2], x[3], x[4]) # model, year, qnum
     else: # default year
         sort_key = lambda x: (x[3], x[2], x[4])
-        
+
     if sort_strategy == "random":
         random.shuffle(filtered_rows)
     else:
         filtered_rows.sort(key=sort_key)
-        
+
     if limit is not None:
         filtered_rows = filtered_rows[:limit]
-        
+
     sections = []
-    
+
     if group_by:
         from collections import defaultdict
         grouped = defaultdict(list)
@@ -225,7 +237,7 @@ def build_custom_document(subject, doc_config, filtered_rows):
             else:
                 key = "Group"
             grouped[key].append(row)
-            
+
         for key, rows in grouped.items():
             lines = [f"\\clearpage", f"\\section{{{key}}}"]
             for r in rows:
@@ -267,10 +279,10 @@ def build_custom_document(subject, doc_config, filtered_rows):
     output_dir = os.path.join(SRC_DIR, subject, "bagrut_questions")
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{filename}.tex")
-    
+
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(content)
-    
+
     print(f"  Generated custom document: {output_file} ({len(filtered_rows)} questions)")
 
 
