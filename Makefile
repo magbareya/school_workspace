@@ -1,10 +1,16 @@
 SHELL := /bin/bash
 
-.PHONY: all pdf printable sols ipynb md cs tex clean sclean wb wbsols
+.PHONY: help all pdf printable sols ipynb md cs tex empty_sols index clean sclean dclean wb wbsols
+
+.DEFAULT_GOAL := help
 
 # -----------------------
 # Sources
 # -----------------------
+
+SOURCE_GOALS := all pdf printable sols ipynb md tex cs wb wbsols
+
+ifneq ($(filter $(SOURCE_GOALS),$(MAKECMDGOALS)),)
 
 # Find all ipynb, md, tex under src
 NB  := $(shell find src -name "*.ipynb")
@@ -49,11 +55,28 @@ WBSOLS_TEX := $(patsubst %.tex,out/%_wb_sols.pdf,$(TEX_WITH_SOLS))
 
 CSFILES := $(patsubst %.ipynb,out/%.cs,$(NB_REL))
 
+endif
+
 export TEXMF_OUTPUT_DIRECTORY=.
 
 # -----------------------
 # Targets
 # -----------------------
+
+help: ## List all available targets
+	@awk 'BEGIN {FS = ":.*##"; printf "Available targets:\n\n"} /^[a-zA-Z0-9_.-]+:.*##/ {printf "  %-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+all: pdf printable sols sclean ## Build regular, printable, and solutions PDFs
+pdf: ipynb md tex $(PDF_OUT) sclean ## Build all regular PDFs
+printable: $(PRINTABLE_NB) $(PRINTABLE_TEX) ## Build printable PDFs
+sols: $(SOLS_TEX) ## Build solutions PDFs
+wb: $(WB_TEX) ## Build white-black PDFs
+wbsols: $(WBSOLS_TEX) ## Build white-black solutions PDFs
+
+ipynb: $(IPYNB) ## Build PDFs from Jupyter notebooks
+md: $(MDS) ## Build PDFs from Markdown files
+tex: $(TEXS) ## Build PDFs from LaTeX files
+cs: $(CSFILES) ## Export C# files from Jupyter notebooks
 
 all: pdf printable sols sclean
 
@@ -73,10 +96,10 @@ cs: $(CSFILES)
 # Rules
 # -----------------------
 
-empty_sols:
+empty_sols: ## Create empty solution files for Bagrut questions
 	python scripts/bagrut_questions/create_empty_sol.py
 
-index:
+index: ## Create the Bagrut questions index and build its PDFs
 	python scripts/bagrut_questions/create_questions_index.py
 	@make \
 		$$(find src/*/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#.pdf#') \
@@ -170,12 +193,12 @@ out/%.pdf: src/%.pdf
 # Cleaning
 # -----------------------
 
-clean:
+clean: ## Remove all generated output and LaTeX build artifacts
 	rm -rf out
 	find . -type d -name "_minted*" -exec rm -rf {} +
 
 CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz pyc pyo pyd
-sclean:
+sclean: ## Remove temporary, empty, and cache files
 	find out -type f -empty -delete
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	@for ext in $(CLEAN_EXTS); do \
@@ -183,6 +206,6 @@ sclean:
 	done
 	find . -type d -name "_minted*" -exec rm -rf {} +
 
-dclean:
+dclean: ## Clean generated files using the cleanup script
 	python3 scripts/clean.py out
 
