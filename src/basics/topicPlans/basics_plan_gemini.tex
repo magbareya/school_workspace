@@ -229,9 +229,57 @@
 
 
 \clearpage
-\section{مباني معطيات بسيطة}
+\section{مباني معطيات بسيطة (المصفوفات)}
+
+\begin{itemize}
+    \item المصفوفات لأنواع البيانات الأساسية.
+    \item مفاهيم أساسية في التعامل مع المصفوفات: المؤشر (\textenglish{index})، الطول (\textenglish{length})، والوصول للقيم.
+    \item تعريف وتهيئة (إعطاء قيم ابتدائية) للمصفوفات.
+    \item التمييز بين مرحلة تعريف المصفوفة ومرحلة تهيئتها في الذاكرة (باستخدام أمر \texttt{new}).
+    \item خوارزميات نموذجية على المصفوفات:
+    \begin{itemize}
+        \item البحث الخطي / المتسلسل (\textenglish{Sequential search}).
+        \item البحث الثنائي (\textenglish{Binary search}) في مصفوفة مرتبة.
+        \item ترتيب الإدخال (\textenglish{Insertion sort}).
+        \item دمج مصفوفتين (\textenglish{Merge}).
+        \item مناقشة ومقارنة نجاعة الخوارزميات (بشكل غير رسمي، الشعور بالفرق بين البحث الخطي والثنائي مثلاً).
+    \end{itemize}
+    \item مصفوفة من الكائنات (\textenglish{Array of objects}):
+    \begin{itemize}
+        \item بناء مصفوفة كائنات (باستخدام \texttt{new}).
+        \item الوصول لخصائص الكائن داخل المصفوفة.
+    \end{itemize}
+    \item المصفوفات ثنائية الأبعاد (\textenglish{2D Arrays}):
+    \begin{itemize}
+        \item تعريف مصفوفة ثنائية الأبعاد (مربعة أو مستطيلة).
+        \item الوصول لخلية في مصفوفة ثنائية الأبعاد باستخدام مؤشرين معقدين.
+        \item عمليات على القطر الرئيسي والقطر الثانوي.
+        \item مسح المصفوفة حسب الصفوف، حسب الأعمدة، أو بشكل حلزوني.
+        \item قلب المصفوفة.
+    \end{itemize}
+    \item استخدام حلقة \textenglish{foreach} مع المصفوفات.
+    \item تتبع الكود وعمليات المصفوفات باستخدام جدول المتابعة (الذي يحتوي على تغيرات قيم المصفوفة).
+\end{itemize}
+
 
 \clearpage
-\section{كائنات وفئات}
+\section{كائنات وفئات (البرمجة الموجهة للكائنات)}
+
+\begin{itemize}
+    \item مراجعة: إنشاء وتشغيل الكائنات باستخدام واجهة فئة (\textenglish{Interface}) جاهزة.
+    \item مفاهيم أساسية: الفئة كقالب لإنشاء وتشغيل الكائنات، الفرق بين استخدام الفئة (\textenglish{Usage}) وتنفيذها/برمجتها (\textenglish{Implementation}).
+    \item مفاهيم أساسية: الخصائص (\textenglish{Properties})، دوال البناء (\textenglish{Constructors})، العمليات (دوال استعلام \textenglish{Queries} / دوال أوامر \textenglish{Commands}).
+    \item حالة الكائن (\textenglish{Object state}) والحالة السليمة/القانونية (\textenglish{Valid state}).
+    \item التغليف (\textenglish{Encapsulation}): أهمية المبدأ وكيفية تنفيذه باستخدام صلاحيات الوصول (مثل \texttt{private}) وكتابة عمليات مناسبة للوصول وتغيير القيم.
+    \item الكائنات التي لا يمكن تغيير حالتها (\textenglish{Immutable objects}).
+    \item الشروط المسبقة (\textenglish{Pre-conditions}) والشروط اللاحقة (\textenglish{Post-conditions}) للعمليات.
+    \item فئات تستخدم فئات أخرى.
+    \item برمجة فئة بلغة البرمجة بناءً على واجهة (\textenglish{Interface}) معطاة.
+    \item توثيق الواجهات.
+    \item كتابة برامج فحص (\textenglish{Test programs}) للتحقق من عمل الفئة.
+    \item التحميل الزائد للعمليات ودوال البناء (\textenglish{Method overloading}).
+    \item نقاش حول الخصائص والعمليات الساكنة (\texttt{static}).
+    \item الوراثة (\textenglish{Inheritance}): شرح المبدأ بشكل أساسي ومفاهيمي فقط (بهدف فهم واجهات الـ \textenglish{API} التي تحتوي على وراثة).
+\end{itemize}
 
 \end{document}

@@ -1,0 +1,131 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ملخص: المتغيرات والعمليات الحسابية}
+
+\begin{document}
+\maketitle
+
+\section{المتغيرات وأنواعها (\textenglish{Variables})}
+تُستخدم المتغيرات لحفظ البيانات. يتم تعريف المتغير بتحديد \textbf{نوعه}، ثم \textbf{اسمه}، ثم \textbf{قيمته}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+var_type var_name = var_value;
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{النوع} & \textbf{مثال} & \textbf{الاستخدام} \\
+\hline
+\textenglish{int} & \textenglish{int age = 16;} & أعداد صحيحة فقط \\
+\hline
+\textenglish{double} & \textenglish{double price = 15.5;} & أعداد عشرية (كسور) \\
+\hline
+\textenglish{string} & \textenglish{string name = "Ahmad";} & نصوص (داخل علامتي اقتباس \textenglish{""}) \\
+\hline
+\textenglish{char} & \textenglish{char grade = 'A';} & حرف واحد (داخل علامة اقتباس مفردة \textenglish{''}) \\
+\hline
+\textenglish{bool} & \textenglish{bool isDone = true;} & قيمة منطقية (\textenglish{true / false}) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{boxNote}
+\textbf{قواعد التسمية:} يبدأ بحرف، يحتوي فقط على أحرف وأرقام وشرطة سفلية (\textenglish{\_})، وممنوع استخدام المسافات أو بدء الاسم برقم.
+\end{boxNote}
+
+\section{الإدخال والإخراج (\textenglish{I/O})}
+\begin{itemize}
+    \item \textbf{الطباعة:} الأمر \textenglish{Console.WriteLine()} لطباعة نص أو قيمة متغيّر والنزول لسطر جديد.
+    \item \textbf{القراءة (استقبال بيانات):} الأمر \textenglish{Console.ReadLine()} يستقبل المُدخلات كـ\textbf{نص (\textenglish{string})} دائمًا.
+    \item \textbf{تحويل المدخلات إلى أرقام:} نستخدم \textenglish{Parse}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine()); // Read an integer
+double y = double.Parse(Console.ReadLine()); // Read a double
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{itemize}
+
+\section{العمليات الحسابية (\textenglish{Math Operations})}
+العمليات الأساسية: \textenglish{+} (جمع), \textenglish{-} (طرح), \textenglish{*} (ضرب), \textenglish{/} (قسمة), \textenglish{\%} (باقي القسمة).
+\begin{itemize}
+    \item \textbf{أولويات العمليات:} الأقواس $()$ أولاً، ثم الضرب والقسمة والباقي، وأخيرًا الجمع والطرح. (التنفيذ من اليسار لليمين عند تساوي الأولوية).
+\end{itemize}
+
+\begin{boxWarning}
+\textbf{القسمة بين أعداد صحيحة:} إذا كان العددان من نوع \textenglish{int}، فالنتيجة تكون صحيحة دائمًا \textbf{ويُحذف الجزء العشري} (مثال: $7 / 2 = 3$). للحصول على نتيجة دقيقة، يجب تحويل أحد الأطراف لـ \textenglish{double}.
+\end{boxWarning}
+
+\section{باقي القسمة وتجزئة الأعداد (\textenglish{\%})}
+باقي القسمة \textenglish{\%} يرجع المتبقي من عملية القسمة. استخداماته الشائعة مع العدد 10:
+\begin{itemize}
+    \item \textbf{استخراج الآحاد:} \textenglish{n \% 10} (مثال: $456 \% 10 = 6$).
+    \item \textbf{حذف الآحاد:} \textenglish{n / 10} (مثال: $456 / 10 = 45$).
+\end{itemize}
+
+\section{التحويل بين الأنواع (\textenglish{Casting})}
+\begin{itemize}
+    \item \textbf{من صحيح إلى عشري:} تحويل تلقائي آمن ولا يفقد بيانات. (مثل: تخزين $5$ في \textenglish{double} يصبح $5.0$).
+    \item \textbf{من عشري إلى صحيح:} \textbf{يفقد الفواصل الكسرية} ولا يقرّب العدد. يجب التحويل صراحةً باستخدام \textenglish{(int)}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+double d = 9.99;
+int i = (int)d; // Result: 9
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{itemize}
+
+\clearpage
+\section{الطباعة المتقدمة}
+\begin{itemize}
+    \item \textbf{الفرق بين \textenglish{Write} و \textenglish{WriteLine}:}
+    \begin{itemize}
+        \item \textenglish{Console.WriteLine()}: يطبع النص ثم ينزل إلى سطر جديد.
+        \item \textenglish{Console.Write()}: يطبع النص ويبقى المؤشر في نفس السطر.
+    \end{itemize}
+    \item \textbf{الطباعة باستخدام دمج المتغيرات (\textenglish{String Interpolation}):} \\
+    يمكن دمج قيم المتغيرات داخل النص باستخدام علامة \textenglish{\$} قبل علامات الاقتباس، ووضع المتغيرات داخل أقواس متعرجة \textenglish{\{\}}.
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+string name = "Ahmad";
+int age = 16;
+// Using string interpolation
+Console.WriteLine($"My name is {name} and I am {age} years old.");
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{itemize}
+
+\section{مكتبة الرياضيات (\textenglish{Math Library})}
+تُستخدم للعمليات الرياضية المتقدمة (معظمها يرجع \textenglish{double}):
+\begin{center}
+\begin{tabular}{|l|r|l|}
+\hline
+\textbf{الدالة} & \textbf{الوظيفة} & \textbf{مثال} \\
+\hline
+\textenglish{Math.Max(a, b)} & إرجاع العدد الأكبر & \textenglish{Math.Max(5, 8) $\rightarrow 8$} \\
+\hline
+\textenglish{Math.Min(a, b)} & إرجاع العدد الأصغر & \textenglish{Math.Min(5, 8) $\rightarrow 5$} \\
+\hline
+\textenglish{Math.Pow(x, y)} & القوة (الأس) $x^y$ & \textenglish{Math.Pow(2, 3) $\rightarrow 8$} \\
+\hline
+\textenglish{Math.Sqrt(x)} & الجذر التربيعي & \textenglish{Math.Sqrt(16) $\rightarrow 4$} \\
+\hline
+\textenglish{Math.Abs(x)} & القيمة المطلقة & \textenglish{Math.Abs(-7) $\rightarrow 7$} \\
+\hline
+\textenglish{Math.Round(x)} & التقريب لأقرب صحيح & \textenglish{Math.Round(4.7) $\rightarrow 5$} \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
