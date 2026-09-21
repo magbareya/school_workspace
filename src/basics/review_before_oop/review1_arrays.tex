@@ -27,7 +27,7 @@ int count = 0;
 for (int i = 0; i < arr.Length; i++)
 {
     // Take absolute value in case numbers are negative
-    int num = Math.Abs(arr[i]);
+    int num = arr[i];
     if (num >= 10 && num <= 99)
         count++;
 }
@@ -114,8 +114,10 @@ public static int LongestNegativeSequenceIndex(int[] arr)
         else
         {
             if (currentLen > maxLen)
+            {
                 maxLen = currentLen;
                 maxIndex = currentIndex;
+            }
             currentLen = 0;
         }
     }
@@ -162,6 +164,27 @@ public static int[] SumQuantities(int[] productIds, int[] quantities)
         sums[productIds[i]] += quantities[i];
     }
     return sums;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\begin{boxSolution}[بديل]
+\begin{english}
+\begin{minted}{csharp}
+public static int[] SumQuantities(int[] productIds, int[] quantities)
+{
+    int[] result = new int[10];
+    for (int i = 0; i < result.Length; i++)
+    {
+        int sum = 0;
+        for(int j = 0; j < productIds.Length; j++)
+        {
+            if (productIds[j] == i)
+                sum += quantities[j];
+        }
+        result[i] = sum;
+    }
+    return result;
 }
 \end{minted}
 \end{english}
@@ -232,7 +255,7 @@ public static void PrintUniqueLastTwoDigits(int[] arr)
         bool isUnique = true;
         for (int j = 0; j < arr.Length; j++)
         {
-            if (i != j && Math.Abs(arr[i]) % 100 == Math.Abs(arr[j]) % 100)
+            if (i != j && (arr[i] % 100) == (arr[j] % 100))
                 isUnique = false;
         }
 
