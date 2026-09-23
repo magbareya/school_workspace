@@ -199,12 +199,12 @@ clean: ## Remove all generated output and LaTeX build artifacts
 
 CLEAN_EXTS := log aux toc fls fdb_latexmk out minted pyg vrb nav snm gz pyc pyo pyd
 sclean: ## Remove temporary, empty, and cache files
-	find out -type f -empty -delete
-	find . -type d -name "__pycache__" -exec rm -rf {} +
+	-find out -type f -empty -delete
+	-find . -type d -name "__pycache__" -exec rm -rf {} +
 	@for ext in $(CLEAN_EXTS); do \
-		find . -type f -name "*.$$ext" -delete; \
+		find . -type f -name "*.$$ext" -delete || true; \
 	done
-	find . -type d -name "_minted*" -exec rm -rf {} +
+	-find . -type d -name "_minted*" -exec rm -rf {} +
 
 dclean: ## Clean generated files using the cleanup script
 	python3 scripts/clean.py out
