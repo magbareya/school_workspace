@@ -1,4 +1,4 @@
-﻿\documentclass[14pt]{extarticle}
+\documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
 \title{ورقة تمرن 3 للصف العاشر 10 $\mathtt{Math\ Library}$}
@@ -11,8 +11,114 @@
 
 \begin{enumerate}[itemsep=3em]
 
+    % Basic single-function questions
     \item
-    اكتب برنامجا يستقبل من المستخدم رقمين، ثم يطبع تربيع الرقم الصغير وجذر الرقم الكبير.
+    اكتب برنامجًا يقرأ عددًا من المستخدم ويطبع جذره التربيعي.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+25
+The square root is 5
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+Console.WriteLine("The square root is " + Math.Sqrt(n));
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا من المستخدم ويطبع تكعيبه (أي العدد مرفوعًا للقوة 3).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+6
+The cube is 216
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+Console.WriteLine("The cube is " + Math.Pow(n, 3));
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددين صحيحين من المستخدم ويطبع العدد الأكبر بينهما.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 2 numbers:
+15
+8
+The max is 15
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+Console.WriteLine("The max is " + Math.Max(a, b));
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا صحيحًا (قد يكون سالبًا أو موجبًا) ويطبع قيمته المطلقة (بدون إشارة).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+-12
+The absolute value is 12
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+Console.WriteLine("The absolute value is " + Math.Abs(n));
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    % Combined questions
+    \item
+    اكتب برنامجا يستقبل من المستخدم رقمين، ثم يطبع تربيع الرقم الصغير وجذر الرقم الكبير. \\
+    \textbf{إرشاد:}
+    \begin{itemize}[itemsep=0em]
+        \item جد الرقم الأكبر والرقم الأصغر أولاً، واحفظهما في متغيرين.
+        \item احسب جذر الأكبر، وتربيع الأصغر ثم اطبعهما.
+    \end{itemize}
     \ifdetailed
     \begin{boxExample}
     \begin{english}
@@ -38,8 +144,8 @@ Console.WriteLine("The square of the min = " + Math.Pow(min, 2));
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \clearpage
     \fi
+    \clearpage
 \fi
 
     \item
@@ -78,13 +184,17 @@ Console.WriteLine("The absolute difference = " + (max - min));
     \end{english}
     \end{boxSolution}
     \fi
-    \clearpage
 \fi
 
     \item
-    اكتب برنامجًا يقرأ إحداثيات نقطتين في المستوى (أي يقرأ 4 أرقام) $(x_1, y_1)$ و $(x_2, y_2)$،
-    ثم يحسب المسافة بينهما باستخدام:
+    اكتب برنامجًا يقرأ إحداثيات نقطتين في المستوى (أي يقرأ 4 أرقام) $(x_1, y_1)$ و $(x_2, y_2)$، ثم يحسب المسافة بينهما باستخدام:
     $$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+    \textbf{خطوات مقترحة:}
+    \begin{itemize}
+        \item احسب الفرق بين قيم $x$ وربّعه، واحفظ النتيجة في متغير.
+        \item احسب الفرق بين قيم $y$ وربّعه، واحفظ النتيجة في متغير آخر.
+        \item اجمع النتيجتين، ثم احسب الجذر التربيعي للمجموع واطبعه.
+    \end{itemize}
     \ifdetailed
     \begin{boxExample}
     \begin{english}
@@ -113,8 +223,8 @@ Console.WriteLine("Distance = " + d);
     \end{minted}
     \end{english}
     \end{boxSolution}
-    \clearpage
     \fi
+    \clearpage
 \fi
 
     \item
@@ -144,6 +254,7 @@ Console.WriteLine("The maximum = " + max);
     \end{minted}
     \end{english}
     \end{boxSolution}
+    \clearpage
     \fi
 \fi
 
@@ -178,7 +289,6 @@ Console.WriteLine("The minimum = " + min);
     \end{english}
     \end{boxSolution}
     \fi
-    \clearpage
 \fi
 
     \item
@@ -228,7 +338,7 @@ Console.WriteLine("The largest difference = " + maxDiff);
 \fi
 
     \item
-    اكتب برنامجًا يقرأ عددًا عشريًا من المستخدم (مثلاً 12.34567) ويقرّبه إلى منزلتين عشريتين فقط.
+    اكتب برنامجًا يقرأ عددًا عشريًا من المستخدم (مثلاً $12.34567$) ويقرّبه إلى منزلتين عشريتين فقط مستخدما الدالة $\mathtt{Math.Round}$. \\
     \ifdetailed
     \begin{boxExample}
     \begin{english}
