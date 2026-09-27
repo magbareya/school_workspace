@@ -1,0 +1,199 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تلخيصية: أساسيات البرمجة كائنية التوجه في \textenglish{C\#} \\ (ما قبل الوراثة)}
+\author{أ. محمود اغبارية}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section{الفصل الأول: بناء الفئات والتعامل مع الكائنات}
+%=============================================================
+
+\subsection{مفهوم الفئة والكائن (\textenglish{Class and Object})}
+\textbf{الفئة} (\textenglish{Class}) هي قالب أو مخطط مجرد يحدد الخصائص والأساليب. بينما \textbf{الكائن} (\textenglish{Object}) هو نسخة حقيقية تُنشأ من هذا القالب في الذاكرة.
+اتفاقيات التسمية (\textenglish{Naming Conventions}): تبدأ أسماء الفئات بحرف كبير (مثل \textenglish{Student}).
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    // Attributes
+    public string Name;
+    public int Age;
+
+    // Methods
+    public void PrintInfo()
+    {
+        Console.WriteLine(Name + " is " + Age + " years old.");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{إنشاء الكائنات ودالة البناء (\textenglish{Instantiation \& Constructors})}
+نستخدم الكلمة \textenglish{new} لإنشاء كائن. وعند الإنشاء يتم استدعاء \textbf{دالة البناء} (\textenglish{Constructor})، وهي دالة خاصة تحمل نفس اسم الفئة وتُستخدم لإعطاء قيم أولية (تهيئة) لخصائص الكائن.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    public string Name;
+    public int Age;
+
+    // Default constructor
+    public Student()
+    {
+        Name = "Unknown";
+        Age = 0;
+    }
+
+    // Parameterized constructor (overloading)
+    public Student(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{صيغة النقطة والمتغيرات المرجعية (\textenglish{Dot Notation \& References})}
+المتغير الذي يحفظ الكائن هو \textbf{متغير مرجعي} (\textenglish{Reference})، أي أنه يؤشر إلى عنوان الكائن في الذاكرة. للوصول إلى خصائص أو أساليب الكائن، نستخدم \textbf{صيغة النقطة} (\textenglish{Dot Notation}). يتم تمرير الكائنات إلى الدوال كمرجع، مما يعني أن تعديل الكائن داخل الدالة يؤثر على الكائن الأصلي.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+Student s1 = new Student("Ahmad", 16);
+s1.Age = 17; // Modifying property
+s1.PrintInfo(); // Calling method
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{التحميل الزائد للأساليب (\textenglish{Method Overloading})}
+التحميل الزائد يعني كتابة أكثر من دالة بنفس الاسم داخل نفس الفئة، بشرط أن تختلف في عدد أو نوع البارامترات. هذا يتيح مرونة في استدعاء الدالة بحالات مختلفة. رأينا مثالاً على ذلك في دوال البناء المتعددة أعلاه.
+
+\subsection{الكائنات المركبة (\textenglish{Complex Objects})}
+يمكن أن تحتوي الفئة على خصائص هي بحد ذاتها كائنات من فئات أخرى.
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Course
+{
+    public string Title;
+    public Student TopStudent; // Complex object
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+%=============================================================
+\section{الفصل الثاني: المفاهيم الهيكلية المتقدمة وتغليف البيانات}
+%=============================================================
+
+\subsection{محددات الوصول والتغليف (\textenglish{Access Modifiers \& Encapsulation})}
+التغليف (\textenglish{Encapsulation}) يعني إخفاء البيانات الداخلية للفئة وحمايتها من التعديل العشوائي، وتوفير واجهة آمنة للتعامل معها. نستخدم \textenglish{private} لإخفاء الخصائص، و \textenglish{public} للدوال التي تسمح بقراءتها أو تعديلها بأمان.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class BankAccount
+{
+    private double balance; // Hidden property
+
+    public void Deposit(double amount)
+    {
+        if (amount > 0)
+            balance += amount;
+    }
+
+    public double GetBalance()
+    {
+        return balance;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{الأعضاء الساكنة (\textenglish{Static Members})}
+الأعضاء المعرّفة كـ \textenglish{static} تتبع الفئة نفسها كقالب عام، وليس لكل كائن على حدة. يمكن استدعاؤها مباشرة باستخدام اسم الفئة. من الأمثلة على ذلك فئات الخدمة (\textenglish{Utility Classes}) مثل \textenglish{Math}.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Calculator
+{
+    public static int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+// Calling without creating an object
+int sum = Calculator.Add(5, 3);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{المصفوفات ككائنات (\textenglish{Arrays as Objects})}
+المصفوفة في \textenglish{C\#} هي كائن، ولها خصائص (مثل \textenglish{Length}) وأساليب. يمكن إنشاء مصفوفات من الكائنات، ويجب الانتباه إلى عدم تجاوز حدود المصفوفة (\textenglish{Out of Bounds}).
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+Student[] classRoom = new Student[30];
+classRoom[0] = new Student("Ali", 16);
+Console.WriteLine(classRoom.Length); // Prints 30
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{فئة النصوص (\textenglish{String Class})}
+السلاسل النصية هي كائنات من نوع \textenglish{String}. وهي توفر أساليب مفيدة جداً، وتدعم دمج النصوص. كما يمكننا إعادة تعريف دالة \textenglish{ToString()} في فئاتنا الخاصة لتمثيل الكائن كنص عند طباعته.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+class Student
+{
+    public string Name;
+    // Overriding the string representation method
+    public override string ToString()
+    {
+        return "Student Name: " + Name;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\subsection{توثيق الكود واستدعاء الفئات (\textenglish{Documentation \& Using})}
+نستخدم الكلمة \textenglish{using} في أعلى الملف لجلب فئات من مساحات أسماء أخرى (\textenglish{Namespaces}). ولتسهيل استخدام الواجهات البرمجية، نستخدم تعليقات التوثيق (\textenglish{XML Docs}) باستخدام ثلاثة خطوط مائلة.
+
+\begin{boxExample}
+\begin{english}
+\begin{minted}{csharp}
+using System;
+
+/// <summary>
+/// This class represents a student in a school
+/// </summary>
+class Student
+{
+    // ...
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\end{document}

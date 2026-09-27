@@ -1,0 +1,42 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{أساسيات البرمجة كائنية التوجه في \textenglish{C\#}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%=============================================================
+\section{الفصل الأول: بناء الفئات والتعامل مع الكائنات}
+%=============================================================
+
+\begin{itemize}[itemsep=5pt]
+    \item \textbf{الفئة} (\textenglish{Class}): قالب أو مخطط مجرد يحدد شكل ونوع الكائن. يشمل تعريف الفئة، الترويسة، واتفاقيات التسمية (\textenglish{Naming Conventions}).
+    \item \textbf{الخصائص} (\textenglish{Attributes}): متغيرات تُعرّف داخل الفئة لوصف حالة الكائن، وتشمل التوصيف، التعريف، والتهيئة.
+    \item \textbf{الأساليب} (\textenglish{Methods}): دوال تحدد سلوك الكائن، وتشمل التوقيع (\textenglish{Signature})، تمرير البارامترات، والقيم المرجعة.
+    \item \textbf{إنشاء الكائنات} (\textenglish{Instantiation}): استخدام الكلمة المحجوزة \textenglish{new} لحجز مساحة وإنشاء نسخة في الذاكرة.
+    \item \textbf{دالة البناء} (\textenglish{Constructor}): دالة خاصة لتهيئة الكائن عند إنشائه، وتشمل دالة البناء الافتراضية (\textenglish{Default Constructor}) ودالة البناء الناسخة (\textenglish{Copy Constructor}).
+    \item \textbf{المتغيرات المرجعية} (\textenglish{References}): متغيرات تؤشر إلى عنوان الكائن في الذاكرة ولا تحتويه مباشرة. يشمل ذلك تمرير الكائنات كبارامترات.
+    \item \textbf{تواصل الكائنات} (\textenglish{Object Communication}): استخدام الكائنات القائمة والتواصل بينها عبر صيغة النقطة (\textenglish{Dot Notation}).
+    \item \textbf{الكائنات المركبة} (\textenglish{Complex Objects}): كائنات تحتوي بداخلها على كائنات أخرى كخصائص.
+    \item \textbf{التحميل الزائد} (\textenglish{Method Overloading}): كتابة نفس الدالة ببارامترات مختلفة داخل نفس الفئة.
+    \item \textbf{استخدام المكتبات الجاهزة} (\textenglish{API}): التعامل مع مكتبات الفئات القياسية واستخدامها في البرنامج.
+\end{itemize}
+
+%=============================================================
+\section{الفصل الثاني: المفاهيم الهيكلية المتقدمة وتغليف البيانات}
+%=============================================================
+
+\begin{itemize}[itemsep=5pt]
+    \item \textbf{المصفوفات ككائنات} (\textenglish{Arrays as Objects}): التعامل مع المصفوفة (أحادية وثنائية الأبعاد) ككائن برمجي له خصائص وأساليب، ومعالجة استثناءات تجاوز حدود المصفوفة (\textenglish{Out of Bounds})، وإنشاء مصفوفات من الكائنات.
+    \item \textbf{فئة النصوص} (\textenglish{String Class}): التعامل مع السلاسل النصية ككائنات، واستخدام أساليبها المختلفة، ومعامل الدمج (\textenglish{Concatenation})، واستخدام دالة \textenglish{ToString()} لتمثيل الكائن نصياً.
+    \item \textbf{استدعاء الفئات} (\textenglish{Using/Import}): جلب واستخدام فئات من مساحات أسماء أخرى لتوسيع قدرات البرنامج.
+    \item \textbf{الأعضاء الساكنة} (\textenglish{Static Members}): خصائص وأساليب تابعة للفئة كقالب عام وليس للنسخ (الكائنات)، ويشمل ذلك فئات الخدمة (\textenglish{Utility Classes}).
+    \item \textbf{محددات الوصول} (\textenglish{Access Modifiers}): تحديد صلاحيات القراءة والتعديل باستخدام \textenglish{public} و \textenglish{private}.
+    \item \textbf{التغليف وإخفاء المعلومات} (\textenglish{Encapsulation}): حماية البيانات الداخلية للفئة، والفصل الواضح بين واجهة الاستخدام (\textenglish{Interface}) وتفاصيل التنفيذ الداخلي (\textenglish{Implementation}).
+    \item \textbf{توثيق الكود} (\textenglish{Documentation}): استخدام التعليقات المخصصة (مثل \textenglish{XML Docs} أو \textenglish{Javadoc}) لتوثيق الدوال والفئات لتسهيل استخدام الواجهات البرمجية.
+\end{itemize}
+
+\end{document}
