@@ -29,7 +29,8 @@ The square root is 5
     \begin{english}
     \begin{minted}{csharp}
 int n = int.Parse(Console.ReadLine());
-Console.WriteLine("The square root is " + Math.Sqrt(n));
+double result = Math.Sqrt(n);
+Console.WriteLine("The square root is " + result);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -53,7 +54,8 @@ The cube is 216
     \begin{english}
     \begin{minted}{csharp}
 int n = int.Parse(Console.ReadLine());
-Console.WriteLine("The cube is " + Math.Pow(n, 3));
+double result = Math.Pow(n, 3);
+Console.WriteLine("The cube is " + result);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -79,7 +81,8 @@ The max is 15
     \begin{minted}{csharp}
 int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
-Console.WriteLine("The max is " + Math.Max(a, b));
+int result = Math.Max(a, b);
+Console.WriteLine("The max is " + result);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -103,7 +106,8 @@ The absolute value is 12
     \begin{english}
     \begin{minted}{csharp}
 int n = int.Parse(Console.ReadLine());
-Console.WriteLine("The absolute value is " + Math.Abs(n));
+int result = Math.Abs(n);
+Console.WriteLine("The absolute value is " + result);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -139,8 +143,10 @@ int n1 = int.Parse(Console.ReadLine());
 int n2 = int.Parse(Console.ReadLine());
 int max = Math.Max(n1, n2);
 int min = Math.Min(n1, n2);
-Console.WriteLine("The sqrt of the max = " + Math.Sqrt(max));
-Console.WriteLine("The square of the min = " + Math.Pow(min, 2));
+double sqrtMax = Math.Sqrt(max);
+double squareMin = Math.Pow(min, 2);
+Console.WriteLine("The sqrt of the max = " + sqrtMax);
+Console.WriteLine("The square of the min = " + squareMin);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -179,7 +185,8 @@ int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 int max = Math.Max(a, b);
 int min = Math.Min(a, b);
-Console.WriteLine("The absolute difference = " + (max - min));
+int diff = max - min;
+Console.WriteLine("The absolute difference = " + diff);
     \end{minted}
     \end{english}
     \end{boxSolution}
@@ -312,8 +319,10 @@ The largest difference = 17
 int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 int c = int.Parse(Console.ReadLine());
-int max = Math.Max(a, Math.Max(b, c));
-int min = Math.Min(a, Math.Min(b, c));
+int maxBC = Math.Max(b, c);
+int max = Math.Max(a, maxBC);
+int minBC = Math.Min(b, c);
+int min = Math.Min(a, minBC);
 int diff = max - min;
 Console.WriteLine("The largest difference = " + diff);
     \end{minted}
@@ -328,7 +337,8 @@ int c = int.Parse(Console.ReadLine());
 int diff1 = Math.Abs(a-b);
 int diff2 = Math.Abs(a-c);
 int diff3 = Math.Abs(b-c);
-int maxDiff = Math.Max(diff1, Math.Max(diff2, diff3));
+int maxDiff23 = Math.Max(diff2, diff3);
+int maxDiff = Math.Max(diff1, maxDiff23);
 Console.WriteLine("The largest difference = " + maxDiff);
     \end{minted}
     \end{english}
