@@ -1,0 +1,363 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 2 للصف العاشر 10}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2cm]
+
+
+\item
+في مطعم الطويل ثمن ساندويتش فلافل 13 شاقل وثمن ساندويتش شاورما 22 شاقل. اكتب برنامجًا يستقبل عدد ساندويتشات الفلافل وعدد ساندويتشات الشاورما التي باعها المطعم في أحد الأيام. على البرنامج أن يحسب ويطبع المدخول الكلي الذي جمعه المطعم في ذلك اليوم.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter falafel sandwiches:
+> 35
+Enter shawarma sandwiches:
+> 46
+Total income: 1467
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter falafel sandwiches:");
+int falafel = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter shawarma sandwiches:");
+int shawarma = int.Parse(Console.ReadLine());
+int total = falafel * 13 + shawarma * 22;
+Console.WriteLine("Total income: " + total);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+}
+
+\item
+في محل لبيع الاجهزة الكهربائية يتم دفع مبلغ الشراء بالطريقة التالية: نصف المبلغ نقدي والنصف الآخر يتم تقسيمه على خمسة أقساط. اكتب برنامجًا يستقبل الثمن الكلي للأجهزة الكهربائية التي تم شراؤها، على البرنامج أن يحسب ويطبع المبلغ المدفوع نقدا وقيمة القسط الواحد.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter the total price:
+> 10000
+Cash payment: 5000
+Installment payment: 1000
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter the total price:");
+double total = double.Parse(Console.ReadLine());
+double cash = total / 2;
+double installment = cash / 5;
+Console.WriteLine("Cash payment: " + cash);
+Console.WriteLine("Installment payment: " + installment);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+}
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل علامة الفصل الأول وعلامة الفصل الثاني وعلامة الفصل الثالث بموضوع علم الحاسوب، على البرنامج أن يحسب ويطبع معدل العلامات بالطريقة التالية: 30\% من علامة الفصل الأول، 25\% من علامة الفصل الثاني و 45\% من علامة الفصل الثالث.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter grade 1:
+> 82
+Enter grade 2:
+> 77
+Enter grade 3:
+> 92
+Final grade: 85.25
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter grade 1:");
+int g1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter grade 2:");
+int g2 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter grade 3:");
+int g3 = int.Parse(Console.ReadLine());
+double finalGrade = g1 * 0.30 + g2 * 0.25 + g3 * 0.45;
+Console.WriteLine("Final grade: " + finalGrade);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+}
+
+
+\item
+اكتب برنامجًا يستقبل من المستخدم الميزانية لمشروع ما. \\
+ثم يستقبل من المستخدم 3 مصروفات للمشروع. \\
+بعد كل مرة يدخل فيها المستخدم مصروفًا، اطبع له الميزانية المتبقية.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter the budget:
+> 1000
+Enter expense 1:
+> 200
+Remaining budget: 800
+Enter expense 2:
+> 150
+Remaining budget: 650
+Enter expense 3:
+> 50
+Remaining budget: 600
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int budget;
+int expenses;
+Console.Write("Please enter the budget:");
+budget = int.Parse(Console.ReadLine());
+Console.WriteLine("Please enter the first expense:");
+expenses = int.Parse(Console.ReadLine());
+budget = budget - expenses;
+Console.WriteLine(budget);
+
+Console.WriteLine("Please enter the second expense:");
+expenses = int.Parse(Console.ReadLine());
+budget = budget - expenses;
+Console.WriteLine(budget);
+
+Console.WriteLine("Please enter the third expense:");
+expenses = int.Parse(Console.ReadLine());
+budget = budget - expenses;
+Console.WriteLine(budget);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\fi
+}
+
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم السعر الأولي لمنتج ما. \\
+ثم يستقبل من المستخدم 3 تخفيضات على هذا المنتج بالنسبة المئوية. \\
+بعد كل مرة يدخل فيها المستخدم تخفيضًا، اطبع له السعر الجديد للمنتج.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter the initial price:
+> 500
+Enter discount 1 (%):
+> 20
+Price after discount:400
+Enter discount 2 (%):
+> 10
+Price after discount: 360
+Enter discount 3 (%):
+> 5
+Price after discount: 342
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double price;
+int discount;
+Console.WriteLine("Please enter the initial price:");
+price = double.Parse(Console.ReadLine());
+Console.WriteLine("Please enter the first discount (%):");
+discount = int.Parse(Console.ReadLine());
+price = price * (100 - discount) / 100;
+Console.WriteLine("The new price = " + price);
+
+Console.WriteLine("Please enter the second discount (%):");
+discount = int.Parse(Console.ReadLine());
+price = price * (100 - discount) / 100;
+Console.WriteLine("The new price = " + price);
+
+Console.WriteLine("Please enter the third discount (%):");
+discount = int.Parse(Console.ReadLine());
+price = price * (100 - discount) / 100;
+Console.WriteLine("The final price = " + price);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\fi
+}
+
+\item
+اكتب برنامجًا يبدأ بالحساب من 3600 ثانية (أي ساعة واحدة)، ثم يستقبل من المستخدم عدد الثواني التي مرت. \\
+يستقبل ذلك 4 مرات، وفي كل مرة يطبع الوقت المتبقي بالثواني.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter seconds passed:
+> 600
+Remaining time (seconds): 3000
+Enter seconds passed:
+> 300
+Remaining time (seconds): 2700
+Enter seconds passed:
+> 1200
+Remaining time (seconds): 1500
+Enter seconds passed:
+> 500
+Remaining time (seconds): 1000
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int time = 3600;
+int passedTime;
+Console.WriteLine("Enter seconds passed:");
+passedTime = int.Parse(Console.ReadLine());
+time = time - passedTime;
+Console.WriteLine($"Remaining time (seconds): {time}");
+
+Console.WriteLine("Enter seconds passed:");
+passedTime = int.Parse(Console.ReadLine());
+time = time - passedTime;
+Console.WriteLine($"Remaining time (seconds): {time}");
+
+Console.WriteLine("Enter seconds passed:");
+passedTime = int.Parse(Console.ReadLine());
+time = time - passedTime;
+Console.WriteLine($"Remaining time (seconds): {time}");
+
+Console.WriteLine("Enter seconds passed:");
+passedTime = int.Parse(Console.ReadLine());
+time = time - passedTime;
+Console.WriteLine($"Remaining time (seconds): {time}");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\fi
+}
+
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل عددين صحيحين وموجبين ثنائيي المنزلة، على البرنامج ان يطبع حاصل ضرب خانتي الآحاد من العددين.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter first number:
+> 15
+Enter second number:
+> 23
+Units product: 15
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+int units1 = num1 % 10;
+int units2 = num2 % 10;
+int product = units1 * units2;
+Console.WriteLine("Units product: " + product);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+}
+
+\item
+في مصنع لإنتاج حبات الشوكولاتة يعبئون كل 30 حبة بعلبة. اكتب برنامجًا يستقبل عدد حبات الشوكولاتة التي أنتجها المصنع في أحد الايام، على البرنامج أن يطبع عدد العُلب التي ملأها المصنع ذلك اليوم، وأيضًا يطبع عدد حبّات الشوكولاتة التي بقيت ولم تكفِ لملء علبة إضافية.
+{\small
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter the number of chocolates:
+> 3070
+Full boxes: 102
+Leftover chocolates: 10
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter the number of chocolates:");
+int chocolates = int.Parse(Console.ReadLine());
+int boxes = chocolates / 30;
+int leftovers = chocolates % 30;
+Console.WriteLine("Full boxes: " + boxes);
+Console.WriteLine("Leftover chocolates: " + leftovers);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+}
+
+
+
+\end{enumerate}
+
+\vspace{3cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

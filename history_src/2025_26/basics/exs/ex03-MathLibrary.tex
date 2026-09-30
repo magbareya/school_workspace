@@ -1,0 +1,404 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 3 للصف العاشر 10 $\mathtt{Math\ Library}$}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+
+\begin{enumerate}[itemsep=3em]
+
+    % Basic single-function questions
+    \item
+    اكتب برنامجًا يقرأ عددًا من المستخدم ويطبع جذره التربيعي.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+25
+The square root is 5
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+double result = Math.Sqrt(n);
+Console.WriteLine("The square root is " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا من المستخدم ويطبع تكعيبه (أي العدد مرفوعًا للقوة 3).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+6
+The cube is 216
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+double result = Math.Pow(n, 3);
+Console.WriteLine("The cube is " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددين صحيحين من المستخدم ويطبع العدد الأكبر بينهما.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 2 numbers:
+15
+8
+The max is 15
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int result = Math.Max(a, b);
+Console.WriteLine("The max is " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا صحيحًا (قد يكون سالبًا أو موجبًا) ويطبع قيمته المطلقة (بدون إشارة).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a number:
+-12
+The absolute value is 12
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int result = Math.Abs(n);
+Console.WriteLine("The absolute value is " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    % Combined questions
+    \item
+    اكتب برنامجا يستقبل من المستخدم رقمين، ثم يطبع تربيع الرقم الصغير وجذر الرقم الكبير. \\
+    \textbf{إرشاد:}
+    \begin{itemize}[itemsep=0em]
+        \item جد الرقم الأكبر والرقم الأصغر أولاً، واحفظهما في متغيرين.
+        \item احسب جذر الأكبر، وتربيع الأصغر ثم اطبعهما.
+    \end{itemize}
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 2 numbers:
+4
+9
+The sqrt of the max = 3
+The square of the min = 16
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int n1 = int.Parse(Console.ReadLine());
+int n2 = int.Parse(Console.ReadLine());
+int max = Math.Max(n1, n2);
+int min = Math.Min(n1, n2);
+double sqrtMax = Math.Sqrt(max);
+double squareMin = Math.Pow(min, 2);
+Console.WriteLine("The sqrt of the max = " + sqrtMax);
+Console.WriteLine("The square of the min = " + squareMin);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \clearpage
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ عددين صحيحين من المستخدم، ويطبع الفرق المطلق بينهما (الفرق بينهما بالقيمة المطلقة).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 2 numbers:
+5
+12
+The absolute difference = 7
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}[1]
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int diff = Math.Abs(a - b);
+Console.WriteLine("The absolute difference = " + diff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \begin{boxSolution}[2]
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int max = Math.Max(a, b);
+int min = Math.Min(a, b);
+int diff = max - min;
+Console.WriteLine("The absolute difference = " + diff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ إحداثيات نقطتين في المستوى (أي يقرأ 4 أرقام) $(x_1, y_1)$ و $(x_2, y_2)$، ثم يحسب المسافة بينهما باستخدام:
+    $$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+    \textbf{خطوات مقترحة:}
+    \begin{itemize}
+        \item احسب الفرق بين قيم $x$ وربّعه، واحفظ النتيجة في متغير.
+        \item احسب الفرق بين قيم $y$ وربّعه، واحفظ النتيجة في متغير آخر.
+        \item اجمع النتيجتين، ثم احسب الجذر التربيعي للمجموع واطبعه.
+    \end{itemize}
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x1, y1, x2, y2:
+0
+0
+3
+4
+Distance = 5
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int x1 = int.Parse(Console.ReadLine());
+int y1 = int.Parse(Console.ReadLine());
+int x2 = int.Parse(Console.ReadLine());
+int y2 = int.Parse(Console.ReadLine());
+double diffx = Math.Pow(x2 - x1, 2);
+double diffy = Math.Pow(y2 - y1, 2);
+double d = Math.Sqrt(diffx + diffy);
+Console.WriteLine("Distance = " + d);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \clearpage
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ ثلاثة أعداد من المستخدم، ويطبع الأكبر بينها.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 3 numbers:
+5
+12
+7
+The maximum = 12
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int max = Math.Max(a, b);
+max = Math.Max(max, c);
+Console.WriteLine("The maximum = " + max);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ أربعة أعداد من المستخدم ويطبع الأصغر بينها.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 4 numbers:
+8
+3
+15
+6
+The minimum = 3
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int d = int.Parse(Console.ReadLine());
+int min1 = Math.Min(a, b);
+int min2 = Math.Min(c, d);
+int min = Math.Min(min1, min2);
+Console.WriteLine("The minimum = " + min);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يستقبل ثلاثة أعداد، ويطبع الفرق الأكبر بين رقمين من بين الثلاثة.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter 3 numbers:
+10
+3
+20
+The largest difference = 17
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}[1]
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int maxBC = Math.Max(b, c);
+int max = Math.Max(a, maxBC);
+int minBC = Math.Min(b, c);
+int min = Math.Min(a, minBC);
+int diff = max - min;
+Console.WriteLine("The largest difference = " + diff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \begin{boxSolution}[2]
+    \begin{english}
+    \begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+int diff1 = Math.Abs(a-b);
+int diff2 = Math.Abs(a-c);
+int diff3 = Math.Abs(b-c);
+int maxDiff23 = Math.Max(diff2, diff3);
+int maxDiff = Math.Max(diff1, maxDiff23);
+Console.WriteLine("The largest difference = " + maxDiff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+\fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا عشريًا من المستخدم (مثلاً $12.34567$) ويقرّبه إلى منزلتين عشريتين فقط مستخدما الدالة $\mathtt{Math.Round}$. \\
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a decimal number:
+12.34567
+Rounded to 2 decimals = 12.35
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double n = double.Parse(Console.ReadLine());
+n = n * 100;
+double rounded = Math.Round(n);
+rounded = rounded / 100;
+Console.WriteLine("Rounded to 2 decimals = " + rounded);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يقرأ عددًا صحيحًا موجبًا من المستخدم، ثم يحسب أكبر عدد صحيح $n$ بحيث:
+    $$ n^2 \leq \text{العدد} $$
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a positive integer:
+20
+The largest n with n^2 <= number is 4
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+int n = (int) Math.Sqrt(num);
+Console.WriteLine("The largest n with n^2 <= number is " + n);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+\fi
+\end{enumerate}
+
+\end{document}
