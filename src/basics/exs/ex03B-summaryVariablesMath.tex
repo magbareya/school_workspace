@@ -1,0 +1,277 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 4: المتغيرات ومكتبة \textenglish{Math}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا من 3 منازل (مثلاً 258)، ويقوم ببناء عدد جديد بحيث تكون منازله معكوسة (852). ثم يطبع العدد الجديد، ويحسب ويطبع الفارق المطلق بين العدد الأصلي والعدد المعكوس.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a 3-digit number:
+258
+Reversed number = 852
+Absolute difference = 594
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+int units = num % 10;
+num = num / 10;
+int tens = num  % 10;
+int hundreds = num / 100;
+
+int reversedNum = units * 100 + tens * 10 + hundreds;
+int diff = Math.Abs(num - reversedNum);
+
+Console.WriteLine("Reversed number = " + reversedNum);
+Console.WriteLine("Absolute difference = " + diff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    \ifwhiteblack
+    \clearpage
+    \fi
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا يمثل مبلغًا من المال (من مضاعفات الـ $50$)، ويطبع أقل عدد ممكن من الأوراق النقدية (فئة 200، 100، 50) اللازمة لتكوين هذا المبلغ.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter the amount:
+878
+200 bills: 4
+100 bills: 0
+50 bills: 1
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int amount = int.Parse(Console.ReadLine());
+
+int bills200 = amount / 200;
+amount = amount % 200;
+
+int bills100 = amount / 100;
+amount = amount % 100;
+
+int bills50 = amount / 50;
+amount = amount % 50;
+
+Console.WriteLine("200 bills: " + bills200);
+Console.WriteLine("100 bills: " + bills100);
+Console.WriteLine("50 bills: " + bills50);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+    \clearpage
+
+    \item
+    اكتب برنامجًا يستقبل وقتين (وقت بداية حدث ووقت نهايته) كأعداد صحيحة من 4 منازل بنظام 24 ساعة (مثلاً 1430 تعني 14:30).
+    البرنامج يحسب مدة الحدث بالدقائق الإجمالية ويطبعها.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter start time (HHMM):
+1430
+Please enter end time (HHMM):
+1615
+Duration in minutes = 105
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int start = int.Parse(Console.ReadLine());
+int end = int.Parse(Console.ReadLine());
+
+int startHours = start / 100;
+int startMinutes = start % 100;
+int startTotalMins = startHours * 60 + startMinutes;
+
+int endHours = end / 100;
+int endMinutes = end % 100;
+int endTotalMins = endHours * 60 + endMinutes;
+
+int duration = endTotalMins - startTotalMins;
+Console.WriteLine("Duration in minutes = " + duration);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+    \ifwhiteblack
+    \clearpage
+    \fi
+
+    \item
+    اكتب برنامجًا يستقبل محيط مربع.
+    البرنامج يقوم بحساب وطباعة مساحة هذا المربع.
+    ثم، بافتراض وجود دائرة لها \textbf{نفس مساحة هذا المربع}، البرنامج يقوم بحساب نصف قطر هذه الدائرة وتقريبه لمنزلتين عشريتين باستخدام الدالة $\mathtt{Math.Round}$، ومن ثم يطبعه. \\
+    ($\text{المساحة} = 3.14 \times r^2 \Rightarrow r = \sqrt{\frac{\text{المساحة}}{3.14}}$)
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter the square's perimeter:
+20
+Square Area = 25
+Circle Radius (rounded) = 2.82
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double perimeter = double.Parse(Console.ReadLine());
+
+double side = perimeter / 4.0;
+double squareArea = Math.Pow(side, 2);
+Console.WriteLine("Square Area = " + squareArea);
+
+double radiusSq = squareArea / 3.14;
+double radius = Math.Sqrt(radiusSq);
+
+double rTimes100 = radius * 100;
+double rRounded = Math.Round(rTimes100);
+double finalRadius = rRounded / 100.0;
+
+Console.WriteLine("Circle Radius (rounded) = " + finalRadius);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+    \clearpage
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$.
+    البرنامج يقوم بحساب وطباعة قيمة الدالة التالية عند النقطة $x$:
+    $$ f(x) = \frac{x + 1}{x^3} $$
+    (افترض أن المدخلات دائما صحيحة ولا تسبب خطأ رياضي).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x:
+2
+f(x) = 0.375
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double x = double.Parse(Console.ReadLine());
+
+double num = x + 1;
+double den = Math.Pow(x, 3);
+double result = num / den;
+
+Console.WriteLine("f(x) = " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+    \ifwhiteblack
+    \clearpage
+    \fi
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$.
+    البرنامج يقوم بحساب وطباعة قيمة الدالة التالية عند النقطة $x$:
+    $$ f(x) = (\sqrt{x} + 1)^2 $$
+    (افترض أن المدخلات دائما صحيحة ولا تسبب خطأ رياضي).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x:
+4
+f(x) = 9
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double x = double.Parse(Console.ReadLine());
+
+double root = Math.Sqrt(x);
+double inner = root + 1;
+double result = Math.Pow(inner, 2);
+
+Console.WriteLine("f(x) = " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+    \clearpage
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$.
+    البرنامج يقوم بحساب وطباعة قيمة الدالة التالية عند النقطة $x$:
+    $$ f(x) = \frac{|x^3 - 8|}{\sqrt{x^2 + 16}} $$
+    (افترض أن المدخلات دائما صحيحة ولا تسبب خطأ رياضي).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x:
+3
+f(x) = 3.8
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double x = double.Parse(Console.ReadLine());
+
+double num = Math.Abs(Math.Pow(x, 3) - 8);
+double den = Math.Sqrt(Math.Pow(x, 2) + 16);
+double result = num / den;
+
+Console.WriteLine("f(x) = " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+\end{enumerate}
+
+\end{document}
