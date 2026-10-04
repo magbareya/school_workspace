@@ -1,7 +1,7 @@
-﻿\documentclass[14pt]{extarticle}
+\documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\title{وظيفة بيتية 3 للصف العاشر 10 - $\mathtt{Math\ Library\ if-else}$}
+\title{وظيفة بيتية 3 للصف العاشر 10}
 
 \begin{document}
 
@@ -10,17 +10,17 @@
 
 \begin{enumerate}[itemsep=3em]
     \item
-    اكتب برنامجًا يقرأ طول ضلع مكعب، ثم يحسب ويطبع حجمه.
-    \[
-    V = s^3
-    \]
+    اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا من 3 منازل (مثلاً 472).
+    البرنامج يقوم باستخراج منازل العدد (الآحاد، العشرات، والمئات) ويطبع كل منها على سطر منفصل.
     \ifdetailed
     \begin{boxExample}
     \begin{english}
     \begin{minted}{csharp}
-Please enter the side length of the cube:
-4
-The volume = 64
+Please enter a 3-digit number:
+472
+Units: 2
+Tens: 7
+Hundreds: 4
     \end{minted}
     \end{english}
     \end{boxExample}
@@ -28,15 +28,55 @@ The volume = 64
     \begin{boxSolution}
     \begin{english}
     \begin{minted}{csharp}
-double side = double.Parse(Console.ReadLine());
-double volume = Math.Pow(side, 3);
-Console.WriteLine("The volume = " + volume);
+int num = int.Parse(Console.ReadLine());
+
+int units = num % 10;
+num = num / 10;
+int tens = num % 10;
+int hundreds = num / 10;
+
+Console.WriteLine("Units: " + units);
+Console.WriteLine("Tens: " + tens);
+Console.WriteLine("Hundreds: " + hundreds);
     \end{minted}
     \end{english}
     \end{boxSolution}
     \clearpage
     \fi
     \fi
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا إجماليًا للطلاب في المدرسة.
+    البرنامج يقوم بتوزيع الطلاب على صفوف، بحيث يتسع كل صف لـ $30$ طالبًا كحد أقصى.
+    البرنامج يطبع عدد الصفوف الممتلئة، وعدد الطلاب المتبقين (الذين لا يكفون لفتح صف ممتلئ).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter the total number of students:
+100
+Full classes: 3
+Remaining students: 10
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int students = int.Parse(Console.ReadLine());
+
+int fullClasses = students / 30;
+int remaining = students % 30;
+
+Console.WriteLine("Full classes: " + fullClasses);
+Console.WriteLine("Remaining students: " + remaining);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+    \clearpage
 
     \item
     اكتب برنامجًا يقرأ طولي ضلعي القائمة في مثلث قائم الزاوية $(a, b)$، ثم يحسب ويطبع طول الوتر $c$ باستخدام نظرية فيثاغورس:
@@ -65,54 +105,83 @@ Console.WriteLine("The hypotenuse = " + c);
         \end{minted}
     \end{english}
 \end{boxSolution}
-\fi
 \clearpage
 \fi
-
-
-%     \item
-%     اكتب برنامجًا يقرأ إحداثيات نقطتين في الفضاء $(x_1,y_1,z_1)$ و $(x_2,y_2,z_2)$، ثم يحسب المسافة بينهما:
-%     \[
-%     d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
-%     \]
-%     \ifdetailed
-%     \begin{boxExample}
-%     \begin{english}
-%     \begin{minted}{csharp}
-% Please enter x1, y1, z1, x2, y2, z2:
-% 0
-% 0
-% 0
-% 3
-% 4
-% 12
-% Distance = 13
-%     \end{minted}
-%     \end{english}
-%     \end{boxExample}
-%     \ifwithsols
-%     \begin{boxSolution}
-%     \begin{english}
-%     \begin{minted}{csharp}
-% int x1 = int.Parse(Console.ReadLine());
-% int y1 = int.Parse(Console.ReadLine());
-% int z1 = int.Parse(Console.ReadLine());
-% int x2 = int.Parse(Console.ReadLine());
-% int y2 = int.Parse(Console.ReadLine());
-% int z2 = int.Parse(Console.ReadLine());
-% double d = Math.Sqrt(Math.Pow(x2 - x1, 2) +
-%                      Math.Pow(y2 - y1, 2) +
-%                      Math.Pow(z2 - z1, 2));
-% Console.WriteLine("Distance = " + d);
-%     \end{minted}
-%     \end{english}
-%     \end{boxSolution}
-%     \clearpage
-%     \fi
-%     \fi
+\fi
 
 
     \item
+    اكتب برنامجًا يستقبل من المستخدم أطوال أضلاع مثلث قائم الزاوية ($a$ و $b$ و $c$).
+    البرنامج يحسب مساحة هذا المثلث ويطبعها. \\
+    \textbf{ملاحظة:} في المثلث قائم الزاوية، الوتر هو أطول ضلع، والضلعان الآخران هما القائمان. والمساحة تساوي نصف حاصل ضرب القائمين.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter the 3 side lengths:
+3
+5
+4
+Area = 6
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+double c = double.Parse(Console.ReadLine());
+
+double maxAB = Math.Max(a, b);
+double hypotenuse = Math.Max(maxAB, c);
+
+// The product of the two legs is (a * b * c) / hypotenuse
+double productOfLegs = (a * b * c) / hypotenuse;
+double area = productOfLegs / 2.0;
+
+Console.WriteLine("Area = " + area);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+    \clearpage
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$.
+    البرنامج يقوم بحساب وطباعة قيمة الدالة التالية عند النقطة $x$:
+    $$ f(x) = |x - 5| + x^4 $$
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x:
+-2
+f(x) = 23
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double x = double.Parse(Console.ReadLine());
+
+double absolute = Math.Abs(x - 5);
+double power = Math.Pow(x, 4);
+double result = absolute + power;
+
+Console.WriteLine("f(x) = " + result);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    \item \textbf{سؤال بونوس:}
     اكتب برنامجًا يستقبل من المستخدم معاملات معادلة تربيعية:
     \[
         ax^2 + bx + c = 0
@@ -152,124 +221,6 @@ Console.WriteLine("The solutions are: x1 = " + x1 + ", x2 = " + x2);
     \fi
     \fi
 
-% \item
-% اكتب برنامجًا يقرأ رقمًا، وحدًا أدنى، وحدًا أعلى. يجب على البرنامج طباعة الرقم بحيث يكون محصورًا ضمن هذا النطاق (إذا كان أكبر من الحد الأعلى، اطبع الحد الأعلى، وإذا كان أصغر من الحد الأدنى، اطبع الحد الأدنى).
-% \ifdetailed
-% \begin{boxExample}
-%     \begin{english}
-%         \begin{minted}{csharp}
-%             Please enter a number, a min value, and a max value:
-%             150
-%             0
-%             100
-%             The clamped value is: 100
-%         \end{minted}
-%     \end{english}
-% \end{boxExample}
-% \ifwithsols
-% \begin{boxSolution}
-%     \begin{english}
-%         \begin{minted}{csharp}
-% int num = int.Parse(Console.ReadLine());
-% int min = int.Parse(Console.ReadLine());
-% int max = int.Parse(Console.ReadLine());
-% int clamped = Math.Max(min, Math.Min(num, max));
-% Console.WriteLine("The clamped value is: " + clamped);
-%         \end{minted}
-%     \end{english}
-% \end{boxSolution}
-% \fi
-% \fi
-
-\end{enumerate}
-
-\clearpage
-\section*{أسئلة عن الجمل الشرطية \texttt{if}}
-
-\begin{enumerate}
-    \item اكتب برنامجًا يستقبل من المستخدم علامته ويطبع له إن كان ناجحًا أو لا. \\
-    علامة النّجاح هي 55 فما فوق.
-    \ifdetailed
-    \begin{boxExample}[1]
-        \begin{english}
-            \begin{minted}{csharp}
-Please enter a your grade:
-89
-You succeeded.
-\end{minted}
-\end{english}
-\end{boxExample}
-    \begin{boxExample}[2]
-        \begin{english}
-            \begin{minted}{csharp}
-Please enter a your grade:
-54
-You failed.
-\end{minted}
-\end{english}
-\end{boxExample}
-\ifwithsols
-\begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-Console.WriteLine("Please enter you grade:");
-int grade = int.Parse(Console.ReadLine());
-if (grade >= 55)
-{
-    Console.WriteLine("You succeeded");
-}
-else
-{
-    Console.WriteLine("You failed");
-}
-    \end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-\fi
-
-\clearpage
-    \item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا. \\
-    إذا كان العدد زوجيًّا، فعلى البرنامج أن يطبع نصف العدد. \\
-    وإذا كان العدد فرديًّا فعلى البرنامج أن يطبع ضعف العدد
-    \ifdetailed
-    \begin{boxExample}[1]
-        \begin{english}
-            \begin{minted}{csharp}
-Please enter a number:
-6
-Result is 3
-\end{minted}
-\end{english}
-\end{boxExample}
-    \begin{boxExample}[2]
-        \begin{english}
-            \begin{minted}{csharp}
-Please enter a number:
-5
-Result is 10
-\end{minted}
-\end{english}
-\end{boxExample}
-\ifwithsols
-\begin{boxSolution}
-    \begin{english}
-    \begin{minted}{csharp}
-Console.WriteLine("Please enter a number:");
-int a = int.Parse(Console.ReadLine());
-if (a % 2 == 0)
-{
-    Console.WriteLine("Result is " + (a/2));
-}
-else
-{
-    Console.WriteLine("Result is " + (a*2));
-}
-    \end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-\fi
 \end{enumerate}
 
 
