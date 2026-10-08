@@ -1,0 +1,219 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة عمل 1 - الفئة \textenglish{Point}}
+\else
+\title{ورقة عمل 1 - الفئة \textenglish{Point}}
+\fi
+
+\begin{document}
+
+\maketitle
+
+
+أمامك واجهة الفئة \textenglish{Point} التي تمثّل نقطة في هيئة المحاور:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+{\small
+\begin{tabular}{|p{0.5\textwidth}|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{\textenglish{Point}}} \\
+\hline
+صفة تُمثّل الإحداثي $x$ للنقطة في المستوى. & \textenglish{private double x} \\
+\hline
+صفة تُمثّل الإحداثي $y$ للنقطة في المستوى. & \textenglish{private double y} \\
+\hline
+عمليّة بنائيّة تتلقّى قيمًا لجميع صفات الكائن. & \textenglish{public Point(double x, double y)} \\
+\hline
+عمليّة بنائيّة (افتراضية) تُهيّئ النقطة إلى نقطة الأصل $(0,0)$. & \textenglish{public Point()} \\
+\hline
+عمليّة بنائيّة تتلقّى كائنًا آخر من نمط \textenglish{Point} وتنسخ قيمه (Copy Constructor). & \textenglish{public Point(Point other)} \\
+\hline
+عمليّة تُعيد قيمة الإحداثي $x$. & \textenglish{public double GetX()} \\
+\hline
+عمليّة تُعيد قيمة الإحداثي $y$. & \textenglish{public double GetY()} \\
+\hline
+عمليّة تُعدّل قيمة الإحداثي $x$ للنقطة الحالية. & \textenglish{public void SetX(double x)} \\
+\hline
+عمليّة تُعدّل قيمة الإحداثي $y$ للنقطة الحالية. & \textenglish{public void SetY(double y)} \\
+\hline
+عمليّة تتلقّى قيمتين وتُزيح (تُحرّك) النقطة الحالية بمقدار $x$ على محور السينات وبمقدار $y$ على محور الصادات. & \textenglish{public void MoveBy(double x, double y)} \\
+\hline
+عمليّة تُعيد نصّاً يُمثّل النقطة بالصيغة $(x, y)$. & \textenglish{public string ToString()} \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\clearpage
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{تطبيق الفئة:} \\
+    اكتب تطبيقًا كاملاً للفئة \textenglish{Point} يشمل تعريف الخصائص، العمليات البنائية الثلاث، عمليات الاسترجاع والتعديل، وعمليات \textenglish{MoveBy} و \textenglish{ToString}.
+
+    \item \textbf{استخدام الفئة في البرنامج الرئيسي:} \\
+    اكتب برنامجًا رئيسيًا (\textenglish{Main}) يقوم بإنشاء نقطتين مختلفتين، ويطبع إحداثياتهما، ثم يفحص الدوال التي قمت بكتابتها في الفئة.
+
+    \item \textbf{دوال ثابتة (\textenglish{Static Methods}) داخل الفئة \textenglish{Point}:} \\
+    أضف الدوال الثابتة التالية إلى الفئة \textenglish{Point}، ثم استدعها في البرنامج الرئيسي لاختبارها:
+    \begin{enumerate}[label=\textbf{\alph*)}]
+        \item عمليّة باسم \textenglish{Slope} تتلقّى كائنين من نمط \textenglish{Point} وتُعيد ميل المستقيم المار بينهما. (قانون الميل: $m = \frac{y_2 - y_1}{x_2 - x_1}$)
+        \item عمليّة باسم \textenglish{Distance} تتلقّى كائنين من نمط \textenglish{Point} وتُعيد المسافة بينهما. (قانون المسافة: $d = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$)
+        \item عمليّة باسم \textenglish{GetMiddlePoint} تتلقّى كائنين من نمط \textenglish{Point} وتُعيد كائنًا جديدًا يُمثّل نقطة المنتصف بينهما. (قانون نقطة المنتصف: $M = (\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2})$)
+    \end{enumerate}
+
+    \item \textbf{دوال مساعدة في البرنامج الرئيسي (خارج الفئة \textenglish{Point}):} \\
+    اكتب الدوال الثابتة التالية في فئة البرنامج الرئيسي (بجوار الـ \textenglish{Main})، ثم استدعها لاختبارها:
+    \begin{enumerate}[label=\textbf{\alph*)}]
+        \item عمليّة باسم \textenglish{GetFurthestFromOrigin} تتلقّى مصفوفة من النقاط (مصفوفة كائنات \textenglish{Point}) وتُعيد النقطة التي بُعدها عن نقطة الأصل $(0,0)$ هو الأكبر.
+        \item عمليّة باسم \textenglish{GetDistancesFromOrigin} تتلقّى مصفوفة من النقاط وتُعيد مصفوفة جديدة موازية، بحيث تحتوي كل خانة فيها على بُعد النقطة المقابلة عن نقطة الأصل $(0,0)$.
+        \item عمليّة باسم \textenglish{GetMostRightPoint} تتلقى مصفوفة من النقاط. تعيد العملية مؤشرًا يُشير إلى النقطة الموجودة في أقصى اليمين (أي النقطة التي لها أكبر إحداثي $x$).
+        \item عمليّة باسم \textenglish{FindClosestPair} تتلقى مصفوفة من النقاط. تقوم العملية بإيجاد أقرب نقطتين على بعضهما البعض في المصفوفة، وتطبع إحداثياتهما. افترض أن المصفوفة تحتوي على نقطتين على الأقل.
+    \end{enumerate}
+
+\end{enumerate}
+
+\ifwithsols
+{\small
+\begin{boxSolution}[حلول ورقة العمل]
+\begin{english}
+\begin{minted}{csharp}
+using System;
+
+public class Point
+{
+    private double x;
+    private double y;
+
+    public Point(double x, double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Point()
+    {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public Point(Point other)
+    {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    public double GetX() { return this.x; }
+    public double GetY() { return this.y; }
+    public void SetX(double x) { this.x = x; }
+    public void SetY(double y) { this.y = y; }
+
+    public void MoveBy(double dx, double dy)
+    {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    public string ToString()
+    {
+        return $"({this.x}, {this.y})";
+    }
+
+    // Static Methods in Point class
+    public static double Slope(Point p1, Point p2)
+    {
+        return (p2.y - p1.y) / (p2.x - p1.x);
+    }
+
+    public static double Distance(Point p1, Point p2)
+    {
+        return Math.Sqrt(Math.Pow(p1.x - p2.x, 2) + Math.Pow(p1.y - p2.y, 2));
+    }
+
+    public static Point GetMiddlePoint(Point p1, Point p2)
+    {
+        return new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+    }
+
+}
+
+public class Program
+{
+    // Static Methods in Main Program
+    public static Point GetFurthestFromOrigin(Point[] points)
+    {
+        Point origin = new Point(0, 0);
+        Point furthest = points[0];
+        double maxDist = Point.Distance(furthest, origin);
+
+        for (int i = 1; i < points.Length; i++)
+        {
+            double dist = Point.Distance(points[i], origin);
+            if (dist > maxDist)
+            {
+                maxDist = dist;
+                furthest = points[i];
+            }
+        }
+        return furthest;
+    }
+
+    public static double[] GetDistancesFromOrigin(Point[] points)
+    {
+        Point origin = new Point(0, 0);
+        double[] distances = new double[points.Length];
+        for (int i = 0; i < points.Length; i++)
+        {
+            distances[i] = Point.Distance(points[i], origin);
+        }
+        return distances;
+    }
+
+    public static Point GetMostRightPoint(Point[] arr)
+    {
+        Point max = arr[0];
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (arr[i].GetX() > max.GetX())
+                max = arr[i];
+        }
+        return max;
+    }
+
+    public static void FindClosestPair(Point[] arr)
+    {
+        double minDistance = double.MaxValue;
+        Point p1 = null;
+        Point p2 = null;
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            for (int j = i + 1; j < arr.Length; j++)
+            {
+                double dist = Point.Distance(arr[i], arr[j]);
+                if (dist < minDistance)
+                {
+                    minDistance = dist;
+                    p1 = arr[i];
+                    p2 = arr[j];
+                }
+            }
+        }
+        if (p1 != null && p2 != null)
+            Console.WriteLine($"{p1.ToString()} and {p2.ToString()}");
+    }
+
+    public static void Main(string[] args)
+    {
+        // Tests can be written here...
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+}
+\fi
+
+\end{document}

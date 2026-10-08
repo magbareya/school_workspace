@@ -1,0 +1,198 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة 1 - الفئة \textenglish{Date}}
+\else
+\title{وظيفة 1 - الفئة \textenglish{Date}}
+\fi
+
+\begin{document}
+
+\maketitle
+
+أمامك واجهة الفئة \textenglish{Date} التي تُمثّل تاريخاً مكوّناً من يوم، شهر، وسنة:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+{\small
+\begin{tabular}{|p{0.5\textwidth}|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{\textenglish{Date}}} \\
+\hline
+صفة تُمثّل اليوم. & \textenglish{private int day} \\
+\hline
+صفة تُمثّل الشهر. & \textenglish{private int month} \\
+\hline
+صفة تُمثّل السنة. & \textenglish{private int year} \\
+\hline
+عمليّة بنائيّة تتلقّى قيمًا لجميع صفات الكائن. & \textenglish{public Date(int day, int month, int year)} \\
+\hline
+عمليّة بنائيّة تتلقّى كائنًا آخر وتبني كائنًا جديدا يمثل نفس التاريخ. & \textenglish{public Date(Date other)} \\
+\hline
+عمليّة تُعيد قيمة السنة. & \textenglish{public int GetYear()} \\
+\hline
+عمليّة تُعيد قيمة الشهر. & \textenglish{public int GetMonth()} \\
+\hline
+عمليّة تُعيد قيمة اليوم. & \textenglish{public int GetDay()} \\
+\hline
+عمليّة تُعدّل قيمة السنة حسب المُعطى.  & \textenglish{public void SetYear(int yearToSet)} \\
+\hline
+عمليّة تُعدّل قيمة الشهر حسب المُعطى. & \textenglish{public void SetMonth(int monthToSet)} \\
+\hline
+عمليّة تُعدّل قيمة اليوم حسب المُعطى. & \textenglish{public void SetDay(int dayToSet)} \\
+\hline
+عمليّة تُعيد عدداً موجباً إذا كان التاريخ الحالي متأخراً عن التاريخ \textenglish{other}؛ 0 - إذا كان التاريخان متساويين؛ وعدداً سالباً - إذا كان التاريخ الحالي يسبق التاريخ \textenglish{other}. & \textenglish{public int CompareTo(Date other)} \\
+\hline
+عمليّة تُعيد نصّاً يُمثّل التاريخ بالصيغة: \textenglish{<day>.<month>.<year>} & \textenglish{public override string ToString()} \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\clearpage
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{تطبيق الفئة:} \\
+    اكتب تطبيقًا كاملاً للفئة \textenglish{Date} يشمل تعريف الخصائص، العمليّة البنائية، عمليات الاسترجاع والتعديل، وعمليتي \textenglish{CompareTo} و \textenglish{ToString}.
+
+    \item \textbf{استخدام الفئة في البرنامج الرئيسي:} \\
+    اكتب برنامجًا رئيسيًا (\textenglish{Main}) يقوم بإنشاء تاريخين مختلفين، ويطبع قيمهما، ثم يفحص الدوال التي قمت بكتابتها في الفئة.
+
+    \item \textbf{دوال ثابتة (\textenglish{Static Methods}) داخل الفئة \textenglish{Date}:} \\
+    أضف الدوال الثابتة التالية إلى الفئة \textenglish{Date}، ثم استدعها في البرنامج الرئيسي لاختبارها:
+    \begin{enumerate}[label=\textbf{\alph*)}]
+        \item عمليّة تتلقّى كائنين من نمط \textenglish{Date} وتُعيد الفرق المطلق بين سنتيهما (الفرق بالسنوات).
+        \item عمليّة تتلقّى كائنين من نمط \textenglish{Date} وتُعيد الكائن الذي يُمثّل التاريخ الأقدم (الأسبق).
+        \item عمليّة تتلقّى مصفوفة من التواريخ (مصفوفة كائنات \textenglish{Date}) وتُعيد التاريخ الأحدث (المتأخر أكثر) من بينها.
+        \item عمليّة تتلقّى مصفوفة من التواريخ وتُعيد مصفوفة أعداد صحيحة موازية، بحيث تحتوي كل خانة فيها على سنة التاريخ المقابل لها في المصفوفة الأصلية.
+    \end{enumerate}
+
+    \item \textbf{دوال مساعدة في البرنامج الرئيسي (خارج الفئة \textenglish{Date}):} \\
+    اكتب الدوال الثابتة التالية في فئة البرنامج الرئيسي (بجوار الـ \textenglish{Main})، ثم استدعها لاختبارها:
+    \begin{enumerate}[label=\textbf{\alph*)}]
+        \item عمليّة باسم \textenglish{CountDatesInYear} تتلقى مصفوفة من التواريخ وسنة معينة. تعيد العملية عدد التواريخ في المصفوفة التي توافق هذه السنة.
+        \item \textbf{(بونوس 10 علامات)} عمليّة باسم \textenglish{FindSameBirthdayPairs} تتلقى مصفوفة من التواريخ. تقوم العملية بإيجاد وطباعة جميع أزواج التواريخ التي تتطابق في اليوم والشهر (بغض النظر عن السنة). افترض أن المصفوفة تحتوي على تاريخين على الأقل.
+    \end{enumerate}
+
+\end{enumerate}
+
+\ifwithsols
+{\small
+\begin{boxSolution}[حلول الوظيفة]
+\begin{english}
+\begin{minted}{csharp}
+using System;
+
+public class Date
+{
+    private int day;
+    private int month;
+    private int year;
+
+    public Date(int day, int month, int year)
+    {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    public int GetDay() { return this.day; }
+    public int GetMonth() { return this.month; }
+    public int GetYear() { return this.year; }
+
+    public void SetDay(int dayToSet) { this.day = dayToSet; }
+    public void SetMonth(int monthToSet) { this.month = monthToSet; }
+    public void SetYear(int yearToSet) { this.year = yearToSet; }
+
+    public int CompareTo(Date other)
+    {
+        if (this.year != other.year)
+            return this.year - other.year;
+        if (this.month != other.month)
+            return this.month - other.month;
+        return this.day - other.day;
+    }
+
+    public string ToString()
+    {
+        return $"{this.day}.{this.month}.{this.year}";
+    }
+
+    // Static Methods in Date class
+    public static int DifferenceInYears(Date d1, Date d2)
+    {
+        return Math.Abs(d1.year - d2.year);
+    }
+
+    public static Date GetEarlierDate(Date d1, Date d2)
+    {
+        if (d1.CompareTo(d2) < 0)
+            return d1;
+        return d2;
+    }
+
+    public static Date GetLatestDate(Date[] dates)
+    {
+        Date latest = dates[0];
+        for (int i = 1; i < dates.Length; i++)
+        {
+            if (dates[i].CompareTo(latest) > 0)
+            {
+                latest = dates[i];
+            }
+        }
+        return latest;
+    }
+
+    public static int[] GetYearsArray(Date[] dates)
+    {
+        int[] years = new int[dates.Length];
+        for (int i = 0; i < dates.Length; i++)
+        {
+            years[i] = dates[i].GetYear();
+        }
+        return years;
+    }
+}
+
+public class Program
+{
+    // Static Methods in Main Program
+    public static int CountDatesInYear(Date[] arr, int year)
+    {
+        int count = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i].GetYear() == year)
+                count++;
+        }
+        return count;
+    }
+
+    public static void FindSameBirthdayPairs(Date[] arr)
+    {
+        for (int i = 0; i < arr.Length; i++)
+        {
+            for (int j = i + 1; j < arr.Length; j++)
+            {
+                if (arr[i].GetDay() == arr[j].GetDay() && arr[i].GetMonth() == arr[j].GetMonth())
+                {
+                    Console.WriteLine($"{arr[i].ToString()} and {arr[j].ToString()} share a birthday!");
+                }
+            }
+        }
+    }
+
+    public static void Main(string[] args)
+    {
+        // Tests can be written here...
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+}
+\fi
+
+\end{document}

@@ -1,0 +1,153 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{نظام إدارة النادي الرياضي - البرمجة الموجهة للكائنات (OOP)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+    \item
+    \textbf{بناء فئة الاشتراك (\textenglish{Member}):} \\
+    اكتب الفئة \textenglish{Member} بحيث تشمل الخصائص التالية:
+    \begin{itemize}
+        \item \textenglish{MemberName} (اسم المشترك - نص).
+        \item \textenglish{SubscriptionId} (رقم الاشتراك - عدد صحيح).
+        \item \textenglish{IsActive} (حالة الفعالية - قيمة منطقية \textenglish{bool}).
+    \end{itemize}
+    أضف دالة بناء (Constructor) تستقبل القيم وتهيئ الخصائص المذكورة أعلاه.
+
+    \item
+    \textbf{بناء فئة البوابة (\textenglish{ClubGate}):} \\
+    اكتب الفئة \textenglish{ClubGate} بحيث تشمل الخصائص التالية:
+    \begin{itemize}
+        \item \textenglish{GateName} (اسم البوابة - نص).
+        \item \textenglish{Members} (مصفوفة من نوع \textenglish{Member} تمثل قائمة المشتركين).
+    \end{itemize}
+    أضف دالة بناء (Constructor) لتهيئة اسم البوابة والمصفوفة.
+
+    أضف الدالة \textenglish{CheckEntry(int subId)} التي تستقبل رقم اشتراك، تبحث عنه في المصفوفة، وتفحص خاصية \textenglish{IsActive} الخاصة به. إذا كانت \textenglish{true} تطبع "تم فتح البوابة للمشترك [الاسم]"، وإذا كانت \textenglish{false} (أو كان الاشتراك غير موجود) تطبع "عذراً، الدخول غير مسموح". \\
+
+    أضف دالة \textenglish{CheckEntry(Member member)} كتحميل زائد (Overload) تقوم بنفس العمل ولكنها تستقبل كائن المشترك مباشرة بدلاً من البحث عنه بواسطة رقم الاشتراك.
+
+    \item
+    \textbf{فحص الكود (في \textenglish{Main}):} \\
+    اكتب برنامجًا رئيسيًا يقوم بما يلي:
+    \begin{itemize}
+        \item إنشاء بوابة (\textenglish{Gate A}) وتهيئة مصفوفة المشتركين بداخلها.
+        \item إنشاء اشتراك فعّال باسمك، واشتراك غير فعّال باسم صديقك، وإضافتهما للمصفوفة.
+        \item استدعاء دالة \textenglish{CheckEntry} وتمرير رقم الاشتراك الخاص بك لفحص الدخول.
+        \item استدعاء دالة \textenglish{CheckEntry} وتمرير كائن الاشتراك الخاص بصديقك (باستخدام الـ Overload) والتأكد من المخرجات.
+    \end{itemize}
+\end{enumerate}
+
+\clearpage
+\section*{المرحلة الثانية: بناء فئات الموظفين (تكرار الكود)}
+الهدف: إضافة أقسام الإدارة والتدريب للنظام باستخدام ما تعلمناه حتى الآن.
+
+\begin{enumerate}[itemsep=3em]
+    \item
+    \textbf{بناء فئة المدرب (\textenglish{Trainer}):} \\
+    اكتب الفئة \textenglish{Trainer} بحيث تشمل الخصائص التالية:
+    \textenglish{Id} (رقم الهوية)، \textenglish{FullName} (الاسم الكامل)، \textenglish{PhoneNumber} (رقم الهاتف)، \textenglish{BasicSalary} (الراتب الأساسي)، \textenglish{Specialty} (التخصص). \\
+    أضف المهام التالية:
+    \begin{itemize}
+        \item دالة بناء تستقبل 5 معطيات لتهيئة جميع الخصائص.
+        \item دالة \textenglish{PrintInfo()} لطباعة بيانات المدرب.
+        \item دالة \textenglish{CalculateSalary()} تُرجع قيمة الراتب الأساسي.
+    \end{itemize}
+
+    \item
+    \textbf{بناء فئة المدير (\textenglish{Manager}):} \\
+    اكتب الفئة \textenglish{Manager} بحيث تشمل الخصائص التالية:
+    \textenglish{Id}، \textenglish{FullName}، \textenglish{PhoneNumber}، \textenglish{BasicSalary}، \textenglish{Department} (القسم). \\
+    أضف المهام التالية:
+    \begin{itemize}
+        \item دالة بناء تستقبل 5 معطيات لتهيئة الخصائص.
+        \item دالة \textenglish{PrintInfo()} لطباعة بيانات المدير.
+        \item دالة \textenglish{CalculateSalary()} تُرجع قيمة الراتب الأساسي.
+    \end{itemize}
+
+    \item
+    \textbf{فحص الكود (في \textenglish{Main}):} \\
+    أضف للبرنامج الرئيسي الكود التالي:
+    \begin{itemize}
+        \item إنشاء كائن من نوع \textenglish{Trainer} وكائن من نوع \textenglish{Manager}.
+        \item استدعاء \textenglish{PrintInfo()} و \textenglish{CalculateSalary()} لكليهما.
+    \end{itemize}
+\end{enumerate}
+
+\clearpage
+\section*{المرحلة الثالثة: صدمة التعديل المفاجئ}
+أرسلت إدارة النادي طلبًا عاجلًا لتحديث النظام بالمتطلبات التالية:
+\begin{itemize}
+    \item إضافة خاصية إجبارية جديدة وهي البريد الإلكتروني (\textenglish{EmailAddress}) لجميع العاملين.
+    \item إضافة علاوة بنسبة 10\% على الراتب لجميع العاملين بمناسبة الأعياد.
+\end{itemize}
+
+\begin{enumerate}[itemsep=3em]
+    \item
+    \textbf{المهام (العمل اليدوي المكرر):} \\
+    قم بتحديث الفئات السابقة كالتالي:
+    \begin{itemize}
+        \item افتح فئة \textenglish{Trainer} وأضف الخاصية الجديدة (\textenglish{EmailAddress}).
+        \item عدّل دالة البناء في \textenglish{Trainer} لتستقبل 6 معطيات.
+        \item عدّل دالة \textenglish{CalculateSalary()} في \textenglish{Trainer} لتضرب الراتب بـ 1.10.
+        \item \textbf{كرر جميع هذه الخطوات الثلاث تماماً داخل فئة \textenglish{Manager}.}
+    \end{itemize}
+
+    \item
+    \textbf{فحص الكود (في \textenglish{Main}):} \\
+    \begin{itemize}
+        \item قم بتحديث الكائنات القديمة لتشمل البريد الإلكتروني.
+        \item تأكد من أن الراتب الجديد يُحسب بشكل صحيح بعد إضافة العلاوة.
+    \end{itemize}
+\end{enumerate}
+
+\clearpage
+\section*{المرحلة الرابعة: الوراثة كحل هندسي}
+لحل مشكلة تكرار الكود وصعوبة التعديل، سنستخدم مفهوم الوراثة (Inheritance) لتمثيل علاقة التصنيف الهرمية.
+
+\begin{enumerate}[itemsep=3em]
+    \item
+    \textbf{بناء فئة أساسية (\textenglish{Employee}):}
+    \begin{itemize}
+        \item انقل جميع الخصائص المشتركة إليها: \textenglish{Id}، \textenglish{FullName}، \textenglish{PhoneNumber}، \textenglish{EmailAddress}، \textenglish{BasicSalary}.
+        \item اكتب دالة بناء واحدة هنا تهيئ هذه الخصائص.
+        \item اكتب دالة \textenglish{CalculateSalary()} ودالة \textenglish{PrintInfo()} مرة واحدة فقط هنا.
+    \end{itemize}
+
+    \item
+    \textbf{تحديث فئة المدرب (\textenglish{Trainer}):}
+    \begin{itemize}
+        \item اجعلها ترث من الفئة الأساسية (الفئة العليا) باستخدام النقطتين الرأسيتين \textenglish{:} للدلالة على \textenglish{Employee}.
+        \item أبقِ خاصية \textenglish{Specialty} فقط (كتوسيع للفئة الفرعية).
+        \item استخدم الكلمة المحجوزة \textenglish{base} في دالة البناء لتمرير المعطيات المشتركة لدالة بناء الفئة الأساسية.
+    \end{itemize}
+
+    \item
+    \textbf{تحديث فئة المدير (\textenglish{Manager}):}
+    \begin{itemize}
+        \item اجعلها ترث من الفئة الأساسية \textenglish{Employee}.
+        \item أبقِ خاصية \textenglish{Department} فقط.
+        \item استخدم الكلمة المحجوزة \textenglish{base} في دالة البناء.
+    \end{itemize}
+
+    \item
+    \textbf{فحص الكود (في \textenglish{Main}):}
+    \begin{itemize}
+        \item قم بتشغيل نفس الكود الموجود في الـ \textenglish{Main} من المرحلة الثالثة.
+        \item يجب أن يعمل البرنامج بكفاءة، مع ملاحظة أن حجم الكود في فئتي \textenglish{Trainer} و \textenglish{Manager} أصبح قصيراً جداً وخالياً من التكرار بفضل إعادة استخدام الكود.
+    \end{itemize}
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
