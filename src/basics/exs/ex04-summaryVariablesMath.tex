@@ -159,11 +159,9 @@ Console.WriteLine("Square Area = " + squareArea);
 double radiusSq = squareArea / 3.14;
 double radius = Math.Sqrt(radiusSq);
 
-double rTimes100 = radius * 100;
-double rRounded = Math.Round(rTimes100);
-double finalRadius = rRounded / 100.0;
+radius = Math.Round(radius, 2);
 
-Console.WriteLine("Circle Radius (rounded) = " + finalRadius);
+Console.WriteLine("Circle Radius (rounded) = " + radius);
     \end{minted}
     \end{english}
     \end{boxSolution}

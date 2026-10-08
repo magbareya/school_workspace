@@ -1,0 +1,163 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{وظيفة بيتية 4: المتغيرات ومكتبة \textenglish{Math}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا من 4 منازل (مثلاً 1234).
+    البرنامج يقوم ببناء عدد جديد بحيث يتم التبديل بين منزلة العشرات ومنزلة المئات (1324).
+    البرنامج يطبع العدد الجديد، ثم يطبع الفارق المطلق بين العددين.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter a 4-digit number:
+1234
+New number = 1324
+Absolute difference = 90
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+
+int units = num % 10;
+int tens = (num / 10) % 10;
+int hundreds = (num / 100) % 10;
+int thousands = num / 1000;
+
+int newNum = thousands * 1000 + tens * 100 + hundreds * 10 + units;
+int diff = Math.Abs(num - newNum);
+
+Console.WriteLine("New number = " + newNum);
+Console.WriteLine("Absolute difference = " + diff);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يستقبل عددًا يمثل إجمالي عدد الأيام. البرنامج يقوم بتحويل هذا العدد إلى سنوات (اعتبر السنة 365 يومًا)، وأشهر (اعتبر الشهر 30 يومًا)، وأيام متبقية.
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter total days:
+800
+Years = 2
+Months = 2
+Days = 10
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int totalDays = int.Parse(Console.ReadLine());
+
+int years = totalDays / 365;
+int remainingDays = totalDays % 365;
+
+int months = remainingDays / 30;
+int days = remainingDays % 30;
+
+Console.WriteLine("Years = " + years);
+Console.WriteLine("Months = " + months);
+Console.WriteLine("Days = " + days);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+    \clearpage
+
+    \item
+    اكتب برنامجًا يستقبل وقت بداية حدث ما كعدد صحيح من 4 منازل بنظام 24 ساعة (مثلاً 1430 تعني 14:30)، ويستقبل مدة الحدث بالدقائق (مثلاً 135 دقيقة).
+    البرنامج يحسب وقت انتهاء الحدث ويطبعه بنفس الصيغة (HHMM).
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter start time (HHMM):
+1430
+Please enter duration in minutes:
+135
+End time (HHMM) = 1645
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+int startTime = int.Parse(Console.ReadLine());
+int duration = int.Parse(Console.ReadLine());
+
+int startHours = startTime / 100;
+int startMins = startTime % 100;
+
+int totalStartMins = startHours * 60 + startMins;
+int totalEndMins = totalStartMins + duration;
+
+int endHours = totalEndMins / 60;
+int endMins = totalEndMins % 60;
+
+int endTime = endHours * 100 + endMins;
+Console.WriteLine("End time (HHMM) = " + endTime);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \clearpage
+    \fi
+    \fi
+
+    \item
+    اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$.
+    البرنامج يحسب ويطبع قيمة الدالة التالية عند النقطة $x$ (البرنامج يقرب النتيجة إلى فاصلتين):
+    $$ f(x) = \sqrt{|x^3 - 1|} $$
+    \ifdetailed
+    \begin{boxExample}
+    \begin{english}
+    \begin{minted}{csharp}
+Please enter x:
+3
+f(x) = 5.1
+    \end{minted}
+    \end{english}
+    \end{boxExample}
+    \ifwithsols
+    \begin{boxSolution}
+    \begin{english}
+    \begin{minted}{csharp}
+double x = double.Parse(Console.ReadLine());
+
+double cube = Math.Pow(x, 3);
+double absolute = Math.Abs(cube - 1);
+double result = Math.Sqrt(absolute);
+
+double resultTimes100 = result * 100;
+double resultRounded = Math.Round(resultTimes100) / 100.0;
+
+Console.WriteLine("f(x) = " + resultRounded);
+    \end{minted}
+    \end{english}
+    \end{boxSolution}
+    \fi
+    \fi
+
+\end{enumerate}
+
+\end{document}
