@@ -84,11 +84,16 @@ This repository contains educational materials for a Computer Science Basics cou
 3. Run `make` to generate all materials
 4. View generated PDFs in `out/`
 
+## Authoring & Teaching Style Guide
+
+All worksheets, homeworks, lesson notes, and exams follow a unified pedagogical and LaTeX authoring standard. Detailed instructions, terminology definitions, and code formatting rules are documented in:
+- **[AGENTS.md](AGENTS.md)**: Master style guide for contributors and AI assistants.
+
 ## Dependencies
 
 - Python 3
 - Jupyter Notebook
 - Pandoc
 - XeLaTeX
-- LaTeX packages (minted, etc.)
+- LaTeX packages (minted, polyglossia, tcolorbox, etc.)
 - JFLAP (for automata files)
