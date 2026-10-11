@@ -1,0 +1,184 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة عمل - الشروط والشروط المركبة}
+\else
+\title{ورقة عمل - الشروط والشروط المركبة}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{سؤال 1: حدد نتيجة التعبير المنطقي (\textenglish{True / False})}
+\begin{english}
+\begin{enumerate}[label=\arabic*), itemsep=1em]
+    \item \textenglish{3 < 5 and 9 > 10}
+    \item \textenglish{8 < 7 or 16 > 15}
+    \item \textenglish{4 <= 3 and 2 == 2}
+    \item \textenglish{10 <= 10 or 5 != 5}
+    \item \textenglish{12 < 10 and 5 >= 3}
+    \item \textenglish{9 != 9 and 6 > 5}
+    \item \textenglish{(3 > 5 and 9 < 10) or (6 == 6)}
+    \item \textenglish{(4 < 2 and 8 > 7) or (5 < 5)}
+    \item \textenglish{(7 > 6 and 12 < 11) and (8 > 8)}
+    \item \textenglish{(not(2 < 1) and 6 > 5) or not(5 != 10)}
+\end{enumerate}
+\end{english}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{enumerate}[label=\arabic*)]
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{False}
+    \item \textenglish{True}
+\end{enumerate}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\section*{سؤال 2: أوامر طباعة التعبيرات المنطقيّة}
+نفّذ أسطر الكود التالية لمعرفة نتيجة الطباعة (\textenglish{True} أم \textenglish{False}).
+\begin{english}
+\begin{enumerate}[label=\arabic*), itemsep=1em]
+    \item \textenglish{print(4 < 2 and 8 > 7)}
+    \item \textenglish{print(5 < 4 or 11 > 10)}
+    \item \textenglish{print(9 < 8 and 15 > 14)}
+    \item \textenglish{print(6 < 5 and 13 > 12)}
+    \item \textenglish{print(1 < 0 and 4 > 3)}
+    \item \textenglish{print(8 < 7 or 16 > 15)}
+    \item \textenglish{print(10 < 9 and 20 > 19)}
+    \item \textenglish{print((4 < 2 and 8 > 7) or not(5 == 5))}
+    \item \textenglish{print((not(2 < 1) and 6 > 5) or not(10 == 10))}
+    \item \textenglish{print((not(9 > 8) and not(15 < 14)) or (11 < 11))}
+    \item \textenglish{print((8 > 7 or not(16 < 15)) or (14 == 14))}
+    \item \textenglish{print((not(10 < 9) and 20 > 19) or not(15 == 15))}
+\end{enumerate}
+\end{english}
+
+\ifwithsols
+\begin{boxSolution}
+    \begin{english}
+\begin{enumerate}[label=\arabic*)]
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{False}
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{False}
+    \item \textenglish{True}
+    \item \textenglish{True}
+\end{enumerate}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\section*{كتابة برنامج - اختياري}
+\begin{enumerate}[itemsep=3em]
+
+\item \textbf{برنامج 1: شراء حاسوب نقال} \\
+اكتبوا برنامج يستقبل المبلغ المالي الذي تم توفيره وعدد أشهر التوفير. إذا كان المبلغ الذي تم توفيره أكثر من 4000 ش.ج أو عدد الاشهر أكثر من 10 اطبعوا عبارة توضيحية أنه "أصبح باستطاعتكم شراء حاسوب نقال".
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+savings = float(input("أدخل المبلغ المالي الموفر (ش.ج): "))
+months = int(input("أدخل عدد أشهر التوفير: "))
+
+if savings > 4000 or months > 10:
+    print("أصبح باستطاعتكم شراء حاسوب نقال")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{برنامج 2: مساحة الذاكرة المتاحة} \\
+اكتبوا برنامج يستقبل مساحة الذاكرة المتاحة في مجلّد الصور المحوسب. إذا كانت القيمة المُدخلة اقل من 2 ميجابايت (\textenglish{MB})، اطبعوا عبارة توضيحية تنص أن المكان امتلأ ويجب حذف صور.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+free_space_mb = float(input("أدخل مساحة الذاكرة المتاحة بالميجابايت (MB): "))
+
+if free_space_mb < 2:
+    print("المكان امتلأ ويجب حذف صور")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{برنامج 3: قطار الجبال} \\
+اكتبوا برنامج يستقبل طول وعمر شخص. إذا كان طول الشخص 130 سم وما فوق وعمره 13 سنة وما فوق، اطبعوا عبارة توضيحية أن بامكانه الدخول لقطار الجبال.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+height = float(input("أدخل طول الشخص (سم): "))
+age = int(input("أدخل عمر الشخص (سنوات): "))
+
+if height >= 130 and age >= 13:
+    print("بإمكانك الدخول لقطار الجبال")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{برنامج 4: رخصة القيادة} \\
+يحصل الطالب على رخصة قيادة إذا تحققت الشروط التالية: عمره فوق 17، نجح في امتحان السياقة النظري (تئوريا) ونجح في امتحان السياقة العملي. اكتبوا برنامج يستقبل المتطلبات الثلاثة وفي حالة أن الطالب لا يستحق رخصة سياقة، يقوم بطباعة السبب.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+age = float(input("أدخل عمر الطالب: "))
+passed_theory = input("هل نجحت في الامتحان النظري؟ (نعم/لا): ")
+passed_practical = input("هل نجحت في الامتحان العملي؟ (نعم/لا): ")
+
+reasons = []
+if age <= 17:
+    reasons.append("العمر يجب أن يكون فوق 17 سنة")
+if passed_theory != "نعم":
+    reasons.append("لم تنجح في امتحان السياقة النظري")
+if passed_practical != "نعم":
+    reasons.append("لم تنجح في امتحان السياقة العملي")
+
+if len(reasons) == 0:
+    print("تهانينا! أنت تستحق الحصول على رخصة القيادة.")
+else:
+    print("لا تستحق رخصة القيادة للأسباب التالية:")
+    for reason in reasons:
+        print("- ", reason)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

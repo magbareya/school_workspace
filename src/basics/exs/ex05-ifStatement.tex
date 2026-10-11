@@ -1,0 +1,1493 @@
+﻿\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ورقة تمرن 5 للصف العاشر 10 $\mathtt{if\ Statement}$}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ==============================================================
+% القسم الأول: جملة الشرط البسيطة
+% ==============================================================
+\section*{القسم الأوّل: جملة الشرط البسيطة}
+
+\begin{enumerate}[itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا (غير الصفر)، ويطبع له "\textbf{موجب}" إذا كان العدد أكبر من صفر، و"\textbf{سالب}" إذا كان أصغر من صفر.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter an integer:");
+int num = int.Parse(Console.ReadLine());
+if (num > 0)
+{
+    Console.WriteLine("Positive");
+}
+else
+{
+    Console.WriteLine("Negative");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا، ويطبع له "\textbf{زوجي}" إذا كان العدد زوجيًا، و"\textbf{فردي}" إذا كان فرديًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a positive integer:");
+int num = int.Parse(Console.ReadLine());
+if (num % 2 == 0)
+{
+    Console.WriteLine("Even");
+}
+else
+{
+    Console.WriteLine("Odd");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم علامة طالب (عدد صحيح بين 0 و 100)، ويطبع له "\textbf{ناجح}" إذا كانت العلامة 55 فما فوق، و"\textbf{راسب}" إذا كانت أقل من 55.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter student grade:");
+int grade = int.Parse(Console.ReadLine());
+if (grade >= 55)
+{
+    Console.WriteLine("Passed");
+}
+else
+{
+    Console.WriteLine("Failed");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم كلمة مرور (\textenglish{string})، فإذا كانت الكلمة تطابق \textenglish{"open123"} يطبع له "\textbf{أهلاً بك}"، وإلا يطبع له "\textbf{كلمة المرور خاطئة}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter password:");
+string password = Console.ReadLine();
+if (password == "open123")
+{
+    Console.WriteLine("Welcome");
+}
+else
+{
+    Console.WriteLine("Wrong password");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم حرفًا واحدًا (\textenglish{char}) يمثل جنس المشترك (\textenglish{'M'} للذكر أو \textenglish{'F'} للأنثى). إذا أدخل المستخدم \textenglish{'M'} يطبع له "\textbf{ذكر}"، وإلا يطبع له "\textbf{أنثى}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter gender (M/F):");
+char gender = char.Parse(Console.ReadLine());
+if (gender == 'M')
+{
+    Console.WriteLine("Male");
+}
+else
+{
+    Console.WriteLine("Female");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقمين مختلفين، ويطبع له "\textbf{الرقم الأول أكبر}" إذا كان الرقم الأول أكبر من الثاني، و"\textbf{الرقم الثاني أكبر}" إذا كان الرقم الثاني أكبر من الأول.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+if (num1 > num2)
+{
+    Console.WriteLine("The first number is larger");
+}
+else
+{
+    Console.WriteLine("The second number is larger");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{لهما نفس الإشارة}" إذا كان كلاهما موجبَين أو كلاهما سالبين، و"\textbf{إشارتان مختلفتان}" إذا كان أحدهما موجبًا والآخر سالبًا. \\
+(افترض أنّ الرقمين ليسا صفرًا.)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+
+int product = num1 * num2;
+if (product > 0)
+{
+    Console.WriteLine("Same sign");
+}
+else
+{
+    Console.WriteLine("Different signs");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم سلسلتين نصيتين (\textenglish{string})، ويفحص هل هما متطابقتان تمامًا. إذا كانتا متطابقتين يطبع "\textbf{النصان متطابقان}"، وإلا يطبع "\textbf{النصان مختلفان}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first text:");
+string text1 = Console.ReadLine();
+Console.WriteLine("Enter second text:");
+string text2 = Console.ReadLine();
+if (text1 == text2)
+{
+    Console.WriteLine("Identical strings");
+}
+else
+{
+    Console.WriteLine("Different strings");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\end{enumerate}
+
+% ==============================================================
+% القسم الثاني: جملة الشرط المنفردة بدون else
+% ==============================================================
+\section*{القسم الثاني: جملة الشرط المنفردة بدون \textenglish{else}}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم درجة حرارة، ويطبع له "\textbf{الجو حار}" إذا كانت درجة الحرارة أكثر من 30 درجة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+if (temperature > 30)
+{
+    Console.WriteLine("It's hot");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقمًا، ويطبع له "\textbf{الرقم ليس صفر}" إذا كان الرقم لا يساوي صفرًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a number:");
+int number = int.Parse(Console.ReadLine());
+if (number != 0)
+{
+    Console.WriteLine("The number is not zero");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{الرقمان غير متساويين}" إذا كان الرقم الأول لا يساوي الثاني.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+if (num1 != num2)
+{
+    Console.WriteLine("The numbers are not equal");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم سعر مشتريات (عدد عشري). إذا كان السعر أكبر من 200 شيكل، يحصل المشتري على خصم بقيمة 30 شيكل (تطرح 30 من السعر). وفي نهاية البرنامج (في جميع الحالات) يطبع البرنامج السعر النهائي للدفع، متبوعًا بعبارة: "\textbf{شكرًا لتسوقكم}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter purchase price:");
+double price = double.Parse(Console.ReadLine());
+if (price > 200)
+{
+    price = price - 30;
+}
+Console.WriteLine("Final price: " + price);
+Console.WriteLine("Thank you for shopping");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم الرصيد البنكي الحالي (عدد صحيح) والمبلغ المراد سحبه. البرنامج يقوم بطرح المبلغ المسحوب من الرصيد. إذا أصبح الرصيد سالبًا (أقل من صفر)، يطبع البرنامج رسالة تنبيه: "\textbf{تنبيه: دخلت في السحب الزائد}". وفي نهاية البرنامج (في جميع الحالات) يطبع البرنامج الرصيد المتبقي.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter balance:");
+int balance = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter withdrawal amount:");
+int withdraw = int.Parse(Console.ReadLine());
+balance = balance - withdraw;
+if (balance < 0)
+{
+    Console.WriteLine("Warning: Overdraft!");
+}
+Console.WriteLine("Remaining balance: " + balance);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثالث: الشروط المتعددة if - else if - else
+% ==============================================================
+\section*{القسم الثالث: الشروط المتعددة (\textenglish{if - else if - else})}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا، ويطبع له رسالة توضح طبيعة العدد:
+\begin{itemize}
+\item "\textbf{موجب}" إذا كان العدد أكبر من صفر.
+\item "\textbf{سالب}" إذا كان العدد أصغر من صفر.
+\item "\textbf{صفر}" إذا كان العدد يساوي صفرًا.
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter an integer:");
+int num = int.Parse(Console.ReadLine());
+if (num > 0)
+{
+    Console.WriteLine("Positive");
+}
+else if (num < 0)
+{
+    Console.WriteLine("Negative");
+}
+else
+{
+    Console.WriteLine("Zero");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا، ويطبع له رسالة مناسبة عن العدد: هل الرقم مكون من منزلة، أو منزلتين، أو أكثر.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter number:");
+int num = int.Parse(Console.ReadLine());
+if (num < 10)
+{
+    Console.WriteLine("The number is made of one digit");
+}
+else if (num < 100)
+{
+    Console.WriteLine("The number is made of 2 digits");
+}
+else
+{
+    Console.WriteLine("The number is made of more than 2 digits");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\ifwhiteblack
+    \clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عمر إنسان (بالسنوات)، ويطبع تصنيف المرحلة العمرية المناسبة:
+\begin{itemize}
+\item "\textbf{طفل}" إذا كان العمر أقل من 13 سنة.
+\item "\textbf{مراهق}" إذا كان العمر بين 13 و 19 سنة.
+\item "\textbf{بالغ}" إذا كان العمر 20 سنة أو أكثر.
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter age:");
+int age = int.Parse(Console.ReadLine());
+if (age < 13)
+{
+    Console.WriteLine("Child");
+}
+else if (age <= 19)
+{
+    Console.WriteLine("Teenager");
+}
+else
+{
+    Console.WriteLine("Adult");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددين، ويطبع رسالة مناسبة مقارنةً بينهما:
+\begin{itemize}
+\item "\textbf{الرقم الأول أكبر}" إذا كان الأول أكبر من الثاني.
+\item "\textbf{الرقم الثاني أكبر}" إذا كان الثاني أكبر من الأول.
+\item "\textbf{الرقمان متساويان}" إذا كان الرقمان متساويين.
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int a = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int b = int.Parse(Console.ReadLine());
+if (a > b)
+{
+    Console.WriteLine("The first number is larger");
+}
+else if (b > a)
+{
+    Console.WriteLine("The second number is larger");
+}
+else
+{
+    Console.WriteLine("The numbers are equal");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم علامة طالب، ويطبع له التقدير المناسب حسب العلامة:
+\begin{itemize}
+\item \texttt{A+} إذا كانت العلامة 95 أو أكثر
+\item \texttt{A} إذا كانت العلامة 90-94
+\item \texttt{A-} إذا كانت العلامة 85-89
+\item \texttt{B+} إذا كانت العلامة 80-84
+\item \texttt{B} إذا كانت العلامة 75-79
+\item \texttt{B-} إذا كانت العلامة 70-74
+\item \texttt{C} إذا كانت العلامة أقل من 70
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter your grade:");
+int grade = int.Parse(Console.ReadLine());
+if (grade >= 95)
+{
+    Console.WriteLine("A+");
+}
+else if (grade >= 90)
+{
+    Console.WriteLine("A");
+}
+else if (grade >= 85)
+{
+    Console.WriteLine("A-");
+}
+else if (grade >= 80)
+{
+    Console.WriteLine("B+");
+}
+else if (grade >= 75)
+{
+    Console.WriteLine("B");
+}
+else if (grade >= 70)
+{
+    Console.WriteLine("B-");
+}
+else
+{
+    Console.WriteLine("C");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+% ==============================================================
+% القسم الرابع: الشروط المركبة (&&, ||, !)
+% ==============================================================
+\section*{القسم الرابع: الشروط المركبة}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقمين، ويطبع له "\textbf{الرقمان موجبان}" إذا كان كلاهما أكبر من صفر، وإلا يطبع "\textbf{ليس كلاهما موجبين}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int num1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int num2 = int.Parse(Console.ReadLine());
+if (num1 > 0 && num2 > 0)
+{
+    Console.WriteLine("Both numbers are positive");
+}
+else
+{
+    Console.WriteLine("Not both are positive");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم درجة حرارة، ويطبع له "\textbf{الجو غير مناسب}" إذا كانت درجة الحرارة أقل من 10 أو أكثر من 40، وإلا يطبع "\textbf{الجو مناسب}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+if (temperature < 10 || temperature > 40)
+{
+    Console.WriteLine("Weather is not suitable");
+}
+else
+{
+    Console.WriteLine("Weather is suitable");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عمر شخص ودرجة حرارة، ويطبع له "\textbf{يمكنك الخروج}" إذا كان عمره 18 أو أكثر ودرجة الحرارة أقل من 35، وإلا يطبع "\textbf{لا يمكنك الخروج}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter your age:");
+int age = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+if (age >= 18 && temperature < 35)
+{
+    Console.WriteLine("You can go out");
+}
+else
+{
+    Console.WriteLine("You cannot go out");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا، ويطبع له "\textbf{عدد ثنائي المنازل}" إذا كان العدد مكونًا من منزلتين (أي يقع بين 10 و 99 مشمولاً)، وإلا يطبع "\textbf{ليس ثنائي المنازل}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a positive number:");
+int num = int.Parse(Console.ReadLine());
+if (num >= 10 && num <= 99)
+{
+    Console.WriteLine("Two-digit number");
+}
+else
+{
+    Console.WriteLine("Not a two-digit number");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا، ويطبع له "\textbf{يقبل القسمة على 2 و 3 معًا}" إذا كان يقبل القسمة على 2 و 3 بدون باقٍ، وإلا يطبع "\textbf{لا يقبل القسمة على كليهما}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter an integer:");
+int num = int.Parse(Console.ReadLine());
+if (num % 2 == 0 && num % 3 == 0)
+{
+    Console.WriteLine("Divisible by 2 and 3");
+}
+else
+{
+    Console.WriteLine("Not divisible by both");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم رقم اليوم في الأسبوع (من 1 إلى 7، حيث 1 للأحد، 6 للجمعة، و 7 للسبت). يطبع البرنامج "\textbf{عطلة نهاية الأسبوع}" إذا كان اليوم 6 أو 7، وإلا يطبع "\textbf{يوم دراسة وعمل}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter day number (1-7):");
+int day = int.Parse(Console.ReadLine());
+if (day == 6 || day == 7)
+{
+    Console.WriteLine("Weekend");
+}
+else
+{
+    Console.WriteLine("Work day");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم نوع اليوم (1 للعمل، 2 للعطلة) ودرجة الحرارة، ويطبع له "\textbf{يوم ممتع}" إذا كان يوم عطلة أو درجة الحرارة بين 20 و 25، وإلا يطبع "\textbf{يوم عادي}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter day type (1=Work, 2=Holiday):");
+int dayType = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+if (dayType == 2 || (temperature >= 20 && temperature <= 25))
+{
+    Console.WriteLine("Enjoyable day");
+}
+else
+{
+    Console.WriteLine("Regular day");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم قيمة منطقية (\textenglish{bool}) تحدد هل الطالب معفى من الامتحان (\textenglish{isExempt})، وعلامته في الوظيفة (عدد صحيح). إذا كان الطالب \textbf{غير معفى} وعلامته أقل من 60، يطبع البرنامج "\textbf{عليك التقدم للامتحان}"، وإلا يطبع "\textbf{لا حاجة للتقدم للامتحان}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Is exempt? (true/false):");
+bool isExempt = bool.Parse(Console.ReadLine());
+Console.WriteLine("Enter homework grade:");
+int grade = int.Parse(Console.ReadLine());
+if (!isExempt && grade < 60)
+{
+    Console.WriteLine("You must take the exam");
+}
+else
+{
+    Console.WriteLine("No need to take the exam");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم أطوال 3 أضلاع لمثلث ($a, b, c$). لكي تشكل الأضلاع مثلثًا حقيقيًا، يجب أن يكون مجموع كل ضلعين أكبر تمامًا من الضلع الثالث:
+$$ a + b > c \quad \text{و} \quad a + c > b \quad \text{و} \quad b + c > a $$
+يطبع البرنامج "\textbf{يشكل مثلثًا}" إذا تحققت الشروط جميعها، وإلا يطبع "\textbf{لا يمكن تكوين مثلث}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter side a:");
+double a = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter side b:");
+double b = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter side c:");
+double c = double.Parse(Console.ReadLine());
+if (a + b > c && a + c > b && b + c > a)
+{
+    Console.WriteLine("Valid triangle");
+}
+else
+{
+    Console.WriteLine("Cannot form a triangle");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم حرفًا إنجليزيًا صغيرًا (\textenglish{char})، ويفحص هل هو حرف علة (\textenglish{vowel}) من بين الأحرف: \textenglish{'a', 'e', 'i', 'o', 'u'}. إذا كان كذلك يطبع "\textbf{حرف علة}"، وإلا يطبع "\textbf{حرف ساكن}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a character:");
+char ch = char.Parse(Console.ReadLine());
+if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
+{
+    Console.WriteLine("Vowel");
+}
+else
+{
+    Console.WriteLine("Consonant");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\end{enumerate}
+
+% ==============================================================
+% القسم الخامس: الشروط المتداخلة (Nested If)
+% ==============================================================
+\section*{القسم الخامس: الشروط المتداخلة (\textenglish{Nested If Statements})}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم نوع الحيوان \texttt{1} للقط، \texttt{2} للكلب وعمره بالأشهر، ويطبع له رسالة مناسبة باستخدام \textbf{شروط متداخلة}:
+\begin{itemize}
+\item إذا كان قط وعمره 12 شهر أو أكثر: "\textbf{قط بالغ}"
+\item إذا كان قط وعمره أقل من 12 شهر: "\textbf{قط صغير}"
+\item إذا كان كلب وعمره 12 شهر أو أكثر: "\textbf{كلب بالغ}"
+\item إذا كان كلب وعمره أقل من 12 شهر: "\textbf{كلب صغير}"
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter animal type (1=Cat, 2=Dog):");
+int animalType = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter age in months:");
+int age = int.Parse(Console.ReadLine());
+if (animalType == 1)
+{
+    if (age >= 12)
+    {
+        Console.WriteLine("Adult cat");
+    }
+    else
+    {
+        Console.WriteLine("Young cat");
+    }
+}
+else
+{
+    if (age >= 12)
+    {
+        Console.WriteLine("Adult dog");
+    }
+    else
+    {
+        Console.WriteLine("Young dog");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\ifwhiteblack
+    \clearpage
+    \fi
+
+\item
+معطى:
+\begin{itemize}
+\item متوسط درجة الحرارة في الشتاء: 15 درجة
+\item متوسط درجة الحرارة في الصيف: 30 درجة
+\end{itemize}
+اكتب برنامجًا يستقبل من المستخدم درجة الحرارة والفصل (1 للشتاء، 2 للصيف)، ويطبع له رسالة مناسبة باستخدام \textbf{شروط متداخلة}:
+\begin{itemize}
+\item إذا كانت درجة الحرارة أعلى من المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{حار [اسم الفصل]}"
+\item إذا كانت درجة الحرارة أقل من أو تساوي المتوسط في الفصل الذي أدخله المستخدم فإنّه يطبع: \\ "\textbf{برد [اسم الفصل]}"
+\end{itemize}
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter temperature:
+20
+Enter season (1=Winter, 2=Summer):
+1
+Hot Winter
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter temperature:
+25
+Enter season (1=Winter, 2=Summer):
+2
+Cold Summer
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter temperature:");
+int temperature = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter season (1=Winter, 2=Summer):");
+int season = int.Parse(Console.ReadLine());
+if (season == 1)
+{
+    if (temperature > 15)
+    {
+        Console.WriteLine("Hot Winter");
+    }
+    else
+    {
+        Console.WriteLine("Cold Winter");
+    }
+}
+else
+{
+    if (temperature > 30)
+    {
+        Console.WriteLine("Hot Summer");
+    }
+    else
+    {
+        Console.WriteLine("Cold Summer");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم جنس الشخص (\textenglish{'M'} للذكر و \textenglish{'F'} للأنثى) وعمره بالسنوات. باستخدام \textbf{شروط متداخلة}، يطبع البرنامج التصنيف التالي:
+\begin{itemize}
+\item إذا كان ذكراً وعمره 18 أو أكثر: "\textbf{رجل}"
+\item إذا كان ذكراً وعمره أقل من 18: "\textbf{ولد}"
+\item إذا كانت أنثى وعمرها 18 أو أكثر: "\textbf{امرأة}"
+\item إذا كانت أنثى وعمرها أقل من 18: "\textbf{بنت}"
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter gender (M/F):");
+char gender = char.Parse(Console.ReadLine());
+Console.WriteLine("Enter age:");
+int age = int.Parse(Console.ReadLine());
+if (gender == 'M')
+{
+    if (age >= 18)
+    {
+        Console.WriteLine("Man");
+    }
+    else
+    {
+        Console.WriteLine("Boy");
+    }
+}
+else
+{
+    if (age >= 18)
+    {
+        Console.WriteLine("Woman");
+    }
+    else
+    {
+        Console.WriteLine("Girl");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\ifwhiteblack
+    \clearpage
+    \fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا. باستخدام \textbf{شروط متداخلة}:
+\begin{itemize}
+\item يفحص البرنامج أولاً هل العدد ثنائي المنازل (بين 10 و 99). إذا لم يكن كذلك، يطبع: "\textbf{العدد ليس ثنائي المنازل}".
+\item إذا كان ثنائي المنازل، يفحص داخل ذلك: هل منزلة الآحاد تساوي منزلة العشرات؟
+  \begin{itemize}
+  \item إذا تساوتا (مثل 77، 44)، يطبع: "\textbf{المنازل متطابقة}".
+  \item وإلا (مثل 48، 92)، يطبع: "\textbf{المنازل مختلفة}".
+  \end{itemize}
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a positive number:");
+int num = int.Parse(Console.ReadLine());
+if (num >= 10 && num <= 99)
+{
+    int units = num % 10;
+    int tens = num / 10;
+    if (units == tens)
+    {
+        Console.WriteLine("Digits are identical");
+    }
+    else
+    {
+        Console.WriteLine("Digits are different");
+    }
+}
+else
+{
+    Console.WriteLine("Not a two-digit number");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 3 أعداد صحيحة مختلفة، ويطبعها مرتّبة من الصغير إلى الكبير باستخدام \textbf{شروط متداخلة}.
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter first number:
+15
+Enter second number:
+3
+Enter third number:
+9
+3 < 9 < 15
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int a = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int b = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter third number:");
+int c = int.Parse(Console.ReadLine());
+
+if (a > b && a > c)
+{
+    if (b > c)
+    {
+        Console.WriteLine(c + " < " + b + " < " + a);
+    }
+    else
+    {
+        Console.WriteLine(b + " < " + c + " < " + a);
+    }
+}
+else if (b > a && b > c)
+{
+    if (a > c)
+    {
+        Console.WriteLine(c + " < " + a + " < " + b);
+    }
+    else
+    {
+        Console.WriteLine(a + " < " + c + " < " + b);
+    }
+}
+else
+{
+    if (a > b)
+    {
+        Console.WriteLine(b + " < " + a + " < " + c);
+    }
+    else
+    {
+        Console.WriteLine(a + " < " + b + " < " + c);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\end{enumerate}
+
+% ==============================================================
+% القسم السادس: أسئلة شاملة ومتنوعة
+% ==============================================================
+\section*{القسم السادس: أسئلة شاملة ومتنوعة (\textenglish{General Questions})}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددين صحيحين، ويحسب ويطبع الفارق الموجب بينهما (أي حاصل طرح الأصغر من الأكبر) بدون استخدام الدالة \textenglish{Math.Abs}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int a = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int b = int.Parse(Console.ReadLine());
+int diff;
+if (a >= b)
+{
+    diff = a - b;
+}
+else
+{
+    diff = b - a;
+}
+Console.WriteLine("Positive difference = " + diff);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددين صحيحين موجبين ($a$ و $b$). يفحص البرنامج هل العدد $a$ يقبل القسمة على $b$ بدون باقٍ (أي هل $a$ من مضاعفات $b$). إذا كان كذلك يطبع "\textbf{مضاعف}"، وإلا يطبع "\textbf{ليس مضاعفًا}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a:");
+int a = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter b:");
+int b = int.Parse(Console.ReadLine());
+if (a % b == 0)
+{
+    Console.WriteLine("Multiple");
+}
+else
+{
+    Console.WriteLine("Not a multiple");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\clearpage
+\fi
+
+\item
+دار سينما تبيع التذاكر كالتالي: السعر الأساسي للتذكرة هو 40 شيكل.
+\begin{itemize}
+\item إذا كان عمر الزائر أقل من 12 سنة أو أكبر من 65 سنة، يحصل على خصم بنسبة 50\% (السعر 20 شيكل).
+\item عدا ذلك، إذا كان يملك بطاقة عضوية (\textenglish{hasMembership})، يحصل على خصم 25\% (السعر 30 شيكل).
+\item في باقي الحالات يدفع السعر الأساسي كاملاً (40 شيكل).
+\end{itemize}
+اكتب برنامجًا يستقبل عمر الزائر وقيمة منطقية تبين هل يملك بطاقة عضوية، ويطبع السعر النهائي للتذكرة.
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter age:
+10
+Has membership? (true/false):
+false
+Ticket price: 20
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter age:
+30
+Has membership? (true/false):
+true
+Ticket price: 30
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter age:");
+int age = int.Parse(Console.ReadLine());
+Console.WriteLine("Has membership? (true/false):");
+bool hasMembership = bool.Parse(Console.ReadLine());
+
+double price;
+if (age < 12 || age > 65)
+{
+    price = 20;
+}
+else if (hasMembership)
+{
+    price = 30;
+}
+else
+{
+    price = 40;
+}
+Console.WriteLine("Ticket price: " + price);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددين عشريين ورمز عملية حسابية (\textenglish{char}: \textenglish{'+', '-', '*', '/'}). يقوم البرنامج بحساب وطباعة نتيجة العملية. إذا كانت العملية قسمة والعدد الثاني صفر، يطبع البرنامج تنبيهًا: "\textbf{لا يمكن القسمة على صفر}". وإذا أُدخل رمز غير معروف يطبع "\textbf{عملية غير صالحة}".
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter first number:
+10
+Enter second number:
+5
+Enter operator:
++
+Result = 15
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter first number:
+8
+Enter second number:
+0
+Enter operator:
+/
+Cannot divide by zero
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+double num1 = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+double num2 = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter operator (+, -, *, /):");
+char op = char.Parse(Console.ReadLine());
+
+if (op == '+')
+{
+    Console.WriteLine("Result = " + (num1 + num2));
+}
+else if (op == '-')
+{
+    Console.WriteLine("Result = " + (num1 - num2));
+}
+else if (op == '*')
+{
+    Console.WriteLine("Result = " + (num1 * num2));
+}
+else if (op == '/')
+{
+    if (num2 != 0)
+    {
+        Console.WriteLine("Result = " + (num1 / num2));
+    }
+    else
+    {
+        Console.WriteLine("Cannot divide by zero");
+    }
+}
+else
+{
+    Console.WriteLine("Invalid operator");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا من 3 منازل (بين 100 و 999). يفحص البرنامج هل العدد متناظر (\textenglish{Palindrome})، أي يُقرأ من اليمين إلى اليسار كما يُقرأ من اليسار إلى اليمين (مثلاً: 121، 585، 707). إذا كان كذلك يطبع "\textbf{عدد متناظر}"، وإلا يطبع "\textbf{غير متناظر}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a 3-digit number:");
+int num = int.Parse(Console.ReadLine());
+int units = num % 10;
+int hundreds = num / 100;
+if (units == hundreds)
+{
+    Console.WriteLine("Palindrome number");
+}
+else
+{
+    Console.WriteLine("Not palindrome");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددين صحيحين، ويفحص هل هما عددان متتاليان (أي أنّ أحدهما أكبر من الآخر بواحد تمامًا، مثل 4 و 5، أو 10 و 9). إذا كانا متتاليين يطبع "\textbf{متتاليان}"، وإلا يطبع "\textbf{غير متتاليين}".
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+int a = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+int b = int.Parse(Console.ReadLine());
+if (a - b == 1 || b - a == 1)
+{
+    Console.WriteLine("Consecutive");
+}
+else
+{
+    Console.WriteLine("Not consecutive");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+في التقويم الميلادي، تكون السنة كبيسة (\textenglish{Leap Year}) إذا كانت تقبل القسمة على 4، ما عدا السنوات المئوية (التي تقبل القسمة على 100) فلا تكون كبيسة إلا إذا كانت تقبل القسمة على 400 أيضًا.
+اكتب برنامجًا يستقبل رقم السنة، ويطبع "\textbf{سنة كبيسة}" أو "\textbf{سنة عادية}".
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter year:
+2024
+Leap year
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter year:
+1900
+Common year
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter year:");
+int year = int.Parse(Console.ReadLine());
+if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+{
+    Console.WriteLine("Leap year");
+}
+else
+{
+    Console.WriteLine("Common year");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+عند حل معادلة تربيعية من الصورة $ax^2 + bx + c = 0$
+نرمز لـ $\Delta = b^2 - 4ac$ وعندها:
+\begin{itemize}
+    \item إذا كان $\Delta < 0$ فعندها لا يوجد حلول حقيقية للمعادلة.
+    \item إذا كان $\Delta = 0$ فعندها يوجد حلّ واحد وهو:
+    \( x = \frac{-b}{2a} \)
+    \item إذا كان $\Delta > 0$ فعندها يوجد حلّان، وهما:
+    \[ x_1 = \frac{-b + \sqrt{b^2 - 4ac}}{2a} \qquad x_2 = \frac{-b - \sqrt{b^2 - 4ac}}{2a} \]
+\end{itemize}
+اكتب برنامجًا يستقبل معاملات المعادلة التربيعية $a,b,c$ ويحسب حلول المعادلة ويطبعها مع رسالة مناسبة.
+\ifdetailed
+\begin{boxExample}[1]
+عند استقبال المعاملات: $1, -5, 6$ يطبع: \\ "\textenglish{Two solutions: x1 = 2, x2 = 3}"
+\end{boxExample}
+\begin{boxExample}[2]
+عند استقبال المعاملات: $1, 2, 1$ يطبع: \\ "\textenglish{One solution: x = -1}"
+\end{boxExample}
+\begin{boxExample}[3]
+عند استقبال المعاملات: $1, 0, 1$ يطبع: \\ "\textenglish{No solution}"
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a:");
+double a = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter b:");
+double b = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter c:");
+double c = double.Parse(Console.ReadLine());
+
+double delta = Math.Pow(b, 2) - 4 * a * c;
+if (delta < 0)
+{
+    Console.WriteLine("No solution");
+}
+else if (delta == 0)
+{
+    double x = -b / (2 * a);
+    Console.WriteLine("One solution: x = " + x);
+}
+else
+{
+    double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+    double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+    Console.WriteLine("Two solutions: x1 = " + x1 + ", x2 = " + x2);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل عدد الكيلوواط المستهلكة (عددًا صحيحًا موجبًا)، ويحسب التكلفة التراكمية حسب التعرفة التالية:
+\begin{itemize}
+  \item حتى 100 كيلوواط: الكلفة $0.5$ شيكل لكل كيلوواط.
+  \item كل كيلوواط من 101 إلى 200 كيلوواط: الكلفة $0.7$ شيكل لكل كيلوواط.
+  \item كل كيلوواط أكثر من 200: الكلفة 1 شيكل لكل كيلوواط.
+\end{itemize}
+على البرنامج أن يطبع المبلغ الإجمالي المستحق.
+\ifdetailed
+\begin{boxExample}[1]
+إذا كان المدخل 150 كيلوواط، فالمبلغ الإجمالي هو \\
+$100 \cdot 0.5 + 50 \cdot 0.7 = 85$.
+\end{boxExample}
+\begin{boxExample}[2]
+إذا كان المدخل 780 كيلوواط، فالمبلغ الإجمالي هو \\
+$100 \cdot 0.5 + 100 \cdot 0.7 + 580 \cdot 1 = 700$.
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter kWh:");
+int kwh = int.Parse(Console.ReadLine());
+double cost;
+if (kwh <= 100)
+{
+    cost = kwh * 0.5;
+}
+else if (kwh <= 200)
+{
+    cost = 100 * 0.5 + (kwh - 100) * 0.7;
+}
+else
+{
+    cost = 100 * 0.5 + 100 * 0.7 + (kwh - 200) * 1.0;
+}
+Console.WriteLine("Total cost = " + cost);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل 3 أعداد صحيحة موجبة تمثل تاريخًا: اليوم (\textenglish{day})، الشهر (\textenglish{month})، والسنة (\textenglish{year}).
+يقوم البرنامج بالتحقق من صحة التاريخ:
+\begin{itemize}
+\item السنة يجب أن تكون موجبة ($year > 0$).
+\item الشهر يجب أن يكون بين 1 و 12.
+\item اليوم يجب أن يكون صحيحًا وفق أيام كل شهر:
+  \begin{itemize}
+    \item الأشهر (1, 3, 5, 7, 8, 10, 12): تحتوي على 31 يومًا.
+    \item الأشهر (4, 6, 9, 11): تحتوي على 30 يومًا.
+    \item شهر شباط (2): يحتوي على 29 يومًا إذا كانت السنة كبيسة، و 28 يومًا إذا كانت سنة عادية.
+  \end{itemize}
+\end{itemize}
+يطبع البرنامج "\textbf{تاريخ صحيح}" إذا كان التاريخ سليمًا، وإلا يطبع "\textbf{تاريخ غير صحيح}".
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter day:
+29
+Enter month:
+2
+Enter year:
+2024
+Valid date
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter day:
+29
+Enter month:
+2
+Enter year:
+2023
+Invalid date
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter day:");
+int day = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter month:");
+int month = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter year:");
+int year = int.Parse(Console.ReadLine());
+
+bool isValid = false;
+if (year > 0 && month >= 1 && month <= 12 && day >= 1)
+{
+    int maxDays;
+    if (month == 1 || month == 3 || month == 5 || month == 7 ||
+        month == 8 || month == 10 || month == 12)
+    {
+        maxDays = 31;
+    }
+    else if (month == 4 || month == 6 || month == 9 || month == 11)
+    {
+        maxDays = 30;
+    }
+    else // Month 2 (February)
+    {
+        bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        if (isLeap)
+        {
+            maxDays = 29;
+        }
+        else
+        {
+            maxDays = 28;
+        }
+    }
+
+    if (day <= maxDays)
+    {
+        isValid = true;
+    }
+}
+
+if (isValid)
+{
+    Console.WriteLine("Valid date");
+}
+else
+{
+    Console.WriteLine("Invalid date");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
