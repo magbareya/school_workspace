@@ -1,0 +1,159 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن - حلقات \textenglish{for}}
+\else
+\title{ورقة تمرن - حلقات \textenglish{for}}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+
+\item يوجد في الصف 30 طالبًا. في النصف الأول من السنة الدراسية يقدّم كل طالب 3 وظائف. العلامة النهائية للنصف الأول تُحسب حسب الخطوات التالية:
+\begin{enumerate}[label=\alph*.]
+    \item تحسب المعلمة \textbf{معدّل} علامات كل طالب في الوظائف الثلاثة. (افرضوا أنّ لكل الوظائف نفس الوزن في العلامة النهائية.)
+    \item إذا كانت علامة الطالب في \textbf{الوظيفة الثالثة} أعلى من 85، تضيف المعلمة خمس علامات بونوس للمعدّل الذي حسبته في البند أ.
+    \item إذا كانت العلامة الناتجة بعد الإضافة أعلى من 100، تُعتبر علامة النصف الأول 100.
+\end{enumerate}
+
+اكتبوا \textbf{مقطع برنامج} يستقبل علامات طالب واحد في الوظائف الثلاثة، ويحسب ويطبع علامته النهائية في النصف الأول.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+grade1 = float(input("Enter grade of homework 1: "))
+grade2 = float(input("Enter grade of homework 2: "))
+grade3 = float(input("Enter grade of homework 3: "))
+
+finalGrade = (grade1 + grade2 + grade3) / 3
+if grade3 > 85:
+    finalGrade = finalGrade + 5
+if finalGrade > 100:
+    finalGrade = 100
+
+print("Final grade:", finalGrade)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item اكتبوا \textbf{برنامجًا} يستقبل لكل واحد من الثلاثين طالبًا اسمه وعلاماته في الوظائف الثلاثة.
+
+البرنامج يحسب لكل طالب علامته النهائية في النصف الأول، ويعرض كمخرج اسم الطالب وعلامته النهائية في النصف الأول. بالإضافة لذلك، يقوم البرنامج بعدّ الطلاب الذين حصلوا على علامة 100 في النصف الأول، ويعرض عددهم كمخرج.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+count100 = 0
+for i in range(30):
+    name = input("Enter student name: ")
+    grade1 = float(input("Enter grade of homework 1: "))
+    grade2 = float(input("Enter grade of homework 2: "))
+    grade3 = float(input("Enter grade of homework 3: "))
+
+    finalGrade = (grade1 + grade2 + grade3) / 3
+    if grade3 > 85:
+        finalGrade = finalGrade + 5
+    if finalGrade > 100:
+        finalGrade = 100
+
+    print(name, finalGrade)
+    if finalGrade == 100:
+        count100 = count100 + 1
+
+print("Number of students with grade 100:", count100)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+
+\item يوجد في مصنع الخرز ماكينة تستقبل خرزات بألوان مختلفة. أمامكم مقطع كود هدفه أن يعدّ \textbf{عدد الخرزات الحمراء}.
+
+مثلًا، إذا كان المدخل (من اليسار لليمين): \textenglish{red red green red green red yellow yellow}، يكون المخرج: \textenglish{The number of red beads is: 4}.
+
+أكملوا الناقص في البرنامج.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count_red = 0
+ans = "yes"
+while ans == "yes":
+    ______ = input("Please enter a color: ")
+    if color == ______:
+        count_red = __________
+    ans = input("Do you want to continue? yes/no ")
+print("The number of red beads is: ", __________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{center}
+\begin{english}
+\texttt{count\_red + 1} \quad \texttt{color} \quad \texttt{count\_red} \quad \texttt{"red"}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+count_red = 0
+ans = "yes"
+while ans == "yes":
+    color = input("Please enter a color: ")
+    if color == "red":
+        count_red = count_red + 1
+    ans = input("Do you want to continue? yes/no ")
+print("The number of red beads is: ", count_red)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\item \textbf{المهمّة - تنظيف شاطئ البحر}
+
+في يوم الكرة الأرضية، خرجت 5 صفوف من طبقة الثوامن لتنظيف شاطئ البحر (الصفوف مُرقّمة من 1 إلى 5). كل صف حصل على كيس وجمع فيه النفايات. بنهاية اليوم، يتم وزن الأكياس والصف الذي يكون كيسه هو \textbf{الأثقل} يحصل على جائزة!
+
+اكتبوا \textbf{عمليّة} تستقبل وزن الكيس من كل صف، تحسب وتطبع \textbf{رقم الصف الفائز} ووزن كيس النفايات الأثقل التي جُمعت على الشاطئ.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def find_winner():
+    max_weight = 0
+    winner = 0
+    for row in range(1, 6):
+        weight = float(input("Enter bag weight of row " + str(row) + ": "))
+        if weight > max_weight:
+            max_weight = weight
+            winner = row
+    print("Winning row:", winner)
+    print("Heaviest bag weight:", max_weight)
+
+find_winner()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

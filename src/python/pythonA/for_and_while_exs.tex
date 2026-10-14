@@ -1,0 +1,817 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+\usepackage{longtable}
+\providecommand{\LTcaptype}{table}
+
+% Code cell used inside tables (keeps code left-to-right inside RTL tables)
+\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth}
+
+\ifwithsols
+\title{حل ورقة تمرن - حلقات \textenglish{for} و \textenglish{while}}
+\else
+\title{ورقة تمرن - حلقات \textenglish{for} و \textenglish{while}}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%==============================================================
+\section*{القسم الأول: حلقات \textenglish{for}}
+
+\subsection*{سؤال 1}
+اكتبوا \textbf{المخرج} الناتج عن كل مقطع برنامج في الجدول التالي.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.45\textwidth}|p{0.32\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{رقم البند}} & \multicolumn{1}{c|}{\textbf{الكود في لغة \textenglish{python}}} & \multicolumn{1}{c|}{\textbf{المخرج الناتج}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(3):
+    print(item + 1, end=" ")
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(3, 5):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(6, 1, -2):
+    print(item, end=" ")
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(-5, 6):
+    print(item + 6)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+5 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for i in range(16, 3, -4):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+6 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(6):
+    if item % 2 == 1:
+        print(item * item)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+7 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for item in range(9, 0, -3):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+8 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(7, 8):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+9 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(100, 120):
+    if x % 2 == 0:
+        print(x)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+10 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(100, 120, 2):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+11 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(1, 10):
+    print(x - 1)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+12 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(4, 5):
+    print(x + 3)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+13 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for x in range(-5, 6):
+    print(x + 6)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+\end{longtable}
+}
+
+\clearpage
+\subsection*{سؤال 2}
+طُلب من التلاميذ أن يكتبوا برنامجًا يستقبل 5 أزواج أعداد ويطبع \textbf{عدد الأزواج} التي لهما نفس باقي القسمة على 2 (أي عددين زوجيين أو عددين فرديين).
+
+\textbf{مثال:}
+\begin{itemize}
+    \item زوج الأعداد الأول: \textenglish{4 \ 8} $\leftarrow$ نفس باقي القسمة على 2، العددين زوجيين.
+    \item زوج الأعداد الثاني: \textenglish{7 \ 66} $\leftarrow$ باقي القسمة على 2 مختلف.
+    \item زوج الأعداد الثالث: \textenglish{3 \ 5} $\leftarrow$ نفس باقي القسمة على 2، العددين فرديين.
+    \item زوج الأعداد الرابع: \textenglish{1 \ 8} $\leftarrow$ باقي القسمة على 2 مختلف.
+    \item زوج الأعداد الخامس: \textenglish{1 \ 5} $\leftarrow$ نفس باقي القسمة على 2، العددين فرديين.
+\end{itemize}
+المخرج الناتج من البرنامج هو \textenglish{3}، أي عدد الأزواج ذات نفس باقي القسمة على 2 هي \textenglish{3}.
+
+أكملوا مقطع الكود التالي بحيث يقوم بالمطلوب.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = ______________
+for item in range(______________):
+    num1 = int(input("Please enter first number: "))
+    num2 = int(input("Please enter second number: "))
+    if ______________:
+        count = ______________
+print(______________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\texttt{count} \quad \texttt{count + 1} \quad \texttt{num1\%2 == num2\%2} \quad \texttt{5} \quad \texttt{0}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+count = 0
+for item in range(5):
+    num1 = int(input("Please enter first number: "))
+    num2 = int(input("Please enter second number: "))
+    if num1 % 2 == num2 % 2:
+        count = count + 1
+print(count)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+
+%==============================================================
+\section*{القسم الثاني: حلقات \textenglish{while}}
+
+الحلقة \textbf{اللانهائية} هي الحلقة التي شرط التوقف فيها لا يتحقق أبدًا، ولذلك الأوامر التي في جسم الحلقة تتنفذ إلى ما لا نهاية. أمامكم مقاطع برنامج تحتوي على حلقة \textenglish{while}. لكل مقطع برنامج، حدّدوا إذا كانت الحلقة لا نهائية أم نهائية.
+إذا كانت الحلقة لا نهائية، أشيروا بـ \textenglish{X} في الخانة الملائمة، وإذا كانت نهائية اكتبوا ماذا سيكون المخرج (أو عدد المرات التي ستُنفّذ فيها الحلقة).
+
+\subsection*{سؤال 1}
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.34\textwidth}|p{0.17\textwidth}|p{0.2\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{البند}} & \multicolumn{1}{c|}{\textbf{مقطع البرنامج}} & \multicolumn{1}{c|}{\textbf{حلقة لا نهائية}} & \multicolumn{1}{c|}{\textbf{عدد المرات (أو المخرج)}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 5
+while num > 0:
+    print(num)
+    num = num - 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 0
+while num < 10:
+    print(num)
+    num = num + 3
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 0
+while num > 0:
+    print(num)
+    num = num + 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 5
+while i == 5:
+    print(i)
+    i = i / 10
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+5 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 5
+while i == 5:
+    print(i)
+    i = i % 10
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+\end{longtable}
+}
+
+\subsection*{سؤال 2}
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.34\textwidth}|p{0.17\textwidth}|p{0.2\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{البند}} & \multicolumn{1}{c|}{\textbf{مقطع البرنامج}} & \multicolumn{1}{c|}{\textbf{حلقة لا نهائية}} & \multicolumn{1}{c|}{\textbf{عدد المرات (أو المخرج)}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 5
+while num > 0:
+    print(num)
+    num = num - 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 1
+while num < 10:
+    print(num)
+    num = num + 3
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 5
+while num > 0:
+    print(num)
+    num = num + 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 3
+while num != 10:
+    print(num)
+    num = num + 3
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+5 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+num = 2
+while num != 10:
+    print(num)
+    num = num + 2
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} & \\
+\hline
+\end{longtable}
+}
+
+\clearpage
+\subsection*{سؤال 3}
+اكتبوا ماذا سيكون \textbf{المخرج} في كل بند.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.45\textwidth}|p{0.3\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{البند}} & \multicolumn{1}{c|}{\textbf{مقطع البرنامج}} & \multicolumn{1}{c|}{\textbf{المخرج}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 12
+while i < 15:
+    i = i + 1
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 6
+while i > 0:
+    if i % 2 == 1:
+        print(i)
+    i = i - 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+\end{longtable}
+}
+
+\clearpage
+\subsection*{سؤال 4}
+اكتبوا ماذا سيكون \textbf{المخرج} في كل بند.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.45\textwidth}|p{0.3\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{البند}} & \multicolumn{1}{c|}{\textbf{مقطع البرنامج}} & \multicolumn{1}{c|}{\textbf{المخرج}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i < 10:
+    print(i)
+    i = i + 2
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i <= 30:
+    if i % 3 == 0:
+        print(i)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i < 4:
+    print('wow')
+    i += 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+x = 5
+i = 1
+while i < 4:
+    x -= 1
+    i += 1
+    print(i, x)
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+5 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+x = 0
+while x < 9:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+6 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+x = 1
+while x < 12:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.7cm} \\
+\hline
+\end{longtable}
+}
+
+\clearpage
+%==============================================================
+\section*{القسم الثالث: \textenglish{for} مقابل \textenglish{while}}
+
+صِلوا كل مقطع برنامج في العمود أ بمقطع البرنامج في العمود ب الذي \textbf{يطبع المخرج نفسه}.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.36\textwidth}|p{0.36\textwidth}|c|}
+\hline
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{\textbf{العمود أ}} & \multicolumn{1}{c|}{\textbf{العمود ب}} & \multicolumn{1}{c|}{} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i <= 10:
+    if i % 3 == 0:
+        print(i)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell} &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for i in range(-4, 5, 2):
+    print(i + 5)
+\end{minted}
+\end{english}
+\end{pycell} & \textenglish{A} \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for i in range(16, 3, -4):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell} &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i <= 3:
+    print(i * 3)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell} & \textenglish{B} \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 1
+while i < 10:
+    print(i)
+    i = i + 2
+\end{minted}
+\end{english}
+\end{pycell} &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+i = 8
+while i > 0:
+    print(i * 2)
+    i = i - 2
+\end{minted}
+\end{english}
+\end{pycell} & \textenglish{C} \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for i in range(-5, 6):
+    print(i + 6)
+\end{minted}
+\end{english}
+\end{pycell} &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+for i in range(1, 12):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell} & \textenglish{D} \\
+\hline
+\end{longtable}
+}
+
+\vspace{1.5cm}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{2cm}|p{3cm}|p{6cm}|}
+\hline
+رقم العمود أ &  حرف العمود ب & المخرج \\
+\hline
+1 &  &  \\
+\hline
+2 &  &  \\
+\hline
+3 &  &  \\
+\hline
+4 &  &  \\
+\hline
+\end{tabular}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{tabular}{ll}
+1 $\rightarrow$ B & (\texttt{3, 6, 9}) \\
+2 $\rightarrow$ C & (\texttt{16, 12, 8, 4}) \\
+3 $\rightarrow$ A & (\texttt{1, 3, 5, 7, 9}) \\
+4 $\rightarrow$ D & (\texttt{1, 2, \ldots, 11}) \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+
+\section*{القسم الرابع: أكمل الكود}
+
+\begin{enumerate}[itemsep=3em]
+
+
+\item يوجد في مصنع الخرز ماكينة تستقبل خرزات بألوان مختلفة. أمامكم مقطع كود هدفه أن يعدّ \textbf{عدد الخرزات الحمراء}.
+
+مثلًا، إذا كان المدخل (من اليسار لليمين): \textenglish{red red green red green red yellow yellow}، يكون المخرج: \textenglish{The number of red beads is: 4}.
+
+أكملوا الناقص في البرنامج باستخدام مخزن الكلمات.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count_red = 0
+ans = "yes"
+while ans == "yes":
+    ______ = input("Please enter a color: ")
+    if color == ______:
+        count_red = __________
+    ans = input("Do you want to continue? yes/no ")
+print("The number of red beads is: ", __________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\begin{boxCode}
+\texttt{count\_red + 1} \quad , \quad \texttt{color} \quad , \quad \texttt{count\_red} \quad , \quad \texttt{"red"}
+\end{boxCode}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+count_red = 0
+ans = "yes"
+while ans == "yes":
+    color = input("Please enter a color: ")
+    if color == "red":
+        count_red = count_red + 1
+    ans = input("Do you want to continue? yes/no ")
+print("The number of red beads is: ", count_red)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\clearpage
+
+\item يريد معلم أن يحسب عدد الطلاب الذين نجحوا في الامتحان (علامة 55 أو أكثر) من بين 8 طلاب في الصف.
+
+أكملوا الناقص في البرنامج باستخدام مخزن الكلمات ليستقبل البرنامج 8 علامات ويحسب عدد الناجحين ثم يطبع عددهم.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+passed = 0
+for i in range(______):
+    grade = int(input("Enter grade: "))
+    if ______ >= 55:
+        passed = __________
+print("Number of passing students: ", passed)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\begin{boxCode}
+\texttt{passed + 1} \quad , \quad \texttt{grade} \quad , \quad \texttt{8} \quad , \quad \texttt{i}
+\end{boxCode}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+passed = 0
+for i in range(8):
+    grade = int(input("Enter grade: "))
+    if grade >= 55:
+        passed = passed + 1
+print("Number of passing students: ", passed)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item آلة حاسبة في سوبر ماركت تجمع أسعار المنتجات التي يشتريها الزبون. تتوقف الآلة عن استقبال الأسعار وتطبع المجموع الكلي عندما يتم إدخال السعر 0.
+
+أكملوا الناقص في البرنامج باستخدام مخزن الكلمات.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+total = ______
+price = int(input("Enter price (0 to stop): "))
+while price != ______:
+    total = total + ______
+    price = int(input("Enter price (0 to stop): "))
+print("Total to pay is: ", total)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\begin{boxCode}
+\texttt{price} \quad , \quad \texttt{0} \quad , \quad \texttt{total} \quad , \quad \texttt{0}
+\end{boxCode}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+total = 0
+price = int(input("Enter price (0 to stop): "))
+while price != 0:
+    total = total + price
+    price = int(input("Enter price (0 to stop): "))
+print("Total to pay is: ", total)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+\item برنامج لخزنة ذكية يطلب من المستخدم إدخال كلمة المرور السريّة (\textenglish{"1234"}). يستمر البرنامج بطلب كلمة المرور طالما أن المستخدم يُدخل كلمة مرور خاطئة. عند إدخال كلمة المرور الصحيحة، يطبع البرنامج عبارة \textenglish{"Safe Opened!"}.
+
+أكملوا الناقص في البرنامج باستخدام مخزن الكلمات.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+password = input("Enter password: ")
+while password ______ "1234":
+    print("Wrong password, try again.")
+    ______ = input("Enter password: ")
+print(__________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\begin{boxCode}
+\texttt{"Safe Opened!"} \quad , \quad \texttt{password} \quad , \quad \texttt{==} \quad , \quad \texttt{!=}
+\end{boxCode}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+password = input("Enter password: ")
+while password != "1234":
+    print("Wrong password, try again.")
+    password = input("Enter password: ")
+print("Safe Opened!")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
