@@ -1,0 +1,363 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\setminted{fontsize=\small, baselinestretch=0.95, breaklines=true}
+
+\title{كراس تمارين متدرج: الوراثة وتعدد الأشكال}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxDef}[مشروع نظام الموظفين في شركة "السعادة للجميع"]
+في شركة \textbf{"السعادة للجميع"}، ترغب الإدارة في بناء نظام برمجي متكامل لإدارة شؤون الموظفين، حساب رواتبهم، وتنظيم عمليات التصويت في الشركة. \\
+في هذا الكراس، سنبني النظام \textbf{خطوة بخطوة}: سنبدأ ببناء فئات منفصلة بدون وراثة، ثم نكتشف التكرار ونعالجه عبر بناء فئة أساسية وتطبيق \textbf{الوراثة}، وبعدها نوسّع النظام ليشمل إدارة الشركة وتطبيق \textbf{تعدد الأشكال} و\textbf{إعادة تعريف العمليات}.
+\end{boxDef}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+في \textbf{كل تمرين} تغيّر فيه شيئاً في الفئات أو تضيف عملية جديدة، \textbf{يجب عليك} تحديث البرنامج الرئيسي \textenglish{Main} لإنشاء كائنات واستدعاء العمليات الجديدة وفحص صحّة عملها على الشاشة.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{بناء فئة تقني الحواسيب (\textenglish{Technician}) بدون وراثة} \\
+    ابنِ فئة باسم \textenglish{Technician} لإدارة بيانات تقني الحواسيب في الشركة. \\
+    \textbf{الصفات (\textenglish{private}):}
+    \begin{itemize}
+        \item \textenglish{id} (\textenglish{string}): رقم هوية الموظف.
+        \item \textenglish{name} (\textenglish{string}): اسم الموظف.
+        \item \textenglish{seniority} (\textenglish{int}): أقدمية الموظف في الشركة (عدد السنوات).
+        \item \textenglish{computers} (\textenglish{int}): عدد الحواسيب التي تقع تحت مسؤوليته.
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية أولى:} تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وعدد الحواسيب، وتهيئ جميع الصفات.
+        \item \textbf{عملية بنائية ثانية (لتقني جديد):} تتلقى رقم الهوية، الاسم، وعدد الحواسيب فقط، وتهيئ الأقدمية (\textenglish{seniority}) إلى \textenglish{0}.
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات (\textenglish{GetId}، \textenglish{GetName}، \textenglish{GetSeniority}، \textenglish{GetComputers}).
+        \item \textbf{عمليات \textenglish{Set}:}
+        \begin{itemize}
+            \item \textenglish{SetName(string name)}: لتعديل اسم الموظف.
+            \item \textenglish{SetComputers(int computers)}: لتعديل عدد الحواسيب (بشرط أن يكون العدد \textbf{غير سالب} $\ge 0$؛ إذا كانت القيمة سالبة لا يتم التعديل).
+        \end{itemize}
+        \item \textbf{العملية \textenglish{AddSeniorityYear()}:} تزيد عدد سنوات أقدمية الموظف بسنة واحدة ($+1$).
+        \item \textbf{العملية \textenglish{ToString()}:} تعيد نصاً يصف بيانات التقني.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اكتب في \textenglish{Main} مقطع برنامج ينشئ كائنين من الفئة \textenglish{Technician} (أحدهما بالعملية البنائية الأولى والآخر بالثانية)، يستدعي \textenglish{AddSeniorityYear()} و \textenglish{SetComputers}، ويطبع وصفهما باستخدام \textenglish{ToString()}.
+
+    \item \textbf{بناء فئة عضو لجنة العمال (\textenglish{UnionMember}) بدون وراثة} \\
+    ابنِ فئة باسم \textenglish{UnionMember} لإدارة بيانات موظف يشغل عضوية في لجنة عمال الشركة. \\
+    \textbf{الصفات (\textenglish{private}):}
+    \begin{itemize}
+        \item \textenglish{id} (\textenglish{string}): رقم هوية الموظف.
+        \item \textenglish{name} (\textenglish{string}): اسم الموظف.
+        \item \textenglish{seniority} (\textenglish{int}): أقدمية الموظف في الشركة (عدد السنوات).
+        \item \textenglish{unionYears} (\textenglish{int}): عدد سنوات عضويته في لجنة العمال.
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية:} تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وسنوات العضوية في اللجنة، وتهيئ جميع الصفات.
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات (\textenglish{GetId}، \textenglish{GetName}، \textenglish{GetSeniority}، \textenglish{GetUnionYears}).
+        \item \textbf{عمليات \textenglish{Set}:}
+        \begin{itemize}
+            \item \textenglish{SetName(string name)}: لتعديل اسم الموظف.
+            \item \textenglish{SetUnionYears(int unionYears)}: لتعديل سنوات العضوية في اللجنة (بشرط أن تكون القيمة \textbf{غير سالبة} ولا تتجاوز أقدميته في الشركة: $0 \le \text{unionYears} \le \text{seniority}$).
+        \end{itemize}
+        \item \textbf{العملية \textenglish{AddSeniorityYear()}:} تزيد عدد سنوات أقدمية الموظف في الشركة بسنة واحدة ($+1$).
+        \item \textbf{العملية \textenglish{ToString()}:} تعيد نصاً يصف بيانات عضو اللجنة.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أضف إلى \textenglish{Main} إنشاء كائن من الفئة \textenglish{UnionMember}، وجرّب استدعاء عملياته (\textenglish{AddSeniorityYear}، \textenglish{SetUnionYears}، \textenglish{ToString}) وطباعة النتائج.
+
+    \item \textbf{استخلاص المشترك وبناء فئة الموظف الأساسي (\textenglish{Employee})} \\
+    راجع الفئتين اللتين بنيتهما في التمرين 1 والتمرين 2. جد جميع الصفات والعمليات \textbf{المتطابقة (المشتركة فقط)} بين الفئتين، وأنشئ فئة جديدة باسم \textenglish{Employee} تتضمن فقط هذه الصفات والعمليات المشتركة. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Employee} في \textenglish{Main}، وافحص عملياته واطبع بياناته.
+
+\end{enumerate}
+
+\begin{boxAttention}[- نقطة للتفكير]
+هل كان من الأريح برمجياً تطوير الجزء المشترك مرة واحدة فقط، ثم إضافة الجزء الفريد لكل فئة على حدة؟ \\
+ربما سيساعدنا ذلك أيضاً عند بناء فئات لأنماط إضافية من الموظفين (مثل مسؤول مشاريع، محاسب، مدير فرع...). \\
+\textbf{والآن ننتقل إلى تعلم الوراثة...}
+\end{boxAttention}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{بناء علاقة الوراثة بين \textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember}}
+    \begin{itemize}
+        \item \textbf{أولاً:} حدّث الفئة \textenglish{Employee} وفق قواعد البرمجة كائنية التوجه بحيث تشكّل \textbf{فئة أساسية (فئة أب)} للفئات التي سترث منها (\textenglish{Technician} و \textenglish{UnionMember})، وذلك بتحويل أذونات الوصول لصفاتها إلى محمية (\textenglish{protected}).
+        \item \textbf{ثانياً:} أعد بناء الفئتين \textenglish{Technician} و \textenglish{UnionMember} بحيث ترثان من الفئة \textenglish{Employee} (باستخدام \textenglish{: Employee}):
+        \begin{itemize}
+            \item أبقِ في كل فئة فرعية الصفات والعمليات الخاصة بها \textbf{فقط} (واحذف التكرار الموجود في \textenglish{Employee}).
+            \item استعن بالعملية البنائية لفئة الأب باستخدام الكلمة المحجوزة \textenglish{base}.
+            \item في العملية \textenglish{ToString()} لكل فئة فرعية، استدعِ \textenglish{base.ToString()} وألحق بها الصفة الخاصة بالفئة الفرعية.
+        \end{itemize}
+    \end{itemize}
+
+    فيما يلي ملخص واجهة الفئة الأساسية \textenglish{Employee} بعد التحديث:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    {\small
+    \begin{tabular}{|p{0.44\textwidth}|p{0.48\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
+    \hline
+    صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
+    \hline
+    عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
+    \hline
+    عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
+    \hline
+    \end{tabular}
+    }
+    \end{center}
+
+    وملخص واجهتي الفئتين الفرعيتين الوارثتين \textenglish{Technician} و \textenglish{UnionMember}:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    {\small
+    \begin{tabular}{|p{0.44\textwidth}|p{0.48\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Technician : Employee}}} \\
+    \hline
+    صفة خاصة لعدد الحواسيب. & \textenglish{private int computers;} \\
+    \hline
+    عمليتان بنائيتان تستعينان بـ \textenglish{base}. & \textenglish{public Technician(string id, string name, int seniority, int computers)} \newline \textenglish{public Technician(string id, string name, int computers)} \\
+    \hline
+    عمليات الحواسيب وإعادة تعريف \textenglish{ToString}. & \textenglish{GetComputers(), SetComputers(int c), override ToString()} \\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{UnionMember : Employee}}} \\
+    \hline
+    صفة خاصة لسنوات العضوية في اللجنة. & \textenglish{private int unionYears;} \\
+    \hline
+    عملية بنائية تستعين بـ \textenglish{base}. & \textenglish{public UnionMember(string id, string name, int seniority, int unionYears)} \\
+    \hline
+    عمليات العضوية وإعادة تعريف \textenglish{ToString}. & \textenglish{GetUnionYears(), SetUnionYears(int u), override ToString()} \\
+    \hline
+    \end{tabular}
+    }
+    \end{center}
+
+    \textbf{الفحص في \textenglish{Main}:} \\
+    افحص الفئات المحدّثة في \textenglish{Main}: أنشئ كائنات من الفئات الثلاث، واستدعِ على كائني \textenglish{Technician} و \textenglish{UnionMember} عمليات موروثة من \textenglish{Employee} (مثل \textenglish{GetName} و \textenglish{AddSeniorityYear}) وعمليات خاصة بكل منهما، واطبع الكائنات.
+
+    \item \textbf{إضافة فئة فرعية ثالثة: مسؤول المشاريع (\textenglish{Supervisor})} \\
+    أضف فئة جديدة باسم \textenglish{Supervisor} تمثل مسؤول مشاريع في الشركة يدير فريقاً مكوّناً من 15 موظفاً كحد أقصى، وترث من الفئة \textenglish{Employee}. \\
+    \textbf{الصفات الخاصة الإضافية (\textenglish{private}) في \textenglish{Supervisor}:}
+    \begin{itemize}
+        \item \textenglish{team} (\textenglish{Employee[]}): مصفوفة تمثل فريق الموظفين الذين يشرف عليهم (بحجم أقصى 15).
+        \item \textenglish{teamCount} (\textenglish{int}): عدد الموظفين الفعليين حالياً في فريقه.
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية أولى:} تتلقى رقم الهوية، الاسم، وسنوات الأقدمية، وتهيئ صفات الأب عبر \textenglish{base}، وتنشئ مصفوفة \textenglish{team} بحجم 15، وتهيئ \textenglish{teamCount} إلى \textenglish{0}.
+        \item \textbf{عملية بنائية ثانية:} تتلقى رقم الهوية، الاسم، سنوات الأقدمية، ومصفوفة موظفين جاهزة \textenglish{Employee[] team}، وتهيئ صفات الأب عبر \textenglish{base}، وتنسخ الحدود غير الفارغة (\textenglish{!= null}) إلى مصفوفة الفريق وتحدّث \textenglish{teamCount}.
+        \item \textbf{عمليات \textenglish{Get}:} للصفتين (\textenglish{GetTeam()} و \textenglish{GetTeamCount()}).
+        \item \textbf{العملية \textenglish{AddEmployeeToTeam(Employee emp)}:} تتلقى كائن موظف (من نمط \textenglish{Employee} أو أي فئة ترث منه)، وإذا كان هناك متسع في فريق المشروع ($\text{teamCount} < 15$) تضيفه إلى الفريق وتعيد \textenglish{true}، وإلا تعيد \textenglish{false}.
+        \item \textbf{العملية \textenglish{TransferBonusSeniority(Employee emp)}:} عملية تشجيعية تتلقى كائن موظف \textenglish{emp} وتستدعي عليه \textenglish{AddSeniorityYear()} لمنحه سنة أقدمية إضافية، بشرط أن يكون هذا الموظف عضواً موجوداً فعلياً داخل مصفوفة \textenglish{team} الخاصة بمسؤول المشاريع الحالي (تعيد \textenglish{true} إذا وجدته في فريقه ومنحته السنة، و \textenglish{false} خلاف ذلك).
+        \item \textbf{العملية \textenglish{ToString()}:} تعيد وصفاً نصياً لمسؤول المشاريع بالاستعانة بـ \textenglish{base.ToString()} مع إضافة عدد أعضاء فريقه الحاليين.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Supervisor} في \textenglish{Main}، وأضف إلى فريقه موظفاً عادياً (\textenglish{Employee})، وتقنياً (\textenglish{Technician})، وعضو لجنة (\textenglish{UnionMember})، ثم جرّب العملية \textenglish{TransferBonusSeniority} واطبع بيانات المسؤول وأعضاء فريقه.
+
+\end{enumerate}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الثالثة: تعدد الأشكال الأساسي (التحويل لأعلى)}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{بناء فئة إدارة الشركة (\textenglish{Company})} \\
+    أضف فئة جديدة لمشروعنا باسم \textenglish{Company}. تمثّل هذه الفئة مجموعة موظفي الشركة من جميع الأنماط، بالاعتماد على الفئة الأساسية \textenglish{Employee} (أي تشمل أيضاً كل كائن من فئة ترث من \textenglish{Employee}).
+    \begin{itemize}
+        \item \textbf{الصفات:}
+        \begin{itemize}
+            \item \textenglish{public const int MAX = 100}: ثابت يمثل الحد الأقصى للموظفين في الشركة.
+            \item \textenglish{private Employee[] employees}: مصفوفة لحفظ موظفي الشركة.
+            \item \textenglish{private int current}: عدد الموظفين الفعليين حالياً في الشركة.
+        \end{itemize}
+        \item \textbf{عملية بنائية \textenglish{public Company()}:} تنشئ المصفوفة بحجم \textenglish{MAX} وتهيئ \textenglish{current} إلى \textenglish{0}.
+        \item \textbf{عملية \textenglish{GetCurrent()}:} تعيد عدد الموظفين الحاليين في الشركة.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Company} في \textenglish{Main} واطبع عدد الموظفين الابتدائي فيه.
+
+    \item \textbf{إضافة موظف إلى الشركة (\textenglish{AddEmployee})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{AddEmployee(Employee e)} تتلقى موظفاً من أي نمط وتضيفه إلى مصفوفة موظفي الشركة: افحص أولاً إن كان هناك متسع في المصفوفة؛ إذا نعم، أضف الموظف وأعد \textenglish{true}، وإلا فلا تضفه وأعد \textenglish{false}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أضف في \textenglish{Main} عدة موظفين من الأنماط الأربعة (\textenglish{Employee}، \textenglish{Technician}، \textenglish{UnionMember}، و \textenglish{Supervisor}) إلى كائن الشركة \textenglish{Company}.
+
+    \item \textbf{البحث عن بيانات موظف حسب رقم الهوية (\textenglish{GetEmployeeDetails})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetEmployeeDetails(string id)} تتلقى رقم هوية موظف (افترض أنه فريد) وتعيد سلسلة نصية تصف بيانات هذا الموظف (استخدم \textenglish{ToString()}). إذا لم يوجد موظف بهذا الرقم في الشركة، تعيد العملية نصاً فارغاً \textenglish{""}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} لرقم هوية موجود وآخر غير موجود واطبع النتيجة.
+
+    \item \textbf{عدّ الموظفين الذين يملكون نفس الأقدمية (\textenglish{CountSameSeniority})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{CountSameSeniority(string id)} تتلقى رقم هوية موظف (افترض أنه فريد وموجود في الشركة)، وتعيد عدد الموظفين في الشركة الذين لديهم نفس عدد سنوات الأقدمية التي يمتلكها صاحب هذا الرقم. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع النتيجة.
+
+    \item \textbf{تصفية الموظفين حسب الأقدمية (\textenglish{GetEmployeesByMinSeniority})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetEmployeesByMinSeniority(int minYears)} تتلقى حداً أدنى لسنوات الأقدمية، وتعيد مصفوفة من نمط \textenglish{Employee[]} تحتوي على جميع موظفي الشركة الذين أقدميتهم أكبر أو تساوي \textenglish{minYears} (بحجم مطابق تماماً لعددهم). إذا لم يوجد أي موظف يحقق الشرط، يُعاد \textenglish{null}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع بيانات جميع الموظفين في المصفوفة المُعادة.
+
+    \item \textbf{إيجاد الموظف صاحب الأقدمية الأكبر (\textenglish{GetMostVeteranId})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetMostVeteranId()} تعيد رقم هوية (\textenglish{id}) الموظف صاحب أكبر أقدمية في الشركة (افترض وجود موظف واحد كهذا، وإذا كانت الشركة خالية تعيد \textenglish{""}). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع رقم هوية الموظف الأقدم في الشركة.
+
+\end{enumerate}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الرابعة: إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+% ==============================================================
+
+\begin{boxNote}[- قواعد حساب الرواتب ونقاط التصويت واستحقاق المكافأة]
+تُتخذ القرارات في الشركة عبر التصويت باستخدام \textbf{نقاط التأثير}، كما يتحدد الراتب الشهري والمكافأة السنوية لكل موظف بحسب نمطه وأقدميته كما يلي:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+{\small
+\begin{tabular}{|p{0.20\textwidth}|p{0.37\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{نمط الموظف} & \textbf{الراتب الشهري (\textenglish{GetSalary})} & \textbf{نقاط التصويت (\textenglish{GetScore})} \\
+\hline
+\textbf{موظف عادي} \newline (\textenglish{Employee}) &
+راتب أساسي $5000$ ش.ج + $500$ ش.ج عن كل سنة أقدمية: \newline
+$5000 + 500 \cdot \text{seniority}$ &
+$4$ نقاط أساسية + نقطة عن كل سنة أقدمية: \newline
+$4 + \text{seniority}$ \\
+\hline
+\textbf{تقني حواسيب} \newline (\textenglish{Technician}) &
+راتب الموظف العادي + $250$ ش.ج عن كل 10 حواسيب كاملة: \newline
+$\text{base} + \lfloor \frac{\text{computers}}{10} \rfloor \cdot 250$ &
+نقاط الموظف العادي + نقطة عن كل حاسوب: \newline
+$\text{base} + \text{computers}$ \\
+\hline
+\textbf{عضو لجنة عمال} \newline (\textenglish{UnionMember}) &
+يماثل راتب الموظف العادي تماماً. &
+\textbf{ضعف} نقاط الموظف العادي + نقطتان عن كل سنة باللجنة: \newline
+$2 \cdot \text{base} + 2 \cdot \text{unionYears}$ \\
+\hline
+\textbf{مسؤول مشاريع} \newline (\textenglish{Supervisor}) &
+راتب الموظف العادي + $100$ ش.ج عن كل موظف فعلي في فريقه: \newline
+$\text{base} + 100 \cdot \text{teamCount}$ &
+نقاط الموظف العادي + مجموع نقاط كافة أعضاء فريقه الفعليين. \\
+\hline
+\end{tabular}
+}
+\end{center}
+\end{boxNote}
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{تطبيق العمليات القابلة لإعادة التعريف: \textenglish{GetSalary()} و \textenglish{GetScore()}}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضف إلى الفئة الأساسية \textenglish{Employee} العمليتين العامتين القابلتين لإعادة التعريف:
+        \begin{itemize}
+            \item \textenglish{public virtual double GetSalary()}
+            \item \textenglish{public virtual int GetScore()}
+        \end{itemize}
+        وأعد تعريفهما (\textenglish{override}) في الفئات الفرعية \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} وفق الجدول أعلاه، مع الحرص على استدعاء \textenglish{base.GetSalary()} و \textenglish{base.GetScore()} لتجنب تكرار المعادلات الحسابية.
+        \item أضف إلى الفئة \textenglish{Company} العملية \textenglish{public double TotalSalary()} التي تحسب وتعيد مجموع الرواتب الشهرية لجميع موظفي الشركة.
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    في \textenglish{Main}، اطبع راتب ونقاط تصويت كل موظف، ثم اطبع مجموع الرواتب الكلي في الشركة عبر \textenglish{TotalSalary()}.
+
+    \item \textbf{إضافة عملية استحقاق المكافأة السنوية (\textenglish{YearlyBonus})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضف لمشروع الشركة عملية عامة قابلة لإعادة التعريف تعريفها: \textenglish{public virtual bool YearlyBonus()}
+        \begin{itemize}
+            \item تُعرّف العملية لأول مرة في الفئة \textenglish{Employee} وتعيد \textenglish{true} إذا كانت أقدمية الموظف 5 سنوات على الأقل ($\text{seniority} \ge 5$)، وإلا تعيد \textenglish{false}.
+            \item في الفئة \textenglish{Technician} يُعاد تعريف العملية (\textenglish{override}) وتعيد \textenglish{true} إذا كان التقني يحقق شرط الأقدمية (عبر \textenglish{base.YearlyBonus()}) \textbf{و}يتولى مسؤولية 100 حاسوب على الأقل ($\text{computers} \ge 100$)، وإلا تعيد \textenglish{false}.
+            \item في الفئتين \textenglish{UnionMember} و \textenglish{Supervisor} يُعاد تعريف العملية (\textenglish{override}) بحيث تعيد \textenglish{false} دائماً (لأن أعضاء اللجنة ومسؤولي المشاريع غير مشمولين في هذه المكافأة).
+        \end{itemize}
+        \item أضف إلى الفئة \textenglish{Company} عملية باسم \textenglish{GetBonusEmployees()} تعيد مصفوفة (\textenglish{Employee[]}) تضم جميع موظفي الشركة المستحقين للمكافأة السنوية (بحسب نتيجة العملية \textenglish{YearlyBonus()}).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ في \textenglish{Main} العملية \textenglish{GetBonusEmployees()} واطبع بيانات الموظفين المستحقين للمكافأة.
+
+\end{enumerate}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الخامسة: تعدد الأشكال المتقدم (\textenglish{is} والتحويل لأسفل)}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{تخصيص علاوة مسؤول المشاريع وتصفية التقنيين (\textenglish{GetSeniorTechnicians})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item \textbf{تحديث \textenglish{GetSalary()} في الفئة \textenglish{Supervisor}:} \\
+        قررت إدارة الشركة تعديل منحة الإدارة الخاصة بمسؤول المشاريع بحيث يحصل على راتب الموظف العادي (\textenglish{base.GetSalary()}) + علاوة قدرها \textbf{$100$ ش.ج عن كل تقني حواسيب (\textenglish{Technician})} ضمن فريقه + علاوة قدرها \textbf{$50$ ش.ج عن كل عضو لجنة عمال (\textenglish{UnionMember})} ضمن فريقه (دون علاوة عن الموظفين العاديين في الفريق). حدّث العملية \textenglish{GetSalary()} في \textenglish{Supervisor} باستخدام العامل \textenglish{is}.
+        \item \textbf{عملية \textenglish{GetSeniorTechnicians} في الفئة \textenglish{Company}:} \\
+        اكتب عملية في الفئة \textenglish{Company} تعريفها:
+        \begin{center}
+        \textenglish{public Technician[] GetSeniorTechnicians(int minComputers)}
+        \end{center}
+        تعيد العملية مصفوفة من نمط \textenglish{Technician[]} تحتوي فقط على تقنيي الحواسيب في الشركة الذين عدد الحواسيب تحت مسؤوليتهم أكبر أو يساوي \textenglish{minComputers} (بهدف ترقيتهم مستقبلاً).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبع راتب مسؤول المشاريع في \textenglish{Main} بعد التعديل، ثم استدعِ \textenglish{GetSeniorTechnicians} واطبع بيانات التقنيين الذين أرجعتهم العملية.
+
+    \item \textbf{تقرير المراجعة الإدارية (\textenglish{AuditReport}) وعملية التصويت العامة (\textenglish{IsAccepted})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item \textbf{العملية \textenglish{AuditReport} في الفئة \textenglish{Company}:} \\
+        اكتب عملية لقسم الموارد البشرية في الفئة \textenglish{Company} باسم \textenglish{public string[] AuditReport()}. تعيد العملية مصفوفة نصوص (\textenglish{string[]})، بحيث يصف كل سطر فيها موظفاً في الشركة من نمط \textbf{تقني حواسيب (\textenglish{Technician}) أو عضو لجنة عمال (\textenglish{UnionMember})} ممن يُصنَّفون كـ \textbf{"كادر تشغيلي متمرس"} بالمعطيات التالية:
+        \begin{center}
+        \textenglish{\$"Type:\{empType\}, ID:\{id\}, Name:\{name\}, Score:\{score\}"}
+        \end{center}
+        \begin{itemize}
+            \item \textenglish{empType} هو نمط الموظف: \textenglish{"Technician"} أو \textenglish{"Union"}.
+            \item \textenglish{id} هو رقم هوية الموظف، و \textenglish{name} هو اسمه، و \textenglish{score} هو نقاط تصويته.
+            \item في حالة كان الموظف تقني حواسيب (\textenglish{Technician})، يجب إضافة عدد حواسيبه في نهاية النص: \textenglish{", Computers:\{computers\}"}.
+            \item في حالة كان الموظف عضو لجنة (\textenglish{UnionMember})، يجب إضافة سنوات عضويته باللجنة في نهاية النص: \textenglish{", UnionYears:\{unionYears\}"}.
+        \end{itemize}
+        \textbf{انتبه:} الموظف الذي يُصنَّف كـ \textbf{"كادر تشغيلي متمرس"} يجب أن تكون أقدميته في الشركة أكثر من 3 سنوات ($\text{seniority} > 3$)، وأن تكون نقاط تصويته (\textenglish{GetScore()}) أكبر من 15 نقطة!
+
+        \item \textbf{العملية العامة \textenglish{IsAccepted} في فئة \textenglish{Program}:} \\
+        طُرح اقتراح رسمي في الشركة لتغيير اسمها من "السعادة للجميع" إلى \textbf{"السعادة الآن وفي المستقبل"}. \\
+        صوّت جميع الموظفين العاديين والتقنيين \textbf{تأييداً} للاقتراح (مع)، بينما عارض جميع أعضاء لجنة العمال ومسؤولي المشاريع هذا الاقتراح (\textbf{ضد}). \\
+        يُعتمد القرار فقط إذا كان مجموع نقاط المؤيدين \textbf{أكبر تماماً} من مجموع نقاط المعارضين. \\
+        اكتب في فئة \textenglish{Program} العملية الثابتة التي تعريفها:
+        \begin{boxCode}
+        \begin{english}
+        \begin{minted}{csharp}
+public static bool IsAccepted(object[] arr)
+        \end{minted}
+        \end{english}
+        \end{boxCode}
+        تتلقى العملية مصفوفة كائنات عامة \textenglish{object[]} تمثل موظفي الشركة، وتعيد \textenglish{true} إذا قُبل الاقتراح، وإلا تعيد \textenglish{false}.
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    في \textenglish{Main}، استدعِ \textenglish{AuditReport()} واطبع جميع أسطر التقرير، ثم أنشئ مصفوفة \textenglish{object[]} تضم موظفي الشركة ومررها إلى \textenglish{IsAccepted} واطبع نتيجة التصويت.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

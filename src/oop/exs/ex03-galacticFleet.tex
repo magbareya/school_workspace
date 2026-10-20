@@ -1,0 +1,300 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\setminted{fontsize=\small, baselinestretch=0.95, breaklines=true}
+
+\title{كراس تمارين متدرج: أسطول المجرّة}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxDef}[قصة السلسلة: مركز التحكم في أسطول المجرّة]
+أنتم مبرمجو مركز التحكم في أسطول فضائي يستكشف المجرّة. على كل مركبة فضائية أن تُدار بالكامل بواسطة برنامج: وقودها، احتياطها الطارئ، وتاريخ وصولها. \\
+ستبنون خلال هذه السلسلة نظام التحكم من الصفر، وستكتشفون في الطريق لماذا ابتكر المبرمجون \textbf{الوراثة} و\textbf{تعدد الأشكال} و\textbf{الفئات المجردة} و\textbf{الواجهات}.
+\end{boxDef}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+في \textbf{كل تمرين}، يجب كتابة مقطع برنامج داخل العملية الرئيسية \textenglish{Main} ينشئ كائنات ويفحص الفئة والعمليات الجديدة التي كتبتموها ويتأكد من صحة عملها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{بناء فئة مركبة الاستكشاف (\textenglish{ScoutShip}) بدون وراثة} \\
+    ابنوا فئة باسم \textenglish{ScoutShip} لإدارة مركبة استكشاف "ذهاب وإياب" (تخرج للمهمات وتعود باستمرار). \\
+    \textbf{الصفات (\textenglish{private}):}
+    \begin{itemize}
+        \item \textenglish{fleetNumber} (\textenglish{int}): رقم الأسطول.
+        \item \textenglish{baseNumber} (\textenglish{int}): رقم المحطة.
+        \item \textenglish{shipNumber} (\textenglish{int}): رقم المركبة.
+        \item \textenglish{captainID} (\textenglish{string}): رقم هوية القائد.
+        \item \textenglish{fuel} (\textenglish{double}): كمية الوقود الحالية في المركبة.
+        \item \textenglish{emergencyReserve} (\textenglish{double}): حجم الاحتياطي الطارئ المسموح استخدامه.
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية أولى:} تتلقى بيانات الأسطول والمحطة والمركبة ورقم هوية القائد (وتهيئ الوقود والاحتياطي الطارئ إلى \textenglish{0}).
+        \item \textbf{عملية بنائية ثانية:} تتلقى بيانات الأسطول والمحطة والمركبة ورقم هوية القائد \textbf{وكذلك} حجم الاحتياطي الطارئ المسموح (وتهيئ الوقود إلى \textenglish{0}).
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات (\textenglish{GetFleetNumber}، \textenglish{GetBaseNumber}، \textenglish{GetShipNumber}، \textenglish{GetCaptainID}، \textenglish{GetFuel}، \textenglish{GetEmergencyReserve}).
+        \item \textbf{عملية \textenglish{Set}:} لصفة حجم الاحتياطي الطارئ \textenglish{SetEmergencyReserve(double reserve)} (بشرط أن يكون \textbf{غير سالب} $\ge 0$).
+        \item \textbf{عملية \textenglish{ToString()}:} تعيد نصاً يصف بيانات الكائن.
+        \item \textbf{عمليات إضافية:}
+        \begin{itemize}
+            \item \textbf{تعبئة وقود \textenglish{Refuel(double amount)}:} تتلقى كمية وقود وتضيفها لوقود المركبة بشرط أن تكون الكمية \textbf{موجبة} ($> 0$)، وتعيد \textenglish{true} إذا نجحت التعبئة و \textenglish{false} خلاف ذلك.
+            \item \textbf{استهلاك وقود \textenglish{Consume(double amount)}:} تتلقى كمية وقود وتخصمها من وقود المركبة إذا كان ذلك مسموحاً. (انتبهوا: الكمية يجب أن تكون \textbf{موجبة}، والاستهلاك مسموح فقط إذا لم يهبط الوقود تحت \textenglish{-emergencyReserve}). تعيد العملية \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح.
+        \end{itemize}
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا مركبتي استكشاف (إحداهما بالعملية البنائية الأولى والأخرى بالثانية)، وجرّبوا تعبئة الوقود واستهلاكه في حالات ناجحة وأخرى تتجاوز الاحتياطي الطارئ، واطبعوا بيانات المركبتين.
+
+    \item \textbf{بناء فئة مركبة السبات (\textenglish{HibernationShip}) بدون وراثة} \\
+    ابنوا فئة باسم \textenglish{HibernationShip} لإدارة مركبة سبات طويلة المدى، تحتفظ بخلايا الوقود مختومة حتى انتهاء الرحلة. \\
+    \textbf{الصفات (\textenglish{private}):}
+    \begin{itemize}
+        \item \textenglish{fleetNumber} (\textenglish{int}): رقم الأسطول.
+        \item \textenglish{baseNumber} (\textenglish{int}): رقم المحطة.
+        \item \textenglish{shipNumber} (\textenglish{int}): رقم المركبة.
+        \item \textenglish{captainID} (\textenglish{string}): رقم هوية القائد.
+        \item \textenglish{fuel} (\textenglish{double}): كمية الوقود في المركبة.
+        \item \textenglish{arrivalDate} (\textenglish{Date}): تاريخ الوصول (من الفئة \textenglish{Date} التي بنيتموها سابقاً).
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية:} تتلقى بيانات الأسطول والمحطة والمركبة، ورقم هوية القائد، وتاريخ الوصول (وتهيئ الوقود إلى \textenglish{0}).
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات.
+        \item \textbf{عملية \textenglish{Set}:} لصفة تاريخ الوصول \textenglish{SetArrivalDate(Date arrivalDate)}.
+        \item \textbf{عملية \textenglish{ToString()}:} تعيد نصاً يصف بيانات الكائن.
+        \item \textbf{عمليات إضافية:}
+        \begin{itemize}
+            \item \textbf{تعبئة وقود \textenglish{Refuel(double amount)}:} تتلقى كمية وقود موجبة وتضيفها لخزان المركبة، وتعيد \textenglish{true} إذا نجحت التعبئة و \textenglish{false} خلاف ذلك.
+            \item \textbf{سحب كل الوقود \textenglish{WithdrawAllFuel(Date withdrawalDate)}:} تتلقى تاريخ السحب؛ إذا كان هذا التاريخ \textbf{أكبر من أو يساوي} تاريخ الوصول (\textenglish{arrivalDate}) وكان في المركبة وقود ($> 0$)، ينجح السحب (يصبح الوقود \textenglish{0}) وتعيد العملية \textenglish{true}، وإلا تعيد \textenglish{false}.
+        \end{itemize}
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا مركبة سبات، عبّئوها بالوقود، وجرّبوا سحب الوقود مرة بتاريخ يسبق تاريخ الوصول ومرة بتاريخ يساويه أو يتأخر عنه، واطبعوا النتائج.
+
+    \item \textbf{استخلاص الفئة المشتركة (\textenglish{BasicShip})} \\
+    راجعوا الفئتين اللتين بنيتموهما في التمرين 1 والتمرين 2. جدوا \textbf{جميع} الصفات والعمليات المتطابقة في الفئتين، وأنشئوا فئة جديدة باسم \textenglish{BasicShip} تضمّ كل الصفات والعمليات المشتركة (\textbf{المتطابقة فقط}) بين الفئتين اللتين طوّرتموهما. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا كائناً من الفئة \textenglish{BasicShip} في \textenglish{Main}، عبّئوه بالوقود واطبعوا بياناته.
+
+\end{enumerate}
+
+\begin{boxAttention}[- نقطة للتفكير]
+هل برأيكم كان سيكون أسهل لو طوّرنا الجزء المشترك بين الفئتين \textbf{مرة واحدة} فقط، ثم أضفنا لكل فئة الجزء الخاص بها؟ ربما يساعدنا هذا أيضاً في بناء فئات مركبات إضافية (سفينة شحن، سفينة قيادة، مركبة إنقاذ وغيرها). \\
+\textbf{والآن ننتقل إلى تعلم الوراثة...}
+\end{boxAttention}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تطبيق الوراثة في \textenglish{BasicShip} و \textenglish{ScoutShip} و \textenglish{HibernationShip}} \\
+    حدّثوا الفئة \textenglish{BasicShip} حسب قواعد البرمجة كائنية التوجه التي تعلمناها (صفات \textenglish{protected}، تغليف، عمليات بنائية)، بحيث تصبح \textbf{فئة أساسية (فئة أب)} لكل من الفئتين \textenglish{ScoutShip} و \textenglish{HibernationShip} اللتين سترثان منها. \\
+    ابنوا من جديد الفئتين \textenglish{ScoutShip} و \textenglish{HibernationShip} بحسب قواعد البرمجة كائنية التوجه، بحيث \textbf{ترثان} من الفئة \textenglish{BasicShip} (استخدموا \textenglish{: base(...)} في العمليات البنائية، واحذفوا الصفات والعمليات المكررة). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    تأكدوا أن كود الفحص في \textenglish{Main} يعمل بنجاح على الفئات الوارثة الجديدة.
+
+    \item \textbf{إضافة فئة السفينة الأم (\textenglish{MotherShip})} \\
+    أضيفوا فئة جديدة باسم \textenglish{MotherShip} تمثّل سفينة قيادة أم ترث من \textenglish{BasicShip} (أو من \textenglish{ScoutShip})، حسب قواعد البرمجة كائنية التوجه التي تعلمناها. \\
+    \textbf{الصفات:}
+    \begin{itemize}
+        \item رقم الأسطول (\textenglish{int})، رقم المحطة (\textenglish{int})، رقم المركبة (\textenglish{int})، رقم هوية القائد (\textenglish{string})، وكمية الوقود (\textenglish{double}) — موروثة من الفئة الأساسية.
+        \item \textenglish{fleetName} (\textenglish{string}): اسم الأسطول.
+        \item \textenglish{emergencyReserve} (\textenglish{double}): حجم الاحتياطي الطارئ المسموح.
+    \end{itemize}
+    \textbf{العمليات (\textenglish{public}):}
+    \begin{itemize}
+        \item \textbf{عملية بنائية أولى:} تتلقى بيانات الأسطول والمحطة والمركبة، واسم الأسطول، ورقم هوية القائد.
+        \item \textbf{عملية بنائية ثانية:} تتلقى بيانات الأسطول والمحطة والمركبة، ورقم هوية القائد، واسم الأسطول، وحجم الاحتياطي الطارئ المسموح.
+        \item \textbf{عمليات \textenglish{Get}:} للصفات الخاصة بها (\textenglish{GetFleetName}، \textenglish{GetEmergencyReserve}).
+        \item \textbf{عملية \textenglish{Set}:} لصفة اسم الأسطول \textenglish{SetFleetName(string fleetName)}.
+        \item \textbf{عملية \textenglish{Set}:} لصفة حجم الاحتياطي الطارئ المسموح \textenglish{SetEmergencyReserve(double reserve)} (يجب أن يكون غير سالب).
+        \item \textbf{عملية \textenglish{ToString()}:} تصف الكائن.
+        \item \textbf{عمليات إضافية:}
+        \begin{itemize}
+            \item \textbf{تعبئة وقود \textenglish{Refuel(double amount)}:} (موروثة من \textenglish{BasicShip}؛ الكمية يجب أن تكون موجبة). تعيد \textenglish{true} إذا نجحت التعبئة، وإلا \textenglish{false}.
+            \item \textbf{استهلاك وقود \textenglish{Consume(double amount)}:} إذا كان مسموحاً (الكمية موجبة ولا يهبط الوقود تحت \textenglish{-emergencyReserve})، وتعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح.
+            \item \textbf{نقل وقود إلى مركبة استكشاف \textenglish{TransferFuel(double amount, ScoutShip target)}:} تتلقى كمية الوقود المراد نقلها، وكائناً من النمط \textenglish{ScoutShip}. تنقل العملية كمية الوقود من السفينة الأم الحالية إلى مركبة الاستكشاف المُتلقّاة. تعيد العملية \textenglish{true} إذا نجح النقل، و \textenglish{false} إذا لم ينجح بسبب كون المركبة \textenglish{null} أو كمية غير موجبة أو كمية تتجاوز ما تسمح به السفينة الأم من استهلاك.
+        \end{itemize}
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا سفينة أم، عبّئوها بالوقود، وجرّبوا نقل وقود منها إلى مركبة استكشاف عبر \textenglish{TransferFuel} في حالة ناجحة وأخرى فاشلة، واطبعوا حالة المركبتين.
+
+\end{enumerate}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الثالثة: مركز التحكم وتعدد الأشكال}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{بناء فئة مركز التحكم (\textenglish{FleetControl})} \\
+    ابنوا فئة خدمات باسم \textenglish{FleetControl} (مركز التحكم في الأسطول)، وهي الفئة التي تدير كل مركبات الأسطول. تحتوي الفئة على:
+    \begin{itemize}
+        \item \textbf{صفة:} مصفوفة \textenglish{private BasicShip[] ships} تحوي مركبات من كل الأنماط (\textenglish{ScoutShip}، \textenglish{HibernationShip}، \textenglish{MotherShip})، مع عمليتي \textenglish{GetShips()} و \textenglish{SetShips(BasicShip[] ships)}.
+        \item \textbf{عملية بنائية \textenglish{public FleetControl(int maxShips)}:} تتلقى حجم المصفوفة وتنشئها (في البداية كل الحدود فارغة، أي \textenglish{null}).
+        \item \textbf{العملية \textenglish{Add(BasicShip ship)}:} تتلقى كائناً من النمط \textenglish{BasicShip} (أي مركبة من أي نمط) وتضيفه في \textbf{أول مكان فارغ} في المصفوفة. تعيد \textenglish{true} إذا أُضيفت المركبة و \textenglish{false} إذا كانت المصفوفة ممتلئة أو كان الكائن \textenglish{null}.
+        \item \textbf{العملية \textenglish{ToString()}:} تعيد سلسلة نصية تصف كل المركبات الموجودة في المصفوفة (انتبهوا: لا يجوز أن يتعطل البرنامج بسبب الحدود الفارغة \textenglish{null}).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا مركز تحكم بحجم 6، وأضيفوا إليه مركبات من الأنماط الثلاثة، واطبعوا الوصف. ماذا يحدث عند استدعاء \textenglish{ToString} لكل مركبة؟ لاحظوا أنّ كل مركبة "تعرف" كيف تصف نفسها!
+
+    \item \textbf{إضافة عمليات قابلة لإعادة التعريف (\textenglish{virtual} و \textenglish{override})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضيفوا إلى مشروع الأسطول عملية عامة قابلة لإعادة التعريف تعريفها:
+        \begin{center}
+        \textenglish{public virtual bool IsInDanger()}
+        \end{center}
+        \begin{itemize}
+            \item تُعرَّف العملية للمرة الأولى في الفئة \textenglish{BasicShip} وتعيد \textenglish{false} دائماً.
+            \item في الفئة \textenglish{ScoutShip} يُعاد تعريف العملية (\textenglish{override})، وتعيد \textenglish{true} إذا كانت المركبة \textbf{تستخدم الاحتياطي الطارئ} (الوقود سالب $< 0$)، وإلا \textenglish{false}.
+            \item في الفئة \textenglish{HibernationShip} يُعاد تعريف العملية (\textenglish{override})، وتعيد \textenglish{true} إذا كان \textbf{خزان المركبة فارغاً} (الوقود $\le 0$)، وإلا \textenglish{false}.
+            \item في الفئة \textenglish{MotherShip} يُعاد تعريف العملية (\textenglish{override})، وتعيد \textenglish{true} إذا كانت السفينة الأم تستخدم من احتياطيها الطارئ \textbf{90\% أو أكثر} من الحجم المسموح لها (أي $\text{emergencyReserve} > 0$ و $\text{fuel} \le -0.9 \cdot \text{emergencyReserve}$)، وإلا \textenglish{false}.
+        \end{itemize}
+        \item أضيفوا إلى الفئة \textenglish{FleetControl} عملية باسم \textenglish{DangerShips()} تعيد مصفوفة (\textenglish{BasicShip[]}) تضم جميع المركبات التي \textbf{في خطر} (حسب نتيجة العملية \textenglish{IsInDanger()}).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا \textenglish{DangerShips()} في \textenglish{Main} واطبعوا جميع المركبات الموجودة في دائرة الخطر.
+
+    \item \textbf{أذونات الوصول \textenglish{protected} والكلمة \textenglish{base} وسلسلة \textenglish{ToString}}
+    \begin{itemize}
+        \item أضيفوا إلى الفئة \textenglish{BasicShip} صفة \textbf{محمية} (\textenglish{protected}) من النمط \textenglish{string} باسم \textenglish{shipType} (نمط المركبة). تُحدَّد قيمتها من داخل كل فئة وارثة (\textenglish{"Scout"} أو \textenglish{"Hibernation"} أو \textenglish{"Mother"}).
+        \item غيّروا العملية \textenglish{ToString} في \textenglish{BasicShip} بحيث تعيد بالضبط:
+        \begin{center}
+        \textenglish{\$"Type:\{shipType\}, Num:\{shipNumber\}, Captain:\{captainID\}, Fuel:\{fuel\}"}
+        \end{center}
+        \item في كل فئة وارثة، \textbf{أعيدوا تعريف} \textenglish{ToString} بحيث تستدعي \textenglish{base.ToString()} وتضيف إلى النتيجة الصفات الخاصة بالفئة (الاحتياطي الطارئ، تاريخ الوصول، اسم الأسطول).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبعوا مركز التحكم وتأكدوا من ظهور الوصف النصي الجديد لكل مركبة.
+
+\end{enumerate}
+
+\begin{boxAttention}[- نقطة للتفكير]
+لماذا من الأفضل أن نستدعي \textenglish{base.ToString()} بدل أن نكتب الوصف من الصفر في كل فئة؟
+\end{boxAttention}
+
+\clearpage
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{عمليات خاصة بفئة فرعية واحدة فقط}
+    \begin{itemize}
+        \item أضيفوا إلى الفئة \textenglish{HibernationShip} عملية \textenglish{ZeroFuel()} تعيد \textenglish{true} إذا كان خزان المركبة فارغاً ($\text{fuel} \le 0$)، واستخدموها داخل \textenglish{IsInDanger()}.
+        \item أضيفوا إلى الفئة \textenglish{ScoutShip} عملية \textenglish{LoanSuggestion()} تعيد سلسلة نصية: إذا كانت المركبة تستخدم الاحتياطي الطارئ ($\text{fuel} < 0$)، تعيد اقتراحاً بطلب \textbf{قرض وقود} من سفينة أم مع ذكر الكمية المقترحة (\textenglish{-fuel})، وإلا تعيد النص \textenglish{"No loan needed"}.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    جرّبوا استدعاء هاتين العمليتين على كائنات من نمطيهما. ثم جرّبوا استدعاءهما من خلال متغير من النمط \textenglish{BasicShip} يشير إلى هذه الكائنات (وسجّلوا ملاحظتكم في تعليق).
+
+    \item \textbf{العامل \textenglish{is} والتحويل لأسفل} \\
+    أضيفوا إلى الفئة \textenglish{FleetControl} عملية \textenglish{PrintSuggestions()}. تمسح العملية مصفوفة المركبات (مع الانتباه إلى الحدود الفارغة \textenglish{null}) وتفعل ما يلي باستخدام العامل \textenglish{is} والتحويل لأسفل:
+    \begin{itemize}
+        \item إذا كانت المركبة من النمط \textenglish{HibernationShip} \textbf{وكان خزانها فارغاً} (\textenglish{ZeroFuel()}) — تطبع تحذيراً برقم المركبة.
+        \item إذا كانت المركبة من النمط \textenglish{ScoutShip} أو \textenglish{MotherShip} — تطبع الاقتراح الناتج عن \textenglish{LoanSuggestion()} (أضيفوا عملية \textenglish{LoanSuggestion()} للفئة \textenglish{MotherShip} بصياغة مناسبة).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا \textenglish{PrintSuggestions()} في \textenglish{Main} وتأكدوا من طباعة التحذيرات والاقتراحات الصحيحة.
+
+    \item \textbf{العامل \textenglish{as} ومقارنة الأساليب} \\
+    أعيدوا كتابة العملية \textenglish{PrintSuggestions} في نسخة جديدة باسم \textenglish{PrintSuggestions2()} باستخدام العامل \textenglish{as} بدل \textenglish{is}. ثم أجيبوا في تعليق داخل الكود:
+    \begin{enumerate}[label=\textbf{\arabic*.}]
+        \item ما الفرق بين \textenglish{is} و \textenglish{as} وبين التحويل المباشر \textenglish{(HibernationShip)ship}؟
+        \item ماذا يحدث في كل أسلوب إذا كانت المركبة من نمط آخر؟ وماذا إذا كانت \textenglish{null}؟
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    شغّلوا \textenglish{PrintSuggestions()} و \textenglish{PrintSuggestions2()} على نفس الأسطول وتأكدوا من تطابق المخرجات.
+
+    \item \textbf{التعبئة الجماعية (\textenglish{RefuelAll}) — تعدد الأشكال في العمل} \\
+    أضيفوا إلى الفئة \textenglish{FleetControl} عملية \textenglish{RefuelAll(double amount)} تتلقى كمية وقود وتُعبّئ بها \textbf{كل} المركبات في الأسطول، وتعيد عدد المركبات التي نجحت تعبئتها. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا \textenglish{RefuelAll} بكمية موجبة ثم بكمية سالبة واطبعوا عدد المركبات التي تمت تعبئتها وحالة الأسطول.
+
+    \item \textbf{الوراثة من الفئة \textenglish{Object} — العملية \textenglish{Equals}}
+    \begin{itemize}
+        \item أعيدوا تعريف العملية \textenglish{Equals(object obj)} في الفئة \textenglish{BasicShip} بحيث تُعتبر المركبتان \textbf{متساويتين} إذا تطابقت لديهما قيم: رقم الأسطول، ورقم المحطة، ورقم المركبة (بغضّ النظر عن نمط المركبة أو كمية وقودها). انتبهوا لحالة \textenglish{null} ولحالة أن يكون المُعطى ليس من النمط \textenglish{BasicShip}.
+        \item عدّلوا العملية \textenglish{Add} في \textenglish{FleetControl} بحيث \textbf{لا تضيف} مركبة موجودة مسبقاً في الأسطول (وتعيد \textenglish{false} في هذه الحالة).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اختبروا \textenglish{Equals} بين مركبتين بنفس الأرقام، وحاولوا إضافة مركبة مكررة إلى \textenglish{FleetControl} وتأكدوا من رفضها.
+
+\end{enumerate}
+
+\clearpage
+
+% ==============================================================
+\section*{المرحلة الرابعة: الفئات المجردة والواجهات}
+% ==============================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تحويل \textenglish{BasicShip} إلى فئة مجردة (\textenglish{abstract})} \\
+    غيّروا الفئة \textenglish{BasicShip} بحيث تصبح \textbf{فئة مجردة} (\textenglish{abstract class})، وأضيفوا إليها عملية مجردة تعريفها:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+public abstract bool Consume(object o);
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    حدّثوا الكود في الفئات الوارثة بحسب ذلك:
+    \begin{itemize}
+        \item \textenglish{ScoutShip}: العملية تتلقى \textenglish{double} (أو \textenglish{int}) يمثل كمية الوقود المستهلكة وتطبّق الاستهلاك.
+        \item \textenglish{HibernationShip}: العملية تتلقى \textenglish{Date} (تاريخ السحب) وتسحب كل الوقود إن كان ذلك مسموحاً.
+        \item \textenglish{MotherShip}: العملية تتلقى \textenglish{double} (أو \textenglish{int}) وتطبّق الاستهلاك.
+        \item إذا وصل مُعطى من نمط غير مناسب (أو \textenglish{null})، تعيد العملية \textenglish{false}.
+    \end{itemize}
+    بالإضافة إلى ذلك، غيّروا العملية القابلة لإعادة التعريف \textenglish{IsInDanger()} في \textenglish{BasicShip} إلى عملية \textbf{مجردة} (\textenglish{abstract}). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    امسحوا مركبات الأسطول في \textenglish{Main} واستدعوا \textenglish{Consume(object)} بمعطيات مختلفة (\textenglish{double} و \textenglish{Date}) واطبعوا النتائج.
+
+    \item \textbf{تطبيق الواجهة \textenglish{IComparable}} \\
+    طبّقوا الواجهة \textenglish{IComparable} في الفئة \textenglish{Date} وطبّقوا العملية \textenglish{CompareTo(object obj)} المطلوبة (انتبهوا: العملية تتلقى \textenglish{object} ويجب إجراء فحص نمط وتحويل). \\
+    بالإضافة إلى ذلك، طبّقوا الواجهة \textenglish{IComparable} في الفئتين التاليتين:
+    \begin{itemize}
+        \item \textbf{\textenglish{HibernationShip}:} تتم المقارنة حسب \textbf{تاريخ الوصول} (\textenglish{arrivalDate}).
+        \item \textbf{\textenglish{MotherShip}:} تتم المقارنة حسب \textbf{القوة الكامنة} (\textenglish{PowerPotential})، أي: كمية الوقود الحالية + حجم الاحتياطي الطارئ المسموح ($\text{fuel} + \text{emergencyReserve}$).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    قارنوا في \textenglish{Main} بين تواريخ مختلفة، وبين مركبات سبات، وبين سفن أم باستخدام \textenglish{CompareTo} واطبعوا النتائج.
+
+    \item \textbf{بناء فئة خدمات الفرز (\textenglish{SortServices})} \\
+    ابنوا فئة باسم \textenglish{SortServices} وطبّقوا فيها عمليتي فرز ثابتتين:
+    \begin{itemize}
+        \item \textenglish{public static void SortAscending(IComparable[] arr)}: لفرز المصفوفة بترتيب \textbf{تصاعدي}.
+        \item \textenglish{public static void SortDescending(IComparable[] arr)}: لفرز المصفوفة بترتيب \textbf{تنازلي}.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    جرّبوا فرز مصفوفة تواريخ \textenglish{Date[]} ومصفوفة مركبات سبات ومصفوفة سفن أم في \textenglish{Main} واطبعوا المصفوفات قبل الفرز وبعده.
+
+    \item \textbf{استخراج قوائم المركبات المرتّبة في \textenglish{FleetControl}} \\
+    أضيفوا العمليتين التاليتين إلى الفئة \textenglish{FleetControl}:
+    \begin{itemize}
+        \item \textbf{\textenglish{GetMotherShipsByPower()}:} تعيد مصفوفة (\textenglish{MotherShip[]}) تضم سفن القيادة الأم في الأسطول مرتّبة حسب \textbf{القوة الكامنة} — السفينة الأقوى أولاً (تنازلياً).
+        \item \textbf{\textenglish{GetHibernationByArrivalDate()}:} تعيد مصفوفة (\textenglish{HibernationShip[]}) تضم مركبات السبات في الأسطول مرتّبة حسب \textbf{تاريخ الوصول} — المركبات التي ستصل أولاً تأتي أولاً (تصاعدياً).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا العمليتين في \textenglish{Main} واطبعوا المصفوفتين المرتبتين.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

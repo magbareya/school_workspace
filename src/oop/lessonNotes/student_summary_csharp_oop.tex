@@ -1,0 +1,611 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\setminted{fontsize=\footnotesize, breaklines=true}
+\tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}}
+
+\title{ملخص شامل للطلاب: البرمجة كائنية التوجه في \textenglish{C\#}}
+\author{أ. محمود اغبارية}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\vspace{-0.6cm}
+
+\begin{boxNote}[- دليل استخدام الملخص]
+لكل موضوع في هذا الملخص: \textbf{شرح مختصر}، \textbf{مثال موضعي} قصير ومستقل مع كيفية استدعائه من \textenglish{Main}، و\textbf{تنبيهات} لأخطاء شائعة يجب الحذر منها أثناء الحل.
+\end{boxNote}
+
+% ==============================================================
+\section*{الجزء الأول: أساسيات الفئات والتغليف}
+% ==============================================================
+
+\subsection*{1. الفئة والصفات والتغليف (عمليات \textenglish{Get} و \textenglish{Set})}
+\textbf{الفكرة:} الفئة هي قالب لإنشاء كائنات. نُعرّف الصفات بإذن وصول \textenglish{private} لحمايتها من التعديل العشوائي من خارج الفئة، ونتيح قراءتها عبر عمليات \textenglish{Get} وتعديلها بأمان عبر عمليات \textenglish{Set} بعد فحص صحة القيمة المُتلقّاة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Player
+{
+    private string name;
+    private int score;
+    public string GetName() { return this.name; }
+    public void SetName(string name) { this.name = name; }
+    public int GetScore() { return this.score; }
+    public void SetScore(int score)
+    {
+        if (score >= 0) { this.score = score; } // Reject negative values
+    }
+}
+// Usage in Main:
+Player p = new Player();
+p.SetName("Lina");
+p.SetScore(50);
+p.SetScore(-7); // Ignored because -7 is negative
+Console.WriteLine(p.GetName() + ": " + p.GetScore()); // Prints: Lina: 50
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} لا تجعلوا الصفات \textenglish{public} للتسهيل؛ لأن ذلك يُفقد الفئة القدرة على التحقق من القيم. استعملوا \textenglish{this.score = score;} للتمييز بين صفة الكائن والمُعطى.
+
+\filbreak
+\subsection*{2. العمليات البنائية والتحميل الزائد (\textenglish{this})}
+\textbf{الفكرة:} العملية البنائية تهيّئ صفات الكائن لحظة إنشائه بواسطة \textenglish{new}؛ وهي تحمل نفس اسم الفئة وليس لها نمط إرجاع (حتى \textenglish{void} لا تُكتب). يمكن كتابة عدة عمليات بنائية بمعطيات مختلفة (تحميل زائد)، ولتجنب تكرار الكود تستدعي إحداها الأخرى عبر \textenglish{: this(...)}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Rect
+{
+    private int width;
+    private int height;
+
+    public Rect(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+    }
+
+    // Square constructor calls the first constructor
+    public Rect(int side) : this(side, side) { }
+}
+
+// Usage in Main:
+Rect r1 = new Rect(4, 7); // Calls 1st constructor (4x7)
+Rect r2 = new Rect(5);    // Calls 2nd constructor (5x5)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} إذا كتبتم أي عملية بنائية في الفئة، تلغى العملية البنائية الافتراضية الفارغة \textenglish{new Rect()} تلقائياً؛ فإن احتجتموها يجب كتابتها صراحةً.
+
+\filbreak
+\subsection*{3. العملية \textenglish{ToString()} وتنسيق السلاسل النصية}
+\textbf{الفكرة:} كل كائن يمتلك العملية \textenglish{ToString()}. نعيد تعريفها (\textenglish{override}) لتعيد نصاً يصف قيم صفات الكائن. عند تمرير الكائن إلى \textenglish{Console.WriteLine(obj)} تُستدعى \textenglish{ToString()} تلقائياً.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Player
+{
+    private string name;
+    private int score;
+
+    public override string ToString()
+    {
+        return $"Player:{this.name}, Score:{this.score}";
+    }
+}
+
+// Usage in Main:
+Console.WriteLine(p);       // Automatically calls p.ToString()
+string info = p.ToString(); // Stores the returned string
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} نسيان الكلمة \textenglish{override} يجعل طباعة الكائن تطبع اسم الفئة فقط. انتبهوا أنّ \textenglish{ToString()} \textbf{تعيد} نصاً (\textenglish{return}) ولا تطبع داخلها بواسطة \textenglish{Console.WriteLine}.
+
+\filbreak
+\subsection*{4. عمليات تعيد \textenglish{bool} وفحص المعطيات}
+\textbf{الفكرة:} العملية التي قد تفشل (مثل سحب مبلغ أكبر من الرصيد أو تمرير قيمة سالبة) تعيد \textenglish{true} عند النجاح و \textenglish{false} عند الفشل. نفحص الشروط \textbf{أولاً}، ولا نعدّل صفات الكائن إلا إذا تحققت جميع الشروط.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Wallet
+{
+    private int coins;
+
+    public bool Spend(int amount)
+    {
+        if (amount <= 0 || amount > this.coins)
+        {
+            return false;
+        }
+        this.coins -= amount; // Modify state only after all checks pass
+        return true;
+    }
+}
+
+// Usage in Main:
+if (w.Spend(30)) { Console.WriteLine("Success"); }
+else { Console.WriteLine("Failed"); }
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{5. كائن من فئة أخرى كصفة (المؤشرات والعملية البنائية الناسخة)}
+\textbf{الفكرة:} المتغير من نمط فئة يحمل \textbf{مؤشراً (عنواناً)} للكائن في الذاكرة وليس الكائن نفسه. كتابة \textenglish{b = a} تنسخ المؤشر فيشير المتغيران لنفس الكائن. لحماية صفات الكائن المركب من التعديل الخارجي، ننشئ \textbf{نسخة جديدة} (مثلاً عبر عملية بنائية ناسخة) في العملية البنائية وفي عمليتي \textenglish{Get} و \textenglish{Set}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Hero
+{
+    private Point position;
+
+    public Hero(Point start)
+    {
+        this.position = new Point(start.GetX(), start.GetY()); // Defensive copy
+    }
+
+    public Point GetPosition()
+    {
+        return new Point(this.position.GetX(), this.position.GetY()); // Return copy
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} المقارنة \textenglish{a == b} بين كائنين تقارن \textbf{العناوين (المؤشرات)} افتراضياً وليس القيم الداخلية. لمقارنة القيم نستخدم عملية مقارنة مثل \textenglish{Equals}.
+
+\filbreak
+\subsection*{6. دافع الوراثة: منع تكرار الكود}
+\textbf{الفكرة:} إذا اشتركت فئتان أو أكثر في نفس الصفات والعمليات، فإن أي تعديل مستقبلي سيتطلب تعديل عدة أماكن. الحل الهندسي هو استخلاص الجزء \textbf{المتطابق المشترك فقط} في فئة أساسية واحدة، وإبقاء الصفات والعمليات الفريدة في كل فئة فرعية.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// Shared members (name, energy, Eat) belong in base class Animal
+// Unique methods (Meow in Cat, Bark in Dog) remain in subclasses
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+% ==============================================================
+\section*{الجزء الثاني: الوراثة بين الفئات}
+% ==============================================================
+
+\subsection*{7. الوراثة واستدعاء العملية البنائية للأب (\textenglish{base})}
+\textbf{الفكرة:} كتابة \textenglish{class Dog : Animal} تعني أن \textenglish{Dog} يرث من \textenglish{Animal} جميع صفاته وعملياته المعرّفة بإذن وصول \textenglish{public} أو \textenglish{protected}. \textbf{العمليات البنائية لا تُورَّث}، لذلك تستدعي العملية البنائية للابن العملية البنائية للأب باستخدام \textenglish{: base(...)}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Animal
+{
+    protected string name;
+    protected int energy;
+
+    public Animal(string name, int energy)
+    {
+        this.name = name;
+        this.energy = energy;
+    }
+
+    public void Eat(int x) { if (x > 0) { this.energy += x; } }
+}
+
+public class Dog : Animal
+{
+    public Dog(string name) : base(name, 10) { } // Calls Animal constructor
+    public void Bark() { Console.WriteLine("Woof"); }
+}
+
+// Usage in Main:
+Dog d = new Dog("Rex");
+d.Eat(5);  // Inherited from Animal
+d.Bark();  // Specific to Dog
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} لا تعيدوا تعريف الصفات الموروثة (\textenglish{name}, \textenglish{energy}) داخل الفئة الفرعية. إذن الوصول \textenglish{private} في الأب لا يراه الابن؛ نستخدم \textenglish{protected} ليتمكن الأبناء من الوصول إلى الصفات.
+
+\filbreak
+\subsection*{8. تمرير كائن كمُعطى لعملية}
+\textbf{الفكرة:} عند تمرير كائن إلى عملية، يُمرَّر مؤشره، فأي تعديل عليه داخل العملية يؤثر على الكائن الأصلي. يجب دائماً فحص \textenglish{target != null} والتأكد من تحقق شروط الطرف الأول قبل تعديل الطرف الثاني.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public bool Give(Wallet target, int amount)
+{
+    if (target == null || amount <= 0 || amount > this.coins)
+    {
+        return false;
+    }
+    this.coins -= amount;
+    target.Add(amount);
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+% ==============================================================
+\section*{الجزء الثالث: تعدد الأشكال}
+% ==============================================================
+
+\subsection*{9. مصفوفة الكائنات والتحويل لأعلى}
+\textbf{الفكرة:} متغير من نمط الفئة الأساسية (\textenglish{Animal}) يستطيع الإشارة إلى كائن من أي فئة فرعية ترث منها (\textenglish{Dog} أو \textenglish{Cat}). لذلك يمكن لمصفوفة واحدة \textenglish{Animal[]} أن تجمع كائنات من جميع الفئات الفرعية.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Zoo
+{
+    private Animal[] animals;
+    public Zoo(int size) { this.animals = new Animal[size]; }
+
+    public bool Add(Animal a)
+    {
+        if (a == null) { return false; }
+        for (int i = 0; i < this.animals.Length; i++)
+        {
+            if (this.animals[i] == null)
+            {
+                this.animals[i] = a;
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// Usage in Main:
+Zoo z = new Zoo(3);
+z.Add(new Dog("Rex")); // Upcasting: Dog -> Animal
+z.Add(new Cat("Tom")); // Upcasting: Cat -> Animal
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} الحدود الفارغة في المصفوفة قيمتها \textenglish{null}؛ لذا افحصوا \textenglish{animals[i] != null} دائماً قبل استدعاء أي عملية عليها لتجنب \textenglish{NullReferenceException}.
+
+\filbreak
+\subsection*{10. إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+\textbf{الفكرة:} العملية التي نريد أن يخصصها كل ابن بطريقته نعرّفها في الأب بالكلمة \textenglish{virtual}، ويعيد الابن تعريفها بالكلمة \textenglish{override} \textbf{بنفس التعريف تماماً}. عند استدعائها عبر مؤشر من نمط الأب، تُنفَّذ نسخة \textbf{الكائن الفعلي} وقت التشغيل.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Animal
+{
+    public virtual string Speak() { return "..."; }
+}
+public class Dog : Animal
+{
+    public override string Speak() { return "Woof"; }
+}
+public class Cat : Animal
+{
+    public override string Speak() { return "Meow"; }
+}
+
+// Usage in Main:
+Animal a1 = new Dog("Rex");
+Animal a2 = new Cat("Tom");
+Console.WriteLine(a1.Speak() + ", " + a2.Speak()); // Prints: Woof, Meow
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{11. إرجاع مصفوفة مُصفّاة (مرشّحة) حسب شرط}
+\textbf{الفكرة:} لإرجاع مصفوفة جديدة بحجم مطابق تماماً لعدد الكائنات التي تحقق شرطاً معيناً، نمسح المصفوفة مرتين: المرة الأولى لعدّ الحدود المطابقة وإنشاء المصفوفة الجديدة، والمرة الثانية لنسخ المؤشرات إليها.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public Animal[] GetHungry()
+{
+    int count = 0;
+    for (int i = 0; i < this.animals.Length; i++)
+    {
+        if (this.animals[i] != null && this.animals[i].GetEnergy() < 10) { count++; }
+    }
+    Animal[] result = new Animal[count];
+    int k = 0;
+    for (int i = 0; i < this.animals.Length; i++)
+    {
+        if (this.animals[i] != null && this.animals[i].GetEnergy() < 10)
+        {
+            result[k] = this.animals[i];
+            k++;
+        }
+    }
+    return result;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{12. أذونات الوصول \textenglish{protected} والاستدعاء \textenglish{base.Method()}}
+\textbf{الفكرة:} داخل عملية مُعاد تعريفها (\textenglish{override}) في الفئة الفرعية، نستدعي نسخة الفئة الأساسية عبر \textenglish{base.Method()} للاستفادة من نتيجتها وإضافة الجزء الخاص بالابن عليها (مثل \textenglish{base.ToString()} أو \textenglish{base.GetSalary()}).
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Animal
+{
+    protected string kind;
+    protected string name;
+    public override string ToString() { return $"Kind:{this.kind}, Name:{this.name}"; }
+}
+
+public class Dog : Animal
+{
+    private string breed;
+    public override string ToString() { return base.ToString() + $", Breed:{this.breed}"; }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{13. النمط الساكن للمتغير مقابل النمط الفعلي للكائن}
+\textbf{الفكرة:} المترجم يفحص قانونية استدعاء العملية حسب \textbf{نمط المتغير (الساكن)}، بينما وقت التشغيل ينفّذ العملية حسب \textbf{نمط الكائن (الفعلي)}. لذلك لا يمكن عبر متغير من نمط \textenglish{Animal} استدعاء عملية موجودة في \textenglish{Dog} فقط إلا بعد إجراء تحويل لأسفل.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+Animal a = new Dog("Rex");
+a.Speak();        // Valid: Speak() is declared in Animal
+// a.Bark();      // Compile error: Animal does not have Bark()
+((Dog)a).Bark();  // Valid after downcasting to Dog
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{14. العامل \textenglish{is} والتحويل لأسفل}
+\textbf{الفكرة:} التعبير البولياني \textenglish{x is Dog} يفحص وقت التشغيل إن كان الكائن الفعلي من نمط \textenglish{Dog} (ويعيد \textenglish{false} بأمان إذا كان \textenglish{null}). بعد التأكد من نمطه، نحوله بالصيغة \textenglish{(Dog)x} لاستدعاء عملياته الخاصة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 0; i < this.animals.Length; i++)
+{
+    if (this.animals[i] is Dog)
+    {
+        Dog d = (Dog)this.animals[i];
+        d.Bark();
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} إجراء تحويل مباشر \textenglish{(Dog)a} دون فحص مسبق بـ \textenglish{is} يسبب انهيار البرنامج (\textenglish{InvalidCastException}) إذا كان الكائن الفعلي من نمط آخر.
+
+\filbreak
+\subsection*{15. العامل \textenglish{as} ومقارنة أساليب التحويل}
+\textbf{الفكرة:} التعبير \textenglish{x as Dog} يحاول تحويل الكائن إلى \textenglish{Dog}؛ فإذا نجح يعيد مؤشر الكائن، وإذا فشل يعيد \textenglish{null} دون رمي استثناء. لذلك نفحص بعده \textenglish{d != null}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+Dog d = this.animals[i] as Dog;
+if (d != null)
+{
+    d.Bark();
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+{\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{الأسلوب} & \textbf{عند التوافق} & \textbf{عند عدم التوافق} & \textbf{مع \textenglish{null}} \\
+\hline
+\textenglish{is} ثم \textenglish{(Dog)x} & ينجح & يمنع التحويل بأمان & \textenglish{false} \\
+\hline
+\textenglish{x as Dog} & ينجح & يعيد \textenglish{null} & يعيد \textenglish{null} \\
+\hline
+\textenglish{(Dog)x} مباشرة & ينجح & \textbf{انهيار (\textenglish{InvalidCastException})} & \textenglish{null} \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\filbreak
+\subsection*{16. قوة تعدد الأشكال وقابلية التوسع}
+\textbf{الفكرة:} عندما تتعامل العمليات في فئة الإدارة مع الواجهة المشتركة للفئة الأساسية (مثل \textenglish{Speak()} أو \textenglish{Eat()})، فإن إضافة فئة فرعية جديدة مستقبلاً (مثل \textenglish{Bird}) تعمل تلقائياً دون تعديل كود فئة الإدارة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public void MakeAllSpeak()
+{
+    for (int i = 0; i < this.animals.Length; i++)
+    {
+        if (this.animals[i] != null) { Console.WriteLine(this.animals[i].Speak()); }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{17. الوراثة من الفئة \textenglish{Object} — العملية \textenglish{Equals}}
+\textbf{الفكرة:} جميع الفئات في \textenglish{C\#} ترث ضمنياً من الفئة العليا \textenglish{object}. لمقارنة كائنين حسب قيم صفاتهما، نعيد تعريف العملية \textenglish{Equals(object obj)} بالترتيب: فحص \textenglish{null} ونمط الكائن عبر \textenglish{is}، ثم التحويل، ثم مقارنة الصفات.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public override bool Equals(object obj)
+{
+    if (obj == null || !(obj is Animal)) { return false; }
+    Animal other = (Animal)obj;
+    return this.id == other.id;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+% ==============================================================
+\section*{الجزء الرابع: الفئات المجردة والواجهات}
+% ==============================================================
+
+\subsection*{18. الفئة المجردة (\textenglish{abstract}) والعمليات المجردة}
+\textbf{الفكرة:} الفئة المجردة هي فئة أساسية غير مكتملة لا يمكن إنشاء كائنات منها مباشرة (\textenglish{new Animal()} ممنوع)، وتُستخدم كفئة أب فقط. العملية المجردة (\textenglish{abstract}) تُكتب بتعريفها فقط دون جسم (تنتهي بـ \textenglish{;})، ويلتزم كل ابن غير مجرد بإعادة تعريفها (\textenglish{override}).
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public abstract class Animal
+{
+    protected string name;
+    public abstract string Speak(); // No body - must be overridden
+}
+
+public class Dog : Animal
+{
+    public override string Speak() { return "Woof"; }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{19. المُعطى العام من نمط \textenglish{object} وفحص نمطه}
+\textbf{الفكرة:} عندما تشترك الفئات الوارثة في عملية مجردة واحدة لكن تختلف أنماط المعطيات التي تحتاجها كل فئة، نجعل المُعطى من نمط \textenglish{object}، وداخل كل فئة فرعية نفحص نمطه بـ \textenglish{is} ونحوله قبل الاستخدام.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Dog : Animal
+{
+    public override bool Feed(object o)
+    {
+        if (o is int)
+        {
+            int amount = (int)o;
+            if (amount > 0) { this.energy += amount; return true; }
+        }
+        return false;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{20. الواجهة \textenglish{IComparable} والعملية \textenglish{CompareTo}}
+\textbf{الفكرة:} الواجهة هي عقد يحدد عمليات يجب على الفئة تطبيقها. الواجهة \textenglish{IComparable} تلزم الفئة بتطبيق العملية \textenglish{int CompareTo(object obj)} التي تقارن الكائن الحالي (\textenglish{this}) بالكائن المُتلقّى (\textenglish{obj}) وتعيد: \textbf{عدداً سالباً} إذا كان الكائن الحالي أصغر، \textbf{صفراً} إذا تساويا، و\textbf{عدداً موجباً} إذا كان الكائن الحالي أكبر.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Player : IComparable
+{
+    private int score;
+    public int CompareTo(object obj)
+    {
+        if (obj == null || !(obj is Player)) { return 1; }
+        Player other = (Player)obj;
+        return this.score - other.score;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{21. خدمات الفرز العامة عبر الواجهة \textenglish{IComparable}}
+\textbf{الفكرة:} نكتب عملية فرز واحدة تتلقى مصفوفة \textenglish{IComparable[]} وتعتمد على \textenglish{CompareTo}، فتصلح لفرز أي مصفوفة كائنات تطبّق الواجهة \textenglish{IComparable}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class SortServices
+{
+    public static void SortAscending(IComparable[] arr)
+    {
+        for (int i = 0; i < arr.Length - 1; i++)
+        {
+            for (int j = 0; j < arr.Length - 1 - i; j++)
+            {
+                if (arr[j].CompareTo(arr[j + 1]) > 0)
+                {
+                    IComparable temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{22. الدمج الشامل: تصفية حسب النمط ثم فرز وإرجاع مصفوفة}
+\textbf{الفكرة:} لاستخراج مصفوفة مرتّبة لكائنات من فئة فرعية معينة: (1) نمسح المصفوفة ونعدّ الكائنات من النمط المطلوب باستخدام \textenglish{is}، (2) ننسخ مؤشراتها إلى مصفوفة جديدة بحجمها الدقيق، (3) نفرز المصفوفة الجديدة عبر \textenglish{SortServices} ونعيدها دون تغيير ترتيب المصفوفة الأصلية.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public Dog[] GetDogsSorted()
+{
+    int count = 0;
+    for (int i = 0; i < this.animals.Length; i++)
+    {
+        if (this.animals[i] is Dog) { count++; }
+    }
+    Dog[] result = new Dog[count];
+    int k = 0;
+    for (int i = 0; i < this.animals.Length; i++)
+    {
+        if (this.animals[i] is Dog) { result[k] = (Dog)this.animals[i]; k++; }
+    }
+    SortServices.SortAscending(result);
+    return result;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\begin{boxAttention}[- قائمة مراجعة سريعة قبل تسليم أي تمرين]
+\begin{enumerate}[itemsep=0.2em]
+    \item هل كتبتُ في \textenglish{Main} كوداً يختبر كل عملية جديدة بحالات ناجحة وأخرى فاشلة؟
+    \item هل فحصتُ \textenglish{!= null} قبل استخدام أي حد في مصفوفة أو مُعطى من نمط كائن؟
+    \item هل كل عملية تحتمل الفشل تفحص جميع الشروط \textbf{قبل} تعديل صفات الكائن؟
+    \item هل وضعتُ الكلمات \textenglish{protected}، \textenglish{base}، \textenglish{virtual}، \textenglish{override}، و \textenglish{abstract} في أماكنها الصحيحة؟
+    \item هل استعنتُ بـ \textenglish{base.ToString()} في الفئات الفرعية لمنع تكرار الكود؟
+\end{enumerate}
+\end{boxAttention}
+
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

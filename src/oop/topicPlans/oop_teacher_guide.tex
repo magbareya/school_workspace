@@ -1,0 +1,324 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\setminted{fontsize=\footnotesize, breaklines=true}
+\tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=3pt, bottom=3pt, before skip=4pt, after skip=4pt}}
+
+\title{دليل المعلم وخطة تدريس البرمجة كائنية التوجه في \textenglish{C\#}}
+\author{أ. محمود اغبارية}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxNote}[- هدف هذا الدليل]
+مرجع تذكيري مكثّف للمعلم لترتيب عرض أفكار البرمجة كائنية التوجه بالتدرج المنطقي المعتمد في المنهاج وكراسات التمارين. يتضمن لكل موضوع: \textbf{النقاط الفرعية الدقيقة التي لا ينبغي نسيانها}، \textbf{الإشارات التمهيدية المسبقة (ما يُمهَّد له قبل أوانه)}، \textbf{تشبيهات وطرق الشرح على اللوح}، و\textbf{مزالق الطلاب في الامتحانات}.
+\end{boxNote}
+
+\begin{boxAttention}[- خريطة الإشارات التمهيدية المبكرة]
+لتسهيل استيعاب المواضيع المتقدمة لاحقاً، يُفضّل غرس هذه الإشارات السريعة أثناء تدريس الجزء الأول:
+\begin{enumerate}[itemsep=0.25em]
+    \item \textbf{عند شرح \textenglish{private} و \textenglish{public} (موضوع 1):} أشر سريعاً إلى وجود إذن وصول ثالث اسمه \textenglish{protected} ("للأبناء فقط") سنتعلمه في الوراثة.
+    \item \textbf{عند شرح التحميل الزائد للعمليات البنائية (موضوع 2):} اشرح \textenglish{: this(...)} لمنع تكرار الكود، ونبّه الطلاب أن نفس الآلية سنستخدمها في الوراثة باسم \textenglish{: base(...)}.
+    \item \textbf{عند تقديم \textenglish{public override string ToString()} (موضوع 3):} أشر في جملة واحدة إلى أن جميع الفئات في \textenglish{C\#} لها أب خفي اسمه \textenglish{object} ورثت منه \textenglish{ToString()}، وكلمة \textenglish{override} تعني "إعادة تعريف عملية موروثة" وسنتعمق فيها في فصل الوراثة.
+    \item \textbf{عند شرح العمليات البنائية (موضوع 2):} قدّم \textbf{العملية البنائية الناسخة} على فئة بسيطة مثل \textenglish{Point}، لنستخدمها جاهزةً عند شرح الكائن المركب (موضوع 5).
+\end{enumerate}
+\end{boxAttention}
+
+\clearpage
+
+% ==============================================================
+\section*{الجزء الأول: أساسيات الفئات والتغليف (تمهيد للوراثة)}
+% ==============================================================
+
+\subsection*{1. الفئة، الصفات، التغليف، وعمليات \textenglish{Get} و \textenglish{Set}}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item الفئة كقالب يعرّف نمطاً جديداً: \textbf{صفات} (الحالة) + \textbf{عمليات} (السلوك).
+        \item \textbf{التغليف وإخفاء المعلومات:} الصفات دائماً \textenglish{private}، والوصول إليها عبر عمليات \textenglish{Get} (قراءة) و\textenglish{Set} (تعديل مشروط بعد فحص صحة المُعطى).
+        \item \textbf{الفصل بين الواجهة والتطبيق:} لو غيّرنا طريقة الحساب داخل الفئة مستقبلاً، لا يتأثر الكود في \textenglish{Main} طالما بقيت تعريفات العمليات ثابتة.
+        \item \textbf{المؤشر \textenglish{this}:} يشير للكائن الحالي الذي استُدعيت عليه العملية، ويُستخدم للتمييز بين الصفة والمُعطى (\textenglish{this.name = name}).
+        \item \textbf{العمليات المساعدة الخاصة (\textenglish{private}):} إذا تكرر منطق فحص أو تصحيح داخل الفئة (مثل حصر قيمة ضمن مجال)، نضعه في عملية \textenglish{private} داخل الفئة.
+        \item \textbf{صفة للقراءة فقط:} نكتفي بكتابة عملية \textenglish{Get} لها دون عملية \textenglish{Set} (أو تُعدَّل عبر عملية مخصصة مثل \textenglish{AddSeniorityYear()}).
+    \end{itemize}
+    \item \textbf{طريقة الشرح والتشبيه:} كبسولة الدواء أو لوحة قيادة السيارة؛ السائق يضغط الدواسة (\textenglish{SetSpeed}) ولا يلمس المحرك الداخلي (\textenglish{private}) مباشرة حتى لا يتلفه بقيمة غير منطقية.
+    \item \textbf{تنبيهات وأخطاء شائعة:}
+    \begin{itemize}
+        \item \textbf{تنبيه منهاج البجروت:} في البجروت نلتزم بعمليات \textenglish{GetX()} و\textenglish{SetX(val)} الصريحة وليس خصائص \textenglish{C\#} المختصرة \textenglish{\{ get; set; \}} (يُشار إليها شفوياً فقط لو ظهرت للطالب في الإكمال التلقائي).
+        \item خطأ التعيين العكسي في \textenglish{Set}: كتابة \textenglish{name = this.name;} بدل \textenglish{this.name = name;} فتبقى الصفة فارغة!
+    \end{itemize}
+\end{itemize}
+
+\filbreak
+\subsection*{2. العمليات البنائية، التحميل الزائد، و\textenglish{: this(...)}}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item تعريف العملية البنائية: تحمل اسم الفئة تماماً، وليس لها نمط إرجاع (ولا حتى \textenglish{void}).
+        \item \textbf{القيم الافتراضية للصفات غير المهيأة:} الأعداد \textenglish{0}، المنطقي \textenglish{false}، والكائنات والمصفوفات \textenglish{null} (ترك صفة كائن أو مصفوفة دون تهيئة في العملية البنائية هو السبب الأول لـ \textenglish{NullReferenceException}).
+        \item \textbf{التحميل الزائد:} عدة عمليات بنائية بمعطيات مختلفة في عددها أو أنماطها.
+        \item \textbf{العملية البنائية الافتراضية:} يمنحها المترجم مجاناً فقط إذا لم نكتب أي عملية بنائية؛ وبمجرد كتابة عملية بنائية واحدة تختفي التلقائية.
+        \item \textbf{العملية البنائية الناسخة:} \textenglish{public Point(Point other)} تنشئ كائناً جديداً بنسخ صفات \textenglish{other}.
+        \item \textbf{منع تكرار الكود بطريقتين:} (1) استدعاء عملية بنائية من أخرى عبر \textenglish{: this(...)}، (2) استدعاء عمليات \textenglish{Set} داخل العملية البنائية للاستفادة من شروط الفحص الموجودة فيها.
+    \end{itemize}
+    \item \textbf{إشارة تمهيدية:} ربط \textenglish{: this(...)} بأنها شقيقة \textenglish{: base(...)} التي سنراها في الوراثة.
+    \item \textbf{تنبيهات وأخطاء شائعة:} إعادة تعريف متغير محلي بنفس اسم الصفة داخل العملية البنائية (\textenglish{int score = s;}) بدلاً من تهيئة الصفة (\textenglish{this.score = s;}).
+\end{itemize}
+
+\filbreak
+\subsection*{3. العملية \textenglish{ToString()} وتنسيق السلاسل النصية}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item الفرق بين عملية \textbf{تعيد} نصاً (\textenglish{ToString}) وبين الطباعة المباشرة (\textenglish{Console.WriteLine}).
+        \item استدعاء \textenglish{Console.WriteLine(obj)} يستدعي \textenglish{obj.ToString()} تلقائياً.
+        \item استخدام التنسيق المدمج \textenglish{\$"Name:\{this.name\}"} لوضوح القراءة.
+    \end{itemize}
+    \item \textbf{إشارة تمهيدية:} لماذا كتبنا \textenglish{override}؟ لأن كل فئة ترث ضمنياً من \textenglish{object}، وبدون \textenglish{override} تطبع اسم الفئة فقط.
+    \item \textbf{تنبيهات وأخطاء شائعة:} كتابة \textenglish{Console.WriteLine} داخل \textenglish{ToString()}، أو نسيان كلمة \textenglish{override}.
+\end{itemize}
+
+\filbreak
+\subsection*{4. عمليات تعيد \textenglish{bool}، فحص المعطيات، والأعضاء الثابتة (\textenglish{static})}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{مبدأ الذرّية (عدم التعديل الجزئي):} في العمليات التي قد تفشل (مثل سحب وقود أو شراء)، نفحص \textbf{كل} الشروط أولاً؛ وإذا فشل شرط نعيد \textenglish{false} فوراً دون المساس بأي صفة.
+        \item \textbf{استدعاء عملية داخلية من عملية داخلية أخرى:} مثل استدعاء \textenglish{this.Consume(dist)} داخل \textenglish{FlyTo} بدل تكرار فحص الطاقة والخصم.
+        \item \textbf{الأعضاء الثابتة (\textenglish{static} و \textenglish{const}):} الفرق بين صفة/عملية تتبع لكل كائن على حدة، وبين ثابت عام للفئة (\textenglish{public const int MAX = 100}) أو عملية خدمة ثابتة تُستدعى باسم الفئة (\textenglish{Math.Sqrt}، \textenglish{Point.Distance(p1, p2)}).
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:} الانتباه للحدود الحرجة في الشروط (متى نرفض القيمة: $< 0$ أم $\le 0$؟)، ونسيان \textenglish{return} في أحد مسارات الشرط.
+\end{itemize}
+
+\filbreak
+\subsection*{5. المؤشرات، الكائن المركب، ومصفوفة كائنات داخل فئة}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{المتغير من نمط فئة هو مؤشر:} الجملة \textenglish{b = a} تنسخ السهم (العنوان) فيشير المتغيران إلى \textbf{نفس الكائن} في الذاكرة. والمقارنة \textenglish{a == b} تقارن العناوين لا القيم.
+        \item \textbf{الكائن المركب والنسخ الدفاعي:} عندما تكون صفة الفئة كائناً (مثل \textenglish{Date} أو \textenglish{Point})، لا نحفظ المؤشر الخارجي مباشرة (\textenglish{this.pos = p;}) بل ننشئ نسخة مستقلة باستخدام العملية البنائية الناسخة \textenglish{this.pos = new Point(p);} في العملية البنائية وفي \textenglish{Get} و\textenglish{Set}.
+        \item \textbf{فئة تحوي مصفوفة كائنات — نمطان أساسيان في البجروت:}
+        \begin{enumerate}
+            \item \textbf{مصفوفة متراصّة مع عدّاد (\textenglish{count} / \textenglish{current}):} الإضافة في المكان \textenglish{arr[count]} ثم زيادة العدّاد؛ والمسح في الحلقات يكون حتى \textenglish{i < count}؛ وعند الحذف نُزيح الحدود التالية مكاناً لليسار.
+            \item \textbf{مصفوفة بدون عدّاد (قد تحوي فجوات \textenglish{null}):} المسح حتى \textenglish{arr.Length} مع وجوب فحص \textenglish{arr[i] != null} في كل خطوة، والإضافة في أول مكان فارغ (\textenglish{arr[i] == null}).
+        \end{enumerate}
+    \end{itemize}
+    \item \textbf{طريقة الشرح والتشبيه:} رسم الذاكرة على اللوح إلزامي هنا: متغير المؤشر هو "ورقة عليها عنوان المنزل" وليس المنزل نفسه؛ إعطاء صديقك نسخة من عنوان منزلك (\textenglish{this.pos = p}) يسمح له بدخول منزلك وتغيير أثاثه دون علمك!
+    \item \textbf{تنبيهات وأخطاء شائعة:} إنشاء مصفوفة كائنات \textenglish{new Point[5]} والاعتقاد أن النقاط الخمس قد أُنشئت (بينما المصفوفة تحوي 5 مؤشرات قيمتها \textenglish{null}!).
+\end{itemize}
+
+\filbreak
+\subsection*{6. دافع الوراثة: مشكلة تكرار الكود}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية:} بعد بناء فئتين متشابهتين بدون وراثة، نطرح سؤال الصيانة: "لو أردنا تعديل شرط أو إضافة صفة مشتركة، سنضطر لتعديل عدة فئات!". الحل هو استخلاص \textbf{المتطابق المشترك فقط} في فئة أساسية واحدة.
+\end{itemize}
+
+\clearpage
+
+% ==============================================================
+\section*{الجزء الثاني: الوراثة بين الفئات}
+% ==============================================================
+
+\subsection*{7. علاقة الوراثة واستدعاء العملية البنائية للأب (\textenglish{: base(...)})}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{التمييز بين علاقة الوراثة وعلاقة التركيب:} التقني \textbf{هو} موظف (وراثة \textenglish{Technician : Employee})، بينما مسؤول المشاريع \textbf{يمتلك} مصفوفة فريق (صفة).
+        \item \textbf{الوراثة المفردة:} في \textenglish{C\#} ترث الفئة من فئة أب \textbf{واحدة فقط} (ولكن يمكن أن تطبّق عدة واجهات لاحقاً). الفئات الأخوات لا ترث من بعضها.
+        \item \textbf{سؤال دقيق جداً — هل الصفات \textenglish{private} في الأب تُورَّث؟} \textbf{نعم!} هي موجودة داخل كائن الابن في الذاكرة وتُهيَّأ عبر \textenglish{base(...)}، لكن الابن لا يملك إذن وصول مباشر إليها بالاسم (إلا عبر عمليات \textenglish{Get}/\textenglish{Set} العامة، أو بتحويل إذن وصولها إلى \textenglish{protected}).
+        \item \textbf{العمليات البنائية لا تُورَّث:} عملية بناء الأب تُبنى أولاً قبل جسم عملية بناء الابن عبر \textenglish{: base(...)}.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:}
+    \begin{itemize}
+        \item \textbf{الخطأ الأخطر في الوراثة:} إعادة تعريف الصفات الموروثة (\textenglish{id, name}) مرة أخرى داخل الفئة الفرعية! (يؤدي لوجود نسختين من الصفة في نفس الكائن!).
+        \item \textbf{فخ غياب العملية البنائية الفارغة في الأب:} إذا لم يكتب الطالب \textenglish{: base(...)}، يحاول المترجم تلقائياً استدعاء \textenglish{: base()} الفارغة؛ فإن لم تكن موجودة في الأب يظهر خطأ ترجمة يحيّر الطالب.
+    \end{itemize}
+\end{itemize}
+
+\filbreak
+\subsection*{8. تمرير كائن كمُعطى لعملية والتفاعل بين الكائنات}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item عند تمرير كائن كمُعطى (مثل \textenglish{TransferFuel(double amount, ScoutShip target)})، يُمرَّر \textbf{مؤشره}، فأي تعديل على \textenglish{target} داخل العملية يغيّر الكائن الأصلي في \textenglish{Main}.
+        \item وجوب فحص \textenglish{target != null} أولاً، والتحقق من نجاح العملية في الكائن الأول (\textenglish{this}) قبل تعديل الكائن الثاني (\textenglish{target}).
+    \end{itemize}
+    \item \textbf{إشارة تمهيدية (مدخل لتعدد الأشكال):} عندما نكتب في الفئة \textenglish{Supervisor} العملية \textenglish{AddEmployeeToTeam} التي تتلقى \textenglish{Employee emp}، نجرّب في \textenglish{Main} تمرير كائن \textenglish{Technician} إليها ونسأل الطلاب: "لماذا قبله المترجم مع أن نمط المُعطى هو \textenglish{Employee}؟".
+\end{itemize}
+
+\clearpage
+
+% ==============================================================
+\section*{الجزء الثالث: تعدد الأشكال}
+% ==============================================================
+
+\subsection*{9. مصفوفة الكائنات متعددة الأشكال والتحويل لأعلى}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{التحويل لأعلى:} مؤشر من نمط الفئة الأساسية (\textenglish{Employee} أو \textenglish{BasicShip}) يمكنه الإشارة إلى كائن من أي فئة فرعية ترث منها بشكل ضمني وآمن دائماً.
+        \item \textbf{الحاوية الموحّدة:} مصفوفة واحدة \textenglish{BasicShip[]} في فئة الإدارة (\textenglish{FleetControl}) تجمع كائنات من جميع الفئات الفرعية.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:} التوقف عن المسح عند أول حد فارغ \textenglish{null} (باستخدام \textenglish{break} أو شرط خاطئ في الحلقة) بدلاً من تخطيه بـ \textenglish{if (arr[i] != null)}، مما يتجاهل الكائنات الموجودة بعد فجوة حُذف منها كائن!
+\end{itemize}
+
+\filbreak
+\subsection*{10. إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override}) والربط المتأخر}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{الربط المتأخر:} عندما تكون العملية \textenglish{virtual} في الأب و\textenglish{override} في الابن، فإن استدعاءها عبر مؤشر من نمط الأب ينفّذ نسخة \textbf{النمط الفعلي للكائن} وقت التشغيل.
+        \item \textbf{المقارنة الثلاثية التي يجب توضيحها على اللوح:}
+        \begin{enumerate}
+            \item \textbf{التحميل الزائد:} نفس الاسم مع اختلاف المعطيات.
+            \item \textbf{إعادة التعريف:} نفس التعريف تماماً مع \textenglish{virtual} في الأب و\textenglish{override} في الابن.
+            \item \textbf{الإخفاء (نسيان \textenglish{override}):} إذا كتب الطالب العملية في الابن دون \textenglish{override}، فإن استدعاءها عبر مؤشر من نمط الأب سينفّذ نسخة الأب لا الابن!
+        \end{enumerate}
+        \item \textbf{وراثة متعددة المستويات (أب $\leftarrow$ ابن $\leftarrow$ حفيد):} إذا لم يُعد الابن تعريف عملية \textenglish{virtual}، يرث نسخة الأب؛ وإذا أراد الحفيد إعادة تعريفها يكتب \textenglish{override} أيضاً.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:} تغيير نمط أو عدد المعطيات في الابن بالخطأ والاعتقاد أنها \textenglish{override}.
+\end{itemize}
+
+\filbreak
+\subsection*{11. إرجاع مصفوفة مُصفّاة (مرشّحة) حسب شرط}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية:} خوارزمية المسح المزدوج لإرجاع مصفوفة بحجم دقيق: (1) مسح أول لحساب العدّاد \textenglish{count}، (2) إنشاء \textenglish{new BasicShip[count]}، (3) مسح ثانٍ لنسخ المؤشرات باستخدام مؤشر مستقل \textenglish{k = 0}.
+    \item \textbf{تنبيهات وأخطاء شائعة:} الخطأ الكلاسيكي في المسح الثاني: كتابة \textenglish{result[i] = ships[i];} بدل \textenglish{result[k] = ships[i]; k++;} مما يسبب \textenglish{IndexOutOfRangeException}!
+\end{itemize}
+
+\filbreak
+\subsection*{12. أذونات الوصول \textenglish{protected} والاستدعاء \textenglish{base.Method()}}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item جدول أذونات الوصول الثلاثة: \textenglish{private} (الفئة نفسها فقط)، \textenglish{protected} (الفئة نفسها وجميع الفئات الوارثة منها)، \textenglish{public} (الجميع بما في ذلك \textenglish{Main}).
+        \item الفرق بين \textenglish{: base(...)} (في رأس العملية البنائية فقط) وبين \textenglish{base.Method()} (داخل جسم عملية في الابن لاستدعاء نسخة الأب مثل \textenglish{base.ToString()} أو \textenglish{base.GetSalary()}).
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:} نسيان كلمة \textenglish{base.} داخل \textenglish{ToString()} في الابن (كتابة \textenglish{return ToString() + ...}) مما يسبب استدعاءً تراجعياً لا نهائياً (\textenglish{StackOverflowException})!
+\end{itemize}
+
+\filbreak
+\subsection*{13. النمط الساكن للمتغير مقابل النمط الفعلي للكائن}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{القاعدة الذهبية لحل أسئلة تتبع الوراثة في البجروت (خطوتان على اللوح):}
+    \begin{enumerate}
+        \item \textbf{فحص المترجم (وقت الترجمة — ينظر إلى النمط الساكن للمتغير فقط):} عند استدعاء \textenglish{x.Foo()}، يسأل المترجم: هل العملية \textenglish{Foo} معرّفة في فئة النمط الساكن لـ \textenglish{x} (أو في أحد آبائها)؟ إذا \textbf{لا} $\leftarrow$ \textbf{خطأ ترجمة (\textenglish{Compile Error})} حتى لو كان الكائن الفعلي يملكها!
+        \item \textbf{التنفيذ (وقت التشغيل — إذا اجتاز المترجم):} إذا كانت العملية \textenglish{virtual/override}، ننفّذ نسخة \textbf{النمط الفعلي للكائن} (أقرب نسخة لأسفل في شجرة الوراثة).
+    \end{enumerate}
+    \item \textbf{طريقة الشرح والتشبيه:} المتغير \textenglish{Animal a = new Dog();} يشبه "جهاز تحكم عن بعد (ريموت) عام": الأزرار الموجودة على الريموت هي فقط عمليات \textenglish{Animal} (النمط الساكن)؛ لا يمكنك ضغط زر \textenglish{Bark()} لأنه غير موجود على هذا الريموت أصلاً إلا إذا استبدلته بريموت \textenglish{Dog} (تحويل لأسفل)!
+\end{itemize}
+
+\filbreak
+\subsection*{14 و15. العاملان \textenglish{is} و \textenglish{as} والتحويل لأسفل}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item متى نحتاج التحويل لأسفل؟ فقط عندما نريد استدعاء عملية خاصة بفئة فرعية غير موجودة في الفئة الأساسية.
+        \item المقارنة بين: (1) فحص \textenglish{x is Dog} ثم تحويل صريح \textenglish{(Dog)x}، (2) التحويل بـ \textenglish{Dog d = x as Dog} ثم فحص \textenglish{d != null}، (3) التحويل المباشر بدون فحص (خطر \textenglish{InvalidCastException}).
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة بالغة الأهمية:}
+    \begin{itemize}
+        \item \textbf{فخ الأقواس عند الاستدعاء المختصر:} كتابة \textenglish{(Dog)a.Bark()} خطأ ترجمة لأن العامل \textenglish{.} أقوى من التحويل! الصحيح: \textenglish{((Dog)a).Bark()}.
+        \item \textbf{فخ ترتيب فحص \textenglish{is} بين أب وابن:} إذا كان \textenglish{MotherShip} يرث من \textenglish{ScoutShip}، فإن \textenglish{m is ScoutShip} يعيد \textenglish{true} أيضاً! لذلك في جمل \textenglish{if / else if} يجب فحص \textbf{الفئة الأخص (الابن) أولاً} قبل الفئة الأعم.
+    \end{itemize}
+\end{itemize}
+
+\filbreak
+\subsection*{16. قوة تعدد الأشكال وقابلية التوسع}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية:} متى نستخدم \textenglish{virtual/override} ومتى نستخدم \textenglish{is}؟ إذا كان السلوك مشتركاً بالمفهوم لكل الفئات (مثل \textenglish{GetSalary()} أو \textenglish{IsInDanger()}) نجعله \textenglish{virtual} في الأب حتى يعمل الكود تلقائياً عند إضافة فئات مستقبلية دون تعديل فئة الإدارة. نقتصر على \textenglish{is} للعملات الخاصة بفئة واحدة فقط.
+\end{itemize}
+
+\filbreak
+\subsection*{17. الوراثة من الفئة العليا \textenglish{Object} والعملية \textenglish{Equals}}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item الفئة \textenglish{object} هي الجذر الأعلى لجميع الأنماط في \textenglish{C\#}؛ ولذلك مصفوفة \textenglish{object[]} يمكنها استيعاب أي كائن من أي فئة (كما في أسئلة البجروت مثل \textenglish{IsAccepted(object[] arr)}).
+        \item القالب القياسي لإعادة تعريف \textenglish{public override bool Equals(object obj)}: (1) فحص \textenglish{obj != null} و\textenglish{obj is MyClass}، (2) التحويل \textenglish{MyClass other = (MyClass)obj}، (3) مقارنة الصفات المحددة.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:} كتابة \textenglish{public bool Equals(BasicShip other)} بدلاً من \textenglish{public override bool Equals(object obj)} (هذا تحميل زائد وليس إعادة تعريف!).
+\end{itemize}
+
+\clearpage
+
+% ==============================================================
+\section*{الجزء الرابع: الفئات المجردة والواجهات}
+% ==============================================================
+
+\subsection*{18. الفئة المجردة (\textenglish{abstract class}) والعمليات المجردة}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{متى نجعل الفئة مجردة؟} عندما تمثل الفئة مفهوماً عاماً غير مكتمل لا منطق لوجود كائن مستقل منه في الواقع (لا يوجد في الأسطول مركبة اسمها "مركبة أساسية فقط" بل إما استكشاف أو سبات أو أم).
+        \item \textbf{العملية المجردة:} تعريف عملية بدون جسم (\textenglish{;}) داخل فئة مجردة؛ وهي \textbf{عقد إلزامي} يجبر كل فئة فرعية غير مجردة على تطبيقها بـ \textenglish{override}.
+        \item الفئة المجردة تحوي صفات، عمليات عادية مكتملة، و\textbf{عمليات بنائية} يستدعيها الأبناء عبر \textenglish{: base(...)}.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة (سؤال امتحانات متكرر جداً):}
+    \begin{itemize}
+        \item \textbf{الفرق بين \textenglish{new BasicShip()} و \textenglish{new BasicShip[10]}:} إنشاء كائن \textenglish{new BasicShip()} \textbf{ممنوع} (خطأ ترجمة)، لكن إنشاء مصفوفة \textenglish{new BasicShip[10]} \textbf{مسموح تماماً}! لأننا ننشئ مصفوفة مؤشرات فارغة (\textenglish{null}) ستشير لاحقاً إلى كائنات من الفئات الوارثة.
+        \item إذا ورثت فئة من فئة مجردة ولم تطبّق جميع عملياتها المجردة، يجب تعريف الفئة الوارثة أيضاً كـ \textenglish{abstract}.
+    \end{itemize}
+\end{itemize}
+
+\filbreak
+\subsection*{19. المُعطى العام من نمط \textenglish{object} وفحص نمطه}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية:} عندما تشترك الفئات الفرعية في عملية مجردة واحدة (مثل \textenglish{Consume(object o)}) لكن تختلف أنماط المعطيات التي تحتاجها كل فئة (\textenglish{double} في فئة، و\textenglish{Date} في أخرى)، نوحّد تعريف العملية بمُعطى من نمط \textenglish{object}، ثم نفحص نمطه بـ \textenglish{is} داخل كل ابن.
+    \item \textbf{تنبيه هام جداً للمعلم والطلاب:} عند تغليف عدد صحيح \textenglish{int} داخل \textenglish{object} (مثلاً استدعاء \textenglish{ship.Consume(20)} بدل \textenglish{20.0})، فإن الفحص \textenglish{o is double} يعيد \textenglish{false}! لأن الكائن المغلّف هو \textenglish{int}. لذا نوجّه الطلاب إما لتمرير \textenglish{20.0} أو فحص الحالتين (\textenglish{if (o is double)} و\textenglish{else if (o is int)}).
+\end{itemize}
+
+\filbreak
+\subsection*{20 و21. الواجهة \textenglish{IComparable} وخدمات الفرز العامة (\textenglish{SortServices})}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية والتفاصيل الدقيقة:}
+    \begin{itemize}
+        \item \textbf{مقارنة شاملة للطلاب بين الفئة المجردة والواجهة:}
+        \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        {\small
+        \begin{tabular}{|p{0.22\textwidth}|p{0.35\textwidth}|p{0.35\textwidth}|}
+        \hline
+        \textbf{وجه المقارنة} & \textbf{الفئة المجردة (\textenglish{abstract})} & \textbf{الواجهة (\textenglish{interface})} \\
+        \hline
+        العلاقة المنطقية & "هو نمط من" بين فئات متقاربة & "قادر على / يتصرف كـ" حتى بين فئات متباعدة (\textenglish{Date} و\textenglish{Ship}) \\
+        \hline
+        الصفات والعمليات البنائية & تحوي صفات وعمليات بنائية وعمليات مكتملة & عقد سلوكي خالص (تعريفات عمليات فقط بلا صفات ولا عمليات بنائية) \\
+        \hline
+        تعدد الوراثة & الفئة ترث من فئة أساسية \textbf{واحدة فقط} & الفئة تطبّق \textbf{عدة واجهات} معاً \\
+        \hline
+        \end{tabular}
+        }
+        \end{center}
+        \item \textbf{ترتيب التعريف:} الفئة الأب أولاً ثم الواجهات: \textenglish{public class HibernationShip : BasicShip, IComparable}.
+        \item \textbf{عقد \textenglish{CompareTo(object obj)}:} يعيد عدداً سالباً إذا كان \textenglish{this} أصغر من \textenglish{obj}، صفراً إذا تساويا، وموجباً إذا كان \textenglish{this} أكبر.
+        \item \textbf{إعادة استخدام \textenglish{CompareTo} (تفويض المقارنة):} بعد تطبيق \textenglish{IComparable} في الفئة \textenglish{Date}، فإن مقارنة مركبتي سبات حسب تاريخ الوصول تُكتب في سطر واحد: \\
+        \textenglish{return this.arrivalDate.CompareTo(other.arrivalDate);}.
+    \end{itemize}
+    \item \textbf{تنبيهات وأخطاء شائعة:}
+    \begin{itemize}
+        \item \textbf{فخ طرح الأعداد العشرية (\textenglish{double}) في \textenglish{CompareTo}:} مع \textenglish{int} يصح كتابة \textenglish{return this.x - other.x;}، أما مع \textenglish{double} فإن كتابة \textenglish{return (int)(this.fuel - other.fuel);} \textbf{خطأ فادح} لأن الفرق \textenglish{0.5} يتحول إلى \textenglish{0}! مع \textenglish{double} يجب استخدام \textenglish{if / else if} وإرجاع \textenglish{-1} أو \textenglish{1} أو \textenglish{0}.
+    \end{itemize}
+\end{itemize}
+
+\filbreak
+\subsection*{22. الدمج الشامل: تصفية حسب النمط ثم فرز وإرجاع مصفوفة}
+\begin{itemize}[itemsep=0.3em]
+    \item \textbf{الأفكار الأساسية:} ربط جميع المهارات في خوارزمية واحدة من 3 خطوات:
+    \begin{enumerate}
+        \item مسح المصفوفة العامة وعدّ الكائنات من النمط المطلوب باستخدام \textenglish{is}.
+        \item إنشاء مصفوفة جديدة بالحجم الدقيق ونسخ المؤشرات إليها (مع التحويل لأسفل).
+        \item إرسال المصفوفة الجديدة إلى \textenglish{SortServices} لفرزها وإرجاعها دون المساس بترتيب المصفوفة الأصلية في فئة الإدارة.
+    \end{enumerate}
+\end{itemize}
+
+\vspace{0.8cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
