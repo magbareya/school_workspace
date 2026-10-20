@@ -165,6 +165,31 @@ for x in range(-5, 6):
 \end{longtable}
 }
 
+\ifwithsols
+\begin{boxSolution}
+في جميع البنود تُطبع كل قيمة في \textbf{سطر مستقل}، ما عدا البندين 1 و3 حيث تُطبع جميع القيم في سطر واحد بسبب استعمال \textenglish{end=" "}.
+
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{1 2 3} \\
+2 & $\rightarrow$ & \texttt{3, 4} \\
+3 & $\rightarrow$ & \texttt{6 4 2} \\
+4 & $\rightarrow$ & \texttt{1, 2, 3, \ldots, 11} \\
+5 & $\rightarrow$ & \texttt{16, 12, 8, 4} \\
+6 & $\rightarrow$ & \texttt{1, 9, 25} \\
+7 & $\rightarrow$ & \texttt{9, 6, 3} \\
+8 & $\rightarrow$ & \texttt{7} \\
+9 & $\rightarrow$ & \texttt{100, 102, 104, \ldots, 118} \\
+10 & $\rightarrow$ & \texttt{100, 102, 104, \ldots, 118} \\
+11 & $\rightarrow$ & \texttt{0, 1, 2, \ldots, 8} \\
+12 & $\rightarrow$ & \texttt{7} \\
+13 & $\rightarrow$ & \texttt{1, 2, 3, \ldots, 11} \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+\fi
+
 \clearpage
 \subsection*{سؤال 2}
 طُلب من التلاميذ أن يكتبوا برنامجًا يستقبل 5 أزواج أعداد ويطبع \textbf{عدد الأزواج} التي لهما نفس باقي القسمة على 2 (أي عددين زوجيين أو عددين فرديين).
@@ -298,6 +323,18 @@ while i == 5:
 \end{longtable}
 }
 
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*., itemsep=1em]
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{5, 4, 3, 2, 1}} وتُنفَّذ الحلقة 5 مرات.
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{0, 3, 6, 9}} وتُنفَّذ الحلقة 4 مرات.
+    \item حلقة \textbf{نهائية}: الشرط غير محقق منذ البداية، لذلك لا يوجد مخرج وتُنفَّذ الحلقة 0 مرات.
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{5}} وتُنفَّذ الحلقة مرة واحدة، لأنّ قيمة \textenglish{i} تصبح \textenglish{\texttt{0.5}} بعد القسمة فينتفي الشرط.
+    \item حلقة \textbf{لا نهائية}: قيمة \textenglish{i} تبقى دائمًا 5 لأنّ \textenglish{\texttt{i \% 10 = 5}}، ولذلك يبقى الشرط محققًا دائمًا.
+\end{enumerate}
+\end{boxSolution}
+\fi
+
 \subsection*{سؤال 2}
 
 {\small
@@ -370,6 +407,18 @@ while num != 10:
 \end{longtable}
 }
 
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*., itemsep=1em]
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{5, 4, 3, 2, 1}} وتُنفَّذ الحلقة 5 مرات.
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{1, 4, 7}} وتُنفَّذ الحلقة 3 مرات.
+    \item حلقة \textbf{لا نهائية}: قيمة \textenglish{num} تزداد باستمرار وتبقى دائمًا أكبر من 0.
+    \item حلقة \textbf{لا نهائية}: قيم \textenglish{num} هي \textenglish{\texttt{3, 6, 9, 12, \ldots}} فتتجاوز 10 دون أن تساويها أبدًا.
+    \item حلقة \textbf{نهائية}: المخرج \textenglish{\texttt{2, 4, 6, 8}} وتُنفَّذ الحلقة 4 مرات.
+\end{enumerate}
+\end{boxSolution}
+\fi
+
 \clearpage
 \subsection*{سؤال 3}
 اكتبوا ماذا سيكون \textbf{المخرج} في كل بند.
@@ -408,6 +457,20 @@ while i > 0:
 \hline
 \end{longtable}
 }
+
+\ifwithsols
+\begin{boxSolution}
+كل قيمة تُطبع في \textbf{سطر مستقل}.
+
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{13, 14, 15} \\
+2 & $\rightarrow$ & \texttt{5, 3, 1} \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
 \subsection*{سؤال 4}
@@ -497,6 +560,24 @@ while x < 12:
 \hline
 \end{longtable}
 }
+
+\ifwithsols
+\begin{boxSolution}
+كل قيمة (أو زوج قيم في البند 4) تُطبع في \textbf{سطر مستقل}.
+
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{1, 3, 5, 7, 9} \\
+2 & $\rightarrow$ & \texttt{3, 6, 9, \ldots, 30} \\
+3 & $\rightarrow$ & \texttt{wow, wow, wow} \\
+4 & $\rightarrow$ & \texttt{2 4, 3 3, 4 2} \\
+5 & $\rightarrow$ & \texttt{0, 1, 2, \ldots, 8} \\
+6 & $\rightarrow$ & \texttt{1, 2, 3, \ldots, 11} \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+\fi
 
 \clearpage
 %==============================================================
