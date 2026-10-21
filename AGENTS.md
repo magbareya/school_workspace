@@ -60,10 +60,13 @@ This document defines the authoring conventions, pedagogical style, LaTeX archit
   - `\ifwithsols`: Controls inclusion of reference solution boxes (`\begin{boxSolution} ... \end{boxSolution}`).
     - Set to `true` in solutions builds (`make sols` $\rightarrow$ `out/.../<name>_sols.pdf`).
   - `\ifwhiteblack`: Controls black-and-white A4 landscape presentation mode (`make wb` $\rightarrow$ `out/.../<name>_wb.pdf` and `make wbsols`). Sets `\LARGE` font, `bw` minted style, and black-and-white borders. Use `\ifwhiteblack \clearpage \fi` where needed for landscape page breaks.
-- **Helper Macros in [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex):**
+- **Helper Macros & Global Defaults in [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex):**
   - `\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}`: Centered fixed-width column for tables (`|C{2.5cm}|`).
   - `\importpdfpage{filepath}{pagenum}`: Imports a full-page PDF graphic.
   - `\insertFullImg{filepath}`: Centers an image at `0.9\paperwidth`.
+  - `\begin{pycell} ... \end{pycell}`: Frameless, full-width code cell used to put `minted` code inside a table cell while keeping it left-to-right inside an RTL table (see Section 5.7). Do NOT redefine it inside individual `.tex` files.
+  - **Default `minted` look:** `\setminted{fontsize=\footnotesize, breaklines=true}` is set globally by the preamble in regular builds (it is intentionally NOT applied in `\ifwhiteblack` mode, which uses `\LARGE`). Do NOT repeat it in individual files.
+  - **Compact `boxCode`:** the preamble also appends `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt` to the `simplecode` style, so code boxes stay compact despite the global `onehalfspacing`. Do NOT repeat it in individual files.
 - **List Spacing:** Standardize item separation with `[itemsep=2em]` or `[itemsep=2.2em]`. When resuming lists across sections or pages, use `\begin{enumerate}[resume, ...]`.
 
 ---
@@ -92,7 +95,7 @@ In high school CS and Bagrut exams, verb and noun choices convey exact technical
 
 ### 3.1. Language Policy: Technical Concepts vs. Code Identifiers
 - **Technical Concepts (المصطلحات التقنية):** If an established Arabic term exists (e.g. `الوراثة` for Inheritance, `تعدد الأشكال` for Polymorphism, `مخطط الهرمية` for Hierarchy, `البرمجة كائنية التوجه` for OOP, `العمليات البنائية` for Constructors, `التحميل الزائد` for Overloading, `التحويل لأعلى` for Upcasting, `التحويل لأسفل` for Downcasting, `إعادة تعريف العمليات` for Overriding, `الفئة المجردة` for Abstract Class, `الواجهة` for Interface), **write the Arabic term only**. Do NOT append English translations in parentheses (avoid: `الوراثة (Inheritance)`, `البرمجة كائنية التوجه (OOP)`).
-- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{Technician}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{YearlyBonus}`, `\textenglish{IsAccepted}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{current}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This ensures students define and implement unified, specific identifiers in their code.
+- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{Technician}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{YearlyBonus}`, `\textenglish{IsAccepted}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{current}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This ensures students define and implement unified, specific identifiers in their code. Remember to escape underscores in text mode (`\textenglish{student\_name}`).
 
 ### 3.2. Mandatory Word Choices (تفضيلات المصطلحات الإلزامية)
 1. **استخدام "تعريف" بدلاً من "ترويسة":** عند الإشارة إلى توقيع أو رأس الفئة أو العملية البرمجية (Header / Signature / Definition)، استخدم دائمًا مصطلح **"تعريف"** (مثل: `تعريف الفئة`، `تعريف العملية`) وتجنّب استخدام كلمة "ترويسة".
@@ -186,11 +189,7 @@ All callout boxes are defined in [`scripts/tex_preamble.tex`](file:///c:/dev/wor
 ### 4.1. Critical Rule: `tcolorbox` Environments Do NOT Split Across Pages
 None of the boxes above (`boxCode`, `boxSolution`, `boxNote`, etc.) are breakable across pages. If a box is too tall for the remaining space on a page, it will jump to the next page (leaving large whitespace) or overflow the bottom margin and get clipped in print.
 - **Keep `boxCode` Examples Localized & Short:** In summaries and lesson notes, avoid long full-program listings inside a single `boxCode`. Write focused 8–15 line snippets illustrating the exact concept + 2–3 lines of `// Usage in Main:`.
-- **Override Line Spacing Inside Code Boxes:** Because [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex) loads `\usepackage[onehalfspacing]{setspace}`, add the following at the top of code-heavy documents so code boxes remain compact and lines do not wrap awkwardly:
-  ```latex
-  \setminted{fontsize=\footnotesize, breaklines=true}
-  \tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}}
-  ```
+- **Compact Code Boxes Are Configured Globally:** [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex) loads `\usepackage[onehalfspacing]{setspace}`, and therefore it also sets (in regular, non-`\ifwhiteblack` builds) `\setminted{fontsize=\footnotesize, breaklines=true}` and appends `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt` to the `simplecode` style. **Do NOT copy these `\setminted` / `\tcbset` lines into individual `.tex` files** — they are already in effect for every document. Only add a per-file override when a specific document genuinely needs a different value.
 - **Use `\filbreak` Between Topics in Summaries:** Place `\filbreak` before each `\subsection*` in summary sheets so a topic heading and its explanation never sit at the bottom of a page while its `boxCode` jumps to the next page.
 
 ---
@@ -261,22 +260,27 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
 
 ### 5.7. Standard LaTeX Table Patterns
 
-1. **Two-Column RTL Class Specification Table (واجهة الفئة):**
+1. **Two-Column RTL Class Specification Table (واجهة الفئة / ملخص الفئة):**
+   - **Mandatory Usage Rule:** Every time a question or exercise describes a class (its attributes and/or multiple methods), it **MUST** be presented in a two-column table using the exact style below. However, if a question asks to add **only a single method** to an existing class, write it as regular text (do NOT use a table).
+   - **Mandatory Table Style (`{\centering ... \par} %` + `\vspace{2em}`):** Always wrap the table in `{\centering ... \par} %` followed by `\vspace{2em}`, and use `|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|` for the columns:
    ```latex
-   \begin{center}
-   \renewcommand{\arraystretch}{1.5}
-   {\small
-   \begin{tabular}{|p{0.50\textwidth}|l|}
+   {\centering
+   \renewcommand{\arraystretch}{1.2}
+   \small
+   \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
    \hline
-   \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Point}}} \\
+   \multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
    \hline
-   \textbf{شرح العملية} & \multicolumn{1}{c|}{\textbf{تعريف العملية}} \\
+   صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
    \hline
-   عملية بنائية تتلقى إحداثيات النقطة وتبني كائناً جديداً. & \textenglish{public Point(double x, double y)} \\
+   عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
+   \hline
+   عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
    \hline
    \end{tabular}
-   }
-   \end{center}
+   \par} %
+
+   \vspace{2em}
    ```
 2. **Left-to-Right Tracing Table (`جدول متابعة`):**
    Always wrap tracing tables in `\begin{english}` so columns flow left-to-right matching code execution:
@@ -304,6 +308,33 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
    \end{english}
    \end{center}
    ```
+4. **Table With Code Cells (جدول يحوي مقاطع برنامج):**
+   When a table cell must contain a code snippet (e.g. a "what is the output of each method" table with columns *البند / العملية / المُخرج*), put the code in a `pycell` (defined in the preamble) inside a **fixed-width `p{...}` column**, so the code stays left-to-right inside the RTL table. Keep each cell's snippet short (the table row cannot split across pages). If a snippet is long, use a separate `boxCode` per item instead of a table.
+   ```latex
+   {\centering
+   \renewcommand{\arraystretch}{1.3}
+   \begin{tabular}{|C{1.2cm}|p{8cm}|C{3.5cm}|}
+   \hline
+   \textbf{البند} & \textbf{العملية} & \textbf{المُخرج} \\
+   \hline
+   أ &
+   \begin{pycell}
+   \begin{english}
+   \begin{minted}{python}
+   def ex1():
+       a = 5
+       print(a * 2)
+
+   ex1()
+   \end{minted}
+   \end{english}
+   \end{pycell}
+   & \\
+   \hline
+   \end{tabular}
+   \par} %
+   ```
+   Always compile with `make` and check the result visually when using this pattern for the first time in a document.
 
 ### 5.8. Python (`src/python/pythonA/`) & Computational Models (`computational_models/`)
 - **Python Conventions:**
@@ -345,6 +376,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
   ```
 
 ### 6.3. Formatting Prompts
+- **Class Descriptions Must Use a Table (Unless Adding Only 1 Method):** Whenever a question describes the attributes and/or methods of a class, present the class specification in the standard two-column table defined in Section 5.7 (`{\centering ... \par} %` + `\vspace{2em}`). If a question asks to add only a **single method** to an existing class, write the requirement as regular text instead of a table.
 - **Bold Key Terms:** Always bold critical operational words to prevent misreading:
   e.g., `الراتب \textbf{الشهري}`, `الضريبة \textbf{السنوية}`, `\textbf{موجب}`, `\textbf{سالب}`, `\textbf{غير سالب}`.
 - **Explicit Assumptions:** Enclose domain constraints in parentheses:
