@@ -1,0 +1,533 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ملخص: جملة الشرط \textenglish{if} في \textenglish{C\#}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+% ==============================================================
+% القسم الأول: المتغير المنطقي والمقارنات
+% ==============================================================
+\section{المتغير المنطقي \textenglish{bool} والعمليات البوليانية (المقارنات)}
+
+في لغة \textenglish{C\#}، النوع \textbf{\textenglish{bool}} يُستخدم لتخزين قيمة منطقية واحدة من قيمتين فقط:
+\begin{itemize}
+    \item \textbf{\textenglish{true}} (صحيح / متحقق)
+    \item \textbf{\textenglish{false}} (خاطئ / غير متحقق)
+\end{itemize}
+
+نحصل غالبًا على قيم \textbf{\textenglish{bool}} من خلال \textbf{عمليات المقارنة} بين القيم والمتغيرات:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{العملية} & \textbf{المعنى} & \textbf{مثال} & \textbf{النتيجة} \\
+\hline
+\textenglish{>} & أكبر من & \textenglish{5 > 3} & \textenglish{true} \\
+\hline
+\textenglish{<} & أصغر من & \textenglish{2 < 1} & \textenglish{false} \\
+\hline
+\textenglish{>=} & أكبر من أو يساوي & \textenglish{5 >= 5} & \textenglish{true} \\
+\hline
+\textenglish{<=} & أصغر من أو يساوي & \textenglish{3 <= 2} & \textenglish{false} \\
+\hline
+\textenglish{==} & يساوي (مقارنة) & \textenglish{4 == 4} & \textenglish{true} \\
+\hline
+\textenglish{!=} & لا يساوي & \textenglish{7 != 5} & \textenglish{true} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{boxWarning}
+انتبه للفرق بين \textbf{\textenglish{=}} و \textbf{\textenglish{==}}:
+\begin{itemize}
+    \item الرمز \textbf{\textenglish{=}} يُستخدم \textbf{لإعطاء (تعيين) قيمة} لمتغير (مثلاً: \textenglish{int x = 5;}).
+    \item الرمز \textbf{\textenglish{==}} يُستخدم \textbf{للمقارنة (فحص المساواة)} بين قيمتين (مثلاً: \textenglish{x == 5}).
+\end{itemize}
+\end{boxWarning}
+
+\begin{boxExample}[أمثلة على المتغيرات والتعابير المنطقية]
+\begin{english}
+\begin{minted}{csharp}
+int a = 10;
+int b = 4;
+
+bool isGreater = (a > b);        // true (because 10 > 4)
+bool isEqual = (a == 10);        // true (because a equals 10)
+bool isEven = (a % 2 == 0);      // true (because 10 % 2 is 0)
+
+Console.WriteLine(isGreater);    // Prints: True
+Console.WriteLine(a < b);        // Prints: False
+Console.WriteLine(isEven);       // Prints: True
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: جملة if - else
+% ==============================================================
+\section{جملة الشرط \textenglish{if - else}}
+
+نستخدم جملة \textbf{\textenglish{if}} لاتخاذ قرار في البرنامج: إذا كان الشرط صحيحًا (\textbf{\textenglish{true}}) يتم تنفيذ الكود داخل أقواس \textbf{\textenglish{if}}، وإذا كان الشرط خاطئًا (\textbf{\textenglish{false}}) يتم تنفيذ الكود داخل أقواس \textbf{\textenglish{else}}.
+
+الصيغة العامة:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+if (condition)
+{
+    // Code executed if the condition is true
+}
+else
+{
+    // Code executed if the condition is false
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{boxNote}
+\begin{itemize}
+    \item احرص دائمًا على كتابة الأقواس المتعرجة \textbf{\textenglish{\{ \}}} لكل من \textenglish{if} و \textenglish{else}.
+    \item \textbf{لا تضع} فاصلة منقوطة \textbf{\textenglish{;}} بعد سطر \textenglish{if (condition)} أو بعد كلمة \textenglish{else}.
+\end{itemize}
+\end{boxNote}
+
+\begin{boxExample}[1: فحص علامة طالب (ناجح / راسب)]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter your grade:");
+int grade = int.Parse(Console.ReadLine());
+
+if (grade >= 55)
+{
+    Console.WriteLine("Passed");
+}
+else
+{
+    Console.WriteLine("Failed");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[2: فحص هل العدد زوجي أم فردي باستخدام باقي القسمة \textenglish{\%}]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter an integer:");
+int num = int.Parse(Console.ReadLine());
+
+if (num % 2 == 0)
+{
+    Console.WriteLine("Even number");
+}
+else
+{
+    Console.WriteLine("Odd number");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[3: مقارنة النصوص (\textenglish{string}) لفحص كلمة المرور]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter password:");
+string password = Console.ReadLine();
+
+if (password == "open123")
+{
+    Console.WriteLine("Welcome!");
+}
+else
+{
+    Console.WriteLine("Wrong password!");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الثالث: جملة الشرط المنفردة بدون else
+% ==============================================================
+\section{جملة الشرط المنفردة بدون \textenglish{else}}
+
+ليس من الضروري دائمًا كتابة \textbf{\textenglish{else}}. إذا أردنا تنفيذ كود معيّن عند تحقق الشرط فقط، وعدم فعل أي شيء إضافي إذا لم يتحقق الشرط، نكتب \textbf{\textenglish{if}} بمفردها:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+if (condition)
+{
+    // Code executed ONLY if the condition is true
+}
+// The program continues normally from here in all cases
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{boxExample}[1: طباعة رسالة تنبيه عند ارتفاع الحرارة]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter temperature:");
+int temp = int.Parse(Console.ReadLine());
+
+if (temp > 30)
+{
+    Console.WriteLine("Warning: It is hot today!");
+}
+
+Console.WriteLine("Have a nice day."); // Printed in all cases
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[2: خصم 30 شيكل إذا تجاوز سعر المشتريات 200 شيكل]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter total price:");
+double price = double.Parse(Console.ReadLine());
+
+if (price > 200)
+{
+    price = price - 30;
+    Console.WriteLine("You got a 30 NIS discount!");
+}
+
+Console.WriteLine("Final price to pay: " + price);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الرابع: الشروط المتعددة if - else if - else
+% ==============================================================
+\section{الشروط المتعددة (\textenglish{if - else if - else})}
+
+عندما يكون لدينا \textbf{أكثر من حالتين} (مثلاً 3 حالات أو أكثر)، ونريد أن يختار البرنامج \textbf{حالة واحدة فقط} من بينها، نستخدم سلسلة \textbf{\textenglish{if - else if - else}}.
+
+الصيغة العامة:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+if (condition1)
+{
+    // Executed if condition1 is true
+}
+else if (condition2)
+{
+    // Executed if condition1 is false AND condition2 is true
+}
+else if (condition3)
+{
+    // Executed if condition3 is true (and previous are false)
+}
+else
+{
+    // Executed if ALL previous conditions are false
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{boxAttention}
+\textbf{كيف يعمل الحاسوب في \textenglish{if - else if - else}؟}
+\begin{itemize}
+    \item يفحص الحاسوب الشروط \textbf{بالترتيب من الأعلى إلى الأسفل}.
+    \item بمجرد أن يجد \textbf{أول شرط متحقق (\textenglish{true})}، ينفّذ الكود الخاص به فقط، \textbf{ويتجاهل باقي الشروط} حتى نهاية السلسلة.
+    \item جزء \textbf{\textenglish{else}} الأخير اختياري، ويتنفذ فقط إذا كانت جميع الشروط السابقة خاطئة.
+\end{itemize}
+\end{boxAttention}
+
+\begin{boxExample}[1: تصنيف العدد إلى موجب، سالب، أو صفر]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter an integer:");
+int num = int.Parse(Console.ReadLine());
+
+if (num > 0)
+{
+    Console.WriteLine("Positive");
+}
+else if (num < 0)
+{
+    Console.WriteLine("Negative");
+}
+else
+{
+    Console.WriteLine("Zero");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\begin{boxExample}[2: تحديد التقدير حسب العلامة]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter student grade (0-100):");
+int grade = int.Parse(Console.ReadLine());
+
+if (grade >= 90)
+{
+    Console.WriteLine("Excellent (A)");
+}
+else if (grade >= 80)
+{
+    // Reached only if grade < 90 (80 to 89)
+    Console.WriteLine("Very Good (B)");
+}
+else if (grade >= 55)
+{
+    // Reached only if grade < 80 (55 to 79)
+    Console.WriteLine("Passed (C)");
+}
+else
+{
+    Console.WriteLine("Failed (F)");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[3: آلة حاسبة بسيطة باستخدام \textenglish{char}]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter first number:");
+double num1 = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter operation (+, -, *):");
+char op = char.Parse(Console.ReadLine());
+Console.WriteLine("Enter second number:");
+double num2 = double.Parse(Console.ReadLine());
+
+if (op == '+')
+{
+    Console.WriteLine("Result = " + (num1 + num2));
+}
+else if (op == '-')
+{
+    Console.WriteLine("Result = " + (num1 - num2));
+}
+else if (op == '*')
+{
+    Console.WriteLine("Result = " + (num1 * num2));
+}
+else
+{
+    Console.WriteLine("Unknown operation");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الخامس: العمليات المنطقية المركبة
+% ==============================================================
+\section{العمليات المنطقية المركبة (\textenglish{\&\&}, \textenglish{||}, \textenglish{!})}
+
+يمكننا دمج أكثر من شرط في جملة \textenglish{if} واحدة باستخدام المعاملات المنطقية:
+
+\begin{center}
+\begin{tabular}{|c|c|C{5.8cm}|c|}
+\hline
+\textbf{المعامل} & \textbf{المعنى} & \textbf{متى تكون النتيجة \textenglish{true}؟} & \textbf{مثال} \\
+\hline
+\textenglish{\&\&} & \textbf{و} (\textenglish{AND}) & عندما يكون \textbf{كلا الشرطين} صحيحين معًا & \textenglish{x > 0 \&\& x < 10} \\
+\hline
+\textenglish{||} & \textbf{أو} (\textenglish{OR}) & عندما يكون \textbf{أحد الشرطين على الأقل} صحيحًا & \textenglish{day == 6 || day == 7} \\
+\hline
+\textenglish{!} & \textbf{نفي} (\textenglish{NOT}) & يعكس القيمة المنطقية (\textenglish{true} تصبح \textenglish{false} والعكس) & \textenglish{!isRaining} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{boxExample}[1: استخدام \textenglish{\&\&} لفحص هل العدد ثنائي المنازل (بين 10 و 99)]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a positive integer:");
+int num = int.Parse(Console.ReadLine());
+
+if (num >= 10 && num <= 99)
+{
+    Console.WriteLine("Two-digit number");
+}
+else
+{
+    Console.WriteLine("Not a two-digit number");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[2: استخدام \textenglish{||} لفحص أيام عطلة نهاية الأسبوع]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter day number (1-7):");
+int day = int.Parse(Console.ReadLine());
+
+if (day == 6 || day == 7)
+{
+    Console.WriteLine("Weekend!");
+}
+else
+{
+    Console.WriteLine("School / Work day");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxExample}[3: استخدام \textenglish{!} (النفي) مع متغير منطقي]
+\begin{english}
+\begin{minted}{csharp}
+bool isExempt = false;
+int grade = 50;
+
+if (!isExempt && grade < 60)
+{
+    Console.WriteLine("You must take the makeup exam.");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم السادس: الجمل الشرطية المتداخلة (Nested if)
+% ==============================================================
+\section{الجمل الشرطية المتداخلة (\textenglish{Nested if Statements})}
+
+يمكننا وضع جملة \textbf{\textenglish{if}} (أو \textbf{\textenglish{if - else}}) داخل جملة \textbf{\textenglish{if}} أو \textbf{\textenglish{else}} أخرى، وذلك عندما يعتمد فحص شرط معيّن على تحقق شرط سابق.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+if (outerCondition)
+{
+    if (innerCondition)
+    {
+        // Both outerCondition and innerCondition are true
+    }
+    else
+    {
+        // outerCondition is true, innerCondition is false
+    }
+}
+else
+{
+    // outerCondition is false
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{boxExample}[1: فحص القسمة على صفر داخل عملية القسمة]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter two numbers:");
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter operation (+ or /):");
+char op = char.Parse(Console.ReadLine());
+
+if (op == '+')
+{
+    Console.WriteLine("Result = " + (a + b));
+}
+else if (op == '/')
+{
+    if (b == 0)
+    {
+        Console.WriteLine("Error: Cannot divide by zero!");
+    }
+    else
+    {
+        Console.WriteLine("Result = " + (a / b));
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+
+\begin{boxExample}[2: تصنيف حالة الطقس حسب الفصل ودرجة الحرارة]
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter season (1=Winter, 2=Summer):");
+int season = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter temperature:");
+int temp = int.Parse(Console.ReadLine());
+
+if (season == 1)
+{
+    if (temp > 15)
+    {
+        Console.WriteLine("Warm winter day");
+    }
+    else
+    {
+        Console.WriteLine("Cold winter day");
+    }
+}
+else
+{
+    if (temp > 30)
+    {
+        Console.WriteLine("Hot summer day");
+    }
+    else
+    {
+        Console.WriteLine("Mild summer day");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم السابع: خلاصة وأخطاء شائعة
+% ==============================================================
+\section{خلاصة وأخطاء شائعة يجب تجنّبها}
+
+\begin{boxNote}
+\textbf{ملخص جمل الشرط:}
+\begin{itemize}
+    \item \textbf{\textenglish{bool}}: نوع متغير يخزن \textenglish{true} أو \textenglish{false}.
+    \item \textbf{\textenglish{if}}: لتنفيذ كود عند تحقق شرط معيّن فقط.
+    \item \textbf{\textenglish{if - else}}: للاختيار بين مسارين (أحدهما عند تحقق الشرط والآخر عند عدم تحققه).
+    \item \textbf{\textenglish{if - else if - else}}: للاختيار بين 3 مسارات أو أكثر (يتنفذ أول شرط متحقق فقط).
+    \item \textbf{\textenglish{\&\&}} (و)، \textbf{\textenglish{||}} (أو)، \textbf{\textenglish{!}} (نفي): لتركيب الشروط المنطقية.
+    \item \textbf{الشروط المتداخلة}: وضع جملة \textenglish{if} داخل جملة \textenglish{if} أو \textenglish{else} أخرى.
+\end{itemize}
+\end{boxNote}
+
+\begin{boxWarning}
+\textbf{أخطاء شائعة عند كتابة جمل الشرط:}
+\begin{enumerate}
+    \item \textbf{كتابة \textenglish{=} بدلاً من \textenglish{==} داخل الشرط:} \\
+    خطأ: \textenglish{if (x = 5)} $\quad \leftarrow \quad$ الصحيح: \textenglish{if (x == 5)}
+    \item \textbf{وضع فاصلة منقوطة \textenglish{;} بعد الشرط مباشرة:} \\
+    خطأ: \textenglish{if (x > 0);} (هذا ينهي جملة الشرط فورًا وينفذ الأقواس دائمًا!).
+    \item \textbf{كتابة شرط مركب بدون تكرار اسم المتغير:} \\
+    خطأ: \textenglish{if (10 <= x <= 99)} \\
+    الصحيح: \textenglish{if (x >= 10 \&\& x <= 99)}
+\end{enumerate}
+\end{boxWarning}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

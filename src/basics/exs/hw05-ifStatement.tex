@@ -1,0 +1,256 @@
+﻿\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\ifwithsols
+\title{حل وظيفة بيتية 5 للصف العاشر 10: $\mathtt{if\ Statement}$}
+\else
+\title{وظيفة بيتية 5 للصف العاشر 10: $\mathtt{if\ Statement}$}
+\fi
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=3em]
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا ثنائيّ المنازل (بين 10 و 99)، ويطبع "\textbf{\textenglish{Yes}}" إذا كانت منزلتاه عددين متتاليين (أي أنّ الفرق المطلق بينهما يساوي 1، مثل 34 أو 43)، وإلا يطبع "\textbf{\textenglish{No}}".
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter a two-digit number:
+34
+Yes
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter a two-digit number:
+79
+No
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a two-digit number:");
+int num = int.Parse(Console.ReadLine());
+int tens = num / 10;
+int units = num % 10;
+if (Math.Abs(tens - units) == 1)
+{
+    Console.WriteLine("Yes");
+}
+else
+{
+    Console.WriteLine("No");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا ثلاثيّ المنازل (بين 100 و 999)، ويطبع "\textbf{\textenglish{Palindrom}}" إذا كانت قراءته من اليمين إلى اليسار متطابقة مع قراءته من اليسار إلى اليمين (مثلاً: 121، 585).
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter a three-digit number:
+121
+Palindrom
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter a three-digit number:
+123
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a three-digit number:");
+int num = int.Parse(Console.ReadLine());
+int hundreds = num / 100;
+int units = num % 10;
+if (hundreds == units)
+{
+    Console.WriteLine("Palindrom");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+\item
+اكتب برنامجًا يستقبل من المستخدم 3 أعداد عشرية بترتيب غير تنازلي (كل عدد أكبر أو يساوي الذي قبله: $a \le b \le c$) تمثل أطوال أضلاع مثلث. \\
+على البرنامج أن يطبع نوع المثلث:
+\begin{itemize}
+    \item "\textbf{\textenglish{Equilateral}}" (مثلث متساوي الأضلاع)، إذا كانت كل أضلاعه متساوية.
+    \item "\textbf{\textenglish{Isosceles}}" (مثلث متساوي الساقين)، إذا كان هناك ضلعان بالضبط متساويان.
+    \item "\textbf{\textenglish{Right triangle}}" (مثلث قائم الزاوية)، إذا كان المثلث يحقق قانون فيثاغورس: $a^2 + b^2 = c^2$ ($c$ هو الضلع الأطول بين الثلاثة).
+\end{itemize}
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter three sides:
+3
+3
+3
+Equilateral
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter three sides:
+3
+3
+5
+Isosceles
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[3]
+\begin{english}
+\begin{minted}{text}
+Enter three sides:
+3
+4
+5
+Right triangle
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter three sides:");
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+double c = double.Parse(Console.ReadLine());
+
+// Since a <= b <= c, if a == c then all three sides are equal (a == b == c)
+if (a == c)
+{
+    Console.WriteLine("Equilateral");
+}
+else if (a == b)
+{
+    Console.WriteLine("Isosceles");
+}
+else if (b == c)
+{
+    Console.WriteLine("Isosceles");
+}
+else if (Math.Pow(a, 2) + Math.Pow(b, 2) == Math.Pow(c, 2))
+{
+    Console.WriteLine("Right triangle");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\clearpage
+
+% \item
+% اكتب برنامجًا يمثّل آلة حاسبة بسيطة: يستقبل البرنامج من المستخدم عددًا، ثم حرفًا (\textenglish{char}) يمثّل العملية الحسابية (\textenglish{'+'}, \textenglish{'-'}, \textenglish{'*'}, \textenglish{'/'}, \textenglish{'\%'})، ثم عددًا آخر، ويحسب ويطبع نتيجة العملية الحسابية.
+% \ifdetailed
+% \begin{boxExample}[1]
+% \begin{english}
+% \begin{minted}{text}
+% Enter first number:
+% 10
+% Enter operation (+, -, *, /, %):
+% +
+% Enter second number:
+% 5
+% Result: 15
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \begin{boxExample}[2]
+% \begin{english}
+% \begin{minted}{text}
+% Enter first number:
+% 17
+% Enter operation (+, -, *, /, %):
+% %
+% Enter second number:
+% 5
+% Result: 2
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \fi
+
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% Console.WriteLine("Enter first number:");
+% double num1 = double.Parse(Console.ReadLine());
+% Console.WriteLine("Enter operation (+, -, *, /, %):");
+% char op = char.Parse(Console.ReadLine());
+% Console.WriteLine("Enter second number:");
+% double num2 = double.Parse(Console.ReadLine());
+
+% if (op == '+')
+% {
+%     Console.WriteLine("Result: " + (num1 + num2));
+% }
+% else if (op == '-')
+% {
+%     Console.WriteLine("Result: " + (num1 - num2));
+% }
+% else if (op == '*')
+% {
+%     Console.WriteLine("Result: " + (num1 * num2));
+% }
+% else if (op == '/')
+% {
+%     Console.WriteLine("Result: " + (num1 / num2));
+% }
+% else if (op == '%')
+% {
+%     Console.WriteLine("Result: " + (num1 % num2));
+% }
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \clearpage
+% \fi
+
+\end{enumerate}
+
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+
+\end{document}
