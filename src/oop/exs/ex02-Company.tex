@@ -15,11 +15,6 @@
 في هذا الكراس، سنبني النظام \textbf{خطوة بخطوة}: سنبدأ ببناء فئات منفصلة بدون وراثة، ثم نكتشف التكرار ونعالجه عبر بناء فئة أساسية وتطبيق \textbf{الوراثة}، وبعدها نوسّع النظام ليشمل إدارة الشركة وتطبيق \textbf{تعدد الأشكال} و\textbf{إعادة تعريف العمليات}.
 \end{boxDef}
 
-\begin{boxWarning}
-\textbf{تعليمات هامة للعمل:}
-في \textbf{كل تمرين} تغيّر فيه شيئاً في الفئات أو تضيف عملية جديدة، \textbf{يجب عليك} تحديث البرنامج الرئيسي \textenglish{Main} لإنشاء كائنات واستدعاء العمليات الجديدة وفحص صحّة عملها على الشاشة.
-\end{boxWarning}
-
 % ==============================================================
 \section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
 % ==============================================================
@@ -39,7 +34,7 @@
     \begin{itemize}
         \item \textbf{عملية بنائية أولى:} تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وعدد الحواسيب، وتهيئ جميع الصفات.
         \item \textbf{عملية بنائية ثانية (لتقني جديد):} تتلقى رقم الهوية، الاسم، وعدد الحواسيب فقط، وتهيئ الأقدمية (\textenglish{seniority}) إلى \textenglish{0}.
-        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات (\textenglish{GetId}، \textenglish{GetName}، \textenglish{GetSeniority}، \textenglish{GetComputers}).
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات ( \textenglish{GetId} ، \textenglish{GetName} ، \textenglish{GetSeniority} ، \textenglish{GetComputers} ).
         \item \textbf{عمليات \textenglish{Set}:}
         \begin{itemize}
             \item \textenglish{SetName(string name)}: لتعديل اسم الموظف.
@@ -63,17 +58,19 @@
     \textbf{العمليات (\textenglish{public}):}
     \begin{itemize}
         \item \textbf{عملية بنائية:} تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وسنوات العضوية في اللجنة، وتهيئ جميع الصفات.
-        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات (\textenglish{GetId}، \textenglish{GetName}، \textenglish{GetSeniority}، \textenglish{GetUnionYears}).
+        \item \textbf{عمليات \textenglish{Get}:} لجميع الصفات ( \textenglish{GetId} ، \textenglish{GetName} ، \textenglish{GetSeniority} ، \textenglish{GetUnionYears} ).
         \item \textbf{عمليات \textenglish{Set}:}
         \begin{itemize}
             \item \textenglish{SetName(string name)}: لتعديل اسم الموظف.
-            \item \textenglish{SetUnionYears(int unionYears)}: لتعديل سنوات العضوية في اللجنة (بشرط أن تكون القيمة \textbf{غير سالبة} ولا تتجاوز أقدميته في الشركة: $0 \le \text{unionYears} \le \text{seniority}$).
+            \item \textenglish{SetUnionYears(int unionYears)}: لتعديل سنوات العضوية في اللجنة (بشرط أن تكون القيمة \textbf{غير سالبة} ولا تتجاوز أقدميته في الشركة: \\
+             $0 \le \text{unionYears} \le \text{seniority}$).
         \end{itemize}
         \item \textbf{العملية \textenglish{AddSeniorityYear()}:} تزيد عدد سنوات أقدمية الموظف في الشركة بسنة واحدة ($+1$).
         \item \textbf{العملية \textenglish{ToString()}:} تعيد نصاً يصف بيانات عضو اللجنة.
     \end{itemize}
     \textbf{الفحص في \textenglish{Main}:} \\
-    أضف إلى \textenglish{Main} إنشاء كائن من الفئة \textenglish{UnionMember}، وجرّب استدعاء عملياته (\textenglish{AddSeniorityYear}، \textenglish{SetUnionYears}، \textenglish{ToString}) وطباعة النتائج.
+    أضف إلى \textenglish{Main} إنشاء كائن من الفئة \textenglish{UnionMember}، وجرّب استدعاء عملياته \\
+     (\textenglish{AddSeniorityYear} , \textenglish{SetUnionYears} , \textenglish{ToString}) وطباعة النتائج.
 
     \item \textbf{استخلاص المشترك وبناء فئة الموظف الأساسي (\textenglish{Employee})} \\
     راجع الفئتين اللتين بنيتهما في التمرين 1 والتمرين 2. جد جميع الصفات والعمليات \textbf{المتطابقة (المشتركة فقط)} بين الفئتين، وأنشئ فئة جديدة باسم \textenglish{Employee} تتضمن فقط هذه الصفات والعمليات المشتركة. \\
@@ -83,7 +80,7 @@
 \end{enumerate}
 
 \begin{boxAttention}[- نقطة للتفكير]
-هل كان من الأريح برمجياً تطوير الجزء المشترك مرة واحدة فقط، ثم إضافة الجزء الفريد لكل فئة على حدة؟ \\
+هل كان من الأسهل برمجياً تطوير الجزء المشترك مرة واحدة فقط، ثم إضافة الجزء الفريد لكل فئة على حدة؟ \\
 ربما سيساعدنا ذلك أيضاً عند بناء فئات لأنماط إضافية من الموظفين (مثل مسؤول مشاريع، محاسب، مدير فرع...). \\
 \textbf{والآن ننتقل إلى تعلم الوراثة...}
 \end{boxAttention}
@@ -108,28 +105,29 @@
     \end{itemize}
 
     فيما يلي ملخص واجهة الفئة الأساسية \textenglish{Employee} بعد التحديث:
-    \begin{center}
-    \renewcommand{\arraystretch}{1.2}
-    {\small
-    \begin{tabular}{|p{0.44\textwidth}|p{0.48\textwidth}|}
-    \hline
-    \multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
-    \hline
-    صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
-    \hline
-    عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
-    \hline
-    عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
-    \hline
-    \end{tabular}
-    }
-    \end{center}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+{\small
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
+\hline
+صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
+\hline
+عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
+\hline
+عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
+\hline
+\end{tabular}
+}
+\end{center}
 
+\clearpage
     وملخص واجهتي الفئتين الفرعيتين الوارثتين \textenglish{Technician} و \textenglish{UnionMember}:
     \begin{center}
     \renewcommand{\arraystretch}{1.2}
     {\small
-    \begin{tabular}{|p{0.44\textwidth}|p{0.48\textwidth}|}
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
     \hline
     \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Technician : Employee}}} \\
     \hline
@@ -154,6 +152,7 @@
     \textbf{الفحص في \textenglish{Main}:} \\
     افحص الفئات المحدّثة في \textenglish{Main}: أنشئ كائنات من الفئات الثلاث، واستدعِ على كائني \textenglish{Technician} و \textenglish{UnionMember} عمليات موروثة من \textenglish{Employee} (مثل \textenglish{GetName} و \textenglish{AddSeniorityYear}) وعمليات خاصة بكل منهما، واطبع الكائنات.
 
+\clearpage
     \item \textbf{إضافة فئة فرعية ثالثة: مسؤول المشاريع (\textenglish{Supervisor})} \\
     أضف فئة جديدة باسم \textenglish{Supervisor} تمثل مسؤول مشاريع في الشركة يدير فريقاً مكوّناً من 15 موظفاً كحد أقصى، وترث من الفئة \textenglish{Employee}. \\
     \textbf{الصفات الخاصة الإضافية (\textenglish{private}) في \textenglish{Supervisor}:}
@@ -171,7 +170,8 @@
         \item \textbf{العملية \textenglish{ToString()}:} تعيد وصفاً نصياً لمسؤول المشاريع بالاستعانة بـ \textenglish{base.ToString()} مع إضافة عدد أعضاء فريقه الحاليين.
     \end{itemize}
     \textbf{الفحص في \textenglish{Main}:} \\
-    أنشئ كائناً من الفئة \textenglish{Supervisor} في \textenglish{Main}، وأضف إلى فريقه موظفاً عادياً (\textenglish{Employee})، وتقنياً (\textenglish{Technician})، وعضو لجنة (\textenglish{UnionMember})، ثم جرّب العملية \textenglish{TransferBonusSeniority} واطبع بيانات المسؤول وأعضاء فريقه.
+    أنشئ كائناً من الفئة \textenglish{Supervisor} في \textenglish{Main}، وأضف إلى فريقه موظفاً عادياً (\textenglish{Employee})، وتقنياً (\textenglish{Technician})، وعضو لجنة (\textenglish{UnionMember})، ثم جرّب العملية \\
+     \textenglish{TransferBonusSeniority} واطبع بيانات المسؤول وأعضاء فريقه.
 
 \end{enumerate}
 
@@ -201,8 +201,9 @@
     \item \textbf{إضافة موظف إلى الشركة (\textenglish{AddEmployee})} \\
     اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{AddEmployee(Employee e)} تتلقى موظفاً من أي نمط وتضيفه إلى مصفوفة موظفي الشركة: افحص أولاً إن كان هناك متسع في المصفوفة؛ إذا نعم، أضف الموظف وأعد \textenglish{true}، وإلا فلا تضفه وأعد \textenglish{false}. \\
     \textbf{الفحص في \textenglish{Main}:} \\
-    أضف في \textenglish{Main} عدة موظفين من الأنماط الأربعة (\textenglish{Employee}، \textenglish{Technician}، \textenglish{UnionMember}، و \textenglish{Supervisor}) إلى كائن الشركة \textenglish{Company}.
+    أضف في \textenglish{Main} عدة موظفين من الأنماط الأربعة ( \textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} ) إلى كائن الشركة \textenglish{Company}.
 
+    \clearpage
     \item \textbf{البحث عن بيانات موظف حسب رقم الهوية (\textenglish{GetEmployeeDetails})} \\
     اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetEmployeeDetails(string id)} تتلقى رقم هوية موظف (افترض أنه فريد) وتعيد سلسلة نصية تصف بيانات هذا الموظف (استخدم \textenglish{ToString()}). إذا لم يوجد موظف بهذا الرقم في الشركة، تعيد العملية نصاً فارغاً \textenglish{""}. \\
     \textbf{الفحص في \textenglish{Main}:} \\
@@ -214,7 +215,9 @@
     استدعِ العملية في \textenglish{Main} واطبع النتيجة.
 
     \item \textbf{تصفية الموظفين حسب الأقدمية (\textenglish{GetEmployeesByMinSeniority})} \\
-    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetEmployeesByMinSeniority(int minYears)} تتلقى حداً أدنى لسنوات الأقدمية، وتعيد مصفوفة من نمط \textenglish{Employee[]} تحتوي على جميع موظفي الشركة الذين أقدميتهم أكبر أو تساوي \textenglish{minYears} (بحجم مطابق تماماً لعددهم). إذا لم يوجد أي موظف يحقق الشرط، يُعاد \textenglish{null}. \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \\
+    \textenglish{GetEmployeesByMinSeniority(int minYears)} \\
+    تتلقى حداً أدنى لسنوات الأقدمية، وتعيد مصفوفة من نمط \textenglish{Employee[]} تحتوي على جميع موظفي الشركة الذين أقدميتهم أكبر أو تساوي \textenglish{minYears} (بحجم مطابق تماماً لعددهم). إذا لم يوجد أي موظف يحقق الشرط، يُعاد \textenglish{null}. \\
     \textbf{الفحص في \textenglish{Main}:} \\
     استدعِ العملية في \textenglish{Main} واطبع بيانات جميع الموظفين في المصفوفة المُعادة.
 
@@ -231,7 +234,7 @@
 \section*{المرحلة الرابعة: إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
 % ==============================================================
 
-\begin{boxNote}[- قواعد حساب الرواتب ونقاط التصويت واستحقاق المكافأة]
+\textbf{قواعد حساب الرواتب ونقاط التصويت واستحقاق المكافأة}
 تُتخذ القرارات في الشركة عبر التصويت باستخدام \textbf{نقاط التأثير}، كما يتحدد الراتب الشهري والمكافأة السنوية لكل موظف بحسب نمطه وأقدميته كما يلي:
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
@@ -265,7 +268,6 @@ $\text{base} + 100 \cdot \text{teamCount}$ &
 \end{tabular}
 }
 \end{center}
-\end{boxNote}
 
 \begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
 

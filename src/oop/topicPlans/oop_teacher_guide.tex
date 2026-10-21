@@ -4,29 +4,12 @@
 \setminted{fontsize=\footnotesize, breaklines=true}
 \tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=3pt, bottom=3pt, before skip=4pt, after skip=4pt}}
 
-\title{دليل المعلم وخطة تدريس البرمجة كائنية التوجه في \textenglish{C\#}}
-\author{أ. محمود اغبارية}
+\title{خطة تدريس البرمجة كائنية التوجه في \textenglish{C\#}}
 
 \begin{document}
 
 \maketitle
 \thispagestyle{fancy}
-
-\begin{boxNote}[- هدف هذا الدليل]
-مرجع تذكيري مكثّف للمعلم لترتيب عرض أفكار البرمجة كائنية التوجه بالتدرج المنطقي المعتمد في المنهاج وكراسات التمارين. يتضمن لكل موضوع: \textbf{النقاط الفرعية الدقيقة التي لا ينبغي نسيانها}، \textbf{الإشارات التمهيدية المسبقة (ما يُمهَّد له قبل أوانه)}، \textbf{تشبيهات وطرق الشرح على اللوح}، و\textbf{مزالق الطلاب في الامتحانات}.
-\end{boxNote}
-
-\begin{boxAttention}[- خريطة الإشارات التمهيدية المبكرة]
-لتسهيل استيعاب المواضيع المتقدمة لاحقاً، يُفضّل غرس هذه الإشارات السريعة أثناء تدريس الجزء الأول:
-\begin{enumerate}[itemsep=0.25em]
-    \item \textbf{عند شرح \textenglish{private} و \textenglish{public} (موضوع 1):} أشر سريعاً إلى وجود إذن وصول ثالث اسمه \textenglish{protected} ("للأبناء فقط") سنتعلمه في الوراثة.
-    \item \textbf{عند شرح التحميل الزائد للعمليات البنائية (موضوع 2):} اشرح \textenglish{: this(...)} لمنع تكرار الكود، ونبّه الطلاب أن نفس الآلية سنستخدمها في الوراثة باسم \textenglish{: base(...)}.
-    \item \textbf{عند تقديم \textenglish{public override string ToString()} (موضوع 3):} أشر في جملة واحدة إلى أن جميع الفئات في \textenglish{C\#} لها أب خفي اسمه \textenglish{object} ورثت منه \textenglish{ToString()}، وكلمة \textenglish{override} تعني "إعادة تعريف عملية موروثة" وسنتعمق فيها في فصل الوراثة.
-    \item \textbf{عند شرح العمليات البنائية (موضوع 2):} قدّم \textbf{العملية البنائية الناسخة} على فئة بسيطة مثل \textenglish{Point}، لنستخدمها جاهزةً عند شرح الكائن المركب (موضوع 5).
-\end{enumerate}
-\end{boxAttention}
-
-\clearpage
 
 % ==============================================================
 \section*{الجزء الأول: أساسيات الفئات والتغليف (تمهيد للوراثة)}
@@ -145,7 +128,8 @@
         \item عند تمرير كائن كمُعطى (مثل \textenglish{TransferFuel(double amount, ScoutShip target)})، يُمرَّر \textbf{مؤشره}، فأي تعديل على \textenglish{target} داخل العملية يغيّر الكائن الأصلي في \textenglish{Main}.
         \item وجوب فحص \textenglish{target != null} أولاً، والتحقق من نجاح العملية في الكائن الأول (\textenglish{this}) قبل تعديل الكائن الثاني (\textenglish{target}).
     \end{itemize}
-    \item \textbf{إشارة تمهيدية (مدخل لتعدد الأشكال):} عندما نكتب في الفئة \textenglish{Supervisor} العملية \textenglish{AddEmployeeToTeam} التي تتلقى \textenglish{Employee emp}، نجرّب في \textenglish{Main} تمرير كائن \textenglish{Technician} إليها ونسأل الطلاب: "لماذا قبله المترجم مع أن نمط المُعطى هو \textenglish{Employee}؟".
+    \item \textbf{إشارة تمهيدية (مدخل لتعدد الأشكال):} عندما نكتب في الفئة \textenglish{Supervisor} العملية \\
+    \textenglish{AddEmployeeToTeam} التي تتلقى \textenglish{Employee emp}، نجرّب في \textenglish{Main} تمرير كائن \textenglish{Technician} إليها ونسأل الطلاب: "لماذا قبله المترجم مع أن نمط المُعطى هو \textenglish{Employee}؟".
 \end{itemize}
 
 \clearpage
