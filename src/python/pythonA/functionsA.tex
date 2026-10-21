@@ -1,0 +1,428 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن بايثون العمليات (جزء أ)}
+\else
+\title{ورقة تمرن بايثون العمليات (جزء أ)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%==============================================================
+\section*{القسم الأول: قراءة العمليات وتتبّع المخرج}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------- 1
+\item اكتبوا \textbf{المخرج} الناتج عن استدعاء كل واحدة من العمليات في الجدول التالي.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|c|p{0.45\textwidth}|p{0.3\textwidth}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{البند}} & \multicolumn{1}{c|}{\textbf{مقطع البرنامج}} & \multicolumn{1}{c|}{\textbf{المخرج}} \\
+\hline
+\endhead
+1 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex1():
+    num = 34
+    a = num + 10
+    b = num / 10
+    print(b * 10 + a)
+
+ex1()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+2 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex2():
+    a = 10
+    b = 30
+    c = 20
+    print(a + b + c)
+
+ex2()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+3 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex3():
+    a = 5
+    b = 2
+    c = 10
+    print(a * b + c)
+
+ex3()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+4 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex4():
+    a = 3
+    b = 2
+    c = 1
+    print(a + 2 * b + 3 * c)
+
+ex4()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+5 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex5():
+    a = 10
+    b = 30
+    c = 20
+    print((a + b) // c)
+
+ex5()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+6 &
+\begin{pycell}
+\begin{english}
+\begin{minted}[fontsize=\small]{python}
+def ex6():
+    a = 10
+    b = 30
+    print((b + a) / (b - a))
+
+ex6()
+\end{minted}
+\end{english}
+\end{pycell} & \rule{0pt}{1.3cm} \\
+\hline
+\end{longtable}
+}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{78.0} \\
+2 & $\rightarrow$ & \texttt{60} \\
+3 & $\rightarrow$ & \texttt{20} \\
+4 & $\rightarrow$ & \texttt{10} \\
+5 & $\rightarrow$ & \texttt{2} \\
+6 & $\rightarrow$ & \texttt{2.0} \\
+\end{tabular}
+\end{english}
+
+لاحظوا أنّ ناتج العامل \textenglish{/} هو دائمًا من نمط \textenglish{float} (لذلك المخرج في البند 1 هو \textenglish{78.0} وليس \textenglish{78})، بينما ناتج العامل \textenglish{//} على عددين صحيحين هو عدد صحيح.
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 2
+
+\item أمامكم عملية \textbf{تستقبل} من المستخدم \textbf{سعر} صندوق البيتسا و\textbf{كمية} الصناديق المطلوبة. تحسب العملية وتطبع المبلغ \textbf{الكلي} الذي يجب دفعه.
+
+أكملوا الناقص في مقطع البرنامج التالي باستخدام مخزن الكلمات.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def calculate_pizza_order():
+    # Read input from the user
+    num_pizzas = ______________________________
+    ________________ = float(input("Enter the price per pizza: "))
+
+    # Calculate the total price
+    total_price = num_pizzas * price_per_pizza
+
+    # Display the result
+    print("The total price for pizzas is:", ____________, "nis")
+
+# Call the function
+calculate_pizza_order()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{مخزن الكلمات:}
+\begin{center}
+\begin{english}
+\begin{boxCode}
+\texttt{int(input("Enter the number of pizzas: "))} \quad , \quad \texttt{price\_per\_pizza} \quad , \quad \texttt{total\_price}
+\end{boxCode}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def calculate_pizza_order():
+    # Read input from the user
+    num_pizzas = int(input("Enter the number of pizzas: "))
+    price_per_pizza = float(input("Enter the price per pizza: "))
+
+    # Calculate the total price
+    total_price = num_pizzas * price_per_pizza
+
+    # Display the result
+    print("The total price for pizzas is:", total_price, "nis")
+
+# Call the function
+calculate_pizza_order()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+
+\filbreak
+% ---------------------------------------------------------------- 3
+\item أمامكم عملية \textbf{تطبع} معلومات عن المدرسة:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def school_info():
+    school_name = "ABC High School"
+    address = "123 Main St, Anytown"
+    principal = "Mrs. Smith"
+    print("School:", school_name)
+    print("Address:", address)
+    print("Principal:", principal)
+
+# Call the function
+school_info()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[leftmargin=*, itemsep=1.2em]
+\item[\textbf{أ.}] اختاروا الإجابة \textbf{الأكثر صحة}: لكي \textbf{نستقبل} اسم المدرسة من المستخدم علينا كتابة الأمر التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+a. input("Enter school name: ")
+b. int(input("Enter school name: "))
+c. float(input("Enter school name: "))
+d. print("Enter school name: ")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item[\textbf{ب.}] اختاروا الإجابة \textbf{الأكثر صحة}: اسم العملية هو:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+a. school_info
+b. principal
+c. school_name
+d. def
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\item[\textbf{ج.}] عدّلوا العملية بحيث \textbf{تستقبل} من المستخدم المعلومات (اسم المدرسة، العنوان، واسم المديرة) و\textbf{تطبع} رسالة ملائمة.
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[البندان أ و ب]
+\textbf{أ.} الإجابة الصحيحة: \textenglish{a}. \quad \textbf{ب.} الإجابة الصحيحة: \textenglish{a}.
+\end{boxSolution}
+
+\begin{boxSolution}[البند ج]
+\begin{english}
+\begin{minted}{python}
+def school_info():
+    school_name = input("Enter school name: ")
+    address = input("Enter address: ")
+    principal = input("Enter principal name: ")
+    print("School:", school_name)
+    print("Address:", address)
+    print("Principal:", principal)
+
+# Call the function
+school_info()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+
+\end{enumerate}
+
+\clearpage
+%==============================================================
+\section*{القسم الثاني: كتابة عمليات تتلقى معطيات}
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------- 4
+\item اكتبوا عملية باسم \textenglish{rectangle()} \textbf{تتلقى} معطيين صحيحين \textenglish{a} و \textenglish{b} يمثلان طولي ضلعين متجاورين في مستطيل. على العملية أن \textbf{تحسب} و\textbf{تطبع} \textbf{مساحة} المستطيل.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def rectangle(a, b):
+    area = a * b
+    print("The area of the rectangle is:", area)
+
+# Call the function
+rectangle(4, 6)
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 5
+\item اكتبوا عملية باسم \textenglish{pool()} \textbf{تتلقى} معطيين: عدد المرات التي نريد الذهاب بها إلى البركة (\textenglish{times}) وسعر تذكرة الدخول (\textenglish{price}). تحسب العملية و\textbf{تطبع} المبلغ \textbf{الكلي} الذي يجب دفعه.
+
+% TODO: verify this sentence and its numbers against the original PDF (the extracted text was garbled).
+\textbf{احسبوا بدون برمجة:} إذا كان سعر الاشتراك للبركة 200 ش.ج، وسعر تذكرة الدخول للمرة الواحدة 20 ش.ج، فهل من الأفضل شراء اشتراك أم دفع ثمن تذكرة في كل مرة؟
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def pool(times, price):
+    total = times * price
+    print("The total price is:", total)
+
+# Call the function
+pool(3, 20)
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 6
+\item اكتبوا عملية باسم \textenglish{super\_market()} \textbf{تتلقى} ثلاثة معطيات:
+
+\begin{itemize}[itemsep=0.3em]
+\item \textenglish{juice\_bottle}: عدد قناني العصير.
+\item \textenglish{bottle\_price}: سعر القنينة الواحدة.
+\item \textenglish{discount}: التخفيض. (افترضوا أنّ التخفيض نسبة مئوية، مثلًا \textenglish{20} تعني \textenglish{20\%}.)
+\end{itemize}
+
+تحسب العملية و\textbf{تطبع} السعر الذي يجب دفعه لشراء قناني العصير \textbf{قبل} التخفيض و\textbf{بعده}، مع رسالة ملائمة لكل سعر.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def super_market(juice_bottle, bottle_price, discount):
+    price_before = juice_bottle * bottle_price
+    price_after = price_before - price_before * discount / 100
+    print("Price before discount:", price_before)
+    print("Price after discount:", price_after)
+
+# Call the function
+super_market(10, 5, 20)
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 7
+\item اكتبوا عملية باسم \textenglish{ice\_cream()} \textbf{تتلقى} معطيين: طعم البوظة وتقييمها (عدد صحيح من 1 إلى 5). \textbf{تطبع} العملية رسالة تعرض طعم البوظة وتقييمها.
+
+استدعوا العملية \textbf{3 مرات} مع قيم مختلفة للمعطيات.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ice_cream(flavor, rating):
+    print("The", flavor, "ice cream got a rating of", rating, "out of 5")
+
+# Call the function
+ice_cream("Vanilla", 5)
+ice_cream("Chocolate", 4)
+ice_cream("Pistachio", 3)
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+
+\filbreak
+% ---------------------------------------------------------------- 8
+\item اكتبوا عملية باسم \textenglish{certificate()} \textbf{تتلقى} المعطيين التاليين:
+
+\begin{itemize}[itemsep=0.3em]
+\item \textenglish{student\_name}: اسم الطالب/ة.
+\item \textenglish{message}: رسالة.
+\end{itemize}
+
+على العملية أن \textbf{تطبع} شهادة إنهاء للطالب تهنّئه على نجاحه في دراسة موضوع ``العمليات''.
+
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+*****************************
+**** Well Done! ****
+**** Alice ****
+**** you know functions! ****
+*****************************
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def certificate(student_name, message):
+    print("*****************************")
+    print("**** Well Done! ****")
+    print("****", student_name, "****")
+    print("****", message, "****")
+    print("*****************************")
+
+# Call the function
+certificate("Alice", "you know functions!")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

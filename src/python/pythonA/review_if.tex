@@ -1,0 +1,584 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة مراجعة للصف العاشر 10 - الشروط}
+\else
+\title{ورقة مراجعة للصف العاشر 10 - الشروط}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+%====================================================================
+\section*{القسم الأول: التعابير المنطقية والشروط المركبة}
+%====================================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------- 1
+\item لكل تعبير منطقي في الجدول التالي، ضعوا إشارة \textenglish{X} في العمود الملائم لنتيجته: \textenglish{True} أم \textenglish{False}.
+
+\begin{english}
+\renewcommand{\arraystretch}{1.6}
+\begin{longtable}{|C{0.8cm}|p{9cm}|C{2cm}|C{2cm}|}
+\hline
+\textbf{\#} & \textarabic{\textbf{التعبير المنطقي}} & \textbf{True} & \textbf{False} \\
+\hline
+\endhead
+1 & \texttt{3 < 5 and 9 > 10} & & \\ \hline
+2 & \texttt{8 < 7 or 16 > 15} & & \\ \hline
+3 & \texttt{4 <= 3 and 2 == 2} & & \\ \hline
+4 & \texttt{10 <= 10 or 5 != 5} & & \\ \hline
+5 & \texttt{12 < 10 and 5 >= 3} & & \\ \hline
+6 & \texttt{9 != 9 and 6 > 5} & & \\ \hline
+7 & \texttt{(3 > 5 and 9 < 10) or (6 == 6)} & & \\ \hline
+8 & \texttt{(4 < 2 and 8 > 7) or (5 < 5)} & & \\ \hline
+9 & \texttt{(7 > 6 and 12 < 11) and (8 > 8)} & & \\ \hline
+10 & \texttt{(not(2 < 1) and 6 > 5) or not(5 != 10)} & & \\ \hline
+\end{longtable}
+\end{english}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{False} \\
+2 & $\rightarrow$ & \texttt{True} \\
+3 & $\rightarrow$ & \texttt{False} \\
+4 & $\rightarrow$ & \texttt{True} \\
+5 & $\rightarrow$ & \texttt{False} \\
+6 & $\rightarrow$ & \texttt{False} \\
+7 & $\rightarrow$ & \texttt{True} \\
+8 & $\rightarrow$ & \texttt{False} \\
+9 & $\rightarrow$ & \texttt{False} \\
+10 & $\rightarrow$ & \texttt{True} \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+
+\fi
+
+\clearpage
+% ---------------------------------------------------------------- 2
+\item ضعوا دائرة حول \textbf{المخرج} الملائم لكل أمر: \textenglish{True} أم \textenglish{False}.
+
+\begin{english}
+\renewcommand{\arraystretch}{1.6}
+\begin{longtable}{|C{0.8cm}|p{10cm}|C{3cm}|}
+\hline
+\textbf{\#} & \textarabic{\textbf{الأمر}} & \textarabic{\textbf{المخرج}} \\
+\hline
+\endhead
+1 & \texttt{print(4 < 2 and 8 > 7)} & True / False \\ \hline
+2 & \texttt{print(5 < 4 or 11 > 10)} & True / False \\ \hline
+3 & \texttt{print(9 < 8 and 15 > 14)} & True / False \\ \hline
+4 & \texttt{print(6 < 5 and 13 > 12)} & True / False \\ \hline
+5 & \texttt{print(1 < 0 and 4 > 3)} & True / False \\ \hline
+6 & \texttt{print(8 < 7 or 16 > 15)} & True / False \\ \hline
+7 & \texttt{print(10 < 9 and 20 > 19)} & True / False \\ \hline
+8 & \texttt{print((4 < 2 and 8 > 7) or not(5 == 5))} & True / False \\ \hline
+9 & \texttt{print((not(2 < 1) and 6 > 5) or not(10 == 10))} & True / False \\ \hline
+10 & \texttt{print((not(9 > 8) and not(15 < 14)) or (11 < 11))} & True / False \\ \hline
+11 & \texttt{print((8 > 7 or not(16 < 15)) or (14 == 14))} & True / False \\ \hline
+12 & \texttt{print((not(10 < 9) and 20 > 19) or not(15 == 15))} & True / False \\ \hline
+\end{longtable}
+\end{english}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+1 & $\rightarrow$ & \texttt{False} \\
+2 & $\rightarrow$ & \texttt{True} \\
+3 & $\rightarrow$ & \texttt{False} \\
+4 & $\rightarrow$ & \texttt{False} \\
+5 & $\rightarrow$ & \texttt{False} \\
+6 & $\rightarrow$ & \texttt{True} \\
+7 & $\rightarrow$ & \texttt{False} \\
+8 & $\rightarrow$ & \texttt{False} \\
+9 & $\rightarrow$ & \texttt{True} \\
+10 & $\rightarrow$ & \texttt{False} \\
+11 & $\rightarrow$ & \texttt{True} \\
+12 & $\rightarrow$ & \texttt{True} \\
+\end{tabular}
+\end{english}
+\end{boxSolution}
+
+\fi
+
+\end{enumerate}
+
+\clearpage
+%====================================================================
+\section*{القسم الثاني: كتابة برامج بشروط مركبة (اختياري)}
+%====================================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------- 3
+\item \textbf{شراء حاسوب نقّال:} اكتبوا برنامجًا \textbf{يستقبل} المبلغ المالي الذي تم توفيره وعدد أشهر التوفير. إذا كان المبلغ الذي تم توفيره \textbf{أكثر من} 4000 ش.ج \textbf{أو} عدد الأشهر \textbf{أكثر من} 10، \textbf{يطبع} البرنامج عبارة توضيحية أنّ بإمكانه شراء حاسوب نقّال.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+saved_amount = float(input("Enter the amount of money saved: "))
+months = int(input("Enter the number of saving months: "))
+
+if saved_amount > 4000 or months > 10:
+    print("You can buy a laptop!")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 4
+\item \textbf{مجلّد الصور:} اكتبوا برنامجًا \textbf{يستقبل} مساحة الذاكرة المتاحة في مجلّد الصور المحوسب. إذا كانت القيمة المُدخلة \textbf{أقل من} 2 ميغابايت (\textenglish{MB})، \textbf{يطبع} البرنامج عبارة توضيحية أنّ المكان ممتلئ وأنّه يجب حذف صور.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+free_space = float(input("Enter the free space in the picture folder (in megabytes): "))
+
+if free_space < 2:
+    print("Out of space! Delete some pictures.")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 5
+\item \textbf{قطار الجبال:} اكتبوا برنامجًا \textbf{يستقبل} طول شخص (بالسنتيمتر) وعمره. إذا كان طول الشخص 130 سم \textbf{وما فوق} \textbf{و}عمره 13 سنة \textbf{وما فوق}، \textbf{يطبع} البرنامج عبارة توضيحية أنّ بإمكانه الدخول إلى قطار الجبال.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+height = int(input("Enter the person's height: "))
+age = int(input("Enter the person's age: "))
+
+if height >= 130 and age >= 13:
+    print("You can go on the roller coaster!")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+\fi
+
+% ---------------------------------------------------------------- 6
+\item \textbf{رخصة السياقة:} يحصل الطالب على رخصة سياقة إذا تحققت الشروط \textbf{الثلاثة} التالية:
+
+\begin{itemize}[itemsep=0.3em]
+\item عمره \textbf{أكبر من} 17.
+\item نجح في امتحان السياقة \textbf{النظري} (\textenglish{theory}).
+\item نجح في امتحان السياقة \textbf{العملي}.
+\end{itemize}
+
+اكتبوا برنامجًا \textbf{يستقبل} المعطيات الثلاثة. إذا كان الطالب لا يستحق رخصة سياقة، \textbf{يطبع} البرنامج السبب، وإلا \textbf{يطبع} عبارة تهنئة ملائمة.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+age = int(input("Enter the age of the applicant: "))
+has_passed_theory_test = input("Has the applicant passed the theory test? (yes/no): ").lower()
+has_passed_driving_test = input("Has the applicant passed the driving test? (yes/no): ").lower()
+
+if age <= 17:
+    print("Applicant is not eligible for a driving license due to age.")
+elif has_passed_theory_test != "yes":
+    print("Applicant is not eligible for a driving license as they have not passed the theory test.")
+elif has_passed_driving_test != "yes":
+    print("Applicant is not eligible for a driving license as they have not passed the driving test.")
+else:
+    print("Applicant is eligible for a driving license. Congratulations!")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\begin{boxNote}
+العملية \textenglish{lower()} تحوّل جميع أحرف السلسلة النصية إلى أحرف صغيرة. سنتحدث عن ذلك بشكل موسّع فيما بعد.
+\end{boxNote}
+
+\fi
+
+\end{enumerate}
+
+\clearpage
+%====================================================================
+\section*{القسم الثالث: الشرط المتداخل}
+%====================================================================
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------- 7
+\item \textbf{منزلة واحدة:} اكتبوا برنامجًا \textbf{يستقبل} عددًا صحيحًا. يفحص البرنامج إذا كان العدد \textbf{موجبًا} ومركّبًا من \textbf{منزلة واحدة فقط}، و\textbf{يطبع} عبارة توضيحية ملائمة. \textbf{يجب استخدام الشرط المتداخل.}
+
+\textbf{تحدٍّ:} غيّروا البرنامج بحيث يفحص كل عدد صحيح (\textbf{موجبًا} أو \textbf{سالبًا}).
+
+\begin{boxAttention}[- نقطة للتفكير]
+هل توجد طريقة أخرى لحل التمرين؟
+\end{boxAttention}
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{python}
+number = int(input("Enter a number: "))
+
+if number > 0:
+    if number <= 9:
+        print(number, "is a single digit number.")
+    else:
+        print(number, "is not a single digit number.")
+else:
+    print(number, "is not a positive number.")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\begin{boxSolution}[بديل: شرط مركب]
+\begin{english}
+\begin{minted}{python}
+number = int(input("Enter a number: "))
+
+if number > 0 and number <= 9:
+    print(number, "is a single digit number.")
+else:
+    print(number, "is not a single digit number.")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[التحدي]
+\begin{english}
+\begin{minted}{python}
+number = int(input("Enter a number: "))
+
+if number >= -9:
+    if number <= 9:
+        print(number, "is a single digit number.")
+    else:
+        print(number, "is not a single digit number.")
+else:
+    print(number, "is not a single digit number.")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 8
+\item \textbf{العدد الأكبر:} اكتبوا برنامجًا \textbf{يستقبل} ثلاثة أعداد. يفحص البرنامج أيّها \textbf{الأكبر} و\textbf{يطبعه}. \textbf{يجب استخدام الشرط المتداخل.}
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{python}
+# Read three numbers from the user
+number1 = float(input("Enter first number: "))
+number2 = float(input("Enter second number: "))
+number3 = float(input("Enter third number: "))
+
+# Find the largest number using nested conditions
+if number1 >= number2:
+    if number1 >= number3:
+        max_num = number1
+    else:
+        max_num = number3
+else:
+    if number2 >= number3:
+        max_num = number2
+    else:
+        max_num = number3
+
+print("The largest number is:", max_num)
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[بديل: شروط مركبة ومتعددة]
+\begin{english}
+\begin{minted}{python}
+number1 = float(input("Enter first number: "))
+number2 = float(input("Enter second number: "))
+number3 = float(input("Enter third number: "))
+
+if number1 >= number2 and number1 >= number3:
+    print(number1, "is the largest number.")
+elif number2 >= number1 and number2 >= number3:
+    print(number2, "is the largest number.")
+else:
+    print(number3, "is the largest number.")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 9
+\item \textbf{تعليمات عبور الشارع:} قبل أن نعبر الشارع بجانب المدرسة يجب أن يتحقق الشرطان التاليان:
+
+\begin{itemize}[itemsep=0.3em]
+\item على الإشارة الضوئية أن تكون \textbf{خضراء}.
+\item يجب أن يتواجد \textbf{على الأقل طالبان} يريدان عبور الشارع.
+\end{itemize}
+
+وُضعت إشارة محوسبة على الرصيف تعرض إذا كان مسموحًا عبور الشارع. اكتبوا عملية \textbf{تستقبل} من المستخدم المعلومات المطلوبة و\textbf{تطبع} على الإشارة عبارة توضيحية ملائمة. \textbf{يجب استخدام الشرط المتداخل.}
+
+استدعوا العملية عدة مرات بمُدخلات مختلفة، بحيث تظهر كل عبارة توضيحية ممكنة.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def crossing_sign():
+    is_green_light = input("Is the traffic light green? (yes/no): ")
+
+    if is_green_light == "yes":
+        num_students = int(input("Enter the number of students on the sidewalk: "))
+        if num_students >= 2:
+            print("You can cross the road")
+        else:
+            print("You cannot cross the road. Wait for another friend")
+    else:
+        print("You cannot cross the road. No green light")
+
+# Call the function
+crossing_sign()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 10
+\item \textbf{شروط القبول لتخصص علوم الحاسوب:} اكتبوا عملية \textbf{تستقبل} من المستخدم علامات طالب في ثلاثة مواضيع، و\textbf{تطبع} عبارة توضيحية إذا تم قبول الطالب أم لا، بحسب شروط القبول التالية:
+
+\begin{itemize}[itemsep=0.3em]
+\item اللغة الإنجليزية: علامة 85 \textbf{فما فوق}.
+\item الرياضيات: علامة 80 \textbf{فما فوق}.
+\item العلوم: علامة 75 \textbf{فما فوق}.
+\end{itemize}
+
+(يُقبل الطالب فقط إذا تحققت الشروط \textbf{الثلاثة}.) \textbf{يجب استخدام الشرط المتداخل.}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def admission():
+    english_grade = int(input("Enter grade in English: "))
+    math_grade = int(input("Enter grade in math: "))
+    sciences_grade = int(input("Enter grade in science: "))
+
+    if english_grade >= 85:
+        if math_grade >= 80:
+            if sciences_grade >= 75:
+                print("Welcome! The student is accepted")
+            else:
+                print("We apologize, the student is not accepted.")
+        else:
+            print("We apologize, the student is not accepted.")
+    else:
+        print("We apologize, the student is not accepted.")
+
+# Call the function
+admission()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 11
+\item \textbf{من مضاعفات العدد 6:} اكتبوا عملية \textbf{تستقبل} من المستخدم عددًا صحيحًا \textbf{موجبًا}. تفحص العملية إذا كان العدد من مضاعفات العدد 6، ثم \textbf{تطبع} عبارة توضيحية ملائمة.
+
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{python}
+def multiple_of_six():
+    num = int(input("Enter a number: "))
+
+    if num % 2 == 0:
+        if num % 3 == 0:
+            print(num, "is a multiple of 6")
+        else:
+            print(num, "is not a multiple of 6")
+    else:
+        print(num, "is not a multiple of 6")
+
+# Call the function
+multiple_of_six()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\begin{boxSolution}[بديل]
+\begin{english}
+\begin{minted}{python}
+def multiple_of_six():
+    num = int(input("Enter a number: "))
+
+    if num % 6 == 0:
+        print(num, "is a multiple of 6")
+    else:
+        print(num, "is not a multiple of 6")
+
+# Call the function
+multiple_of_six()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 12
+\item \textbf{تحويل مقطع برنامج:} أمامكم مقطع برنامج فيه شرط \textbf{مركّب}:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num <= 10 and num > 4:
+    print("Correct")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+اكتبوا مقطع برنامج يؤدي نفس الغرض ولكن بواسطة \textbf{الشرط المتداخل}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+if num <= 10:
+    if num > 4:
+        print("Correct")
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 13
+\item \textbf{تحويل عملية:} أمامكم عملية فيها شرط \textbf{مركّب}:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def ex7():
+    a = int(input("Enter first number: "))
+    b = int(input("Enter second number: "))
+    if a > b and a < 20:
+        print("True")
+    else:
+        print("False")
+
+ex7()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+اكتبوا العملية من جديد بحيث تؤدي نفس الغرض ولكن بواسطة \textbf{الشرط المتداخل}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex7():
+    a = int(input("Enter first number: "))
+    b = int(input("Enter second number: "))
+    if a > b:
+        if a < 20:
+            print("True")
+        else:
+            print("False")
+    else:
+        print("False")
+
+ex7()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\fi
+\filbreak
+
+% ---------------------------------------------------------------- 14
+\item \textbf{برنامج لأحجية} (تمرين تحدٍّ، يُنفَّذ في أزواج): عليكم أن تكتبوا برنامجًا لأحجية معيّنة.
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=0.5em]
+\item اختاروا موضوعًا معيّنًا واكتبوا 5--10 أسئلة عنه.
+\item اكتبوا برنامجًا يطرح الأسئلة الواحد تلو الآخر على المشترك في الأحجية و\textbf{يستقبل} إجابته:
+\begin{itemize}[itemsep=0.3em]
+\item إذا كانت إجابته صحيحة، \textbf{يطبع} البرنامج عبارة توضيحية ملائمة.
+\item يحصل المشترك على \textbf{20 نقطة} عن كل إجابة صحيحة.
+\item في نهاية الأحجية، \textbf{يطبع} البرنامج عدد النقاط التي جمعها المشترك.
+\end{itemize}
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[نموذج لحل (3 أسئلة، يمكن توسيعه)]
+\begin{english}
+\begin{minted}{python}
+score = 0
+
+answer = input("Which keyword defines a function in Python? ")
+if answer == "def":
+    print("Correct!")
+    score = score + 20
+else:
+    print("Wrong answer.")
+
+answer = input("Which operator checks if two values are equal? ")
+if answer == "==":
+    print("Correct!")
+    score = score + 20
+else:
+    print("Wrong answer.")
+
+answer = input("Which keyword is short for 'else if' in Python? ")
+if answer == "elif":
+    print("Correct!")
+    score = score + 20
+else:
+    print("Wrong answer.")
+
+print("Your final score is:", score)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
