@@ -16,6 +16,7 @@
 \usepackage{minted}
 \usepackage{etoolbox}
 \usepackage{array}
+\usepackage{longtable} % page-breakable tables (must load before polyglossia/bidi RTL setup)
 \usepackage{extsizes}
 \usepackage{float}
 \usepackage{booktabs}
@@ -35,6 +36,7 @@
 \usepackage{datetime2}
 
 \usetikzlibrary{automata, positioning, arrows.meta, arrows}
+\providecommand{\LTcaptype}{table}
 
 \newfontfamily\emoji{Segoe UI Emoji}
 
@@ -90,6 +92,12 @@
   }
 \fi
 
+% Default minted look: compact code that wraps long lines.
+% Not applied in black-and-white landscape mode, which already uses \LARGE.
+\ifwhiteblack\else
+  \setminted{fontsize=\small, breaklines=true}
+\fi
+
 % unified tcolorboxes for articles
 \ifwhiteblack
 \tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=1pt}
@@ -130,7 +138,14 @@
 \else
 \tcbset{simplecode/.style={ colback=gray!5, colframe=black!50, boxrule=0.4pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
 \fi
+% Compact code boxes: tighter line spacing (the preamble uses onehalfspacing) and small vertical gaps.
+% Must come AFTER the simplecode definition above.
+\tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}}
 \newenvironment{boxCode}{\begin{tcolorbox}[simplecode]}{\end{tcolorbox}}
+
+% Code cell used inside tables (keeps code left-to-right inside RTL tables).
+% Use inside a fixed-width p{...} column: \begin{pycell}\begin{minted}...\end{minted}\end{pycell}
+\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth}
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
@@ -184,53 +199,3 @@
         \includegraphics[width=0.9\paperwidth,keepaspectratio]{#1}%
     }%
 }%
-
-% ----------------------
-
-
-% \begin{document}
-
-% \maketitle
-
-% % \clearpage  % start TOC on a new page
-% % \renewcommand{\contentsname}{جدول المحتويات}
-% % \tableofcontents
-% % \clearpage
-
-% \part*{part 1} % the * prevents numbering
-% \section*{مقدمة}
-% \subsection*{مثال رياضي}
-% \subsubsection*{مثال فرعي}
-% \paragraph*{ paragraph 1}
-% \subparagraph*{sub paragraph 1}
-
-% \ifdetailed
-% \begin{english}
-% \begin{minted}{csharp}
-% // C# Example
-% \end{minted}
-% \end{english}
-% \fi
-
-% OLD WAY
-% \ifdetailed
-% \begin{english}
-% \begin{lstlisting}
-% // C# Example
-% \end{lstlisting}
-% \end{english}
-% \fi
-
-% % \includegraphics[width=0.2\textwidth]{../../../images/DFAs/ex1_q1.png}
-
-
-
-% \vspace{3cm}
-% \begin{flushleft}
-% أرجو لكم وقتًا ممتعًا.
-
-% الأستاذ محمود اغبارية.
-% \end{flushleft}
-
-
-% \end{document}
