@@ -1,0 +1,79 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{مشروع شركة "السعادة للجميع" — المرحلة الخامسة: تعدد الأشكال المتقدم (\textenglish{is} والتحويل لأسفل)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المراحل السابقة (\textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} و \textenglish{Company}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الخامسة: تعدد الأشكال المتقدم (\textenglish{is} والتحويل لأسفل)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{تخصيص علاوة مسؤول المشاريع وتصفية التقنيين (\textenglish{GetSeniorTechnicians})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item \textbf{تحديث \textenglish{GetSalary()} في الفئة \textenglish{Supervisor}:} \\
+        قررت إدارة الشركة تعديل منحة الإدارة الخاصة بمسؤول المشاريع بحيث يحصل على راتب الموظف العادي (\textenglish{base.GetSalary()}) + علاوة قدرها \textbf{$100$ ش.ج عن كل تقني حواسيب (\textenglish{Technician})} ضمن فريقه + علاوة قدرها \textbf{$50$ ش.ج عن كل عضو لجنة عمال (\textenglish{UnionMember})} ضمن فريقه (دون علاوة عن الموظفين العاديين في الفريق). حدّث العملية \textenglish{GetSalary()} في \textenglish{Supervisor} باستخدام العامل \textenglish{is}.
+        \item \textbf{عملية \textenglish{GetSeniorTechnicians} في الفئة \textenglish{Company}:} \\
+        اكتب عملية في الفئة \textenglish{Company} تعريفها:
+        \begin{center}
+        \textenglish{public Technician[] GetSeniorTechnicians(int minComputers)}
+        \end{center}
+        تعيد العملية مصفوفة من نمط \textenglish{Technician[]} تحتوي فقط على تقنيي الحواسيب في الشركة الذين عدد الحواسيب تحت مسؤوليتهم أكبر أو يساوي \textenglish{minComputers} (بهدف ترقيتهم مستقبلاً).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبع راتب مسؤول المشاريع في \textenglish{Main} بعد التعديل، ثم استدعِ \textenglish{GetSeniorTechnicians} واطبع بيانات التقنيين الذين أرجعتهم العملية.
+
+    \item \textbf{تقرير المراجعة الإدارية (\textenglish{AuditReport}) وعملية التصويت العامة (\textenglish{IsAccepted})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item \textbf{العملية \textenglish{AuditReport} في الفئة \textenglish{Company}:} \\
+        اكتب عملية لقسم الموارد البشرية في الفئة \textenglish{Company} باسم \textenglish{public string[] AuditReport()}. تعيد العملية مصفوفة نصوص (\textenglish{string[]})، بحيث يصف كل سطر فيها موظفاً في الشركة من نمط \textbf{تقني حواسيب (\textenglish{Technician}) أو عضو لجنة عمال (\textenglish{UnionMember})} ممن يُصنَّفون كـ \textbf{"كادر تشغيلي متمرس"} بالمعطيات التالية:
+        \begin{center}
+        \textenglish{\$"Type:\{empType\}, ID:\{id\}, Name:\{name\}, Score:\{score\}"}
+        \end{center}
+        \begin{itemize}
+            \item \textenglish{empType} هو نمط الموظف: \textenglish{"Technician"} أو \textenglish{"Union"}.
+            \item \textenglish{id} هو رقم هوية الموظف، و \textenglish{name} هو اسمه، و \textenglish{score} هو نقاط تصويته.
+            \item في حالة كان الموظف تقني حواسيب (\textenglish{Technician})، يجب إضافة عدد حواسيبه في نهاية النص: \textenglish{", Computers:\{computers\}"}.
+            \item في حالة كان الموظف عضو لجنة (\textenglish{UnionMember})، يجب إضافة سنوات عضويته باللجنة في نهاية النص: \textenglish{", UnionYears:\{unionYears\}"}.
+        \end{itemize}
+        \textbf{انتبه:} الموظف الذي يُصنَّف كـ \textbf{"كادر تشغيلي متمرس"} يجب أن تكون أقدميته في الشركة أكثر من 3 سنوات ($\text{seniority} > 3$)، وأن تكون نقاط تصويته (\textenglish{GetScore()}) أكبر من 15 نقطة!
+
+        \item \textbf{العملية العامة \textenglish{IsAccepted} في فئة \textenglish{Program}:} \\
+        طُرح اقتراح رسمي في الشركة لتغيير اسمها من "السعادة للجميع" إلى \textbf{"السعادة الآن وفي المستقبل"}. \\
+        صوّت جميع الموظفين العاديين والتقنيين \textbf{تأييداً} للاقتراح (مع)، بينما عارض جميع أعضاء لجنة العمال ومسؤولي المشاريع هذا الاقتراح (\textbf{ضد}). \\
+        يُعتمد القرار فقط إذا كان مجموع نقاط المؤيدين \textbf{أكبر تماماً} من مجموع نقاط المعارضين. \\
+        اكتب في فئة \textenglish{Program} العملية الثابتة التي تعريفها:
+        \begin{boxCode}
+        \begin{english}
+        \begin{minted}{csharp}
+public static bool IsAccepted(object[] arr)
+        \end{minted}
+        \end{english}
+        \end{boxCode}
+        تتلقى العملية مصفوفة كائنات عامة \textenglish{object[]} تمثل موظفي الشركة، وتعيد \textenglish{true} إذا قُبل الاقتراح، وإلا تعيد \textenglish{false}.
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    في \textenglish{Main}، استدعِ \textenglish{AuditReport()} واطبع جميع أسطر التقرير، ثم أنشئ مصفوفة \textenglish{object[]} تضم موظفي الشركة ومررها إلى \textenglish{IsAccepted} واطبع نتيجة التصويت.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

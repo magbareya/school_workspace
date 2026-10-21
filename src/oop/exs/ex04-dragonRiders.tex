@@ -1,7 +1,6 @@
 \documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\setminted{fontsize=\small, baselinestretch=0.95, breaklines=true}
 
 \title{كراس تمارين متدرج: أكاديمية فرسان التنانين}
 
@@ -30,29 +29,36 @@
 \begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
 
     \item \textbf{خريطة الوادي — الفئة \textenglish{Coordinates}} \\
-    ابنوا فئة باسم \textenglish{Coordinates} تمثّل نقطة على خريطة الوادي. الخريطة مربّعة، وقيم الإحداثيات الصالحة هي من $0$ إلى $1000$ (شاملة). \\
-    \textbf{الصفات (\textenglish{private}):}
-    \begin{itemize}
-        \item \textenglish{x} (\textenglish{int}): الإحداثي الأفقي.
-        \item \textenglish{y} (\textenglish{int}): الإحداثي العمودي.
-    \end{itemize}
-    \textbf{العمليات:}
-    \begin{itemize}
-        \item \textbf{عملية بنائية:} تتلقى \textenglish{x} و \textenglish{y} (وعملية بنائية ناسخة \textenglish{public Coordinates(Coordinates other)}).
-        \item \textbf{عمليات \textenglish{Get} و \textenglish{Set}:} لكل صفة (\textenglish{GetX}، \textenglish{GetY}، \textenglish{SetX}، \textenglish{SetY}).
-        \item \textbf{قاعدة التحقق:} إذا كانت القيمة المُتلقّاة خارج المجال $0$–$1000$، تُضبط على أقرب حدّ (أقل من $0 \leftarrow 0$، وأكبر من $1000 \leftarrow 1000$).
-        \begin{itemize}
-            \item \textbf{عملية مساعدة:} اكتبوا عملية \textenglish{private int Clamp(int val)} واحدة تعيد القيمة بعد التصحيح، واستخدموها في كل مكان يحتاج التصحيح (العملية البنائية وعمليتا \textenglish{Set}) بدل تكرار الشروط ثلاث مرات.
-        \end{itemize}
-        \item \textbf{العملية \textenglish{ToString()}:} تعيد النص بالشكل \textenglish{(x,y)}.
-        \item \textbf{عمليات إضافية:}
-        \begin{itemize}
-            \item \textenglish{DistanceTo(Coordinates other)}: تتلقى نقطة أخرى وتعيد المسافة بين النقطتين (\textenglish{double}). تذكّروا \textenglish{Math.Sqrt}.
-            \item \textenglish{IsOnMapEdge()}: تعيد \textenglish{true} إذا كانت النقطة على \textbf{حافة} الخريطة (أي أن \textenglish{x} أو \textenglish{y} يساوي $0$ أو $1000$).
-            \item \textenglish{IsInside(Coordinates c1, Coordinates c2)}: تتلقى \textbf{زاويتين متقابلتين} لمستطيل وتعيد \textenglish{true} إذا كانت النقطة الحالية داخل المستطيل أو على حدوده. انتبهوا: الزاويتان قد تصلان \textbf{بأي ترتيب}، ولا يجوز أن تعتمد العملية على ترتيب معيّن.
-        \end{itemize}
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:}
+    ابنوا فئة باسم \textenglish{Coordinates} تمثّل نقطة على خريطة الوادي. الخريطة مربّعة، وقيم الإحداثيات الصالحة هي من $0$ إلى $1000$ (شاملة):
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Coordinates}}} \\
+    \hline
+    صفات (\textenglish{private}): الإحداثي الأفقي والإحداثي العمودي. & \textenglish{private int x, y;} \\
+    \hline
+    عملية بنائية تتلقى \textenglish{x} و \textenglish{y}، وعملية بنائية ناسخة تتلقى كائناً آخر من النمط \textenglish{Coordinates} وتنسخ قيمه. & \textenglish{public Coordinates(int x, int y)} \newline \textenglish{public Coordinates(Coordinates other)} \\
+    \hline
+    عمليات \textenglish{Get} و \textenglish{Set} لكل صفة، بحيث إذا كانت القيمة المُتلقّاة خارج المجال $0$–$1000$ تُضبط على أقرب حدّ (أقل من $0 \leftarrow 0$، وأكبر من $1000 \leftarrow 1000$). & \textenglish{GetX(), GetY(), SetX(int x), SetY(int y)} \\
+    \hline
+    عملية مساعدة واحدة تعيد القيمة بعد التصحيح، وتُستخدم في كل مكان يحتاج التصحيح (العملية البنائية وعمليتا \textenglish{Set}) بدل تكرار الشروط ثلاث مرات. & \textenglish{private int Clamp(int val)} \\
+    \hline
+    عملية تعيد النص بالشكل \textenglish{(x,y)}. & \textenglish{ToString()} \\
+    \hline
+    عملية تتلقى نقطة أخرى وتعيد المسافة بين النقطتين (\textenglish{double}). تذكّروا \textenglish{Math.Sqrt}. & \textenglish{DistanceTo(Coordinates other)} \\
+    \hline
+    عملية تعيد \textenglish{true} إذا كانت النقطة على \textbf{حافة} الخريطة (أي أن \textenglish{x} أو \textenglish{y} يساوي $0$ أو $1000$). & \textenglish{IsOnMapEdge()} \\
+    \hline
+    عملية تتلقى \textbf{زاويتين متقابلتين} لمستطيل وتعيد \textenglish{true} إذا كانت النقطة الحالية داخل المستطيل أو على حدوده. انتبهوا: الزاويتان قد تصلان \textbf{بأي ترتيب}، ولا يجوز أن تعتمد العملية على ترتيب معيّن. & \textenglish{IsInside(Coordinates c1, Coordinates c2)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:}
     \begin{itemize}
         \item أنشئوا 4 نقاط، منها نقطة على الحافة ونقطة خارج المجال (مثلاً \textenglish{(1500, -20)}) وتأكدوا أنها صُحّحت، وغيّروا \textenglish{x} لنقطة بواسطة \textenglish{SetX} إلى قيمة خارج المجال واطبعوا النتيجة.
         \item احسبوا المسافة بين نقطتين (مثلاً \textenglish{(0,0)} و \textenglish{(3,4)} $\leftarrow 5$).
@@ -60,33 +66,38 @@
     \end{itemize}
 
     \item \textbf{التنين الناري — الفئة \textenglish{FireDragon}} \\
-    ابنوا فئة باسم \textenglish{FireDragon} لإدارة تنين ناري "صيّاد" يخرج للصيد ويعود باستمرار. \\
-    \textbf{الصفات (\textenglish{private}):}
-    \begin{itemize}
-        \item \textenglish{realmNumber} (\textenglish{int}): رقم المملكة.
-        \item \textenglish{caveNumber} (\textenglish{int}): رقم الكهف.
-        \item \textenglish{dragonNumber} (\textenglish{int}): رقم التنين.
-        \item \textenglish{riderID} (\textenglish{string}): رقم هوية الفارس.
-        \item \textenglish{lair} (\textenglish{Coordinates}): موقع العرين على الخريطة.
-        \item \textenglish{energy} (\textenglish{double}): طاقة النار الحالية.
-        \item \textenglish{emberReserve} (\textenglish{double}): جمر الطوارئ المسموح استخدامه (يسمح للتنين أن يهبط \textbf{تحت الصفر} حتى هذا الحد).
-    \end{itemize}
-    \textbf{العمليات (\textenglish{public}):}
-    \begin{itemize}
-        \item \textbf{عملية بنائية أولى:} تتلقى بيانات المملكة والكهف والتنين وهوية الفارس والعرين.
-        \item \textbf{عملية بنائية ثانية:} تتلقى كل ما سبق \textbf{وكذلك} جمر الطوارئ المسموح (تلميح: \textenglish{: this(...)}).
-        \item \textbf{عمليات \textenglish{Get}:} للصفات (انتبهوا: \textenglish{GetLair()} تعيد \textbf{نسخة جديدة} من \textenglish{Coordinates} وليس المؤشر الأصلي).
-        \item \textbf{عملية \textenglish{SetEmberReserve(double reserve)}:} لجمر الطوارئ (يجب أن يكون غير سالب $\ge 0$).
-        \item \textbf{عملية \textenglish{SetLair(Coordinates lair)}:} لموقع العرين (تحفظ \textbf{نسخة} من المُعطى).
-        \item \textbf{عملية \textenglish{ToString()}:} تصف الكائن.
-        \item \textbf{عمليات إضافية:}
-        \begin{itemize}
-            \item \textenglish{Refuel(double amount)}: تعبئة طاقة (الكمية يجب أن تكون موجبة $> 0$). تعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح.
-            \item \textenglish{Consume(double amount)}: استهلاك طاقة إذا كان مسموحاً. الكمية يجب أن تكون موجبة، والاستهلاك مسموح فقط إذا لم تهبط الطاقة تحت \textenglish{-emberReserve}. تعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح.
-            \item \textenglish{FlyTo(Coordinates target)}: تتلقى نقطة وتعيد \textenglish{true} إذا استطاع التنين الطيران إليها. تكلفة الطيران تساوي المسافة بين العرين والنقطة. تنجح العملية (وتخصم التكلفة) فقط إذا كانت النقطة غير \textenglish{null} وكانت الطاقة كافية (استخدموا \textenglish{Consume}).
-        \end{itemize}
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:}
+    ابنوا فئة باسم \textenglish{FireDragon} لإدارة تنين ناري "صيّاد" يخرج للصيد ويعود باستمرار:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{FireDragon}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم المملكة، رقم الكهف، رقم التنين، رقم هوية الفارس، موقع العرين على الخريطة، طاقة النار الحالية، وجمر الطوارئ المسموح استخدامه (يسمح للتنين أن يهبط \textbf{تحت الصفر} حتى هذا الحد). & \textenglish{private int realmNumber, caveNumber, dragonNumber;} \newline \textenglish{private string riderID;} \newline \textenglish{private Coordinates lair;} \newline \textenglish{private double energy, emberReserve;} \\
+    \hline
+    عملية بنائية أولى تتلقى بيانات المملكة والكهف والتنين وهوية الفارس والعرين. & \textenglish{public FireDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair)} \\
+    \hline
+    عملية بنائية ثانية تتلقى كل ما سبق \textbf{وكذلك} جمر الطوارئ المسموح (تلميح: \textenglish{: this(...)}). & \textenglish{public FireDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, double emberReserve)} \\
+    \hline
+    عمليات \textenglish{Get} للصفات (انتبهوا: \textenglish{GetLair()} تعيد \textbf{نسخة جديدة} من \textenglish{Coordinates} وليس المؤشر الأصلي). & \textenglish{GetRealmNumber(), GetCaveNumber(), GetDragonNumber(), GetRiderID(), GetLair(), GetEnergy(), GetEmberReserve()} \\
+    \hline
+    عملية لجمر الطوارئ (يجب أن يكون غير سالب $\ge 0$)، وعملية لموقع العرين (تحفظ \textbf{نسخة} من المُعطى). & \textenglish{SetEmberReserve(double reserve)} \newline \textenglish{SetLair(Coordinates lair)} \\
+    \hline
+    عملية تصف الكائن. & \textenglish{ToString()} \\
+    \hline
+    عملية تعبئة طاقة (الكمية يجب أن تكون موجبة $> 0$). تعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح. & \textenglish{Refuel(double amount)} \\
+    \hline
+    عملية استهلاك طاقة إذا كان مسموحاً. الكمية يجب أن تكون موجبة، والاستهلاك مسموح فقط إذا لم تهبط الطاقة تحت \textenglish{-emberReserve}. تعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح. & \textenglish{Consume(double amount)} \\
+    \hline
+    عملية تتلقى نقطة وتعيد \textenglish{true} إذا استطاع التنين الطيران إليها. تكلفة الطيران تساوي المسافة بين العرين والنقطة. تنجح العملية (وتخصم التكلفة) فقط إذا كانت النقطة غير \textenglish{null} وكانت الطاقة كافية (استخدموا \textenglish{Consume}). & \textenglish{FlyTo(Coordinates target)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:}
     \begin{itemize}
         \item أنشئوا تنينين (الأول بالعملية البنائية الأولى والثاني بالثانية بجمر طوارئ $50$) واطبعوهما.
         \item عبّئوا الأول بـ $100$ وحاولوا استهلاك $30$، ثم $80$ (تفشل)، ثم $-5$ (تفشل)، وللتنين الثاني جرّبوا استهلاك $40$ ثم $20$.
@@ -97,45 +108,62 @@
 
     \item \textbf{سجلّ الطيران — مصفوفة داخل فئة} \\
     نريد أن يتذكّر \textenglish{FireDragon} \textbf{آخر 5 رحلات} (مقدار الطاقة المستهلكة في كل عملية استهلاك/رحلة ناجحة). \\
-    \textbf{أضيفوا إلى الفئة \textenglish{FireDragon}:}
-    \begin{itemize}
-        \item \textbf{صفتان خاصتان:} مصفوفة \textenglish{private double[] flightLog} بحجم $5$ تحفظ سجلّ الرحلات، وعدّاد \textenglish{private int logCount} لعدد الرحلات المسجّلة.
-        \item \textbf{عملية مساعدة \textenglish{private bool TrySpend(double amount)}:} تحوي منطق فحص الاستهلاك وخصم الطاقة وتسجيل الرحلة، وتستخدمها كلٌّ من \textenglish{Consume} و \textenglish{FlyTo}.
-        \item \textbf{عملية مساعدة \textenglish{private void AddToLog(double amount)}:} إذا لم يمتلئ السجلّ تضيف الرحلة في أول مكان فارغ، وإذا امتلأ \textbf{تُزيح} كل الحدود مكاناً واحداً إلى اليسار (يُحذف الأقدم) وتضع الرحلة الجديدة في آخر مكان.
-        \item \textbf{عمليات قراءة وإحصاء للسجل:}
-        \begin{itemize}
-            \item \textenglish{GetLog()}: تعيد \textbf{نسخة} من السجل (مصفوفة بحجم عدد الرحلات الفعلية \textenglish{logCount} فقط).
-            \item \textenglish{LongestFlight()}: تعيد أكبر مقدار في السجل (وتعيد $0$ إذا كان السجل فارغاً).
-            \item \textenglish{CountFlightsOver(double threshold)}: تتلقى حدّاً وتعيد عدد الرحلات في السجل التي تجاوزت هذا الحد.
-            \item \textenglish{HasFlown(double amount)}: تتلقى مقداراً وتعيد \textenglish{true} إذا وُجدت رحلة بهذا المقدار بالضبط في السجل.
-        \end{itemize}
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:}
+    أضيفوا إلى الفئة \textenglish{FireDragon} ما يلي:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{إضافات إلى الفئة: \textenglish{FireDragon}}} \\
+    \hline
+    صفتان خاصتان: مصفوفة تحفظ سجلّ الرحلات (بحجم $5$)، وعدّاد لعدد الرحلات المسجّلة. & \textenglish{private double[] flightLog;} \newline \textenglish{private int logCount;} \\
+    \hline
+    عملية مساعدة تحوي منطق فحص الاستهلاك وخصم الطاقة وتسجيل الرحلة، وتستخدمها كلٌّ من \textenglish{Consume} و \textenglish{FlyTo}. & \textenglish{private bool TrySpend(double amount)} \\
+    \hline
+    عملية مساعدة: إذا لم يمتلئ السجلّ تضيف الرحلة في أول مكان فارغ، وإذا امتلأ \textbf{تُزيح} كل الحدود مكاناً واحداً إلى اليسار (يُحذف الأقدم) وتضع الرحلة الجديدة في آخر مكان. & \textenglish{private void AddToLog(double amount)} \\
+    \hline
+    عمليات قراءة وإحصاء للسجل: تعيد \textbf{نسخة} من السجل (مصفوفة بحجم عدد الرحلات الفعلية \textenglish{logCount} فقط)، وتعيد أكبر مقدار في السجل (وتعيد $0$ إذا كان السجل فارغاً)، وتعيد عدد الرحلات في السجل التي تجاوزت حدّاً مُتلقّى، وتعيد \textenglish{true} إذا وُجدت رحلة بمقدار مُتلقّى بالضبط في السجل. & \textenglish{GetLog(), LongestFlight(),} \newline \textenglish{CountFlightsOver(double threshold), HasFlown(double amount)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:}
     \begin{itemize}
         \item عبّئوا تنيناً بـ $1000$ وأجروا 7 رحلات متتالية بمقادير مختلفة ($10, 20, \dots, 70$)، واطبعوا \textenglish{GetLog()} بعد كل رحلة للتأكد من عمل الإزاحة.
         \item استدعوا \textenglish{LongestFlight()} و \textenglish{CountFlightsOver(35)} و \textenglish{HasFlown(40)} و \textenglish{HasFlown(10)} واطبعوا النتائج.
     \end{itemize}
 
     \item \textbf{التنين النائم — الفئة \textenglish{HibernatingDragon}} \\
-    ابنوا فئة باسم \textenglish{HibernatingDragon} لإدارة تنين ينام شتاءً طويلاً ويحتفظ بطاقته حتى موعد استيقاظه. \\
-    \textbf{الصفات (\textenglish{private}):}
-    \begin{itemize}
-        \item رقم المملكة (\textenglish{int})، رقم الكهف (\textenglish{int})، رقم التنين (\textenglish{int})، رقم هوية الفارس (\textenglish{string})، موقع العرين (\textenglish{Coordinates})، وطاقة النار الحالية (\textenglish{double}).
-        \item \textenglish{wakeDate} (\textenglish{Date}): تاريخ الاستيقاظ.
-    \end{itemize}
-    \textbf{العمليات (\textenglish{public}):}
-    \begin{itemize}
-        \item \textbf{عملية بنائية:} تتلقى بيانات المملكة والكهف والتنين، وهوية الفارس، والعرين، وتاريخ الاستيقاظ.
-        \item \textbf{عمليات \textenglish{Get}:} للصفات (مع إعادة نسخ للكائنات المركبة \textenglish{Coordinates} و \textenglish{Date}).
-        \item \textbf{عملية \textenglish{SetWakeDate(Date wakeDate)}:} لتاريخ الاستيقاظ.
-        \item \textbf{عملية \textenglish{ToString()}:} تصف الكائن.
-        \item \textbf{عمليات إضافية:}
-        \begin{itemize}
-            \item \textenglish{Refuel(double amount)}: تعبئة طاقة موجبة، وتعيد \textenglish{bool}.
-            \item \textenglish{WakeUp(Date today, bool volcanoAlert)}: تتلقى تاريخ اليوم وهل يوجد إنذار بركان. يستيقظ التنين (وتصبح طاقته $0$ وتعيد العملية \textenglish{true}) إذا تحقق \textbf{أحد} الشرطين: (أ) تاريخ اليوم أكبر من أو يساوي تاريخ الاستيقاظ، \textbf{أو} (ب) يوجد إنذار بركان \textbf{وكانت} طاقته أكبر من $0$. وإلا تعيد \textenglish{false} وتبقى الطاقة كما هي.
-        \end{itemize}
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:} \\
+    ابنوا فئة باسم \textenglish{HibernatingDragon} لإدارة تنين ينام شتاءً طويلاً ويحتفظ بطاقته حتى موعد استيقاظه:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{HibernatingDragon}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم المملكة، رقم الكهف، رقم التنين، رقم هوية الفارس، موقع العرين، طاقة النار الحالية، وتاريخ الاستيقاظ. & \textenglish{private int realmNumber, caveNumber, dragonNumber;} \newline \textenglish{private string riderID;} \newline \textenglish{private Coordinates lair;} \newline \textenglish{private double energy;} \newline \textenglish{private Date wakeDate;} \\
+    \hline
+    عملية بنائية تتلقى بيانات المملكة والكهف والتنين، وهوية الفارس، والعرين، وتاريخ الاستيقاظ. & \textenglish{public HibernatingDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, Date wakeDate)} \\
+    \hline
+    عمليات \textenglish{Get} للصفات (مع إعادة نسخ للكائنات المركبة \textenglish{Coordinates} و \textenglish{Date}). & \textenglish{GetRealmNumber(), GetCaveNumber(), GetDragonNumber(), GetRiderID(), GetLair(), GetEnergy(), GetWakeDate()} \\
+    \hline
+    عملية لتعديل تاريخ الاستيقاظ. & \textenglish{SetWakeDate(Date wakeDate)} \\
+    \hline
+    عملية تصف الكائن. & \textenglish{ToString()} \\
+    \hline
+    عملية تعبئة طاقة موجبة، وتعيد \textenglish{bool}. & \textenglish{Refuel(double amount)} \\
+    \hline
+    عملية تتلقى تاريخ اليوم وهل يوجد إنذار بركان. يستيقظ التنين (وتصبح طاقته $0$ وتعيد العملية \textenglish{true}) إذا تحقق \textbf{أحد} الشرطين: (أ) تاريخ اليوم أكبر من أو يساوي تاريخ الاستيقاظ، \textbf{أو} (ب) يوجد إنذار بركان \textbf{وكانت} طاقته أكبر من $0$. وإلا تعيد \textenglish{false} وتبقى الطاقة كما هي. & \textenglish{WakeUp(Date today, bool volcanoAlert)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
     أنشئوا 3 تنانين نائمة وجرّبوا \textenglish{WakeUp} في جميع الحالات الممكنة (قبل الموعد وبعده، مع إنذار بركان وبدونه، وبطاقة أو بدون طاقة)، واطبعوا النتائج.
 
     \item \textbf{استخلاص الفئة المشتركة — \textenglish{BasicDragon}} \\
@@ -165,29 +193,42 @@
     شغّلوا كود الفحص في \textenglish{Main} وتأكدوا أن جميع النتائج بقيت صحيحة، واستدعوا عمليات موروثة وعمليات خاصة على كل كائن.
 
     \item \textbf{قائد القطيع — الفئة \textenglish{AlphaDragon} (وفيها مصفوفة تنانين)} \\
-    أضيفوا فئة جديدة باسم \textenglish{AlphaDragon} تمثّل قائد قطيع من التنانين النارية وترث من \textenglish{BasicDragon}. \\
-    \textbf{الصفات الإضافية في \textenglish{AlphaDragon}:}
-    \begin{itemize}
-        \item \textenglish{clanName} (\textenglish{string}): اسم القطيع.
-        \item \textenglish{emberReserve} (\textenglish{double}): جمر الطوارئ المسموح.
-        \item \textenglish{pack} (\textenglish{FireDragon[]}): مصفوفة تحوي التنانين الأعضاء في القطيع (حجمها الأقصى يُحدَّد عند الإنشاء)، مع عدّاد \textenglish{packCount} (\textenglish{int}) لعدد الأعضاء الفعليين.
-    \end{itemize}
-    \textbf{العمليات:}
-    \begin{itemize}
-        \item \textbf{عملية بنائية أولى:} تتلقى بيانات المملكة والكهف والتنين، وهوية الفارس، والعرين، واسم القطيع، والحجم الأقصى للقطيع.
-        \item \textbf{عملية بنائية ثانية:} تتلقى أيضاً جمر الطوارئ المسموح.
-        \item \textbf{عمليات \textenglish{Get} و \textenglish{Set}:} للصفات، وعملية \textenglish{ToString()} تصف الكائن (وتتضمن اسم القطيع وعدد الأعضاء).
-        \item \textbf{العمليتان \textenglish{Refuel} و \textenglish{Consume}:} كما في \textenglish{FireDragon}.
-        \item \textbf{عمليات إدارة القطيع:}
-        \begin{itemize}
-            \item \textbf{عملية مساعدة \textenglish{private int FindMemberIndex(int dragonNum)}:} تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة، أو $-1$ إذا لم يوجد.
-            \item \textenglish{AddMember(FireDragon d)}: تتلقى تنيناً نارياً وتضيفه في أول مكان فارغ. تنجح (\textenglish{true}) فقط إذا كان التنين غير \textenglish{null} وكان في القطيع متسع وكان غير موجود فيه مسبقاً (بحسب رقم التنين).
-            \item \textenglish{FindMember(int dragonNum)}: تتلقى رقم تنين وتعيد الكائن نفسه إن وُجد في القطيع، وإلا \textenglish{null}.
-            \item \textenglish{RemoveMember(int dragonNum)}: تتلقى رقم تنين وتحذفه من القطيع، ثم \textbf{تُزيح} كل الحدود التالية مكاناً واحداً إلى اليسار حتى لا تبقى ثغرة في وسط المصفوفة، وتعيد \textenglish{true} إذا حُذف.
-            \item \textenglish{TransferEnergy(double amount, FireDragon target)}: تتلقى مقداراً وكائناً من النمط \textenglish{FireDragon}، وتنقل الطاقة من القائد إلى التنين المُتلقّى. تنجح فقط إذا كان التنين غير \textenglish{null} وهو عضو فعلي في القطيع والمقدار موجب واستهلاك القائد لهذا المقدار مسموح.
-        \end{itemize}
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:} \\
+    أضيفوا فئة جديدة باسم \textenglish{AlphaDragon} تمثّل قائد قطيع من التنانين النارية وترث من \textenglish{BasicDragon}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{AlphaDragon : BasicDragon}}} \\
+    \hline
+    صفات خاصة: اسم القطيع، جمر الطوارئ المسموح، ومصفوفة تحوي التنانين الأعضاء في القطيع (حجمها الأقصى يُحدَّد عند الإنشاء)، مع عدّاد لعدد الأعضاء الفعليين. & \textenglish{private string clanName;} \newline \textenglish{private double emberReserve;} \newline \textenglish{private FireDragon[] pack;} \newline \textenglish{private int packCount;} \\
+    \hline
+    عملية بنائية أولى تتلقى بيانات المملكة والكهف والتنين، وهوية الفارس، والعرين، واسم القطيع، والحجم الأقصى للقطيع. & \textenglish{public AlphaDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, string clanName, int maxPackSize)} \\
+    \hline
+    عملية بنائية ثانية تتلقى أيضاً جمر الطوارئ المسموح. & \textenglish{public AlphaDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, string clanName, int maxPackSize, double emberReserve)} \\
+    \hline
+    عمليات \textenglish{Get} و \textenglish{Set} للصفات. & \textenglish{GetClanName(), SetClanName(...),} \newline \textenglish{GetEmberReserve(), SetEmberReserve(...), GetPackCount()} \\
+    \hline
+    عملية تصف الكائن (وتتضمن اسم القطيع وعدد الأعضاء). & \textenglish{ToString()} \\
+    \hline
+    العمليتان \textenglish{Refuel} و \textenglish{Consume} كما في \textenglish{FireDragon}. & \textenglish{Refuel(double amount), Consume(double amount)} \\
+    \hline
+    عملية مساعدة تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة، أو $-1$ إذا لم يوجد. & \textenglish{private int FindMemberIndex(int dragonNum)} \\
+    \hline
+    عملية تتلقى تنيناً نارياً وتضيفه في أول مكان فارغ. تنجح (\textenglish{true}) فقط إذا كان التنين غير \textenglish{null} وكان في القطيع متسع وكان غير موجود فيه مسبقاً (بحسب رقم التنين). & \textenglish{AddMember(FireDragon d)} \\
+    \hline
+    عملية تتلقى رقم تنين وتعيد الكائن نفسه إن وُجد في القطيع، وإلا \textenglish{null}. & \textenglish{FindMember(int dragonNum)} \\
+    \hline
+    عملية تتلقى رقم تنين وتحذفه من القطيع، ثم \textbf{تُزيح} كل الحدود التالية مكاناً واحداً إلى اليسار حتى لا تبقى ثغرة في وسط المصفوفة، وتعيد \textenglish{true} إذا حُذف. & \textenglish{RemoveMember(int dragonNum)} \\
+    \hline
+    عملية تتلقى مقداراً وكائناً من النمط \textenglish{FireDragon}، وتنقل الطاقة من القائد إلى التنين المُتلقّى. تنجح فقط إذا كان التنين غير \textenglish{null} وهو عضو فعلي في القطيع والمقدار موجب واستهلاك القائد لهذا المقدار مسموح. & \textenglish{TransferEnergy(double amount, FireDragon target)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
     أنشئوا قائداً بقطيع أقصى $3$ وأربعة تنانين نارية، واختبروا \textenglish{AddMember}، \textenglish{TransferEnergy}، و \textenglish{RemoveMember} في الحالات المختلفة.
 
 \end{enumerate}
@@ -201,17 +242,34 @@
 \begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
 
     \item \textbf{فئة سجلّ الوادي (\textenglish{DragonRegistry})} \\
-    ابنوا فئة خدمات باسم \textenglish{DragonRegistry} تدير كل تنانين الوادي. تحتوي الفئة على:
-    \begin{itemize}
-        \item \textbf{صفات:} مصفوفة \textenglish{private BasicDragon[] dragons} تحوي تنانين من جميع الأنماط (\textenglish{FireDragon}، \textenglish{HibernatingDragon}، \textenglish{AlphaDragon})، وعدّاد \textenglish{private int count} لعدد التنانين الفعليين.
-        \item \textbf{عملية بنائية \textenglish{public DragonRegistry(int maxDragons)}:} تتلقى حجم المصفوفة وتنشئها.
-        \item \textbf{عملية مساعدة \textenglish{private int FindIndex(int dragonNum)}:} تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة أو $-1$.
-        \item \textbf{العملية \textenglish{Add(BasicDragon d)}:} تضيف التنين في أول مكان فارغ، وتعيد \textenglish{true} إذا أُضيف و \textenglish{false} إذا كانت المصفوفة ممتلئة أو كان المُعطى \textenglish{null}.
-        \item \textbf{العملية \textenglish{Find(int dragonNum)}:} تعيد التنين صاحب الرقم (أو \textenglish{null}) بالاستعانة بـ \textenglish{FindIndex}.
-        \item \textbf{العملية \textenglish{Remove(int dragonNum)}:} تحذف التنين وتُزيح الحدود التالية إلى اليسار (بلا ثغرات في الوسط) وتعيد \textenglish{bool}.
-        \item \textbf{العملية \textenglish{Count()}:} تعيد عدد التنانين الموجودين فعلياً، والعملية \textenglish{ToString()} تعيد نصاً يصف كل التنانين في السجل.
-    \end{itemize}
-    \textbf{الفحص في \textenglish{Main}:} \\
+    ابنوا فئة خدمات باسم \textenglish{DragonRegistry} تدير كل تنانين الوادي:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{DragonRegistry}}} \\
+    \hline
+    صفات: مصفوفة تحوي تنانين من جميع الأنماط (\textenglish{FireDragon}، \textenglish{HibernatingDragon}، \textenglish{AlphaDragon})، وعدّاد لعدد التنانين الفعليين. & \textenglish{private BasicDragon[] dragons;} \newline \textenglish{private int count;} \\
+    \hline
+    عملية بنائية تتلقى حجم المصفوفة وتنشئها. & \textenglish{public DragonRegistry(int maxDragons)} \\
+    \hline
+    عملية مساعدة تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة أو $-1$. & \textenglish{private int FindIndex(int dragonNum)} \\
+    \hline
+    عملية تضيف التنين في أول مكان فارغ، وتعيد \textenglish{true} إذا أُضيف و \textenglish{false} إذا كانت المصفوفة ممتلئة أو كان المُعطى \textenglish{null}. & \textenglish{Add(BasicDragon d)} \\
+    \hline
+    عملية تعيد التنين صاحب الرقم (أو \textenglish{null}) بالاستعانة بـ \textenglish{FindIndex}. & \textenglish{Find(int dragonNum)} \\
+    \hline
+    عملية تحذف التنين وتُزيح الحدود التالية إلى اليسار (بلا ثغرات في الوسط) وتعيد \textenglish{bool}. & \textenglish{Remove(int dragonNum)} \\
+    \hline
+    عملية تعيد عدد التنانين الموجودين فعلياً، وعملية تعيد نصاً يصف كل التنانين في السجل. & \textenglish{Count(), ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
     أنشئوا سجلاً بحجم $6$، وأضيفوا إليه $5$ تنانين من الأنماط الثلاثة، وجرّبوا \textenglish{Find} و \textenglish{Remove} و \textenglish{Count} وطباعة السجل.
 
     \item \textbf{العمليات القابلة لإعادة التعريف (\textenglish{virtual} و \textenglish{override}): \textenglish{IsInDanger} و \textenglish{DangerLevel}}
@@ -332,8 +390,24 @@ public abstract bool UseEnergy(object o);
     قارنوا بين كائنات من كل فئة باستخدام \textenglish{CompareTo} واطبعوا النتائج.
 
     \item \textbf{فئة خدمات الفرز (\textenglish{SortServices})} \\
-    ابنوا فئة باسم \textenglish{SortServices} وطبّقوا فيها عمليتي فرز ثابتتين (\textenglish{SortAscending} و \textenglish{SortDescending}) لمصفوفة من النمط \textenglish{IComparable[]}. \\
-    \textbf{الفحص في \textenglish{Main}:} \\
+    ابنوا فئة باسم \textenglish{SortServices} وطبّقوا فيها عمليتي فرز ثابتتين لمصفوفة من النمط \textenglish{IComparable[]}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{SortServices}}} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تصاعدي}. & \textenglish{public static void SortAscending(IComparable[] arr)} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تنازلي}. & \textenglish{public static void SortDescending(IComparable[] arr)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
     افرِزوا مصفوفات من \textenglish{Date[]} و \textenglish{HibernatingDragon[]} و \textenglish{AlphaDragon[]} واطبعوها قبل الفرز وبعده.
 
     \item \textbf{ترتيب القادة والتنانين النائمة في \textenglish{DragonRegistry}} \\

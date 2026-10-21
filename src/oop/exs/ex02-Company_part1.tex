@@ -1,0 +1,109 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{مشروع شركة "السعادة للجميع" — المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxDef}[مشروع نظام الموظفين في شركة "السعادة للجميع"]
+في شركة \textbf{"السعادة للجميع"}، ترغب الإدارة في بناء نظام برمجي متكامل لإدارة شؤون الموظفين، حساب رواتبهم، وتنظيم عمليات التصويت في الشركة. \\
+في هذا الكراس، سنبني النظام \textbf{خطوة بخطوة}: سنبدأ ببناء فئات منفصلة بدون وراثة، ثم نكتشف التكرار ونعالجه عبر بناء فئة أساسية وتطبيق \textbf{الوراثة}، وبعدها نوسّع النظام ليشمل إدارة الشركة وتطبيق \textbf{تعدد الأشكال} و\textbf{إعادة تعريف العمليات}.
+\end{boxDef}
+
+\clearpage
+% ==============================================================
+\section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{بناء فئة تقني الحواسيب (\textenglish{Technician}) بدون وراثة} \\
+    ابنِ فئة باسم \textenglish{Technician} لإدارة بيانات تقني الحواسيب في الشركة:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Technician}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم هوية الموظف، اسمه، أقدميته في الشركة (عدد السنوات)، وعدد الحواسيب التي تقع تحت مسؤوليته. & \textenglish{private string id, name;} \newline \textenglish{private int seniority, computers;} \\
+    \hline
+    عملية بنائية أولى تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وعدد الحواسيب، وتهيئ جميع الصفات. & \textenglish{public Technician(string id, string name, int seniority, int computers)} \\
+    \hline
+    عملية بنائية ثانية (لتقني جديد) تتلقى رقم الهوية، الاسم، وعدد الحواسيب فقط، وتهيئ الأقدمية (\textenglish{seniority}) إلى \textenglish{0}. & \textenglish{public Technician(string id, string name, int computers)} \\
+    \hline
+    عمليات \textenglish{Get} لجميع الصفات. & \textenglish{GetId(), GetName(), GetSeniority(), GetComputers()} \\
+    \hline
+    عملية \textenglish{SetName} لتعديل اسم الموظف، وعملية \textenglish{SetComputers} لتعديل عدد الحواسيب (بشرط أن يكون العدد \textbf{غير سالب} $\ge 0$؛ إذا كانت القيمة سالبة لا يتم التعديل). & \textenglish{SetName(string name)} \newline \textenglish{SetComputers(int computers)} \\
+    \hline
+    عملية تزيد عدد سنوات أقدمية الموظف بسنة واحدة ($+1$). & \textenglish{AddSeniorityYear()} \\
+    \hline
+    عملية تعيد نصاً يصف بيانات التقني. & \textenglish{ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    اكتب في \textenglish{Main} مقطع برنامج ينشئ كائنين من الفئة \textenglish{Technician} (أحدهما بالعملية البنائية الأولى والآخر بالثانية)، يستدعي \textenglish{AddSeniorityYear()} و \textenglish{SetComputers}، ويطبع وصفهما باستخدام \textenglish{ToString()}.
+
+    \clearpage
+    \item \textbf{بناء فئة عضو لجنة العمال (\textenglish{UnionMember}) بدون وراثة} \\
+    ابنِ فئة باسم \textenglish{UnionMember} لإدارة بيانات موظف يشغل عضوية في لجنة عمال الشركة:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{UnionMember}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم هوية الموظف، اسمه، أقدميته في الشركة (عدد السنوات)، وعدد سنوات عضويته في لجنة العمال. & \textenglish{private string id, name;} \newline \textenglish{private int seniority, unionYears;} \\
+    \hline
+    عملية بنائية تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وسنوات العضوية في اللجنة، وتهيئ جميع الصفات. & \textenglish{public UnionMember(string id, string name, int seniority, int unionYears)} \\
+    \hline
+    عمليات \textenglish{Get} لجميع الصفات. & \textenglish{GetId(), GetName(), GetSeniority(), GetUnionYears()} \\
+    \hline
+    عملية \textenglish{SetName} لتعديل اسم الموظف، وعملية \textenglish{SetUnionYears} لتعديل سنوات العضوية في اللجنة (بشرط أن تكون القيمة \textbf{غير سالبة} ولا تتجاوز أقدميته في الشركة: $0 \le \text{unionYears} \le \text{seniority}$). & \textenglish{SetName(string name)} \newline \textenglish{SetUnionYears(int unionYears)} \\
+    \hline
+    عملية تزيد عدد سنوات أقدمية الموظف في الشركة بسنة واحدة ($+1$). & \textenglish{AddSeniorityYear()} \\
+    \hline
+    عملية تعيد نصاً يصف بيانات عضو اللجنة. & \textenglish{ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أضف إلى \textenglish{Main} إنشاء كائن من الفئة \textenglish{UnionMember}، وجرّب استدعاء عملياته \\
+     (\textenglish{AddSeniorityYear} , \textenglish{SetUnionYears} , \textenglish{ToString}) وطباعة النتائج.
+
+     \clearpage
+    \item \textbf{استخلاص المشترك وبناء فئة الموظف الأساسي (\textenglish{Employee})} \\
+    راجع الفئتين اللتين بنيتهما في التمرين 1 والتمرين 2. جد جميع الصفات والعمليات \textbf{المتطابقة (المشتركة فقط)} بين الفئتين، وأنشئ فئة جديدة باسم \textenglish{Employee} تتضمن فقط هذه الصفات والعمليات المشتركة. \\
+
+    \vspace{2em}
+
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Employee} في \textenglish{Main}، وافحص عملياته واطبع بياناته.
+
+\end{enumerate}
+
+\begin{boxAttention}[- نقطة للتفكير]
+هل كان من الأسهل برمجياً تطوير الجزء المشترك مرة واحدة فقط، ثم إضافة الجزء الفريد لكل فئة على حدة؟ \\
+ربما سيساعدنا ذلك أيضاً عند بناء فئات لأنماط إضافية من الموظفين (مثل مسؤول مشاريع، محاسب، مدير فرع...). \\
+\textbf{والآن ننتقل إلى تعلم الوراثة...}
+\end{boxAttention}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

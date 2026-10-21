@@ -1,0 +1,78 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{أكاديمية فرسان التنانين — المرحلة الثانية: تطبيق الوراثة بين الفئات}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المرحلة السابقة (\textenglish{Coordinates} و \textenglish{Date} و \textenglish{FireDragon} و \textenglish{HibernatingDragon} و \textenglish{BasicDragon}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تطبيق الوراثة في \textenglish{BasicDragon} و \textenglish{FireDragon} و \textenglish{HibernatingDragon}} \\
+    حدّثوا الفئة \textenglish{BasicDragon} حسب قواعد البرمجة كائنية التوجه (صفات \textenglish{protected}، تغليف، عمليات بنائية)، بحيث تصبح \textbf{فئة أساسية (فئة أب)} لكل من \textenglish{FireDragon} و \textenglish{HibernatingDragon}. \\
+    أعيدوا بناء الفئتين \textenglish{FireDragon} و \textenglish{HibernatingDragon} بحيث \textbf{ترثان} من \textenglish{BasicDragon} (استخدموا \textenglish{: base(...)} في العمليات البنائية)، مع الاحتفاظ بسجلّ الرحلات في \textenglish{FireDragon} وشرط الاستيقاظ في \textenglish{HibernatingDragon} دون إعادة كتابة ما ورثتاه. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    شغّلوا كود الفحص في \textenglish{Main} وتأكدوا أن جميع النتائج بقيت صحيحة، واستدعوا عمليات موروثة وعمليات خاصة على كل كائن.
+
+    \item \textbf{قائد القطيع — الفئة \textenglish{AlphaDragon} (وفيها مصفوفة تنانين)} \\
+    أضيفوا فئة جديدة باسم \textenglish{AlphaDragon} تمثّل قائد قطيع من التنانين النارية وترث من \textenglish{BasicDragon}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{AlphaDragon : BasicDragon}}} \\
+    \hline
+    صفات خاصة: اسم القطيع، جمر الطوارئ المسموح، ومصفوفة تحوي التنانين الأعضاء في القطيع (حجمها الأقصى يُحدَّد عند الإنشاء)، مع عدّاد لعدد الأعضاء الفعليين. & \textenglish{private string clanName;} \newline \textenglish{private double emberReserve;} \newline \textenglish{private FireDragon[] pack;} \newline \textenglish{private int packCount;} \\
+    \hline
+    عملية بنائية أولى تتلقى بيانات المملكة والكهف والتنين، وهوية الفارس، والعرين، واسم القطيع، والحجم الأقصى للقطيع. & \textenglish{public AlphaDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, string clanName, int maxPackSize)} \\
+    \hline
+    عملية بنائية ثانية تتلقى أيضاً جمر الطوارئ المسموح. & \textenglish{public AlphaDragon(int realmNumber, int caveNumber, int dragonNumber, string riderID, Coordinates lair, string clanName, int maxPackSize, double emberReserve)} \\
+    \hline
+    عمليات \textenglish{Get} و \textenglish{Set} للصفات. & \textenglish{GetClanName(), SetClanName(...),} \newline \textenglish{GetEmberReserve(), SetEmberReserve(...), GetPackCount()} \\
+    \hline
+    عملية تصف الكائن (وتتضمن اسم القطيع وعدد الأعضاء). & \textenglish{ToString()} \\
+    \hline
+    العمليتان \textenglish{Refuel} و \textenglish{Consume} كما في \textenglish{FireDragon}. & \textenglish{Refuel(double amount), Consume(double amount)} \\
+    \hline
+    عملية مساعدة تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة، أو $-1$ إذا لم يوجد. & \textenglish{private int FindMemberIndex(int dragonNum)} \\
+    \hline
+    عملية تتلقى تنيناً نارياً وتضيفه في أول مكان فارغ. تنجح (\textenglish{true}) فقط إذا كان التنين غير \textenglish{null} وكان في القطيع متسع وكان غير موجود فيه مسبقاً (بحسب رقم التنين). & \textenglish{AddMember(FireDragon d)} \\
+    \hline
+    عملية تتلقى رقم تنين وتعيد الكائن نفسه إن وُجد في القطيع، وإلا \textenglish{null}. & \textenglish{FindMember(int dragonNum)} \\
+    \hline
+    عملية تتلقى رقم تنين وتحذفه من القطيع، ثم \textbf{تُزيح} كل الحدود التالية مكاناً واحداً إلى اليسار حتى لا تبقى ثغرة في وسط المصفوفة، وتعيد \textenglish{true} إذا حُذف. & \textenglish{RemoveMember(int dragonNum)} \\
+    \hline
+    عملية تتلقى مقداراً وكائناً من النمط \textenglish{FireDragon}، وتنقل الطاقة من القائد إلى التنين المُتلقّى. تنجح فقط إذا كان التنين غير \textenglish{null} وهو عضو فعلي في القطيع والمقدار موجب واستهلاك القائد لهذا المقدار مسموح. & \textenglish{TransferEnergy(double amount, FireDragon target)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا قائداً بقطيع أقصى $3$ وأربعة تنانين نارية، واختبروا \textenglish{AddMember}، \textenglish{TransferEnergy}، و \textenglish{RemoveMember} في الحالات المختلفة.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

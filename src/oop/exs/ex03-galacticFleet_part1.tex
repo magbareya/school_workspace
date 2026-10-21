@@ -1,0 +1,111 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{كراس أسطول المجرّة — المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxDef}[قصة السلسلة: مركز التحكم في أسطول المجرّة]
+أنتم مبرمجو مركز التحكم في أسطول فضائي يستكشف المجرّة. على كل مركبة فضائية أن تُدار بالكامل بواسطة برنامج: وقودها، احتياطها الطارئ، وتاريخ وصولها. \\
+ستبنون خلال هذه السلسلة نظام التحكم من الصفر، وستكتشفون في الطريق لماذا ابتكر المبرمجون \textbf{الوراثة} و\textbf{تعدد الأشكال} و\textbf{الفئات المجردة} و\textbf{الواجهات}.
+\end{boxDef}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+في \textbf{كل تمرين}، يجب كتابة مقطع برنامج داخل العملية الرئيسية \textenglish{Main} ينشئ كائنات ويفحص الفئة والعمليات الجديدة التي كتبتموها ويتأكد من صحة عملها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{بناء فئة مركبة الاستكشاف (\textenglish{ScoutShip}) بدون وراثة} \\
+    ابنوا فئة باسم \textenglish{ScoutShip} لإدارة مركبة استكشاف "ذهاب وإياب" (تخرج للمهمات وتعود باستمرار):
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{ScoutShip}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم الأسطول، رقم المحطة، رقم المركبة، رقم هوية القائد، كمية الوقود الحالية في المركبة، وحجم الاحتياطي الطارئ المسموح استخدامه. & \textenglish{private int fleetNumber, baseNumber, shipNumber;} \newline \textenglish{private string captainID;} \newline \textenglish{private double fuel, emergencyReserve;} \\
+    \hline
+    عملية بنائية أولى تتلقى بيانات الأسطول والمحطة والمركبة ورقم هوية القائد (وتهيئ الوقود والاحتياطي الطارئ إلى \textenglish{0}). & \textenglish{public ScoutShip(int fleetNumber, int baseNumber, int shipNumber, string captainID)} \\
+    \hline
+    عملية بنائية ثانية تتلقى بيانات الأسطول والمحطة والمركبة ورقم هوية القائد \textbf{وكذلك} حجم الاحتياطي الطارئ المسموح (وتهيئ الوقود إلى \textenglish{0}). & \textenglish{public ScoutShip(int fleetNumber, int baseNumber, int shipNumber, string captainID, double emergencyReserve)} \\
+    \hline
+    عمليات \textenglish{Get} لجميع الصفات. & \textenglish{GetFleetNumber(), GetBaseNumber(), GetShipNumber(), GetCaptainID(), GetFuel(), GetEmergencyReserve()} \\
+    \hline
+    عملية \textenglish{Set} لصفة حجم الاحتياطي الطارئ (بشرط أن يكون \textbf{غير سالب} $\ge 0$). & \textenglish{SetEmergencyReserve(double reserve)} \\
+    \hline
+    عملية تعيد نصاً يصف بيانات الكائن. & \textenglish{ToString()} \\
+    \hline
+    عملية تعبئة وقود تتلقى كمية وقود وتضيفها لوقود المركبة بشرط أن تكون الكمية \textbf{موجبة} ($> 0$)، وتعيد \textenglish{true} إذا نجحت التعبئة و \textenglish{false} خلاف ذلك. & \textenglish{Refuel(double amount)} \\
+    \hline
+    عملية استهلاك وقود تتلقى كمية وقود وتخصمها من وقود المركبة إذا كان ذلك مسموحاً. (انتبهوا: الكمية يجب أن تكون \textbf{موجبة}، والاستهلاك مسموح فقط إذا لم يهبط الوقود تحت \textenglish{-emergencyReserve}). تعيد العملية \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح. & \textenglish{Consume(double amount)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا مركبتي استكشاف (إحداهما بالعملية البنائية الأولى والأخرى بالثانية)، وجرّبوا تعبئة الوقود واستهلاكه في حالات ناجحة وأخرى تتجاوز الاحتياطي الطارئ، واطبعوا بيانات المركبتين.
+
+    \item \textbf{بناء فئة مركبة السبات (\textenglish{HibernationShip}) بدون وراثة} \\
+    ابنوا فئة باسم \textenglish{HibernationShip} لإدارة مركبة سبات طويلة المدى، تحتفظ بخلايا الوقود مختومة حتى انتهاء الرحلة:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{HibernationShip}}} \\
+    \hline
+    صفات (\textenglish{private}): رقم الأسطول، رقم المحطة، رقم المركبة، رقم هوية القائد، كمية الوقود في المركبة، وتاريخ الوصول (من الفئة \textenglish{Date} التي بنيتموها سابقاً). & \textenglish{private int fleetNumber, baseNumber, shipNumber;} \newline \textenglish{private string captainID;} \newline \textenglish{private double fuel;} \newline \textenglish{private Date arrivalDate;} \\
+    \hline
+    عملية بنائية تتلقى بيانات الأسطول والمحطة والمركبة، ورقم هوية القائد، وتاريخ الوصول (وتهيئ الوقود إلى \textenglish{0}). & \textenglish{public HibernationShip(int fleetNumber, int baseNumber, int shipNumber, string captainID, Date arrivalDate)} \\
+    \hline
+    عمليات \textenglish{Get} لجميع الصفات. & \textenglish{GetFleetNumber(), GetBaseNumber(), GetShipNumber(), GetCaptainID(), GetFuel(), GetArrivalDate()} \\
+    \hline
+    عملية \textenglish{Set} لصفة تاريخ الوصول. & \textenglish{SetArrivalDate(Date arrivalDate)} \\
+    \hline
+    عملية تعيد نصاً يصف بيانات الكائن. & \textenglish{ToString()} \\
+    \hline
+    عملية تعبئة وقود تتلقى كمية وقود موجبة وتضيفها لخزان المركبة، وتعيد \textenglish{true} إذا نجحت التعبئة و \textenglish{false} خلاف ذلك. & \textenglish{Refuel(double amount)} \\
+    \hline
+    عملية سحب كل الوقود تتلقى تاريخ السحب؛ إذا كان هذا التاريخ \textbf{أكبر من أو يساوي} تاريخ الوصول (\textenglish{arrivalDate}) وكان في المركبة وقود ($> 0$)، ينجح السحب (يصبح الوقود \textenglish{0}) وتعيد العملية \textenglish{true}، وإلا تعيد \textenglish{false}. & \textenglish{WithdrawAllFuel(Date withdrawalDate)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا مركبة سبات، عبّئوها بالوقود، وجرّبوا سحب الوقود مرة بتاريخ يسبق تاريخ الوصول ومرة بتاريخ يساويه أو يتأخر عنه، واطبعوا النتائج.
+
+    \item \textbf{استخلاص الفئة المشتركة (\textenglish{BasicShip})} \\
+    راجعوا الفئتين اللتين بنيتموهما في التمرين 1 والتمرين 2. جدوا \textbf{جميع} الصفات والعمليات المتطابقة في الفئتين، وأنشئوا فئة جديدة باسم \textenglish{BasicShip} تضمّ كل الصفات والعمليات المشتركة (\textbf{المتطابقة فقط}) بين الفئتين اللتين طوّرتموهما. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا كائناً من الفئة \textenglish{BasicShip} في \textenglish{Main}، عبّئوه بالوقود واطبعوا بياناته.
+
+\end{enumerate}
+
+\begin{boxAttention}[- نقطة للتفكير]
+هل برأيكم كان سيكون أسهل لو طوّرنا الجزء المشترك بين الفئتين \textbf{مرة واحدة} فقط، ثم أضفنا لكل فئة الجزء الخاص بها؟ ربما يساعدنا هذا أيضاً في بناء فئات مركبات إضافية (سفينة شحن، سفينة قيادة، مركبة إنقاذ وغيرها). \\
+\textbf{والآن ننتقل إلى تعلم الوراثة...}
+\end{boxAttention}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

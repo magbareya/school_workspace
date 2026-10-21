@@ -14,12 +14,12 @@
 
 أمامك واجهة الفئة \textenglish{Point} التي تمثّل نقطة في هيئة المحاور:
 
-\begin{center}
-\renewcommand{\arraystretch}{1.8}
-{\small
-\begin{tabular}{|p{0.5\textwidth}|l|}
+{\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
 \hline
-\multicolumn{2}{|c|}{\textbf{\textenglish{Point}}} \\
+\multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Point}}} \\
 \hline
 صفة تُمثّل الإحداثي $x$ للنقطة في المستوى. & \textenglish{private double x} \\
 \hline
@@ -44,8 +44,9 @@
 عمليّة تُعيد نصّاً يُمثّل النقطة بالصيغة $(x, y)$. & \textenglish{public string ToString()} \\
 \hline
 \end{tabular}
-}
-\end{center}
+\par} %
+
+\vspace{2em}
 
 \clearpage
 

@@ -1,9 +1,6 @@
 \documentclass[14pt]{extarticle}
 \input{../../../scripts/tex_preamble.tex}
 
-\setminted{fontsize=\footnotesize, breaklines=true}
-\tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}}
-
 \title{البرمجة كائنية التوجه في \textenglish{C\#}}
 
 \begin{document}
@@ -160,7 +157,38 @@ public class Hero
 \textbf{تنبيه:} المقارنة \textenglish{a == b} بين كائنين تقارن \textbf{العناوين (المؤشرات)} افتراضياً وليس القيم الداخلية. لمقارنة القيم نستخدم عملية مقارنة مثل \textenglish{Equals}.
 
 \filbreak
-\subsection*{6. دافع الوراثة: منع تكرار الكود}
+\subsection*{6. العمليات الساكنة (\textenglish{static}) وكيفية استدعائها}
+\textbf{الفكرة:} العملية العادية (عملية داخلية) تعمل على كائن محدّد وتستدعى عبره (\textenglish{p.GetScore()}). أما العملية المعرّفة بالكلمة \textenglish{static} فهي \textbf{تتبع للفئة نفسها} ولا ترتبط بكائن معيّن (مثل عمليات الفرز أو الحسابات العامة أو العمليات الخارجية في \textenglish{Program})، وتُستدعى من خارج الفئة عبر \textbf{اسم الفئة مباشرة}: \textenglish{ClassName.MethodName(...)}.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Player
+{
+    private int score;
+    public Player(int score) { this.score = score; }
+    public int GetScore() { return this.score; }
+
+    // Static method: belongs to the Player class, not to a single object
+    public static Player Better(Player p1, Player p2)
+    {
+        if (p1.GetScore() >= p2.GetScore()) { return p1; }
+        return p2;
+    }
+}
+
+// Usage in Main:
+Player a = new Player(40);
+Player b = new Player(75);
+Player winner = Player.Better(a, b); // Called via class name Player, NOT a.Better(b)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{تنبيه:} داخل عملية \textenglish{static} لا يمكن استخدام \textenglish{this} ولا الوصول المباشر إلى صفات الكائن العادية، بل نتعامل فقط مع المعطيات المُتلقّاة أو الصفات المعرّفة كـ \textenglish{static}. وإذا كانت العملية الساكنة داخل نفس الفئة (مثل عملية خارجية في \textenglish{Program} نستدعيها من \textenglish{Main}) فنستدعيها باسمها مباشرة.
+
+\filbreak
+\subsection*{7. دافع الوراثة: منع تكرار الكود}
 \textbf{الفكرة:} إذا اشتركت فئتان أو أكثر في نفس الصفات والعمليات، فإن أي تعديل مستقبلي سيتطلب تعديل عدة أماكن. الحل الهندسي هو استخلاص الجزء \textbf{المتطابق المشترك فقط} في فئة أساسية واحدة، وإبقاء الصفات والعمليات الفريدة في كل فئة فرعية.
 
 \begin{boxCode}
@@ -177,7 +205,7 @@ public class Hero
 \section*{الجزء الثاني: الوراثة بين الفئات}
 % ==============================================================
 
-\subsection*{7. الوراثة واستدعاء العملية البنائية للأب (\textenglish{base})}
+\subsection*{8. الوراثة واستدعاء العملية البنائية للأب (\textenglish{base})}
 \textbf{الفكرة:} كتابة \textenglish{class Dog : Animal} تعني أن \textenglish{Dog} يرث من \textenglish{Animal} جميع صفاته وعملياته المعرّفة بإذن وصول \textenglish{public} أو \textenglish{protected}. \textbf{العمليات البنائية لا تُورَّث}، لذلك تستدعي العملية البنائية للابن العملية البنائية للأب باستخدام \textenglish{: base(...)}.
 
 \begin{boxCode}
@@ -214,7 +242,7 @@ d.Bark();  // Specific to Dog
 \textbf{تنبيه:} لا تعيدوا تعريف الصفات الموروثة (\textenglish{name}, \textenglish{energy}) داخل الفئة الفرعية. إذن الوصول \textenglish{private} في الأب لا يراه الابن؛ نستخدم \textenglish{protected} ليتمكن الأبناء من الوصول إلى الصفات.
 
 \filbreak
-\subsection*{8. تمرير كائن كمُعطى لعملية}
+\subsection*{9. تمرير كائن كمُعطى لعملية}
 \textbf{الفكرة:} عند تمرير كائن إلى عملية، يُمرَّر مؤشره، فأي تعديل عليه داخل العملية يؤثر على الكائن الأصلي. يجب دائماً فحص \textenglish{target != null} والتأكد من تحقق شروط الطرف الأول قبل تعديل الطرف الثاني.
 
 \begin{boxCode}
@@ -239,7 +267,7 @@ public bool Give(Wallet target, int amount)
 \section*{الجزء الثالث: تعدد الأشكال}
 % ==============================================================
 
-\subsection*{9. مصفوفة الكائنات والتحويل لأعلى}
+\subsection*{10. مصفوفة الكائنات والتحويل لأعلى}
 \textbf{الفكرة:} متغير من نمط الفئة الأساسية (\textenglish{Animal}) يستطيع الإشارة إلى كائن من أي فئة فرعية ترث منها (\textenglish{Dog} أو \textenglish{Cat}). لذلك يمكن لمصفوفة واحدة \textenglish{Animal[]} أن تجمع كائنات من جميع الفئات الفرعية.
 
 \begin{boxCode}
@@ -276,7 +304,7 @@ z.Add(new Cat("Tom")); // Upcasting: Cat -> Animal
 \textbf{تنبيه:} الحدود الفارغة في المصفوفة قيمتها \textenglish{null}؛ لذا افحصوا \textenglish{animals[i] != null} دائماً قبل استدعاء أي عملية عليها لتجنب \textenglish{NullReferenceException}.
 
 \filbreak
-\subsection*{10. إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+\subsection*{11. إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
 \textbf{الفكرة:} العملية التي نريد أن يخصصها كل ابن بطريقته نعرّفها في الأب بالكلمة \textenglish{virtual}، ويعيد الابن تعريفها بالكلمة \textenglish{override} \textbf{بنفس التعريف تماماً}. عند استدعائها عبر مؤشر من نمط الأب، تُنفَّذ نسخة \textbf{الكائن الفعلي} وقت التشغيل.
 
 \begin{boxCode}
@@ -304,7 +332,7 @@ Console.WriteLine(a1.Speak() + ", " + a2.Speak()); // Prints: Woof, Meow
 \end{boxCode}
 
 \filbreak
-\subsection*{11. إرجاع مصفوفة مُصفّاة (مرشّحة) حسب شرط}
+\subsection*{12. إرجاع مصفوفة مُصفّاة (مرشّحة) حسب شرط}
 \textbf{الفكرة:} لإرجاع مصفوفة جديدة بحجم مطابق تماماً لعدد الكائنات التي تحقق شرطاً معيناً، نمسح المصفوفة مرتين: المرة الأولى لعدّ الحدود المطابقة وإنشاء المصفوفة الجديدة، والمرة الثانية لنسخ المؤشرات إليها.
 
 \begin{boxCode}
@@ -334,7 +362,7 @@ public Animal[] GetHungry()
 \end{boxCode}
 
 \filbreak
-\subsection*{12. أذونات الوصول \textenglish{protected} والاستدعاء \textenglish{base.Method()}}
+\subsection*{13. أذونات الوصول \textenglish{protected} والاستدعاء \textenglish{base.Method()}}
 \textbf{الفكرة:} داخل عملية مُعاد تعريفها (\textenglish{override}) في الفئة الفرعية، نستدعي نسخة الفئة الأساسية عبر \textenglish{base.Method()} للاستفادة من نتيجتها وإضافة الجزء الخاص بالابن عليها (مثل \textenglish{base.ToString()} أو \textenglish{base.GetSalary()}).
 
 \begin{boxCode}
@@ -357,7 +385,7 @@ public class Dog : Animal
 \end{boxCode}
 
 \filbreak
-\subsection*{13. النمط الساكن للمتغير مقابل النمط الفعلي للكائن}
+\subsection*{14. النمط الساكن للمتغير مقابل النمط الفعلي للكائن}
 \textbf{الفكرة:} المترجم يفحص قانونية استدعاء العملية حسب \textbf{نمط المتغير (الساكن)}، بينما وقت التشغيل ينفّذ العملية حسب \textbf{نمط الكائن (الفعلي)}. لذلك لا يمكن عبر متغير من نمط \textenglish{Animal} استدعاء عملية موجودة في \textenglish{Dog} فقط إلا بعد إجراء تحويل لأسفل.
 
 \begin{boxCode}
@@ -372,7 +400,7 @@ a.Speak();        // Valid: Speak() is declared in Animal
 \end{boxCode}
 
 \filbreak
-\subsection*{14. العامل \textenglish{is} والتحويل لأسفل}
+\subsection*{15. العامل \textenglish{is} والتحويل لأسفل}
 \textbf{الفكرة:} التعبير البولياني \textenglish{x is Dog} يفحص وقت التشغيل إن كان الكائن الفعلي من نمط \textenglish{Dog} (ويعيد \textenglish{false} بأمان إذا كان \textenglish{null}). بعد التأكد من نمطه، نحوله بالصيغة \textenglish{(Dog)x} لاستدعاء عملياته الخاصة.
 
 \begin{boxCode}
@@ -393,7 +421,7 @@ for (int i = 0; i < this.animals.Length; i++)
 \textbf{تنبيه:} إجراء تحويل مباشر \textenglish{(Dog)a} دون فحص مسبق بـ \textenglish{is} يسبب انهيار البرنامج (\textenglish{InvalidCastException}) إذا كان الكائن الفعلي من نمط آخر.
 
 \filbreak
-\subsection*{15. العامل \textenglish{as} ومقارنة أساليب التحويل}
+\subsection*{16. العامل \textenglish{as} ومقارنة أساليب التحويل}
 \textbf{الفكرة:} التعبير \textenglish{x as Dog} يحاول تحويل الكائن إلى \textenglish{Dog}؛ فإذا نجح يعيد مؤشر الكائن، وإذا فشل يعيد \textenglish{null} دون رمي استثناء. لذلك نفحص بعده \textenglish{d != null}.
 
 \begin{boxCode}
@@ -426,7 +454,7 @@ if (d != null)
 \end{center}
 
 \filbreak
-\subsection*{16. قوة تعدد الأشكال وقابلية التوسع}
+\subsection*{17. قوة تعدد الأشكال وقابلية التوسع}
 \textbf{الفكرة:} عندما تتعامل العمليات في فئة الإدارة مع الواجهة المشتركة للفئة الأساسية (مثل \textenglish{Speak()} أو \textenglish{Eat()})، فإن إضافة فئة فرعية جديدة مستقبلاً (مثل \textenglish{Bird}) تعمل تلقائياً دون تعديل كود فئة الإدارة.
 
 \begin{boxCode}
@@ -444,7 +472,7 @@ public void MakeAllSpeak()
 \end{boxCode}
 
 \filbreak
-\subsection*{17. الوراثة من الفئة \textenglish{Object} — العملية \textenglish{Equals}}
+\subsection*{18. الوراثة من الفئة \textenglish{Object} — العملية \textenglish{Equals}}
 \textbf{الفكرة:} جميع الفئات في \textenglish{C\#} ترث ضمنياً من الفئة العليا \textenglish{object}. لمقارنة كائنين حسب قيم صفاتهما، نعيد تعريف العملية \textenglish{Equals(object obj)} بالترتيب: فحص \textenglish{null} ونمط الكائن عبر \textenglish{is}، ثم التحويل، ثم مقارنة الصفات.
 
 \begin{boxCode}
@@ -465,7 +493,7 @@ public override bool Equals(object obj)
 \section*{الجزء الرابع: الفئات المجردة والواجهات}
 % ==============================================================
 
-\subsection*{18. الفئة المجردة (\textenglish{abstract}) والعمليات المجردة}
+\subsection*{19. الفئة المجردة (\textenglish{abstract}) والعمليات المجردة}
 \textbf{الفكرة:} الفئة المجردة هي فئة أساسية غير مكتملة لا يمكن إنشاء كائنات منها مباشرة (\textenglish{new Animal()} ممنوع)، وتُستخدم كفئة أب فقط. العملية المجردة (\textenglish{abstract}) تُكتب بتعريفها فقط دون جسم (تنتهي بـ \textenglish{;})، ويلتزم كل ابن غير مجرد بإعادة تعريفها (\textenglish{override}).
 
 \begin{boxCode}
@@ -486,7 +514,7 @@ public class Dog : Animal
 \end{boxCode}
 
 \filbreak
-\subsection*{19. المُعطى العام من نمط \textenglish{object} وفحص نمطه}
+\subsection*{20. المُعطى العام من نمط \textenglish{object} وفحص نمطه}
 \textbf{الفكرة:} عندما تشترك الفئات الوارثة في عملية مجردة واحدة لكن تختلف أنماط المعطيات التي تحتاجها كل فئة، نجعل المُعطى من نمط \textenglish{object}، وداخل كل فئة فرعية نفحص نمطه بـ \textenglish{is} ونحوله قبل الاستخدام.
 
 \begin{boxCode}
@@ -509,7 +537,7 @@ public class Dog : Animal
 \end{boxCode}
 
 \filbreak
-\subsection*{20. الواجهة \textenglish{IComparable} والعملية \textenglish{CompareTo}}
+\subsection*{21. الواجهة \textenglish{IComparable} والعملية \textenglish{CompareTo}}
 \textbf{الفكرة:} الواجهة هي عقد يحدد عمليات يجب على الفئة تطبيقها. الواجهة \textenglish{IComparable} تلزم الفئة بتطبيق العملية \textenglish{int CompareTo(object obj)} التي تقارن الكائن الحالي (\textenglish{this}) بالكائن المُتلقّى (\textenglish{obj}) وتعيد: \textbf{عدداً سالباً} إذا كان الكائن الحالي أصغر، \textbf{صفراً} إذا تساويا، و\textbf{عدداً موجباً} إذا كان الكائن الحالي أكبر.
 
 \begin{boxCode}
@@ -530,7 +558,7 @@ public class Player : IComparable
 \end{boxCode}
 
 \filbreak
-\subsection*{21. خدمات الفرز العامة عبر الواجهة \textenglish{IComparable}}
+\subsection*{22. خدمات الفرز العامة عبر الواجهة \textenglish{IComparable}}
 \textbf{الفكرة:} نكتب عملية فرز واحدة تتلقى مصفوفة \textenglish{IComparable[]} وتعتمد على \textenglish{CompareTo}، فتصلح لفرز أي مصفوفة كائنات تطبّق الواجهة \textenglish{IComparable}.
 
 \begin{boxCode}
@@ -559,7 +587,7 @@ public class SortServices
 \end{boxCode}
 
 \filbreak
-\subsection*{22. الدمج الشامل: تصفية حسب النمط ثم فرز وإرجاع مصفوفة}
+\subsection*{23. الدمج الشامل: تصفية حسب النمط ثم فرز وإرجاع مصفوفة}
 \textbf{الفكرة:} لاستخراج مصفوفة مرتّبة لكائنات من فئة فرعية معينة: (1) نمسح المصفوفة ونعدّ الكائنات من النمط المطلوب باستخدام \textenglish{is}، (2) ننسخ مؤشراتها إلى مصفوفة جديدة بحجمها الدقيق، (3) نفرز المصفوفة الجديدة عبر \textenglish{SortServices} ونعيدها دون تغيير ترتيب المصفوفة الأصلية.
 
 \begin{boxCode}

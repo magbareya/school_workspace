@@ -1,0 +1,84 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{مشروع شركة "السعادة للجميع" — المرحلة الثالثة: تعدد الأشكال الأساسي (التحويل لأعلى)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المرحلة السابقة (\textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الثالثة: تعدد الأشكال الأساسي (التحويل لأعلى)}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{بناء فئة إدارة الشركة (\textenglish{Company})} \\
+    أضف فئة جديدة لمشروعنا باسم \textenglish{Company}. تمثّل هذه الفئة مجموعة موظفي الشركة من جميع الأنماط، بالاعتماد على الفئة الأساسية \textenglish{Employee} (أي تشمل أيضاً كل كائن من فئة ترث من \textenglish{Employee}):
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Company}}} \\
+    \hline
+    صفات: ثابت يمثل الحد الأقصى للموظفين في الشركة، مصفوفة لحفظ موظفي الشركة، وعدد الموظفين الفعليين حالياً فيها. & \textenglish{public const int MAX = 100;} \newline \textenglish{private Employee[] employees;} \newline \textenglish{private int current;} \\
+    \hline
+    عملية بنائية تنشئ المصفوفة بحجم \textenglish{MAX} وتهيئ \textenglish{current} إلى \textenglish{0}. & \textenglish{public Company()} \\
+    \hline
+    عملية تعيد عدد الموظفين الحاليين في الشركة. & \textenglish{GetCurrent()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Company} في \textenglish{Main} واطبع عدد الموظفين الابتدائي فيه.
+
+    \item \textbf{إضافة موظف إلى الشركة (\textenglish{AddEmployee})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{AddEmployee(Employee e)} تتلقى موظفاً من أي نمط وتضيفه إلى مصفوفة موظفي الشركة: افحص أولاً إن كان هناك متسع في المصفوفة؛ إذا نعم، أضف الموظف وأعد \textenglish{true}، وإلا فلا تضفه وأعد \textenglish{false}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أضف في \textenglish{Main} عدة موظفين من الأنماط الأربعة ( \textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} ) إلى كائن الشركة \textenglish{Company}.
+
+    \clearpage
+    \item \textbf{البحث عن بيانات موظف حسب رقم الهوية (\textenglish{GetEmployeeDetails})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetEmployeeDetails(string id)} تتلقى رقم هوية موظف (افترض أنه فريد) وتعيد سلسلة نصية تصف بيانات هذا الموظف (استخدم \textenglish{ToString()}). إذا لم يوجد موظف بهذا الرقم في الشركة، تعيد العملية نصاً فارغاً \textenglish{""}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} لرقم هوية موجود وآخر غير موجود واطبع النتيجة.
+
+    \item \textbf{عدّ الموظفين الذين يملكون نفس الأقدمية (\textenglish{CountSameSeniority})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{CountSameSeniority(string id)} تتلقى رقم هوية موظف (افترض أنه فريد وموجود في الشركة)، وتعيد عدد الموظفين في الشركة الذين لديهم نفس عدد سنوات الأقدمية التي يمتلكها صاحب هذا الرقم. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع النتيجة.
+
+    \item \textbf{تصفية الموظفين حسب الأقدمية (\textenglish{GetEmployeesByMinSeniority})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \\
+    \textenglish{GetEmployeesByMinSeniority(int minYears)} \\
+    تتلقى حداً أدنى لسنوات الأقدمية، وتعيد مصفوفة من نمط \textenglish{Employee[]} تحتوي على جميع موظفي الشركة الذين أقدميتهم أكبر أو تساوي \textenglish{minYears} (بحجم مطابق تماماً لعددهم). إذا لم يوجد أي موظف يحقق الشرط، يُعاد \textenglish{null}. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع بيانات جميع الموظفين في المصفوفة المُعادة.
+
+    \item \textbf{إيجاد الموظف صاحب الأقدمية الأكبر (\textenglish{GetMostVeteranId})} \\
+    اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{GetMostVeteranId()} تعيد رقم هوية (\textenglish{id}) الموظف صاحب أكبر أقدمية في الشركة (افترض وجود موظف واحد كهذا، وإذا كانت الشركة خالية تعيد \textenglish{""}). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ العملية في \textenglish{Main} واطبع رقم هوية الموظف الأقدم في الشركة.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

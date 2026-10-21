@@ -1,0 +1,144 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{أكاديمية فرسان التنانين — المرحلة الثالثة: سجلّ الوادي وتعدد الأشكال}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المراحل السابقة (\textenglish{BasicDragon} و \textenglish{FireDragon} و \textenglish{HibernatingDragon} و \textenglish{AlphaDragon}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الثالثة: سجلّ الوادي وتعدد الأشكال}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{فئة سجلّ الوادي (\textenglish{DragonRegistry})} \\
+    ابنوا فئة خدمات باسم \textenglish{DragonRegistry} تدير كل تنانين الوادي:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{DragonRegistry}}} \\
+    \hline
+    صفات: مصفوفة تحوي تنانين من جميع الأنماط (\textenglish{FireDragon}، \textenglish{HibernatingDragon}، \textenglish{AlphaDragon})، وعدّاد لعدد التنانين الفعليين. & \textenglish{private BasicDragon[] dragons;} \newline \textenglish{private int count;} \\
+    \hline
+    عملية بنائية تتلقى حجم المصفوفة وتنشئها. & \textenglish{public DragonRegistry(int maxDragons)} \\
+    \hline
+    عملية مساعدة تتلقى رقم تنين وتعيد مؤشره (مكانه) في المصفوفة أو $-1$. & \textenglish{private int FindIndex(int dragonNum)} \\
+    \hline
+    عملية تضيف التنين في أول مكان فارغ، وتعيد \textenglish{true} إذا أُضيف و \textenglish{false} إذا كانت المصفوفة ممتلئة أو كان المُعطى \textenglish{null}. & \textenglish{Add(BasicDragon d)} \\
+    \hline
+    عملية تعيد التنين صاحب الرقم (أو \textenglish{null}) بالاستعانة بـ \textenglish{FindIndex}. & \textenglish{Find(int dragonNum)} \\
+    \hline
+    عملية تحذف التنين وتُزيح الحدود التالية إلى اليسار (بلا ثغرات في الوسط) وتعيد \textenglish{bool}. & \textenglish{Remove(int dragonNum)} \\
+    \hline
+    عملية تعيد عدد التنانين الموجودين فعلياً، وعملية تعيد نصاً يصف كل التنانين في السجل. & \textenglish{Count(), ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا سجلاً بحجم $6$، وأضيفوا إليه $5$ تنانين من الأنماط الثلاثة، وجرّبوا \textenglish{Find} و \textenglish{Remove} و \textenglish{Count} وطباعة السجل.
+
+    \item \textbf{العمليات القابلة لإعادة التعريف (\textenglish{virtual} و \textenglish{override}): \textenglish{IsInDanger} و \textenglish{DangerLevel}}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضيفوا إلى المشروع عملية عامة قابلة لإعادة التعريف تعريفها \textenglish{public virtual bool IsInDanger()}:
+        \begin{itemize}
+            \item في \textenglish{BasicDragon}: تعيد \textenglish{false} دائماً.
+            \item في \textenglish{FireDragon}: تعيد \textenglish{true} إذا كان التنين يستخدم جمر الطوارئ ($\text{energy} < 0$).
+            \item في \textenglish{HibernatingDragon}: تعيد \textenglish{true} إذا كان التنين بلا طاقة ($\text{energy} \le 0$).
+            \item في \textenglish{AlphaDragon}: تعيد \textenglish{true} إذا كان $\text{emberReserve} > 0$ واستخدم القائد $90\%$ أو أكثر من جمره ($\text{energy} \le -0.9 \cdot \text{emberReserve}$).
+        \end{itemize}
+        \item أضيفوا إلى \textenglish{DragonRegistry} عملية \textenglish{DangerDragons()} تعيد مصفوفة (\textenglish{BasicDragon[]}) بالتنانين التي في خطر.
+        \item أضيفوا عملية قابلة لإعادة التعريف \textenglish{public virtual string DangerLevel()} تعيد \textenglish{"Safe"} أو \textenglish{"Warning"} أو \textenglish{"Critical"}:
+        \begin{itemize}
+            \item في \textenglish{BasicDragon}: دائماً \textenglish{"Safe"}.
+            \item في \textenglish{FireDragon}: إذا لم تكن الطاقة سالبة $\leftarrow$ \textenglish{"Safe"}. وإذا كانت سالبة: إن استُهلك نصف جمر الطوارئ أو أكثر ($\text{energy} \le -0.5 \cdot \text{emberReserve}$) $\leftarrow$ \textenglish{"Critical"}، وإلا $\leftarrow$ \textenglish{"Warning"}.
+            \item في \textenglish{HibernatingDragon}: \textenglish{"Critical"} إذا كانت الطاقة $0$ أو أقل، وإلا \textenglish{"Safe"}.
+            \item في \textenglish{AlphaDragon}: إذا كان القائد في خطر (\textenglish{IsInDanger()}) $\leftarrow$ \textenglish{"Critical"}. وإلا إذا كانت طاقته سالبة $\leftarrow$ \textenglish{"Warning"}. وإلا افحصوا أعضاء القطيع: إذا كان أحدهم \textenglish{"Critical"} $\leftarrow$ \textenglish{"Warning"}، وإلا $\leftarrow$ \textenglish{"Safe"}.
+        \end{itemize}
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبعوا \textenglish{DangerLevel()} لكل تنين في السجل، ثم استدعوا \textenglish{DangerDragons()} واطبعوا النتيجة.
+
+    \item \textbf{أذونات الوصول \textenglish{protected} والكلمة \textenglish{base} وسلسلة \textenglish{ToString}}
+    \begin{itemize}
+        \item أضيفوا إلى \textenglish{BasicDragon} صفة محمية \textenglish{protected string dragonType} تُحدَّد قيمتها في كل فئة وارثة (\textenglish{"Fire"} أو \textenglish{"Hibernating"} أو \textenglish{"Alpha"}).
+        \item غيّروا \textenglish{ToString()} في \textenglish{BasicDragon} لتعيد:
+        \begin{center}
+        \textenglish{\$"Type:\{dragonType\}, Num:\{dragonNumber\}, Rider:\{riderID\}, Energy:\{energy\}"}
+        \end{center}
+        \item في كل فئة وارثة، أعيدوا تعريف \textenglish{ToString()} بحيث تستدعي \textenglish{base.ToString()} وتضيف الصفات الخاصة بها.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبعوا السجل وتأكدوا من صيغة \textenglish{ToString()} الجديدة لجميع التنانين.
+
+\clearpage
+
+    \item \textbf{عمليات خاصة بفئة فرعية واحدة فقط}
+    \begin{itemize}
+        \item أضيفوا إلى \textenglish{HibernatingDragon} عملية \textenglish{IsEmpty()} تعيد \textenglish{true} إذا كان التنين بلا طاقة ($\text{energy} \le 0$)، واستخدموها داخل \textenglish{IsInDanger()}.
+        \item أضيفوا إلى \textenglish{FireDragon} عملية \textenglish{RescueSuggestion()} تعيد سلسلة نصية: إذا كانت طاقة التنين سالبة تقترح طلب تحويل طاقة من قائد قطيع بمقدار الدَّين مقرّباً لأعلى (\textenglish{Math.Ceiling(-energy)})، وإلا تعيد \textenglish{"No help needed"}.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا العمليتين على كائنات من نمطيهما في \textenglish{Main}.
+
+    \item \textbf{العامل \textenglish{is} والتحويل لأسفل (\textenglish{PrintSuggestions})} \\
+    أضيفوا إلى \textenglish{DragonRegistry} عملية \textenglish{PrintSuggestions()} تمسح كل تنانين السجل وتفعل ما يلي:
+    \begin{itemize}
+        \item إذا كان التنين \textenglish{HibernatingDragon} وكان فارغاً (\textenglish{IsEmpty()}) $\leftarrow$ تطبع تحذيراً برقم التنين.
+        \item إذا كان \textenglish{FireDragon} وكان في خطر (\textenglish{IsInDanger()}) $\leftarrow$ تطبع \textenglish{RescueSuggestion()}.
+        \item إذا كان \textenglish{AlphaDragon}: أضيفوا له عملية \textenglish{RescueSuggestion()}، واطبعوها فقط إذا كان القائد في خطر \textbf{أو} كان أحد أعضاء قطيعه في مستوى \textenglish{"Critical"}.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا \textenglish{PrintSuggestions()} على السجل وتأكدوا من طباعة الرسائل المتوقعة.
+
+    \item \textbf{العامل \textenglish{as} ومقارنة الأساليب (\textenglish{PrintSuggestions2})} \\
+    أعيدوا كتابة \textenglish{PrintSuggestions} في نسخة جديدة باسم \textenglish{PrintSuggestions2()} باستخدام العامل \textenglish{as} بدل \textenglish{is}، وقارنوا في تعليق بين \textenglish{is} و \textenglish{as} والتحويل المباشر. \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    شغّلوا \textenglish{PrintSuggestions()} و \textenglish{PrintSuggestions2()} وتأكدوا من تطابق المخرجات.
+
+    \item \textbf{التغذية الجماعية (\textenglish{FeedAll} و \textenglish{TotalEnergy})} \\
+    أضيفوا إلى \textenglish{DragonRegistry}:
+    \begin{itemize}
+        \item العملية \textenglish{FeedAll(double amount)}: تتلقى مقدار طاقة وتُعبّئ به كل تنانين السجل، وتعيد عدد التنانين التي نجحت تعبئتها.
+        \item العملية \textenglish{TotalEnergy()}: تعيد مجموع طاقة كل التنانين في السجل.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اطبعوا \textenglish{TotalEnergy()} قبل وبعد استدعاء \textenglish{FeedAll(25)} و \textenglish{FeedAll(-10)}.
+
+    \item \textbf{الوراثة من \textenglish{Object} — العملية \textenglish{Equals}}
+    \begin{itemize}
+        \item أعيدوا تعريف العملية \textenglish{Equals(object obj)} في \textenglish{BasicDragon} بحيث يعتبر التنينان متساويين إذا تطابقت لديهما قيم: رقم المملكة ورقم الكهف ورقم التنين.
+        \item عدّلوا \textenglish{Add} في \textenglish{DragonRegistry} بحيث لا تضيف تنيناً موجوداً مسبقاً في السجل (بحسب \textenglish{Equals}).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    اختبروا \textenglish{Equals} وحاولوا إضافة تنين مكرر إلى السجل.
+
+    \item \textbf{دمج سجلّين (\textenglish{Merge})} \\
+    أضيفوا إلى \textenglish{DragonRegistry} عملية \textenglish{Merge(DragonRegistry other)} تتلقى سجلاً آخر وتعيد \textbf{سجلاً جديداً} يحوي تنانين السجلّين معاً \textbf{دون تكرار} (باستخدام \textenglish{Add}). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا سجلّين بينهما تنانين مشتركة، ادمجوهما عبر \textenglish{Merge}، واطبعوا السجل المدموج.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

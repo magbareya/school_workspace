@@ -1,0 +1,94 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{مشروع شركة "السعادة للجميع" — المرحلة الرابعة: إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المراحل السابقة (\textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} و \textenglish{Company}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الرابعة: إعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+% ==============================================================
+
+\textbf{قواعد حساب الرواتب ونقاط التصويت واستحقاق المكافأة}
+تُتخذ القرارات في الشركة عبر التصويت باستخدام \textbf{نقاط التأثير}، كما يتحدد الراتب الشهري والمكافأة السنوية لكل موظف بحسب نمطه وأقدميته كما يلي:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+{\small
+\begin{tabular}{|p{0.20\textwidth}|p{0.37\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{نمط الموظف} & \textbf{الراتب الشهري (\textenglish{GetSalary})} & \textbf{نقاط التصويت (\textenglish{GetScore})} \\
+\hline
+\textbf{موظف عادي} \newline (\textenglish{Employee}) &
+راتب أساسي $5000$ ش.ج + $500$ ش.ج عن كل سنة أقدمية: \newline
+$5000 + 500 \cdot \text{seniority}$ &
+$4$ نقاط أساسية + نقطة عن كل سنة أقدمية: \newline
+$4 + \text{seniority}$ \\
+\hline
+\textbf{تقني حواسيب} \newline (\textenglish{Technician}) &
+راتب الموظف العادي + $250$ ش.ج عن كل 10 حواسيب كاملة: \newline
+$\text{base} + \lfloor \frac{\text{computers}}{10} \rfloor \cdot 250$ &
+نقاط الموظف العادي + نقطة عن كل حاسوب: \newline
+$\text{base} + \text{computers}$ \\
+\hline
+\textbf{عضو لجنة عمال} \newline (\textenglish{UnionMember}) &
+يماثل راتب الموظف العادي تماماً. &
+\textbf{ضعف} نقاط الموظف العادي + نقطتان عن كل سنة باللجنة: \newline
+$2 \cdot \text{base} + 2 \cdot \text{unionYears}$ \\
+\hline
+\textbf{مسؤول مشاريع} \newline (\textenglish{Supervisor}) &
+راتب الموظف العادي + $100$ ش.ج عن كل موظف فعلي في فريقه: \newline
+$\text{base} + 100 \cdot \text{teamCount}$ &
+نقاط الموظف العادي + مجموع نقاط كافة أعضاء فريقه الفعليين. \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{تطبيق العمليات القابلة لإعادة التعريف: \textenglish{GetSalary()} و \textenglish{GetScore()}}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضف إلى الفئة الأساسية \textenglish{Employee} العمليتين العامتين القابلتين لإعادة التعريف:
+        \begin{itemize}
+            \item \textenglish{public virtual double GetSalary()}
+            \item \textenglish{public virtual int GetScore()}
+        \end{itemize}
+        وأعد تعريفهما (\textenglish{override}) في الفئات الفرعية \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} وفق الجدول أعلاه، مع الحرص على استدعاء \textenglish{base.GetSalary()} و \textenglish{base.GetScore()} لتجنب تكرار المعادلات الحسابية.
+        \item أضف إلى الفئة \textenglish{Company} العملية \textenglish{public double TotalSalary()} التي تحسب وتعيد مجموع الرواتب الشهرية لجميع موظفي الشركة.
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    في \textenglish{Main}، اطبع راتب ونقاط تصويت كل موظف، ثم اطبع مجموع الرواتب الكلي في الشركة عبر \textenglish{TotalSalary()}.
+
+    \item \textbf{إضافة عملية استحقاق المكافأة السنوية (\textenglish{YearlyBonus})}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item أضف لمشروع الشركة عملية عامة قابلة لإعادة التعريف تعريفها: \textenglish{public virtual bool YearlyBonus()}
+        \begin{itemize}
+            \item تُعرّف العملية لأول مرة في الفئة \textenglish{Employee} وتعيد \textenglish{true} إذا كانت أقدمية الموظف 5 سنوات على الأقل ($\text{seniority} \ge 5$)، وإلا تعيد \textenglish{false}.
+            \item في الفئة \textenglish{Technician} يُعاد تعريف العملية (\textenglish{override}) وتعيد \textenglish{true} إذا كان التقني يحقق شرط الأقدمية (عبر \textenglish{base.YearlyBonus()}) \textbf{و}يتولى مسؤولية 100 حاسوب على الأقل ($\text{computers} \ge 100$)، وإلا تعيد \textenglish{false}.
+            \item في الفئتين \textenglish{UnionMember} و \textenglish{Supervisor} يُعاد تعريف العملية (\textenglish{override}) بحيث تعيد \textenglish{false} دائماً (لأن أعضاء اللجنة ومسؤولي المشاريع غير مشمولين في هذه المكافأة).
+        \end{itemize}
+        \item أضف إلى الفئة \textenglish{Company} عملية باسم \textenglish{GetBonusEmployees()} تعيد مصفوفة (\textenglish{Employee[]}) تضم جميع موظفي الشركة المستحقين للمكافأة السنوية (بحسب نتيجة العملية \textenglish{YearlyBonus()}).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ في \textenglish{Main} العملية \textenglish{GetBonusEmployees()} واطبع بيانات الموظفين المستحقين للمكافأة.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

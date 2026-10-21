@@ -1,0 +1,93 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{كراس أسطول المجرّة — المرحلة الرابعة: الفئات المجردة والواجهات}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المراحل السابقة (\textenglish{BasicShip} و \textenglish{ScoutShip} و \textenglish{HibernationShip} و \textenglish{MotherShip} و \textenglish{FleetControl}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الرابعة: الفئات المجردة والواجهات}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تحويل \textenglish{BasicShip} إلى فئة مجردة (\textenglish{abstract})} \\
+    غيّروا الفئة \textenglish{BasicShip} بحيث تصبح \textbf{فئة مجردة} (\textenglish{abstract class})، وأضيفوا إليها عملية مجردة تعريفها:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+public abstract bool Consume(object o);
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    حدّثوا الكود في الفئات الوارثة بحسب ذلك:
+    \begin{itemize}
+        \item \textenglish{ScoutShip}: العملية تتلقى \textenglish{double} (أو \textenglish{int}) يمثل كمية الوقود المستهلكة وتطبّق الاستهلاك.
+        \item \textenglish{HibernationShip}: العملية تتلقى \textenglish{Date} (تاريخ السحب) وتسحب كل الوقود إن كان ذلك مسموحاً.
+        \item \textenglish{MotherShip}: العملية تتلقى \textenglish{double} (أو \textenglish{int}) وتطبّق الاستهلاك.
+        \item إذا وصل مُعطى من نمط غير مناسب (أو \textenglish{null})، تعيد العملية \textenglish{false}.
+    \end{itemize}
+    بالإضافة إلى ذلك، غيّروا العملية القابلة لإعادة التعريف \textenglish{IsInDanger()} في \textenglish{BasicShip} إلى عملية \textbf{مجردة} (\textenglish{abstract}). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    امسحوا مركبات الأسطول في \textenglish{Main} واستدعوا \textenglish{Consume(object)} بمعطيات مختلفة (\textenglish{double} و \textenglish{Date}) واطبعوا النتائج.
+
+    \item \textbf{تطبيق الواجهة \textenglish{IComparable}} \\
+    طبّقوا الواجهة \textenglish{IComparable} في الفئة \textenglish{Date} وطبّقوا العملية \textenglish{CompareTo(object obj)} المطلوبة (انتبهوا: العملية تتلقى \textenglish{object} ويجب إجراء فحص نمط وتحويل). \\
+    بالإضافة إلى ذلك، طبّقوا الواجهة \textenglish{IComparable} في الفئتين التاليتين:
+    \begin{itemize}
+        \item \textbf{\textenglish{HibernationShip}:} تتم المقارنة حسب \textbf{تاريخ الوصول} (\textenglish{arrivalDate}).
+        \item \textbf{\textenglish{MotherShip}:} تتم المقارنة حسب \textbf{القوة الكامنة} (\textenglish{PowerPotential})، أي: كمية الوقود الحالية + حجم الاحتياطي الطارئ المسموح ($\text{fuel} + \text{emergencyReserve}$).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    قارنوا في \textenglish{Main} بين تواريخ مختلفة، وبين مركبات سبات، وبين سفن أم باستخدام \textenglish{CompareTo} واطبعوا النتائج.
+
+    \item \textbf{بناء فئة خدمات الفرز (\textenglish{SortServices})} \\
+    ابنوا فئة باسم \textenglish{SortServices} وطبّقوا فيها عمليتي فرز ثابتتين:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{SortServices}}} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تصاعدي}. & \textenglish{public static void SortAscending(IComparable[] arr)} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تنازلي}. & \textenglish{public static void SortDescending(IComparable[] arr)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    جرّبوا فرز مصفوفة تواريخ \textenglish{Date[]} ومصفوفة مركبات سبات ومصفوفة سفن أم في \textenglish{Main} واطبعوا المصفوفات قبل الفرز وبعده.
+
+    \item \textbf{استخراج قوائم المركبات المرتّبة في \textenglish{FleetControl}} \\
+    أضيفوا العمليتين التاليتين إلى الفئة \textenglish{FleetControl}:
+    \begin{itemize}
+        \item \textbf{\textenglish{GetMotherShipsByPower()}:} تعيد مصفوفة (\textenglish{MotherShip[]}) تضم سفن القيادة الأم في الأسطول مرتّبة حسب \textbf{القوة الكامنة} — السفينة الأقوى أولاً (تنازلياً).
+        \item \textbf{\textenglish{GetHibernationByArrivalDate()}:} تعيد مصفوفة (\textenglish{HibernationShip[]}) تضم مركبات السبات في الأسطول مرتّبة حسب \textbf{تاريخ الوصول} — المركبات التي ستصل أولاً تأتي أولاً (تصاعدياً).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا العمليتين في \textenglish{Main} واطبعوا المصفوفتين المرتبتين.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

@@ -1,0 +1,123 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{مشروع شركة "السعادة للجميع" — المرحلة الثانية: تطبيق الوراثة بين الفئات}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المرحلة السابقة (\textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+
+    \item \textbf{بناء علاقة الوراثة بين \textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember}}
+    \begin{itemize}
+        \item \textbf{أولاً:} حدّث الفئة \textenglish{Employee} وفق قواعد البرمجة كائنية التوجه بحيث تشكّل \textbf{فئة أساسية (فئة أب)} للفئات التي سترث منها (\textenglish{Technician} و \textenglish{UnionMember})، وذلك بتحويل أذونات الوصول لصفاتها إلى محمية (\textenglish{protected}).
+        \item \textbf{ثانياً:} أعد بناء الفئتين \textenglish{Technician} و \textenglish{UnionMember} بحيث ترثان من الفئة \textenglish{Employee} (باستخدام \textenglish{: Employee}):
+        \begin{itemize}
+            \item أبقِ في كل فئة فرعية الصفات والعمليات الخاصة بها \textbf{فقط} (واحذف التكرار الموجود في \textenglish{Employee}).
+            \item استعن بالعملية البنائية لفئة الأب باستخدام الكلمة المحجوزة \textenglish{base}.
+            \item في العملية \textenglish{ToString()} لكل فئة فرعية، استدعِ \textenglish{base.ToString()} وألحق بها الصفة الخاصة بالفئة الفرعية.
+        \end{itemize}
+    \end{itemize}
+
+    \clearpage
+    فيما يلي ملخص واجهة الفئة الأساسية \textenglish{Employee} بعد التحديث:
+
+{\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
+\hline
+صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
+\hline
+عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
+\hline
+عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
+\hline
+\end{tabular}
+\par} %
+
+\vspace{2em}
+
+    وملخص واجهتي الفئتين الفرعيتين الوارثتين \textenglish{Technician} و \textenglish{UnionMember}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Technician : Employee}}} \\
+    \hline
+    صفة خاصة لعدد الحواسيب. & \textenglish{private int computers;} \\
+    \hline
+    عمليتان بنائيتان تستعينان بـ \textenglish{base}. & \textenglish{public Technician(string id, string name, int seniority, int computers)} \newline \textenglish{public Technician(string id, string name, int computers)} \\
+    \hline
+    عمليات الحواسيب وإعادة تعريف \textenglish{ToString}. & \textenglish{GetComputers(), SetComputers(int c), override ToString()} \\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{UnionMember : Employee}}} \\
+    \hline
+    صفة خاصة لسنوات العضوية في اللجنة. & \textenglish{private int unionYears;} \\
+    \hline
+    عملية بنائية تستعين بـ \textenglish{base}. & \textenglish{public UnionMember(string id, string name, int seniority, int unionYears)} \\
+    \hline
+    عمليات العضوية وإعادة تعريف \textenglish{ToString}. & \textenglish{GetUnionYears(), SetUnionYears(int u), override ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+\vspace{2em}
+
+    \textbf{الفحص في \textenglish{Main}:} \\
+    افحص الفئات المحدّثة في \textenglish{Main}: أنشئ كائنات من الفئات الثلاث، واستدعِ على كائني \textenglish{Technician} و \textenglish{UnionMember} عمليات موروثة من \textenglish{Employee} (مثل \textenglish{GetName} و \textenglish{AddSeniorityYear}) وعمليات خاصة بكل منهما، واطبع الكائنات.
+
+\clearpage
+    \item \textbf{إضافة فئة فرعية ثالثة: مسؤول المشاريع (\textenglish{Supervisor})} \\
+    أضف فئة جديدة باسم \textenglish{Supervisor} تمثل مسؤول مشاريع في الشركة يدير فريقاً مكوّناً من 15 موظفاً كحد أقصى، وترث من الفئة \textenglish{Employee}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Supervisor : Employee}}} \\
+    \hline
+    صفات خاصة (\textenglish{private}): مصفوفة تمثل فريق الموظفين الذين يشرف عليهم (بحجم أقصى 15)، وعدد الموظفين الفعليين حالياً في فريقه. & \textenglish{private Employee[] team;} \newline \textenglish{private int teamCount;} \\
+    \hline
+    عملية بنائية أولى تتلقى رقم الهوية، الاسم، وسنوات الأقدمية، وتهيئ صفات الأب عبر \textenglish{base}، وتنشئ مصفوفة \textenglish{team} بحجم 15، وتهيئ \textenglish{teamCount} إلى \textenglish{0}. & \textenglish{public Supervisor(string id, string name, int seniority)} \\
+    \hline
+    عملية بنائية ثانية تتلقى كذلك مصفوفة موظفين جاهزة \textenglish{Employee[] team}، وتنسخ الحدود غير الفارغة (\textenglish{!= null}) إلى مصفوفة الفريق وتحدّث \textenglish{teamCount}. & \textenglish{public Supervisor(string id, string name, int seniority, Employee[] team)} \\
+    \hline
+    عمليات \textenglish{Get} للصفتين. & \textenglish{GetTeam(), GetTeamCount()} \\
+    \hline
+    عملية تتلقى كائن موظف (من نمط \textenglish{Employee} أو أي فئة ترث منه)، وإذا كان هناك متسع في فريق المشروع ($\text{teamCount} < 15$) تضيفه إلى الفريق وتعيد \textenglish{true}، وإلا تعيد \textenglish{false}. & \textenglish{AddEmployeeToTeam(Employee emp)} \\
+    \hline
+    عملية تشجيعية تتلقى كائن موظف \textenglish{emp} وتستدعي عليه \textenglish{AddSeniorityYear()} لمنحه سنة أقدمية إضافية، بشرط أن يكون هذا الموظف عضواً موجوداً فعلياً داخل مصفوفة \textenglish{team} الخاصة بمسؤول المشاريع الحالي (تعيد \textenglish{true} إذا وجدته في فريقه ومنحته السنة، و \textenglish{false} خلاف ذلك). & \textenglish{TransferBonusSeniority(Employee emp)} \\
+    \hline
+    عملية تعيد وصفاً نصياً لمسؤول المشاريع بالاستعانة بـ \textenglish{base.ToString()} مع إضافة عدد أعضاء فريقه الحاليين. & \textenglish{ToString()} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \clearpage
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Supervisor} في \textenglish{Main}، وأضف إلى فريقه موظفاً عادياً (\textenglish{Employee})، وتقنياً (\textenglish{Technician})، وعضو لجنة (\textenglish{UnionMember})، ثم جرّب العملية \\
+     \textenglish{TransferBonusSeniority} واطبع بيانات المسؤول وأعضاء فريقه.
+
+\end{enumerate}
+
+\end{document}

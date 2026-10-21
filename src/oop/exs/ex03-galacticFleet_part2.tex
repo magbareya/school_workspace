@@ -1,0 +1,76 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{كراس أسطول المجرّة — المرحلة الثانية: تطبيق الوراثة بين الفئات}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المرحلة السابقة (\textenglish{ScoutShip} و \textenglish{HibernationShip} و \textenglish{BasicShip}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تطبيق الوراثة في \textenglish{BasicShip} و \textenglish{ScoutShip} و \textenglish{HibernationShip}} \\
+    حدّثوا الفئة \textenglish{BasicShip} حسب قواعد البرمجة كائنية التوجه التي تعلمناها (صفات \textenglish{protected}، تغليف، عمليات بنائية)، بحيث تصبح \textbf{فئة أساسية (فئة أب)} لكل من الفئتين \textenglish{ScoutShip} و \textenglish{HibernationShip} اللتين سترثان منها. \\
+    ابنوا من جديد الفئتين \textenglish{ScoutShip} و \textenglish{HibernationShip} بحسب قواعد البرمجة كائنية التوجه، بحيث \textbf{ترثان} من الفئة \textenglish{BasicShip} (استخدموا \textenglish{: base(...)} في العمليات البنائية، واحذفوا الصفات والعمليات المكررة). \\
+    \textbf{الفحص في \textenglish{Main}:} \\
+    تأكدوا أن كود الفحص في \textenglish{Main} يعمل بنجاح على الفئات الوارثة الجديدة.
+
+    \item \textbf{إضافة فئة السفينة الأم (\textenglish{MotherShip})} \\
+    أضيفوا فئة جديدة باسم \textenglish{MotherShip} تمثّل سفينة قيادة أم ترث من \textenglish{BasicShip} (أو من \textenglish{ScoutShip})، حسب قواعد البرمجة كائنية التوجه التي تعلمناها:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{MotherShip : BasicShip}}} \\
+    \hline
+    صفات موروثة من الفئة الأساسية: رقم الأسطول، رقم المحطة، رقم المركبة، رقم هوية القائد، وكمية الوقود. & \textenglish{(موروثة من BasicShip)} \\
+    \hline
+    صفات خاصة: اسم الأسطول، وحجم الاحتياطي الطارئ المسموح. & \textenglish{private string fleetName;} \newline \textenglish{private double emergencyReserve;} \\
+    \hline
+    عملية بنائية أولى تتلقى بيانات الأسطول والمحطة والمركبة، واسم الأسطول، ورقم هوية القائد. & \textenglish{public MotherShip(int fleetNumber, int baseNumber, int shipNumber, string fleetName, string captainID)} \\
+    \hline
+    عملية بنائية ثانية تتلقى بيانات الأسطول والمحطة والمركبة، ورقم هوية القائد، واسم الأسطول، وحجم الاحتياطي الطارئ المسموح. & \textenglish{public MotherShip(int fleetNumber, int baseNumber, int shipNumber, string captainID, string fleetName, double emergencyReserve)} \\
+    \hline
+    عمليات \textenglish{Get} للصفات الخاصة بها. & \textenglish{GetFleetName(), GetEmergencyReserve()} \\
+    \hline
+    عملية \textenglish{Set} لصفة اسم الأسطول، وعملية \textenglish{Set} لصفة حجم الاحتياطي الطارئ المسموح (يجب أن يكون غير سالب). & \textenglish{SetFleetName(string fleetName)} \newline \textenglish{SetEmergencyReserve(double reserve)} \\
+    \hline
+    عملية تصف الكائن. & \textenglish{ToString()} \\
+    \hline
+    عملية تعبئة وقود (موروثة من \textenglish{BasicShip}؛ الكمية يجب أن تكون موجبة). تعيد \textenglish{true} إذا نجحت التعبئة، وإلا \textenglish{false}. & \textenglish{Refuel(double amount)} \\
+    \hline
+    عملية استهلاك وقود إذا كان مسموحاً (الكمية موجبة ولا يهبط الوقود تحت \textenglish{-emergencyReserve})، وتعيد \textenglish{true} إذا نجحت و \textenglish{false} إذا لم تنجح. & \textenglish{Consume(double amount)} \\
+    \hline
+    عملية نقل وقود إلى مركبة استكشاف تتلقى كمية الوقود المراد نقلها وكائناً من النمط \textenglish{ScoutShip}. تنقل العملية كمية الوقود من السفينة الأم الحالية إلى مركبة الاستكشاف المُتلقّاة. تعيد العملية \textenglish{true} إذا نجح النقل، و \textenglish{false} إذا لم ينجح بسبب كون المركبة \textenglish{null} أو كمية غير موجبة أو كمية تتجاوز ما تسمح به السفينة الأم من استهلاك. & \textenglish{TransferFuel(double amount, ScoutShip target)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئوا سفينة أم، عبّئوها بالوقود، وجرّبوا نقل وقود منها إلى مركبة استكشاف عبر \textenglish{TransferFuel} في حالة ناجحة وأخرى فاشلة، واطبعوا حالة المركبتين.
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

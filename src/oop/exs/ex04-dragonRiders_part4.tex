@@ -1,0 +1,128 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+
+\title{أكاديمية فرسان التنانين — المرحلة الرابعة: الفئات المجردة والواجهات}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxWarning}
+\textbf{تعليمات هامة للعمل:}
+تعتمد هذه المرحلة على الفئات التي بنيتموها في المراحل السابقة (\textenglish{BasicDragon} و \textenglish{FireDragon} و \textenglish{HibernatingDragon} و \textenglish{AlphaDragon} و \textenglish{DragonRegistry}) — حدّثوا الفئات الموجودة ولا تبدأوا من الصفر. \\
+في \textbf{كل تمرين}، يجب تحديث مقطع الفحص داخل العملية الرئيسية \textenglish{Main} وتشغيله للتأكد من صحة عمل الفئات والعمليات الجديدة التي كتبتموها.
+\end{boxWarning}
+
+% ==============================================================
+\section*{المرحلة الرابعة: الفئات المجردة والواجهات}
+% ==============================================================
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+    \item \textbf{تحويل \textenglish{BasicDragon} إلى فئة مجردة (\textenglish{abstract})} \\
+    غيّروا الفئة \textenglish{BasicDragon} بحيث تصبح \textbf{فئة مجردة} (\textenglish{abstract class})، وأضيفوا إليها عملية مجردة تعريفها:
+    \begin{boxCode}
+    \begin{english}
+    \begin{minted}{csharp}
+public abstract bool UseEnergy(object o);
+    \end{minted}
+    \end{english}
+    \end{boxCode}
+    وغيّروا \textenglish{IsInDanger()} لتصبح عملية مجردة (\textenglish{abstract}) أيضاً. طبّقوا \textenglish{UseEnergy(object o)} في الفئات الوارثة:
+    \begin{itemize}
+        \item \textenglish{FireDragon} و \textenglish{AlphaDragon}: تتلقى \textenglish{double} (أو \textenglish{int}) وتستهلكه كما في \textenglish{Consume}.
+        \item \textenglish{HibernatingDragon}: تتلقى \textenglish{Date} (تاريخ اليوم) وتوقظ التنين كما في \textenglish{WakeUp(today, false)}.
+        \item إذا وصل مُعطى من نمط غير مناسب (أو \textenglish{null}) تعيد \textenglish{false}.
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    امسحوا تنانين السجل واستدعوا \textenglish{UseEnergy(25.0)} و \textenglish{UseEnergy(new Date(...))} واطبعوا النتائج.
+
+    \item \textbf{تطبيق الواجهة \textenglish{IComparable}} \\
+    طبّقوا الواجهة \textenglish{IComparable} في الفئة \textenglish{Date}، وكذلك في الفئتين:
+    \begin{itemize}
+        \item \textbf{\textenglish{HibernatingDragon}:} تتم المقارنة حسب \textbf{تاريخ الاستيقاظ} (\textenglish{wakeDate}).
+        \item \textbf{\textenglish{AlphaDragon}:} تتم المقارنة حسب \textbf{القوة الكامنة} ($\text{energy} + \text{emberReserve}$).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    قارنوا بين كائنات من كل فئة باستخدام \textenglish{CompareTo} واطبعوا النتائج.
+
+    \item \textbf{فئة خدمات الفرز (\textenglish{SortServices})} \\
+    ابنوا فئة باسم \textenglish{SortServices} وطبّقوا فيها عمليتي فرز ثابتتين لمصفوفة من النمط \textenglish{IComparable[]}:
+
+    {\centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{SortServices}}} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تصاعدي}. & \textenglish{public static void SortAscending(IComparable[] arr)} \\
+    \hline
+    عملية فرز ثابتة ترتّب المصفوفة بترتيب \textbf{تنازلي}. & \textenglish{public static void SortDescending(IComparable[] arr)} \\
+    \hline
+    \end{tabular}
+    \par} %
+
+    \vspace{2em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    افرِزوا مصفوفات من \textenglish{Date[]} و \textenglish{HibernatingDragon[]} و \textenglish{AlphaDragon[]} واطبعوها قبل الفرز وبعده.
+
+    \item \textbf{ترتيب القادة والتنانين النائمة في \textenglish{DragonRegistry}} \\
+    أضيفوا العمليتين التاليتين إلى \textenglish{DragonRegistry}:
+    \begin{itemize}
+        \item \textenglish{GetAlphasByPower()}: تعيد مصفوفة (\textenglish{AlphaDragon[]}) من قادة القطعان مرتّبة حسب \textbf{القوة الكامنة} — الأقوى أولاً (تنازلياً).
+        \item \textenglish{GetHibernatingByWakeDate()}: تعيد مصفوفة (\textenglish{HibernatingDragon[]}) من التنانين النائمة مرتّبة حسب \textbf{تاريخ الاستيقاظ} — الأقرب موعداً أولاً (تصاعدياً).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعوا العمليتين واطبعوا المصفوفتين المرتبتين.
+
+    \item \textbf{تمرين ختامي: محاكاة يوم كامل في الوادي} \\
+    اكتبوا في \textenglish{Main} محاكاة ليوم كامل في الأكاديمية تجمع كل ما بنيتموه:
+    \begin{enumerate}[label=\textbf{\arabic*.}]
+        \item أنشئوا سجلّين (\textbf{سجل الشمال} و\textbf{سجل الجنوب}) في كل منهما تنانين من الأنماط الثلاثة ويشتركان في تنينين على الأقل، ثم ادمجوهما في \textbf{سجل الوادي} عبر \textenglish{Merge}.
+        \item استدعوا \textenglish{FeedAll} بكمية صغيرة واطبعوا \textenglish{TotalEnergy()}.
+        \item أرسلوا ثلاثة تنانين نارية في رحلات طيران (\textenglish{FlyTo}) بحيث يدخل اثنان منهم في جمر الطوارئ، ثم اطبعوا \textenglish{DangerLevel()}، \textenglish{DangerDragons()}، و \textenglish{PrintSuggestions()}.
+        \item أجروا إنقاذاً عبر \textenglish{TransferEnergy} من قائد القطيع إلى التنانين النارية التي في خطر، ثم أعلنوا إنذار بركان وأيقظوا التنانين النائمة عبر \textenglish{WakeUp(today, true)}.
+        \item اطبعوا قادة القطعان مرتبين بالقوة الكامنة، والتنانين النائمة حسب موعد الاستيقاظ، ثم احذفوا التنانين التي استيقظت واطبعوا السجل النهائي.
+    \end{enumerate}
+
+\end{enumerate}
+
+\section*{خريطة المراجعة للمعلم والطالب}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+{\small
+\begin{tabular}{|p{0.58\textwidth}|p{0.34\textwidth}|}
+\hline
+\textbf{الموضوع المُراجَع} & \textbf{أرقام التمارين} \\
+\hline
+عمليات مساعدة (\textenglish{private}) لتجنب تكرار الكود & 1، 3، 7، 8، 16 \\
+\hline
+المصفوفات (إنشاء، مسح، فحص \textenglish{null}، بحث، إزاحة، دمج) & 3، 7، 8، 14، 16، 20 \\
+\hline
+فئة تحوي كائناً مركباً أو مصفوفة كائنات & 2، 3، 4، 7، 8 \\
+\hline
+الشروط المركّبة (\textenglish{\&\&}, \textenglish{||}, \textenglish{!}) والشروط المتداخلة & 1، 2، 4، 7، 9، 12 \\
+\hline
+العمليات البنائية الناسخة والمؤشرات & 2، 3، 4، 16 \\
+\hline
+الوراثة، \textenglish{base}، وأذونات الوصول \textenglish{protected} & 6، 7، 10 \\
+\hline
+إعادة التعريف (\textenglish{virtual}/\textenglish{override}) وفحص الأنماط (\textenglish{is}/\textenglish{as}) & 9–13 \\
+\hline
+العملية \textenglish{Equals}، الفئات المجردة (\textenglish{abstract})، والواجهة \textenglish{IComparable} & 15، 17–20 \\
+\hline
+\end{tabular}
+}
+\end{center}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
