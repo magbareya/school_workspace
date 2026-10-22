@@ -2,7 +2,22 @@
 
 This document defines the authoring conventions, pedagogical style, LaTeX architecture, build system, and coding standards used across all course materials in this repository.
 
-**Any AI assistant or contributor generating or editing worksheets, booklets, homeworks, lesson notes, summaries, Bagrut solutions, or exams in this workspace MUST follow the rules in this document.**
+**Any AI assistant or contributor generating or editing worksheets, booklets, homeworks, lesson notes, summaries, Bagrut solutions, or exams in this workspace MUST follow the rules in this document.** When a rule here conflicts with an older file in the repository, this document wins.
+
+---
+
+## 0. Quick Checklist (Read First)
+
+Before finishing any task, verify that every item below holds. Each item links to its detailed section.
+
+1. **Compile with `make`, never with `xelatex` directly**, and confirm the PDF builds without errors ([Section 2.2](#22-build--mandatory-compilation-check)).
+2. **Terminology:** use the mandatory Arabic terms (`عملية` not `دالة`, `نمط` not `نوع`, `حد` not `عنصر`, `مؤشر`, `مسح`, `تعريف`, ...) and keep code identifiers in `\textenglish{...}` ([Section 3](#3-strict-pedagogical-terminology-arabic--cs-concepts)).
+3. **No Arabic inside `minted`** — all code comments and console strings are in English ([Section 2.1](#21-engine-fonts--document-skeleton)).
+4. **Boxes never split across pages** — keep every `tcolorbox` short; split long solutions into several boxes ([Section 4.1](#41-critical-rule-tcolorbox-environments-do-not-split-across-pages)).
+5. **Pagination:** `\filbreak` after every `\item` (outside any `\fi`), `\clearpage` before every `\section*` ([Section 8](#8-pagination--spacing-rules)).
+6. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
+7. **Solutions** go in `\ifwithsols \begin{boxSolution} ... \end{boxSolution} \fi`, or — for OOP booklets — in standalone `.cs` files ([Sections 5.2](#52-progressive-multi-stage-oop-booklets--standalone-c-solutions) and [7](#7-solution--code-standards)).
+8. **Every C# `if`/`else`/`for`/`while` has braces**, and fields are accessed with `this.` ([Section 7](#7-solution--code-standards)).
 
 ---
 
@@ -15,63 +30,84 @@ This document defines the authoring conventions, pedagogical style, LaTeX archit
   - **Python (`src/python/pythonA/`):** Variables, I/O, conditionals, `for`/`while` loops, strings (indexing & slicing), and lists.
   - **Computational Models & Automata (`history_src/2025_26/computational_models/`):** Formal languages, regular operations, DFA, NFA, product automaton, closure properties, PDA, and Turing Machines.
 - **Language of Instruction:** Formal, clear Arabic for explanations and requirements, combined seamlessly with English (`\textenglish{...}`) for code tokens, keywords, identifiers, and console I/O.
-- **School & Instructor Identity:**
+- **School & Instructor Identity:** The page headers are already set by the preamble — do NOT redefine them in individual files:
   - Header Right: `\fancyhead[R]{الأستاذ محمود اغبارية}`
   - Header Left: `\fancyhead[L]{مدرسة التسامح الشاملة}`
-  - Standard Document Closing:
+- **Standard Document Closing** (end every student-facing document with it):
 
-    ```latex
-    \vspace{1cm}
-    \begin{flushleft}
-    أرجو لكم وقتًا ممتعًا.
+  ```latex
+  \vspace{1cm}
+  \begin{flushleft}
+  أرجو لكم وقتًا ممتعًا.
 
-    الأستاذ محمود اغبارية.
-    \end{flushleft}
-    ```
+  الأستاذ محمود اغبارية.
+  \end{flushleft}
+  ```
 
 ### 1.1. Repository Directory Structure
-- [`src/`](file:///c:/dev/workspace/school_workspace/src): Current active teaching materials (`basics/`, `oop/`, `python/pythonA/`).
-- [`history_src/2025_26/`](file:///c:/dev/workspace/school_workspace/history_src/2025_26): Full archive of previous year materials (`basics/`, `computational_models/`). *Note: Authoring conventions evolved over that year; always follow the latest settled conventions documented below.*
+- [`src/`](file:///c:/dev/workspace/school_workspace/src): Current active teaching materials (`basics/`, `oop/`, `python/pythonA/`). Inside each subject: `exs/` (worksheets, booklets, homework), `lessonNotes/` (lesson notes and summaries), `exams/`, and `topicPlans/` (teacher-facing guides).
+- [`history_src/2025_26/`](file:///c:/dev/workspace/school_workspace/history_src/2025_26): Full archive of previous year materials (`basics/`, `computational_models/`). *Authoring conventions evolved over that year; when an archive file contradicts this document, follow this document.*
 - [`bagrut_questions/`](file:///c:/dev/workspace/school_workspace/bagrut_questions): Cropped Bagrut exam question images (`.png`/`.pdf`) and their modular `.tex` solution fragments.
-- [`scripts/`](file:///c:/dev/workspace/school_workspace/scripts): Shared LaTeX preambles ([`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex), [`scripts/beamer_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/beamer_preamble.tex)) and Python automation utilities (`scripts/bagrut_questions/`).
-- `out/`: Compiled PDFs mirroring the `src/` directory structure (generated via [`Makefile`](file:///c:/dev/workspace/school_workspace/Makefile)).
+- [`scripts/`](file:///c:/dev/workspace/school_workspace/scripts): Shared LaTeX preambles ([`tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex), [`beamer_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/beamer_preamble.tex)) and Python automation utilities (`scripts/bagrut_questions/`).
+- `out/`: Compiled PDFs mirroring the `src/` directory structure (generated by the [`Makefile`](file:///c:/dev/workspace/school_workspace/Makefile)). Never edit files in `out/` by hand.
 
 ---
 
 ## 2. LaTeX Technical Architecture & Build System
 
+### 2.1. Engine, Fonts & Document Skeleton
 - **Engine:** `XeLaTeX` with `-shell-escape` (required for `minted` v3) and `polyglossia`.
-  - Main language: Arabic (`\setmainlanguage[numerals=western]{arabic}`).
-  - Second language: English (`\setotherlanguage{english}`).
+  - Main language: Arabic (`\setmainlanguage[numerals=western]{arabic}`); second language: English (`\setotherlanguage{english}`).
   - Fonts: `Calibri` (Arabic), `Courier New` (monospace/code), `Segoe UI Emoji` (`\emoji` for box icons).
-  - **CRITICAL Font Rule for `minted`:** Never write Arabic text or Arabic comments inside `\begin{minted}{csharp}` or `\begin{minted}{python}` because the default Latin monospace font lacks Arabic glyphs (they will render as blank spaces). All inline comments inside `minted` blocks MUST be in English.
-- **Document Class:** Always `\documentclass[14pt]{extarticle}`.
-- **Preamble Import:** Always `\input{../../../scripts/tex_preamble.tex}` (adjust relative path based on directory depth).
-- **Mandatory PDF Compilation Verification via `make`:**
-  - Every `.tex` file created or modified MUST be verified by compiling it to PDF and checking that compilation succeeds without errors.
-  - **Always compile using `make` — NEVER run `xelatex` manually.** The [`Makefile`](file:///c:/dev/workspace/school_workspace/Makefile) automatically handles `TEXMF_OUTPUT_DIRECTORY`, two-pass compilation, conditional flags (`\ifdetailed`, `\ifwithsols`, `\ifwhiteblack`), and cleanup (`make sclean`).
-  - Examples of `make` commands:
-    - Build a specific target PDF: `make out/oop/exs/ex02-inheritanceAndPolymorphism.pdf` (or `_printable.pdf`, `_sols.pdf`, `_wb.pdf`) and then run `make sclean`.
-    - Build all `.tex` PDFs: `make tex` or `make pdf`, `make printable`, `make sols`, or `make all`.
-- **Conditional Compilation Flags (driven by [`Makefile`](file:///c:/dev/workspace/school_workspace/Makefile)):**
-  - `\ifdetailed`: Controls sample console interactions (`boxExample`) and visual hints.
-    - Set to `true` in regular builds (`make pdf` $\rightarrow$ `out/.../<name>.pdf`).
-    - Set to `false` in printable student handouts (`make printable` $\rightarrow$ `out/.../<name>_printable.pdf`) to keep the handout compact and paper-efficient.
-  - `\ifwithsols`: Controls inclusion of reference solution boxes (`\begin{boxSolution} ... \end{boxSolution}`).
-    - Set to `true` in solutions builds (`make sols` $\rightarrow$ `out/.../<name>_sols.pdf`).
-  - `\ifwhiteblack`: Controls black-and-white A4 landscape presentation mode (`make wb` $\rightarrow$ `out/.../<name>_wb.pdf` and `make wbsols`). Sets `\LARGE` font, `bw` minted style, and black-and-white borders. Use `\ifwhiteblack \clearpage \fi` where needed for landscape page breaks.
-- **Helper Macros & Global Defaults in [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex):**
-  - `\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}`: Centered fixed-width column for tables (`|C{2.5cm}|`).
-  - `\importpdfpage{filepath}{pagenum}`: Imports a full-page PDF graphic.
-  - `\insertFullImg{filepath}`: Centers an image at `0.9\paperwidth`.
-  - `\begin{pycell} ... \end{pycell}`: Frameless, full-width code cell used to put `minted` code inside a table cell while keeping it left-to-right inside an RTL table (see Section 5.7). Do NOT redefine it inside individual `.tex` files.
-  - **Default `minted` look:** `\setminted{fontsize=\footnotesize, breaklines=true}` is set globally by the preamble in regular builds (it is intentionally NOT applied in `\ifwhiteblack` mode, which uses `\LARGE`). Do NOT repeat it in individual files.
-  - **Compact `boxCode`:** the preamble also appends `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt` to the `simplecode` style, so code boxes stay compact despite the global `onehalfspacing`. Do NOT repeat it in individual files.
-- **List Spacing:** Standardize item separation with `[itemsep=2em]` or `[itemsep=2.2em]`. When resuming lists across sections or pages, use `\begin{enumerate}[resume, ...]`.
+- **CRITICAL Font Rule for `minted`:** Never write Arabic text or Arabic comments inside `\begin{minted}{csharp}` or `\begin{minted}{python}` — the Latin monospace font has no Arabic glyphs, so they render as blank space. All comments and strings inside `minted` MUST be in English.
+- **Document Skeleton:**
+  ```latex
+  \documentclass[14pt]{extarticle}
+  \input{../../../scripts/tex_preamble.tex}  % adjust ../ depth to the file's location
+
+  \title{...}
+
+  \begin{document}
+  \maketitle
+  ...
+  \end{document}
+  ```
+
+### 2.2. Build & Mandatory Compilation Check
+- **Every `.tex` file you create or modify MUST be compiled to PDF and the build must succeed without errors.**
+- **Always compile with `make` — NEVER run `xelatex` manually.** The [`Makefile`](file:///c:/dev/workspace/school_workspace/Makefile) sets `TEXMF_OUTPUT_DIRECTORY`, runs two passes, and passes the conditional flags (Section 2.3).
+- **Targets** (path under `out/` mirrors the path under `src/`):
+
+  | Command | Output | Flags |
+  | :--- | :--- | :--- |
+  | `make out/<path>/<name>.pdf` | Regular PDF | `detailed=true`, `withsols=false` |
+  | `make out/<path>/<name>_printable.pdf` | Compact student handout | `detailed=false`, `withsols=false` |
+  | `make out/<path>/<name>_sols.pdf` | Solutions | `detailed=true`, `withsols=true` |
+  | `make out/<path>/<name>_wb.pdf` | Black-and-white landscape | `whiteblack=true` |
+  | `make out/<path>/<name>_wb_sols.pdf` | Black-and-white landscape + solutions | `whiteblack=true`, `withsols=true` |
+
+  Example: `make out/oop/exs/ex02-Company.pdf`, then `make sclean` to remove temporary files. Bulk targets: `make tex`, `make pdf`, `make printable`, `make sols`, `make wb`, `make wbsols`, `make all`.
+- **If a file contains `\ifwithsols` or `\ifdetailed` blocks, also build the `_sols` / `_printable` variant** to make sure both branches compile.
+- **A build that hangs is a LaTeX error:** `xelatex` is not run in non-stop mode, so on an error it waits for input. Stop it and read the end of `out/<path>/<name>.log` (look for lines starting with `!`).
+
+### 2.3. Conditional Compilation Flags
+- `\ifdetailed` — sample console runs (`boxExample`) and visual hints. `true` in regular builds, `false` in `_printable` handouts (keeps them short and paper-efficient).
+- `\ifwithsols` — reference solution boxes (`boxSolution`). `true` only in `_sols` builds.
+- `\ifwhiteblack` — black-and-white A4 landscape presentation mode (`\LARGE` font, `bw` minted style, black borders). Use `\ifwhiteblack \clearpage \fi` (right after an item's `\filbreak`) only when an exercise must get its own landscape page (see Section 8).
+
+### 2.4. Helper Macros & Global Defaults (in [`tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex))
+- `\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}` — centered fixed-width table column (`|C{2.5cm}|`).
+- `\importpdfpage{filepath}{pagenum}` — imports a full-page PDF graphic.
+- `\insertFullImg{filepath}` — centers an image at `0.9\paperwidth`.
+- `\begin{pycell} ... \end{pycell}` — frameless, full-width cell for putting `minted` code inside an RTL table cell (see Section 5.7).
+- **Global `minted` look:** `\setminted{fontsize=\small, breaklines=true}` (not applied in `\ifwhiteblack` mode, which uses `\LARGE`).
+- **Compact `boxCode`:** the `simplecode` style is extended with `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt`, so code boxes stay compact despite the global `onehalfspacing`.
+- **Do NOT redefine any of the above** (`pycell`, `\setminted`, `\tcbset{simplecode...}`) in individual `.tex` files. Add a per-file override only when a specific document genuinely needs a different value.
+- **List Spacing:** Separate items with `[itemsep=2em]` or `[itemsep=2.2em]`. To continue numbering across sections, use `\begin{enumerate}[resume, ...]`.
 
 ---
 
-## 3. Strict Pedagogical Terminology (Arabic $\leftrightarrow$ CS Concepts)
+## 3. Strict Pedagogical Terminology (Arabic ↔ CS Concepts)
 
 In high school CS and Bagrut exams, verb and noun choices convey exact technical specifications. **Never interchange these terms:**
 
@@ -95,7 +131,7 @@ In high school CS and Bagrut exams, verb and noun choices convey exact technical
 
 ### 3.1. Language Policy: Technical Concepts vs. Code Identifiers
 - **Technical Concepts (المصطلحات التقنية):** If an established Arabic term exists (e.g. `الوراثة` for Inheritance, `تعدد الأشكال` for Polymorphism, `مخطط الهرمية` for Hierarchy, `البرمجة كائنية التوجه` for OOP, `العمليات البنائية` for Constructors, `التحميل الزائد` for Overloading, `التحويل لأعلى` for Upcasting, `التحويل لأسفل` for Downcasting, `إعادة تعريف العمليات` for Overriding, `الفئة المجردة` for Abstract Class, `الواجهة` for Interface), **write the Arabic term only**. Do NOT append English translations in parentheses (avoid: `الوراثة (Inheritance)`, `البرمجة كائنية التوجه (OOP)`).
-- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{Technician}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{YearlyBonus}`, `\textenglish{IsAccepted}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{current}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This ensures students define and implement unified, specific identifiers in their code. Remember to escape underscores in text mode (`\textenglish{student\_name}`).
+- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This makes students implement the exact, unified identifiers. Escape underscores and `#` in text mode (`\textenglish{student\_name}`, `\textenglish{C\#}`).
 
 ### 3.2. Mandatory Word Choices (تفضيلات المصطلحات الإلزامية)
 1. **استخدام "تعريف" بدلاً من "ترويسة":** عند الإشارة إلى توقيع أو رأس الفئة أو العملية البرمجية (Header / Signature / Definition)، استخدم دائمًا مصطلح **"تعريف"** (مثل: `تعريف الفئة`، `تعريف العملية`) وتجنّب استخدام كلمة "ترويسة".
@@ -164,33 +200,33 @@ In high school CS and Bagrut exams, verb and noun choices convey exact technical
 | تطبيق | מימוש | Implementation |
 
 **ملاحظات:**
-- الخلايا المعلّمة بـ (—) فارغة في ورقة المصطلحات المصدرية (`tmp/translate.pdf`).
-- المصطلحان "مؤشر" و"ابن أيسر" مكتوبان في الورقة المصدرية بصيغة ناقصة ("مؤش"، "أيس")؛ الصيغة المعتمدة هنا هي الصيغة الكاملة.
+- الخلايا المعلّمة بـ (—) فارغة في ورقة المصطلحات الرسمية.
+- المصطلحان "مؤشر" و"ابن أيسر" مكتوبان في الورقة الرسمية بصيغة ناقصة ("مؤش"، "أيس")؛ الصيغة المعتمدة هنا هي الصيغة الكاملة.
 
 ---
 
-## 4. Semantic Callout Boxes (`tcolorbox`) & Non-Splitting Rules
+## 4. Semantic Callout Boxes (`tcolorbox`)
 
-All callout boxes are defined in [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex) with colored borders and emoji icons:
+All callout boxes are defined in [`tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex) with colored borders and emoji icons. The optional argument is appended to the title; pass a leading dash for a subtitle (`\begin{boxNote}[- عنوان فرعي]`).
 
 | Environment | Title / Icon | Primary Pedagogical Use |
 | :--- | :--- | :--- |
 | `\begin{boxDef}[#]` | `📘 تعريف # :` | Formal concept definitions or project story/domain framing (`[قصة السلسلة: ...]`). |
 | `\begin{boxExercise}[#]` | `🧩 تمرين # :` | Standalone exercise blocks inside lesson notes. |
 | `\begin{boxExample}[#]` | `📝 مثال # :` | Sample console input/output runs and illustrative scenarios (wrapped in `\ifdetailed`). |
-| `\begin{boxNote}[#]` | `✨ ملاحظة # :` | Helpful hints, type selection reminders, or rules tables. Pass a leading dash for subtitles: `\begin{boxNote}[- عنوان فرعي]`. |
-| `\begin{boxAttention}[#]` | `🔔 تنبيه # :` | Important pedagogical reflections (`\begin{boxAttention}[- نقطة للتفكير]`), pre-submission checklists, or key distinctions. |
+| `\begin{boxNote}[#]` | `✨ ملاحظة # :` | Helpful hints, type selection reminders, or rules tables. |
+| `\begin{boxAttention}[#]` | `🔔 تنبيه # :` | Important pedagogical reflections (`[- نقطة للتفكير]`), pre-submission checklists, or key distinctions. |
 | `\begin{boxWarning}[#]` | `⚡ ملاحظة هامة # :` | Common pitfalls (e.g. integer division truncation) or mandatory workflow instructions (testing in `Main`). |
-| `\begin{boxSolution}[#]` | `✅ حل # :` | Reference solutions wrapped inside `\ifwithsols ... \fi`. Supports labels like `[1]`, `[بديل]`, `[فرع أ]`. |
-| `\begin{boxSymbol}[#]` | `🔣 رمز # :` | Mathematical or formal notation boxes (used in Automata / Computational Models). |
+| `\begin{boxSolution}[#]` | `✅ حل # :` | Reference solutions wrapped inside `\ifwithsols ... \fi`. Labels like `[1]`, `[بديل]`, `[فرع أ]`. |
+| `\begin{boxSymbol}[#]` | `🔣 رمز # :` | Mathematical or formal notation (Automata / Computational Models). |
 | `\begin{boxHint}[#]` | `💡 تلميح # :` | Guided hints for challenging problems. |
-| `\begin{boxCode}` | *(No title bar)* | Compact gray box (`simplecode`) for method signatures, localized code snippets, or exam cover instructions. |
+| `\begin{boxCode}` | *(No title bar)* | Compact gray box for method signatures, localized code snippets, or exam cover instructions. |
 
 ### 4.1. Critical Rule: `tcolorbox` Environments Do NOT Split Across Pages
-None of the boxes above (`boxCode`, `boxSolution`, `boxNote`, etc.) are breakable across pages. If a box is too tall for the remaining space on a page, it will jump to the next page (leaving large whitespace) or overflow the bottom margin and get clipped in print.
-- **Keep `boxCode` Examples Localized & Short:** In summaries and lesson notes, avoid long full-program listings inside a single `boxCode`. Write focused 8–15 line snippets illustrating the exact concept + 2–3 lines of `// Usage in Main:`.
-- **Compact Code Boxes Are Configured Globally:** [`scripts/tex_preamble.tex`](file:///c:/dev/workspace/school_workspace/scripts/tex_preamble.tex) loads `\usepackage[onehalfspacing]{setspace}`, and therefore it also sets (in regular, non-`\ifwhiteblack` builds) `\setminted{fontsize=\footnotesize, breaklines=true}` and appends `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt` to the `simplecode` style. **Do NOT copy these `\setminted` / `\tcbset` lines into individual `.tex` files** — they are already in effect for every document. Only add a per-file override when a specific document genuinely needs a different value.
-- **Use `\filbreak` Between Topics in Summaries:** Place `\filbreak` before each `\subsection*` in summary sheets so a topic heading and its explanation never sit at the bottom of a page while its `boxCode` jumps to the next page.
+None of the boxes above can break across pages. A box taller than the remaining space jumps to the next page (leaving a large gap), and a box taller than a whole page overflows the bottom margin and is **clipped in print**.
+- **Keep code boxes short and localized:** In summaries and lesson notes, avoid full-program listings in one `boxCode`. Write focused 8–15 line snippets showing the exact concept, plus 2–3 lines of `// Usage in Main:`.
+- **Split long solutions** into several consecutive `boxSolution`s (see Section 7).
+- **Keep tables inside boxes short** — a table row cannot break either.
 
 ---
 
@@ -198,7 +234,7 @@ None of the boxes above (`boxCode`, `boxSolution`, `boxNote`, etc.) are breakabl
 
 ### 5.1. Standard Worksheets & Practice Sheets (`exs/exXX-*.tex`)
 - **Location:** `src/<subject>/exs/exXX-<TopicName>.tex`
-- **Title Scheme:**
+- **Title Scheme** (adjust the sheet number, grade, and topic):
   ```latex
   \ifwithsols
   \title{حل ورقة تمرن X للصف العاشر 10 - [الموضوع]}
@@ -211,58 +247,60 @@ None of the boxes above (`boxCode`, `boxSolution`, `boxNote`, etc.) are breakabl
   - C# OOP Single Class: [src/oop/exs/ex01-PointClass.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex01-PointClass.tex)
   - C# Arrays & Classes Archive: [history_src/2025_26/basics/exs/ex10D-classes2-classesWithArrays.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/exs/ex10D-classes2-classesWithArrays.tex)
 
-### 5.2. Progressive Multi-Stage OOP Booklets (`كراس تمارين متدرج`) & Standalone C# Solutions
-Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphism, abstract classes, and interfaces step-by-step through a unified domain story:
+### 5.2. Progressive Multi-Stage OOP Booklets & Standalone C# Solutions
+Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teach object-oriented design, inheritance, polymorphism, abstract classes, and interfaces step by step through one domain story.
+
+- **Files:** Each booklet exists as one full file (`exXX-<Name>.tex`) and as one file per stage (`exXX-<Name>_part1.tex`, `_part2.tex`, ...). Each stage's reference solution is in its own folder `exXX-<Name>_sol/partN/` (or `exXX_<name>_sol/partN/`).
 - **Reference Examples:**
-  - Employees & Company Project: [src/oop/exs/ex02-inheritanceAndPolymorphism.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex02-inheritanceAndPolymorphism.tex) (Solutions in [`src/oop/exs/ex02_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex02_sol))
-  - Galactic Fleet Project: [src/oop/exs/ex03-galacticFleet.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex03-galacticFleet.tex) (Solutions in [`src/oop/exs/ex03_galactic_fleet_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex03_galactic_fleet_sol))
-  - Dragon Riders Academy Project: [src/oop/exs/ex04-dragonRiders.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04-dragonRiders.tex) (Solutions in [`src/oop/exs/ex04_dragon_riders_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04_dragon_riders_sol))
+  - Employees & Company (5 stages): [ex02-Company.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex02-Company.tex), parts `ex02-Company_part1..5.tex`, solutions in [`ex02-Company_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex02-Company_sol)
+  - Galactic Fleet (4 stages): [ex03-galacticFleet.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex03-galacticFleet.tex), solutions in [`ex03_galactic_fleet_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex03_galactic_fleet_sol)
+  - Dragon Riders Academy (4 stages): [ex04-dragonRiders.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04-dragonRiders.tex), solutions in [`ex04_dragon_riders_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04_dragon_riders_sol)
 - **Required Architectural Pattern:**
   1. **Header Boxes:** Open with `\begin{boxDef}[قصة السلسلة: ...]` introducing the narrative, followed by `\begin{boxWarning}` instructing students to update and run `Main` in every exercise.
-  2. **Continuous Exercise Numbering:** Use `\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]` and `\begin{enumerate}[resume, ...]` across stages.
-  3. **Four-Stage Pedagogical Progression:**
-     - **المرحلة الأولى (مقدمة للوراثة):** Build 2 sibling classes *without* inheritance (having some identical fields/methods and some unique ones), then extract only the identical members into a common base class, followed by `\begin{boxAttention}[- نقطة للتفكير]` motivating inheritance.
-     - **المرحلة الثانية (تطبيق الوراثة بين الفئات):** Refactor the base class (`protected` fields) and derived classes (`: base(...)`, `override ToString()` calling `base.ToString()`), and add a third derived class containing an array of objects (e.g. `Supervisor`, `MotherShip`, `AlphaDragon`).
-     - **المرحلة الثالثة (تعدد الأشكال وإدارة المجموعة):** Build a management/registry class holding a polymorphic array of the base type, implement `virtual` and `override` methods, practice downcasting with `is` and `as`, and override `Equals(object obj)`.
-     - **المرحلة الرابعة (الفئات المجردة والواجهات):** Convert the base class to `abstract class` with an `abstract` method taking `object`, implement `IComparable` (`CompareTo(object obj)`), build `SortServices`, and write methods that filter by type (`is`) and return sorted sub-arrays.
-  4. **Mandatory `Main` Verification in Every Exercise:** Every single exercise MUST end with `\textbf{الفحص في \textenglish{Main}:}` specifying what objects to instantiate, which methods to call (both valid and edge/failure cases), and what to print.
-  5. **Standalone C# Solution Files:** Do NOT embed 1,000+ lines of evolving C# inside `boxSolution` in the `.tex` booklet. Instead, place the final, compilable C# classes (`.cs` file per class + `Program.cs`) in a dedicated folder `src/oop/exs/exXX_..._sol/`.
+  2. **Continuous Exercise Numbering:** `\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]`, continued in later stages with `\begin{enumerate}[resume, ...]`.
+  3. **Stage Progression** (one `\section*{المرحلة ...}` per stage):
+     - **مقدمة للوراثة:** Build 2 sibling classes *without* inheritance (some identical fields/methods, some unique), then extract only the identical members into a common base class, followed by `\begin{boxAttention}[- نقطة للتفكير]` motivating inheritance.
+     - **تطبيق الوراثة بين الفئات:** Refactor the base class (`protected` fields) and derived classes (`: base(...)`, `override ToString()` calling `base.ToString()`), and add a third derived class holding an array of objects (e.g. `Supervisor`, `MotherShip`, `AlphaDragon`).
+     - **تعدد الأشكال وإدارة المجموعة:** A management/registry class holding a polymorphic array of the base type; `virtual`/`override` methods; downcasting with `is` and `as`; overriding `Equals(object obj)`.
+     - **الفئات المجردة والواجهات:** Convert the base class to `abstract class` with an `abstract` method taking `object`, implement `IComparable` (`CompareTo(object obj)`), build `SortServices`, and write methods that filter by type (`is`) and return sorted sub-arrays.
+     - A booklet may split one of these stages into two (e.g. the Company booklet has 5 stages).
+  4. **Mandatory `Main` Verification in Every Exercise:** Every exercise MUST end with `\textbf{الفحص في \textenglish{Main}:}` specifying which objects to create, which methods to call (both valid and edge/failure cases), and what to print.
+  5. **Standalone C# Solution Files:** Do NOT embed the evolving C# code inside `boxSolution` in the booklet. Put compilable C# classes (one `.cs` file per class + `Program.cs`) in the stage's solution folder; the full booklet's final solution equals the last stage's solution.
 
 ### 5.3. Homework (`exs/hwXX-*.tex`)
 - **Location:** `src/<subject>/exs/hwXX-<TopicName>.tex`
 - **Title Scheme:** `\title{وظيفة بيتية X للصف العاشر 10: [الموضوع]}`
-- **Header Boxes:** Opens with an imperative `boxWarning` reminding students to run and test their code before submission, followed by a `boxNote` regarding proper types (`int` vs `double`).
+- **Header Boxes:** An imperative `boxWarning` reminding students to run and test their code before submission, followed by a `boxNote` about choosing proper types (`int` vs `double`).
 - **Reference Examples:** [src/basics/exs/hw01-VariablesMathOperations.tex](file:///c:/dev/workspace/school_workspace/src/basics/exs/hw01-VariablesMathOperations.tex), [src/oop/exs/hw00-DateClass.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/hw00-DateClass.tex).
 
 ### 5.4. Lesson Notes & Student Summaries (`lessonNotes/`)
 - **Location:** `src/<subject>/lessonNotes/`
 - **Title Scheme:** `\title{ملخص: [الموضوع]}` or `\title{ملخص شامل للطلاب: [الموضوع]}` with `\author{أ. محمود اغبارية}`.
 - **Two Formats:**
-  1. **Detailed Lesson Notes:** Include formal syntax in `boxCode`, rules tables, memory/TikZ diagrams, and in-class `boxExercise` blocks. Examples: [src/basics/lessonNotes/01-variables_math_string_operations_new.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new.tex), [history_src/2025_26/basics/lessonNotes/12-classes.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/lessonNotes/12-classes.tex).
-  2. **Compact Printable Student Summaries:** Each numbered topic (`\subsection*{1. ...}`) preceded by `\filbreak` follows a strict 3-part localized structure:
-     - `\textbf{الفكرة:}` Concise 1–2 sentence explanation using exact terminology.
-     - `\begin{boxCode} ... \end{boxCode}` Short, localized, self-contained example + `// Usage in Main:`.
-     - `\textbf{تنبيه:}` Common exam mistake to avoid.
-     - **Reference Examples:** [src/oop/lessonNotes/student_summary_csharp_oop.tex](file:///c:/dev/workspace/school_workspace/src/oop/lessonNotes/student_summary_csharp_oop.tex), [src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex).
+  1. **Detailed Lesson Notes:** Formal syntax in `boxCode`, rules tables, memory/TikZ diagrams, and in-class `boxExercise` blocks. Examples: [src/basics/lessonNotes/01-variables_math_string_operations_new.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new.tex), [history_src/2025_26/basics/lessonNotes/12-classes.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/lessonNotes/12-classes.tex).
+  2. **Compact Printable Student Summaries:** Each numbered topic (`\subsection*{1. ...}`, preceded by `\filbreak`) has a strict 3-part structure:
+     - `\textbf{الفكرة:}` — concise 1–2 sentence explanation using exact terminology.
+     - `\begin{boxCode} ... \end{boxCode}` — short, localized, self-contained example + `// Usage in Main:`.
+     - `\textbf{تنبيه:}` — a common exam mistake to avoid (optional when there is no typical mistake).
+     - Reference examples: [src/oop/lessonNotes/student_summary_csharp_oop.tex](file:///c:/dev/workspace/school_workspace/src/oop/lessonNotes/student_summary_csharp_oop.tex), [src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex).
 
 ### 5.5. Exams & Quizzes (`exams/`)
 - **Title Scheme:** `\title{اختبار شهري للصف 10-10}` or `\title{امتحان فصلي ...}`
-- **Exam Rules Header Box:** Enclosed inside `\ifwithsols \else \begin{boxCode} ... \end{boxCode} \fi` containing exam duration, ink-only requirement, external answer sheet instructions, and allowed materials.
-- **Point Allocations:** Displayed next to question headers as `\item \textbf{السؤال الأوّل} (25 علامة)` and sub-questions as `(10 علامات)` or `\textbf{(بونوس +5 علامات)}`.
-- **Detached Student Tear-Off Answer Sheet (`ورقة تسليم للطالب`):**
-  When an exam contains tracing tables (`جدول متابعة`) or fill-in-the-blank tables that students must hand in inside the exam packet, duplicate those tables at the very end of the document inside `\ifwithsols \else ... \fi`, preceded by an empty spacer page (`\clearpage \thispagestyle{empty} \mbox{} \clearpage`) so that in double-sided printing the tear-off sheet is on a separate physical page.
+- **Exam Rules Header Box:** Inside `\ifwithsols \else \begin{boxCode} ... \end{boxCode} \fi`: exam duration, ink-only requirement, external answer sheet instructions, and allowed materials.
+- **Point Allocations:** Next to question headers as `\item \textbf{السؤال الأوّل} (25 علامة)`, and next to sub-questions as `(10 علامات)` or `\textbf{(بونوس +5 علامات)}`.
+- **Detached Student Tear-Off Answer Sheet (`ورقة تسليم للطالب`):** When students must hand in tracing tables (`جدول متابعة`) or fill-in tables, duplicate those tables at the very end of the document inside `\ifwithsols \else ... \fi`, preceded by an empty spacer page (`\clearpage \thispagestyle{empty} \mbox{} \clearpage`), so in double-sided printing the tear-off sheet is on its own physical sheet.
 - **Reference Examples:** [history_src/2025_26/basics/exams/exam01-BasicsMathIf1.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/exams/exam01-BasicsMathIf1.tex), [history_src/2025_26/basics/exams/exam04-final_untilClasses2.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/exams/exam04-final_untilClasses2.tex).
 
 ### 5.6. Bagrut Question Fragments (`bagrut_questions/`)
-- **Architecture:** Individual Bagrut question `.tex` files in `bagrut_questions/<subject>/<topic>_<year>_<examId>_<qNum>.tex` are **document fragments** (they do NOT contain `\documentclass` or `\begin{document}`) designed to be `\input{...}` into topic compilations or full exam booklets (such as [src/oop/review_basics/bagrut371-2026.tex](file:///c:/dev/workspace/school_workspace/src/oop/review_basics/bagrut371-2026.tex)).
-- **Formatting Rule Inside Bagrut `boxSolution`:** When an `\item` inside `\begin{enumerate}` is immediately followed by a `\begin{boxCode}` or table, place a period after `\item` (`\item .`) so `polyglossia`/`bidi` does not misalign the bullet vertically.
+- **Architecture:** Each Bagrut question file `bagrut_questions/<subject>/<topic>_<year>_<examId>_<qNum>.tex` is a **document fragment** (no `\documentclass`, no `\begin{document}`) that is `\input{...}` into topic compilations or full exam booklets (e.g. [src/oop/review_basics/bagrut371-2026.tex](file:///c:/dev/workspace/school_workspace/src/oop/review_basics/bagrut371-2026.tex)). Verify a fragment by building the document that includes it.
+- **Bullet Alignment Inside `boxSolution`:** When an `\item` inside `\begin{enumerate}` is immediately followed by a `\begin{boxCode}` or a table, write `\item .` (with a period) so `polyglossia`/`bidi` does not misalign the bullet vertically.
 - **Reference Example:** [bagrut_questions/basics/classes2_2026_899371_5.tex](file:///c:/dev/workspace/school_workspace/bagrut_questions/basics/classes2_2026_899371_5.tex).
 
 ### 5.7. Standard LaTeX Table Patterns
 
 1. **Two-Column RTL Class Specification Table (واجهة الفئة / ملخص الفئة):**
-   - **Mandatory Usage Rule:** Every time a question or exercise describes a class (its attributes and/or multiple methods), it **MUST** be presented in a two-column table using the exact style below. However, if a question asks to add **only a single method** to an existing class, write it as regular text (do NOT use a table).
-   - **Mandatory Table Style (`{\centering ... \par} %` + `\vspace{2em}`):** Always wrap the table in `{\centering ... \par} %` followed by `\vspace{2em}`, and use `|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|` for the columns:
+   - **When to use:** Every time a question describes a class (its attributes and/or several methods), present it in this table. If a question only asks to add **a single method** to an existing class, write it as regular text instead.
+   - **Exact style:** wrap in `{\centering ... \par} %`, follow with `\vspace{2em}`, and use the columns `|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|` (Arabic description on the right, English definition on the left):
    ```latex
    {\centering
    \renewcommand{\arraystretch}{1.2}
@@ -282,8 +320,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
 
    \vspace{2em}
    ```
-2. **Left-to-Right Tracing Table (`جدول متابعة`):**
-   Always wrap tracing tables in `\begin{english}` so columns flow left-to-right matching code execution:
+2. **Left-to-Right Tracing Table (`جدول متابعة`):** Always wrap tracing tables in `\begin{english}` so columns flow left-to-right like code execution:
    ```latex
    \begin{center}
    \begin{english}
@@ -308,8 +345,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
    \end{english}
    \end{center}
    ```
-4. **Table With Code Cells (جدول يحوي مقاطع برنامج):**
-   When a table cell must contain a code snippet (e.g. a "what is the output of each method" table with columns *البند / العملية / المُخرج*), put the code in a `pycell` (defined in the preamble) inside a **fixed-width `p{...}` column**, so the code stays left-to-right inside the RTL table. Keep each cell's snippet short (the table row cannot split across pages). If a snippet is long, use a separate `boxCode` per item instead of a table.
+4. **Table With Code Cells (جدول يحوي مقاطع برنامج):** When a cell must contain code (e.g. a "what does each method print" table with columns *البند / العملية / المُخرج*), put the code in a `pycell` inside a **fixed-width `p{...}` column**, so it stays left-to-right inside the RTL table. Keep each snippet short (a row cannot split across pages); for long snippets use a separate `boxCode` per item instead. Check the result visually the first time you use this pattern in a document.
    ```latex
    {\centering
    \renewcommand{\arraystretch}{1.3}
@@ -334,7 +370,6 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
    \end{tabular}
    \par} %
    ```
-   Always compile with `make` and check the result visually when using this pattern for the first time in a document.
 
 ### 5.8. Python (`src/python/pythonA/`) & Computational Models (`computational_models/`)
 - **Python Conventions:**
@@ -342,7 +377,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
   - Use `snake_case` for all Python variable and function identifiers (`sum_even`, `user_age`).
   - Reference example: [src/python/pythonA/pythonA_review2.tex](file:///c:/dev/workspace/school_workspace/src/python/pythonA/pythonA_review2.tex).
 - **Computational Models / Automata Conventions:**
-  - Formal notation: Alphabet $\Sigma$, stack alphabet $\Gamma$, word length $|w|$, character count $\#_a(w)$, concatenation $w_1 \cdot w_2$ / $L_1 \bullet L_2$, reversal $w^R$ or $R(w)$, complement $\overline{L}$, Turing left-end marker $\vdash$, blank symbol $\triangle$.
+  - Formal notation: alphabet $\Sigma$, stack alphabet $\Gamma$, word length $|w|$, character count $\#_a(w)$, concatenation $w_1 \cdot w_2$ / $L_1 \bullet L_2$, reversal $w^R$ or $R(w)$, complement $\overline{L}$, Turing left-end marker $\vdash$, blank symbol $\triangle$.
   - State diagrams use TikZ `automata` (`\begin{tikzpicture}[shorten >=1pt, node distance=2.8cm, on grid, auto, >={Stealth[round]}]`) wrapped inside `\begin{english}`.
   - Reference examples: [history_src/2025_26/computational_models/lessonNotes/01-DFA.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/computational_models/lessonNotes/01-DFA.tex), [history_src/2025_26/computational_models/lessonNotes/03-TuringMachine.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/computational_models/lessonNotes/03-TuringMachine.tex), [history_src/2025_26/computational_models/exams/diplomme2026.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/computational_models/exams/diplomme2026.tex).
 
@@ -351,22 +386,20 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
 ## 6. Question Formulation & Pedagogical Guidelines
 
 ### 6.1. Scaffolding & Section Structure
-- Group questions into clear thematic sections (`\section*{القسم الأول: ...}` or `\section*{المرحلة الأولى: ...}`).
+- Group questions into clear thematic sections (`\section*{القسم الأول: ...}` or `\section*{المرحلة الأولى: ...}`). Each section starts on a new page and every `\item` ends with `\filbreak` (see Section 8).
 - Questions must be graduated:
   - Start with direct, single-variable or single-concept questions.
   - Progress through compound conditions and multi-variable logic.
-  - Real-world application scenarios (tax tiers, cinema pricing, date validation, company management).
-  - Only in the final general section include 1–2 challenging multi-step questions.
+  - Continue with real-world application scenarios (tax tiers, cinema pricing, date validation, company management).
+  - Only the final general section includes 1–2 challenging multi-step questions.
 
-### 6.2. When to Include vs. Delete `boxExample` Blocks
-- **DO NOT include `boxExample` for easy/clear questions:**
-  Direct questions (e.g., positive/negative, even/odd, pass/fail, checking password match, simple comparisons) should have **no** bulky example boxes. Keeping them text-only allows several questions to fit per page in student handouts.
-- **INCLUDE `boxExample` (wrapped in `\ifdetailed`) ONLY for:**
-  1. Questions with non-obvious output formatting (e.g. `3 < 9 < 15`, `Result = 15`).
-  2. Multi-input or conditional pricing/tier calculations (e.g. cinema discount rules, electricity consumption brackets).
-  3. Boundary and error test cases (e.g. division by zero, invalid dates, leap year test years).
-- **Arithmetic Breakdown Rule:**
-  Whenever an example involves a multi-step calculation, write an explicit step-by-step arithmetic breakdown in Arabic immediately below the example box:
+### 6.2. When to Include `boxExample` Blocks
+- **Do NOT add `boxExample` to easy, clear questions** (positive/negative, even/odd, pass/fail, password match, simple comparisons). Text-only questions let several fit on one page of the student handout.
+- **Add `boxExample` (always wrapped in `\ifdetailed ... \fi`) ONLY for:**
+  1. Non-obvious output formatting (e.g. `3 < 9 < 15`, `Result = 15`).
+  2. Multi-input or conditional pricing/tier calculations (e.g. cinema discounts, electricity brackets).
+  3. Boundary and error cases (e.g. division by zero, invalid dates, leap years).
+- **Arithmetic Breakdown Rule:** When an example involves a multi-step calculation, write the step-by-step arithmetic in Arabic right below the example box:
 
   ```latex
   \begin{boxExample}
@@ -376,17 +409,15 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
   ```
 
 ### 6.3. Formatting Prompts
-- **Class Descriptions Must Use a Table (Unless Adding Only 1 Method):** Whenever a question describes the attributes and/or methods of a class, present the class specification in the standard two-column table defined in Section 5.7 (`{\centering ... \par} %` + `\vspace{2em}`). If a question asks to add only a **single method** to an existing class, write the requirement as regular text instead of a table.
-- **Bold Key Terms:** Always bold critical operational words to prevent misreading:
-  e.g., `الراتب \textbf{الشهري}`, `الضريبة \textbf{السنوية}`, `\textbf{موجب}`, `\textbf{سالب}`, `\textbf{غير سالب}`.
-- **Explicit Assumptions:** Enclose domain constraints in parentheses:
-  e.g., `(افترض أنّ الرقمين ليسا صفرًا.)`, `(عدد صحيح موجب)`.
+- **Class Descriptions Use a Table:** Whenever a question describes a class's attributes and/or methods, use the class table from Section 5.7. A request to add a **single method** is written as regular text.
+- **Bold Key Terms:** Bold critical words to prevent misreading, e.g. `الراتب \textbf{الشهري}`, `الضريبة \textbf{السنوية}`, `\textbf{موجب}`, `\textbf{سالب}`, `\textbf{غير سالب}`.
+- **Explicit Assumptions:** State domain constraints in parentheses, e.g. `(افترض أنّ الرقمين ليسا صفرًا.)`, `(عدد صحيح موجب)`.
 
 ---
 
 ## 7. Solution & Code Standards
 
-- **Strict Bracing Rule:** Every `if`, `else if`, `else`, `for`, and `while` block in C# solutions and examples MUST have curly braces `{ }`, even if the body is a single statement:
+- **Strict Bracing Rule:** Every `if`, `else if`, `else`, `for`, and `while` block in C# solutions and examples MUST have curly braces `{ }`, even for a single statement:
 
   ```csharp
   // CORRECT:
@@ -403,7 +434,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
   if (num > 0) Console.WriteLine("Positive");
   ```
 
-- **Language Wrapping:** Always wrap code blocks with `english` and `minted`:
+- **Solution Wrapping:** Code always goes in `english` + `minted`; in worksheets, solutions go in `\ifwithsols` + `boxSolution`:
 
   ```latex
   \ifwithsols
@@ -417,18 +448,16 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
   \fi
   ```
 
-- **Identifier Naming & `this.` Qualification in C#:**
-  - Fields (`private` or `protected`) and local variables/parameters: meaningful `camelCase` (`temperature`, `birthYear`, `totalCost`, `seniority`).
+- **Identifier Naming & `this.` in C#:**
+  - Fields (`private` or `protected`), local variables, and parameters: meaningful `camelCase` (`temperature`, `birthYear`, `totalCost`, `seniority`).
   - Methods and classes: `PascalCase` (`GetSalary`, `AddEmployee`, `Technician`).
-  - Inside class constructors and methods, qualify field accesses with `this.` (`this.name = name;`, `return this.score;`).
-- **Console Messages & Inline Comments:** Always write console prompts/outputs and code comments in English (`Console.WriteLine("Enter temperature:");`, `// Reject negative values`).
-- **Alternative Solutions:** When demonstrating two valid pedagogical approaches (e.g., nested `if` vs. `&&`), provide both in consecutive boxes labeled `\begin{boxSolution}[1]` and `\begin{boxSolution}[2]` (or `\begin{boxSolution}[بديل]`).
-- **Partitioning Long Solutions (Multiple Solution Boxes):**
-  A single `boxSolution` (`tcolorbox`) will not break cleanly across pages; if a solution is long (e.g., a full class implementation, multiple helper methods, or a lengthy multi-branch decision tree), a single box will run off the bottom of the page and its contents will be clipped and disappear.
-  **Therefore, long solutions MUST be partitioned into multiple sequential solution boxes:**
-  - Break the code into logical segments (e.g. Part 1: Fields & Constructors, Part 2: Methods & `Main`; or `[فرع أ]` and `[فرع ب]`).
-  - Label each box clearly: `\begin{boxSolution}[الجزء الأول]` and `\begin{boxSolution}[الجزء الثاني]`.
-  - Place `\clearpage` between the boxes so each box renders fully on its own page without vertical overflow:
+  - Inside constructors and methods, access fields with `this.` (`this.name = name;`, `return this.score;`).
+- **Console Messages & Inline Comments:** Always in English (`Console.WriteLine("Enter temperature:");`, `// Reject negative values`).
+- **Alternative Solutions:** When showing two valid approaches (e.g. nested `if` vs. `&&`), use consecutive boxes labeled `\begin{boxSolution}[1]` and `\begin{boxSolution}[2]` (or `[بديل]`).
+- **Partitioning Long Solutions:** A single `boxSolution` cannot break across pages, so a long solution (a full class, several helper methods, a long decision tree) would be clipped. **Long solutions MUST be split into several consecutive boxes:**
+  - Split at logical points (e.g. Part 1: fields & constructors, Part 2: methods & `Main`; or `[فرع أ]` / `[فرع ب]`).
+  - Label each box: `\begin{boxSolution}[الجزء الأول: ...]`, `\begin{boxSolution}[الجزء الثاني: ...]`.
+  - Put `\filbreak` (not `\clearpage`) between the boxes, so the next box moves to a new page only if it does not fit:
     ```latex
     \ifwithsols
     \begin{boxSolution}[الجزء الأول: تعريف الفئة والعمليات البنائية]
@@ -439,7 +468,7 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
     \end{english}
     \end{boxSolution}
 
-    \clearpage
+    \filbreak
 
     \begin{boxSolution}[الجزء الثاني: العمليات الإضافية والعمليات المساعدة]
     \begin{english}
@@ -455,7 +484,37 @@ Used in `src/oop/exs/` to teach object-oriented design, inheritance, polymorphis
 
 ## 8. Pagination & Spacing Rules
 
-- **Compact Handouts:** Do NOT place `\clearpage` unconditionally after simple questions in worksheets.
-- **Clean Solutions:** Put `\clearpage` inside `\ifwithsols` every 2–3 questions (or between partitioned solution boxes) so solution boxes never overflow across pages.
-- **Summary Subsections:** Use `\filbreak` before each `\subsection*` in summary sheets so a topic heading and its code box stay together on the same page.
-- **White/Black Breaks:** Use `\ifwhiteblack \clearpage \fi` when an exercise or solution requires its own slide/page in presentation/landscape mode.
+These two rules are **mandatory** in every document. Any older pattern that contradicts them (e.g. `\clearpage` every 2–3 questions) is obsolete.
+
+1. **`\filbreak` after every `\item` (always, outside any `\fi`):**
+   At the end of each `\item` block — after the question text and after any `\ifdetailed ... \fi` / `\ifwithsols ... \fi` blocks belonging to it — put `\filbreak` on its own line, **outside** the conditional, so it applies in every build (regular, printable, solutions, white/black). The next item stays on the current page if it fits and moves to a new page only if it does not, so a question is never separated from its example/solution box.
+   ```latex
+   \begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+   \item اكتب برنامجًا يستقبل ...
+   \ifdetailed
+   \begin{boxExample}
+   ...
+   \end{boxExample}
+   \fi
+   \ifwithsols
+   \begin{boxSolution}
+   ...
+   \end{boxSolution}
+   \fi
+   \filbreak
+
+   \item ...
+   \filbreak
+   \end{enumerate}
+   ```
+   - Applies to items at every nesting level of question/exercise lists (including sub-questions `أ.`, `ب.`).
+   - Does NOT apply to short lists inside a `tcolorbox` (`boxNote`, `boxAttention` checklists, ...) or inside tables, since a box cannot break anyway.
+2. **`\clearpage` before every `\section` / `\section*`:**
+   Every new section (`القسم ...`, `المرحلة ...`, `الجزء ...`) starts on a new page. Put `\clearpage` on its own line directly before `\section*{...}`.
+   - **Only exception:** the first section of the document (it follows the title and any opening boxes directly) — do not push it to a new page.
+   - If an `enumerate` list continues across sections, close it before `\clearpage \section*{...}` and reopen it with `\begin{enumerate}[resume, ...]`.
+
+**Other pagination rules (consistent with the two rules above):**
+- **Subsections:** Use `\filbreak` (not `\clearpage`) before each `\subsection*`, so a topic heading and its code box stay together on the same page.
+- **Between partitioned solution boxes** inside one item: use `\filbreak` (Section 7).
+- **No other `\clearpage`:** Do not add `\clearpage` between questions or inside `\ifwithsols`; the `\filbreak` after each `\item` already handles it. The only other allowed forced breaks are the exam tear-off spacer page (`\clearpage \thispagestyle{empty} \mbox{} \clearpage`, Section 5.5) and `\ifwhiteblack \clearpage \fi` right after an item's `\filbreak` when an exercise must get its own page in landscape presentation mode.
