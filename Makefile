@@ -16,16 +16,19 @@ ifneq ($(filter $(SOURCE_GOALS),$(MAKECMDGOALS)),)
 NB  := $(shell find src -name "*.ipynb")
 MD  := $(shell find src -name "*.md")
 TEX := $(shell find src -name "*.tex")
+CS_SRC := $(shell find src -name "*.cs")
 
 # Remove the leading src/ so that out/... mirrors structure inside src
 NB_REL  := $(patsubst src/%,%,$(NB))
 MD_REL  := $(patsubst src/%,%,$(MD))
 TEX_REL := $(patsubst src/%,%,$(TEX))
+CS_REL  := $(patsubst src/%,%,$(CS_SRC))
 
 # Map input paths to outputs
 IPYNB := $(patsubst %.ipynb,out/%.pdf,$(NB_REL))
 MDS   := $(patsubst %.md,out/%.pdf,$(MD_REL))
 TEXS  := $(patsubst %.tex,out/%.pdf,$(TEX_REL))
+CS_OUT := $(patsubst %,out/%,$(CS_REL))
 
 PDF_SRC := $(shell find src -name "*.pdf")
 PDF_REL := $(patsubst src/%,%,$(PDF_SRC))
@@ -69,7 +72,7 @@ help: ## List all available targets
 all: pdf printable sols sclean ## Build regular, printable, and solutions PDFs
 pdf: ipynb md tex $(PDF_OUT) sclean ## Build all regular PDFs
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX) ## Build printable PDFs
-sols: $(SOLS_TEX) ## Build solutions PDFs
+sols: $(SOLS_TEX) $(CS_OUT) ## Build solutions PDFs and copy C# solutions
 wb: $(WB_TEX) ## Build white-black PDFs
 wbsols: $(WBSOLS_TEX) ## Build white-black solutions PDFs
 
@@ -82,7 +85,7 @@ all: pdf printable sols sclean
 
 pdf: ipynb md tex $(PDF_OUT) sclean
 printable: $(PRINTABLE_NB) $(PRINTABLE_TEX)
-sols: $(SOLS_TEX)
+sols: $(SOLS_TEX) $(CS_OUT)
 wb: $(WB_TEX)
 wbsols: $(WBSOLS_TEX)
 
@@ -186,6 +189,10 @@ out/%_wb_sols.pdf: src/%.tex
 	TEXMF_OUTPUT_DIRECTORY=$(dir $@) xelatex -shell-escape -output-directory=$(dir $@) -jobname=$(basename $(notdir $@)) "\def\setdetailed{\detailedtrue} \def\setwithsols{\withsolstrue} \def\setwhiteblack{\whiteblacktrue} \input{$<}"
 
 out/%.pdf: src/%.pdf
+	@mkdir -p $(dir $@)
+	cp $< $@
+
+out/%.cs: src/%.cs
 	@mkdir -p $(dir $@)
 	cp $< $@
 
