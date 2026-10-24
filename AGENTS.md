@@ -12,12 +12,13 @@ Before finishing any task, verify that every item below holds. Each item links t
 
 1. **Compile with `make`, never with `xelatex` directly**, and confirm the PDF builds without errors ([Section 2.2](#22-build--mandatory-compilation-check)).
 2. **Terminology:** use the mandatory Arabic terms (`عملية` not `دالة`, `نمط` not `نوع`, `حد` not `عنصر`, `مؤشر`, `مسح`, `تعريف`, ...) and keep code identifiers in `\textenglish{...}` ([Section 3](#3-strict-pedagogical-terminology-arabic--cs-concepts)).
-3. **No Arabic inside `minted`** — all code comments and console strings are in English ([Section 2.1](#21-engine-fonts--document-skeleton)).
-4. **Boxes never split across pages** — keep every `tcolorbox` short; split long solutions into several boxes ([Section 4.1](#41-critical-rule-tcolorbox-environments-do-not-split-across-pages)).
-5. **Pagination:** `\filbreak` after every `\item` (outside any `\fi`), `\clearpage` before every `\section*` ([Section 8](#8-pagination--spacing-rules)).
-6. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
-7. **Solutions** go in `\ifwithsols \begin{boxSolution} ... \end{boxSolution} \fi`, or — for OOP booklets — in standalone `.cs` files ([Sections 5.2](#52-progressive-multi-stage-oop-booklets--standalone-c-solutions) and [7](#7-solution--code-standards)).
-8. **Every C# `if`/`else`/`for`/`while` has braces**, and fields are accessed with `this.` ([Section 7](#7-solution--code-standards)).
+3. **Inline numbers wrapped in `$:`** every time a number appears inline within text, wrap it in math mode with `$...$` (e.g. `$0$`, `$1$`, `$10$`, `$-5$`), **never** with `\textenglish{...}` ([Section 3.1](#31-language-policy-technical-concepts-vs-code-identifiers)).
+4. **No Arabic inside `minted`** — all code comments and console strings are in English ([Section 2.1](#21-engine-fonts--document-skeleton)).
+5. **Boxes never split across pages** — keep every `tcolorbox` short; split long solutions into several boxes ([Section 4.1](#41-critical-rule-tcolorbox-environments-do-not-split-across-pages)).
+6. **Pagination:** `\filbreak` after every `\item` (outside any `\fi`), `\clearpage` before every `\section*` ([Section 8](#8-pagination--spacing-rules)).
+7. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
+8. **Solutions** go in `\ifwithsols \begin{boxSolution} ... \end{boxSolution} \fi`, or — for OOP booklets — in standalone `.cs` files ([Sections 5.2](#52-progressive-multi-stage-oop-booklets--standalone-c-solutions) and [7](#7-solution--code-standards)).
+9. **Every C# `if`/`else`/`for`/`while` has braces**, and fields are accessed with `this.` ([Section 7](#7-solution--code-standards)).
 
 ---
 
@@ -132,6 +133,7 @@ In high school CS and Bagrut exams, verb and noun choices convey exact technical
 ### 3.1. Language Policy: Technical Concepts vs. Code Identifiers
 - **Technical Concepts (المصطلحات التقنية):** If an established Arabic term exists (e.g. `الوراثة` for Inheritance, `تعدد الأشكال` for Polymorphism, `مخطط الهرمية` for Hierarchy, `البرمجة كائنية التوجه` for OOP, `العمليات البنائية` for Constructors, `التحميل الزائد` for Overloading, `التحويل لأعلى` for Upcasting, `التحويل لأسفل` for Downcasting, `إعادة تعريف العمليات` for Overriding, `الفئة المجردة` for Abstract Class, `الواجهة` for Interface), **write the Arabic term only**. Do NOT append English translations in parentheses (avoid: `الوراثة (Inheritance)`, `البرمجة كائنية التوجه (OOP)`).
 - **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This makes students implement the exact, unified identifiers. Escape underscores and `#` in text mode (`\textenglish{student\_name}`, `\textenglish{C\#}`).
+- **Inline Numbers Wrapped in `$` (كتابة الأرقام داخل النص):** Every time a number appears inline with text (in questions, requirements, explanations, headings, grade allocations, constraints, ranges, loops, or indices), **wrap it in math mode with `$` (e.g. `$0$`, `$1$`, `$10$`, `$100$`, `$-5$`, `$3.14$`), and NEVER with `\textenglish{...}`**. Math mode guarantees consistent Western numerals and prevents bidirectional layout reversals in RTL Arabic paragraphs. Reserve `\textenglish{...}` exclusively for English code tokens and identifiers.
 
 ### 3.2. Mandatory Word Choices (تفضيلات المصطلحات الإلزامية)
 1. **استخدام "تعريف" بدلاً من "ترويسة":** عند الإشارة إلى توقيع أو رأس الفئة أو العملية البرمجية (Header / Signature / Definition)، استخدم دائمًا مصطلح **"تعريف"** (مثل: `تعريف الفئة`، `تعريف العملية`) وتجنّب استخدام كلمة "ترويسة".
@@ -237,9 +239,9 @@ None of the boxes above can break across pages. A box taller than the remaining 
 - **Title Scheme** (adjust the sheet number, grade, and topic):
   ```latex
   \ifwithsols
-  \title{حل ورقة تمرن X للصف العاشر 10 - [الموضوع]}
+  \title{حل ورقة تمرن X للصف العاشر $10$ - [الموضوع]}
   \else
-  \title{ورقة تمرن X للصف العاشر 10 - [الموضوع]}
+  \title{ورقة تمرن X للصف العاشر $10$ - [الموضوع]}
   \fi
   ```
 - **Reference Examples:**
@@ -269,7 +271,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
 
 ### 5.3. Homework (`exs/hwXX-*.tex`)
 - **Location:** `src/<subject>/exs/hwXX-<TopicName>.tex`
-- **Title Scheme:** `\title{وظيفة بيتية X للصف العاشر 10: [الموضوع]}`
+- **Title Scheme:** `\title{وظيفة بيتية X للصف العاشر $10$: [الموضوع]}`
 - **Header Boxes:** An imperative `boxWarning` reminding students to run and test their code before submission, followed by a `boxNote` about choosing proper types (`int` vs `double`).
 - **Reference Examples:** [src/basics/exs/hw01-VariablesMathOperations.tex](file:///c:/dev/workspace/school_workspace/src/basics/exs/hw01-VariablesMathOperations.tex), [src/oop/exs/hw00-DateClass.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/hw00-DateClass.tex).
 
@@ -285,9 +287,9 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
      - Reference examples: [src/oop/lessonNotes/student_summary_csharp_oop.tex](file:///c:/dev/workspace/school_workspace/src/oop/lessonNotes/student_summary_csharp_oop.tex), [src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new_summary.tex).
 
 ### 5.5. Exams & Quizzes (`exams/`)
-- **Title Scheme:** `\title{اختبار شهري للصف 10-10}` or `\title{امتحان فصلي ...}`
+- **Title Scheme:** `\title{اختبار شهري للصف $10$-$10$}` or `\title{امتحان فصلي ...}`
 - **Exam Rules Header Box:** Inside `\ifwithsols \else \begin{boxCode} ... \end{boxCode} \fi`: exam duration, ink-only requirement, external answer sheet instructions, and allowed materials.
-- **Point Allocations:** Next to question headers as `\item \textbf{السؤال الأوّل} (25 علامة)`, and next to sub-questions as `(10 علامات)` or `\textbf{(بونوس +5 علامات)}`.
+- **Point Allocations:** Next to question headers as `\item \textbf{السؤال الأوّل} ($25$ علامة)`, and next to sub-questions as `($10$ علامات)` or `\textbf{(بونوس $+5$ علامات)}`.
 - **Detached Student Tear-Off Answer Sheet (`ورقة تسليم للطالب`):** When students must hand in tracing tables (`جدول متابعة`) or fill-in tables, duplicate those tables at the very end of the document inside `\ifwithsols \else ... \fi`, preceded by an empty spacer page (`\clearpage \thispagestyle{empty} \mbox{} \clearpage`), so in double-sided printing the tear-off sheet is on its own physical sheet.
 - **Reference Examples:** [history_src/2025_26/basics/exams/exam01-BasicsMathIf1.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/exams/exam01-BasicsMathIf1.tex), [history_src/2025_26/basics/exams/exam04-final_untilClasses2.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/exams/exam04-final_untilClasses2.tex).
 
@@ -410,6 +412,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
 
 ### 6.3. Formatting Prompts
 - **Class Descriptions Use a Table:** Whenever a question describes a class's attributes and/or methods, use the class table from Section 5.7. A request to add a **single method** is written as regular text.
+- **Inline Numbers Wrapped in `$:`** Always wrap inline numbers in math mode (e.g. `$0$`, `$5$`, `$10$`, `$-1$`, `$100$`) instead of `\textenglish{...}` or bare digits.
 - **Bold Key Terms:** Bold critical words to prevent misreading, e.g. `الراتب \textbf{الشهري}`, `الضريبة \textbf{السنوية}`, `\textbf{موجب}`, `\textbf{سالب}`, `\textbf{غير سالب}`.
 - **Explicit Assumptions:** State domain constraints in parentheses, e.g. `(افترض أنّ الرقمين ليسا صفرًا.)`, `(عدد صحيح موجب)`.
 
