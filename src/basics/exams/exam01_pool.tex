@@ -1,0 +1,780 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل مجمّع أسئلة إضافية للاختبار الشهري الأوّل - المتغيرات وجملة الشرط}
+\else
+\title{مجمّع أسئلة إضافية للاختبار الشهري الأوّل - المتغيرات وجملة الشرط}
+\fi
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{القسم الأوّل: أسئلة فهم وتتبّع كود}
+
+\begin{enumerate}[itemsep=2.2em]
+
+% ==============================================================
+% 1. تتبع كود: عدد ثنائي المنازل
+% ==============================================================
+\item
+أمامك مقطع البرنامج التالي الذي يستقبل عددًا صحيحًا موجبًا \textenglish{num} مكوّنًا من منزلتين (بين 10 و 99):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int num = int.Parse(Console.ReadLine());
+int a = num / 10;
+int b = num % 10;
+
+if (a > b)
+{
+    if (a % 2 == 0 && b % 2 == 0)
+    {
+        Console.WriteLine("A");
+    }
+    else
+    {
+        Console.WriteLine("B");
+    }
+}
+else
+{
+    if (a == b || b - a > 4)
+    {
+        Console.WriteLine("C");
+    }
+    else
+    {
+        Console.WriteLine("D");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+    \item \textbf{ما هو مُخرج هذا المُدخل؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل قيمة من قيم المُدخل \textenglish{num} في الجدول التالي، واكتب قيمة كلّ من \textenglish{a} و \textenglish{b} والمُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.5cm}|C{2.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{num} & \textbf{a} & \textbf{b} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    84 & & & \\
+    \hline
+    72 & & & \\
+    \hline
+    35 & & & \\
+    \hline
+    28 & & & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح قيمة لعدد ثنائي المنازل \textenglish{num} (\textbf{مختلفة} عن الأعداد الواردة في الفرع أ) تجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.6cm}|p{5.8cm}|C{3.2cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخل \textenglish{num}} & \textbf{قيمة مقترحة لـ \textenglish{num}} \\
+    \hline
+    \textenglish{A} & بدون شرط إضافي & \\
+    \hline
+    \textenglish{B} & بحيث تكون منزلة العشرات \textenglish{a} زوجية & \\
+    \hline
+    \textenglish{C} & بحيث تكون المنزلتان متساويتين (\textenglish{a == b}) & \\
+    \hline
+    \textenglish{C} & بحيث تكون المنزلتان مختلفتين (\textenglish{a != b}) & \\
+    \hline
+    \textenglish{D} & بدون شرط إضافي & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{2.5cm}|C{2.5cm}|C{2.5cm}|C{3.5cm}|}
+\hline
+\textbf{num} & \textbf{a} & \textbf{b} & \textarabic{\textbf{المُخرج}} \\
+\hline
+84 & 8 & 4 & A \\
+\hline
+72 & 7 & 2 & B \\
+\hline
+35 & 3 & 5 & D \\
+\hline
+28 & 2 & 8 & C \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة \textenglish{A}: يجب أن يكون \textenglish{a > b} وكلاهما زوجي، مثل: \textenglish{62} أو \textenglish{64} أو \textenglish{82}.
+    \item لطباعة \textenglish{B} مع كون \textenglish{a} زوجيًا: يجب أن يكون \textenglish{a > b} و \textenglish{b} فرديًا، مثل: \textenglish{63} أو \textenglish{85} أو \textenglish{41}.
+    \item لطباعة \textenglish{C} مع تساوي المنزلتين: مثل \textenglish{44} أو \textenglish{77}.
+    \item لطباعة \textenglish{C} مع اختلاف المنزلتين: يجب أن يكون \textenglish{b - a > 4}، مثل \textenglish{17} أو \textenglish{39}.
+    \item لطباعة \textenglish{D}: يجب أن يكون \textenglish{a < b} والفرق بينهما $4$ أو أقل، مثل \textenglish{25} أو \textenglish{47}.
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 2. تتبع كود: 3 أعداد وعامل النفي
+% ==============================================================
+\item
+أمامك مقطع البرنامج التالي الذي يستقبل ثلاثة أعداد صحيحة \textenglish{a} و \textenglish{b} و \textenglish{c}:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+
+if (a + b > c)
+{
+    if (a == b && b != c)
+    {
+        Console.WriteLine("A");
+    }
+    else if (c % 2 == 0)
+    {
+        Console.WriteLine("B");
+    }
+    else
+    {
+        Console.WriteLine("C");
+    }
+}
+else
+{
+    if (!(a > 0 && b > 0))
+    {
+        Console.WriteLine("D");
+    }
+    else
+    {
+        Console.WriteLine("E");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}
+    \item \textbf{ما هو مُخرج هذا المُدخل؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل ثلاثية من المدخلات في الجدول التالي، واكتب المُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.2cm}|C{2.2cm}|C{2.2cm}|C{3.8cm}|}
+    \hline
+    \textbf{a} & \textbf{b} & \textbf{c} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    5 & 5 & 8 & \\
+    \hline
+    4 & 4 & 4 & \\
+    \hline
+    6 & 3 & 7 & \\
+    \hline
+    2 & 3 & 9 & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح قيَمًا للأعداد الصحيحة \textenglish{a} و \textenglish{b} و \textenglish{c} (\textbf{مختلفة} عن ثلاثيات الفرع أ) تجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.2cm}|p{4.8cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{\textenglish{a}} & \textbf{\textenglish{b}} & \textbf{\textenglish{c}} \\
+    \hline
+    \textenglish{A} & بدون شرط إضافي & & & \\
+    \hline
+    \textenglish{B} & بحيث يكون \textenglish{a != b} & & & \\
+    \hline
+    \textenglish{C} & بحيث يكون \textenglish{a == b} & & & \\
+    \hline
+    \textenglish{D} & بحيث يكون \textenglish{a > 0} & & & \\
+    \hline
+    \textenglish{E} & بدون شرط إضافي & & & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{2.2cm}|C{2.2cm}|C{2.2cm}|C{3.8cm}|}
+\hline
+\textbf{a} & \textbf{b} & \textbf{c} & \textarabic{\textbf{المُخرج}} \\
+\hline
+5 & 5 & 8 & A \\
+\hline
+4 & 4 & 4 & B \\
+\hline
+6 & 3 & 7 & C \\
+\hline
+2 & 3 & 9 & E \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة \textenglish{A}: يجب أن يكون \textenglish{a + b > c} و \textenglish{a == b} و \textenglish{b != c}، مثل: \textenglish{a = 3, b = 3, c = 4}.
+    \item لطباعة \textenglish{B} مع \textenglish{a != b}: يجب أن يكون \textenglish{a + b > c} و \textenglish{c} زوجيًا، مثل: \textenglish{a = 5, b = 4, c = 6}.
+    \item لطباعة \textenglish{C} مع \textenglish{a == b}: يجب أن تكون الأعداد الثلاثة متساوية وفردية (\textenglish{a == b == c})، مثل: \textenglish{a = 3, b = 3, c = 3}.
+    \item لطباعة \textenglish{D} مع \textenglish{a > 0}: يجب أن يكون \textenglish{b <= 0} و \textenglish{a + b <= c}، مثل: \textenglish{a = 4, b = -2, c = 5}.
+    \item لطباعة \textenglish{E}: يجب أن يكون \textenglish{a > 0} و \textenglish{b > 0} و \textenglish{a + b <= c}، مثل: \textenglish{a = 1, b = 2, c = 5}.
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{القسم الثاني: أسئلة كتابة برنامج}
+
+\begin{enumerate}[resume, itemsep=2.2em]
+
+% ==============================================================
+% 3. حذف المنزلة الوسطى وفحص القسمة
+% ==============================================================
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا مكوّنًا من \textbf{3 منازل} (بين 100 و 999). \\
+يقوم البرنامج بتكوين \textbf{عدد جديد مكوّن من منزلتين} ناتج عن حذف منزلة العشرات الوسطى من العدد الأصلي (فمثلاً من العدد \textenglish{632} يتكوّن العدد الجديد \textenglish{62})، ويطبع هذا العدد الجديد. \\
+بعد ذلك، يفحص البرنامج العلاقة بين العدد الجديد ومنزلة العشرات التي حُذفت، ويطبع إحدى الرسائل التالية:
+\begin{itemize}[nosep]
+    \item إذا كانت منزلة العشرات المحذوفة تساوي صفرًا، لا يمكن القسمة عليها، فيطبع البرنامج: \textenglish{"Middle digit is zero"}.
+    \item وإلا، إذا كان العدد الجديد يقبل القسمة على منزلة العشرات المحذوفة بدون باقٍ، يطبع البرنامج: \textenglish{"Divisible"}.
+    \item وإلا، يطبع البرنامج: \textenglish{"Not divisible"}.
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter a 3-digit number:
+633
+63
+Divisible
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ بعد حذف منزلة العشرات ($3$) من العدد $633$ يتكوّن العدد الجديد $63$، وبما أنّ $63$ يقبل القسمة على $3$ بدون باقٍ، يطبع البرنامج \textenglish{Divisible}.
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter a 3-digit number:
+408
+48
+Middle digit is zero
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a 3-digit number:");
+int num = int.Parse(Console.ReadLine());
+
+int hundreds = num / 100;
+int tens = (num / 10) % 10;
+int units = num % 10;
+
+int newNum = hundreds * 10 + units;
+Console.WriteLine(newNum);
+
+if (tens == 0)
+{
+    Console.WriteLine("Middle digit is zero");
+}
+else if (newNum % tens == 0)
+{
+    Console.WriteLine("Divisible");
+}
+else
+{
+    Console.WriteLine("Not divisible");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 4. حافلات الرحلة المدرسية
+% ==============================================================
+\item
+تنظّم المدرسة رحلة تعليمية، وتريد حجز حافلات لنقل الطلاب. تتسع كل \textbf{حافلة كبيرة} لـ \textenglish{45} طالبًا بالضبط. \\
+اكتب برنامجًا يستقبل من المستخدم العدد الكلي للطلاب المسجلين للرحلة (عدد صحيح موجب). \\
+يطبع البرنامج أولاً عدد \textbf{الحافلات الكبيرة الممتلئة بالكامل}، ثم عدد \textbf{الطلاب المتبقين} الذين لا يكفون لملء حافلة كبيرة كاملة. \\
+بعد ذلك، يطبع البرنامج توصية بخصوص الطلاب المتبقين حسب القواعد التالية:
+\begin{itemize}[nosep]
+    \item إذا لم يتبقَّ أي طالب (الباقي يساوي $0$)، يطبع: \textenglish{"No extra transport needed"}.
+    \item إذا كان عدد الطلاب المتبقين بين $1$ و $15$ طالبًا (شاملاً $1$ و $15$)، يطبع: \textenglish{"Need 1 minibus"}.
+    \item إذا كان عدد الطلاب المتبقين أكثر من $15$ طالبًا، يطبع: \textenglish{"Need 1 extra large bus"}.
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter total students:
+100
+Full large buses: 2
+Remaining students: 10
+Need 1 minibus
+\end{minted}
+\end{english}
+\end{boxExample}
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter total students:
+115
+Full large buses: 2
+Remaining students: 25
+Need 1 extra large bus
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter total students:");
+int students = int.Parse(Console.ReadLine());
+
+int fullBuses = students / 45;
+int remaining = students % 45;
+
+Console.WriteLine("Full large buses: " + fullBuses);
+Console.WriteLine("Remaining students: " + remaining);
+
+if (remaining == 0)
+{
+    Console.WriteLine("No extra transport needed");
+}
+else if (remaining <= 15)
+{
+    Console.WriteLine("Need 1 minibus");
+}
+else
+{
+    Console.WriteLine("Need 1 extra large bus");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 5. الطاولة الدائرية داخل الغرفة المربعة
+% ==============================================================
+\item
+يريد مهندس ديكور فحص هل تتسع طاولة دائرية الشكل داخل غرفة مربّعة الشكل. \\
+اكتب برنامجًا يستقبل من المستخدم مساحة الغرفة المربّعة بالمتر المربّع (عدد عشري موجب)، ثم يستقبل طول نصف قطر الطاولة الدائرية بالمتر (عدد عشري موجب). \\
+يحسب البرنامج ويطبع \textbf{طول ضلع الغرفة المربّعة} ($\text{side} = \sqrt{\text{roomArea}}$)، وكذلك \textbf{قُطر الطاولة الدائرية} ($\text{diameter} = 2 \times \text{tableRadius}$)، ثم يطبع إحدى الرسائل التالية:
+\begin{itemize}[nosep]
+    \item إذا كان طول ضلع الغرفة أكبر من قُطر الطاولة بـ \textbf{مترين على الأقل} (أي الفرق بينهما $2$ أو أكثر)، يطبع: \textenglish{"Fits comfortably"}.
+    \item إذا كان طول ضلع الغرفة أكبر من أو يساوي قُطر الطاولة، ولكن الفرق بينهما أقل من مترين، يطبع: \textenglish{"Fits tightly"}.
+    \item إذا كان قُطر الطاولة أكبر من طول ضلع الغرفة، يطبع: \textenglish{"Does not fit"}.
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter square room area:
+36
+Enter table radius:
+1.5
+Room side: 6
+Table diameter: 3
+Fits comfortably
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ ضلع الغرفة هو $\sqrt{36} = 6$ أمتار، وقُطر الطاولة هو $2 \times 1.5 = 3$ أمتار، والفرق بينهما $6 - 3 = 3 \ge 2$.
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter square room area:");
+double roomArea = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter table radius:");
+double tableRadius = double.Parse(Console.ReadLine());
+
+double side = Math.Sqrt(roomArea);
+double diameter = 2 * tableRadius;
+
+Console.WriteLine("Room side: " + side);
+Console.WriteLine("Table diameter: " + diameter);
+
+if (side - diameter >= 2)
+{
+    Console.WriteLine("Fits comfortably");
+}
+else if (side >= diameter)
+{
+    Console.WriteLine("Fits tightly");
+}
+else
+{
+    Console.WriteLine("Does not fit");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 6. حملة تخفيضات متجر الكتب
+% ==============================================================
+\item
+أعلن متجر للكتب عن حملة تخفيضات خاصة عند شراء \textbf{3 كتب}. \\
+اكتب برنامجًا يستقبل من المستخدم أسعار الكتب الثلاثة (أعداد عشرية موجبة)، ثم يستقبل قيمة منطقية (\textenglish{bool}) تمثّل هل الزبون مشترك في نادي القرّاء (\textenglish{true} للمشترك و \textenglish{false} لغير المشترك). \\
+يحسب البرنامج المبلغ النهائي للدفع حسب القواعد المتسلسلة التالية:
+\begin{enumerate}
+    \item التكلفة الأولية هي مجموع أسعار الكتب الثلاثة.
+    \item \textbf{العرض الأوّل (تقارب الأسعار):} إذا كان الفرق بين سعر \textbf{أغلى كتاب} وسعر \textbf{أرخص كتاب} من بين الكتب الثلاثة \textbf{لا يتجاوز $20$ شيكلاً} (أي أصغر من أو يساوي $20$)، يحصل الزبون على تخفيض بقيمة \textbf{نصف سعر الكتاب الأرخص} (يُطرح نصف سعر الكتاب الأرخص من التكلفة).
+    \item \textbf{العرض الثاني (نادي القرّاء والمشتريات الكبيرة):} بعد فحص العرض الأول، إذا كان الزبون مشتركًا في نادي القرّاء \textbf{أو} كانت التكلفة الحالية أكثر من $250$ شيكلاً، يُطرح من التكلفة مبلغ إضافي ثابت قدره $15$ شيكلاً.
+    \item في النهاية، يطبع البرنامج المبلغ النهائي للدفع.
+\end{enumerate}
+
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter 3 book prices:
+80
+90
+70
+Is club member (true/false):
+true
+190
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ مجموع أسعار الكتب هو $80 + 90 + 70 = 240$. أغلى كتاب هو $90$ وأرخص كتاب هو $70$، والفرق بينهما $90 - 70 = 20 \le 20$، لذلك يحصل على خصم نصف سعر الأرخص ($35$ شيكلاً) فتصبح التكلفة $240 - 35 = 205$. وبما أنه مشترك في النادي (\textenglish{true})، يحصل على خصم $15$ شيكلاً إضافية فيصبح المبلغ النهائي $205 - 15 = 190$.
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter 3 book prices:");
+double p1 = double.Parse(Console.ReadLine());
+double p2 = double.Parse(Console.ReadLine());
+double p3 = double.Parse(Console.ReadLine());
+
+Console.WriteLine("Is club member (true/false):");
+bool isMember = bool.Parse(Console.ReadLine());
+
+double total = p1 + p2 + p3;
+
+double maxPrice = Math.Max(p1, Math.Max(p2, p3));
+double minPrice = Math.Min(p1, Math.Min(p2, p3));
+
+if (maxPrice - minPrice <= 20)
+{
+    total = total - (minPrice / 2.0);
+}
+
+if (isMember || total > 250)
+{
+    total = total - 15;
+}
+
+Console.WriteLine(total);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 7. فحص قوة الرقم السري PIN من 4 منازل
+% ==============================================================
+\item
+يفحص نظام بنكي مدى قوّة الرقم السرّي (\textenglish{PIN}) للبطاقة الائتمانية، وهو عدد صحيح موجب مكوّن من \textbf{4 منازل} (بين 1000 و 9999، مثلاً \textenglish{3839}). \\
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا من 4 منازل (\textenglish{pin}). \\
+يحسب البرنامج ويطبع \textbf{مجموع الخانتين الخارجيتين} (أي مجموع خانة الآلاف وخانة الآحاد)، وكذلك \textbf{مجموع الخانتين الداخليتين} (أي مجموع خانة المئات وخانة العشرات). \\
+بعد ذلك، يطبع البرنامج \textenglish{"Strong PIN"} إذا تحقّقت \textbf{جميع} الشروط الثلاثة التالية معًا، وإلا يطبع \textenglish{"Weak PIN"}:
+\begin{itemize}[nosep]
+    \item خانة الآلاف لا تساوي خانة الآحاد.
+    \item الفرق المطلق (الموجب) بين مجموع الخانتين الخارجيتين ومجموع الخانتين الداخليتين يساوي $1$ بالضبط.
+    \item أكبر خانة من بين الخانات الأربع أكبر من أو تساوي $7$.
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter 4-digit PIN:
+3849
+Outer digits sum: 12
+Inner digits sum: 12
+Weak PIN
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ في العدد $3849$: مجموع الخارجيتين هو $3 + 9 = 12$ ومجموع الداخليتين هو $8 + 4 = 12$، والفرق المطلق بينهما $0 \neq 1$.
+\begin{boxExample}[2]
+\begin{english}
+\begin{minted}{text}
+Enter 4-digit PIN:
+3839
+Outer digits sum: 12
+Inner digits sum: 11
+Strong PIN
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ في العدد $3839$: مجموع الخارجيتين $3 + 9 = 12$، ومجموع الداخليتين $8 + 3 = 11$، والفرق المطلق $|12 - 11| = 1$، والآلاف لا تساوي الآحاد ($3 \neq 9$)، وأكبر خانة هي $9 \ge 7$، فيطبع \textenglish{Strong PIN}.
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter 4-digit PIN:");
+int pin = int.Parse(Console.ReadLine());
+
+int units = pin % 10;
+int tens = (pin / 10) % 10;
+int hundreds = (pin / 100) % 10;
+int thousands = pin / 1000;
+
+int outerSum = thousands + units;
+int innerSum = hundreds + tens;
+
+Console.WriteLine("Outer digits sum: " + outerSum);
+Console.WriteLine("Inner digits sum: " + innerSum);
+
+int max1 = Math.Max(thousands, hundreds);
+int max2 = Math.Max(tens, units);
+int maxDigit = Math.Max(max1, max2);
+
+if (thousands != units && Math.Abs(outerSum - innerSum) == 1 && maxDigit >= 7)
+{
+    Console.WriteLine("Strong PIN");
+}
+else
+{
+    Console.WriteLine("Weak PIN");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 8. مراقبة مواعيد القطارات HHMM
+% ==============================================================
+\item
+تراقب شركة القطارات دقة مواعيد وصول قطاراتها. يُمثَّل الوقت كعدد صحيح مكوّن من 4 منازل بنظام 24 ساعة (\textenglish{HHMM}، حيث تمثل المنزلتان اليسريان الساعات والمنزلتان اليمنيان الدقائق؛ مثلاً العدد \textenglish{1420} يعني الساعة \textenglish{14:20}، والساعة الواحدة تساوي $60$ دقيقة). \\
+اكتب برنامجًا يستقبل من المستخدم وقت الوصول المجدول (\textenglish{scheduled}) ثم وقت الوصول الفعلي (\textenglish{actual}) لقطار معيّن في نفس اليوم، ويتصرّف حسب القواعد التالية:
+\begin{itemize}
+    \item إذا وصل القطار في الموعد المجدول أو قبله:
+    \begin{itemize}[nosep]
+        \item إذا وصل مبكرًا بأكثر من $10$ دقائق، يطبع البرنامج: \textenglish{"Too Early"}.
+        \item وإلا، يطبع البرنامج: \textenglish{"On Time"}.
+    \end{itemize}
+    \item إذا وصل القطار متأخرًا عن الموعد المجدول:
+    \begin{itemize}[nosep]
+        \item يطبع البرنامج عدد دقائق التأخير (\textenglish{delay}).
+        \item يحسب البرنامج نسبة التعويض للمسافرين حسب المعادلة:
+        $$ \text{compensation} = \sqrt{\text{delay}} \times 4.5 $$
+        ثم يقرّب النتيجة إلى أقرب عدد صحيح ويطبعها.
+    \end{itemize}
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}[1]
+\begin{english}
+\begin{minted}{text}
+Enter scheduled arrival (HHMM):
+1350
+Enter actual arrival (HHMM):
+1406
+Delay in minutes: 16
+Compensation: 18
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ الوقت المجدول هو $13 \times 60 + 50 = 830$ دقيقة، والوقت الفعلي هو $14 \times 60 + 6 = 846$ دقيقة. التأخير هو $846 - 830 = 16$ دقيقة، والتعويض هو $\sqrt{16} \times 4.5 = 4 \times 4.5 = 18$.
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter scheduled arrival (HHMM):");
+int scheduled = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter actual arrival (HHMM):");
+int actual = int.Parse(Console.ReadLine());
+
+int schedMins = (scheduled / 100) * 60 + (scheduled % 100);
+int actualMins = (actual / 100) * 60 + (actual % 100);
+
+if (actualMins <= schedMins)
+{
+    if (schedMins - actualMins > 10)
+    {
+        Console.WriteLine("Too Early");
+    }
+    else
+    {
+        Console.WriteLine("On Time");
+    }
+}
+else
+{
+    int delay = actualMins - schedMins;
+    Console.WriteLine("Delay in minutes: " + delay);
+    double comp = Math.Round(Math.Sqrt(delay) * 4.5);
+    Console.WriteLine("Compensation: " + comp);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% 9. تكلفة شحن الطرود البريدية
+% ==============================================================
+\item
+تحسب شركة بريد تكلفة شحن الطرود بناءً على منطقة الشحن، وزن الطرد، وما إذا كان الطرد قابلاً للكسر. \\
+اكتب برنامجًا يستقبل من المستخدم:
+\begin{itemize}[nosep]
+    \item حرفًا واحدًا (\textenglish{char}) يمثّل منطقة الشحن: \textenglish{'L'} للشحن المحلي، أو \textenglish{'I'} للشحن الدولي.
+    \item عددًا عشريًا موجبًا (\textenglish{double}) يمثّل وزن الطرد بالكيلوغرام.
+    \item قيمة منطقية (\textenglish{bool}) تحدّد هل الطرد قابل للكسر (\textenglish{true} إذا كان قابلاً للكسر، و \textenglish{false} وإلا).
+\end{itemize}
+
+يحسب البرنامج ويطبع التكلفة النهائية للشحن حسب القواعد التالية:
+\begin{itemize}
+    \item \textbf{التكلفة الأساسية حسب المنطقة والوزن:}
+    \begin{itemize}[nosep]
+        \item في حالة الشحن المحلي (\textenglish{'L'}): إذا كان الوزن حتى $5$ كغم (شاملاً $5$) تكون التكلفة الأساسية $25$ شيكلاً؛ وإذا زاد الوزن عن $5$ كغم تكون التكلفة الأساسية $25$ شيكلاً لأول $5$ كغم بالإضافة إلى $4$ شواكل عن كل كيلوغرام إضافي فوق الـ $5$.
+        \item في حالة الشحن الدولي (\textenglish{'I'}): إذا كان الوزن حتى $5$ كغم (شاملاً $5$) تكون التكلفة الأساسية $80$ شيكلاً؛ وإذا زاد الوزن عن $5$ كغم تكون التكلفة الأساسية $80$ شيكلاً لأول $5$ كغم بالإضافة إلى $15$ شيكلاً عن كل كيلوغرام إضافي فوق الـ $5$.
+    \end{itemize}
+    \item \textbf{رسوم التأمين:} إذا كان الطرد قابلاً للكسر، تُضاف إلى التكلفة الأساسية رسوم تأمين بنسبة $10\%$ من التكلفة الأساسية.
+\end{itemize}
+
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter zone (L or I):
+I
+Enter weight in kg:
+8
+Is fragile (true/false):
+true
+137.5
+\end{minted}
+\end{english}
+\end{boxExample}
+لأنّ الشحن دولي (\textenglish{'I'}) والوزن $8 > 5$، فالتكلفة الأساسية هي $80 + (8 - 5) \times 15 = 80 + 45 = 125$ شيكلاً. وبما أن الطرد قابل للكسر (\textenglish{true})، تُضاف $10\%$ ($12.5$ شيكل) فتصبح التكلفة النهائية $125 + 12.5 = 137.5$.
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter zone (L or I):");
+char zone = char.Parse(Console.ReadLine());
+Console.WriteLine("Enter weight in kg:");
+double weight = double.Parse(Console.ReadLine());
+Console.WriteLine("Is fragile (true/false):");
+bool isFragile = bool.Parse(Console.ReadLine());
+
+double cost;
+
+if (zone == 'L')
+{
+    if (weight <= 5)
+    {
+        cost = 25;
+    }
+    else
+    {
+        cost = 25 + (weight - 5) * 4;
+    }
+}
+else
+{
+    if (weight <= 5)
+    {
+        cost = 80;
+    }
+    else
+    {
+        cost = 80 + (weight - 5) * 15;
+    }
+}
+
+if (isFragile)
+{
+    cost = cost + cost * 0.10;
+}
+
+Console.WriteLine(cost);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

@@ -1,0 +1,403 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل اختبار شهري للصف العاشر}
+\else
+\title{اختبار شهري للصف العاشر}
+\fi
+\renewcommand{\DTMtoday}{29.10.2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\else
+\begin{boxCode}
+    \begin{itemize}
+        \item يحتوي الاختبار على 4 أسئلة، \textbf{أجب عنها كلّها} $(4 \times 25 = 100)$.
+        \item الوقت المخصص: ساعة ونصف.
+        \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
+        \item اكتب بقلم حبر فقط، وبخط واضح.
+        \item حلّ \textbf{السؤال الأوّل} على ورقة التسليم المرفقة في نهاية الامتحان، وحلّ باقي الأسئلة على ورقة الإجابة الخارجية (لا تنسَ كتابة اسمك الكامل).
+        \item في كل الأسئلة افترض أن المدخلات صحيحة ولا داعي لفحصها إلا إذا ذُكر غير ذلك.
+    \end{itemize}
+\end{boxCode}
+
+\vspace{1cm}
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{../../../images/logoTasamoh.png}
+\end{center}
+
+\vspace{2cm}
+\begin{flushleft}
+    أرجو لكم التفوّق.
+
+    الأستاذ محمود اغبارية.
+\end{flushleft}
+\clearpage
+\fi
+
+% ==============================================================
+% السؤال الأول: فهم وتتبع كود معطى
+% ==============================================================
+\section{السؤال الأوّل}
+أمامك مقطع البرنامج التالي الذي يستقبل عددين صحيحين $x$ و $y$:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+int y = int.Parse(Console.ReadLine());
+int diff = Math.Abs(x - y);
+
+if (x * y > 0)
+{
+    if (diff <= 5 && x > y)
+    {
+        Console.WriteLine("A");
+    }
+    else
+    {
+        Console.WriteLine("B");
+    }
+}
+else
+{
+    if (x == 0 || y == 0)
+    {
+        Console.WriteLine("C");
+    }
+    else
+    {
+        Console.WriteLine("D");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[itemsep=2em]
+    \filbreak
+    \item \textbf{ما هو المُخرج؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل زوج من المدخلات في الجدول التالي، واكتب قيمة المتغير \textenglish{diff} والمُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.5cm}|C{2.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{$x$} & \textbf{$y$} & \textbf{diff} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    10 & 7 & & \\
+    \hline
+    -4 & -9 & & \\
+    \hline
+    5 & 8 & & \\
+    \hline
+    -5 & 3 & & \\
+    \hline
+    2 & 0 & & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح زوجًا من الأعداد الصحيحة $x$ و $y$ (\textbf{مختلفًا} عن أزواج الفرع أ) يجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|C{2.5cm}|p{5.5cm}|C{2cm}|C{2cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{قيمة $x$} & \textbf{قيمة $y$} \\
+    \hline
+    $A$ & بحيث يكون العددان موجبَين & & \\
+    \hline
+    $B$ & بحيث يكون \textenglish{diff} $\le 5$ & & \\
+    \hline
+    $B$ & بحيث يكون $x > y$ & & \\
+    \hline
+    $C$ & بدون شرط إضافي & & \\
+    \hline
+    $D$ & بحيث يكون $x$ موجبًا & & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{2.5cm}|C{2.5cm}|C{2.5cm}|C{3.5cm}|}
+\hline
+\textbf{x} & \textbf{y} & \textbf{diff} & \textarabic{\textbf{المُخرج}} \\
+\hline
+10 & 7 & 3 & A \\
+\hline
+-4 & -9 & 5 & A \\
+\hline
+5 & 8 & 3 & B \\
+\hline
+-5 & 3 & 8 & D \\
+\hline
+2 & 0 & 2 & C \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة $A$ بعددين موجبين: يجب أن يكون $x > y$ والفرق $\le 5$، مثل: $x = 8,\ y = 5$.
+    \item لطباعة $B$ مع \textenglish{diff} $\le 5$: يجب أن يكون لهما نفس الإشارة ولكن $x \le y$، مثل: $x = 5,\ y = 8$.
+    \item لطباعة $B$ مع $x > y$: يجب أن يكون لهما نفس الإشارة والفرق $> 5$، مثل: $x = 15,\ y = 4$.
+    \item لطباعة $C$: يجب أن يكون أحدهما على الأقل صفرًا، مثل: $x = 0,\ y = 6$.
+    \item لطباعة $D$ مع كون $x$ موجبًا: يجب أن يكون $y$ سالبًا، مثل: $x = 4,\ y = -2$.
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال الثاني: تحليل عدد ثلاثي المنازل لخاناته
+% ==============================================================
+\section{السؤال الثاني}
+نسمّي العدد الصحيح الموجب المكوّن من 3 منازل \textbf{«عددًا متوازنًا»} إذا كان \textbf{تربيع منزلة العشرات} (أي منزلة العشرات مضروبة بنفسها) مساويًا لـ \textbf{حاصل ضرب منزلة المئات في منزلة الآحاد}. \\
+على سبيل المثال:
+\begin{itemize}[nosep]
+    \item العدد $248$ هو عدد متوازن لأنّ $4^2 = 16$ وكذلك $2 \times 8 = 16$.
+    \item العدد $139$ هو عدد متوازن لأنّ $3^2 = 9$ وكذلك $1 \times 9 = 9$.
+    \item العدد $352$ هو عدد غير متوازن لأنّ $5^2 = 25$ بينما $3 \times 2 = 6$.
+    \item العدد $429$ هو عدد غير متوازن لأنّ $2^2 = 4$ بينما $4 \times 9 = 36$.
+\end{itemize}
+
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا مكوّنًا من 3 منازل (بين 100 و 999):
+\begin{itemize}[nosep]
+    \item إذا كان العدد متوازنًا، يطبع البرنامج: \textenglish{"Balanced"}.
+    \item وإلا، يطبع البرنامج: \textenglish{"Not Balanced"}.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a 3-digit number:");
+int num = int.Parse(Console.ReadLine());
+
+int hundreds = num / 100;
+int tens = (num / 10) % 10;
+int units = num % 10;
+
+int tensSquared = tens * tens;
+int endsProduct = hundreds * units;
+
+if (tensSquared == endsProduct)
+{
+    Console.WriteLine("Balanced");
+}
+else
+{
+    Console.WriteLine("Not Balanced");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال الثالث: تعبير جبري ومجال التعريف
+% ==============================================================
+\section{السؤال الثالث}
+معطى التعبير الجبري التالي الذي يعتمد على عددين عشريين $x$ و $y$:
+$$ \text{result} = \frac{\sqrt{x - 4}}{y^2 - 9} $$
+
+اكتب برنامجًا يستقبل من المستخدم العدد العشري $x$ ثم العدد العشري $y$. \\
+قبل حساب قيمة التعبير، على البرنامج فحص مجال التعريف حسب الترتيب التالي:
+\begin{itemize}[nosep]
+    \item إذا كانت قيمة ما تحت الجذر التربيعي سالبة (أي عندما يكون $x < 4$)، لا يمكن حساب الجذر، فيطبع البرنامج: \\
+    \textenglish{"Error: Negative root"}
+    \item وإلا، إذا كانت قيمة المقام تساوي صفرًا (أي عندما يكون $y = 3$ أو $y = -3$)، لا يمكن القسمة على صفر، فيطبع البرنامج: \\
+    \textenglish{"Error: Division by zero"}
+    \item في جميع الحالات الأخرى، يحسب البرنامج قيمة التعبير $\text{result}$ ويطبعها.
+\end{itemize}
+
+\textbf{مثال:}
+\begin{itemize}[nosep]
+    \item إذا أدخل المستخدم $x = 2$ و $y = 3$، يطبع البرنامج: \\
+    \textenglish{"Error: Negative root"}.
+    \item إذا أدخل المستخدم $x = 20$ و $y = -3$، يطبع البرنامج: \\
+    \textenglish{"Error: Division by zero"}.
+    \item إذا أدخل المستخدم $x = 20$ و $y = 5$, يحسب البرنامج ويطبع: $0.25$، لأنّ: \\
+    $\frac{\sqrt{20 - 4}}{5^2 - 9} = \frac{\sqrt{16}}{25 - 9} = \frac{4}{16} = 0.25$.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter x:");
+double x = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter y:");
+double y = double.Parse(Console.ReadLine());
+
+if (x < 4)
+{
+    Console.WriteLine("Error: Negative root");
+}
+else if (y == 3 || y == -3)
+{
+    Console.WriteLine("Error: Division by zero");
+}
+else
+{
+    double numerator = Math.Sqrt(x - 4);
+    double denominator = Math.Pow(y, 2) - 9;
+    double result = numerator / denominator;
+    Console.WriteLine(result);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال الرابع: فاتورة المياه حسب حجم العائلة والاستهلاك
+% ==============================================================
+\section{السؤال الرابع}
+تحسب شركة المياه فاتورة الاستهلاك الشهري للعائلات بناءً على \textbf{عدد أفراد العائلة} و\textbf{كمية المياه المستهلكة} بالمتر المكعّب. \\
+اكتب برنامجًا يستقبل من المستخدم عدد أفراد العائلة (عدد صحيح موجب)، ثم كمية استهلاك المياه بالمتر المكعّب (عدد صحيح موجب)، ويحسب ويطبع مبلغ الفاتورة النهائي حسب القواعد التالية:
+\begin{itemize}
+    \item \textbf{إذا كانت العائلة صغيرة (أقل من $5$ أفراد):}
+    \begin{itemize}[nosep]
+        \item إذا كان الاستهلاك $20$ مترًا مكعّبًا أو أقل، تدفع العائلة $8$ شواكل عن كل متر مكعّب.
+        \item إذا زاد الاستهلاك عن $20$ مترًا مكعّبًا، تدفع العائلة $8$ شواكل عن كل متر من أوّل $20$ مترًا، و $14$ شيكلاً عن كل متر مكعّب إضافي فوق الـ $20$.
+    \end{itemize}
+    \item \textbf{إذا كانت العائلة كبيرة ($5$ أفراد أو أكثر):}
+    \begin{itemize}[nosep]
+        \item إذا كان الاستهلاك $35$ مترًا مكعّبًا أو أقل، تدفع العائلة $7$ شواكل عن كل متر مكعّب.
+        \item إذا زاد الاستهلاك عن $35$ مترًا مكعّبًا، تدفع العائلة $7$ شواكل عن كل متر من أوّل $35$ مترًا، و $12$ شيكلاً عن كل متر مكعّب إضافي فوق الـ $35$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{مثال:}
+\begin{itemize}[nosep]
+    \item إذا أدخل المستخدم عدد أفراد العائلة $3$ والاستهلاك $25$ مترًا مكعّبًا، يحسب البرنامج ويطبع: $230$، لأنّ:
+    $20 \times 8 + (25 - 20) \times 14 = 160 + 70 = 230$.
+    \item إذا أدخل المستخدم عدد أفراد العائلة $6$ والاستهلاك $30$ مترًا مكعّبًا، يحسب البرنامج ويطبع: $210$، لأنّ:
+    $30 \times 7 = 210$.
+\end{itemize}
+
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter family members:");
+int members = int.Parse(Console.ReadLine());
+Console.WriteLine("Enter water consumption (cubes):");
+int cubes = int.Parse(Console.ReadLine());
+
+int bill;
+
+if (members < 5)
+{
+    if (cubes <= 20)
+    {
+        bill = cubes * 8;
+    }
+    else
+    {
+        bill = 20 * 8 + (cubes - 20) * 14;
+    }
+}
+else
+{
+    if (cubes <= 35)
+    {
+        bill = cubes * 7;
+    }
+    else
+    {
+        bill = 35 * 7 + (cubes - 35) * 12;
+    }
+}
+
+Console.WriteLine(bill);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+
+
+% ==============================================================
+% ورقة تسليم للطالب
+% ==============================================================
+\ifwithsols
+\else
+\clearpage
+% \thispagestyle{empty}
+% \mbox{}
+% \clearpage
+
+\begin{center}
+{\Large \textbf{ورقة تسليم للطالب — السؤال الأوّل}}
+\end{center}
+\vspace{0.4cm}
+
+\noindent\textbf{الاسم الكامل:}\hspace{0.4cm}\rule{8cm}{0.6pt}\hfill\textbf{الصف:} العاشر
+\vspace{0.8cm}
+
+\noindent\textbf{أ. ما هو مُخرج هذا المُدخل؟}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{|C{2.8cm}|C{2.8cm}|C{2.8cm}|C{4cm}|}
+\hline
+\textbf{$x$} & \textbf{$y$} & \textbf{diff} & \textarabic{\textbf{المُخرج}} \\
+\hline
+10 & 7 & & \\
+\hline
+-4 & -9 & & \\
+\hline
+5 & 8 & & \\
+\hline
+-5 & 3 & & \\
+\hline
+2 & 0 & & \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\vspace{0.8cm}
+\filbreak
+
+\noindent\textbf{ب. أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات (يجب ألّا يكون الزوج المختار مطابقًا لأي زوج في الفرع أ):}
+\begin{center}
+\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{|C{2.5cm}|p{5.8cm}|C{2cm}|C{2cm}|}
+\hline
+\textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{قيمة $x$} & \textbf{قيمة $y$} \\
+\hline
+$A$ & بحيث يكون العددان موجبَين & & \\
+\hline
+$B$ & بحيث يكون \textenglish{diff} $\le 5$ & & \\
+\hline
+$B$ & بحيث يكون $x > y$ & & \\
+\hline
+$C$ & بدون شرط إضافي & & \\
+\hline
+$D$ & بحيث يكون $x$ موجبًا & & \\
+\hline
+\end{tabular}
+\end{center}
+\fi
+
+\end{document}
