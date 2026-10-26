@@ -1,0 +1,493 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن $6$ للصف العاشر $10$ - أسئلة شاملة في جملة الشرط \textenglish{if}}
+\else
+\title{ورقة تمرن $6$ للصف العاشر $10$ - أسئلة شاملة في جملة الشرط \textenglish{if}}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2.2em]
+
+% ==============================================================
+% السؤال 4: حذف المنزلة الوسطى وفحص القسمة
+% ==============================================================
+\item
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا مكوّنًا من \textbf{$3$ منازل} (بين $100$ و $999$). \\
+يقوم البرنامج بتكوين \textbf{عدد جديد مكوّن من منزلتين} ناتج عن حذف منزلة العشرات الوسطى من العدد الأصلي (فمثلاً من العدد $632$ يتكوّن العدد الجديد $62$)، ويطبع هذا العدد الجديد. \\
+بعد ذلك، يفحص البرنامج العلاقة بين العدد الجديد ومنزلة العشرات التي حُذفت، ويطبع إحدى الرسائل التالية:
+\begin{itemize}[nosep]
+    \item إذا كانت منزلة العشرات المحذوفة تساوي $0$، لا يمكن القسمة عليها، فيطبع البرنامج: \textenglish{"Middle digit is zero"}.
+    \item وإلا، إذا كان العدد الجديد يقبل القسمة على منزلة العشرات المحذوفة بدون باقٍ، يطبع البرنامج: \textenglish{"Divisible"}.
+    \item وإلا، يطبع البرنامج: \textenglish{"Not divisible"}.
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم العدد $633$، يحذف البرنامج منزلة العشرات، فيكوّن العدد الجديد $63$ ويطبعه، ثم يطبع \textenglish{Divisible} لأنّ $63$ يقبل القسمة على منزلة العشرات المحذوفة، وهي $3$، بدون باقٍ.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم العدد $408$، يحذف البرنامج منزلة العشرات، فيكوّن العدد الجديد $48$ ويطبعه، ثم يطبع \textenglish{Middle digit is zero} لأنّ منزلة العشرات المحذوفة تساوي $0$.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a 3-digit number:");
+int num = int.Parse(Console.ReadLine());
+
+int hundreds = num / 100;
+int tens = (num / 10) % 10;
+int units = num % 10;
+
+int newNum = hundreds * 10 + units;
+Console.WriteLine(newNum);
+
+if (tens == 0)
+{
+    Console.WriteLine("Middle digit is zero");
+}
+else if (newNum % tens == 0)
+{
+    Console.WriteLine("Divisible");
+}
+else
+{
+    Console.WriteLine("Not divisible");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 5: تعريف وفحص خاصية على عدد من 4 منازل - العدد المتكافئ
+% ==============================================================
+\item
+نسمّي العدد الصحيح الموجب المكوّن من $4$ منازل (بين $1000$ و $9999$) \textbf{«عددًا متكافئًا»} إذا تحقّق فيه الشرطان التاليان معًا:
+\begin{enumerate}[nosep]
+    \item \textbf{مجموع الخانتين الخارجيتين} (أي خانة الآلاف وخانة الآحاد) يساوي \textbf{مجموع الخانتين الداخليتين} (أي خانة المئات وخانة العشرات).
+    \item خانة الآلاف \textbf{لا تساوي} خانة الآحاد.
+\end{enumerate}
+على سبيل المثال:
+\begin{itemize}[nosep]
+    \item العدد $3849$ هو عدد متكافئ لأنّ $3 + 9 = 12$ وكذلك $8 + 4 = 12$، وخانة الآلاف لا تساوي الآحاد ($3 \neq 9$).
+    \item العدد $4624$ هو عدد غير متكافئ؛ فرغم أنّ $4 + 4 = 8$ و $6 + 2 = 8$، إلا أنّ خانة الآلاف تساوي خانة الآحاد ($4 = 4$).
+    \item العدد $2519$ هو عدد غير متكافئ لأنّ $2 + 9 = 11$ بينما $5 + 1 = 6$.
+\end{itemize}
+اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا مكوّنًا من $4$ منازل، ويطبع \\
+ \textenglish{"Equivalent"} إذا كان العدد متكافئًا، و \textenglish{"Not Equivalent"} وإلا.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a 4-digit number:");
+int num = int.Parse(Console.ReadLine());
+
+int units = num % 10;
+int tens = (num / 10) % 10;
+int hundreds = (num / 100) % 10;
+int thousands = num / 1000;
+
+int outerSum = thousands + units;
+int innerSum = hundreds + tens;
+
+if (outerSum == innerSum && thousands != units)
+{
+    Console.WriteLine("Equivalent");
+}
+else
+{
+    Console.WriteLine("Not Equivalent");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 6: تعريف وفحص المتوالية الحسابية لثلاثة أعداد
+% ==============================================================
+\item
+نسمّي ثلاثة أعداد صحيحة $(a, b, c)$ \textbf{«متوالية حسابية»} إذا كان الفرق بين العدد الثاني والأول مساويًا للفرق بين العدد الثالث والثاني (أي $b - a = c - b$). \\
+اكتب برنامجًا يستقبل من المستخدم $3$ أعداد صحيحة $a$ ثم $b$ ثم $c$، ويصنّفها إلى إحدى الحالات التالية:
+\begin{itemize}[nosep]
+    \item إذا كانت الأعداد الثلاثة تشكل متوالية حسابية \textbf{متزايدة} (أي $b - a = c - b$ والفرق أكبر تمامًا من $0$، مثل $4, 7, 10$)، يطبع البرنامج: \textenglish{"Increasing Arithmetic"}.
+    \item إذا كانت الأعداد الثلاثة تشكل متوالية حسابية \textbf{متناقصة} (أي $b - a = c - b$ والفرق أصغر تمامًا من $0$، مثل $20, 15, 10$)، يطبع البرنامج: \textenglish{"Decreasing Arithmetic"}.
+    \item إذا كانت الأعداد الثلاثة تشكل متوالية حسابية \textbf{ثابتة} (أي الأعداد الثلاثة متساوية، مثل $5, 5, 5$)، يطبع البرنامج: \textenglish{"Constant Arithmetic"}.
+    \item في جميع الحالات الأخرى (مثل $2, 5, 9$)، يطبع البرنامج: \textenglish{"Not Arithmetic"}.
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم الأعداد $4$ و $7$ و $10$، يطبع البرنامج \textenglish{Increasing Arithmetic} لأنّ $7 - 4 = 3$ و $10 - 7 = 3$، والفرق $3 > 0$.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم الأعداد $12$ و $8$ و $4$، يطبع البرنامج \textenglish{Decreasing Arithmetic} لأنّ $8 - 12 = -4$ و $4 - 8 = -4$، والفرق $-4 < 0$.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter 3 integers:");
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int c = int.Parse(Console.ReadLine());
+
+int diff1 = b - a;
+int diff2 = c - b;
+
+if (diff1 == diff2)
+{
+    if (diff1 > 0)
+    {
+        Console.WriteLine("Increasing Arithmetic");
+    }
+    else if (diff1 < 0)
+    {
+        Console.WriteLine("Decreasing Arithmetic");
+    }
+    else
+    {
+        Console.WriteLine("Constant Arithmetic");
+    }
+}
+else
+{
+    Console.WriteLine("Not Arithmetic");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 7: حافلات الرحلة المدرسية (قسمة وباقي مع شروط)
+% ==============================================================
+\item
+تنظّم المدرسة رحلة تعليمية، وتريد حجز حافلات لنقل الطلاب. تتسع كل \textbf{حافلة كبيرة} لـ $45$ طالبًا بالضبط. \\
+اكتب برنامجًا يستقبل من المستخدم العدد الكلي للطلاب المسجلين للرحلة (عدد صحيح موجب). \\
+يطبع البرنامج أولاً عدد \textbf{الحافلات الكبيرة الممتلئة بالكامل}، ثم عدد \textbf{الطلاب المتبقين} الذين لا يكفون لملء حافلة كبيرة كاملة. \\
+بعد ذلك، يطبع البرنامج توصية بخصوص الطلاب المتبقين حسب القواعد التالية:
+\begin{itemize}[nosep]
+    \item إذا لم يتبقَّ أي طالب (الباقي يساوي $0$)، يطبع: \textenglish{"No extra transport needed"}.
+    \item إذا كان عدد الطلاب المتبقين بين $1$ و $15$ طالبًا (شاملاً $1$ و $15$)، يطبع: \textenglish{"Need 1 minibus"}.
+    \item إذا كان عدد الطلاب المتبقين أكثر من $15$ طالبًا، يطبع: \textenglish{"Need 1 extra large bus"}.
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم عدد الطلاب $100$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $10$، ثم يطبع \textenglish{Need 1 minibus}.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم عدد الطلاب $115$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $25$، ثم يطبع \textenglish{Need 1 extra large bus}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter total students:");
+int students = int.Parse(Console.ReadLine());
+
+int fullBuses = students / 45;
+int remaining = students % 45;
+
+Console.WriteLine("Full large buses: " + fullBuses);
+Console.WriteLine("Remaining students: " + remaining);
+
+if (remaining == 0)
+{
+    Console.WriteLine("No extra transport needed");
+}
+else if (remaining <= 15)
+{
+    Console.WriteLine("Need 1 minibus");
+}
+else
+{
+    Console.WriteLine("Need 1 extra large bus");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 8: مجال تعريف تعبير رياضي وحساب قيمته
+% ==============================================================
+\item
+معطى التعبير الرياضي التالي:
+\[ f(x) = \frac{x^3 - 8}{\sqrt{25 - x^2}} \]
+اكتب برنامجًا يستقبل من المستخدم عددًا عشريًّا يمثّل قيمة $x$، ويفحص مجال تعريف التعبير قبل حسابه:
+\begin{itemize}[nosep]
+    \item إذا كان $x = 5$ أو $x = -5$ (حينها يصبح المقام صفرًا)، يطبع البرنامج: \\
+    \textenglish{"ERROR: division by 0"}.
+    \item إذا كان $x > 5$ أو $x < -5$ (حينها يصبح ما تحت الجذر سالبًا)، يطبع البرنامج: \\
+    \textenglish{"ERROR: negative square root"}.
+    \item في باقي الحالات (أي عندما $-5 < x < 5$)، يحسب البرنامج قيمة $f(x)$ ويطبعها.
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم $x = -5$، يطبع البرنامج \textenglish{ERROR: division by 0} لأنّ المقام يساوي صفرًا.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم $x = 3$، يحسب البرنامج القيمة $f(x) = 4.75$ ويطبعها، لأنّ $\frac{3^3 - 8}{\sqrt{25 - 3^2}} = \frac{19}{\sqrt{16}} = \frac{19}{4} = 4.75$.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter x:");
+double x = double.Parse(Console.ReadLine());
+
+if (x == 5 || x == -5)
+{
+    Console.WriteLine("ERROR: division by 0");
+}
+else if (x > 5 || x < -5)
+{
+    Console.WriteLine("ERROR: negative square root");
+}
+else
+{
+    double numerator = Math.Pow(x, 3) - 8;
+    double denominator = Math.Sqrt(25 - Math.Pow(x, 2));
+    double fx = numerator / denominator;
+    Console.WriteLine("f(x) = " + fx);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 9: حل المعادلة التربيعية حسب المميز دلتا
+% ==============================================================
+\item
+عند حل معادلة تربيعية من الصورة $ax^2 + bx + c = 0$ (حيث $a \neq 0$)، نرمز للمميّز بـ $\Delta = b^2 - 4ac$ وعندها:
+\begin{itemize}[nosep]
+    \item إذا كان $\Delta < 0$: لا توجد حلول حقيقية للمعادلة، فيطبع البرنامج \textenglish{"No real solutions"}.
+    \item إذا كان $\Delta = 0$: يوجد حلّ حقيقي واحد للمعادلة وهو:
+    \( x = \frac{-b}{2a} \)
+    \item إذا كان $\Delta > 0$: يوجد حلّان حقيقيان للمعادلة، وهما:
+    \[ x_1 = \frac{-b + \sqrt{\Delta}}{2a} \qquad x_2 = \frac{-b - \sqrt{\Delta}}{2a} \]
+\end{itemize}
+اكتب برنامجًا يستقبل معاملات المعادلة التربيعية $a, b, c$ ويحسب حلول المعادلة ويطبعها مع رسالة مناسبة.
+
+\textbf{مثال $1$:} عند استقبال المعاملات $1, -5, 6$ يطبع البرنامج:
+\textenglish{"Two solutions: x1 = 3, x2 = 2"}.
+
+\textbf{مثال $2$:} عند استقبال المعاملات $1, 2, 1$ يطبع البرنامج:
+\textenglish{"One solution: x = -1"}.
+
+\textbf{مثال $3$:} عند استقبال المعاملات $1, 0, 1$ يطبع البرنامج:
+\textenglish{"No real solutions"}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter a:");
+double a = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter b:");
+double b = double.Parse(Console.ReadLine());
+Console.WriteLine("Enter c:");
+double c = double.Parse(Console.ReadLine());
+
+double delta = Math.Pow(b, 2) - 4 * a * c;
+if (delta < 0)
+{
+    Console.WriteLine("No real solutions");
+}
+else if (delta == 0)
+{
+    double x = -b / (2 * a);
+    Console.WriteLine("One solution: x = " + x);
+}
+else
+{
+    double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+    double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+    Console.WriteLine("Two solutions: x1 = " + x1 + ", x2 = " + x2);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 10: حساب فاتورة الكهرباء التراكمية حسب الشرائح
+% ==============================================================
+\item
+اكتب برنامجًا يستقبل عدد الكيلوواط المستهلكة (عددًا صحيحًا موجبًا)، ويحسب التكلفة التراكمية حسب التعرفة التدريجية التالية:
+\begin{itemize}[nosep]
+    \item أول $100$ كيلوواط (من $1$ إلى $100$): الكلفة $0.5$ شيكل لكل كيلوواط.
+    \item كل كيلوواط إضافي من $101$ إلى $200$ كيلوواط: الكلفة $0.7$ شيكل لكل كيلوواط.
+    \item كل كيلوواط إضافي أكثر من $200$: الكلفة $1.0$ شيكل لكل كيلوواط.
+\end{itemize}
+على البرنامج أن يطبع المبلغ الإجمالي المستحق للدفع.
+
+\textbf{مثال $1$:} إذا كان المدخل $150$ كيلوواط، فالمبلغ الإجمالي هو:
+$100 \times 0.5 + 50 \times 0.7 = 85$.
+
+\textbf{مثال $2$:} إذا كان المدخل $780$ كيلوواط، فالمبلغ الإجمالي هو:
+$100 \times 0.5 + 100 \times 0.7 + 580 \times 1 = 700$.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter kWh:");
+int kwh = int.Parse(Console.ReadLine());
+
+double cost;
+if (kwh <= 100)
+{
+    cost = kwh * 0.5;
+}
+else if (kwh <= 200)
+{
+    cost = 100 * 0.5 + (kwh - 100) * 0.7;
+}
+else
+{
+    cost = 100 * 0.5 + 100 * 0.7 + (kwh - 200) * 1.0;
+}
+Console.WriteLine("Total cost = " + cost);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 11: تكلفة شحن الطرود البريدية حسب المنطقة والوزن
+% ==============================================================
+\item
+تحسب شركة بريد تكلفة شحن الطرود بناءً على \textbf{منطقة الشحن} و\textbf{وزن الطرد} بالكيلوغرام. \\
+اكتب برنامجًا يستقبل من المستخدم حرفًا واحدًا (\textenglish{char}) يمثّل منطقة الشحن (\textenglish{'L'} للشحن المحلي، أو \textenglish{'I'} للشحن الدولي)، ثم عددًا عشريًا موجبًا (\textenglish{double}) يمثّل وزن الطرد بالكيلوغرام، ويحسب ويطبع تكلفة الشحن حسب القواعد التالية:
+\begin{itemize}
+    \item \textbf{في حالة الشحن المحلي (\textenglish{'L'}):}
+    \begin{itemize}[nosep]
+        \item إذا كان الوزن $5$ كغم أو أقل، تكون التكلفة الثابتة $25$ شيكلاً.
+        \item إذا زاد الوزن عن $5$ كغم، يدفع الزبون $25$ شيكلاً عن أوّل $5$ كغم، بالإضافة إلى $4$ شواكل عن كل كيلوغرام إضافي فوق الـ $5$.
+    \end{itemize}
+    \item \textbf{في حالة الشحن الدولي (\textenglish{'I'}):}
+    \begin{itemize}[nosep]
+        \item إذا كان الوزن $5$ كغم أو أقل، تكون التكلفة الثابتة $80$ شيكلاً.
+        \item إذا زاد الوزن عن $5$ كغم، يدفع الزبون $80$ شيكلاً عن أوّل $5$ كغم، بالإضافة إلى $15$ شيكلاً عن كل كيلوغرام إضافي فوق الـ $5$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم المنطقة الدولية \textenglish{'I'} والوزن $8$ كغم، يطبع البرنامج تكلفة الشحن $125$ شيكلاً، لأنّ $80 + (8 - 5) \times 15 = 125$.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم المنطقة المحلية \textenglish{'L'} والوزن $3.5$ كغم، يطبع البرنامج تكلفة الشحن $25$ شيكلاً، لأنّ الوزن لا يتجاوز $5$ كغم.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter zone (L or I):");
+char zone = char.Parse(Console.ReadLine());
+Console.WriteLine("Enter weight in kg:");
+double weight = double.Parse(Console.ReadLine());
+
+double cost;
+if (zone == 'L')
+{
+    if (weight <= 5)
+    {
+        cost = 25;
+    }
+    else
+    {
+        cost = 25 + (weight - 5) * 4;
+    }
+}
+else
+{
+    if (weight <= 5)
+    {
+        cost = 80;
+    }
+    else
+    {
+        cost = 80 + (weight - 5) * 15;
+    }
+}
+Console.WriteLine("Shipping cost: " + cost);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 12: حساب طلبية مطعم مع تخفيض الكمية ورسوم التوصيل
+% ==============================================================
+\item
+في مطعم يبيعون نوعين من الوجبات:
+\begin{itemize}[nosep]
+    \item وجبة عادية (يرمز لها بالحرف \textenglish{'R'}): سعر الوجبة الواحدة $25$ شيكلاً.
+    \item وجبة خاصة (يرمز لها بالحرف \textenglish{'S'}): سعر الوجبة الواحدة $35$ شيكلاً.
+\end{itemize}
+تُحسب التكلفة النهائية للطلبية وفق القواعد المتسلسلة التالية:
+\begin{enumerate}[nosep]
+    \item إذا شملت الطلبية \textbf{$5$ وجبات أو أكثر}، يحصل الزبون على تخفيض قدره $20$ شيكلاً من ثمن الوجبات.
+    \item إذا طلب الزبون خدمة التوصيل للمنزل (\textenglish{needDelivery} من نمط \textenglish{bool})، تُضاف رسوم توصيل قدرها $15$ شيكلاً، \textbf{إلا} إذا كان ثمن الطلبية (بعد احتساب التخفيض إن وُجد) $150$ شيكلاً أو أكثر، فيكون التوصيل مجانيًا.
+\end{enumerate}
+اكتب برنامجًا يستقبل نوع الوجبة (\textenglish{'R'} أو \textenglish{'S'})، وعدد الوجبات، وهل الطلبية تشمل توصيلاً (\textenglish{true/false})، ويطبع المبلغ النهائي للدفع.
+
+\textbf{مثال $1$:} إذا كانت الوجبة من النمط \textenglish{'R'}، وعددها $6$، والتوصيل مطلوبًا، يطبع البرنامج المبلغ النهائي $145$ شيكلاً؛ فثمن الوجبات $150$، وبعد التخفيض يصبح $130$، ثم تضاف رسوم التوصيل $15$ شيكلاً.
+
+\textbf{مثال $2$:} إذا كانت الوجبة من النمط \textenglish{'S'}، وعددها $5$، والتوصيل مطلوبًا، يطبع البرنامج المبلغ النهائي $155$ شيكلاً؛ فثمن الوجبات $175$، وبعد التخفيض يصبح $155$، ولذلك يكون التوصيل مجانيًا.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter meal type (R/S):");
+char mealType = char.Parse(Console.ReadLine());
+Console.WriteLine("Enter number of meals:");
+int count = int.Parse(Console.ReadLine());
+Console.WriteLine("Need delivery? (true/false):");
+bool needDelivery = bool.Parse(Console.ReadLine());
+
+int total;
+if (mealType == 'R')
+{
+    total = count * 25;
+}
+else
+{
+    total = count * 35;
+}
+
+if (count >= 5)
+{
+    total = total - 20;
+}
+
+if (needDelivery && total < 150)
+{
+    total = total + 15;
+}
+
+Console.WriteLine("Total price: " + total);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
