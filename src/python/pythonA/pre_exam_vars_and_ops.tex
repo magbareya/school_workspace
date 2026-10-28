@@ -1,0 +1,605 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تحضير للامتحان النهائي - المتغيرات، العوامل والشروط (بايثون أ)}
+\else
+\title{ورقة تحضير للامتحان النهائي - المتغيرات، العوامل والشروط (بايثون أ)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{القسم الأول: المتغيرات والشروط - أسئلة الدرس}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+num1 = 5
+num2 = num1 + 1
+num1 = num2
+print("num1 = ", num1, " num2 = ", num2)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2cm}|C{2cm}|C{6cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 5 & & \\ \hline
+2 & 5 & 6 & \\ \hline
+3 & 6 & 6 & \\ \hline
+4 & 6 & 6 & \texttt{num1 =\ \ 6\ \ num2 =\ \ 6} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2cm}|C{2cm}|C{6cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+num1 = 3
+num2 = 10
+num1 = num2
+num2 = num1
+print("num1 = ", num1, "num2 = ", num2)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2cm}|C{2cm}|C{6cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 3 & & \\ \hline
+2 & 3 & 10 & \\ \hline
+3 & 10 & 10 & \\ \hline
+4 & 10 & 10 & \\ \hline
+5 & 10 & 10 & \texttt{num1 =\ \ 10 num2 =\ \ 10} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2cm}|C{2cm}|C{6cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+counter = 0
+print(counter == 5)
+counter = counter + 1
+print("Hello!")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2.5cm}|C{4cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{counter} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 0 & \\ \hline
+2 & 0 & \texttt{False} \\ \hline
+3 & 1 & \\ \hline
+4 & 1 & \texttt{Hello!} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2.5cm}|C{4cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{counter} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & \\ \hline
+ & & \\ \hline
+ & & \\ \hline
+ & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} أمامكم مقطع البرنامج التالي:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+number_int = int(input("Enter an integer: "))
+number_float = float(number_int)
+print("The decimal number is:", number_float)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item اكتبوا ما هو مُخرج مقطع البرنامج دون تشغيله في برمجية بايثون، على فرض أنّ المُدخل هو $34$. يجب الاستعانة بجدول متابعة.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.2cm}|C{2.4cm}|C{2.8cm}|C{3.8cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{\small number\_int} & \textbf{\small number\_float} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 34 & & \small\texttt{Enter an integer:} \\ \hline
+2 & 34 & 34.0 & \\ \hline
+3 & 34 & 34.0 & \small\texttt{The decimal number is: 34.0} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.2cm}|C{2.4cm}|C{2.8cm}|C{3.8cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{\small number\_int} & \textbf{\small number\_float} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+\item ما الهدف من مقطع البرنامج؟
+
+\ifwithsols
+\begin{boxSolution}
+يستقبل مقطع البرنامج عددًا صحيحًا من المستخدم، يحوّله من نمط عدد صحيح (\textenglish{int}) إلى نمط عدد عشري (\textenglish{float})، ثم يطبع العدد العشري.
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item في دكان \textbf{"مفاجآت"}، قرّروا منح هدية لكل زبون وفقًا لمبلغ الشراء من الدكان. الهدية هي واحدة من الخيارات الخمسة التالية:
+دفتر يوميات (\textenglish{Diary})، مقلمة مجهّزة (\textenglish{Pencil case})، حقيبة مجهّزة (\textenglish{Bag})، لعبة حاسوب (\textenglish{Computer game})، قسيمة شراء بقيمة $500$ شيكل (\textenglish{Gift voucher}).
+عند الشراء بأقل من $10$ شيكل، فإنّ الزبون \textbf{لا يستحق} هدية.
+
+يتم تحديد الهدية وفقًا للسيناريو الذي أمامكم (المتغير \textenglish{amount} هو مبلغ الشراء):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if amount < 10:
+    print("Not eligible for a gift")
+elif amount < 400:
+    if amount >= 10 and amount <= 100:
+        print("Diary")
+    elif amount < 250:
+        print("Pencil case")
+    else:
+        print("Bag")
+elif amount <= 600:
+    print("Computer game")
+else:
+    print("Gift voucher")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item قرّر يوسف أن يشغّل السيناريو. ساعدوه وأكملوا الجدول أدناه: لكل مبلغ شراء، ما هي الهدية التي يستحقها الزبون؟
+
+{\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{3cm}|C{6cm}|}
+\hline
+\textbf{مبلغ الشراء} & \textbf{الهدية التي يستحقها الزبون} \\
+\hline
+\ifwithsols
+$8$ & لا يستحق هدية \\ \hline
+$80$ & دفتر يوميات \\ \hline
+$250$ & حقيبة مجهّزة \\ \hline
+$450$ & لعبة حاسوب \\ \hline
+\else
+$8$ & \\ \hline
+$80$ & \\ \hline
+$250$ & \\ \hline
+$450$ & \\ \hline
+\fi
+\end{tabular}
+\par} %
+\filbreak
+
+\item أمامكم قائمة هدايا ممكنة وقائمة مبالغ شراء تخوّل الحصول على هدايا. لائموا بين كل هدية ومبلغ الشراء الملائم، واكتبوا الإجابات في الجدول:
+
+{\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5cm}p{5cm}}
+$1$. دفتر يوميات & \textenglish{A}. أكبر من $600$ \\
+$2$. حقيبة مجهّزة & \textenglish{B}. $250 - 399$ \\
+$3$. لعبة حاسوب & \textenglish{C}. $400 - 600$ \\
+$4$. قسيمة شراء & \textenglish{D}. $10 - 100$ \\
+\end{tabular}
+\par} %
+
+\vspace{1em}
+
+{\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{5cm}|C{4cm}|}
+\hline
+\textbf{الهدية التي يستحقها الزبون} & \textbf{مبلغ الشراء} \\
+\hline
+\ifwithsols
+$1$. دفتر يوميات & \textenglish{D}. $10 - 100$ \\ \hline
+$2$. حقيبة مجهّزة & \textenglish{B}. $250 - 399$ \\ \hline
+$3$. لعبة حاسوب & \textenglish{C}. $400 - 600$ \\ \hline
+$4$. قسيمة شراء & \textenglish{A}. أكبر من $600$ \\ \hline
+\else
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+\fi
+\end{tabular}
+\par} %
+\filbreak
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{القسم الثاني: ورقة عمل - نتدرّب على حل المشكلات}
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+num = 1234
+num1 = num // 100
+num2 = num % 100
+print("num1 = ", num1, " num2 = ", num2)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.2cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{5.2cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 1234 & & & \\ \hline
+2 & 1234 & 12 & & \\ \hline
+3 & 1234 & 12 & 34 & \\ \hline
+4 & 1234 & 12 & 34 & \texttt{num1 =\ \ 12\ \ num2 =\ \ 34} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.2cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{5.2cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num} & \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & & & \\ \hline
+ & & & & \\ \hline
+ & & & & \\ \hline
+ & & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+number = 123
+print(number // 100)
+print(number % 100 % 10)
+print(number % 10)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2.5cm}|C{4cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{number} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 123 & \\ \hline
+2 & 123 & \texttt{1} \\ \hline
+3 & 123 & \texttt{3} \\ \hline
+4 & 123 & \texttt{3} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{2.5cm}|C{4cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{number} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & \\ \hline
+ & & \\ \hline
+ & & \\ \hline
+ & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{تمرين متابعة:} اكتبوا ما هو مُخرج مقطع البرنامج التالي دون تشغيله في برمجية بايثون. يجب الاستعانة بجدول متابعة.
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+num1 = 2
+num2 = 3
+num3 = 5
+sum = num1 + num2 + num3
+print(sum)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{2.5cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textbf{num3} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+\hline
+1 & 2 & & & & \\ \hline
+2 & 2 & 3 & & & \\ \hline
+3 & 2 & 3 & 5 & & \\ \hline
+4 & 2 & 3 & 5 & 10 & \\ \hline
+5 & 2 & 3 & 5 & 10 & \texttt{10} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.5cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{2.5cm}|}
+\hline
+\textarabic{\textbf{السطر}} & \textbf{num1} & \textbf{num2} & \textbf{num3} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+\hline
+ & & & & & \\ \hline
+ & & & & & \\ \hline
+ & & & & & \\ \hline
+ & & & & & \\ \hline
+ & & & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item معطاة ثلاثة متغيرات \textenglish{a}، \textenglish{b}، \textenglish{c} وقيمها كالتالي:
+\begin{center}
+\textenglish{a = 10, b = 15, c = 0}
+\end{center}
+احسبوا قيمة كل من التعابير المنطقية في الجدول، واكتبوا القيمة (\textenglish{True} / \textenglish{False}) في العمود الفارغ.
+
+{\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{1.2cm}|>{\raggedright\arraybackslash}p{9.6cm}|C{3cm}|}
+\hline
+\textbf{البند} & \centering\textbf{التعبير المنطقي} & \textbf{قيمة التعبير المنطقي} \\
+\hline
+$1$ & \textenglish{\texttt{a >= b or b == c}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$2$ & \textenglish{\texttt{a \% 5 == 0 and b // 5 > c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$3$ & \textenglish{\texttt{a < 0 or (b == c + 15 and a >= c)}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$4$ & \textenglish{\texttt{a \% 2 == c \% 2 and b \% 3 > a \% 3}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$5$ & \textenglish{\texttt{a != b and b != c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+\end{tabular}
+\par} %
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*.]
+\item $10 \geq 15$ خطأ، و $15 = 0$ خطأ، إذن \textenglish{False}.
+\item $10 \% 5 = 0$ صحيح، و $15 // 5 = 3 > 0$ صحيح، إذن \textenglish{True}.
+\item $10 < 0$ خطأ، لكن $15 = 0 + 15$ صحيح و $10 \geq 0$ صحيح، إذن \textenglish{True}.
+\item $10 \% 2 = 0$ و $0 \% 2 = 0$ متساويان (صحيح)، لكن $15 \% 3 = 0$ ليس أكبر من $10 \% 3 = 1$ (خطأ)، إذن \textenglish{False}.
+\item $10 \neq 15$ صحيح، و $15 \neq 0$ صحيح، إذن \textenglish{True}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item في حانوت رياضيّ، في إطار حملة تُمنح هدايا للزبائن وفقًا لمبلغ الشراء.
+يمكن أن تكون الهدية واحدة من الإمكانيات التالية: كرة يوغا (\textenglish{Yoga ball})، كرات تنس (\textenglish{Tennis balls})، كرة قدم (\textenglish{Football})، حذاء رياضي (\textenglish{Sports shoes}).
+عند الشراء بمبلغ أقل من $80$ شيكل \textbf{لا يحصل} الزبون على هدية.
+
+يتم تحديد الهدية حسب السيناريو الآتي (المتغير \textenglish{amount} هو مبلغ الشراء):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if amount < 80:
+    print("Not eligible for a gift")
+elif amount < 800:
+    if amount >= 80 and amount <= 500:
+        print("Yoga ball")
+    elif amount < 650:
+        print("Tennis balls")
+    else:
+        print("Football")
+else:
+    print("Sports shoes")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item قرّرت دانة تشغيل السيناريو. ساعدوها وأكملوا الجدول: لكل مبلغ، اكتبوا ما هي الهدية التي يستحقها الزبون.
+
+{\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{3cm}|C{6cm}|}
+\hline
+\textbf{مبلغ الشراء} & \textbf{الهدية التي يستحقها الزبون} \\
+\hline
+\ifwithsols
+$25$ & لا يستحق هدية \\ \hline
+$200$ & كرة يوغا \\ \hline
+$750$ & كرة قدم \\ \hline
+$999$ & حذاء رياضي \\ \hline
+$550$ & كرات تنس \\ \hline
+\else
+$25$ & \\ \hline
+$200$ & \\ \hline
+$750$ & \\ \hline
+$999$ & \\ \hline
+$550$ & \\ \hline
+\fi
+\end{tabular}
+\par} %
+\filbreak
+
+\item أمامكم قائمة الهدايا المُتاحة وقائمة مبالغ الشراء التي تؤهّل الحصول على هدية. لائموا لكل هدية مبلغ الشراء، واكتبوا الإجابات في الجدول التالي:
+
+{\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5cm}p{5cm}}
+$1$. كرة يوغا & \textenglish{A}. أكبر من $800$ \\
+$2$. كرات تنس & \textenglish{B}. $500 - 650$ \\
+$3$. كرة قدم & \textenglish{C}. $650 - 800$ \\
+$4$. حذاء رياضي & \textenglish{D}. $80 - 500$ \\
+\end{tabular}
+\par} %
+
+\vspace{1em}
+
+{\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{5cm}|C{4cm}|}
+\hline
+\textbf{الهدية التي يستحقها الزبون} & \textbf{مبلغ الشراء} \\
+\hline
+\ifwithsols
+$1$. كرة يوغا & \textenglish{D}. $80 - 500$ \\ \hline
+$2$. كرات تنس & \textenglish{B}. $500 - 650$ \\ \hline
+$3$. كرة قدم & \textenglish{C}. $650 - 800$ \\ \hline
+$4$. حذاء رياضي & \textenglish{A}. أكبر من $800$ \\ \hline
+\else
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+\fi
+\end{tabular}
+\par} %
+\filbreak
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
