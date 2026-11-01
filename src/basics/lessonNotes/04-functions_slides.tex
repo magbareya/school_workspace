@@ -1,0 +1,312 @@
+\documentclass[13pt]{beamer}
+\input{../../../scripts/beamer_preamble.tex}
+
+\title{العمليات الخارجية في لغة \textenglish{C\#}}
+\author{الأستاذ محمود اغبارية}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{مقدمة ومصطلحات أساسية}
+العمليات الخارجية تقسّم البرنامج إلى مقاطع صغيرة تؤدي مهام محددة:
+\begin{itemize}
+  \item تنظيم الكود وجعله أسهل للقراءة والصيانة.
+  \item إعادة استخدام نفس الكود أكثر من مرة.
+\end{itemize}
+\vspace{0.5em}
+\textbf{انتبه للفرق بين المصطلحات:}
+\begin{itemize}
+  \item \textbf{تستقبل:} تقرأ مدخلات من المستخدم عبر \textenglish{Console.ReadLine()}.
+  \item \textbf{تتلقى:} تأخذ معطيات (بارامترات) بين القوسين في تعريف العملية.
+  \item \textbf{تطبع:} تعرض مخرجات على الشاشة عبر \textenglish{Console.WriteLine(...)}.
+  \item \textbf{تعيد:} تُرجع قيمة عبر الأمر \textenglish{return}.
+\end{itemize}
+\end{frame}
+
+% مبنى تعريف العملية
+\begin{frame}[fragile]{مبنى تعريف العملية}
+كل عملية خارجية تتكوّن من قسمين رئيسيين:
+\begin{itemize}
+  \item \textbf{تعريف العملية:} السطر الأوّل ويحتوي على \textenglish{public static}، ونمط القيمة المعادة (أو \textenglish{void})، واسم العملية، والمعطيات بين القوسين مثل \textenglish{(int x, int y)}.
+  \item \textbf{جسم العملية:} الأوامر المكتوبة بين القوسين \textenglish{\{ \}} وتُنفّذ عند استدعاء العملية.
+\end{itemize}
+\end{frame}
+
+% مثال: PrintHello
+\begin{frame}[fragile]{مثال $1$: عملية لا تتلقى ولا تعيد}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintHello()
+{
+    Console.WriteLine("Hello");
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item \textenglish{public static} $\leftarrow$ جزء ثابت في هذه المرحلة.
+  \item \textenglish{void} $\leftarrow$ العملية لا تعيد أي قيمة.
+  \item \textenglish{()} $\leftarrow$ الأقواس الفارغة تعني أنّها لا تتلقى معطيات.
+\end{itemize}
+\end{frame}
+
+% مثال: AddNumbers
+\begin{frame}[fragile]{مثال $2$: عملية تتلقى وتعيد}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int AddNumbers(int a, int b)
+{
+    int sum = a + b;
+    return sum;
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item تعيد قيمة من نمط \textenglish{int}، ويجب أن يطابق نمط القيمة بعد \textenglish{return}.
+  \item تتلقى معطيين من نمط \textenglish{int} هما \textenglish{(int a, int b)}.
+\end{itemize}
+\end{frame}
+
+% استدعاء العملية
+\begin{frame}[fragile]{استدعاء العملية في \textenglish{Main}}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Main(string[] args)
+{
+    PrintHello();
+    int sum1 = AddNumbers(5, 10);
+    int a = 5;
+    int b = 10;
+    int sum2 = AddNumbers(a, b);
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.5em}
+\begin{itemize}
+  \item \textenglish{PrintHello()} لا تعيد قيمة (\textenglish{void})، لذلك نكتب اسمها فقط.
+  \item \textenglish{AddNumbers} تعيد قيمة، فنحفظها في متغير من نفس النمط أو نطبعها.
+  \item ترتيب وأنماط المعطيات الممرّرة يجب أن يطابق تعريف العملية.
+\end{itemize}
+\end{frame}
+
+% استدعاء من فئة أخرى
+\begin{frame}[fragile]{استدعاء عملية من فئة أخرى}
+نكتب اسم الفئة ثم نقطة ثم اسم العملية:
+
+\begin{english}
+\begin{itemize}
+  \item Console.WriteLine("Hello World!");
+  \item Console.ReadLine();
+  \item int.Parse(str); ~ double.Parse(str);
+  \item Math.Max(5, 10); ~ Math.Min(5, 10);
+  \item Math.Abs(-5); ~ Math.Pow(2, 3);
+  \item Math.Sqrt(25); ~ Math.Round(2.5);
+\end{itemize}
+\end{english}
+\end{frame}
+
+\begin{frame}[fragile]{أقسام العمليات الخارجية}
+\begin{enumerate}
+  \item عمليات لا تتلقى ولا تعيد (تستقبل وتطبع فقط)
+  \item عمليات تتلقى ولا تعيد (قسم منها يستقبل أيضًا)
+  \item عمليات لا تتلقى وتعيد أعدادًا صحيحة أو عشرية
+  \item عمليات تتلقى وتعيد أعدادًا صحيحة أو عشرية
+  \item عمليات تعيد \textenglish{string} أو \textenglish{char}
+  \item عمليات تعيد \textenglish{bool} وكيفية استخدامها داخل جملة \textenglish{if}
+  \item عمليات تستدعي عمليات أخرى
+\end{enumerate}
+\end{frame}
+
+% القسم الأول
+\begin{frame}[fragile]{$1$. عمليات لا تتلقى ولا تعيد (تستقبل وتطبع)}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void ReadAndPrintSum()
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    Console.WriteLine("Sum = " + (a + b));
+}
+
+public static void Main()
+{
+    ReadAndPrintSum();
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% القسم الثاني
+\begin{frame}[fragile]{$2$. عمليات تتلقى ولا تعيد}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void PrintTotalCost(double price)
+{
+    int quantity = int.Parse(Console.ReadLine());
+    double total = price * quantity;
+    Console.WriteLine("Total = " + total);
+}
+
+public static void Main()
+{
+    PrintTotalCost(15.5);
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.3em}
+تتلقى السعر كمعطى، وتستقبل الكمية من المستخدم، ثم تطبع التكلفة.
+\end{frame}
+
+% القسم الثالث
+\begin{frame}[fragile]{$3$. عمليات لا تتلقى وتعيد عددًا (\textenglish{int / double})}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static int ReadNumber()
+{
+    int num = int.Parse(Console.ReadLine());
+    return num;
+}
+
+public static void Main()
+{
+    int x = ReadNumber();
+    Console.WriteLine("The number: " + x);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% القسم الرابع
+\begin{frame}[fragile]{$4$. عمليات تتلقى وتعيد عددًا (\textenglish{int / double})}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double GetAverage(double a, double b)
+{
+    double avg = (a + b) / 2.0;
+    return avg;
+}
+
+public static void Main()
+{
+    double result = GetAverage(7.5, 9.0);
+    Console.WriteLine("Average = " + result);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% القسم الخامس
+\begin{frame}[fragile]{$5$. عمليات تعيد \textenglish{string} أو \textenglish{char}}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static char GetGradeSymbol(int grade)
+{
+    if (grade >= 55)
+    {
+        return 'P';
+    }
+    else
+    {
+        return 'F';
+    }
+}
+
+public static void Main()
+{
+    char sym = GetGradeSymbol(80);
+    Console.WriteLine(sym);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% القسم السادس - شريحة 1
+\begin{frame}[fragile]{$6$. تعريف عملية تعيد \textenglish{bool}}
+يمكن كتابتها باستعمال \textenglish{if - else} أو بإرجاع الشرط مباشرة:
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+// Way 1: using if - else
+public static bool IsEven(int num)
+{
+    if (num % 2 == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+// Way 2: returning the boolean expression directly
+public static bool AreEqual(double a, double b)
+{
+    return (a == b);
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% القسم السادس - شريحة 2
+\begin{frame}[fragile]{$6$. استدعاء عملية تعيد \textenglish{bool} داخل جملة \textenglish{if}}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static void Main()
+{
+    int n = int.Parse(Console.ReadLine());
+    if (IsEven(n))
+    {
+        Console.WriteLine("Even");
+    }
+    else
+    {
+        Console.WriteLine("Odd");
+    }
+}
+\end{lstlisting}
+\end{english}
+\vspace{0.3em}
+بما أنّ العملية تعيد \textenglish{true} أو \textenglish{false}، نضع استدعاءها مباشرة بين قوسي \textenglish{if (...)}.
+\end{frame}
+
+% القسم السابع
+\begin{frame}[fragile]{$7$. عمليات تستدعي عمليات أخرى}
+\begin{english}
+\begin{lstlisting}[language=CSharp]
+public static double AddNumbers(double a, double b)
+{
+    return a + b;
+}
+
+public static double AddFourNumbers(double a, double b, double c, double d)
+{
+    double sum = AddNumbers(a, b);
+    sum = AddNumbers(sum, c);
+    sum = AddNumbers(sum, d);
+    return sum;
+}
+
+public static void Main()
+{
+    Console.WriteLine(AddFourNumbers(10, 20, 30, 40));
+}
+\end{lstlisting}
+\end{english}
+\end{frame}
+
+% ملاحظات هامة
+\begin{frame}[fragile]{ملاحظات هامة}
+\begin{itemize}
+  \item أسماء العمليات تبدأ بحرف كبير وتصف الوظيفة: \textenglish{CalculateSum(), GetMaxValue(), PrintResult()}.
+  \item اجعل كل عملية تقوم بمهمة واحدة، وتجنّب تكرار الكود.
+  \item يمكن استخدام جمل \textenglish{if - else} داخل العملية، واستدعاء عملية من داخل عملية أخرى.
+  \item يمكن تمرير القيمة المعادة من عملية كمعطى لعملية أخرى مباشرة.
+\end{itemize}
+\end{frame}
+
+\end{document}
