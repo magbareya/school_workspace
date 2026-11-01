@@ -1,0 +1,412 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{ملخص: حلقات التكرار \textenglish{while} و \textenglish{for} في لغة \textenglish{C\#}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{مقدمة}
+الحلقة هي مقطع كود يتكرّر تنفيذه عدّة مرّات لأداء مهمة متكرّرة دون إعادة كتابة الأوامر:
+\begin{itemize}[nosep]
+    \item التكرار يجعل البرنامج أقصر وأكثر مرونة.
+    \item أهم أنواع الحلقات: حلقة \textenglish{while} وحلقة \textenglish{for}.
+\end{itemize}
+
+% ==============================================================
+% القسم الأول: حلقة while
+% ==============================================================
+\section{حلقة \textenglish{while}}
+
+\subsection{مفهوم ومبنى حلقة \textenglish{while}}
+فكرة الحلقة: \textbf{طالما أنّ الشرط متحقّق (\textenglish{true})، استمرّ في تنفيذ أوامر جسم الحلقة}.
+\begin{itemize}[nosep]
+    \item نستخدمها عندما لا نعرف عدد التكرارات مسبقًا (التكرار مرتبط بتحقّق شرط معيّن).
+    \item يُفحص الشرط \textbf{قبل} كل تكرار؛ فإذا كان \textenglish{false} تتوقف الحلقة فورًا (وإذا كان \textenglish{false} منذ البداية لا يتنفّذ جسم الحلقة ولا مرّة).
+\end{itemize}
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+while (condition)
+{
+    // Loop body: executed as long as condition is true
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{استقبال أعداد حتى إدخال قيمة توقّف}
+نستقبل القيمة الأولى \textbf{قبل} الحلقة، وفي نهاية جسم الحلقة نستقبل القيمة التالية:
+
+\begin{boxExample}[1: جمع الأعداد المدخلة حتى إدخال $0$]
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    sum += num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Sum = " + sum);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[2: ضرب الأعداد المدخلة حتى إدخال $1$]
+\begin{english}
+\begin{minted}{csharp}
+int prod = 1;
+int num = int.Parse(Console.ReadLine());
+while (num != 1)
+{
+    prod *= num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Product = " + prod);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{التحقّق من صحة المُدخلات (تكرار الطلب عند الخطأ)}
+طالما أنّ المُدخل غير صالح، نطلب من المستخدم إدخال قيمة جديدة:
+
+\begin{boxExample}[إلزام المستخدم بإدخال علامة قانونية بين $0$ و $100$]
+\begin{english}
+\begin{minted}{csharp}
+int grade = int.Parse(Console.ReadLine());
+while (grade < 0 || grade > 100)
+{
+    Console.WriteLine("Invalid! Enter a grade between 0 and 100:");
+    grade = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Valid grade = " + grade);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{العدّ والتراكم المشروط في \textenglish{while}}
+
+\begin{boxExample}[1: جمع أعداد مدخلة حتى يتجاوز المجموع $10$]
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+while (sum <= 10)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+Console.WriteLine("Total = " + sum);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[2: عدّ الأعداد الزوجية فقط حتى إدخال $-1$]
+\begin{english}
+\begin{minted}{csharp}
+int evenCount = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    if (num % 2 == 0)
+    {
+        evenCount++;
+    }
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Even count = " + evenCount);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[3: الاستمرار بالاستقبال حتى قراءة $3$ أعداد زوجية بالضبط]
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+while (count < 3)
+{
+    int number = int.Parse(Console.ReadLine());
+    if (number % 2 == 0)
+    {
+        count++;
+    }
+}
+Console.WriteLine("Done reading 3 even numbers.");
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{إيجاد القيمة الكبرى أو الصغرى في \textenglish{while}}
+\begin{itemize}[nosep]
+    \item لإيجاد \textbf{أكبر} قيمة نهيّئ المتغير بـ \textenglish{int.MinValue} (أو بأوّل عدد مدخل).
+    \item لإيجاد \textbf{أصغر} قيمة نهيّئ المتغير بـ \textenglish{int.MaxValue} (أو بأوّل عدد مدخل).
+\end{itemize}
+
+\begin{boxExample}[إيجاد أصغر عدد مدخل حتى إدخال $0$]
+\begin{english}
+\begin{minted}{csharp}
+int min = int.MaxValue;
+int num = int.Parse(Console.ReadLine());
+while (num != 0)
+{
+    if (num < min)
+    {
+        min = num;
+    }
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Min = " + min);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{شرط توقّف مركّب في \textenglish{while}}
+عندما تستمرّ الحلقة طالما أنّ شرطين متحقّقان معًا (وتتوقف فور انتهاء أحدهما)، نربط بينهما بالعامل \textenglish{\&\&}:
+
+\begin{boxExample}[الاستمرار باستقبال حتى $10$ أعداد كحدّ أقصى أو وصول المجموع إلى $200$]
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0, i = 0;
+while (i < 10 && sum < 200)
+{
+    sum += int.Parse(Console.ReadLine());
+    i++;
+}
+Console.WriteLine("Sum = " + sum + ", Count = " + i);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: حلقة for
+% ==============================================================
+\section{حلقة \textenglish{for}}
+
+\subsection{متى نستخدم \textenglish{for} وما هو مبناها؟}
+نستخدم حلقة \textenglish{for} عندما \textbf{نعرف عدد التكرارات مسبقًا} (أو يحدّده متغير مثل $N$).
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+for (initialization; condition; update)
+{
+    // Loop body
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{itemize}[nosep]
+    \item \textenglish{initialization} (التهيئة): تتنفّذ \textbf{مرّة واحدة فقط} في بداية الحلقة (مثل \textenglish{int i = 1}).
+    \item \textenglish{condition} (شرط الاستمرار): يُفحص \textbf{قبل} كل تكرار؛ إذا كان \textenglish{true} يتنفّذ الجسم، وإذا كان \textenglish{false} تتوقف الحلقة.
+    \item \textenglish{update} (التحديث): يتنفّذ في نهاية كل تكرار \textbf{بعد} تنفيذ جسم الحلقة (مثل \textenglish{i++}).
+\end{itemize}
+
+\filbreak
+\begin{boxExample}[تتبّع تنفيذ حلقة تطبع الأعداد من $1$ إلى $3$]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 3; i++)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{التكرار عددًا محدّدًا من المرّات والقفزات في العدّاد}
+عدّاد الحلقة موجود دائمًا لضبط عدد التكرارات حتى لو لم نستخدمه داخل جسم الحلقة:
+
+\begin{boxExample}[1: طباعة كلمة \textenglish{"Hello"} خمس مرّات]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 0; i < 5; i++)
+{
+    Console.WriteLine("Hello");
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[2: طباعة الأعداد الزوجية بين $1$ و $100$ بطريقتين]
+\begin{english}
+\begin{minted}{csharp}
+// Method 1: step by 2
+for (int i = 2; i <= 100; i += 2)
+{
+    Console.WriteLine(i);
+}
+
+// Method 2: step by 1 and check condition
+for (int i = 1; i <= 100; i++)
+{
+    if (i % 2 == 0)
+    {
+        Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[3: طباعة الأعداد التي تقبل القسمة على $5$ من $0$ حتى $N$ بطريقتين]
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+
+// Method 1: using if
+for (int i = 0; i <= n; i++)
+{
+    if (i % 5 == 0)
+    {
+        Console.WriteLine(i);
+    }
+}
+
+// Method 2: step by 5
+for (int i = 0; i <= n; i += 5)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+% --------------------------------------------------------------
+\filbreak
+\subsection{حساب المجموع، القيمة العظمى، والمتوسط في \textenglish{for}}
+
+\begin{boxExample}[1: حساب مجموع الأعداد من $1$ إلى $100$]
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+for (int i = 1; i <= 100; i++)
+{
+    sum += i;
+}
+Console.WriteLine("Sum = " + sum);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[2: إيجاد أكبر عدد من بين $10$ أعداد مدخلة]
+\begin{english}
+\begin{minted}{csharp}
+int max = int.MinValue;
+for (int i = 0; i < 10; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > max)
+    {
+        max = x;
+    }
+}
+Console.WriteLine("Max = " + max);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\filbreak
+\begin{boxExample}[3: حساب معدّل $5$ أعداد مدخلة]
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+for (int i = 0; i < 5; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+}
+double avg = sum / 5.0;
+Console.WriteLine("Average = " + avg);
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\clearpage
+% ==============================================================
+% القسم الثالث: العلاقة بين for و while والحلقات اللانهائية
+% ==============================================================
+\section{العلاقة بين \textenglish{for} و \textenglish{while} والحلقات اللانهائية}
+
+\subsection{تحويل حلقة \textenglish{for} إلى \textenglish{while}}
+كل حلقة \textenglish{for} يمكن كتابتها كحلقة \textenglish{while} مكافئة لها (التهيئة قبل الحلقة، الشرط داخل قوسي \textenglish{while}، والتحديث في نهاية جسم الحلقة):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// Using for:
+for (int i = 1; i <= 5; i++)
+{
+    Console.WriteLine(i);
+}
+
+// Equivalent using while:
+int i = 1;
+while (i <= 5)
+{
+    Console.WriteLine(i);
+    i++;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection{الحلقات اللانهائية وأخطاء شائعة}
+تحدث \textbf{الحلقة اللانهائية} عندما يبقى شرط الحلقة \textenglish{true} دائمًا ولا يتغيّر إلى \textenglish{false} أبدًا:
+
+\begin{boxExample}[أمثلة لحلقات لانهائية خاطئة منطقيًّا]
+\begin{english}
+\begin{minted}{csharp}
+// Error 1: variable x is never updated inside while
+int x = 5;
+while (x > 0)
+{
+    Console.WriteLine(x);
+}
+
+// Error 2: condition (i > 0) stays true forever because i increases
+for (int i = 1; i > 0; i++)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxExample}
+
+\begin{boxWarning}[- تنبيهات هامة]
+\begin{itemize}[nosep]
+    \item تأكّد دائمًا من تحديث المتغير المؤثّر في شرط التوقف داخل جسم الحلقة (مثل \textenglish{i++} أو قراءة القيمة التالية \textenglish{Console.ReadLine()}).
+    \item لا تضع فاصلة منقوطة \textenglish{;} بعد سطر \textenglish{while (...)} أو \textenglish{for (...)} مباشرة.
+\end{itemize}
+\end{boxWarning}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

@@ -142,26 +142,26 @@ public static void Main(string[] args)
 \subsection{القسم الأوّل: عمليات لا تتلقى ولا تعيد (تستقبل وتطبع فقط)}
 في هذا القسم يكون نمط الإرجاع \textenglish{void} والأقواس بعد اسم العملية فارغة \textenglish{()}. تقوم العملية باستقبال المدخلات من المستخدم عبر \textenglish{Console.ReadLine()} وطباعة المطلوب مباشرة.
 
-\begin{boxExample}[عملية لا تتلقى ولا تعيد - تستقبل عددين وتطبع مجموعهما]
+\begin{boxExample}[عملية لا تتلقى ولا تعيد - تستقبل عددين وتطبع حاصل ضربهما]
 \begin{english}
 \begin{minted}{csharp}
-public static void ReadAndPrintSum()
+public static void ReadAndPrintProduct()
 {
     Console.WriteLine("Enter two integers:");
     int a = int.Parse(Console.ReadLine());
     int b = int.Parse(Console.ReadLine());
-    Console.WriteLine("Sum = " + (a + b));
+    Console.WriteLine("Product = " + (a * b));
 }
 
 public static void Main()
 {
-    ReadAndPrintSum();
+    ReadAndPrintProduct();
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 \begin{itemize}[nosep]
-    \item لا تتلقى $\leftarrow$ نستدعيها بدون معطيات بين القوسين: \textenglish{ReadAndPrintSum();}.
+    \item لا تتلقى $\leftarrow$ نستدعيها بدون معطيات بين القوسين: \textenglish{ReadAndPrintProduct();}.
     \item لا تعيد (\textenglish{void}) $\leftarrow$ لا يوجد فيها \textenglish{return}، ولا نحفظ استدعاءها في متغير.
 \end{itemize}
 
@@ -193,20 +193,20 @@ public static void Main()
 \end{boxExample}
 
 \filbreak
-\begin{boxExample}[2: عملية تتلقى معطى وتستقبل قيمة من المستخدم ثم تطبع]
+\begin{boxExample}[2: عملية تتلقى أجر الساعة وتستقبل عدد ساعات العمل ثم تطبع الراتب]
 \begin{english}
 \begin{minted}{csharp}
-public static void PrintTotalCost(double price)
+public static void PrintSalary(double hourlyRate)
 {
-    Console.WriteLine("Enter quantity:");
-    int quantity = int.Parse(Console.ReadLine());
-    double total = price * quantity;
-    Console.WriteLine("Total = " + total);
+    Console.WriteLine("Enter hours worked:");
+    int hours = int.Parse(Console.ReadLine());
+    double salary = hourlyRate * hours;
+    Console.WriteLine("Salary = " + salary);
 }
 
 public static void Main()
 {
-    PrintTotalCost(15.5);
+    PrintSalary(45.0);
 }
 \end{minted}
 \end{english}
@@ -243,21 +243,22 @@ public static void Main()
 \end{boxExample}
 
 \filbreak
-\begin{boxExample}[2: عملية تستقبل أبعاد مستطيل، تطبع محيطه، وتعيد مساحته]
+\begin{boxExample}[2: عملية تستقبل سعرين، تطبع مجموعهما، وتعيد قيمة الضريبة ($17\%$)]
 \begin{english}
 \begin{minted}{csharp}
-public static int ReadRectPrintPerimeterGetArea()
+public static double ReadPricesPrintSumGetTax()
 {
-    int length = int.Parse(Console.ReadLine());
-    int width = int.Parse(Console.ReadLine());
-    Console.WriteLine("Perimeter = " + (2 * (length + width)));
-    return length * width;
+    double p1 = double.Parse(Console.ReadLine());
+    double p2 = double.Parse(Console.ReadLine());
+    double sum = p1 + p2;
+    Console.WriteLine("Sum before tax = " + sum);
+    return sum * 0.17;
 }
 
 public static void Main()
 {
-    int area = ReadRectPrintPerimeterGetArea();
-    Console.WriteLine("Area = " + area);
+    double tax = ReadPricesPrintSumGetTax();
+    Console.WriteLine("Tax = " + tax);
 }
 \end{minted}
 \end{english}
@@ -270,19 +271,19 @@ public static void Main()
 \subsection{القسم الرابع: عمليات تتلقى وتعيد أعدادًا صحيحة أو عشرية}
 تتلقى العملية معطيات بين القوسين، وتجري حسابات عليها (وقد تستقبل مدخلات إضافية أو تطبع رسائل)، ثم تعيد الناتج العددي (\textenglish{int} أو \textenglish{double}) باستخدام \textenglish{return}.
 
-\begin{boxExample}[1: عملية تتلقى عددين عشريّين وتعيد معدّلهما]
+\begin{boxExample}[1: عملية تتلقى طول مستطيل وعرضه وتعيد مساحته]
 \begin{english}
 \begin{minted}{csharp}
-public static double GetAverage(double a, double b)
+public static double GetRectangleArea(double length, double width)
 {
-    double avg = (a + b) / 2.0;
-    return avg;
+    double area = length * width;
+    return area;
 }
 
 public static void Main()
 {
-    double result = GetAverage(7.5, 9.0);
-    Console.WriteLine("Average = " + result);
+    double result = GetRectangleArea(6.5, 4.0);
+    Console.WriteLine("Area = " + result);
 }
 \end{minted}
 \end{english}
@@ -334,25 +335,25 @@ public static void Main()
 \end{boxExample}
 
 \filbreak
-\begin{boxExample}[2: عملية تتلقى علامة طالب وتعيد رمز النتيجة (\textenglish{char})]
+\begin{boxExample}[2: عملية تتلقى عددًا صحيحًا وتعيد رمز إشارته (\textenglish{char})]
 \begin{english}
 \begin{minted}{csharp}
-public static char GetGradeSymbol(int grade)
+public static char GetSignSymbol(int num)
 {
-    if (grade >= 55)
+    if (num >= 0)
     {
-        return 'P';
+        return '+';
     }
     else
     {
-        return 'F';
+        return '-';
     }
 }
 
 public static void Main()
 {
-    char symbol = GetGradeSymbol(80);
-    Console.WriteLine("Result: " + symbol);
+    char symbol = GetSignSymbol(-12);
+    Console.WriteLine("Sign: " + symbol);
 }
 \end{minted}
 \end{english}
@@ -369,9 +370,9 @@ public static void Main()
 \begin{boxExample}[1: تعريف عملية تعيد \textenglish{bool} واستدعاؤها مباشرة داخل \textenglish{if}]
 \begin{english}
 \begin{minted}{csharp}
-public static bool IsEven(int num)
+public static bool IsPositive(int num)
 {
-    if (num % 2 == 0)
+    if (num > 0)
     {
         return true;
     }
@@ -384,13 +385,13 @@ public static bool IsEven(int num)
 public static void Main()
 {
     int n = int.Parse(Console.ReadLine());
-    if (IsEven(n))
+    if (IsPositive(n))
     {
-        Console.WriteLine("Even number");
+        Console.WriteLine("Positive number");
     }
     else
     {
-        Console.WriteLine("Odd number");
+        Console.WriteLine("Zero or negative");
     }
 }
 \end{minted}
@@ -401,22 +402,21 @@ public static void Main()
 \begin{boxExample}[2: كتابة عملية تعيد \textenglish{bool} باختصار واستخدامها في \textenglish{if}]
 \begin{english}
 \begin{minted}{csharp}
-public static bool AreEqual(double a, double b)
+public static bool IsAdult(int age)
 {
-    return (a == b);
+    return (age >= 18);
 }
 
 public static void Main()
 {
-    double x = double.Parse(Console.ReadLine());
-    double y = double.Parse(Console.ReadLine());
-    if (AreEqual(x, y))
+    int userAge = int.Parse(Console.ReadLine());
+    if (IsAdult(userAge))
     {
-        Console.WriteLine("Equal");
+        Console.WriteLine("Allowed");
     }
     else
     {
-        Console.WriteLine("Not Equal");
+        Console.WriteLine("Under 18");
     }
 }
 \end{minted}
@@ -424,8 +424,8 @@ public static void Main()
 \end{boxExample}
 
 \begin{itemize}[nosep]
-    \item عند تنفيذ \textenglish{if (IsEven(n))}، يتم أولاً استدعاء العملية \textenglish{IsEven(n)}؛ فإذا أعادت \textenglish{true} يُنفَّذ كود \textenglish{if}، وإذا أعادت \textenglish{false} يُنفَّذ كود \textenglish{else}.
-    \item يمكن أيضًا حفظ النتيجة في متغير منطقي أولاً ثم فحصه: \textenglish{bool res = IsEven(n); if (res) \{ ... \}}.
+    \item عند تنفيذ \textenglish{if (IsPositive(n))}، يتم أولاً استدعاء العملية \textenglish{IsPositive(n)}؛ فإذا أعادت \textenglish{true} يُنفَّذ كود \textenglish{if}، وإذا أعادت \textenglish{false} يُنفَّذ كود \textenglish{else}.
+    \item يمكن أيضًا حفظ النتيجة في متغير منطقي أولاً ثم فحصه: \textenglish{bool res = IsPositive(n); if (res) \{ ... \}}.
 \end{itemize}
 
 % --------------------------------------------------------------
@@ -435,26 +435,24 @@ public static void Main()
 \subsection{القسم السابع: عمليات تستدعي عمليات أخرى}
 تمامًا كما نستدعي العمليات الخارجية من داخل \textenglish{Main}، يمكن لأي عملية خارجية أن تستدعي عملية خارجية أخرى لمساعدتها في أداء مهمتها.
 
-\begin{boxExample}[عملية تحسب مجموع $4$ أعداد باستدعاء عملية تجمع عددين]
+\begin{boxExample}[عملية تحسب تكعيب عدد باستدعاء عملية تضرب عددين]
 \begin{english}
 \begin{minted}{csharp}
-public static double AddNumbers(double a, double b)
+public static int Multiply(int a, int b)
 {
-    return a + b;
+    return a * b;
 }
 
-public static double AddFourNumbers(double a, double b, double c, double d)
+public static int Cube(int x)
 {
-    double sum = AddNumbers(a, b);
-    sum = AddNumbers(sum, c);
-    sum = AddNumbers(sum, d);
-    return sum;
+    int temp = Multiply(x, x);
+    return Multiply(temp, x);
 }
 
 public static void Main()
 {
-    double total = AddFourNumbers(10, 20, 30, 40);
-    Console.WriteLine("Total = " + total);
+    int res = Cube(4);
+    Console.WriteLine("Result = " + res);
 }
 \end{minted}
 \end{english}

@@ -126,16 +126,16 @@ public static void Main(string[] args)
 \begin{frame}[fragile]{$1$. عمليات لا تتلقى ولا تعيد (تستقبل وتطبع)}
 \begin{english}
 \begin{lstlisting}[language=CSharp]
-public static void ReadAndPrintSum()
+public static void ReadAndPrintProduct()
 {
     int a = int.Parse(Console.ReadLine());
     int b = int.Parse(Console.ReadLine());
-    Console.WriteLine("Sum = " + (a + b));
+    Console.WriteLine("Product = " + (a * b));
 }
 
 public static void Main()
 {
-    ReadAndPrintSum();
+    ReadAndPrintProduct();
 }
 \end{lstlisting}
 \end{english}
@@ -145,21 +145,21 @@ public static void Main()
 \begin{frame}[fragile]{$2$. عمليات تتلقى ولا تعيد}
 \begin{english}
 \begin{lstlisting}[language=CSharp]
-public static void PrintTotalCost(double price)
+public static void PrintSalary(double hourlyRate)
 {
-    int quantity = int.Parse(Console.ReadLine());
-    double total = price * quantity;
-    Console.WriteLine("Total = " + total);
+    int hours = int.Parse(Console.ReadLine());
+    double salary = hourlyRate * hours;
+    Console.WriteLine("Salary = " + salary);
 }
 
 public static void Main()
 {
-    PrintTotalCost(15.5);
+    PrintSalary(45.0);
 }
 \end{lstlisting}
 \end{english}
 \vspace{0.3em}
-تتلقى السعر كمعطى، وتستقبل الكمية من المستخدم، ثم تطبع التكلفة.
+تتلقى أجر الساعة كمعطى، وتستقبل عدد ساعات العمل من المستخدم، ثم تطبع الراتب.
 \end{frame}
 
 % القسم الثالث
@@ -185,16 +185,16 @@ public static void Main()
 \begin{frame}[fragile]{$4$. عمليات تتلقى وتعيد عددًا (\textenglish{int / double})}
 \begin{english}
 \begin{lstlisting}[language=CSharp]
-public static double GetAverage(double a, double b)
+public static double GetRectangleArea(double length, double width)
 {
-    double avg = (a + b) / 2.0;
-    return avg;
+    double area = length * width;
+    return area;
 }
 
 public static void Main()
 {
-    double result = GetAverage(7.5, 9.0);
-    Console.WriteLine("Average = " + result);
+    double result = GetRectangleArea(6.5, 4.0);
+    Console.WriteLine("Area = " + result);
 }
 \end{lstlisting}
 \end{english}
@@ -204,21 +204,21 @@ public static void Main()
 \begin{frame}[fragile]{$5$. عمليات تعيد \textenglish{string} أو \textenglish{char}}
 \begin{english}
 \begin{lstlisting}[language=CSharp]
-public static char GetGradeSymbol(int grade)
+public static char GetSignSymbol(int num)
 {
-    if (grade >= 55)
+    if (num >= 0)
     {
-        return 'P';
+        return '+';
     }
     else
     {
-        return 'F';
+        return '-';
     }
 }
 
 public static void Main()
 {
-    char sym = GetGradeSymbol(80);
+    char sym = GetSignSymbol(-12);
     Console.WriteLine(sym);
 }
 \end{lstlisting}
@@ -231,9 +231,9 @@ public static void Main()
 \begin{english}
 \begin{lstlisting}[language=CSharp]
 // Way 1: using if - else
-public static bool IsEven(int num)
+public static bool IsPositive(int num)
 {
-    if (num % 2 == 0)
+    if (num > 0)
     {
         return true;
     }
@@ -244,9 +244,9 @@ public static bool IsEven(int num)
 }
 
 // Way 2: returning the boolean expression directly
-public static bool AreEqual(double a, double b)
+public static bool IsAdult(int age)
 {
-    return (a == b);
+    return (age >= 18);
 }
 \end{lstlisting}
 \end{english}
@@ -259,13 +259,13 @@ public static bool AreEqual(double a, double b)
 public static void Main()
 {
     int n = int.Parse(Console.ReadLine());
-    if (IsEven(n))
+    if (IsPositive(n))
     {
-        Console.WriteLine("Even");
+        Console.WriteLine("Positive");
     }
     else
     {
-        Console.WriteLine("Odd");
+        Console.WriteLine("Zero or negative");
     }
 }
 \end{lstlisting}
@@ -278,22 +278,20 @@ public static void Main()
 \begin{frame}[fragile]{$7$. عمليات تستدعي عمليات أخرى}
 \begin{english}
 \begin{lstlisting}[language=CSharp]
-public static double AddNumbers(double a, double b)
+public static int Multiply(int a, int b)
 {
-    return a + b;
+    return a * b;
 }
 
-public static double AddFourNumbers(double a, double b, double c, double d)
+public static int Cube(int x)
 {
-    double sum = AddNumbers(a, b);
-    sum = AddNumbers(sum, c);
-    sum = AddNumbers(sum, d);
-    return sum;
+    int temp = Multiply(x, x);
+    return Multiply(temp, x);
 }
 
 public static void Main()
 {
-    Console.WriteLine(AddFourNumbers(10, 20, 30, 40));
+    Console.WriteLine(Cube(4));
 }
 \end{lstlisting}
 \end{english}
