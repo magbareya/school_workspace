@@ -1,0 +1,1223 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن $9$ للصف العاشر $10$ - الحلقات: الخانات، القواسم، والمتواليات}
+\else
+\title{ورقة تمرن $9$ للصف العاشر $10$ - الحلقات: الخانات، القواسم، والمتواليات}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ==============================================================
+% القسم الأول: أسئلة تحليل العدد إلى خاناته
+% ==============================================================
+\section*{القسم الأوّل: تحليل العدد إلى خاناته}
+
+\begin{enumerate}[itemsep=2em]
+
+% --- أ: استخراج خانات ثابتة (الآحاد والعشرات) ---
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$، وتطبع الأعداد من $1$ حتى $n$ التي تكون منزلة آحادها $5$ فقط.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintEndingWith5(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        if (i % 10 == 5)
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$، وتعيد مجموع كل الأعداد بين $1$ و $n$ التي تكون منزلة آحادها $3$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumEnding3(int n)
+{
+    int sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (i % 10 == 3)
+        {
+            sum += i;
+        }
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $20$ عددًا صحيحًا، ويطبع عدد الأعداد التي كانت منزلة آحادها أكبر من منزلة عشراتها.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+for (int i = 0; i < 20; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    x = Math.Abs(x);
+    int ones = x % 10;
+    int tens = (x / 10) % 10;
+    if (ones > tens)
+    {
+        cnt++;
+    }
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة غير سالبة، ويعدّ الأعداد التي تكون منزلة العشرات فيها زوجية ويطبع عددها. \\
+ينتهي الاستقبال عندما يُدخل المستخدم عددًا سالبًا.
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+int n = int.Parse(Console.ReadLine());
+while (n >= 0)
+{
+    int tens = (n / 10) % 10;
+    if (tens % 2 == 0)
+    {
+        cnt++;
+    }
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2: فكّر لماذا هو صحيح؟]
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+int n = int.Parse(Console.ReadLine());
+while (n >= 0)
+{
+    n /= 10;
+    if (n % 2 == 0)
+    {
+        cnt++;
+    }
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- ب: تفكيك العدد بحلقة while (العدّ، الجمع، الضرب، الأكبر) ---
+\item \label{item:digitCount} اكتب عملية خارجية باسم \textenglish{DigitsCount} تتلقى عددًا صحيحًا غير سالب، وتعيد عدد خاناته.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DigitsCount(int n)
+{
+    if (n == 0)
+    {
+        return 1;
+    }
+    int count = 0;
+    while (n > 0)
+    {
+        count++;
+        n /= 10;
+    }
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{DigitsSum} تتلقى عددًا صحيحًا غير سالب، وتعيد مجموع خاناته.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DigitsSum(int n)
+{
+    int sum = 0;
+    while (n > 0)
+    {
+        sum += (n % 10);
+        n /= 10;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا غير سالب، وتعيد حاصل ضرب خاناته. \\
+\textbf{مثال:} إذا كان العدد $234$، تكون النتيجة $2 \times 3 \times 4 = 24$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int ProductOfDigits(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+    int prod = 1;
+    while (n != 0)
+    {
+        prod *= (n % 10);
+        n /= 10;
+    }
+    return prod;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا وتطبع: عدد خاناته، ومجموع خاناته، ومعدّل خاناته. \\
+لا تستخدم العمليات من الأسئلة السابقة، واكتب حلقة \textenglish{while} واحدة فقط. \\
+\textbf{مثال:} إذا تلقّت العملية العدد $762945$، فإنّها تطبع:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+Digits count = 6
+Digits sum = 33
+Digits average = 5.5
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintDigitsStats(int n)
+{
+    int count = 0, sum = 0;
+    int m = n;
+    while (m > 0)
+    {
+        sum += (m % 10);
+        count++;
+        m /= 10;
+    }
+    Console.WriteLine("Digits count = " + count);
+    Console.WriteLine("Digits sum = " + sum);
+    double avg = (double)sum / count;
+    Console.WriteLine("Digits average = " + avg);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا غير سالب، وتطبع عدد الخانات الزوجية فيه وعدد الخانات الفردية فيه.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintEvenOddDigitsCount(int n)
+{
+    int even = 0, odd = 0;
+    if (n == 0)
+    {
+        even = 1;
+    }
+    while (n > 0)
+    {
+        int d = n % 10;
+        if (d % 2 == 0)
+        {
+            even++;
+        }
+        else
+        {
+            odd++;
+        }
+        n /= 10;
+    }
+    Console.WriteLine("Even digits = " + even);
+    Console.WriteLine("Odd digits = " + odd);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $100$ عدد صحيح موجب، وفي النهاية يطبع العدد الذي له أكبر مجموع خانات (يمكنك الاستعانة بالعملية \textenglish{DigitsSum} التي كتبتها في الأسئلة السابقة).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int bestNum = 0, bestSum = -1;
+for (int i = 0; i < 100; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    int s = DigitsSum(x);
+    if (s > bestSum)
+    {
+        bestSum = s;
+        bestNum = x;
+    }
+}
+Console.WriteLine(bestNum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{MaxDigit} تتلقى عددًا صحيحًا غير سالب وتعيد قيمة أكبر خانة فيه. \\
+    \textbf{مثال:} إذا تلقّت العدد $23481$ فإنّها تعيد $8$.
+    \item اكتب برنامجًا يستقبل من المستخدم $100$ عدد صحيح موجب، وفي النهاية يطبع العدد الذي ظهرت فيه أكبر خانة. إذا كان هناك أكثر من عدد ظهرت فيه أكبر خانة، يطبع البرنامج العدد الأكبر من بينها.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}[فرع أ]
+\begin{english}
+\begin{minted}{csharp}
+public static int MaxDigit(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+    int md = 0;
+    while (n > 0)
+    {
+        md = Math.Max(md, n % 10);
+        n /= 10;
+    }
+    return md;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[فرع ب]
+\begin{english}
+\begin{minted}{csharp}
+public static void Main(string[] args)
+{
+    int bestNum = 0, bestMax = -1;
+    for (int i = 0; i < 100; i++)
+    {
+        int x = int.Parse(Console.ReadLine());
+        int m = MaxDigit(x);
+        if (m > bestMax)
+        {
+            bestMax = m;
+            bestNum = x;
+        }
+        else if (m == bestMax && x > bestNum)
+        {
+            bestNum = x;
+        }
+    }
+    Console.WriteLine(bestNum);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- ج: البحث في الخانات وفحص خصائصها (شرط وجودي وشرط كلّي) ---
+\item اكتب عملية خارجية باسم \textenglish{DigitExists} تتلقى عددًا صحيحًا غير سالب $n$ ورقمًا مكوّنًا من منزلة واحدة $d$ ($0 \le d \le 9$). \\
+تعيد العملية \textenglish{true} إذا كان الرقم $d$ يظهر كإحدى خانات العدد $n$، وتعيد \textenglish{false} خلاف ذلك. \\
+\textbf{مثال:} استدعاء العملية مع العدد $4729$ والرقم $7$ يعيد \textenglish{true}، بينما استدعاؤها مع العدد $4729$ والرقم $5$ يعيد \textenglish{false}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool DigitExists(int n, int d)
+{
+    if (n == 0 && d == 0)
+    {
+        return true;
+    }
+    while (n > 0)
+    {
+        if (n % 10 == d)
+        {
+            return true;
+        }
+        n /= 10;
+    }
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{AreDigitsAscending} تتلقى عددًا صحيحًا موجبًا $n$، وتعيد \textenglish{true} إذا كانت خانات العدد مرتّبة تصاعديًّا تمامًا من اليسار إلى اليمين (أي أنّ كل خانة أكبر تمامًا من الخانة التي على يسارها)، وتعيد \textenglish{false} خلاف ذلك. \\
+\textbf{مثال:} للعدد $1359$ وللعدد $7$ تعيد العملية \textenglish{true}، بينما للعدد $1428$ وللعدد $1225$ تعيد \textenglish{false}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreDigitsAscending(int n)
+{
+    while (n >= 10)
+    {
+        int rightDigit = n % 10;
+        int leftDigit = (n / 10) % 10;
+        if (rightDigit <= leftDigit)
+        {
+            return false;
+        }
+        n /= 10;
+    }
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- د: مجموع قوى الخانات والأعداد المميّزة ---
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{SumSquares} تتلقى عددًا صحيحًا موجبًا، وتعيد مجموع \textbf{تربيع} خاناته. \\
+    \textbf{مثال:} إذا تلقّت العملية العدد $123$، فإنّها تعيد: $1^2 + 2^2 + 3^2 = 1 + 4 + 9 = 14$.
+    \item في البرنامج الرئيسي، استدعِ العملية مع العدد $23$ واطبع النتيجة.
+    \item اكتب مقطع برنامج في \textenglish{Main} يطبع جميع الأعداد بين $1$ و $10000$ التي تساوي مجموع تربيع خاناتها.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int SumSquares(int n)
+{
+    int sum = 0;
+    while (n > 0)
+    {
+        int d = n % 10;
+        sum += d * d;
+        n /= 10;
+    }
+    return sum;
+}
+
+public static void Main(string[] args)
+{
+    Console.WriteLine(SumSquares(23));
+
+    for (int i = 1; i <= 10000; i++)
+    {
+        if (SumSquares(i) == i)
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item نعرّف «عددًا مميّزًا» بأنّه عدد موجب إذا رفعنا كل خانة من خاناته لقوة مساوية لعدد خاناته ثم جمعنا النتائج فإنّنا نحصل على العدد الأصلي نفسه. \\
+\textbf{مثال:} العدد $153$ هو عدد مميّز، لأنّه مكوّن من $3$ خانات، و:
+$1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153$.
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{IsSpecial} تتلقى عددًا صحيحًا موجبًا، وتعيد \textenglish{true} إذا كان العدد مميّزًا، و \textenglish{false} خلاف ذلك. \\
+    يمكنك الاستعانة بالعملية \textenglish{DigitsCount} من السؤال (\ref{item:digitCount}) لمعرفة عدد خانات العدد.
+    \item في البرنامج الرئيسي، اطبع جميع الأعداد المميّزة من $1$ إلى $10000$ بالاستعانة بالعملية \textenglish{IsSpecial}.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsSpecial(int n)
+{
+    int k = DigitsCount(n);
+    int m = n, sum = 0;
+    while (m > 0)
+    {
+        int d = m % 10;
+        sum += (int)Math.Pow(d, k);
+        m /= 10;
+    }
+    if (sum == n)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+public static void Main(string[] args)
+{
+    for (int i = 1; i <= 10000; i++)
+    {
+        if (IsSpecial(i))
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- هـ: بناء عدد، عكس عدد، والعدد المتماثل (Palindrome) ---
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{AppendDigit} تتلقى عددًا صحيحًا غير سالب، ورقمًا مكوّنًا من منزلة واحدة. \\
+    العملية تلصق المنزلة في يمين العدد الأوّل وتعيد النتيجة. \\
+    \textbf{مثال:} إذا تلقّت العملية العدد $12$ والمنزلة $5$ فإنّها تعيد $125$.
+    \item اكتب برنامجًا يستقبل من المستخدم أرقامًا (كل منها مكوّن من منزلة واحدة) ويكوّن عددًا صحيحًا من هذه الأرقام ويطبعه. \\
+    ينتهي استقبال الأرقام عندما يُدخل المستخدم عددًا سالبًا. \\
+    \textbf{مثال:} إذا أدخل المستخدم الأرقام $5$ ثم $1$ ثم $2$ ثم $4$ ثم $-1$ فعلى البرنامج أن يطبع $5124$. \\
+    عليك استخدام العملية \textenglish{AppendDigit} من الفرع السابق (لا حاجة للتحقق من صحة المدخلات).
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int AppendDigit(int n, int d)
+{
+    return n * 10 + d;
+}
+
+public static void Main(string[] args)
+{
+    int res = 0;
+    int d = int.Parse(Console.ReadLine());
+    while (d >= 0)
+    {
+        res = AppendDigit(res, d);
+        d = int.Parse(Console.ReadLine());
+    }
+    Console.WriteLine(res);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{ReverseNumber} تتلقى عددًا صحيحًا غير سالب $n$، وتعيد العدد الناتج من عكس ترتيب خاناته. \\
+    \textbf{مثال:} إذا تلقّت العملية العدد $1234$ فإنّها تعيد $4321$.
+    \item نسمّي العدد «متماثلاً» (بوليندروم) إذا كان يقرأ من اليمين إلى اليسار كما يقرأ من اليسار إلى اليمين (مثل: $12321$، $4554$، $7$). \\
+    اكتب عملية خارجية باسم \textenglish{IsPalindrome} تتلقى عددًا صحيحًا غير سالب، وتعيد \textenglish{true} إذا كان العدد متماثلاً، و \textenglish{false} خلاف ذلك (استعن بالعملية \textenglish{ReverseNumber}).
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+public static int ReverseNumber(int n)
+{
+    int rev = 0;
+    while (n > 0)
+    {
+        rev = rev * 10 + (n % 10);
+        n /= 10;
+    }
+    return rev;
+}
+
+// b
+public static bool IsPalindrome(int n)
+{
+    if (n == ReverseNumber(n))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \label{item:appendDigitToLeft}
+اكتب عملية خارجية باسم \textenglish{AppendDigitToLeft} تتلقى عددًا صحيحًا موجبًا، ورقمًا مكوّنًا من منزلة واحدة. \\
+العملية تلصق المنزلة بالعدد الأوّل \textbf{من اليسار} وتعيد النتيجة. \\
+\textbf{مثال:} إذا تلقّت العملية العدد $12$ والمنزلة $5$ فإنّها تعيد $512$.
+\begin{boxHint}
+يمكنك الاستعانة بالعملية \textenglish{DigitsCount} التي كتبتها في السؤال (\ref{item:digitCount}) لمعرفة عدد خانات العدد. \\
+لكي نحصل على $512$ من $5$ و $12$ نضرب الـ $5$ بـ $100$ (وهو $10$ مرفوعًا لقوة عدد خانات الـ $12$) ثم نجمع الـ $12$.
+\end{boxHint}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int AppendDigitToLeft(int n, int d)
+{
+    int dc = DigitsCount(n);
+    int p = (int)Math.Pow(10, dc);
+    return d * p + n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\input{../../../bagrut_questions/basics/loops_both_2025_899371_3.tex}
+\input{../../../bagrut_questions/basics/loops_both_2024_899371_6.tex}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: أسئلة تحليل العدد إلى عوامله (قواسمه)
+% ==============================================================
+\section*{القسم الثاني: تحليل العدد إلى عوامله (قواسمه) والأعداد الأوّلية}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+% --- أ: إيجاد القواسم، عددها، مجموعها، والأعداد الكاملة والصديقة ---
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا، ويطبع جميع عوامله (قواسمه)، أي كل الأعداد الموجبة التي يقبل هذا العدد القسمة عليها بدون باقٍ.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int d = 1; d <= n; d++)
+{
+    if (n % d == 0)
+    {
+        Console.WriteLine(d);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{CountDivisors} تتلقى عددًا صحيحًا موجبًا $n$، وتعيد عدد قواسمه الموجبة (بما فيها الـ $1$ والعدد $n$ نفسه). \\
+\textbf{مثال:} إذا تلقّت العملية العدد $12$ فإنّها تعيد $6$ (لأنّ قواسم الـ $12$ هي: $1, 2, 3, 4, 6, 12$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int CountDivisors(int n)
+{
+    int count = 0;
+    for (int d = 1; d <= n; d++)
+    {
+        if (n % d == 0)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \label{item:divisors_sum}
+اكتب عملية خارجية باسم \textenglish{DivisorsSum} تتلقى عددًا صحيحًا موجبًا وتعيد \textbf{مجموع} قواسمه \textbf{باستثناء نفسه}. \\
+\textbf{مثال:} إذا تلقّت العدد $8$، فإنّها تعيد: $1 + 2 + 4 = 7$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int DivisorsSum(int n)
+{
+    int sum = 0;
+    for (int d = 1; d < n; d++)
+    {
+        if (n % d == 0)
+        {
+            sum += d;
+        }
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{العدد الكامل:} هو عدد موجب يساوي مجموع قواسمه باستثناء نفسه. \\
+\textbf{مثال:} العدد $6$ هو عدد كامل لأنّ $1 + 2 + 3 = 6$. \\
+اكتب عملية خارجية باسم \textenglish{IsPerfectNumber} تتلقى عددًا صحيحًا موجبًا وتعيد \textenglish{true} إذا كان عددًا كاملاً، و \textenglish{false} وإلا (يمكنك الاستعانة بالعملية \textenglish{DivisorsSum} من السؤال \ref{item:divisors_sum}).
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPerfectNumber(int n)
+{
+    int sum = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (n % i == 0)
+        {
+            sum += i;
+        }
+    }
+    return sum == n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2: مع استعمال العملية \textenglish{DivisorsSum}]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPerfectNumber(int n)
+{
+    return DivisorsSum(n) == n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{عددان صديقان:} هما عددان موجبان يحقّقان أنّ مجموع قواسم الأوّل (باستثناء نفسه) يساوي العدد الثاني، ومجموع قواسم الثاني (باستثناء نفسه) يساوي العدد الأوّل. \\
+\textbf{مثال:} العددان $220$ و $284$ هما عددان صديقان، لأنّ مجموع قواسم $220$ (بدون نفسه) يساوي $284$، ومجموع قواسم $284$ (بدون نفسه) يساوي $220$. \\
+اكتب عملية خارجية باسم \textenglish{AreAmicable} تتلقى عددين صحيحين موجبين وتعيد \textenglish{true} إذا كانا عددين صديقين، و \textenglish{false} وإلا (يمكنك الاستعانة بالعملية \textenglish{DivisorsSum} من السؤال \ref{item:divisors_sum}).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreAmicable(int a, int b)
+{
+    if (DivisorsSum(a) == b && DivisorsSum(b) == a)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- ب: الأعداد الأوّلية وتطبيقاتها ---
+\item \textbf{تذكير:} العدد الأوّلي هو عدد صحيح أكبر من $1$ لا يقبل القسمة إلا على نفسه وعلى $1$.
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{IsPrime} تتلقى عددًا صحيحًا وتعيد \textenglish{true} إذا كان هذا العدد أوّليًّا، وإلا تعيد \textenglish{false}.
+    \item في البرنامج الرئيسي، استدعِ العملية \textenglish{IsPrime} مع العدد $17$ واطبع النتيجة، ثم مع العدد $20$ واطبع النتيجة.
+    \item اكتب عملية خارجية أخرى باسم \textenglish{PrintPrimes} تتلقى عددًا صحيحًا $n$ وتطبع كل الأعداد الأوّلية من $2$ حتى $n$ (بالاستعانة بالعملية \textenglish{IsPrime}). \\
+    \textbf{مثال:} إذا تلقّت العملية العدد $20$ فإنّها تطبع: $2, 3, 5, 7, 11, 13, 17, 19$.
+    \item في البرنامج الرئيسي، استدعِ العملية \textenglish{PrintPrimes} مع العدد $100$.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}[فرع أ و ج]
+\begin{english}
+\begin{minted}{csharp}
+// a
+public static bool IsPrime(int n)
+{
+    if (n < 2)
+    {
+        return false;
+    }
+    for (int i = 2; i < n; i++)
+    {
+        if (n % i == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+// c
+public static void PrintPrimes(int n)
+{
+    for (int i = 2; i <= n; i++)
+    {
+        if (IsPrime(i))
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[فرع ب و د]
+\begin{english}
+\begin{minted}{csharp}
+public static void Main(string[] args)
+{
+    // b
+    Console.WriteLine(IsPrime(17));
+    Console.WriteLine(IsPrime(20));
+
+    // d
+    PrintPrimes(100);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{الأعداد الأوّلية التوأم:} هما عددان أوّليان الفرق بينهما يساوي $2$ (مثل: $(3, 5)$، $(5, 7)$، $(11, 13)$، $(17, 19)$). \\
+اكتب عملية خارجية باسم \textenglish{PrintTwinPrimes} تتلقى عددًا صحيحًا موجبًا $n$، وتطبع جميع أزواج الأعداد الأوّلية التوأم التي لا تتجاوز $n$ (استعن بالعملية \textenglish{IsPrime}).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintTwinPrimes(int n)
+{
+    for (int i = 2; i <= n - 2; i++)
+    {
+        if (IsPrime(i) && IsPrime(i + 2))
+        {
+            Console.WriteLine(i + " , " + (i + 2));
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا، وتطبع كل عوامله (قواسمه) \textbf{الأوّلية} (أي كل الأعداد الأوّلية التي يقبل هذا العدد القسمة عليها بدون باقٍ). \\
+يمكنك الاستعانة بالعملية \textenglish{IsPrime} التي كتبتها في الأسئلة السابقة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintPrimeFactors(int n)
+{
+    for (int i = 2; i <= n; i++)
+    {
+        if (n % i == 0 && IsPrime(i))
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{IsPrimeSquare} تتلقى عددًا صحيحًا موجبًا وتعيد \textenglish{true} إذا كان العدد الذي تلقّته عبارة عن تربيع عدد أوّلي، وإلا تعيد \textenglish{false}. \\
+\textbf{مثال:} تعيد العملية \textenglish{true} إذا تلقّت $25$ (لأنّ $25 = 5^2$ والعدد $5$ أوّلي)، وتعيد \textenglish{false} إذا تلقّت $30$ أو $36$.
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPrimeSquare(int n)
+{
+    for (int i = 2; i <= Math.Sqrt(n); i++)
+    {
+        if (i * i == n && IsPrime(i))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static bool IsPrimeSquare(int n)
+{
+    int sq = (int)Math.Sqrt(n);
+    if (sq * sq == n && IsPrime(sq))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- ج: القاسم المشترك الأكبر (GCD) والمضاعف المشترك الأصغر (LCM) ---
+\item اكتب عملية خارجية باسم \textenglish{GCD} تتلقى عددين صحيحين موجبين $a$ و $b$، وتعيد القاسم المشترك الأكبر لهما (أكبر عدد يقبل كلا العددين القسمة عليه بدون باقٍ). \\
+\textbf{مثال:} القاسم المشترك الأكبر للعددين $12$ و $15$ هو $3$. \\
+\textbf{ملاحظة:} القاسم المشترك الأكبر يكون بالضرورة أصغر من أو مساويًا لـ \textenglish{Math.Min(a, b)}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int GCD(int a, int b)
+{
+    int min = Math.Min(a, b);
+    for (int i = min; i >= 1; i--)
+    {
+        if (a % i == 0 && b % i == 0)
+        {
+            return i;
+        }
+    }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{GCDThreeNumbers} تتلقى ثلاثة أعداد صحيحة موجبة $a$ و $b$ و $c$، وتعيد القاسم المشترك الأكبر للأعداد الثلاثة. \\
+\textbf{مثال:} القاسم المشترك الأكبر للأعداد $12$ و $18$ و $24$ هو $6$. \\
+\textbf{ملاحظة:} يمكنك الاستعانة بالعملية \textenglish{GCD} التي كتبتها في السؤال السابق.
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+public static int GCDThreeNumbers(int a, int b, int c)
+{
+    int min = Math.Min(c, Math.Min(a, b));
+    for (int i = min; i >= 1; i--)
+    {
+        if (a % i == 0 && b % i == 0 && c % i == 0)
+        {
+            return i;
+        }
+    }
+    return 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+public static int GCDThreeNumbers(int a, int b, int c)
+{
+    int gcdAB = GCD(a, b);
+    return GCD(gcdAB, c);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{سؤال للتفكير:} معطاة العملية \textenglish{GCDThreeNumbers} التي كتبتها في السؤال السابق. كيف يمكنك باستخدامها فقط كتابة العملية \textenglish{GCD} التي تحسب القاسم المشترك الأكبر لعددين صحيحين $a$ و $b$؟
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int GCD(int a, int b)
+{
+    return GCDThreeNumbers(a, a, b);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{عددان أوّليان نسبيًّا:} هما عددان القاسم المشترك الأكبر لهما يساوي $1$. \\
+\textbf{مثال:} العددان $15$ و $28$ أوّليان نسبيًّا لأنّ القاسم المشترك الأكبر لهما يساوي $1$. \\
+اكتب عملية خارجية باسم \textenglish{AreRelativelyPrime} تتلقى عددين صحيحين موجبين وتعيد \textenglish{true} إذا كانا أوّليين نسبيًّا، و \textenglish{false} وإلا (يمكنك الاستعانة بالعملية \textenglish{GCD}).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static bool AreRelativelyPrime(int a, int b)
+{
+    return GCD(a, b) == 1;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{LCM} تتلقى عددين صحيحين موجبين $a$ و $b$، وتعيد المضاعف المشترك الأصغر لهما (أصغر عدد موجب يقبل القسمة على العددين معًا بدون باقٍ). \\
+\textbf{مثال:} المضاعف المشترك الأصغر للعددين $6$ و $8$ هو $24$، لأنّه أصغر عدد موجب يقبل القسمة على $6$ وعلى $8$ معًا. \\
+\textbf{ملاحظة:} المضاعف المشترك الأصغر يكون بالضرورة أكبر من أو مساويًا لـ \textenglish{Math.Max(a, b)} وأصغر من أو مساويًا لـ $a \cdot b$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int LCM(int a, int b)
+{
+    int max = Math.Max(a, b);
+    for (int i = max; i < (a * b); i++)
+    {
+        if (i % a == 0 && i % b == 0)
+        {
+            return i;
+        }
+    }
+    return a * b;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثالث: أسئلة المتواليات والسلاسل
+% ==============================================================
+\section*{القسم الثالث: أسئلة المتواليات والسلاسل}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item اكتب برنامجًا يطبع أوّل $20$ حدًّا من المتوالية: $3, 6, 9, 12, \dots$
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 20; i++)
+{
+    Console.WriteLine(3 * i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$، وتطبع أوّل $n$ حدود من المتوالية التالية:
+\[ 1,\; 2,\; 4,\; 7,\; 11,\; 16,\; \ldots \]
+(نحصل على حدود هذه المتوالية بأن نبدأ بالعدد $1$، ثم نضيف $1$، ثم نضيف $2$، ثم نضيف $3$، ثم نضيف $4$، وهكذا.)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintSequence(int n)
+{
+    int val = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        Console.WriteLine(val);
+        val += i;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$، وتحسب وتعيد مجموع السلسلة التالية:
+\[ \text{Sum} = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n} \]
+\ifdetailed
+\begin{boxExample}
+\begin{itemize}[nosep]
+    \item إذا تلقّت $1$ فإنّها تعيد $1$.
+    \item إذا تلقّت $2$ فإنّها تعيد: $1 + \frac{1}{2} = 1.5$.
+    \item إذا تلقّت $3$ فإنّها تعيد: $1 + \frac{1}{2} + \frac{1}{3} = 1.8333\dots$
+    \item إذا تلقّت $10$ فإنّها تعيد: $1 + \frac{1}{2} + \frac{1}{3} + \ldots + \frac{1}{10} = 2.9289\dots$
+\end{itemize}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double SeriesSum(int n)
+{
+    double sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += 1.0 / i;
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية تتلقى عددًا صحيحًا موجبًا $n$، وتحسب وتعيد مجموع السلسلة التالية:
+\[ \text{Sum} = \frac{1}{2} + \frac{2}{3} + \frac{3}{4} + \dots + \frac{n}{n+1} \]
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static double FractionsSeriesSum(int n)
+{
+    double sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += (double)i / (i + 1);
+    }
+    return sum;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب عملية خارجية باسم \textenglish{MinTermsToExceed} تتلقى عددًا عشريًّا موجبًا $target$، وتجد وتعيد أصغر عدد حدود $n$ يجب جمعها من السلسلة:
+\[ 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n} \]
+لكي يصبح المجموع أكبر تمامًا من $target$. \\
+\textbf{مثال:} إذا تلقّت العملية العدد $1.7$ فإنّها تعيد $3$ (لأنّ $1 + \frac{1}{2} = 1.5 \le 1.7$، بينما $1 + \frac{1}{2} + \frac{1}{3} \approx 1.833 > 1.7$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+public static int MinTermsToExceed(double target)
+{
+    double sum = 0;
+    int n = 0;
+    while (sum <= target)
+    {
+        n++;
+        sum += 1.0 / n;
+    }
+    return n;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item متوالية فيبوناتشي معرّفة بالشكل التالي:
+\begin{english}
+\begin{align*}
+    a_1 &= 1 \\
+    a_2 &= 1 \\
+    a_n &= a_{n-1} + a_{n-2} \quad \text{for } n > 2
+\end{align*}
+\end{english}
+مثلاً، أوّل $7$ حدود من متوالية فيبوناتشي هي: $1, 1, 2, 3, 5, 8, 13$.
+\begin{enumerate}
+    \item اكتب عملية خارجية باسم \textenglish{Fib} تتلقى عددًا صحيحًا موجبًا $n$ وتعيد الحد الـ $n$ من متوالية فيبوناتشي (مثلاً: إذا تلقّت العدد $3$ تعيد $2$، وإذا تلقّت $6$ تعيد $8$).
+    \item اكتب عملية خارجية باسم \textenglish{PrintFirstNFibs} تتلقى عددًا صحيحًا موجبًا $n$، وتطبع أوّل $n$ حدود من متوالية فيبوناتشي بالاستعانة بالعملية \textenglish{Fib} من البند (أ). \\
+    مثلاً، إذا تلقّت العملية العدد $8$، تطبع الأعداد: $1, 1, 2, 3, 5, 8, 13, 21$ (كل عدد في سطر).
+    \item اكتب برنامجًا رئيسيًّا يستقبل عددًا صحيحًا موجبًا من المستخدم، ويستدعي العملية \textenglish{PrintFirstNFibs} مع العدد المدخل.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}[فرع أ]
+\begin{english}
+\begin{minted}{csharp}
+public static int Fib(int n)
+{
+    if (n <= 2)
+    {
+        return 1;
+    }
+    int a = 1, b = 1;
+    for (int i = 3; i <= n; i++)
+    {
+        int c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[فرع ب و ج]
+\begin{english}
+\begin{minted}{csharp}
+public static void PrintFirstNFibs(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        Console.WriteLine(Fib(i));
+    }
+}
+
+public static void Main(string[] args)
+{
+    int n = int.Parse(Console.ReadLine());
+    PrintFirstNFibs(n);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

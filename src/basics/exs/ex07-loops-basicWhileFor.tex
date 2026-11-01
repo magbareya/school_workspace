@@ -1,0 +1,961 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن $7$ للصف العاشر $10$ - حلقات التكرار \textenglish{while} و \textenglish{for}}
+\else
+\title{ورقة تمرن $7$ للصف العاشر $10$ - حلقات التكرار \textenglish{while} و \textenglish{for}}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ==============================================================
+% القسم الأول: أسئلة تأسيسية على حلقة while
+% ==============================================================
+\section*{القسم الأوّل: أسئلة تأسيسية على حلقة \textenglish{while}}
+
+\begin{enumerate}[itemsep=1em]
+
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويطبع كل عدد يدخله المستخدم. إذا أدخل المستخدم العدد $0$ يتوقف البرنامج.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n != 0)
+{
+    Console.WriteLine(n);
+    n = int.Parse(Console.ReadLine());
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطلب من المستخدم إدخال عدد صحيح يقبل القسمة على $7$ بدون باقٍ، فإذا أدخل عددًا لا يقبل القسمة على $7$ يكرّر البرنامج الطلب حتى يُدخل المستخدم عددًا يقبل القسمة على $7$، ثم يطبعه.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n % 7 != 0)
+{
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(n);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطلب من المستخدم إدخال عدد صحيح بين $1$ و $10$. إذا أدخل عددًا خارج هذا المجال، يطبع البرنامج رسالة خطأ \textenglish{"Error"} ويطلب عددًا جديدًا حتى يُدخل عددًا ضمن المجال المطلوب. في النهاية يطبع البرنامج عدد المرات التي أدخل فيها المستخدم عددًا خاطئًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int invalid = 0;
+int x = int.Parse(Console.ReadLine());
+while (x < 1 || x > 10)
+{
+    Console.WriteLine("Error");
+    invalid++;
+    x = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(invalid);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم كلمة مرور سرية (عدد صحيح). إذا كانت كلمة المرور المدخلة غير مطابقة لكلمة المرور الصحيحة $8264$، يستمر البرنامج بالاستقبال حتى يُدخل المستخدم كلمة المرور الصحيحة $8264$. في النهاية يطبع البرنامج عدد المحاولات الفاشلة التي حاولها المستخدم.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int fails = 0;
+int x = int.Parse(Console.ReadLine());
+while (x != 8264)
+{
+    fails++;
+    x = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(fails);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل أعدادًا صحيحة من المستخدم ويجمعها، ويتوقف فقط عندما تصبح قيمة المجموع أكبر تمامًا من $100$، ثم يطبع المجموع النهائي.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+while (sum <= 100)
+{
+    int v = int.Parse(Console.ReadLine());
+    sum += v;
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل علامات طلاب (أعدادًا صحيحة بين $0$ و $100$)، ويتوقف عن الاستقبال عندما يُدخل المستخدم العدد $-1$. بعد التوقف، يطبع البرنامج عدد العلامات التي أُدخلت ومعدّلها (افترض أنّ المستخدم يُدخل علامة واحدة على الأقل قبل $-1$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int count = 0;
+int grade = int.Parse(Console.ReadLine());
+while (grade != -1)
+{
+    sum += grade;
+    count++;
+    grade = int.Parse(Console.ReadLine());
+}
+double avg = (double)sum / count;
+Console.WriteLine("Count: " + count);
+Console.WriteLine("Average: " + avg);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة حتى يُدخل العدد $999$. بعد التوقف، يطبع البرنامج أكبر عدد قام المستخدم بإدخاله قبل العدد $999$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int max = int.MinValue;
+int v = int.Parse(Console.ReadLine());
+while (v != 999)
+{
+    if (v > max)
+    {
+        max = v;
+    }
+    v = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(max);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item أمامك مقطع البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+while (x != y)
+{
+    x += 1;
+    y -= 2;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{enumerate}
+    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة $3$ مرّات بالضبط.
+    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة مرّة واحدة فقط.
+    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث لا تتكرّر الحلقة أبدًا ($0$ مرّات).
+    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة إلى ما لا نهاية من المرّات.
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item نأخذ مثلاً: $x = 0$ و $y = 9$. بعد $3$ خطوات يصبحان متساويين ($3$ و $3$) فتتوقف الحلقة (يمكن أخذ أي عددين يحققان $y - x = 9$).
+    \item نأخذ مثلاً: $x = 0$ و $y = 3$. بعد خطوة واحدة يصبحان متساويين ($1$ و $1$) فتتوقف الحلقة (يمكن أخذ أي عددين يحققان $y - x = 3$).
+    \item أي عددين متساويين منذ البداية (مثلاً $x = 5$ و $y = 5$)، لأنّ شرط الحلقة غير متحقّق من البداية.
+    \item نأخذ مثلاً: $x = 1$ و $y = 0$؛ عندها لن يتساويا أبدًا (يمكن أخذ أي قيمتين بحيث $x > y$ أو بحيث لا يقبل الفرق $y - x$ القسمة على $3$).
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: أسئلة تأسيسية على حلقة for
+% ==============================================================
+\section*{القسم الثاني: أسئلة تأسيسية على حلقة \textenglish{for}}
+
+\begin{enumerate}[resume, itemsep=1em]
+
+\item اكتب برنامجًا يطبع الأعداد من $1$ إلى $20$ باستخدام حلقة \textenglish{for}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 20; i++)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطبع الأعداد من $10$ إلى $1$ تنازليًا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 10; i >= 1; i--)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطبع جميع الأعداد الزوجية بين $20$ و $50$ (شاملاً $20$ و $50$).
+\ifwithsols
+\begin{boxSolution}[1]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 20; i <= 50; i++)
+{
+    if (i % 2 == 0)
+    {
+        Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2]
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 20; i <= 50; i += 2)
+{
+    Console.WriteLine(i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطبع أوّل $12$ مضاعفًا موجبًا للعدد $7$ (أي $7, 14, 21, \dots, 84$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 12; i++)
+{
+    Console.WriteLine(7 * i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطبع تربيع الأعداد من $1$ إلى $15$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 15; i++)
+{
+    Console.WriteLine(i * i);
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يطبع لكل عدد من $1$ إلى $10$ قيمة العدد مرفوعًا لقوة نفسه \\
+ (أي: $1^1, 2^2, 3^3, \ldots, 10^{10}$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 1; i <= 10; i++)
+{
+    Console.WriteLine(Math.Pow(i, i));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يحسب ويطبع مجموع الأعداد من $70$ إلى $100$ (شاملاً $70$ و $100$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+for (int i = 70; i <= 100; i++)
+{
+    sum += i;
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يحسب ويطبع عدد الأعداد ثلاثية المنزلة (بين $100$ و $999$) التي تقبل القسمة على $7$ بدون باقٍ.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+for (int i = 100; i <= 999; i++)
+{
+    if (i % 7 == 0)
+    {
+        count++;
+    }
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $N$، ثم يطبع $N$ أسطر، في كل سطر الكلمة \textenglish{"Hello"}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int i = 0; i < n; i++)
+{
+    Console.WriteLine("Hello");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ويطبع الأعداد من $1$ حتى $n$، ولكن بدلاً من كل عدد يقبل القسمة على $4$ بدون باقٍ يطبع الكلمة \textenglish{"FOUR"}.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int i = 1; i <= n; i++)
+{
+    if (i % 4 == 0)
+    {
+        Console.WriteLine("FOUR");
+    }
+    else
+    {
+        Console.WriteLine(i);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ويحسب ويطبع مضروب العدد $n$ (الذي يُرمز له بـ $n!$ ويساوي حاصل الضرب $1 \times 2 \times 3 \times \dots \times n$). \\
+\textbf{مثال:} إذا أدخل المستخدم العدد $5$، يطبع البرنامج $120$ لأنّ $1 \times 2 \times 3 \times 4 \times 5 = 120$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int fact = 1;
+for (int i = 1; i <= n; i++)
+{
+    fact *= i;
+}
+Console.WriteLine(fact);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ثم يستقبل منه $n$ أعداد صحيحة ويطبع مجموعها.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = 0; i < n; i++)
+{
+    sum += int.Parse(Console.ReadLine());
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثالث: تمارين تطبيقية وشاملة في حلقات while و for
+% ==============================================================
+\section*{القسم الثالث: تمارين تطبيقية في حلقات \textenglish{while} و \textenglish{for}}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+% --- مجموعة 1: حلقات على مجال [1..n] أو [a..b] ---
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ويطبع الأعداد من $1$ إلى $n$ وبجانب كل عدد تربيعه. \\
+مثلاً، إذا أدخل المستخدم العدد $5$، يطبع البرنامج:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+1 1
+2 4
+3 9
+4 16
+5 25
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+for (int i = 1; i <= n; i++)
+{
+    Console.WriteLine(i + " " + (i * i));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل عددًا صحيحًا موجبًا $n$، ويحسب ويطبع قيمة التعبير التالي: \\
+$1 - 2 + 3 - 4 + 5 - 6 + \dots \pm n$ \\
+(لاحظ أنّ الأعداد الفردية تُضاف، والأعداد الزوجية تُطرح.)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+for (int i = 1; i <= n; i++)
+{
+    if (i % 2 == 0)
+    {
+        sum -= i;
+    }
+    else
+    {
+        sum += i;
+    }
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل عددًا صحيحًا موجبًا $n$، ويحسب ويطبع عدد القيم $i$ من $1$ حتى $n$ التي يكون فيها التعبير $i^2 - i$ قابلاً للقسمة على $3$ بدون باقٍ.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+int cnt = 0;
+for (int i = 1; i <= n; i++)
+{
+    int v = i * i - i;
+    if (v % 3 == 0)
+    {
+        cnt++;
+    }
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددين صحيحين $a$ و $b$ (افترض أنّ العدد الأوّل أصغر من الثاني)، ويحسب ويطبع عدد الأعداد التي تقبل القسمة على $3$ بدون باقٍ بينهما (بما يشمل العددين نفسيهما).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int count = 0;
+for (int i = a; i <= b; i++)
+{
+    if (i % 3 == 0)
+    {
+        count++;
+    }
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم عددين صحيحين، ويحسب ويطبع مجموع جميع الأعداد الصحيحة بينهما (بما يشمل العددين نفسيهما). \\
+\textbf{ملاحظة:} لا تفترض أنّ العدد الأوّل أصغر من الثاني (قد يكون الأوّل أكبر وقد يكون الثاني أكبر).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int max = Math.Max(a, b);
+int min = Math.Min(a, b);
+int sum = 0;
+for (int i = min; i <= max; i++)
+{
+    sum += i;
+}
+Console.WriteLine(sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- مجموعة 2: استقبال سلسلة مدخلات مع عدّ ومجموع ومتوسط ---
+\item اكتب برنامجًا يستقبل من المستخدم $100$ عدد صحيح، ويعدّ الأعداد التي لها نفس زوجية ترتيب إدخالها ويطبع عددها. \\
+أي: إذا كان العدد الأوّل فرديًّا نعدّه وإلا فلا، وإذا كان العدد الثاني زوجيًّا نعدّه وإلا فلا، وإذا كان العدد الثالث فرديًّا نعدّه وإلا فلا، وهكذا.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int cnt = 0;
+for (int i = 1; i <= 100; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (i % 2 == Math.Abs(x % 2))
+    {
+        cnt++;
+    }
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item تُحسب العلامة النهائية في موضوع الحاسوب على النحو التالي:
+\begin{itemize}[nosep]
+    \item $30\%$ للوظائف
+    \item $30\%$ للامتحان الشهري
+    \item $40\%$ للامتحان الفصلي
+\end{itemize}
+اكتب برنامجًا يستقبل عدد طلاب الصف، ثم يستقبل علامات كل واحد من الطلاب (لكل طالب يستقبل $3$ علامات)، ويطبع لكل طالب علامته النهائية. وفي النهاية يطبع البرنامج عدد الطلاب الناجحين الذين حصلوا على علامة نهائية $70$ فما فوق.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int pupilsCnt = int.Parse(Console.ReadLine());
+int cnt = 0;
+for (int i = 1; i <= pupilsCnt; i++)
+{
+    int hw = int.Parse(Console.ReadLine());
+    int mid = int.Parse(Console.ReadLine());
+    int finalExam = int.Parse(Console.ReadLine());
+    double avg = hw * 0.3 + mid * 0.3 + finalExam * 0.4;
+    Console.WriteLine(avg);
+    if (avg >= 70)
+    {
+        cnt++;
+    }
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل $25$ عددًا صحيحًا ويطبع عدد الأعداد التي كانت أصغر من المتوسط الجزئي للأعداد المدخلة حتى تلك اللحظة (أي في الخطوة $i$، نحسب متوسط أوّل $i$ أعداد، ونفحص هل العدد الـ $i$ أصغر من هذا المتوسط).
+\ifdetailed
+\begin{boxExample}
+إذا كانت أوّل $5$ أعداد مدخلة هي: $12, 8, 20, 4, 6$ فإنّ البرنامج يحسب كالتالي:
+\begin{enumerate}[label=(\arabic*), nosep]
+    \item عند قراءة العدد $12$: المتوسط الجزئي هو $12$. العدد $12$ ليس أصغر من $12$ $\leftarrow$ لا نعدّه.
+    \item عند قراءة العدد $8$: المتوسط الجزئي هو $\frac{12 + 8}{2} = 10$. العدد $8$ أصغر من $10$ $\leftarrow$ نعدّه (العداد الآن $1$).
+    \item عند قراءة العدد $20$: المتوسط الجزئي هو $\frac{12 + 8 + 20}{3} = 13.33$. العدد $20$ ليس أصغر من $13.33$ $\leftarrow$ لا نعدّه (العداد الآن $1$).
+    \item عند قراءة العدد $4$: المتوسط الجزئي هو $\frac{12 + 8 + 20 + 4}{4} = 11$. العدد $4$ أصغر من $11$ $\leftarrow$ نعدّه (العداد الآن $2$).
+    \item عند قراءة العدد $6$: المتوسط الجزئي هو $\frac{12 + 8 + 20 + 4 + 6}{5} = 10$. العدد $6$ أصغر من $10$ $\leftarrow$ نعدّه (العداد الآن $3$).
+\end{enumerate}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int cnt = 0;
+for (int i = 1; i <= 25; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    sum += x;
+    double avg = (double)sum / i;
+    if (x < avg)
+    {
+        cnt++;
+    }
+}
+Console.WriteLine(cnt);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- مجموعة 3: إيجاد الأكبر والأصغر (Max / Min) ---
+\item اكتب برنامجًا يستقبل من المستخدم $100$ عدد صحيح، ويحسب ويطبع أكبر عدد زوجي وأكبر عدد فردي من بين الأعداد التي أدخلها المستخدم.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int maxEven = int.MinValue;
+int maxOdd = int.MinValue;
+for (int i = 1; i <= 100; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x % 2 == 0)
+    {
+        maxEven = Math.Max(maxEven, x);
+    }
+    else
+    {
+        maxOdd = Math.Max(maxOdd, x);
+    }
+}
+Console.WriteLine(maxEven);
+Console.WriteLine(maxOdd);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item في إحدى مسابقات ألعاب القوى هناك مسابقة «العرض الشيّق»، وفيها يعطي $7$ حكّام علامة لكل متسابق بعد عرضه. \\
+العلامة النهائية التي يستحقها المتسابق تُحسب كمعدّل لـ $5$ علامات فقط من بين العلامات الـ $7$، وذلك بعد شطب العلامة الكبرى والعلامة الصغرى. \\
+اكتب برنامجًا يستقبل علامات الحكّام السبعة لأحد المتسابقين، ويطبع معدّله النهائي.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int min = int.MaxValue;
+int max = int.MinValue;
+int sum = 0;
+for (int i = 0; i < 7; i++)
+{
+    int s = int.Parse(Console.ReadLine());
+    sum += s;
+    if (s < min)
+    {
+        min = s;
+    }
+    if (s > max)
+    {
+        max = s;
+    }
+}
+double avg = (sum - min - max) / 5.0;
+Console.WriteLine(avg);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $20$ زوجًا من الأعداد الصحيحة (أي ما مجمله $40$ عددًا). \\
+لكل زوج من الأعداد، يحسب البرنامج معدّل العددين ويطبعه، وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل.
+\ifdetailed
+\begin{boxExample}
+لو كان البرنامج يستقبل $5$ أزواج فقط وهي: $(2,4), (5,7), (1,9), (6,8), (3,3)$ فإنّه يعمل كما يلي:
+\begin{enumerate}[label=(\arabic*), nosep]
+    \item يستقبل العددين $2$ و $4$، المعدّل هو $\frac{2+4}{2} = 3$، فيطبع $3$.
+    \item يستقبل العددين $5$ و $7$، المعدّل هو $\frac{5+7}{2} = 6$، فيطبع $6$.
+    \item يستقبل العددين $1$ و $9$، المعدّل هو $\frac{1+9}{2} = 5$، فيطبع $5$.
+    \item يستقبل العددين $6$ و $8$، المعدّل هو $\frac{6+8}{2} = 7$، فيطبع $7$.
+    \item يستقبل العددين $3$ و $3$، المعدّل هو $\frac{3+3}{2} = 3$، فيطبع $3$.
+\end{enumerate}
+وفي النهاية يطبع العددين اللذين كان لهما أكبر معدّل وهما: $6$ و $8$ (لأنّ معدّلهما $7$ هو الأكبر).
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double maxAvg = double.MinValue;
+int num1 = 0, num2 = 0;
+for (int i = 0; i < 20; i++)
+{
+    int a = int.Parse(Console.ReadLine());
+    int b = int.Parse(Console.ReadLine());
+    double avg = (a + b) / 2.0;
+    Console.WriteLine(avg);
+    if (avg > maxAvg)
+    {
+        maxAvg = avg;
+        num1 = a;
+        num2 = b;
+    }
+}
+Console.WriteLine(num1);
+Console.WriteLine(num2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $20$ عددًا صحيحًا، ويطبع أكبر عددين أدخلهما المستخدم (أكبر عدد وثاني أكبر عدد).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int max1 = int.MinValue;
+int max2 = int.MinValue;
+for (int i = 0; i < 20; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x > max1)
+    {
+        max2 = max1;
+        max1 = x;
+    }
+    else if (x > max2)
+    {
+        max2 = x;
+    }
+}
+Console.WriteLine(max1);
+Console.WriteLine(max2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $20$ عددًا صحيحًا، ويطبع أصغر عددين أدخلهما المستخدم (أصغر عدد وثاني أصغر عدد).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int min1 = int.MaxValue;
+int min2 = int.MaxValue;
+for (int i = 0; i < 20; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x < min1)
+    {
+        min2 = min1;
+        min1 = x;
+    }
+    else if (x < min2)
+    {
+        min2 = x;
+    }
+}
+Console.WriteLine(min1);
+Console.WriteLine(min2);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- مجموعة 4: مقارنة كل عدد بالعدد الذي سبقه مباشرة (prev و curr) ---
+\item اكتب برنامجًا يستقبل $20$ عددًا صحيحًا من المستخدم، ويطبع عدد المرات التي أدخل فيها المستخدم عددين متتاليين متساويين. \\
+\textbf{مثال:} إذا كانت المدخلات $5, 3, \mathbf{4, 4}, 7, \mathbf{9, 9} \dots$ $\leftarrow$ العداد هنا يساوي $2$.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+int prev = int.Parse(Console.ReadLine());
+for (int i = 1; i < 20; i++)
+{
+    int curr = int.Parse(Console.ReadLine());
+    if (curr == prev)
+    {
+        count++;
+    }
+    prev = curr;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم $10$ أعداد صحيحة، ويطبع عدد الأعداد التي كانت أكبر من العدد الذي أُدخل قبلها مباشرة.
+\ifdetailed
+\begin{boxExample}
+إذا كانت الأعداد العشرة المدخلة هي: $5, 8, 3, 10, 7, 12, 6, 15, 9, 20$:
+\begin{itemize}[nosep]
+    \item الأعداد التي كانت أكبر من العدد الذي سبقها مباشرة هي: $8$ (أكبر من $5$)، $10$ (أكبر من $3$)، $12$ (أكبر من $7$)، $15$ (أكبر من $6$)، و $20$ (أكبر من $9$).
+    \item يطبع البرنامج في النهاية $5$.
+\end{itemize}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int count = 0;
+for (int i = 1; i < 10; i++)
+{
+    int current = int.Parse(Console.ReadLine());
+    if (current > prev)
+    {
+        count++;
+    }
+    prev = current;
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا ويحسب ويطبع أكبر فرق بين عددين متتاليين (بالقيمة المطلقة).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int prev = int.Parse(Console.ReadLine());
+int maxDiff = 0;
+for (int i = 1; i < 30; i++)
+{
+    int x = int.Parse(Console.ReadLine());
+    int diff = Math.Abs(x - prev);
+    if (diff > maxDiff)
+    {
+        maxDiff = diff;
+    }
+    prev = x;
+}
+Console.WriteLine(maxDiff);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- مجموعة 5: حلقات while بشروط توقف مركبة ---
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويطبع الجذر التربيعي لكل عدد غير سالب يدخله المستخدم (بعد التأكّد من أنّ العدد ليس سالبًا). ينتهي الاستقبال عندما يصبح عدد الأعداد السالبة التي أدخلها المستخدم $3$ أعداد.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int negCnt = 0;
+while (negCnt < 3)
+{
+    int x = int.Parse(Console.ReadLine());
+    if (x >= 0)
+    {
+        Console.WriteLine(Math.Sqrt(x));
+    }
+    else
+    {
+        negCnt++;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل عددًا صحيحًا $x$ يمثّل الحد الأقصى للوزن الإجمالي الذي يمكن أن تحمله شاحنة بالكيلوغرام، ثم يستقبل وزن كل صندوق يتم تحميله للشاحنة الواحد تلو الآخر طالما أنّ الوزن الإجمالي لا يتجاوز $x$. في النهاية يطبع البرنامج عدد الصناديق التي تم تحميلها للشاحنة حتى امتلأت. (فكّر: ما هو شرط الحلقة؟)
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+int sum = 0;
+int count = 0;
+int w = int.Parse(Console.ReadLine());
+while (sum + w <= x)
+{
+    sum += w;
+    count++;
+    w = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item تنظّم المدرسة حملة تبرّعات، وتستمر الحملة باستقبال مبالغ التبرّعات (أعداد صحيحة موجبة) حتى يتحقّق \textbf{أحد} الشرطين التاليين:
+\begin{itemize}[nosep]
+    \item أن يصل المجموع الكلي للتبرّعات إلى $5000$ شاقل أو أكثر.
+    \item أو أن يصل عدد المتبرّعين إلى $30$ متبرّعًا.
+\end{itemize}
+اكتب برنامجًا يستقبل مبالغ التبرّعات الواحد تلو الآخر حتى تتوقف الحملة، وفي النهاية يطبع المجموع الكلي للتبرّعات وعدد المتبرّعين.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int totalDonations = 0;
+int donorsCount = 0;
+while (totalDonations < 5000 && donorsCount < 30)
+{
+    int amount = int.Parse(Console.ReadLine());
+    totalDonations += amount;
+    donorsCount++;
+}
+Console.WriteLine("Total donations: " + totalDonations);
+Console.WriteLine("Donors count: " + donorsCount);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
