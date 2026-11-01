@@ -19,6 +19,7 @@ Before finishing any task, verify that every item below holds. Each item links t
 7. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
 8. **Solutions** go in `\ifwithsols \begin{boxSolution} ... \end{boxSolution} \fi`, or — for OOP booklets — in standalone `.cs` files ([Sections 5.2](#52-progressive-multi-stage-oop-booklets--standalone-c-solutions) and [7](#7-solution--code-standards)).
 9. **Every C# `if`/`else`/`for`/`while` has braces**, and fields are accessed with `this.` ([Section 7](#7-solution--code-standards)).
+10. **Never put worksheet/exercise solutions as examples in lesson notes or summaries** — all examples in summaries/lesson notes must be different from the questions in the practice worksheets ([Section 5.4](#54-lesson-notes--student-summaries)).
 
 ---
 
@@ -281,6 +282,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
 ### 5.4. Lesson Notes & Student Summaries (`lessonNotes/`)
 - **Location:** `src/<subject>/lessonNotes/`
 - **Title Scheme:** `\title{ملخص: [الموضوع]}` or `\title{ملخص شامل للطلاب: [الموضوع]}` with `\author{أ. محمود اغبارية}`.
+- **CRITICAL Rule — Never Use Worksheet Questions as Examples:** It is **strictly forbidden** for lesson notes, summaries, or slides to include code examples that are solutions to the questions in the worksheets (`exs/`). Always invent distinct, parallel examples (different numbers, conditions, or scenarios) that teach the same concept without giving away the answers to the exercises.
 - **Two Formats:**
   1. **Detailed Lesson Notes:** Formal syntax in `boxCode`, rules tables, memory/TikZ diagrams, and in-class `boxExercise` blocks. Examples: [src/basics/lessonNotes/01-variables_math_string_operations_new.tex](file:///c:/dev/workspace/school_workspace/src/basics/lessonNotes/01-variables_math_string_operations_new.tex), [history_src/2025_26/basics/lessonNotes/12-classes.tex](file:///c:/dev/workspace/school_workspace/history_src/2025_26/basics/lessonNotes/12-classes.tex).
   2. **Compact Printable Student Summaries:** Each numbered topic (`\subsection*{1. ...}`, preceded by `\filbreak`) has a strict 3-part structure:
