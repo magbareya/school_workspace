@@ -104,7 +104,10 @@ Before finishing any task, verify that every item below holds. Each item links t
 - **Global `minted` look:** `\setminted{fontsize=\small, breaklines=true}` (not applied in `\ifwhiteblack` mode, which uses `\LARGE`).
 - **Compact `boxCode`:** the `simplecode` style is extended with `fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt`, so code boxes stay compact despite the global `onehalfspacing`.
 - **Do NOT redefine any of the above** (`pycell`, `\setminted`, `\tcbset{simplecode...}`) in individual `.tex` files. Add a per-file override only when a specific document genuinely needs a different value.
-- **List Spacing:** Separate items with `[itemsep=2em]` or `[itemsep=2.2em]`. To continue numbering across sections, use `\begin{enumerate}[resume, ...]`.
+- **List Spacing (`itemsep`):**
+  - When the questions in a section/list are **short** (1–2 lines each), use `\begin{enumerate}[itemsep=1em]` (or `[resume, itemsep=1em]`).
+  - When the questions are **longer** (multi-line descriptions, sub-questions, or examples), use `\begin{enumerate}[itemsep=2em]` (or `[itemsep=2.2em]` in multi-stage booklets).
+  - To continue numbering across sections, use `\begin{enumerate}[resume, ...]`.
 
 ---
 
@@ -517,7 +520,8 @@ These two rules are **mandatory** in every document. Any older pattern that cont
    - **Only exception:** the first section of the document (it follows the title and any opening boxes directly) — do not push it to a new page.
    - If an `enumerate` list continues across sections, close it before `\clearpage \section*{...}` and reopen it with `\begin{enumerate}[resume, ...]`.
 
-**Other pagination rules (consistent with the two rules above):**
+**Other pagination & spacing rules (consistent with the two rules above):**
+- **Question list spacing (`itemsep`):** Use `\begin{enumerate}[itemsep=1em]` when questions are short (1–2 lines each), and `\begin{enumerate}[itemsep=2em]` when questions are longer (see Section 2.4).
 - **Subsections:** Use `\filbreak` (not `\clearpage`) before each `\subsection*`, so a topic heading and its code box stay together on the same page.
 - **Between partitioned solution boxes** inside one item: use `\filbreak` (Section 7).
 - **No other `\clearpage`:** Do not add `\clearpage` between questions or inside `\ifwithsols`; the `\filbreak` after each `\item` already handles it. The only other allowed forced breaks are the exam tear-off spacer page (`\clearpage \thispagestyle{empty} \mbox{} \clearpage`, Section 5.5) and `\ifwhiteblack \clearpage \fi` right after an item's `\filbreak` when an exercise must get its own page in landscape presentation mode.
