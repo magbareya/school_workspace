@@ -13,7 +13,7 @@ Before finishing any task, verify that every item below holds. Each item links t
 1. **Compile with `make`, never with `xelatex` directly**, and confirm the PDF builds without errors ([Section 2.2](#22-build--mandatory-compilation-check)).
 2. **Terminology:** use the mandatory Arabic terms (`عملية` not `دالة`, `نمط` not `نوع`, `حد` not `عنصر`, `مؤشر`, `مسح`, `تعريف`, ...) and keep code identifiers in `\textenglish{...}` ([Section 3](#3-strict-pedagogical-terminology-arabic--cs-concepts)).
 3. **Inline numbers wrapped in `$:`** every time a number appears inline within text, wrap it in math mode with `$...$` (e.g. `$0$`, `$1$`, `$10$`, `$-5$`), **never** with `\textenglish{...}` ([Section 3.1](#31-language-policy-technical-concepts-vs-code-identifiers)).
-4. **No Arabic inside `minted`** — all code comments and console strings are in English ([Section 2.1](#21-engine-fonts--document-skeleton)).
+4. **No Arabic in code (strictly forbidden without any exception)** — never write any Arabic text anywhere inside code (`minted` blocks, `.cs` files, `.py` files, etc.), neither in print/console commands (`Console.WriteLine`, `print`) nor in comments ([Sections 2.1](#21-engine-fonts--document-skeleton) and [7](#7-solution--code-standards)).
 5. **Boxes never split across pages** — keep every `tcolorbox` short; split long solutions into several boxes ([Section 4.1](#41-critical-rule-tcolorbox-environments-do-not-split-across-pages)).
 6. **Pagination:** `\filbreak` after every `\item` (outside any `\fi`), `\clearpage` before every `\section*` ([Section 8](#8-pagination--spacing-rules)).
 7. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
@@ -61,7 +61,7 @@ Before finishing any task, verify that every item below holds. Each item links t
 - **Engine:** `XeLaTeX` with `-shell-escape` (required for `minted` v3) and `polyglossia`.
   - Main language: Arabic (`\setmainlanguage[numerals=western]{arabic}`); second language: English (`\setotherlanguage{english}`).
   - Fonts: `Calibri` (Arabic), `Courier New` (monospace/code), `Segoe UI Emoji` (`\emoji` for box icons).
-- **CRITICAL Font Rule for `minted`:** Never write Arabic text or Arabic comments inside `\begin{minted}{csharp}` or `\begin{minted}{python}` — the Latin monospace font has no Arabic glyphs, so they render as blank space. All comments and strings inside `minted` MUST be in English.
+- **CRITICAL Rule — Arabic in Code is Strictly Forbidden (Without Any Exception):** It is **totally forbidden** to write any Arabic text anywhere inside code (`\begin{minted}{csharp}`, `\begin{minted}{python}`, standalone `.cs` / `.py` files, etc.) — **neither in print/output commands (`Console.WriteLine`, `Console.Write`, `print`, `input`) nor in comments (`//`, `/* ... */`, `#`) nor in string literals**. Apart from the Latin monospace font lacking Arabic glyphs in `minted` (rendering them as blank spaces), all code, console messages, string literals, and comments MUST be 100% in English without any exception. Even if a question in Arabic asks to print a message (e.g., "اطبع أنّ العدد زوجي"), the code MUST print it in English (`Console.WriteLine("Even");`).
 - **Document Skeleton:**
   ```latex
   \documentclass[14pt]{extarticle}
@@ -460,7 +460,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
   - Fields (`private` or `protected`), local variables, and parameters: meaningful `camelCase` (`temperature`, `birthYear`, `totalCost`, `seniority`).
   - Methods and classes: `PascalCase` (`GetSalary`, `AddEmployee`, `Technician`).
   - Inside constructors and methods, access fields with `this.` (`this.name = name;`, `return this.score;`).
-- **Console Messages & Inline Comments:** Always in English (`Console.WriteLine("Enter temperature:");`, `// Reject negative values`).
+- **Zero Arabic in Code (Console Messages, String Literals & Comments):** It is **strictly and totally forbidden (without any exception)** to write any Arabic characters inside code — neither in print/output commands (`Console.WriteLine(...)`, `print(...)`) nor in inline/block comments (`// ...`, `# ...`) nor in string literals. Always write all console prompts, outputs, and code comments in English (`Console.WriteLine("Enter temperature:");`, `// Reject negative values`), even when the Arabic question prompt phrases the output requirement in Arabic.
 - **Alternative Solutions:** When showing two valid approaches (e.g. nested `if` vs. `&&`), use consecutive boxes labeled `\begin{boxSolution}[1]` and `\begin{boxSolution}[2]` (or `[بديل]`).
 - **Partitioning Long Solutions:** A single `boxSolution` cannot break across pages, so a long solution (a full class, several helper methods, a long decision tree) would be clipped. **Long solutions MUST be split into several consecutive boxes:**
   - Split at logical points (e.g. Part 1: fields & constructors, Part 2: methods & `Main`; or `[فرع أ]` / `[فرع ب]`).
