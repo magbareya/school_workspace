@@ -1,0 +1,381 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة تمرن تمهيدية للصف العاشر $10$ - مدخل متدرّج إلى حلقة \textenglish{while}}
+\else
+\title{ورقة تمرن تمهيدية للصف العاشر $10$ - مدخل متدرّج إلى حلقة \textenglish{while}}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+% ==============================================================
+% القسم الأول: تتبع وفهم عمل حلقة while
+% ==============================================================
+\section*{القسم الأوّل: تتبّع وفهم عمل حلقة \textenglish{while}}
+
+\begin{enumerate}[itemsep=2em]
+
+\item تَتبَّع مقطع البرنامج التالي وأجب عن الأسئلة التي تليه:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = 2;
+while (x <= 10)
+{
+    Console.WriteLine(x);
+    x = x + 3;
+}
+Console.WriteLine("End: " + x);
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{enumerate}
+    \item ما هي الأعداد التي يطبعها البرنامج داخل الحلقة؟
+    \item ما هي قيمة \textenglish{x} النهائية التي جعلت شرط الحلقة يصبح \textenglish{false} وتتوقف الحلقة؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item يطبع داخل الحلقة الأعداد: $2$، ثم $5$، ثم $8$.
+    \item قيمة \textenglish{x} عند التوقف هي $11$ (لأنّ $11 \le 10$ غير متحقّق)، فيطبع في النهاية: \textenglish{End: 11}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item تَتبَّع مقطع البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n != 0)
+{
+    Console.WriteLine(n * 2);
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Finished");
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{enumerate}
+    \item إذا أدخل المستخدم الأعداد: $4$ ثم $7$ ثم $-3$ ثم $0$، ماذا يطبع البرنامج؟
+    \item إذا كان أوّل عدد يُدخله المستخدم هو $0$، ماذا يطبع البرنامج؟
+    \item لماذا نحتاج السطر \textenglish{n = int.Parse(Console.ReadLine());} في نهاية جسم الحلقة؟ ماذا سيحدث لو حذفناه؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item يطبع: $8$، ثم $14$، ثم $-6$، ثم \textenglish{Finished} (لاحظ أنّ الـ $0$ لا يُضرب بـ $2$ لأنّ الحلقة تتوقف عنده).
+    \item يطبع \textenglish{Finished} فقط، لأنّ الشرط \textenglish{n != 0} يكون \textenglish{false} منذ البداية فلا يدخل إلى جسم الحلقة أبدًا.
+    \item نحتاجه لقراءة العدد التالي في كل دورة؛ لو حذفناه ستبقى قيمة \textenglish{n} الأولى ثابتة إلى الأبد ويدخل البرنامج في حلقة لا نهائية.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item تَتبَّع مقطع البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    sum = sum + num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Sum = " + sum);
+\end{minted}
+\end{english}
+\end{boxCode}
+إذا أدخل المستخدم الأعداد: $10$ ثم $5$ ثم $20$ ثم $-1$:
+\begin{enumerate}
+    \item أكمل جدول المتابعة التالي:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|C{2.5cm}|C{3.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{num} & \textbf{num != -1} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+    \hline
+     & & $0$ & \\ \hline
+    $10$ & \textenglish{true} & & \\ \hline
+    $5$ & & & \\ \hline
+    $20$ & & & \\ \hline
+    $-1$ & & & \\ \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item هل جُمِع العدد $-1$ مع المتغير \textenglish{sum}؟ لماذا؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item .
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|C{2.5cm}|C{3.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{num} & \textbf{num != -1} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+    \hline
+     & & $0$ & \\ \hline
+    $10$ & \textenglish{true} & $10$ & \\ \hline
+    $5$ & \textenglish{true} & $15$ & \\ \hline
+    $20$ & \textenglish{true} & $35$ & \\ \hline
+    $-1$ & \textenglish{false} & $35$ & \textenglish{Sum = 35} \\ \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item كلا، لم يُجمع العدد $-1$ لأنّنا قرأناه في نهاية الدورة الثالثة، وعندما فُحص الشرط \textenglish{num != -1} أعاد \textenglish{false} فخرجت الحلقة فورًا قبل تنفيذ \textenglish{sum = sum + num}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: كتابة شرط الاستمرار وإكمال الكود الناقص
+% ==============================================================
+\section*{القسم الثاني: كتابة شرط الاستمرار وإكمال الكود الناقص}
+
+\begin{enumerate}[resume, itemsep=2em]
+
+\item \textbf{تدريب على كتابة شرط \textenglish{while}:} \\
+تذكّر أنّنا نكتب داخل \textenglish{while (...)} \textbf{شرط الاستمرار} (متى تستمرّ الحلقة؟)، وهو \textbf{عكس شرط التوقف}. \\
+لكل حالة في الجدول التالي، اكتب الشرط المناسب داخل \textenglish{while (...)}:
+
+{\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.62\textwidth}|>{\centering\arraybackslash}p{0.32\textwidth}|}
+\hline
+\textbf{المطلوب في السؤال (متى تتوقف الحلقة؟)} & \textbf{شرط الاستمرار في \textenglish{while}} \\
+\hline
+$1$. تتوقف الحلقة عندما يُدخل المستخدم العدد $0$ في المتغير \textenglish{n}. & \textenglish{while (n != 0)} \\
+\hline
+$2$. تتوقف الحلقة عندما يُدخل المستخدم العدد $-1$ في المتغير \textenglish{x}. & \textenglish{while (............)} \\
+\hline
+$3$. تتوقف الحلقة عندما يُدخل المستخدم عددًا \textbf{سالبًا} في المتغير \textenglish{num} (أي تستمر طالما العدد غير سالب). & \textenglish{while (............)} \\
+\hline
+$4$. تتوقف الحلقة عندما يُدخل المستخدم كلمة المرور الصحيحة $1234$ في المتغير \textenglish{pass}. & \textenglish{while (............)} \\
+\hline
+$5$. تتوقف الحلقة عندما يصبح المجموع \textenglish{sum} أكبر تمامًا من $100$. & \textenglish{while (............)} \\
+\hline
+$6$. تتوقف الحلقة عندما يُدخل المستخدم في \textenglish{n} عددًا يقبل القسمة على $7$ بدون باقٍ. & \textenglish{while (............)} \\
+\hline
+\end{tabular}
+\par}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[nosep]
+    \item \textenglish{while (n != 0)}
+    \item \textenglish{while (x != -1)}
+    \item \textenglish{while (num >= 0)}
+    \item \textenglish{while (pass != 1234)}
+    \item \textenglish{while (sum <= 100)}
+    \item \textenglish{while (n \% 7 != 0)}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $1$ — أكمل شرط الحلقة فقط:}
+\begin{enumerate}
+    \item البرنامج التالي يستقبل أعدادًا صحيحة ويطبع كل عدد يدخله المستخدم، ويتوقف عندما يُدخل المستخدم العدد $0$. أكمل الشرط الناقص:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    Console.WriteLine(n);
+    n = int.Parse(Console.ReadLine());
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يطلب من المستخدم إدخال عدد موجب (أكبر من $0$). طالما أدخل المستخدم عددًا أصغر أو يساوي $0$، يطبع البرنامج رسالة خطأ ويطلب عددًا جديدًا:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    Console.WriteLine("Error! Enter a positive number:");
+    x = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Thank you! You entered: " + x);
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[nosep]
+    \item الشرط هو: \textenglish{n != 0}
+    \item الشرط هو: \textenglish{x <= 0}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $2$ — أكمل الشرط وسطْر التحديث داخل الحلقة:}
+\begin{enumerate}
+    \item البرنامج التالي يطلب من المستخدم إدخال عدد يقبل القسمة على $7$ بدون باقٍ، ويكرّر الطلب حتى يُدخل المستخدم عددًا يقبل القسمة على $7$ ثم يطبعه:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    n = ____________________________;
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل كلمة المرور (عدد صحيح)، وطالما كانت غير مطابقة لكلمة المرور الصحيحة $8264$ يطلب إدخالها من جديد، وفي النهاية يطبع \textenglish{"Welcome"}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int pass = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    Console.WriteLine("Wrong password, try again:");
+    ____________________________________;
+}
+Console.WriteLine("Welcome");
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+int n = int.Parse(Console.ReadLine());
+while (n % 7 != 0)
+{
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(n);
+
+// b
+int pass = int.Parse(Console.ReadLine());
+while (pass != 8264)
+{
+    Console.WriteLine("Wrong password, try again:");
+    pass = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Welcome");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $3$ — أكمل حلقات تحتوي على عدّاد (\textenglish{count}) أو مجموع (\textenglish{sum}):}
+\begin{enumerate}
+    \item البرنامج التالي يستقبل أعدادًا صحيحة حتى يُدخل المستخدم العدد $0$، وفي النهاية يطبع \textbf{عدد} الأعداد التي أُدخلت (بدون حساب الـ $0$):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int count = ____;
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    count = ____________;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل أعدادًا صحيحة ويجمعها، ويتوقف عندما يصبح المجموع أكبر تمامًا من $100$، ثم يطبع المجموع النهائي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int sum = ____;
+while ( ____________ )
+{
+    int v = int.Parse(Console.ReadLine());
+    sum = ____________;
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل أعدادًا صحيحة حتى يُدخل المستخدم $-1$، ويعدّ ويطبع في النهاية كم عددًا من بينها كان \textbf{موجبًا} (أكبر من $0$):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int posCount = 0;
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    if ( ____________ )
+    {
+        posCount++;
+    }
+    n = ________________________________;
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+int count = 0;
+int n = int.Parse(Console.ReadLine());
+while (n != 0)
+{
+    count = count + 1; // or count++;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(count);
+
+// b
+int sum = 0;
+while (sum <= 100)
+{
+    int v = int.Parse(Console.ReadLine());
+    sum = sum + v; // or sum += v;
+}
+Console.WriteLine(sum);
+
+// c
+int posCount = 0;
+int n = int.Parse(Console.ReadLine());
+while (n != -1)
+{
+    if (n > 0)
+    {
+        posCount++;
+    }
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(posCount);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+
+\end{document}
