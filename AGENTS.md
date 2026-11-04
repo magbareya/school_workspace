@@ -12,11 +12,11 @@ Before finishing any task, verify that every item below holds. Each item links t
 
 1. **Compile with `make`, never with `xelatex` directly**, and confirm the PDF builds without errors ([Section 2.2](#22-build--mandatory-compilation-check)).
 2. **Terminology:** use the mandatory Arabic terms (`عملية` not `دالة`, `نمط` not `نوع`, `حد` not `عنصر`, `مؤشر`, `مسح`, `تعريف`, ...) and keep code identifiers in `\textenglish{...}` ([Section 3](#3-strict-pedagogical-terminology-arabic--cs-concepts)).
-3. **Inline numbers wrapped in `$:`** every time a number appears inline within text, wrap it in math mode with `$...$` (e.g. `$0$`, `$1$`, `$10$`, `$-5$`), **never** with `\textenglish{...}` ([Section 3.1](#31-language-policy-technical-concepts-vs-code-identifiers)).
+3. **Math mode `$...$` for numbers, single-letter variables & operators; never `\textenglish` inside `$...$`:** wrap inline numbers (`$0$`, `$10$`, `$-5$`), single-letter variables/labels (`$x$`, `$a$`, `$A$`), and operators in `$...$`, **never** in `\textenglish{...}`. Inside math mode `$...$`, **never** use `\textenglish` — use `\text{...}` for multi-letter identifiers ([Section 3.1](#31-language-policy-technical-concepts-vs-code-identifiers)).
 4. **No Arabic in code (strictly forbidden without any exception)** — never write any Arabic text anywhere inside code (`minted` blocks, `.cs` files, `.py` files, etc.), neither in print/console commands (`Console.WriteLine`, `print`) nor in comments ([Sections 2.1](#21-engine-fonts--document-skeleton) and [7](#7-solution--code-standards)).
 5. **Boxes never split across pages** — keep every `tcolorbox` short; split long solutions into several boxes ([Section 4.1](#41-critical-rule-tcolorbox-environments-do-not-split-across-pages)).
 6. **Pagination:** `\filbreak` after every `\item` (outside any `\fi`), `\clearpage` before every `\section*` ([Section 8](#8-pagination--spacing-rules)).
-7. **Class descriptions go in the standard two-column table**; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
+7. **Use `longtable` for tables with long text, code cells, or many rows**, and put class descriptions in the standard two-column `longtable`; adding a single method is plain text ([Section 5.7](#57-standard-latex-table-patterns)).
 8. **Solutions** go in `\ifwithsols \begin{boxSolution} ... \end{boxSolution} \fi`, or — for OOP booklets — in standalone `.cs` files ([Sections 5.2](#52-progressive-multi-stage-oop-booklets--standalone-c-solutions) and [7](#7-solution--code-standards)).
 9. **Every C# `if`/`else`/`for`/`while` has braces**, and fields are accessed with `this.` ([Section 7](#7-solution--code-standards)).
 10. **Never put worksheet/exercise solutions as examples in lesson notes or summaries** — all examples in summaries/lesson notes must be different from the questions in the practice worksheets ([Section 5.4](#54-lesson-notes--student-summaries)).
@@ -136,8 +136,11 @@ In high school CS and Bagrut exams, verb and noun choices convey exact technical
 
 ### 3.1. Language Policy: Technical Concepts vs. Code Identifiers
 - **Technical Concepts (المصطلحات التقنية):** If an established Arabic term exists (e.g. `الوراثة` for Inheritance, `تعدد الأشكال` for Polymorphism, `مخطط الهرمية` for Hierarchy, `البرمجة كائنية التوجه` for OOP, `العمليات البنائية` for Constructors, `التحميل الزائد` for Overloading, `التحويل لأعلى` for Upcasting, `التحويل لأسفل` for Downcasting, `إعادة تعريف العمليات` for Overriding, `الفئة المجردة` for Abstract Class, `الواجهة` for Interface), **write the Arabic term only**. Do NOT append English translations in parentheses (avoid: `الوراثة (Inheritance)`, `البرمجة كائنية التوجه (OOP)`).
-- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep these in English wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This makes students implement the exact, unified identifiers. Escape underscores and `#` in text mode (`\textenglish{student\_name}`, `\textenglish{C\#}`).
-- **Inline Numbers Wrapped in `$` (كتابة الأرقام داخل النص):** Every time a number appears inline with text (in questions, requirements, explanations, headings, grade allocations, constraints, ranges, loops, or indices), **wrap it in math mode with `$` (e.g. `$0$`, `$1$`, `$10$`, `$100$`, `$-5$`, `$3.14$`), and NEVER with `\textenglish{...}`**. Math mode guarantees consistent Western numerals and prevents bidirectional layout reversals in RTL Arabic paragraphs. Reserve `\textenglish{...}` exclusively for English code tokens and identifiers.
+- **Code Identifiers, Keywords & Console Strings (أسماء الفئات والعمليات والمتغيرات والكلمات المحجوزة):** Keep multi-letter English identifiers, keywords, and strings wrapped in `\textenglish{...}` in questions, headings, tables, and prompts (e.g. `\textenglish{Employee}`, `\textenglish{ToString}`, `\textenglish{GetScore}`, `\textenglish{AddEmployee}`, `\textenglish{Get}` / `\textenglish{Set}`, `\textenglish{MAX}`, `\textenglish{virtual}`, `\textenglish{override}`, `\textenglish{protected}`, `\textenglish{base}`, `\textenglish{is}`, `\textenglish{as}`). This makes students implement the exact, unified identifiers. Escape underscores and `#` in text mode (`\textenglish{student\_name}`, `\textenglish{C\#}`).
+- **Inline Numbers, Single-Letter Variables & Math Expressions Wrapped in `$` (كتابة الأرقام والمتغيرات أحادية الحرف داخل `$`):**
+  - Every time a number appears inline with text (in questions, requirements, explanations, headings, grade allocations, constraints, ranges, loops, or indices), **wrap it in math mode with `$` (e.g. `$0$`, `$1$`, `$10$`, `$100$`, `$-5$`, `$3.14$`), and NEVER with `\textenglish{...}`**.
+  - **Do NOT use `\textenglish{...}` when `$...$` can be used instead** — such as for single-letter variable names (`$a$`, `$b$`, `$c$`, `$i$`, `$k$`, `$n$`, `$x$`, `$y$`), single-letter option labels (`$A$`, `$B$`, `$C$`, `$D$`), arithmetic/comparison operators (`$+$`, `$-$`, `$/$`, `$//$`, `$\%$`, `$>$`, `$<$`), or simple mathematical assignments (`$a = 10$`, `$i = 0$`).
+  - **NEVER use `\textenglish{...}` inside math mode `$...$`** (this is invalid in LaTeX). Whenever a multi-letter identifier must appear inside `$...$`, use `\text{...}` (e.g. `$\text{num1} = 9$`, `$\text{num1} \geq \text{num2}$`).
 
 ### 3.2. Mandatory Word Choices (تفضيلات المصطلحات الإلزامية)
 1. **استخدام "تعريف" بدلاً من "ترويسة":** عند الإشارة إلى توقيع أو رأس الفئة أو العملية البرمجية (Header / Signature / Definition)، استخدم دائمًا مصطلح **"تعريف"** (مثل: `تعريف الفئة`، `تعريف العملية`) وتجنّب استخدام كلمة "ترويسة".
@@ -305,14 +308,18 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
 
 ### 5.7. Standard LaTeX Table Patterns
 
+- **Mandatory Rule — Use `longtable` Whenever Relevant (Tables With Long Text, Code Cells, or Many Rows):**
+  - Always use `\begin{longtable}{...} ... \end{longtable}` instead of `\begin{tabular}{...} ... \end{tabular}` for any table that contains long/multi-line text, `pycell` code blocks, TikZ figures, or many rows (including class specification tables, code-output tables, loop-matching tables, boolean-expression tables, and multi-row fill-in tables). Unlike `tabular`, `longtable` splits cleanly across page boundaries and prevents large vertical gaps or bottom-margin overflows.
+  - Note: `longtable` centers itself automatically (`\LTleft=\fill`, `\LTright=\fill`), so do not wrap it in `\begin{center}`; wrap it in a group `{\renewcommand{\arraystretch}{...} \begin{longtable}{...} ... \end{longtable}}` when adjusting row spacing.
+  - **Exception:** `longtable` cannot be used inside a `tcolorbox` (`boxSolution`, `boxNote`, etc.) or inside another table cell; keep tables that are inside a `tcolorbox` or tiny 1–2 row diagrams (like 1D array visuals) as `tabular`.
+
 1. **Two-Column RTL Class Specification Table (واجهة الفئة / ملخص الفئة):**
    - **When to use:** Every time a question describes a class (its attributes and/or several methods), present it in this table. If a question only asks to add **a single method** to an existing class, write it as regular text instead.
-   - **Exact style:** wrap in `{\centering ... \par} %`, follow with `\vspace{2em}`, and use the columns `|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|` (Arabic description on the right, English definition on the left):
+   - **Exact style:** use `longtable` with the columns `|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|` (Arabic description on the right, English definition on the left):
    ```latex
-   {\centering
-   \renewcommand{\arraystretch}{1.2}
+   {\renewcommand{\arraystretch}{1.2}
    \small
-   \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+   \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
    \hline
    \multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
    \hline
@@ -322,24 +329,21 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
    \hline
    عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
    \hline
-   \end{tabular}
-   \par} %
+   \end{longtable}}
 
-   \vspace{2em}
+   \vspace{1em}
    ```
-2. **Left-to-Right Tracing Table (`جدول متابعة`):** Always wrap tracing tables in `\begin{english}` so columns flow left-to-right like code execution:
+2. **Left-to-Right Tracing Table (`جدول متابعة`):** Always wrap tracing tables in `\begin{english}` so columns flow left-to-right like code execution. Use `longtable` when the tracing table is outside a `tcolorbox` and has many rows, or `tabular` when inside `boxSolution`:
    ```latex
-   \begin{center}
-   \begin{english}
+   {\begin{english}
    \renewcommand{\arraystretch}{1.6}
-   \begin{tabular}{|C{2cm}|C{2cm}|C{3cm}|C{3.5cm}|}
+   \begin{longtable}{|C{2cm}|C{2cm}|C{3cm}|C{3.5cm}|}
    \hline
    \textbf{a} & \textbf{b} & \textbf{a > b} & \textarabic{\textbf{المخرجات}} \\
    \hline
     & & & \\ \hline
-   \end{tabular}
-   \end{english}
-   \end{center}
+   \end{longtable}
+   \end{english}}
    ```
 3. **Visual 1D Array Diagram (رسم مصفوفة مع مؤشراتها):**
    ```latex
@@ -352,11 +356,10 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
    \end{english}
    \end{center}
    ```
-4. **Table With Code Cells (جدول يحوي مقاطع برنامج):** When a cell must contain code (e.g. a "what does each method print" table with columns *البند / العملية / المُخرج*), put the code in a `pycell` inside a **fixed-width `p{...}` column**, so it stays left-to-right inside the RTL table. Keep each snippet short (a row cannot split across pages); for long snippets use a separate `boxCode` per item instead. Check the result visually the first time you use this pattern in a document.
+4. **Table With Code Cells (جدول يحوي مقاطع برنامج):** When a cell must contain code (e.g. a "what does each method print" table with columns *البند / العملية / المُخرج* or a two-column loop matching table), use `longtable` and put the code in a `pycell` inside a **fixed-width `p{...}` column**, so it stays left-to-right inside the RTL table and the table can break across pages between rows:
    ```latex
-   {\centering
-   \renewcommand{\arraystretch}{1.3}
-   \begin{tabular}{|C{1.2cm}|p{8cm}|C{3.5cm}|}
+   {\renewcommand{\arraystretch}{1.3}
+   \begin{longtable}{|C{1.2cm}|p{8cm}|C{3.5cm}|}
    \hline
    \textbf{البند} & \textbf{العملية} & \textbf{المُخرج} \\
    \hline
@@ -374,8 +377,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
    \end{pycell}
    & \\
    \hline
-   \end{tabular}
-   \par} %
+   \end{longtable}}
    ```
 
 ### 5.8. Python (`src/python/pythonA/`) & Computational Models (`computational_models/`)
