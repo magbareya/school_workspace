@@ -1,0 +1,650 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل امتحان مفمار في علم الحاسوب للصف الثامن - بايثون $2019$}
+\else
+\title{امتحان مفمار في علم الحاسوب للصف الثامن - بايثون $2019$}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\else
+\begin{boxCode}
+\begin{itemize}[nosep]
+    \item \textbf{الفصل الأول (إجباري - $60$ علامة):} أجب عن \textbf{جميع} الأسئلة $1$-$5$.
+    \item \textbf{الفصل الثاني (اختياري - $40$ علامة):} أجب عن \textbf{سؤالين} من بين الأسئلة $6$-$9$.
+    \item \textbf{مدة الامتحان:} $120$ دقيقة.
+    \item \textbf{مواد مساعدة مسموحة:} كل مادة مساعدة شخصية، باستثناء حاسبة أو حاسوب قابل للبرمجة.
+    \item اقرأ أسئلة الامتحان بتمعّن وأجب عنها بانتباه في المكان المخصّص لذلك.
+\end{itemize}
+\end{boxCode}
+\fi
+
+\section*{الفصل الأول — إجباري ($60$ علامة)}
+في هذا الفصل خمسة أسئلة. أجب عن \textbf{جميع} الأسئلة $1$-$5$.
+
+\begin{enumerate}[label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($8$ علامات) أمامك جدول فيه ثلاثة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتب ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. \newline ($1$ علامة) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = 2
+num2 = num1 + 5
+num1 = num1 + num2 + 3
+print("num1 = ", num1, "num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 12 num2 = 7}\end{english} \fi \\
+\hline
+$2$. \newline ($1$ علامة) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num = 3
+num = 10
+num = num + 3
+print("num = ", num)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num = 13}\end{english} \fi \\
+\hline
+$3$. \newline ($6$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+string = "Yes We Can!!!"
+print(string[4])
+print(len(string))
+print(string[-3])
+print(string[::2])
+print(string[4:-3])
+print(string[:])
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{W}\newline\texttt{13}\newline\texttt{!}\newline\texttt{YsW a!!}\newline\texttt{We Can}\newline\texttt{Yes We Can!!!}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($8$ علامات) أمامك جدول فيه أربعة مقاطع برنامج. لكل واحد من مقاطع البرنامج في الجدول، أعطِ مثالًا لمُدخل يعرض \textenglish{Yes} ومثالًا لمُدخل يعرض \textenglish{No}.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.4cm}|p{8.2cm}|C{2.4cm}|C{2.4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{مثال لمُدخل يعرض \textenglish{Yes}} & \textbf{مثال لمُدخل يعرض \textenglish{No}} \\
+\hline
+$1$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 and num2 <= 4:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$2$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 or num2 <= 4:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{10}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$3$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if (num1 > 5 or num2 <= 4) and num1 == num2:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$4$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 or (num2 <= 4 and num1 == num2):
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{7}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{10}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($15$ علامة) أمامك جدول فيه أربعة مقاطع برنامج. لكل مقطع برنامج في الجدول، اكتب ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.8cm}|p{8.5cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. \newline ($3$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(10):
+    if k % 2 == 0:
+        print(k + 1)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{3}\newline\texttt{5}\newline\texttt{7}\newline\texttt{9}\end{english} \fi \\
+\hline
+$2$. \newline ($4$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(20):
+    if k % 3 == 0 and k <= 9:
+        print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{0}\newline\texttt{3}\newline\texttt{6}\newline\texttt{9}\end{english} \fi \\
+\hline
+$3$. \newline ($4$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(3, 10, 2):
+    print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{3}\newline\texttt{5}\newline\texttt{7}\newline\texttt{9}\end{english} \fi \\
+\hline
+$4$. \newline ($4$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(40, 0, -10):
+    print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{40}\newline\texttt{30}\newline\texttt{20}\newline\texttt{10}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($14$ علامة) أمامك جدول فيه أربعة مقاطع برنامج. لكل مقطع برنامج في الجدول، اكتب ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.8cm}|p{8.5cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. \newline ($3$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+print(number // 100)
+print(number // 10 % 10)
+print(number % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{2}\newline\texttt{3}\end{english} \fi \\
+\hline
+$2$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 12345
+print(number // 100)
+print(number % 100)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{123}\newline\texttt{45}\end{english} \fi \\
+\hline
+$3$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 12345
+print(number // 100 // 10)
+print(number // 10 % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{12}\newline\texttt{4}\end{english} \fi \\
+\hline
+$4$. \newline ($7$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+while number > 0:
+    print(number % 10)
+    number = int(number // 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{3}\newline\texttt{2}\newline\texttt{1}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($15$ علامة) أمامك ثلاثة مقاطع برنامج تتضمّن عملية باسم \textenglish{num\_even}.
+الهدف من كل واحد من مقاطع البرنامج هو استقبال $10$ أعداد صحيحة، وطباعة كمية الأعداد \textbf{ثنائية المنازل الموجبة} (من $10$ إلى $99$) التي ظهرت في المُدخل.
+\textbf{مثال:} لسلسلة الأعداد العشرة التالية: $230$، $-555$، $76$، $5$، $80$، $-100$، $77$، $8$، $74$، $90$، يُطبع العدد $5$.
+في كل مقطع برنامج وقع خطأ منطقي واحد، ولذلك لا يحقّق المقطع هدفه. اشرح الخطأ وصحّحه.
+(ملاحظة: الخطأ ليس خطأ وقت تشغيل. افترض أنّ المُدخل سليم ويشمل أعدادًا صحيحة فقط.)
+
+\begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, leftmargin=*, itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def num_even():
+    count = 0
+    index = 0
+    num = int(input("Enter an integer number"))
+    while index < 10:
+        if num <= 99 and num >= 10:
+            count = count + 1
+        index = index + 1
+    print("count", count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} أمر الاستقبال \textenglish{\texttt{num = int(input(...))}} مكتوب خارج الحلقة فقط، ولذلك يستقبل البرنامج عددًا واحدًا فقط ويفحصه $10$ مرات بدل استقبال $10$ أعداد مختلفة. \\
+\textbf{التصحيح:} نقل (أو إضافة) السطر \textenglish{\texttt{num = int(input("Enter an integer number"))}} إلى داخل حلقة \textenglish{while}.
+\end{boxSolution}
+\else
+\textbf{ما هو الخطأ؟} \underline{\hspace{11cm}} \\
+\textbf{كيف يجب تصحيحه؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def num_even():
+    count = 0
+    index = 0
+    while index < 10:
+        num = int(input("Enter an integer number"))
+        if num <= 99 and num >= 10:
+            print("count", count)
+        index = index + 1
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} لا يتمّ زيادة العداد \textenglish{count} بـ $1$ عند تحقق الشرط، وبدلًا من ذلك تتمّ طباعة \textenglish{count} (الذي يبقى $0$) داخل الشرط بدل طباعته في نهاية العملية بعد انتهاء الحلقة. \\
+\textbf{التصحيح:} استبدال أمر الطباعة داخل الشرط بـ \textenglish{\texttt{count = count + 1}}، ووضع \textenglish{\texttt{print("count", count)}} خارج حلقة \textenglish{while} في نهاية العملية.
+\end{boxSolution}
+\else
+\textbf{ما هو الخطأ؟} \underline{\hspace{11cm}} \\
+\textbf{كيف يجب تصحيحه؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def num_even():
+    count = 0
+    index = 0
+    while index < 10:
+        if num <= 99 and num >= 10:
+            count = count + 1
+            num = int(input("Enter an integer number"))
+        index = index + 1
+    print("count", count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} أمر الاستقبال \textenglish{\texttt{num = int(input(...))}} موضوع داخل جملة الشرط \textenglish{if} (وبعد الفحص)، بدل أن يكون في بداية كل تكرار من الحلقة قبل جملة \textenglish{if}. \\
+\textbf{التصحيح:} نقل السطر \textenglish{\texttt{num = int(input("Enter an integer number"))}} ليكون السطر الأول داخل حلقة \textenglish{while} قبل جملة الشرط \textenglish{if}.
+\end{boxSolution}
+\else
+\textbf{ما هو الخطأ؟} \underline{\hspace{11cm}} \\
+\textbf{كيف يجب تصحيحه؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{الفصل الثاني — اختياري ($40$ علامة)}
+أجب عن \textbf{سؤالين} من بين الأسئلة $6$-$9$ (لكل سؤال — $20$ علامة).
+
+\begin{enumerate}[resume, label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) أمامك مقطع برنامج يستعمل مكتبة \textenglish{turtle}:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+import turtle
+
+tw = turtle.Screen()
+player = turtle.Turtle()
+player.shape("square")
+size = 100
+player.pendown()
+
+for index in range(4):
+    for item in range(4):
+        player.forward(size)
+        player.left(90)
+    size = size - 20
+
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+تمّ تشغيل مقطع البرنامج. أيّ من المخرجات التالية سيُعرض على شاشة الحاسوب؟ أحط بدائرة الإجابة الصحيحة:
+
+{\centering
+\begin{english}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|C{6.5cm}|C{6.5cm}|}
+\hline
+\vspace{0.2cm}
+\begin{tikzpicture}[scale=0.6]
+\draw[thick] (0,0) rectangle (4,1);
+\draw[thick] (1,0) -- (1,1);
+\draw[thick] (2,0) -- (2,1);
+\draw[thick] (3,0) -- (3,1);
+\draw[-{Latex[length=2mm]}, thick] (3.5,0) -- (4,0);
+\end{tikzpicture}
+\newline \textarabic{\textbf{أ}}
+&
+\vspace{0.2cm}
+\begin{tikzpicture}[scale=0.6]
+\draw[thick] (0,0) rectangle (3.2,3.2);
+\draw[thick] (0,0) rectangle (2.5,2.5);
+\draw[thick] (0,0) rectangle (1.8,1.8);
+\draw[thick] (0,0) rectangle (1.1,1.1);
+\draw[-{Latex[length=2mm]}, thick] (-0.8,0) -- (0,0);
+\end{tikzpicture}
+\newline \textarabic{\textbf{ب}}
+\\ \hline
+\vspace{0.2cm}
+\begin{tikzpicture}[scale=0.6]
+\draw[thick] (0,0) rectangle (3.2,3.2);
+\draw[thick] (0.4,0.4) rectangle (2.8,2.8);
+\draw[thick] (0.8,0.8) rectangle (2.4,2.4);
+\draw[thick] (1.2,1.2) rectangle (2.0,2.0);
+\draw[-{Latex[length=2mm]}, thick] (0,2.5) -- (0,3.2);
+\end{tikzpicture}
+\newline \textarabic{\textbf{ج}}
+&
+\vspace{0.2cm}
+\begin{tikzpicture}[scale=0.6]
+\draw[thick] (0,0) rectangle (1,4);
+\draw[thick] (0,1) -- (1,1);
+\draw[thick] (0,2) -- (1,2);
+\draw[thick] (0,3) -- (1,3);
+\draw[-{Latex[length=2mm]}, thick] (0,3.5) -- (0,4);
+\end{tikzpicture}
+\newline \textarabic{\textbf{د}}
+\\ \hline
+\end{tabular}
+\end{english}
+\par} %
+
+\ifwithsols
+\begin{boxSolution}
+الإجابة الصحيحة هي \textbf{ب}. \\
+\textbf{التعليل:} الحلقة الداخلية ترسم مربّعًا طول ضلعه \textenglish{size} وتعود لنفس نقطة البداية وبنفس الاتجاه (لأنّها تدور $90^\circ$ يسارًا $4$ مرات، أي $360^\circ$). في كل تكرار للحلقة الخارجية يقلّ طول الضلع \textenglish{size} بمقدار $20$، فترسم $4$ مربعات متداخلة تشترك جميعها في الزاوية اليسرى السفلية $(0,0)$.
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) متوالية فيبوناتشي (\textenglish{Fibonacci}) هي متوالية يكون حدّاها الأولان $1$، وكل حدّ يليهما يساوي مجموع الحدّين اللذين سبقاه.
+أمامك متوالية فيبوناتشي المكوّنة من $8$ حدود (من اليسار إلى اليمين):
+$$1, 1, 2, 3, 5, 8, 13, 21$$
+معروف أنّ الحدّ الأول في المتوالية هو $\text{first} = 1$، والحدّ الثاني هو $\text{second} = 1$.
+
+\begin{enumerate}[label=\alph*.]
+\item ($2$ علامتان) ما هو الحدّ التالي في المتوالية (الحدّ التاسع) في المثال؟ \ifwithsols $\mathbf{34}$ (لأنّ $13 + 21 = 34$) \else \underline{\hspace{3cm}} \fi
+\filbreak
+
+\item ($18$ علامة) أمامك مقطع برنامج يطبع الحدود الـ $8$ الأولى في المتوالية. أكمل المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+first = ____________
+second = ____________
+counter = 3
+print("Fibonacci item 1 is ", first)
+print("Fibonacci item 2 is ", second)
+while counter <= 8:
+    third = ______ + _______
+    first = ____________
+    second = ____________
+    print("Fibonacci item ", counter, "is", ____________)
+    counter = counter + ____________
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+first = 1
+second = 1
+counter = 3
+print("Fibonacci item 1 is ", first)
+print("Fibonacci item 2 is ", second)
+while counter <= 8:
+    third = first + second
+    first = second
+    second = third
+    print("Fibonacci item ", counter, "is", third)
+    counter = counter + 1
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) طبّقت إدارة مدرسة "علم وتكنولوجيا للجميع" برنامجًا تعليميًا جديدًا لطلاب طبقة الصف الثامن، والتي تضمّ $300$ طالب. لفحص ما إذا كان البرنامج قد ساهم في تحسين تحصيلات الطلاب، تقرّر المقارنة بين علامات الطلاب في نهاية النصف الأول من السنة (\textenglish{gradeA}) وبين علاماتهم في نهاية النصف الثاني (\textenglish{gradeB}).
+من أجل الفحص، كُتب برنامج يستقبل لكل طالب العلامة التي حصل عليها في النصف الأول والعلامة التي حصل عليها في النصف الثاني. يعدّ البرنامج ويطبع كمية الطلاب الذين حسّنوا علاماتهم:
+\begin{itemize}
+\item يُعرَّف التحسّن فقط عندما تكون العلامة في النصف الثاني \textbf{أعلى من أو تساوي} العلامة في النصف الأول.
+\item إذا حسّن أكثر من $200$ طالب علاماتهم في هذا الفحص، يُطبع \textenglish{"The program is successful"}؛ وإلّا يُطبع \textenglish{"The program needs improvement"}.
+\end{itemize}
+أمامك كود البرنامج. أكمل التعليمات الناقصة فيه (انتبه: للمتغيرات ووظيفتها في البرنامج أهمية):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def Exs8():
+    counter = _______
+    for k in range(_______):
+        gradeA = int(input("Enter gradeA"))
+        gradeB = int(input("Enter gradeB"))
+        if gradeB >= gradeA:
+            counter = _______ + _______
+    if counter > _______:
+        print("___________________________")
+    else:
+        print("___________________________")
+
+Exs8()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def Exs8():
+    counter = 0
+    for k in range(300):
+        gradeA = int(input("Enter gradeA"))
+        gradeB = int(input("Enter gradeB"))
+        if gradeB >= gradeA:
+            counter = counter + 1
+    print(counter)
+    if counter > 200:
+        print("The program is successful")
+    else:
+        print("The program needs improvement")
+
+Exs8()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) كتبت عدي سيناريو بحيث تؤدّي كل نقرة (\textenglish{click}) على الفأرة إلى رسم مربّع على الشاشة في مكان النقرة:
+\begin{itemize}
+\item يُرسم المربّع على الشاشة باللونين الأحمر والأزرق بالتناوب (النقرة الأولى — أحمر \textenglish{"red"}، النقرة الثانية — أزرق \textenglish{"blue"}، وهكذا).
+\item في كل نقرة يُرسم مربّع يزداد طول ضلعه بـ $2$.
+\end{itemize}
+أمامك مقطع برنامج تنقصه تعليمات. أكمل التعليمات الناقصة:
+(ملاحظة: المتغير \textenglish{size} يمثّل طول ضلع المربّع، والمتغير \textenglish{click\_num} يمثّل رقم النقرة.)
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+import turtle
+
+def do_it(x, y):
+    global click_num
+    global size
+    player.penup()
+    player.goto(x, y)
+    player.shapesize(size)
+    if ____________ % 2 == 0:
+        player.color("_____")
+    else:
+        player.color("_____")
+    player.stamp()
+    click_num = ____________ + ____________
+    size = ____________ + ____________
+
+tw = turtle.Screen()
+click_num = 0
+size = 2
+tw.onclick(do_it)
+player = turtle.Turtle()
+player.shape("square")
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+import turtle
+
+def do_it(x, y):
+    global click_num
+    global size
+    player.penup()
+    player.goto(x, y)
+    player.shapesize(size)
+    if click_num % 2 == 0:
+        player.color("red")
+    else:
+        player.color("blue")
+    player.stamp()
+    click_num = click_num + 1
+    size = size + 2
+
+tw = turtle.Screen()
+click_num = 0
+size = 2
+tw.onclick(do_it)
+player = turtle.Turtle()
+player.shape("square")
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

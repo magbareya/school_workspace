@@ -256,9 +256,8 @@ else:
 \begin{enumerate}[label=\alph*.]
 \item قرّر يوسف أن يشغّل السيناريو. ساعدوه وأكملوا الجدول أدناه: لكل مبلغ شراء، ما هي الهدية التي يستحقها الزبون؟
 
-{\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|C{3cm}|C{6cm}|}
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{3cm}|C{6cm}|}
 \hline
 \textbf{مبلغ الشراء} & \textbf{الهدية التي يستحقها الزبون} \\
 \hline
@@ -273,43 +272,36 @@ $80$ & \\ \hline
 $250$ & \\ \hline
 $450$ & \\ \hline
 \fi
-\end{tabular}
-\par} %
+\end{longtable}}
 \filbreak
 
 \item أمامكم قائمة هدايا ممكنة وقائمة مبالغ شراء تخوّل الحصول على هدايا. لائموا بين كل هدية ومبلغ الشراء الملائم، واكتبوا الإجابات في الجدول:
 
-{\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{5cm}p{5cm}}
-$1$. دفتر يوميات & \textenglish{A}. أكبر من $600$ \\
-$2$. حقيبة مجهّزة & \textenglish{B}. $250 - 399$ \\
-$3$. لعبة حاسوب & \textenglish{C}. $400 - 600$ \\
-$4$. قسيمة شراء & \textenglish{D}. $10 - 100$ \\
-\end{tabular}
-\par} %
+{\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5cm}p{5cm}}
+$1$. دفتر يوميات & $A$. أكبر من $600$ \\
+$2$. حقيبة مجهّزة & $B$. $250 - 399$ \\
+$3$. لعبة حاسوب & $C$. $400 - 600$ \\
+$4$. قسيمة شراء & $D$. $10 - 100$ \\
+\end{longtable}}
 
-\vspace{1em}
-
-{\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|C{5cm}|C{4cm}|}
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{5cm}|C{4cm}|}
 \hline
 \textbf{الهدية التي يستحقها الزبون} & \textbf{مبلغ الشراء} \\
 \hline
 \ifwithsols
-$1$. دفتر يوميات & \textenglish{D}. $10 - 100$ \\ \hline
-$2$. حقيبة مجهّزة & \textenglish{B}. $250 - 399$ \\ \hline
-$3$. لعبة حاسوب & \textenglish{C}. $400 - 600$ \\ \hline
-$4$. قسيمة شراء & \textenglish{A}. أكبر من $600$ \\ \hline
+$1$. دفتر يوميات & $D$. $10 - 100$ \\ \hline
+$2$. حقيبة مجهّزة & $B$. $250 - 399$ \\ \hline
+$3$. لعبة حاسوب & $C$. $400 - 600$ \\ \hline
+$4$. قسيمة شراء & $A$. أكبر من $600$ \\ \hline
 \else
  & \\ \hline
  & \\ \hline
  & \\ \hline
  & \\ \hline
 \fi
-\end{tabular}
-\par} %
+\end{longtable}}
 \filbreak
 \end{enumerate}
 \filbreak
@@ -472,15 +464,12 @@ print(sum)
 \filbreak
 
 % ---------------------------------------------------------------
-\item معطاة ثلاثة متغيرات \textenglish{a}، \textenglish{b}، \textenglish{c} وقيمها كالتالي:
-\begin{center}
-\textenglish{a = 10, b = 15, c = 0}
-\end{center}
+\item معطاة ثلاثة متغيرات $a$، $b$، $c$ وقيمها كالتالي:
+$$a = 10, \quad b = 15, \quad c = 0$$
 احسبوا قيمة كل من التعابير المنطقية في الجدول، واكتبوا القيمة (\textenglish{True} / \textenglish{False}) في العمود الفارغ.
 
-{\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|C{1.2cm}|>{\raggedright\arraybackslash}p{9.6cm}|C{3cm}|}
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.2cm}|>{\raggedright\arraybackslash}p{9.6cm}|C{3cm}|}
 \hline
 \textbf{البند} & \centering\textbf{التعبير المنطقي} & \textbf{قيمة التعبير المنطقي} \\
 \hline
@@ -489,8 +478,7 @@ $2$ & \textenglish{\texttt{a \% 5 == 0 and b // 5 > c}} & \ifwithsols \textengli
 $3$ & \textenglish{\texttt{a < 0 or (b == c + 15 and a >= c)}} & \ifwithsols \textenglish{True} \fi \\ \hline
 $4$ & \textenglish{\texttt{a \% 2 == c \% 2 and b \% 3 > a \% 3}} & \ifwithsols \textenglish{False} \fi \\ \hline
 $5$ & \textenglish{\texttt{a != b and b != c}} & \ifwithsols \textenglish{True} \fi \\ \hline
-\end{tabular}
-\par} %
+\end{longtable}}
 
 \ifwithsols
 \begin{boxSolution}
@@ -533,9 +521,8 @@ else:
 \begin{enumerate}[label=\alph*.]
 \item قرّرت دانة تشغيل السيناريو. ساعدوها وأكملوا الجدول: لكل مبلغ، اكتبوا ما هي الهدية التي يستحقها الزبون.
 
-{\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|C{3cm}|C{6cm}|}
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{3cm}|C{6cm}|}
 \hline
 \textbf{مبلغ الشراء} & \textbf{الهدية التي يستحقها الزبون} \\
 \hline
@@ -552,43 +539,36 @@ $750$ & \\ \hline
 $999$ & \\ \hline
 $550$ & \\ \hline
 \fi
-\end{tabular}
-\par} %
+\end{longtable}}
 \filbreak
 
 \item أمامكم قائمة الهدايا المُتاحة وقائمة مبالغ الشراء التي تؤهّل الحصول على هدية. لائموا لكل هدية مبلغ الشراء، واكتبوا الإجابات في الجدول التالي:
 
-{\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{5cm}p{5cm}}
-$1$. كرة يوغا & \textenglish{A}. أكبر من $800$ \\
-$2$. كرات تنس & \textenglish{B}. $500 - 650$ \\
-$3$. كرة قدم & \textenglish{C}. $650 - 800$ \\
-$4$. حذاء رياضي & \textenglish{D}. $80 - 500$ \\
-\end{tabular}
-\par} %
+{\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5cm}p{5cm}}
+$1$. كرة يوغا & $A$. أكبر من $800$ \\
+$2$. كرات تنس & $B$. $500 - 650$ \\
+$3$. كرة قدم & $C$. $650 - 800$ \\
+$4$. حذاء رياضي & $D$. $80 - 500$ \\
+\end{longtable}}
 
-\vspace{1em}
-
-{\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|C{5cm}|C{4cm}|}
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{5cm}|C{4cm}|}
 \hline
 \textbf{الهدية التي يستحقها الزبون} & \textbf{مبلغ الشراء} \\
 \hline
 \ifwithsols
-$1$. كرة يوغا & \textenglish{D}. $80 - 500$ \\ \hline
-$2$. كرات تنس & \textenglish{B}. $500 - 650$ \\ \hline
-$3$. كرة قدم & \textenglish{C}. $650 - 800$ \\ \hline
-$4$. حذاء رياضي & \textenglish{A}. أكبر من $800$ \\ \hline
+$1$. كرة يوغا & $D$. $80 - 500$ \\ \hline
+$2$. كرات تنس & $B$. $500 - 650$ \\ \hline
+$3$. كرة قدم & $C$. $650 - 800$ \\ \hline
+$4$. حذاء رياضي & $A$. أكبر من $800$ \\ \hline
 \else
  & \\ \hline
  & \\ \hline
  & \\ \hline
  & \\ \hline
 \fi
-\end{tabular}
-\par} %
+\end{longtable}}
 \filbreak
 \end{enumerate}
 \filbreak

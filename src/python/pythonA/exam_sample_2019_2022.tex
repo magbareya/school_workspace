@@ -1,0 +1,906 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة عمل شاملة للتحضير للامتحان}
+\else
+\title{ورقة عمل شاملة للتحضير للامتحان}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item أمامكم جدول فيه ثلاثة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = 2
+num2 = num1 + 5
+num1 = num1 + num2 + 3
+print("num1 = ", num1, "num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 12 num2 = 7}\end{english} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num = 3
+num = 10
+num = num + 3
+print("num = ", num)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num = 13}\end{english} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = 3
+num2 = 10
+num1 = num2
+num2 = num1
+print("num1 = ", num1, "num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 10 num2 = 10}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم جدول فيه خمسة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+print(number // 100)
+print(number // 10 % 10)
+print(number % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{2}\newline\texttt{3}\end{english} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+print(number // 100)
+print(number % 100 % 10)
+print(number % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{3}\newline\texttt{3}\end{english} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 12345
+print(number // 100)
+print(number % 100)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{123}\newline\texttt{45}\end{english} \fi \\
+\hline
+$4$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 12345
+print(number // 100 // 10)
+print(number // 10 % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{12}\newline\texttt{4}\end{english} \fi \\
+\hline
+$5$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+while number > 0:
+    print(number % 10)
+    number = int(number // 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{3}\newline\texttt{2}\newline\texttt{1}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item معطاة ثلاثة متغيرات $a$، $b$، $c$ وقيمها كالتالي:
+$$a = 10, \quad b = 15, \quad c = 0$$
+احسبوا قيمة كل واحد من التعابير البوليانية في الجدول، واكتبوا القيمة (\textenglish{True} / \textenglish{False}) في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|>{\raggedright\arraybackslash}p{9cm}|C{3.5cm}|}
+\hline
+\textbf{البند} & \centering\textbf{تعبير بولياني} & \textbf{قيمة التعبير} \\
+\hline
+$1$. & \textenglish{\texttt{a >= b or b == c}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$2$. & \textenglish{\texttt{a \% 5 == 0 and b // 5 > c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$3$. & \textenglish{\texttt{a < 0 or (b == c + 15 and a >= c)}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$4$. & \textenglish{\texttt{a \% 2 == c \% 2 and b \% 3 > a \% 3}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$5$. & \textenglish{\texttt{a != b and b != c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*.]
+\item $10 \geq 15$ خطأ، و $15 = 0$ خطأ، إذن \textenglish{False}.
+\item $10 \% 5 = 0$ صحيح، و $15 // 5 = 3 > 0$ صحيح، إذن \textenglish{True}.
+\item $10 < 0$ خطأ، لكن $15 = 0 + 15$ صحيح و $10 \geq 0$ صحيح، إذن \textenglish{True}.
+\item $10 \% 2 = 0$ و $0 \% 2 = 0$ متساويان (صحيح)، لكن $15 \% 3 = 0$ ليس أكبر من $10 \% 3 = 1$ (خطأ)، إذن \textenglish{False}.
+\item $10 \neq 15$ صحيح، و $15 \neq 0$ صحيح، إذن \textenglish{True}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم جدول فيه أربعة مقاطع برنامج. لكل واحد من مقاطع البرنامج في الجدول، أعطوا مثالًا لمُدخل يعرض \textenglish{Yes} ومثالًا لمُدخل يعرض \textenglish{No}.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.4cm}|p{8.2cm}|C{2.4cm}|C{2.4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{مثال لمُدخل يعرض \textenglish{Yes}} & \textbf{مثال لمُدخل يعرض \textenglish{No}} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 and num2 <= 4:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 or num2 <= 4:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{10}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if (num1 > 5 or num2 <= 4) and num1 == num2:
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{6}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+$4$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input("Enter first number"))
+num2 = int(input("Enter second number"))
+if num1 > 5 or (num2 <= 4 and num1 == num2):
+    print("Yes")
+else:
+    print("No")
+\end{minted}
+\end{english}
+\end{pycell}
+& \textenglish{num1:} \ifwithsols $\mathbf{7}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{10}$ \else \underline{\hspace{0.8cm}} \fi
+& \textenglish{num1:} \ifwithsols $\mathbf{5}$ \else \underline{\hspace{0.8cm}} \fi \newline \textenglish{num2:} \ifwithsols $\mathbf{4}$ \else \underline{\hspace{0.8cm}} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم جدول فيه ثمانية مقاطع برنامج تحتوي على حلقات. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(10):
+    if k % 2 == 0:
+        print(k + 1)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{3}\newline\texttt{5}\newline\texttt{7}\newline\texttt{9}\end{english} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(20):
+    if k % 3 == 0 and k <= 9:
+        print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{0}\newline\texttt{3}\newline\texttt{6}\newline\texttt{9}\end{english} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(3, 10, 2):
+    print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{3}\newline\texttt{5}\newline\texttt{7}\newline\texttt{9}\end{english} \fi \\
+\hline
+$4$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for k in range(40, 0, -10):
+    print(k)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{40}\newline\texttt{30}\newline\texttt{20}\newline\texttt{10}\end{english} \fi \\
+\hline
+$5$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i < 4:
+    print('wow')
+    i += 1
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{wow}\newline\texttt{wow}\newline\texttt{wow}\end{english} \fi \\
+\hline
+$6$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(6):
+    if item % 2 == 1:
+        print(item * item)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{9}\newline\texttt{25}\end{english} \fi \\
+\hline
+$7$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(9, 0, -3):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{9}\newline\texttt{6}\newline\texttt{3}\end{english} \fi \\
+\hline
+$8$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 5
+i = 1
+while i < 4:
+    x -= 1
+    i += 1
+print(i, x)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{4 2}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم عمودان من الحلقات. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في الحلقتين نفس المُخرج تمامًا).
+
+\textbf{مثال:} الحلقتان التاليتان متكافئتان لأنّ لهما نفس المُخرج (من اليسار إلى اليمين): \textenglish{\texttt{5 6 7 8 9 10}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|p{6.5cm}|p{6.5cm}|}
+\hline
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(5, 11):
+    print(item, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+&
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(6):
+    print(item + 5, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+لائموا بين كل حلقة في العمود "أ" والحلقة المكافئة لها في العمود "ب":
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{5.8cm}|C{0.9cm}|p{5.8cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ}} & \multicolumn{2}{c|}{\textbf{العمود ب}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(100, 200, 2):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+& $a$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 0
+while x < 9:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(1, 10):
+    print(x - 1)
+\end{minted}
+\end{english}
+\end{pycell}
+& $b$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(7, 8):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(4, 5):
+    print(x + 3)
+\end{minted}
+\end{english}
+\end{pycell}
+& $c$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(100, 200):
+    if x % 2 == 0:
+        print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(-5, 6):
+    print(x + 6)
+\end{minted}
+\end{english}
+\end{pycell}
+& $d$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 1
+while x < 12:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}
+\item الحلقة $1$ تلائم الحلقة $c$ (كلاهما يطبع الأعداد الزوجية من $100$ إلى $198$).
+\item الحلقة $2$ تلائم الحلقة $a$ (كلاهما يطبع الأعداد من $0$ إلى $8$).
+\item الحلقة $3$ تلائم الحلقة $b$ (كلاهما يطبع العدد $7$ فقط).
+\item الحلقة $4$ تلائم الحلقة $d$ (كلاهما يطبع الأعداد من $1$ إلى $11$).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+
+\item أمامكم ثلاثة مقاطع برنامج. الهدف من كل واحد من مقاطع البرنامج هو استقبال $10$ أعداد صحيحة، وطباعة كمية الأعداد \textbf{ثنائية المنازل الموجبة} (من $10$ إلى $99$) التي ظهرت في المُدخل.
+
+\textbf{مثال:} لسلسلة الأعداد العشرة التالية: $230$، $-555$، $76$، $5$، $80$، $-100$، $77$، $8$، $74$، $90$، يُطبع العدد $5$.
+في كل مقطع برنامج وقع خطأ منطقي واحد، ولذلك لا يحقّق المقطع هدفه. اشرحوا الخطأ وصحّحوه.
+(ملاحظة: الخطأ ليس خطأ وقت تشغيل. افترضوا أنّ المُدخل سليم ويشمل أعدادًا صحيحة فقط.)
+
+\begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+index = 0
+num = int(input("Enter an integer number"))
+while index < 10:
+    if num <= 99 and num >= 10:
+        count = count + 1
+    index = index + 1
+print("count", count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} أمر الاستقبال \textenglish{\texttt{num = int(input(...))}} مكتوب خارج الحلقة فقط، ولذلك يستقبل البرنامج عددًا واحدًا فقط ويفحصه $10$ مرات بدل استقبال $10$ أعداد مختلفة. \\
+\textbf{التصحيح:} نقل السطر \textenglish{\texttt{num = int(input("Enter an integer number"))}} إلى داخل حلقة \textenglish{while}.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الخطأ؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+index = 0
+while index < 10:
+    num = int(input("Enter an integer number"))
+    if num <= 99 and num >= 10:
+        print("count", count)
+    index = index + 1
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} لا يتمّ زيادة العداد \textenglish{count} بـ $1$ عند تحقق الشرط، وبدلًا من ذلك تتمّ طباعة \textenglish{count} (الذي يبقى $0$) داخل الشرط بدل طباعته في النهاية بعد انتهاء الحلقة. \\
+\textbf{التصحيح:} استبدال أمر الطباعة داخل الشرط بـ \textenglish{\texttt{count = count + 1}}، ووضع \textenglish{\texttt{print("count", count)}} خارج حلقة \textenglish{while} في نهاية المقطع.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الخطأ؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+index = 0
+while index < 10:
+    if num <= 99 and num >= 10:
+        count = count + 1
+        num = int(input("Enter an integer number"))
+    index = index + 1
+print("count", count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} أمر الاستقبال \textenglish{\texttt{num = int(input(...))}} موضوع داخل جملة الشرط \textenglish{if} (وبعد الفحص)، بدل أن يكون في بداية كل تكرار من الحلقة قبل جملة \textenglish{if}. \\
+\textbf{التصحيح:} نقل السطر \textenglish{\texttt{num = int(input("Enter an integer number"))}} ليكون السطر الأول داخل حلقة \textenglish{while} قبل جملة الشرط \textenglish{if}.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الخطأ؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم أربعة مقاطع برنامج. الهدف من كل واحد من مقاطع البرنامج هو استقبال علامات طلاب الصف الثامن في امتحان الرياضيات من المستخدم حتى تُستقبل علامة سالبة أو صفر، وحساب معدّل العلامات الموجبة التي استُقبلت.
+(انتبهوا: العلامة السالبة أو الصفر التي تُستقبل في نهاية الإدخال ليست جزءًا من حساب المعدّل.)
+في كل مقطع برنامج وقع خطأ منطقي واحد، ولذلك لا يحقّق المقطع هدفه. اكتبوا الأمر الخاطئ واشرحوا كيف يمكن تصحيحه.
+(ملاحظة: الخطأ ليس خطأ وقت تشغيل. يمكن الافتراض أنّ المُدخل سليم ويشمل أعدادًا صحيحة فقط، وتوجد علامة موجبة واحدة على الأقل في سلسلة القيم المستقبَلة.)
+
+\begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+sum = 0
+count = 0
+grade = int(input("Please enter Math's grade:"))
+while grade > 0:
+    sum += grade
+    count += 1
+avg = sum / count
+print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} تنقص تعليمة استقبال علامة جديدة داخل حلقة \textenglish{while}، مما يؤدّي إلى حلقة لا نهائية إذا كانت العلامة الأولى موجبة. \\
+\textbf{التصحيح:} إضافة السطر \textenglish{\texttt{grade = int(input("Please enter Math's grade:"))}} في نهاية جسم حلقة \textenglish{while}.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الأمر الخاطئ (أو الناقص)؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+sum = 0
+count = 0
+grade = int(input("Please enter Math's grade:"))
+while grade < 0:
+    sum += grade
+    count += 1
+    grade = int(input("Please enter Math's grade:"))
+avg = sum / count
+print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} \textenglish{\texttt{while grade < 0:}} \\
+\textbf{التصحيح:} تغيير شرط الحلقة إلى \textenglish{\texttt{while grade > 0:}} لأنّ الحلقة يجب أن تستمر طالما أنّ العلامة موجبة وتتوقف عند إدخال علامة سالبة أو صفر.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الأمر الخاطئ (أو الناقص)؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+sum = 0
+count = 0
+grade = int(input("Please enter Math's grade:"))
+while grade > 0:
+    sum += grade
+    count += 1
+    grade = int(input("Please enter Math's grade:"))
+    avg = sum / count
+print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} حساب المعدّل \textenglish{\texttt{avg = sum / count}} موجود داخل حلقة \textenglish{while} (إزاحة زائدة). رغم أنّه يحسب القيمة الصحيحة في التكرار الأخير، إلّا أنّ حساب المعدّل يجب أن يتمّ مرة واحدة فقط بعد انتهاء الحلقة. \\
+\textbf{التصحيح:} إخراج السطر \textenglish{\texttt{avg = sum / count}} ليكون خارج حلقة \textenglish{while} (بنفس مستوى إزاحة \textenglish{while} و \textenglish{print}).
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الأمر الخاطئ (أو الناقص)؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+sum = 0
+count = 0
+grade = int(input("Please enter Math's grade:"))
+while grade > 0:
+    sum += grade
+    count -= 1
+    grade = int(input("Please enter Math's grade:"))
+avg = sum / count
+print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} \textenglish{\texttt{count -= 1}} (إنقاص عدّاد العلامات بـ $1$ بدل زيادته). \\
+\textbf{التصحيح:} تغيير السطر إلى \textenglish{\texttt{count += 1}} لعدّ العلامات الموجبة بشكل صحيح.
+\end{boxSolution}
+\else
+\vspace{0.5cm}
+\textbf{ما هو الأمر الخاطئ (أو الناقص)؟} \hrulefill \\
+ \\
+\textbf{كيف يجب تصحيحه؟} \hrulefill
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item متوالية فيبوناتشي (\textenglish{Fibonacci}) هي متوالية يكون حدّاها الأولان $1$، وكل حدّ يليهما يساوي مجموع الحدّين اللذين سبقاه.
+أمامكم متوالية فيبوناتشي المكوّنة من $8$ حدود (من اليسار إلى اليمين):
+$$1, 1, 2, 3, 5, 8, 13, 21$$
+معروف أنّ الحدّ الأول في المتوالية هو $\text{first} = 1$، والحدّ الثاني هو $\text{second} = 1$.
+
+\begin{enumerate}[label=\alph*.]
+\item ما هو الحدّ التالي في المتوالية (الحدّ التاسع) في المثال؟ \ifwithsols $\mathbf{34}$ (لأنّ $13 + 21 = 34$) \else \underline{\hspace{3cm}} \fi
+\filbreak
+
+\item أمامكم مقطع برنامج يطبع الحدود الـ $8$ الأولى في المتوالية. أكملوا المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+first = ____________
+second = ____________
+counter = 3
+print("Fibonacci item 1 is ", first)
+print("Fibonacci item 2 is ", second)
+while counter <= 8:
+    third = ______ + _______
+    first = ____________
+    second = ____________
+    print("Fibonacci item ", counter, "is", ____________)
+    counter = counter + ____________
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+first = 1
+second = 1
+counter = 3
+print("Fibonacci item 1 is ", first)
+print("Fibonacci item 2 is ", second)
+while counter <= 8:
+    third = first + second
+    first = second
+    second = third
+    print("Fibonacci item ", counter, "is", third)
+    counter = counter + 1
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item طبّقت إدارة مدرسة "علم وتكنولوجيا للجميع" برنامجًا تعليميًا جديدًا لطلاب طبقة الصف الثامن، والتي تضمّ $300$ طالب. لفحص ما إذا كان البرنامج قد ساهم في تحسين تحصيلات الطلاب، تقرّر المقارنة بين علامات الطلاب في نهاية النصف الأول من السنة (\textenglish{gradeA}) وبين علاماتهم في نهاية النصف الثاني (\textenglish{gradeB}).
+من أجل الفحص، كُتب برنامج يستقبل لكل طالب العلامة التي حصل عليها في النصف الأول والعلامة التي حصل عليها في النصف الثاني. يعدّ البرنامج ويطبع كمية الطلاب الذين حسّنوا علاماتهم:
+\begin{itemize}
+\item يُعرَّف التحسّن فقط عندما تكون العلامة في النصف الثاني \textbf{أعلى من أو تساوي} العلامة في النصف الأول.
+\item إذا حسّن أكثر من $200$ طالب علاماتهم في هذا الفحص، يُطبع \textenglish{"The program is successful"}؛ وإلّا يُطبع \textenglish{"The program needs improvement"}.
+\end{itemize}
+أمامكم كود البرنامج. أكملوا التعليمات الناقصة فيه (انتبهوا: للمتغيرات ووظيفتها في البرنامج أهمية):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+counter = _______
+for k in range(_______):
+    gradeA = int(input("Enter gradeA"))
+    gradeB = int(input("Enter gradeB"))
+    if gradeB >= gradeA:
+        counter = _______ + _______
+print(counter)
+if counter > _______:
+    print("___________________________")
+else:
+    print("___________________________")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+counter = 0
+for k in range(300):
+    gradeA = int(input("Enter gradeA"))
+    gradeB = int(input("Enter gradeB"))
+    if gradeB >= gradeA:
+        counter = counter + 1
+print(counter)
+if counter > 200:
+    print("The program is successful")
+else:
+    print("The program needs improvement")
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{العدد المثالي} هو عدد يساوي مجموع جميع قواسمه الموجبة (لا يشمل العدد نفسه).
+\begin{itemize}
+\item \textbf{مثال:} العدد $28$ هو عدد مثالي لأنّه يساوي مجموع جميع قواسمه: $28 = 1 + 2 + 4 + 7 + 14$.
+\item القاسم هو عدد يقسم العدد المقسوم مع باقي قسمة صفر. مثلًا: $4$ هو قاسم لـ $24$، لكنّه ليس قاسمًا لـ $23$.
+\end{itemize}
+
+\begin{enumerate}[label=\alph*.]
+\item حسب التعريف أعلاه، هل $6$ هو عدد مثالي؟ إذا نعم، اعرضوا تعبيرًا رياضيًا (كما هو معروض في المثال) يُظهر ذلك؛ وإلّا اشرحوا.
+\ifwithsols
+\begin{boxSolution}
+\textbf{نعم}، العدد $6$ هو عدد مثالي لأنّ قواسمه (بدون الـ $6$ نفسه) هي $1$، $2$، $3$، ومجموعها يساوي:
+$$6 = 1 + 2 + 3$$
+\end{boxSolution}
+\else
+\\ \underline{\hspace{14cm}}
+\fi
+\filbreak
+
+\item أمامكم مقطع برنامج يستقبل عددًا من المستخدم ويفحص ما إذا كان العدد مثاليًا. أكملوا الفراغات $(1)$-$(5)$ في المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+num = int(input("Please enter a number:"))
+sum = (1)______
+x = 1
+while x < num:
+    if (2)______________:
+        sum = sum + (3)_________
+    x = (4)_________
+if (5)______________:
+    print("Perfect number ")
+else:
+    print("Not perfect number ")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $0$
+\item \textenglish{\texttt{num \% x == 0}}
+\item $x$
+\item $x + 1$
+\item \textenglish{\texttt{sum == num}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item مقطع البرنامج الذي أمامكم يستقبل رقم هوية مكوّنًا من $9$ منازل (\textenglish{id\_number}) ومنزلة إضافية (\textenglish{digit})، ويطبع جميع الأماكن (المواقع) في رقم الهوية التي تظهر فيها المنزلة \textenglish{digit} (من اليمين إلى اليسار، بدءًا من المكان $1$).
+إذا لم تظهر المنزلة في رقم الهوية، يطبع مقطع البرنامج $-1$.
+\begin{itemize}
+\item \textbf{مثال $1$:} لرقم الهوية $334429969$ والمنزلة $9$ — تُطبع الأماكن التالية: $1$، $3$، $4$.
+\item \textbf{مثال $2$:} لرقم الهوية $123457899$ والمنزلة $6$ — يُطبع $-1$ لأنّ المنزلة $6$ غير موجودة في رقم الهوية.
+\end{itemize}
+أكملوا الفراغات $(1)$-$(7)$ في المقطع لكي ينفّذ المطلوب:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+id_number = int(input("Please enter ID number:"))
+digit = int(input("Please enter a digit:"))
+found = False
+for index in range((1)_______, (2)_______):
+    if (3)__________________:
+        print((4)____________)
+        found = (5)_____________
+    id_number = (6)_______________
+if found == False:
+    print((7)__________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $1$
+\item $10$
+\item \textenglish{\texttt{id\_number \% 10 == digit}}
+\item \textenglish{\texttt{index}}
+\item \textenglish{\texttt{True}}
+\item \textenglish{\texttt{id\_number // 10}}
+\item $-1$
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+
+\end{document}

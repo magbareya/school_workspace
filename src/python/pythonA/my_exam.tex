@@ -1,0 +1,564 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل امتحان تلخيصي في علم الحاسوب - بايثون (أ)}
+\else
+\title{امتحان تلخيصي في علم الحاسوب - بايثون (أ)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\else
+\begin{boxCode}
+\begin{itemize}[nosep]
+    \item \textbf{اسم الطالب/ة:} \underline{\hspace{5cm}} \quad \textbf{الصف:} \underline{\hspace{3cm}}
+    \item \textbf{أجب عن جميع الأسئلة $1$–$6$} (بالإضافة إلى سؤال البونوس الاختياري).
+    \item \textbf{مدة الامتحان:} $90$ دقيقة.
+    \item \textbf{مواد مساعدة مسموحة:} كل مادة مساعدة شخصية مكتوبة أو مطبوعة، باستثناء حاسبة أو حاسوب قابل للبرمجة.
+    \item اقرأ أسئلة الامتحان بتمعّن وأجب عنها بانتباه في المكان المخصّص لذلك، وبقلم حبر فقط.
+\end{itemize}
+\end{boxCode}
+\fi
+
+\vspace{0.5cm}
+
+\begin{enumerate}[label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($16$ علامة — $4$ علامات لكل بند) أمامكم جدول فيه أربعة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+a = 5
+b = a * 2
+a = b - 3
+print("a =", a, "b =", b)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{a = 7 b = 10}\end{english} \fi \\
+\hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num = 3748
+d1 = num // 1000
+d2 = (num // 100) % 10
+print(d1, d2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{3 7}\end{english} \fi \\
+\hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+word = "Hello World!"
+print(word[0])
+print(len(word))
+print(word[-1])
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{H}\newline\texttt{12}\newline\texttt{!}\end{english} \fi \\
+\hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 20
+while i > 5:
+    print(i)
+    i = i - 7
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{20}\newline\texttt{13}\newline\texttt{6}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($18$ علامة — $6$ علامات لكل بند) في الجدول الذي أمامكم ثلاثة مقاطع برنامج جزئية والمُخرج الذي سينتج من تشغيل مقطع البرنامج الكامل. كل مقطع برنامج يحتوي على حلقة.
+أكملوا التعليمات الناقصة في كل مقطع برنامج للحصول على المُخرج المعطى. استعينوا بالمثال في أعلى الجدول.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+مثال &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(1, 4):
+    print(item, end=' ')
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{1 2 3}\end{english} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(_____, _____, _____):
+    print(item, end=' ')
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{2 4 6 8}\end{english} \\
+\hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = _________
+while i > ______:
+    print(i)
+    i = i - 3
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{10}\newline\texttt{7}\newline\texttt{4}\end{english} \\
+\hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(5, 26, _______):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{5}\newline\texttt{10}\newline\texttt{15}\newline\texttt{20}\newline\texttt{25}\end{english} \\
+\hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*.]
+\item \textenglish{\texttt{for item in range(2, 10, 2):}} (أو \textenglish{\texttt{range(2, 9, 2)}})
+\item التهيئة $i = 10$، وشرط الحلقة \textenglish{\texttt{while i > 1:}} (أو أي عدد من $1$ إلى $3$)
+\item مقدار القفزة $5$: \textenglish{\texttt{for i in range(5, 26, 5):}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($16$ علامة — $4$ علامات لكل ملاءمة) أمامكم عمودان من مقاطع البرنامج التي تُنفَّذ فيها حلقة. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في مقطعي الحلقة نفس المُخرج تمامًا) وكتابتها في جدول الإجابات أدناه.
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{5.8cm}|C{0.9cm}|p{5.8cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ}} & \multicolumn{2}{c|}{\textbf{العمود ب}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(1, 6):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& $A$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 10
+while i > 0:
+    print(i)
+    i = i - 2
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(2, 12, 2):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& $B$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i <= 5:
+    print(i)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(10, 0, -2):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& $C$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 0
+while i <= 3:
+    print(i + 1)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(4):
+    print(i + 1)
+\end{minted}
+\end{english}
+\end{pycell}
+& $D$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 2
+while i <= 10:
+    print(i)
+    i = i + 2
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+\textbf{جدول الإجابات:}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{4.5cm}|C{6cm}|}
+\hline
+\textbf{رقم الحلقة في العمود أ} & \textbf{الحلقة المكافئة من العمود ب ($A$ / $B$ / $C$ / $D$)} \\
+\hline
+$1$ & \ifwithsols $\mathbf{B}$ (يطبع الأعداد من $1$ إلى $5$) \fi \\ \hline
+$2$ & \ifwithsols $\mathbf{D}$ (يطبع الأعداد الزوجية من $2$ إلى $10$) \fi \\ \hline
+$3$ & \ifwithsols $\mathbf{A}$ (يطبع الأعداد الزوجية تنازليًا من $10$ إلى $2$) \fi \\ \hline
+$4$ & \ifwithsols $\mathbf{C}$ (يطبع الأعداد من $1$ إلى $4$) \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($16$ علامة) في منظومة الرواتب لشركة، تحسب الشركة منحة (بونوس) لكل موظف وفقًا لعدد سنوات أقدميته (\textenglish{years}) في العمل:
+\begin{itemize}
+\item أقل من سنة أقدمية واحدة (أقل من $1$): بونوس بنسبة $0\%$ (\textenglish{\texttt{"Bonus 0\%"}}).
+\item من سنة واحدة ($1$) وحتى أقل من $3$ سنوات: بونوس بنسبة $5\%$ (\textenglish{\texttt{"Bonus 5\%"}}).
+\item من $3$ سنوات وحتى أقل من $7$ سنوات: بونوس بنسبة $10\%$ (\textenglish{\texttt{"Bonus 10\%"}}).
+\item $7$ سنوات فما فوق: بونوس بنسبة $15\%$ (\textenglish{\texttt{"Bonus 15\%"}}).
+\end{itemize}
+
+\begin{enumerate}[label=\alph*.]
+\item ($4$ علامات) أكملوا الجدول التالي: اكتبوا ما هي نسبة البونوس لكل قيمة من سنوات الأقدمية:
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{4cm}|C{5.5cm}|}
+\hline
+\textbf{سنوات الأقدمية (\textenglish{years})} & \textbf{نسبة البونوس} \\
+\hline
+$0$ & \ifwithsols بونوس $0\%$ (\textenglish{\texttt{Bonus 0\%}}) \fi \\ \hline
+$2$ & \ifwithsols بونوس $5\%$ (\textenglish{\texttt{Bonus 5\%}}) \fi \\ \hline
+$6$ & \ifwithsols بونوس $10\%$ (\textenglish{\texttt{Bonus 10\%}}) \fi \\ \hline
+$10$ & \ifwithsols بونوس $15\%$ (\textenglish{\texttt{Bonus 15\%}}) \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+\item ($12$ علامة) أكملوا الفراغات $(1)$–$(4)$ في مقطع البرنامج التالي لكي ينفّذ المطلوب:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+years = int(input('Enter years: '))
+if (1)_____________:
+    print('Bonus 0%')
+elif (2)_____________:
+    print('Bonus 5%')
+elif (3)_____________:
+    print('Bonus 10%')
+else:
+    (4)______________________
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+years = int(input('Enter years: '))
+if years < 1:
+    print('Bonus 0%')
+elif years < 3:
+    print('Bonus 5%')
+elif years < 7:
+    print('Bonus 10%')
+else:
+    print('Bonus 15%')
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة — $5$ علامات لكل بند) أمامكم أربعة مقاطع برنامج تستعمل مكتبة \textenglish{turtle}. كل مقطع برنامج يرسم شكلًا مختلفًا. لائموا بين كل كود والشكل ($A$، $B$، $C$، $D$) الذي يرسمه.
+افترضوا أنّه في بداية كل كود يظهر السطران التاليان:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+import turtle
+player = turtle.Turtle()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{7.2cm}|C{0.9cm}|C{5.2cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ (كود بايثون)}} & \multicolumn{2}{c|}{\textbf{العمود ب (الشكل)}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(3):
+    player.left(60)
+    player.forward(40)
+    player.right(120)
+    player.forward(40)
+    player.left(60)
+\end{minted}
+\end{english}
+\end{pycell}
+& $A$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (-2,0) -- (2,0);
+\draw[thick] (0,-2) -- (0,2);
+\draw[-{Latex[length=2mm]}, thick] (-0.3,0) -- (0.1,0);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(4):
+    player.circle(40)
+    player.left(90)
+\end{minted}
+\end{english}
+\end{pycell}
+& $B$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (0,0.8) -- (3.2,0.8);
+\draw[-{Latex[length=2mm]}, thick] (3.2,-0.4) -- (0,-0.4);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(4):
+    player.forward(50)
+    player.backward(50)
+    player.left(90)
+\end{minted}
+\end{english}
+\end{pycell}
+& $C$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.5]
+\draw[thick] (0,0) -- (0.6,1.1) -- (1.2,0) -- (1.8,1.1) -- (2.4,0) -- (3.0,1.1);
+\draw[-{Latex[length=2mm]}, thick] (3.0,1.1) -- (3.6,0);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+player.forward(80)
+player.penup()
+player.right(90)
+player.forward(30)
+player.right(90)
+player.pendown()
+player.forward(80)
+\end{minted}
+\end{english}
+\end{pycell}
+& $D$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.5]
+\draw[thick] (0,1) circle (1cm);
+\draw[thick] (-1,0) circle (1cm);
+\draw[thick] (0,-1) circle (1cm);
+\draw[thick] (1,0) circle (1cm);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+\end{longtable}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{4.5cm}|C{5.5cm}|}
+\hline
+\textbf{كود بايثون ($1$ / $2$ / $3$ / $4$)} & \textbf{الشكل الملائم ($A$ / $B$ / $C$ / $D$)} \\
+\hline
+$1$ & \ifwithsols $\mathbf{C}$ (خط متعرّج من $3$ قمم) \fi \\ \hline
+$2$ & \ifwithsols $\mathbf{D}$ ($4$ دوائر في الـ $4$ اتجاهات) \fi \\ \hline
+$3$ & \ifwithsols $\mathbf{A}$ (علامة زائد $+$ من المركز) \fi \\ \hline
+$4$ & \ifwithsols $\mathbf{B}$ (خطان متوازيان منفصلان) \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($14$ علامة) طُلب من الطلاب كتابة عملية باسم \textenglish{analyze\_numbers} تستقبل $10$ أعداد صحيحة، وتطبع كمية الأعداد \textbf{الزوجية} من بينها، وكذلك تطبع مجموع الأعداد \textbf{الموجبة} (الأكبر من $0$).
+\begin{itemize}
+\item \textbf{مثال:} إذا استقبلت العملية الأعداد العشرة التالية: $4, -3, 10, 0, 5, -2, 8, 1, -7, 6$، فإنّها تطبع أنّ كمية الأعداد الزوجية هي $6$ (وهي: $4, 10, 0, -2, 8, 6$)، ومجموع الأعداد الموجبة هو $34$ (لأنّ $4 + 10 + 5 + 8 + 1 + 6 = 34$).
+\end{itemize}
+أكملوا الأجزاء الناقصة $(1)$–$(9)$ في العملية:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def analyze_numbers():
+    even_count = (1)________
+    pos_sum = (2)________
+    for i in range((3)________):
+        num = int(input('Enter number: '))
+        if num (4)________ 2 == 0:
+            even_count = even_count + (5)________
+        if num (6)________ 0:
+            pos_sum = pos_sum + (7)________
+
+    print("Even numbers:", (8)________)
+    print("Sum of positives:", (9)________)
+
+analyze_numbers()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $0$
+\item $0$
+\item $10$
+\item $\%$
+\item $1$
+\item $>$
+\item \textenglish{\texttt{num}}
+\item \textenglish{\texttt{even\_count}}
+\item \textenglish{\texttt{pos\_sum}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{سؤال بونوس ($+10$ علامات):}
+اكتبوا عملية باسم \textenglish{reverse\_string} تستقبل نصًا \textenglish{st} من المستخدم، وتطبع النص بترتيب عكسي (من آخر حرف إلى أول حرف، بدون استخدام تقطيع النصوص \textenglish{slicing}).
+\begin{itemize}
+\item \textbf{مثال:} للنص \textenglish{\texttt{'Python'}} يكون المُخرج \textenglish{\texttt{'nohtyP'}}.
+\end{itemize}
+أكملوا الفراغات $(1)$–$(5)$ في العملية (يمكن حلّ السؤال بطريقتين مختلفتين):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def reverse_string():
+    st = input('Enter string: ')
+    result = ''
+    for i in range((1)________, (2)________, (3)________):
+        result = (4)________ + (5)________
+    print(result)
+
+reverse_string()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}[1 — المسح من نهاية النص إلى بدايته]
+\begin{english}
+\begin{minted}{python}
+def reverse_string():
+    st = input('Enter string: ')
+    result = ''
+    for i in range(len(st) - 1, -1, -1):
+        result = result + st[i]
+    print(result)
+
+reverse_string()
+\end{minted}
+\end{english}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[2 — المسح التصاعدي وإضافة كل حرف في بداية النص الجديد]
+\begin{english}
+\begin{minted}{python}
+def reverse_string():
+    st = input('Enter string: ')
+    result = ''
+    for i in range(0, len(st), 1):
+        result = st[i] + result
+    print(result)
+
+reverse_string()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

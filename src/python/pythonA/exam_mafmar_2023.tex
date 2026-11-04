@@ -1,0 +1,749 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل امتحان مفمار في علم الحاسوب للصف السابع/الثامن - بايثون $2023$}
+\else
+\title{امتحان مفمار في علم الحاسوب للصف السابع/الثامن - بايثون $2023$}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\else
+\begin{boxCode}
+\begin{itemize}[nosep]
+    \item \textbf{الفصل الأول (إجباري - $60$ علامة):} أجب عن \textbf{جميع} الأسئلة $1$–$5$.
+    \item \textbf{الفصل الثاني (اختياري - $40$ علامة):} أجب عن \textbf{سؤالين} من بين الأسئلة $6$–$9$.
+    \item \textbf{مدة الامتحان:} $120$ دقيقة.
+    \item \textbf{مواد مساعدة مسموحة:} كل مادة مساعدة شخصية مكتوبة أو مطبوعة، باستثناء حاسبة أو حاسوب قابل للبرمجة.
+    \item اقرأ أسئلة الامتحان بتمعّن وأجب عنها بانتباه في المكان المخصّص لذلك.
+\end{itemize}
+\end{boxCode}
+\fi
+
+\section*{الفصل الأول — إجباري ($60$ علامة)}
+في هذا الفصل خمسة أسئلة. يجب الإجابة عن \textbf{جميع} الأسئلة $1$–$5$.
+
+\begin{enumerate}[label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم جدول فيه أربعة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.8cm}|p{8.7cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = 5
+num2 = num1 + 1
+num1 = num2
+print("num1 = ", num1, " num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 6 num2 = 6}\end{english} \fi \\
+\hline
+$2$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num = 1234
+num1 = num // 100
+num2 = num % 100
+print("num1 = ", num1, " num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 12 num2 = 34}\end{english} \fi \\
+\hline
+$3$. \newline ($4$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+title = "Python is fun!"
+print(title[3])
+print(title[::2])
+print(title[-2])
+print(title[len(title) - 1])
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{h}\newline\texttt{Pto sfn}\newline\texttt{n}\newline\texttt{!}\end{english} \fi \\
+\hline
+$4$. \newline ($4$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+text = "Programming in python"
+print(text.find('r'))
+print(text.find('out'))
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{-1}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) في الجدول الذي أمامكم أربعة مقاطع برنامج جزئية والمُخرج الذي سينتج من تشغيل مقطع البرنامج الكامل. كل مقطع برنامج يحتوي على حلقة.
+أكملوا التعليمات الناقصة في كل مقطع برنامج للحصول على المُخرج المعطى. استعينوا بالمثال في أعلى الجدول.
+(انتبهوا: تعليمة الطباعة مع المُعطى \textenglish{end} تضيفه إلى نهاية المُخرج بدل النزول لسطر جديد؛ مثلًا \textenglish{\texttt{print("Python", end="!")}} تطبع \textenglish{\texttt{Python!}}.)
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.8cm}|p{8.7cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+مثال &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(3):
+    print(item + 1, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{1 2 3}\end{english} \\
+\hline
+$1$. \newline ($1$ علامة) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(___, ___):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{3}\newline\texttt{4}\end{english} \\
+\hline
+$2$. \newline ($2$ علامتان) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(6, ____, ____):
+    print(item, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{6 4 2}\end{english} \\
+\hline
+$3$. \newline ($3$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 12
+while i < ____:
+    i = i + ____
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{13}\newline\texttt{14}\newline\texttt{15}\end{english} \\
+\hline
+$4$. \newline ($6$ علامات) &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 6
+while i > ____:
+    if i % 2 == ___:
+        print(i)
+    i = i - ___
+\end{minted}
+\end{english}
+\end{pycell}
+& \begin{english}\texttt{5}\newline\texttt{3}\newline\texttt{1}\end{english} \\
+\hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=\arabic*.]
+\item \textenglish{\texttt{for item in range(3, 5):}}
+\item \textenglish{\texttt{for item in range(6, 0, -2):}} (أو \textenglish{\texttt{range(6, 1, -2)}})
+\item \textenglish{\texttt{while i < 15:}} والسطر الذي يليه \textenglish{\texttt{i = i + 1}}
+\item \textenglish{\texttt{while i > 0:}}، الشرط \textenglish{\texttt{if i \% 2 == 1:}}، والتحديث \textenglish{\texttt{i = i - 1}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم عمودان من مقاطع البرنامج التي تُنفَّذ فيها حلقة. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في مقطعي الحلقة نفس المُخرج تمامًا) وكتابتها في الجدول أدناه.
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{5.8cm}|C{0.9cm}|p{5.8cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ}} & \multicolumn{2}{c|}{\textbf{العمود ب}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i < 10:
+    print(i)
+    i = i + 2
+\end{minted}
+\end{english}
+\end{pycell}
+& $A$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(1, 12):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(-5, 6):
+    print(item + 6)
+\end{minted}
+\end{english}
+\end{pycell}
+& $B$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i <= 10:
+    print(i * 3)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i <= 30:
+    if i % 3 == 0:
+        print(i)
+    i = i + 1
+\end{minted}
+\end{english}
+\end{pycell}
+& $C$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 8
+while i > 0:
+    print(i * 2)
+    i = i - 2
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(16, 3, -4):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& $D$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(-4, 5, 2):
+    print(item + 5)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{5cm}|C{5cm}|}
+\hline
+\textbf{العمود أ ($1$ / $2$ / $3$ / $4$)} & \textbf{العمود ب ($A$ / $B$ / $C$ / $D$)} \\
+\hline
+$1$ & \ifwithsols $\mathbf{D}$ \fi \\ \hline
+$2$ & \ifwithsols $\mathbf{A}$ \fi \\ \hline
+$3$ & \ifwithsols $\mathbf{B}$ \fi \\ \hline
+$4$ & \ifwithsols $\mathbf{C}$ \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) في دكان \textbf{"المفاجآت"}، قرّروا منح هدية لكل زبون وفقًا لمبلغ الشراء من الدكان. يمكن أن تكون الهدية واحدة من $5$ إمكانيات:
+دفتر يوميات (\textenglish{Diary})، مقلمة مجهّزة (\textenglish{Pencil case})، حقيبة مجهّزة (\textenglish{Bag})، لعبة حاسوب (\textenglish{Computer game})، قسيمة شراء بقيمة $500$ شيكل (\textenglish{Gift voucher}).
+الشراء بأقل من $10$ شيكل لا يؤهّل للحصول على هدية.
+تُحدَّد الهدية وفقًا للسيناريو التالي (المتغير \textenglish{amount} يمثّل مبلغ الشراء):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if amount < 10:
+    print("Not eligible for a gift")
+elif amount < 400:
+    if amount >= 10 and amount <= 100:
+        print("Diary")
+    elif amount < 250:
+        print("Pencil case")
+    else:
+        print("Bag")
+elif amount <= 600:
+    print("Computer game")
+else:
+    print("Gift voucher")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item ($8$ علامات) قرّر يوسف تشغيل السيناريو. ساعدوا يوسف وأكملوا الجدول: لكل مبلغ شراء، ما هي الهدية التي يستحقها الزبون؟
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{3cm}|C{6cm}|}
+\hline
+\textbf{مبلغ الشراء} & \textbf{ما هي الهدية التي يستحقها الزبون؟} \\
+\hline
+$8$ & \ifwithsols لا يستحق هدية \fi \\ \hline
+$80$ & \ifwithsols دفتر يوميات \fi \\ \hline
+$250$ & \ifwithsols حقيبة مجهّزة \fi \\ \hline
+$450$ & \ifwithsols لعبة حاسوب \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+\item ($4$ علامات) لائموا بين كل هدية ومجال مبالغ الشراء الملائم، واملؤوا الجدول أدناه:
+
+{\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5cm}p{5cm}}
+$1$. دفتر يوميات & $A$. أكبر من $600$ \\
+$2$. حقيبة مجهّزة & $B$. $250 - 399$ \\
+$3$. لعبة حاسوب & $C$. $400 - 600$ \\
+$4$. قسيمة شراء & $D$. $10 - 100$ \\
+\end{longtable}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{4.5cm}|C{4.5cm}|}
+\hline
+\textbf{العمود أ ($1$ / $2$ / $3$ / $4$)} & \textbf{العمود ب ($A$ / $B$ / $C$ / $D$)} \\
+\hline
+$1$ & \ifwithsols $\mathbf{D}$ \fi \\ \hline
+$2$ & \ifwithsols $\mathbf{B}$ \fi \\ \hline
+$3$ & \ifwithsols $\mathbf{C}$ \fi \\ \hline
+$4$ & \ifwithsols $\mathbf{A}$ \fi \\ \hline
+\end{longtable}}
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم أربعة مقاطع برنامج. الهدف من كل مقطع برنامج هو استقبال $10$ علامات، عدّ وطباعة كمية العلامات \textbf{الأعلى من $55$ ولكن أقل من $80$}.
+لسلسلة العلامات التالية: $76, 84, 80, 57, 77, 90, 68, 74, 100, 55$، يُطبع $5$.
+حدّدوا لكل مقطع برنامج هل ينفّذ المطلوب في السؤال. إذا نعم، اشرحوا؛ وإذا لا، اقترحوا طريقة لتصحيح الكود لكي ينفّذ المطلوب.
+
+\begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, leftmargin=*, itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+for item in range(10):
+    grade = int(input("Please enter a grade:"))
+    if grade > 55 and grade < 80:
+        count = count + 1
+print(count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{نعم، ينفّذ المطلوب.} الحلقة تتكرّر $10$ مرات، وفي كل تكرار تستقبل علامة وتفحص بواسطة العامل \textenglish{and} إذا كانت أكبر من $55$ وأصغر من $80$ في آنٍ واحد، وتزيد العداد \textenglish{count} بـ $1$، وفي النهاية تطبع العداد.
+\end{boxSolution}
+\else
+\textbf{هل ينفّذ الكود المطلوب؟} \underline{\hspace{4cm}} \quad \textbf{الشرح / التصحيح:} \underline{\hspace{6cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+for item in range(10):
+    grade = int(input("Please enter a grade:"))
+    if grade > 55 or grade < 80:
+        count = count + 1
+print(count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا ينفّذ المطلوب.} لأنّه استعمل العامل المنطقي \textenglish{or} بدل \textenglish{and}، والشرط \textenglish{\texttt{grade > 55 or grade < 80}} يتحقّق لأيّ عدد كان. \\
+\textbf{التصحيح:} استبدال \textenglish{or} بـ \textenglish{and} في سطر الشرط: \textenglish{\texttt{if grade > 55 and grade < 80:}}.
+\end{boxSolution}
+\else
+\textbf{هل ينفّذ الكود المطلوب؟} \underline{\hspace{4cm}} \quad \textbf{الشرح / التصحيح:} \underline{\hspace{6cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+index = 0
+while index < 10:
+    grade = int(input("Please enter a grade:"))
+    if grade > 55 and grade < 80:
+        count = count + 1
+print(count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا ينفّذ المطلوب.} لأنّ المتغير \textenglish{index} لا يتمّ تحديثه داخل حلقة \textenglish{while}، فيبقى $0$ وتدخل الحلقة في تكرار لا نهائي. \\
+\textbf{التصحيح:} إضافة السطر \textenglish{\texttt{index = index + 1}} في نهاية جسم حلقة \textenglish{while}.
+\end{boxSolution}
+\else
+\textbf{هل ينفّذ الكود المطلوب؟} \underline{\hspace{4cm}} \quad \textbf{الشرح / التصحيح:} \underline{\hspace{6cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = 0
+index = 10
+while index > 0:
+    grade = int(input("Please enter a grade:"))
+    if grade > 55 and grade < 80:
+        print(count + 1)
+    index = index - 1
+print(count)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا ينفّذ المطلوب.} لأنّه عند تحقق الشرط يطبع \textenglish{\texttt{count + 1}} دون أن يحدّث قيمة المتغير \textenglish{count} نفسه، فيبقى \textenglish{count} مساويًا لـ $0$ ويطبع $0$ في النهاية. \\
+\textbf{التصحيح:} استبدال \textenglish{\texttt{print(count + 1)}} بـ \textenglish{\texttt{count = count + 1}}.
+\end{boxSolution}
+\else
+\textbf{هل ينفّذ الكود المطلوب؟} \underline{\hspace{4cm}} \quad \textbf{الشرح / التصحيح:} \underline{\hspace{6cm}}
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{الفصل الثاني — اختياري ($40$ علامة)}
+في هذا الفصل $4$ أسئلة. يجب الإجابة عن \textbf{سؤالين} من بين الأسئلة $6$–$9$ (لكل سؤال — $20$ علامة).
+
+\begin{enumerate}[resume, label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) \textbf{العدد "الخاص"} هو عدد صحيح تكون فيه منزلة الآحاد \textbf{أكبر من نصف مجموع منازل العدد}.
+\begin{itemize}
+\item \textbf{مثال $1$:} $129$ هو عدد "خاص" لأنّ منزلة الآحاد ($9$) أكبر من نصف مجموع منازل العدد: $1 + 2 + 9 = 12$، ونصفه $12 / 2 = 6$.
+\item \textbf{مثال $2$:} $137$ هو عدد "خاص" لأنّ منزلة الآحاد ($7$) أكبر من نصف مجموع منازل العدد: $1 + 3 + 7 = 11$، ونصفه $11 / 2 = 5.5$.
+\item \textbf{مثال $3$:} $31$ ليس عددًا "خاصًا" لأنّ منزلة الآحاد ($1$) ليست أكبر من نصف مجموع منازل العدد: $3 + 1 = 4$، ونصفه $4 / 2 = 2$.
+\end{itemize}
+
+\begin{enumerate}[label=\alph*.]
+\item ($4$ علامات) حسب التعريف أعلاه، هل $867$ هو عدد "خاص"؟ إذا نعم، اعرضوا تعبيرًا رياضيًا (كما في المثال) يُظهر ذلك؛ وإلّا اشرحوا.
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا}، العدد $867$ ليس عددًا "خاصًا" لأنّ منزلة الآحاد هي $7$، ومجموع منازل العدد هو $8 + 6 + 7 = 21$، ونصف المجموع هو $21 / 2 = 10.5$، والمنزلة $7$ ليست أكبر من $10.5$.
+\end{boxSolution}
+\else
+\\ \underline{\hspace{14cm}}
+\fi
+\filbreak
+
+\item ($16$ علامة) أمامكم مقطع برنامج يستقبل عددًا من المستخدم ويفحص هل العدد "خاص". أكملوا الفراغات $(1)$–$(6)$ في المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def special_number():
+    num = int(input("Please enter a number:"))
+    total = (1)_________
+    digit = num % (2)_________
+    while (3)_________:
+        total = total + (4)___________
+        num = num // (5)_________
+    if (6)________________:
+        print("Number is special")
+    else:
+        print("Number is not special")
+
+special_number()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $0$
+\item $10$
+\item \textenglish{\texttt{num > 0}}
+\item \textenglish{\texttt{num \% 10}}
+\item $10$
+\item \textenglish{\texttt{digit > total / 2}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة)
+\begin{enumerate}[label=\alph*.]
+\item ($8$ علامات) أمامكم رقعة رسم فيها طول وعرض كل مربّع (خلية) هو $40$ خطوة. وفقًا للكود التالي، ارسموا على الرقعة ما سيرسمه السلحفاة (علماً أنّه يبدأ من النقطة $(0,0)$ متّجهًا لليمين):
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+import turtle
+wn = turtle.Screen()
+player = turtle.Turtle()
+player.shape("turtle")
+player.goto(0, 0)
+player.left(180)
+player.forward(80)
+player.left(90)
+player.forward(160)
+player.left(90)
+player.forward(80)
+player.left(90)
+player.forward(80)
+player.left(90)
+player.forward(80)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[scale=0.65]
+\draw[step=1cm, gray, dashed] (-4,-4) grid (4,4);
+\filldraw (0,0) circle (2pt) node[above right] {\small\textbf{(0,0)}};
+\ifwithsols
+\draw[ultra thick, blue] (0,0) -- (-2,0) -- (-2,-4) -- (0,-4) -- (0,-2) -- (-2,-2);
+\fi
+\end{tikzpicture}
+\end{english}
+\end{center}
+
+\ifwithsols
+\begin{boxSolution}
+يتّجه السلحفاة يسارًا ($180^\circ$)، يتقدّم مربّعين ($80$ خطوة) إلى $(-2,0)$، ينزل $4$ مربّعات ($160$ خطوة) إلى $(-2,-4)$، يتّجه يمينًا مربّعين إلى $(0,-4)$، يصعد مربّعين إلى $(0,-2)$، ثم يتّجه يسارًا مربّعين إلى $(-2,-2)$، فيرسم الرمز المشابه للرقم $6$ المبيّن باللون الأزرق على الشبكة.
+\end{boxSolution}
+\fi
+\filbreak
+
+\item ($12$ علامة) أمامكم ثلاثة مقاطع برنامج تستعمل المكتبة \textenglish{turtle}. كل مقطع برنامج يرسم شكلًا مختلفًا. لائموا بين كل كود والشكل الذي يرسمه في الجدول أدناه (افترضوا وجود أسطر التهيئة المشتركة في بداية كل كود):
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{7.2cm}|C{0.9cm}|C{5.2cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ (الكود)}} & \multicolumn{2}{c|}{\textbf{العمود ب (الشكل)}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for index in range(5):
+    player.forward(60)
+    player.left(360 / 5)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $A$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.5]
+\draw[thick] (0,1.2) circle (1.2cm);
+\draw[thick] (0,-1.2) circle (1.2cm);
+\filldraw (0,0) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(180):
+    player.forward(5)
+    player.left(2)
+for item in range(180):
+    player.forward(5)
+    player.right(2)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $B$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (0,0) -- (1.5,0) -- (1.96,1.43) -- (0.75,2.31) -- (-0.46,1.43) -- cycle;
+\filldraw (0,0) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for index in range(3):
+    player.forward(100)
+    player.left(360 / 3)
+for index in range(3):
+    player.forward(100)
+    player.right(360 / 3)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $C$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.5]
+\draw[thick] (0,0) -- (2.4,0) -- (1.2,2.1) -- cycle;
+\draw[thick] (0,0) -- (2.4,0) -- (1.2,-2.1) -- cycle;
+\filldraw (0,0) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+\end{longtable}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{4.5cm}|C{4.5cm}|}
+\hline
+\textbf{العمود أ ($1$ / $2$ / $3$)} & \textbf{العمود ب ($A$ / $B$ / $C$)} \\
+\hline
+$1$ & \ifwithsols $\mathbf{B}$ (مخمّس منتظم) \fi \\ \hline
+$2$ & \ifwithsols $\mathbf{A}$ (دائرتان متماستان) \fi \\ \hline
+$3$ & \ifwithsols $\mathbf{C}$ (مثلثان متطابقان) \fi \\ \hline
+\end{longtable}}
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) \textbf{نص "النجوم"} هو نص يُبنى من نص موجود بحيث يُستبدل كل حرف في مكان (مؤشر) \textbf{فردي} في النص الأصلي برمز النجمة \textenglish{\texttt{'*'}}.
+\begin{itemize}
+\item \textbf{مثال:} للنص التالي \textenglish{\texttt{"Paybtchdoen"}}، ينتج نص النجوم التالي: \textenglish{\texttt{"P*y*t*h*o*n"}}.
+\end{itemize}
+مقطع البرنامج الذي أمامكم يستقبل نصًا \textenglish{st} من المستخدم، ويعرض نص "النجوم". أكملوا الفراغات $(1)$–$(7)$ في المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def create_stars_str():
+    st = (1)____________("Please enter a string:")
+    stars_str = (2)_______________________
+    for index in range((3)___________):
+        if (4)_________________:
+            stars_str = stars_str + (5)____________
+        else:
+            stars_str = stars_str + (6)____________
+    print((7)_______________)
+
+create_stars_str()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item \textenglish{\texttt{input}}
+\item \textenglish{\texttt{""}}
+\item \textenglish{\texttt{len(st)}}
+\item \textenglish{\texttt{index \% 2 == 1}} (أو \textenglish{\texttt{index \% 2 == 0}} مع عكس الفرعين $(5)$ و $(6)$)
+\item \textenglish{\texttt{"*"}}
+\item \textenglish{\texttt{st[index]}}
+\item \textenglish{\texttt{stars\_str}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) طُلب من الطلاب كتابة برنامج يستقبل $5$ أزواج من الأعداد الصحيحة، ويطبع كمية الأزواج التي تحتوي على عددين لهما \textbf{نفس الزوجية} (أي كلا العددين زوجيان، أو كلا العددين فرديان).
+\begin{itemize}
+\item \textbf{مثال:}
+\begin{itemize}
+\item الزوج $1$: $8, 4 \leftarrow$ زوجية متساوية (كلا العددين زوجيان).
+\item الزوج $2$: $66, 7 \leftarrow$ زوجية مختلفة.
+\item الزوج $3$: $3, 5 \leftarrow$ زوجية متساوية (كلا العددين فرديان).
+\item الزوج $4$: $8, 1 \leftarrow$ زوجية مختلفة.
+\item الزوج $5$: $5, 1 \leftarrow$ زوجية متساوية (كلا العددين فرديان).
+\end{itemize}
+مُخرج البرنامج سيكون $3$ لأنّ هذه هي كمية أزواج الأعداد ذات الزوجية المتساوية.
+\end{itemize}
+أكملوا الفراغات $(1)$–$(5)$ في المقطع لكي ينفّذ المطلوب:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+count = (1)_________
+for item in range((2)________):
+    num1 = int(input("Please enter first number: "))
+    num2 = int(input("Please enter second number: "))
+    if (3)____________________________:
+        count = (4)___________________
+print((5)______________)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $0$
+\item $5$
+\item \textenglish{\texttt{num1 \% 2 == num2 \% 2}} (أو \textenglish{\texttt{(num1 + num2) \% 2 == 0}})
+\item \textenglish{\texttt{count + 1}}
+\item \textenglish{\texttt{count}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

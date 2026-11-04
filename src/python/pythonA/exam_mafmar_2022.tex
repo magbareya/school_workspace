@@ -1,0 +1,701 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل امتحان مفمار في علم الحاسوب للصف الثامن - بايثون $2022$}
+\else
+\title{امتحان مفمار في علم الحاسوب للصف الثامن - بايثون $2022$}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\ifwithsols
+\else
+\begin{boxCode}
+\begin{itemize}[nosep]
+    \item \textbf{الفصل الأول (إجباري - $60$ علامة):} يجب الإجابة عن \textbf{جميع} الأسئلة $1$-$5$.
+    \item \textbf{الفصل الثاني (اختياري - $40$ علامة):} يجب الإجابة عن \textbf{سؤالين} من بين الأسئلة $6$-$9$.
+    \item \textbf{مدة الامتحان:} $120$ دقيقة.
+    \item \textbf{مواد مساعدة مسموحة:} كل مادة مساعدة، باستثناء حاسبة أو حاسوب قابل للبرمجة.
+    \item اقرؤوا أسئلة الامتحان بتمعّن وأجيبوا عنها بانتباه في المكان المخصّص لذلك.
+\end{itemize}
+\end{boxCode}
+\fi
+
+\section*{الفصل الأول — إجباري ($60$ علامة)}
+في هذا الفصل خمسة أسئلة. أجيبوا عن \textbf{جميع} الأسئلة $1$-$5$.
+
+\begin{enumerate}[label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم جدول فيه أربعة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول يجب كتابة ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num1 = 3
+num2 = 10
+num1 = num2
+num2 = num1
+print("num1 = ", num1, "num2 = ", num2)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\small\texttt{num1 = 10 num2 = 10}\end{english} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = "12345"
+print("4" in number)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{True}\end{english} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+msg1 = "He" + "l" * 2 + "o"
+msg2 = " world"
+print(msg1 + msg2)
+print(len(msg1))
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{Hello world}\newline\texttt{5}\end{english} \fi \\
+\hline
+$4$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+number = 123
+print(number // 100)
+print(number % 100 % 10)
+print(number % 10)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{3}\newline\texttt{3}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) معطاة ثلاثة متغيرات $a$، $b$، $c$ وقيمها كالتالي:
+$$a = 10, \quad b = 15, \quad c = 0$$
+احسبوا قيمة كل واحد من التعابير البوليانية في الجدول، واكتبوا القيمة (\textenglish{True} / \textenglish{False}) في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|>{\raggedright\arraybackslash}p{9cm}|C{3.5cm}|}
+\hline
+\textbf{البند} & \centering\textbf{تعبير بولياني} & \textbf{قيمة التعبير} \\
+\hline
+$1$. & \textenglish{\texttt{a >= b or b == c}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$2$. & \textenglish{\texttt{a \% 5 == 0 and b // 5 > c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$3$. & \textenglish{\texttt{a < 0 or (b == c + 15 and a >= c)}} & \ifwithsols \textenglish{True} \fi \\ \hline
+$4$. & \textenglish{\texttt{a \% 2 == c \% 2 and b \% 3 > a \% 3}} & \ifwithsols \textenglish{False} \fi \\ \hline
+$5$. & \textenglish{\texttt{a != b and b != c}} & \ifwithsols \textenglish{True} \fi \\ \hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم جدول فيه أربعة مقاطع برنامج. لكل مقطع برنامج في الجدول يجب كتابة ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\hline
+\textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+$1$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+i = 1
+while i < 4:
+    print('wow')
+    i += 1
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{wow}\newline\texttt{wow}\newline\texttt{wow}\end{english} \fi \\
+\hline
+$2$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(6):
+    if item % 2 == 1:
+        print(item * item)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{1}\newline\texttt{9}\newline\texttt{25}\end{english} \fi \\
+\hline
+$3$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(9, 0, -3):
+    print(item)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{9}\newline\texttt{6}\newline\texttt{3}\end{english} \fi \\
+\hline
+$4$. &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 5
+i = 1
+while i < 4:
+    x -= 1
+    i += 1
+print(i, x)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{4 2}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم عمودان من الحلقات. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في الحلقتين نفس المُخرج تمامًا).
+
+\textbf{مثال:} الحلقتان التاليتان متكافئتان لأنّ لهما نفس المُخرج (من اليسار إلى اليمين): \textenglish{\texttt{5 6 7 8 9 10}}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|p{6.5cm}|p{6.5cm}|}
+\hline
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(5, 11):
+    print(item, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+&
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for item in range(6):
+    print(item + 5, end=" ")
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+لائموا بين كل حلقة في العمود "أ" والحلقة المكافئة لها في العمود "ب":
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{5.8cm}|C{0.9cm}|p{5.8cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{العمود أ}} & \multicolumn{2}{c|}{\textbf{العمود ب}} \\
+\hline
+$1$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(100, 200, 2):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+& $a$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 0
+while x < 9:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$2$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(1, 10):
+    print(x - 1)
+\end{minted}
+\end{english}
+\end{pycell}
+& $b$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(7, 8):
+    print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$3$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(4, 5):
+    print(x + 3)
+\end{minted}
+\end{english}
+\end{pycell}
+& $c$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(100, 200):
+    if x % 2 == 0:
+        print(x)
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+$4$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(-5, 6):
+    print(x + 6)
+\end{minted}
+\end{english}
+\end{pycell}
+& $d$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+x = 1
+while x < 12:
+    print(x)
+    x += 1
+\end{minted}
+\end{english}
+\end{pycell}
+\\ \hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}
+\item الحلقة $1$ تلائم الحلقة $c$ (كلاهما يطبع الأعداد الزوجية من $100$ إلى $198$).
+\item الحلقة $2$ تلائم الحلقة $a$ (كلاهما يطبع الأعداد من $0$ إلى $8$).
+\item الحلقة $3$ تلائم الحلقة $b$ (كلاهما يطبع العدد $7$ فقط).
+\item الحلقة $4$ تلائم الحلقة $d$ (كلاهما يطبع الأعداد من $1$ إلى $11$).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($12$ علامة) أمامكم أربعة مقاطع برنامج تتضمّن عملية باسم \textenglish{calc\_avg}.
+الهدف من كل واحد من مقاطع البرنامج هو استقبال علامات طلاب الصف الثامن في امتحان الرياضيات من المستخدم حتى تُستقبل علامة سالبة أو صفر، وحساب معدّل العلامات الموجبة التي استُقبلت.
+(انتبهوا: العلامة السالبة أو الصفر التي تُستقبل في نهاية الإدخال ليست جزءًا من حساب المعدّل.)
+في كل مقطع برنامج وقع خطأ منطقي واحد، ولذلك لا يحقّق المقطع هدفه. اكتبوا التعليمة الخاطئة واشرحوا كيف يمكن تصحيحها.
+(ملاحظة: الخطأ ليس خطأ وقت تشغيل. يمكن الافتراض أنّ المُدخل سليم ويشمل أعدادًا صحيحة فقط، وتوجد علامة موجبة واحدة على الأقل في سلسلة القيم المستقبَلة.)
+
+\begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, leftmargin=*, itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def calc_avg():
+    sum = 0
+    count = 0
+    grade = int(input("Please enter Math's grade:"))
+    while grade > 0:
+        sum += grade
+        count += 1
+    avg = sum / count
+    print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{الخطأ:} تنقص تعليمة استقبال علامة جديدة داخل حلقة \textenglish{while}، مما يؤدّي إلى حلقة لا نهائية إذا كانت العلامة الأولى موجبة. \\
+\textbf{التصحيح:} إضافة السطر \textenglish{\texttt{grade = int(input("Please enter Math's grade:"))}} في نهاية جسم حلقة \textenglish{while}.
+\end{boxSolution}
+\else
+\textbf{ما هي التعليمة الخاطئة (أو الناقصة)؟} \underline{\hspace{8.5cm}} \\
+\textbf{كيف يجب تصحيحها؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def calc_avg():
+    sum = 0
+    count = 0
+    grade = int(input("Please enter Math's grade:"))
+    while grade < 0:
+        sum += grade
+        count += 1
+        grade = int(input("Please enter Math's grade:"))
+    avg = sum / count
+    print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} \textenglish{\texttt{while grade < 0:}} \\
+\textbf{التصحيح:} تغيير شرط الحلقة إلى \textenglish{\texttt{while grade > 0:}} لأنّ الحلقة يجب أن تستمر طالما أنّ العلامة موجبة وتتوقف عند إدخال علامة سالبة أو صفر.
+\end{boxSolution}
+\else
+\textbf{ما هي التعليمة الخاطئة؟} \underline{\hspace{9.5cm}} \\
+\textbf{كيف يجب تصحيحها؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def calc_avg():
+    sum = 0
+    count = 0
+    grade = int(input("Please enter Math's grade:"))
+    while grade > 0:
+        sum += grade
+        count += 1
+        grade = int(input("Please enter Math's grade:"))
+        avg = sum / count
+    print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} حساب المعدّل \textenglish{\texttt{avg = sum / count}} موجود داخل حلقة \textenglish{while} (إزاحة زائدة). رغم أنّه يحسب القيمة الصحيحة في التكرار الأخير، إلّا أنّ حساب المعدّل يجب أن يتمّ مرة واحدة فقط بعد انتهاء الحلقة. \\
+\textbf{التصحيح:} إخراج السطر \textenglish{\texttt{avg = sum / count}} ليكون خارج حلقة \textenglish{while} (بنفس مستوى إزاحة \textenglish{while} و \textenglish{print}).
+\end{boxSolution}
+\else
+\textbf{ما هي التعليمة الخاطئة؟} \underline{\hspace{9.5cm}} \\
+\textbf{كيف يجب تصحيحها؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def calc_avg():
+    sum = 0
+    count = 0
+    grade = int(input("Please enter Math's grade:"))
+    while grade > 0:
+        sum += grade
+        count -= 1
+        grade = int(input("Please enter Math's grade:"))
+    avg = sum / count
+    print(avg)
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{التعليمة الخاطئة:} \textenglish{\texttt{count -= 1}} (إنقاص عدّاد العلامات بـ $1$ بدل زيادته). \\
+\textbf{التصحيح:} تغيير السطر إلى \textenglish{\texttt{count += 1}} لعدّ العلامات الموجبة بشكل صحيح.
+\end{boxSolution}
+\else
+\textbf{ما هي التعليمة الخاطئة؟} \underline{\hspace{9.5cm}} \\
+\textbf{كيف يجب تصحيحها؟} \underline{\hspace{10cm}}
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{الفصل الثاني — اختياري ($40$ علامة)}
+أجيبوا عن \textbf{سؤالين} من بين الأسئلة $6$-$9$ (لكل سؤال — $20$ علامة).
+
+\begin{enumerate}[resume, label=\textbf{السؤال \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) \textbf{العدد المثالي} هو عدد يساوي مجموع جميع قواسمه الموجبة (لا يشمل العدد نفسه).
+\begin{itemize}
+\item \textbf{مثال:} العدد $28$ هو عدد مثالي لأنّه يساوي مجموع جميع قواسمه: $28 = 1 + 2 + 4 + 7 + 14$.
+\item القاسم هو عدد يقسم العدد المقسوم مع باقي قسمة صفر. مثلًا: $4$ هو قاسم لـ $24$، لكنّه ليس قاسمًا لـ $23$.
+\end{itemize}
+
+\begin{enumerate}[label=\alph*.]
+\item حسب التعريف أعلاه، هل $6$ هو عدد مثالي؟ إذا نعم، اعرضوا تعبيرًا رياضيًا (كما هو معروض في المثال) يُظهر ذلك؛ وإلّا اشرحوا.
+\ifwithsols
+\begin{boxSolution}
+\textbf{نعم}، العدد $6$ هو عدد مثالي لأنّ قواسمه (بدون الـ $6$ نفسه) هي $1$، $2$، $3$، ومجموعها يساوي:
+$$6 = 1 + 2 + 3$$
+\end{boxSolution}
+\else
+\\ \underline{\hspace{14cm}}
+\fi
+\filbreak
+
+\item أمامكم مقطع برنامج يستقبل عددًا من المستخدم ويفحص ما إذا كان العدد مثاليًا. أكملوا الفراغات $(1)$-$(5)$ في المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def perfect_number():
+    num = int(input("Please enter a number:"))
+    sum = (1)______
+    x = 1
+    while x < num:
+        if (2)______________:
+            sum = sum + (3)_________
+        x = (4)_________
+    if (5)______________:
+        print("Perfect number ")
+    else:
+        print("Not perfect number ")
+
+perfect_number()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $0$
+\item \textenglish{\texttt{num \% x == 0}}
+\item $x$
+\item $x + 1$
+\item \textenglish{\texttt{sum == num}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) مقطع البرنامج الذي أمامكم يستقبل رقم هوية مكوّنًا من $9$ منازل (\textenglish{id\_number}) ومنزلة إضافية (\textenglish{digit})، ويطبع جميع الأماكن (المواقع) في رقم الهوية التي تظهر فيها المنزلة \textenglish{digit} (من اليمين إلى اليسار، بدءًا من المكان $1$).
+إذا لم تظهر المنزلة في رقم الهوية، تطبع العملية $-1$.
+\begin{itemize}
+\item \textbf{مثال $1$:} لرقم الهوية $334429969$ والمنزلة $9$ — تُطبع الأماكن التالية: $1$، $3$، $4$.
+\item \textbf{مثال $2$:} لرقم الهوية $123457899$ والمنزلة $6$ — يُطبع $-1$ لأنّ المنزلة $6$ غير موجودة في رقم الهوية.
+\end{itemize}
+أكملوا الفراغات $(1)$-$(7)$ في المقطع لكي ينفّذ المطلوب:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def find_location():
+    id_number = int(input("Please enter ID number:"))
+    digit = int(input("Please enter a digit:"))
+    found = False
+    for index in range((1)_______, (2)_______):
+        if (3)__________________:
+            print((4)____________)
+            found = (5)_____________
+        id_number = (6)_______________
+    if found == False:
+        print((7)__________)
+
+find_location()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item $1$
+\item $10$
+\item \textenglish{\texttt{id\_number \% 10 == digit}}
+\item \textenglish{\texttt{index}}
+\item \textenglish{\texttt{True}}
+\item \textenglish{\texttt{id\_number // 10}}
+\item $-1$
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) أمامكم أربعة مقاطع برنامج تستعمل المكتبة \textenglish{turtle}. كل مقطع برنامج يرسم شكلًا مختلفًا. لائموا بين كل كود والشكل الذي يرسمه.
+افترضوا أنّه في بداية كل كود تظهر الأسطر التالية المشتركة لجميع المقاطع:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+import turtle
+wn = turtle.Screen()
+player = turtle.Turtle()
+player.shape("turtle")
+\end{minted}
+\end{english}
+\end{boxCode}
+
+{\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|C{0.9cm}|p{7.2cm}|C{0.9cm}|C{5.2cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{كود بايثون}} & \multicolumn{2}{c|}{\textbf{الشكل}} \\
+\hline
+$1)$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for x in range(360):
+    player.left(1)
+    player.forward(1)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $a)$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.45]
+\draw[thick] (0,0) -- (0,1) -- (1,1) -- (1,2) -- (2,2) -- (2,3) -- (3,3) -- (3,4) -- (4,4);
+\filldraw (4,4) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$2)$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for index in range(3):
+    player.forward(100)
+    player.left(360 / 3)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $b)$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (0,0) -- (3,0) -- (1.5,2.6) -- cycle;
+\filldraw (0,0) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$3)$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+player.left(180)
+player.forward(80)
+player.left(90)
+player.forward(70)
+for index in range(4):
+    player.forward(80)
+    player.left(90)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $c)$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (0,1.5) circle (1.5cm);
+\filldraw (0,0) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+$4)$ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for index in range(4):
+    player.left(90)
+    player.forward(50)
+    player.right(90)
+    player.forward(50)
+turtle.mainloop()
+\end{minted}
+\end{english}
+\end{pycell}
+& $d)$ &
+\begin{english}
+\vspace{0.1cm}
+\begin{tikzpicture}[scale=0.45]
+\draw[thick] (2,4) -- (0,4) -- (0,2.2) -- (0,0) -- (2,0) -- (2,2.2) -- (0,2.2);
+\filldraw (0,2.2) circle (3pt);
+\end{tikzpicture}
+\end{english}
+\\ \hline
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}
+\item الكود $1$ يلائم الشكل $c$ (دائرة، لأنّه يتحرك خطوة واحدة ويدور درجة واحدة $360$ مرة).
+\item الكود $2$ يلائم الشكل $b$ (مثلث متساوي الأضلاع، لأنّه يكرر $3$ مرات وبزاوية دوران $120^\circ$).
+\item الكود $3$ يلائم الشكل $d$ (يتحرك يسارًا ثم للأسفل، ثم يرسم مربّعًا).
+\item الكود $4$ يلائم الشكل $a$ (درج صاعد مكوّن من $4$ درجات).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item ($20$ علامة) \textbf{"نص بقفزة $2$"} هو نص يُبنى من نص موجود عن طريق تخطّي حرفين اثنين في كل مرة (أي أخذ حرف وتخطّي حرفين، وهكذا).
+\begin{itemize}
+\item \textbf{مثال:} للنص التالي: \textenglish{\texttt{"paryertgfhyjogqn"}}، ينتج النص بقفزة $2$ التالي: \textenglish{\texttt{"python"}}.
+\end{itemize}
+مقطع البرنامج الذي أمامكم يستقبل نصًا \textenglish{st} من المستخدم، ويعرض "نصًا بقفزة $2$". أكملوا الأجزاء الناقصة $(1)$-$(6)$ في المقطع:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def create_skip2str():
+    (1)___ = input("Please enter a string:")
+    skip2str = ""
+    for index in range((2)____, (3)________, (4)____):
+        skip2str = skip2str + (5)_________
+    print((6)________)
+
+create_skip2str()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[label=(\arabic*)]
+\item \textenglish{\texttt{st}}
+\item $0$
+\item \textenglish{\texttt{len(st)}}
+\item $3$ (لأنّ تخطّي حرفين يعني القفز بخطوة مقدارها $3$ مؤشرات: $0, 3, 6, \dots$)
+\item \textenglish{\texttt{st[index]}}
+\item \textenglish{\texttt{skip2str}}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

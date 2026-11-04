@@ -1,0 +1,273 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة عمل - تدريب على الشروط والحلقات (بايثون أ)}
+\else
+\title{ورقة عمل - تدريب على الشروط والحلقات (بايثون أ)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{تمارين: الشروط والحلقات}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item طلبت المعلمة من الطلاب تنفيذ المهمة التالية:
+"اكتبوا برنامجًا يستقبل عددين صحيحين، ويطبع عبارة توضيحية تصف إذا كان العددان \textbf{زوجيين} أو \textbf{فرديين}".
+
+كتب الطلاب عدة حلول مختلفة. افترضوا أنّه في بداية كل مقطع برنامج كتب الطلاب السطرين التاليين:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+num1 = int(input('Enter an integer number: '))
+num2 = int(input('Enter an integer number: '))
+\end{minted}
+\end{english}
+\end{boxCode}
+
+حددوا لكل مقطع برنامج إذا كان يحقّق المطلوب (نعم أم لا)؛ وإذا كان مقطع البرنامج لا يحقّق المطلوب، اشرحوا لماذا.
+
+\begin{enumerate}[label=\alph*., itemsep=1.5em]
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num1 % num2 == 0:
+    print(num1, num2, "Both are even")
+else:
+    print(num1, num2, "Both are odd")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا يحقّق المطلوب.} لأنّ الشرط \textenglish{\texttt{num1 \% num2 == 0}} يفحص إذا كان \textenglish{num1} يقسم على \textenglish{num2} بدون باقٍ، ولا يفحص إذا كان كل عدد يقسم على $2$ بدون باقٍ. مثلًا لـ $\text{num1} = 9$ و $\text{num2} = 3$ يطبع أنّهما زوجيان رغم أنّهما فرديان.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+even = num1
+odd = num2
+print(num1, "Even number")
+print(num2, "Odd number")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا يحقّق المطلوب.} لأنّ مقطع البرنامج لا يفحص قيمتي العددين أصلًا، بل يفترض دائمًا أنّ العدد الأول زوجي والعدد الثاني فردي بغضّ النظر عن المُدخل.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num1 % 2 == 0:
+    print(num1, num2, "Both are even")
+else:
+    print(num1, num2, "Both are odd")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا يحقّق المطلوب.} لأنّ الشرط يفحص العدد الأول \textenglish{num1} فقط ويتجاهل فحص العدد الثاني \textenglish{num2}. مثلًا لـ $\text{num1} = 4$ و $\text{num2} = 5$ يطبع أنّهما زوجيان.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num1 % 2 == 0 and num2 % 2 == 0:
+    print(num1, num2, "Both are even")
+else:
+    print(num1, num2, "Both are odd")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا يحقّق المطلوب.} لأنّ فرع \textenglish{else} يعمل عندما لا يكون العددان زوجيين معًا، وهذا يشمل الحالة التي يكون فيها أحدهما زوجيًا والآخر فرديًا (مثل $\text{num1} = 4$ و $\text{num2} = 5$)، فيطبع بالخطأ أنّهما فرديان.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num1 % 2 == 0 and num2 % 2 == 0:
+    print(num1, num2, "Both are even")
+elif num1 % 2 != 0 and num2 % 2 != 0:
+    print(num1, num2, "Both are odd")
+else:
+    print("One is even and the other is odd")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{نعم، يحقّق المطلوب.} لأنّه يفحص أولًا إذا كان العددان زوجيين معًا، ثم يفحص إذا كانا فرديين معًا، وفي باقي الحالات يطبع أنّ أحدهما زوجي والآخر فردي.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\item .
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+if num1 % 2 == 0:
+    if num2 % 2 == 0:
+        print(num1, num2, "Both are even")
+    else:
+        print("One is even and the other is odd")
+elif num1 % 2 != 0 and num2 % 2 != 0:
+    print(num1, num2, "Both are odd")
+else:
+    print("One is even and the other is odd")
+\end{minted}
+\end{english}
+\end{boxCode}
+\ifwithsols
+\begin{boxSolution}
+\textbf{نعم، يحقّق المطلوب.} لأنّه يغطي جميع الحالات الأربعة الممكنة لزوجية وفردية العددين بشكل صحيح بواسطة شروط متداخلة ومتتالية.
+\end{boxSolution}
+\else
+\textbf{هل يحقّق المطلوب (نعم / لا)؟} \underline{\hspace{3cm}} \quad \textbf{الشرح:} \underline{\hspace{7cm}}
+\fi
+\filbreak
+
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم جدول به مقطعا برنامج. لكل من المقطعين، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|p{8.5cm}|C{4.5cm}|}
+\hline
+\textbf{البند} & \centering\textbf{الكود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+أ &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(-5, 0, 1):
+    print(i)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{-5}\newline\texttt{-4}\newline\texttt{-3}\newline\texttt{-2}\newline\texttt{-1}\end{english} \fi \\
+\hline
+ب &
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+for i in range(5):
+    print(i)
+else:
+    print("Done!")
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{0}\newline\texttt{1}\newline\texttt{2}\newline\texttt{3}\newline\texttt{4}\newline\texttt{Done!}\end{english} \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم مقطع البرنامج التالي:
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|p{9.5cm}|C{5cm}|}
+\hline
+\centering\textbf{الكود بلغة بايثون} & \textbf{المُخرج الناتج} \\
+\hline
+\begin{pycell}
+\begin{english}
+\begin{minted}{python}
+num = 98713
+reverse_number = 0
+while num > 0:
+    reminder = num % 10
+    reverse_number = (reverse_number * 10) + reminder
+    num = num // 10
+print("Reverse number: ", reverse_number)
+\end{minted}
+\end{english}
+\end{pycell}
+& \ifwithsols \begin{english}\texttt{Reverse number:\ \ 31789}\end{english} \fi \\
+\hline
+\end{longtable}}
+
+\vspace{1em}
+\begin{enumerate}[label=\alph*.]
+\item اكتبوا ما هو المُخرج الناتج في العمود الفارغ في الجدول أعلاه.
+\ifwithsols
+\begin{boxSolution}
+المُخرج الناتج هو: \textenglish{\texttt{Reverse number:\ \ 31789}}
+
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|C{2cm}|C{2cm}|C{3cm}|C{5cm}|}
+\hline
+\textbf{num} & \textbf{reminder} & \textbf{reverse\_number} & \textarabic{\textbf{المخرجات}} \\
+\hline
+98713 & & 0 & \\ \hline
+9871 & 3 & 3 & \\ \hline
+987 & 1 & 31 & \\ \hline
+98 & 7 & 317 & \\ \hline
+9 & 8 & 3178 & \\ \hline
+0 & 9 & 31789 & \texttt{Reverse number:\ \ 31789} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item ما هو الهدف من مقطع البرنامج؟
+\ifwithsols
+\begin{boxSolution}
+يقوم مقطع البرنامج بعكس ترتيب منازل العدد الصحيح الموجب \textenglish{num} وحفظ العدد المقلوب في المتغير \textenglish{reverse\_number} ثم طباعته.
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

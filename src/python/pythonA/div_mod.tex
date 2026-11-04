@@ -1,0 +1,675 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل ورقة عمل - القسمة الصحيحة وباقي القسمة (بايثون أ)}
+\else
+\title{ورقة عمل - القسمة الصحيحة وباقي القسمة (بايثون أ)}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{القسم الأول: أسئلة الدرس - القسمة الصحيحة وباقي القسمة}
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item \textbf{توزيع هدايا:} نريد أن نوزّع هدايا عيد ميلاد لخمسة أولاد بالتساوي.
+اكتبوا عملية تستقبل كمية الهدايا، تحسب وتطبع كمية الهدايا التي يحصل عليها كل ولد وكمية الهدايا المتبقية.
+
+\ifdetailed
+\begin{boxExample}
+عند إدخال $34$ هدية مقسّمة على $5$ أولاد:
+\begin{english}
+\begin{minted}{text}
+Enter number of presents: 34
+Each kid gets: 6 presents
+Left presents: 4 presents
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def presents():
+    num = int(input("Enter number of presents: "))
+    print("Each kid gets:", num // 5, "presents")
+    print("Left presents:", num % 5, "presents")
+
+presents()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{قسمة عادية، قسمة صحيحة وباقي القسمة:} اكتبوا عملية تستقبل عددين صحيحين وتطبع نتيجة قسمتهما على بعض، نتيجة القسمة الصحيحة، والباقي من القسمة. يجب أن يظهر التمرين والحل على الشاشة.
+
+\ifdetailed
+\begin{boxExample}
+عند إدخال $\text{num1} = 7$ و $\text{num2} = 5$:
+\begin{english}
+\begin{minted}{text}
+Enter number: 7
+Enter number: 5
+num1 // num2 : 1
+num1 / num2 : 1.4
+num1 % num2 : 2
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex1():
+    num1 = int(input("Enter number: "))
+    num2 = int(input("Enter number: "))
+    print("num1 // num2 :", num1 // num2)
+    print("num1 / num2 :", num1 / num2)
+    print("num1 % num2 :", num1 % num2)
+
+ex1()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{القسمة على $2$:} أمامكم عملية تطبع باقي القسمة على $2$ ($0$ أو $1$) مع عبارة توضيحية ملائمة:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def ex2():
+    num = int(input("Enter an integer number:"))
+    print("Calculating modulo:")
+    print(num % 2)
+
+ex2()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item ما هو المُخرج الناتج للمُدخل $\text{num} = 15$؟
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{text}
+Calculating modulo:
+1
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item ما هو المُخرج الناتج للمُدخل $\text{num} = 14$؟
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{text}
+Calculating modulo:
+0
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{منازل العدد:} اكتبوا عملية تستقبل عددًا ثنائي المنازل (مؤلّفًا من منزلتين)، وتطبع:
+\begin{itemize}
+\item منزلة الآحاد مع رسالة ملائمة.
+\item منزلة العشرات مع رسالة ملائمة.
+\item حاصل جمع المنزلتين مع رسالة ملائمة.
+\end{itemize}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex3():
+    num = int(input("Enter a two-digit number: "))
+    units = num % 10
+    tens = num // 10
+    total = units + tens
+    print("The units digit is:", units)
+    print("The tens digit is:", tens)
+    print("Sum of two digits:", total)
+
+ex3()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{عدد ثلاثي المنازل:} أمامكم عمليتان تستقبل كلٌّ منهما عددًا ثلاثي المنازل (مؤلّفًا من $3$ منازل) وتطبع حاصل ضرب منازله الثلاث:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def mult1():
+    num = int(input("Enter 3 digits num: "))
+    d = num % 10
+    t = num // 10 % 10
+    h = num // 100
+    print(d * t * h)
+
+mult1()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def mult2():
+    num = int(input("Enter 3 digits num: "))
+    d = num % 10
+    t = num % 100 // 10
+    h = num // 100
+    print(d * t * h)
+
+mult2()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[label=\alph*.]
+\item ما هو المُخرج الناتج لكلّ من العمليتين عند إدخال العدد $243$؟
+\ifwithsols
+\begin{boxSolution}
+المُخرج في كلتا العمليتين هو $24$ (لأنّ $3 \cdot 4 \cdot 2 = 24$).
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اشرحوا كيف يتمّ استخلاص منزلة العشرات $t$ في كلّ من العمليتين.
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}
+\item في \textenglish{mult1}: التعبير \textenglish{\texttt{num // 10}} يحذف منزلة الآحاد (مثلًا $243 // 10 = 24$)، ثم \textenglish{\texttt{\% 10}} يستخلص منزلة الآحاد للعدد الناتج وهي منزلة العشرات الأصلية ($24 \% 10 = 4$).
+\item في \textenglish{mult2}: التعبير \textenglish{\texttt{num \% 100}} يستخلص آخر منزلتين (الآحاد والعشرات معًا، مثلًا $243 \% 100 = 43$)، ثم \textenglish{\texttt{// 10}} يستخلص منزلة العشرات ($43 // 10 = 4$).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item حلّوا التمارين الحسابية التالية:
+
+{\centering
+\begin{english}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{p{4.5cm}p{4.5cm}p{4.5cm}}
+\texttt{16 // 3 =} \ifwithsols \textbf{5} \else \underline{\hspace{2cm}} \fi &
+\texttt{26 // 4 =} \ifwithsols \textbf{6} \else \underline{\hspace{2cm}} \fi &
+\texttt{52 // 7 =} \ifwithsols \textbf{7} \else \underline{\hspace{2cm}} \fi \\
+\texttt{16 \% 3 =} \ifwithsols \textbf{1} \else \underline{\hspace{2cm}} \fi &
+\texttt{26 \% 4 =} \ifwithsols \textbf{2} \else \underline{\hspace{2cm}} \fi &
+\texttt{52 / 7 =} \ifwithsols \textbf{7.4285...} \else \underline{\hspace{2cm}} \fi \\
+\end{tabular}
+\end{english}
+\par} %
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{باقات الزهور:} يتلقّى حانوت بيع الزهور يوميًا كميات مختلفة من الزهور. تقوم سهى بتنسيق الزهور في الحانوت وتقسيمها لباقات بالتساوي.
+اكتبوا عملية لمساعدة سهى على تقسيم كميات الزهور اليومية لباقات تحتوي على عدد زهور متساوٍ: تستقبل العملية عدد الورود في المخزون اليومي الذي استلمه الحانوت وعدد الباقات التي يجب على سهى تنسيقها، وتطبع عدد الورود في كل باقة وعدد الورود المتبقية.
+
+\ifdetailed
+\begin{boxExample}
+\begin{itemize}
+\item لإدخال $1000$ وردة و $23$ باقة: في كل باقة $43$ وردة، ويتبقى $11$ وردة.
+\item لإدخال $610$ وردات و $20$ باقة: في كل باقة $30$ وردة، ويتبقى $10$ وردات.
+\end{itemize}
+\end{boxExample}
+\fi
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex4():
+    flowers = int(input("Enter the number of flowers today: "))
+    bouquet = int(input("Enter the number of ordered bouquets: "))
+    print("The number of flowers to be assigned to each bouquet is:")
+    print(flowers // bouquet)
+    print("The number of flowers left is:")
+    print(flowers % bouquet)
+
+ex4()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{كتب المكتبة:} بمناسبة افتتاح مكتبة المدرسة يقومون بترتيب الرفوف فيها. في كل رفّ يمكن وضع $15$ كتابًا تعليميًا، وتوضع الكتب التي لا مكان لها على الرفوف جانبًا في العربة.
+اكتبوا عملية تستقبل عدد الكتب، ثم تحسب وتطبع عدد الرفوف اللازم لحفظها، وتطبع عدد الكتب المتبقية التي لا مكان لها على الرفوف.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex5():
+    books_num = int(input("Enter number of books: "))
+    shelf = 15
+    print("The number of shelves needed:", books_num // shelf)
+    print("The number of books in the cart:", books_num % shelf)
+
+ex5()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item \textbf{فعاليات مدرسية:} في المدرسة يخرجون ليوم فعاليات مدرسية لكل صفوف الطبقة. يوجد $3$ باصات، في كل باص $40$ مكانًا للجلوس، ويجب ملء الأماكن في الباصات بالكامل قبل الانطلاق.
+\begin{itemize}
+\item وصل من الصف السابع "أ": $23$ طالبًا، مرافقان اثنان ($2$) ومسعف ($1$).
+\item وصل من الصف السابع "ب": $20$ طالبًا ومرافق واحد ($1$).
+\item وصل من الصف السابع "ج": $30$ طالبًا و $3$ مرافقين.
+\end{itemize}
+
+\begin{enumerate}[label=\alph*.]
+\item هل يوجد مكان لكل الطلاب والمرافقين (عددهم الكلي $80$) في الباصات الممتلئة، أم توجد حاجة لإحضار حافلة صغيرة (مينيبوس)؟
+\ifwithsols
+\begin{boxSolution}
+بما أنّ كل باص يتّسع لـ $40$ مسافرًا وعدد المسافرين الكلي هو $80$، فإنّهم يملؤون باصين بالكامل ($80 // 40 = 2$) ولا يتبقى أي مسافر بدون مقعد ($80 \% 40 = 0$)، لذا لا توجد حاجة لإحضار مينيبوس.
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتبوا عملية تستقبل عدد المسافرين وعدد الأماكن في الباص الواحد، وتطبع عدد المسافرين الذين لا يوجد لهم مكان في الباصات الممتلئة.
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex6():
+    people = int(input("Enter the number of people: "))
+    seats = int(input("Enter the number of seats: "))
+    left = people % seats
+    print("The number of people with no seat:", left)
+
+ex6()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+\end{enumerate}
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+\section*{القسم الثاني: ورقة عمل - طباعة، استقبال والعمليات الحسابية}
+
+\begin{enumerate}[resume, label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+
+% ---------------------------------------------------------------
+\item اكتبوا نتائج الأوامر التالية:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+print("30//6= ", 30 // 6)
+print("30/6= ", 30 / 6)
+print("28//6= ", 28 // 6)
+print("28/6= ", 28 / 6)
+print("28//4= ", 28 // 4)
+print("28/4= ", 28 / 4)
+print("10//3= ", 10 // 3)
+print("10/3= ", 10 / 3)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{text}
+30//6=  5
+30/6=  5.0
+28//6=  4
+28/6=  4.666666666666667
+28//4=  7
+28/4=  7.0
+10//3=  3
+10/3=  3.3333333333333335
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item اكتبوا نتائج الأوامر التالية:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+print("30%6 =", 30 % 6)
+print("30%4 =", 30 % 4)
+print("28%6 =", 28 % 6)
+print("27%8 =", 27 % 8)
+print("28%10 =", 28 % 10)
+print("26%4 =", 26 % 4)
+print("9%3 =", 9 % 3)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{text}
+30%6 = 0
+30%4 = 2
+28%6 = 4
+27%8 = 3
+28%10 = 8
+26%4 = 2
+9%3 = 0
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item أكملوا الجدول التالي، واشرحوا ما معنى كل عامل:
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{longtable}{|C{1.5cm}|C{2.5cm}|p{9.5cm}|}
+\hline
+\textbf{البند} & \textbf{العامل} & \centering\arraybackslash\textbf{معنى العامل} \\
+\hline
+$1$ & $/$ & \ifwithsols قسمة عادية (دقيقة) — تعيد نتيجة القسمة كعدد عشري (\textenglish{float}). \fi \\
+\hline
+$2$ & $//$ & \ifwithsols قسمة صحيحة — تعيد الجزء الصحيح فقط من ناتج القسمة بدون الكسر (\textenglish{int}). \fi \\
+\hline
+$3$ & $\%$ & \ifwithsols باقي القسمة (مودولو) — تعيد الباقي من قسمة العدد الأول على العدد الثاني. \fi \\
+\hline
+\end{longtable}}
+\filbreak
+
+% ---------------------------------------------------------------
+\item
+\begin{enumerate}[label=\alph*.]
+\item في الجدول الذي أمامكم توجد عدة تمارين حسابية، لائموا بين التمارين ذات نفس باقي القسمة:
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{|C{1.5cm}|C{3cm}|C{1cm}|C{1.5cm}|C{3cm}|}
+\cline{1-2}\cline{4-5}
+$1$ & $10 \% 7$ & & $A$ & $6 \% 6$ \\
+\cline{1-2}\cline{4-5}
+$2$ & $6 \% 9$ & & $B$ & $10 \% 3$ \\
+\cline{1-2}\cline{4-5}
+$3$ & $12 \% 5$ & & $C$ & $2 \% 10$ \\
+\cline{1-2}\cline{4-5}
+$4$ & $13 \% 4$ & & $D$ & $13 \% 10$ \\
+\cline{1-2}\cline{4-5}
+$5$ & $15 \% 3$ & & $E$ & $14 \% 8$ \\
+\cline{1-2}\cline{4-5}
+\end{longtable}}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{itemize}
+\item $1$ ($10 \% 7 = 3$) يلائم $D$ ($13 \% 10 = 3$).
+\item $2$ ($6 \% 9 = 6$) يلائم $E$ ($14 \% 8 = 6$).
+\item $3$ ($12 \% 5 = 2$) يلائم $C$ ($2 \% 10 = 2$).
+\item $4$ ($13 \% 4 = 1$) يلائم $B$ ($10 \% 3 = 1$).
+\item $5$ ($15 \% 3 = 0$) يلائم $A$ ($6 \% 6 = 0$).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item احسبوا:
+\begin{english}
+\begin{itemize}
+\item \texttt{20 // 6 + 14 \% 7 =} \ifwithsols $\mathbf{3 + 0 = 3}$ \else \underline{\hspace{3cm}} \fi
+\item \texttt{20 * 3 - 6 // 4 =} \ifwithsols $\mathbf{60 - 1 = 59}$ \else \underline{\hspace{3cm}} \fi
+\item \texttt{7 \% 6 + 12 / 6 + 13 // 6 =} \ifwithsols $\mathbf{1 + 2.0 + 2 = 5.0}$ \else \underline{\hspace{3cm}} \fi
+\end{itemize}
+\end{english}
+\filbreak
+\end{enumerate}
+\filbreak
+
+% ---------------------------------------------------------------
+\item أمامكم مقطع البرنامج التالي. أكملوا جدول المتابعة التالي:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}[linenos]{python}
+num1 = 71
+num2 = num1 // 2
+num3 = num2 * num1
+num3 = num3 % 10
+print(num1, num2, num3)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{2.2cm}|C{2.2cm}|C{2.5cm}|C{4.5cm}|}
+\hline
+\textbf{num1} & \textbf{num2} & \textbf{num3} & \textarabic{\textbf{المُخرج}} \\
+\hline
+71 & 35 & 2485 & \\ \hline
+ & & 5 & \texttt{71 35 5} \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\end{boxSolution}
+\else
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|C{2.2cm}|C{2.2cm}|C{2.5cm}|C{4.5cm}|}
+\hline
+\textbf{num1} & \textbf{num2} & \textbf{num3} & \textarabic{\textbf{المُخرج}} \\
+\hline
+ & & & \\ \hline
+ & & & \\ \hline
+ & & & \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item تريد المرشدة أن توزّع ملصقات للأولاد المشاركين بفعالية الحركة الشبابية. لديها $36$ ملصقًا في الصندوق وتريد أن توزّعها بالتساوي على الأولاد.
+اكتبوا برنامجًا يستقبل عدد الأولاد المشاركين بالفعالية ويطبع على الشاشة كمية الملصقات التي يحصل عليها كل ولد وعدد الملصقات المتبقية.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+kids = int(input("Enter number of kids: "))
+stickers = 36
+print("Stickers per kid:", stickers // kids)
+print("Stickers left:", stickers % kids)
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item انضمّ حمادة لحملة تنزيلات في شركة جديدة تبيع هواتف نقالة وحزم تصفّح. يريد حمادة أن يحسب ويطبع تكلفة الاستخدام السنوي وتكلفة الهاتف. اقترح عمر أن يحسب التكلفة الكلية لسنة واحدة ثم يقسم النتيجة على $12$ قسطًا.
+ساعدوهم أن يكملوا البرنامج:
+\begin{itemize}
+\item تكلفة الهاتف النقال: $1000$ ش.ج.
+\item تكلفة غطاء للهاتف: $100$ ش.ج.
+\item تكلفة الاستخدام: $50$ ش.ج للشهر.
+\end{itemize}
+
+أكملوا الناقص في مقطع الكود:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def ex2():
+    phone_price = _____
+    phone_cover = _____
+    monthly_pay = 50
+    _________ = phone_price + phone_cover + monthly_pay * _______
+    print("Total payment per month: ", total / 12, "nis")
+
+ex2()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex2():
+    phone_price = 1000
+    phone_cover = 100
+    monthly_pay = 50
+    total = phone_price + phone_cover + monthly_pay * 12
+    print("Total payment per month: ", total / 12, "nis")
+
+ex2()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item قائمة الطعام في مخبز الأخوة:
+\begin{itemize}
+\item قطعة بسكويت بطعم الشوكولاتة: $10$ ش.ج.
+\item قطعة كعك بطعم القرفة: $15$ ش.ج.
+\end{itemize}
+دخل سامح للمخبز واشترى قطعًا من البسكويت والكعك. اكتبوا عملية تستقبل عدد قطع البسكويت وعدد قطع الكعك التي اشتراها سامح، وتطبع عبارة توضيحية تبيّن تكلفة المنتجات والمبلغ الكلي للشراء.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def bakery():
+    cookies = int(input("Enter number of cookies: "))
+    cakes = int(input("Enter number of cakes: "))
+    cookies_cost = cookies * 10
+    cakes_cost = cakes * 15
+    total = cookies_cost + cakes_cost
+    print("Cookies cost:", cookies_cost, "Cakes cost:", cakes_cost)
+    print("Total cost:", total, "nis")
+
+bakery()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item تقوم شركة \textenglish{"work-n-play"} بتطوير أفاتارات (\textenglish{avatar}) للاعبي ألعاب الحاسوب. أمامكم تكلفة كل أفاتار:
+\begin{itemize}
+\item أفاتار سوبرمان: $6$ ش.ج.
+\item أفاتار مهرّج: $10$ ش.ج.
+\item أفاتار محاربة: $15$ ش.ج.
+\end{itemize}
+تمّ شراء $10$ أفاتارات من نمط سوبرمان، $5$ من نمط مهرّج و $12$ من نمط محاربة.
+أمامكم برنامج يحسب التكلفة الكلية للأفاتارات التي تمّ شراؤها. ساعدوا المبرمجين على إكمال الناقص:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{python}
+def ex3():
+    super_man = ___________
+    clown = ____________
+    fighter = ___________
+    total_cost = super_man * _____ + ______ * 5 + fighter * 12
+    print("total_cost= ", total_cost)
+
+ex3()
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def ex3():
+    super_man = 6
+    clown = 10
+    fighter = 15
+    total_cost = super_man * 10 + clown * 5 + fighter * 12
+    print("total_cost= ", total_cost)
+
+ex3()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ---------------------------------------------------------------
+\item سوف تحتفل لينا بعيد ميلادها. بهذه المناسبة طلبت هدايا لأولاد صفّها من موقع في الإنترنت:
+\begin{itemize}
+\item تكلفة التوصيل: $25$ ش.ج.
+\item تكلفة الهدية الواحدة: $10$ ش.ج.
+\end{itemize}
+اكتبوا عملية تستقبل عدد الأولاد، وتطبع المبلغ الكلي للطلبية مع تكلفة التوصيل.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{python}
+def birthday_order():
+    kids = int(input("Enter number of kids: "))
+    total = kids * 10 + 25
+    print("Total order cost:", total, "nis")
+
+birthday_order()
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
