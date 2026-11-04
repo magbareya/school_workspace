@@ -266,7 +266,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
   - Dragon Riders Academy (4 stages): [ex04-dragonRiders.tex](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04-dragonRiders.tex), solutions in [`ex04_dragon_riders_sol/`](file:///c:/dev/workspace/school_workspace/src/oop/exs/ex04_dragon_riders_sol)
 - **Required Architectural Pattern:**
   1. **Header Boxes:** Open with `\begin{boxDef}[قصة السلسلة: ...]` introducing the narrative, followed by `\begin{boxWarning}` instructing students to update and run `Main` in every exercise.
-  2. **Continuous Exercise Numbering:** `\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]`, continued in later stages with `\begin{enumerate}[resume, ...]`.
+  2. **Continuous Exercise Numbering:** `\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]`, continued in later stages with `\begin{enumerate}[resume, ...]`.
   3. **Stage Progression** (one `\section*{المرحلة ...}` per stage):
      - **مقدمة للوراثة:** Build 2 sibling classes *without* inheritance (some identical fields/methods, some unique), then extract only the identical members into a common base class, followed by `\begin{boxAttention}[- نقطة للتفكير]` motivating inheritance.
      - **تطبيق الوراثة بين الفئات:** Refactor the base class (`protected` fields) and derived classes (`: base(...)`, `override ToString()` calling `base.ToString()`), and add a third derived class holding an array of objects (e.g. `Supervisor`, `MotherShip`, `AlphaDragon`).
@@ -499,7 +499,7 @@ These two rules are **mandatory** in every document. Any older pattern that cont
 1. **`\filbreak` after every `\item` (always, outside any `\fi`):**
    At the end of each `\item` block — after the question text and after any `\ifdetailed ... \fi` / `\ifwithsols ... \fi` blocks belonging to it — put `\filbreak` on its own line, **outside** the conditional, so it applies in every build (regular, printable, solutions, white/black). The next item stays on the current page if it fits and moves to a new page only if it does not, so a question is never separated from its example/solution box.
    ```latex
-   \begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+   \begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]
    \item اكتب برنامجًا يستقبل ...
    \ifdetailed
    \begin{boxExample}
