@@ -1,0 +1,121 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{مشروع شركة "السعادة للجميع"}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ==============================================================
+\section*{المرحلة الثالثة: التحويل لأعلى وإعادة تعريف العمليات (\textenglish{virtual} و \textenglish{override})}
+% ==============================================================
+
+\textbf{قواعد حساب الرواتب ونقاط التصويت واستحقاق المكافأة} \\
+تُتخذ القرارات في الشركة عبر التصويت باستخدام \textbf{نقاط التأثير}، كما يتحدد الراتب الشهري والمكافأة السنوية لكل موظف بحسب نمطه وأقدميته كما يلي:
+
+{\renewcommand{\arraystretch}{1.4}
+\small
+\begin{longtable}{|p{0.20\textwidth}|p{0.37\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{نمط الموظف} & \textbf{الراتب الشهري (\textenglish{GetSalary})} & \textbf{نقاط التصويت (\textenglish{GetScore})} \\
+\hline
+\textbf{موظف عادي} \newline (\textenglish{Employee}) &
+راتب أساسي $5000$ ش.ج + $500$ ش.ج عن كل سنة أقدمية: \newline
+$5000 + 500 \cdot \text{seniority}$ &
+$4$ نقاط أساسية + نقطة عن كل سنة أقدمية: \newline
+$4 + \text{seniority}$ \\
+\hline
+\textbf{تقني حواسيب} \newline (\textenglish{Technician}) &
+راتب الموظف العادي + $250$ ش.ج عن كل $10$ حواسيب كاملة: \newline
+$\text{base} + \lfloor \frac{\text{computers}}{10} \rfloor \cdot 250$ &
+نقاط الموظف العادي + نقطة عن كل حاسوب: \newline
+$\text{base} + \text{computers}$ \\
+\hline
+\textbf{عضو لجنة عمال} \newline (\textenglish{UnionMember}) &
+يماثل راتب الموظف العادي تماماً. &
+\textbf{ضعف} نقاط الموظف العادي + نقطتان عن كل سنة باللجنة: \newline
+$2 \cdot \text{base} + 2 \cdot \text{unionYears}$ \\
+\hline
+\textbf{مسؤول مشاريع} \newline (\textenglish{Supervisor}) &
+راتب الموظف العادي + $100$ ش.ج عن كل موظف فعلي في فريقه: \newline
+$\text{base} + 100 \cdot \text{teamCount}$ &
+نقاط الموظف العادي + مجموع نقاط كافة أعضاء فريقه الفعليين. \\
+\hline
+\end{longtable}}
+
+\filbreak
+
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]
+
+    \item \textbf{تطبيق العمليات القابلة لإعادة التعريف (\textenglish{GetSalary()} و \textenglish{GetScore()}) واستدعاء \textenglish{base}} \\
+    أضف إلى الفئة الأساسية \textenglish{Employee} العمليتين العامتين القابلتين لإعادة التعريف:
+    \begin{itemize}
+        \item \textenglish{public virtual double GetSalary()}
+        \item \textenglish{public virtual int GetScore()}
+    \end{itemize}
+    وأعد تعريفهما (\textenglish{override}) في الفئات الفرعية \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor} وفق الجدول أعلاه، مع الحرص على استدعاء عملية فئة الأب عبر \textenglish{base.GetSalary()} و \\ \textenglish{base.GetScore()} لتجنب تكرار المعادلات الحسابية. \\
+    \textbf{الفحص في \textenglish{Main} (التحويل لأعلى):} \\
+    أنشئ في \textenglish{Main} مؤشرات من نمط الأب \textenglish{Employee} تشير إلى كائنات من الفئات الوارثة (مثلاً: \textenglish{Employee e1 = new Technician(...);} و \textenglish{Employee e2 = new UnionMember(...);} و \textenglish{Employee e3 = new Supervisor(...);})، ثم استدعِ عليها \textenglish{GetSalary()} و \textenglish{GetScore()} و \textenglish{ToString()} واطبع النتائج.
+    \filbreak
+
+    \item \textbf{إضافة عملية استحقاق المكافأة السنوية (\textenglish{YearlyBonus})} \\
+    أضف لمشروع الشركة عملية عامة قابلة لإعادة التعريف تعريفها: \\
+    \textenglish{public virtual bool YearlyBonus()}
+    \begin{itemize}
+        \item تُعرّف العملية لأول مرة في الفئة \textenglish{Employee} وتعيد \textenglish{true} إذا كانت أقدمية الموظف $5$ سنوات على الأقل ($\text{seniority} \ge 5$)، وإلا تعيد \textenglish{false}.
+        \item في الفئة \textenglish{Technician} يُعاد تعريف العملية (\textenglish{override}) وتعيد \textenglish{true} إذا كان التقني يحقق شرط الأقدمية (عبر استدعاء \textenglish{base.YearlyBonus()}) \textbf{وأيضًا} يتولى مسؤولية $100$ حاسوب على الأقل ($\text{computers} \ge 100$)، وإلا تعيد \textenglish{false}.
+        \item في الفئتين \textenglish{UnionMember} و \textenglish{Supervisor} يُعاد تعريف العملية (\textenglish{override}) بحيث تعيد \textenglish{false} دائماً (لأن أعضاء اللجنة ومسؤولي المشاريع غير مشمولين في هذه المكافأة).
+    \end{itemize}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    استدعِ في \textenglish{Main} العملية \textenglish{YearlyBonus()} عبر مؤشرات من نمط \textenglish{Employee} تشير إلى كائنات مختلفة واطبع النتائج.
+    \filbreak
+
+    \item \textbf{بناء فئة إدارة الشركة (\textenglish{Company}) وإضافة موظفين (\textenglish{AddEmployee})} \\
+    أضف فئة جديدة لمشروعنا باسم \textenglish{Company}. تمثّل هذه الفئة مجموعة موظفي الشركة من جميع الأنماط، بالاعتماد على حفظ مؤشرات لكائنات الأبناء داخل مصفوفة من نمط الأب \textenglish{Employee[]}:
+
+    {\renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Company}}} \\
+    \hline
+    صفات: ثابت يمثل الحد الأقصى للموظفين في الشركة، مصفوفة لحفظ موظفي الشركة، وعدد الموظفين الفعليين حالياً فيها. & \textenglish{public const int MAX = 100;} \newline \textenglish{private Employee[] employees;} \newline \textenglish{private int current;} \\
+    \hline
+    عملية بنائية تنشئ المصفوفة بحجم \textenglish{MAX} وتهيئ \textenglish{current} إلى $0$. & \textenglish{public Company()} \\
+    \hline
+    عملية تعيد عدد الموظفين الحاليين في الشركة. & \textenglish{GetCurrent()} \\
+    \hline
+    عملية تتلقى موظفاً من أي نمط وتضيفه إلى مصفوفة موظفي الشركة: تفحص أولاً إن كان هناك متسع في المصفوفة؛ إذا نعم، تضيف الموظف وتعيد \textenglish{true}، وإلا فلا تضيفه وتعيد \textenglish{false}. & \textenglish{public bool AddEmployee(Employee e)} \\
+    \hline
+    \end{longtable}}
+
+    \vspace{1em}
+    \noindent \textbf{الفحص في \textenglish{Main}:} \\
+    أنشئ كائناً من الفئة \textenglish{Company} في \textenglish{Main}، وأضف إليه عدة موظفين من الأنماط الأربعة (\textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember} و \textenglish{Supervisor})، واطبع عدد الموظفين الحاليين.
+    \filbreak
+
+    \item \textbf{عمليات تعتمد على \textenglish{virtual} و \textenglish{override} في الفئة \textenglish{Company}}
+    \begin{enumerate}[label=\textbf{(\arabic*)}]
+        \item \textbf{البحث عن بيانات موظف حسب رقم الهوية (\textenglish{GetEmployeeDetails}):} \\
+        اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{public string GetEmployeeDetails(string id)} تتلقى رقم هوية موظف (افترض أنه فريد) وتعيد سلسلة نصية تصف بيانات هذا الموظف (باستدعاء \textenglish{ToString()}). إذا لم يوجد موظف بهذا الرقم في الشركة، تعيد العملية نصاً فارغاً \textenglish{""}.
+        \item \textbf{مجموع الرواتب الشهرية (\textenglish{TotalSalary}):} \\
+        اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{public double TotalSalary()} تحسب وتعيد مجموع الرواتب الشهرية لجميع موظفي الشركة (باستدعاء \textenglish{GetSalary()} لكل موظف في المصفوفة).
+        \item \textbf{الموظفون المستحقون للمكافأة (\textenglish{GetBonusEmployees}):} \\
+        اكتب في الفئة \textenglish{Company} عملية باسم \textenglish{public Employee[] GetBonusEmployees()} تعيد مصفوفة (\textenglish{Employee[]}) تضم جميع موظفي الشركة المستحقين للمكافأة السنوية (بحسب نتيجة العملية \textenglish{YearlyBonus()}).
+    \end{enumerate}
+    \textbf{الفحص في \textenglish{Main}:} \\
+    في \textenglish{Main}، استدعِ \textenglish{GetEmployeeDetails} لرقم هوية موجود وآخر غير موجود، ثم اطبع مجموع الرواتب الكلي عبر \textenglish{TotalSalary()}، واستدعِ \textenglish{GetBonusEmployees()} واطبع بيانات الموظفين المستحقين للمكافأة.
+    \filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}

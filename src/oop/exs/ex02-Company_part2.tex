@@ -19,7 +19,7 @@
 \section*{المرحلة الثانية: تطبيق الوراثة بين الفئات}
 % ==============================================================
 
-\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2em]
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]
 
     \item \textbf{بناء علاقة الوراثة بين \textenglish{Employee} و \textenglish{Technician} و \textenglish{UnionMember}}
     \begin{itemize}
@@ -32,33 +32,28 @@
         \end{itemize}
     \end{itemize}
 
-    \clearpage
     فيما يلي ملخص واجهة الفئة الأساسية \textenglish{Employee} بعد التحديث:
 
-{\centering
-\renewcommand{\arraystretch}{1.2}
-\small
-\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
-\hline
-\multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
-\hline
-صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
-\hline
-عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
-\hline
-عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
-\hline
-\end{tabular}
-\par} %
+    {\renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{الفئة الأساسية: \textenglish{Employee}}} \\
+    \hline
+    صفات محمية: رقم الهوية، الاسم، وسنوات الأقدمية. & \textenglish{protected string id, name;} \newline \textenglish{protected int seniority;} \\
+    \hline
+    عمليتان بنائيتان لتهيئة صفات الموظف. & \textenglish{public Employee(string id, string name, int seniority)} \newline \textenglish{public Employee(string id, string name)} \\
+    \hline
+    عمليات \textenglish{Get}، \textenglish{SetName}، \textenglish{AddSeniorityYear}، و \textenglish{ToString}. & \textenglish{GetId(), GetName(), GetSeniority(), SetName(...), AddSeniorityYear(), ToString()} \\
+    \hline
+    \end{longtable}}
 
-\vspace{2em}
-
+    \vspace{1em}
     وملخص واجهتي الفئتين الفرعيتين الوارثتين \textenglish{Technician} و \textenglish{UnionMember}:
 
-    {\centering
-    \renewcommand{\arraystretch}{1.2}
+    {\renewcommand{\arraystretch}{1.2}
     \small
-    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
     \hline
     \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Technician : Employee}}} \\
     \hline
@@ -76,28 +71,25 @@
     \hline
     عمليات العضوية وإعادة تعريف \textenglish{ToString}. & \textenglish{GetUnionYears(), SetUnionYears(int u), override ToString()} \\
     \hline
-    \end{tabular}
-    \par} %
+    \end{longtable}}
 
-\vspace{2em}
-
+    \vspace{1em}
     \textbf{الفحص في \textenglish{Main}:} \\
     افحص الفئات المحدّثة في \textenglish{Main}: أنشئ كائنات من الفئات الثلاث، واستدعِ على كائني \textenglish{Technician} و \textenglish{UnionMember} عمليات موروثة من \textenglish{Employee} (مثل \textenglish{GetName} و \textenglish{AddSeniorityYear}) وعمليات خاصة بكل منهما، واطبع الكائنات.
+    \filbreak
 
-\clearpage
     \item \textbf{إضافة فئة فرعية ثالثة: مسؤول المشاريع (\textenglish{Supervisor})} \\
-    أضف فئة جديدة باسم \textenglish{Supervisor} تمثل مسؤول مشاريع في الشركة يدير فريقاً مكوّناً من 15 موظفاً كحد أقصى، وترث من الفئة \textenglish{Employee}:
+    أضف فئة جديدة باسم \textenglish{Supervisor} تمثل مسؤول مشاريع في الشركة يدير فريقاً مكوّناً من $15$ موظفاً كحد أقصى، وترث من الفئة \textenglish{Employee}:
 
-    {\centering
-    \renewcommand{\arraystretch}{1.2}
+    {\renewcommand{\arraystretch}{1.2}
     \small
-    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
     \hline
     \multicolumn{2}{|c|}{\textbf{الفئة الفرعية: \textenglish{Supervisor : Employee}}} \\
     \hline
-    صفات خاصة (\textenglish{private}): مصفوفة تمثل فريق الموظفين الذين يشرف عليهم (بحجم أقصى 15)، وعدد الموظفين الفعليين حالياً في فريقه. & \textenglish{private Employee[] team;} \newline \textenglish{private int teamCount;} \\
+    صفات خاصة (\textenglish{private}): مصفوفة تمثل فريق الموظفين الذين يشرف عليهم (بحجم أقصى $15$)، وعدد الموظفين الفعليين حالياً في فريقه. & \textenglish{private Employee[] team;} \newline \textenglish{private int teamCount;} \\
     \hline
-    عملية بنائية أولى تتلقى رقم الهوية، الاسم، وسنوات الأقدمية، وتهيئ صفات الأب عبر \textenglish{base}، وتنشئ مصفوفة \textenglish{team} بحجم 15، وتهيئ \textenglish{teamCount} إلى \textenglish{0}. & \textenglish{public Supervisor(string id, string name, int seniority)} \\
+    عملية بنائية أولى تتلقى رقم الهوية، الاسم، وسنوات الأقدمية، وتهيئ صفات الأب عبر \textenglish{base}، وتنشئ مصفوفة \textenglish{team} بحجم $15$، وتهيئ \textenglish{teamCount} إلى $0$. & \textenglish{public Supervisor(string id, string name, int seniority)} \\
     \hline
     عملية بنائية ثانية تتلقى كذلك مصفوفة موظفين جاهزة \textenglish{Employee[] team}، وتنسخ الحدود غير الفارغة (\textenglish{!= null}) إلى مصفوفة الفريق وتحدّث \textenglish{teamCount}. & \textenglish{public Supervisor(string id, string name, int seniority, Employee[] team)} \\
     \hline
@@ -109,15 +101,21 @@
     \hline
     عملية تعيد وصفاً نصياً لمسؤول المشاريع بالاستعانة بـ \textenglish{base.ToString()} مع إضافة عدد أعضاء فريقه الحاليين. & \textenglish{ToString()} \\
     \hline
-    \end{tabular}
-    \par} %
+    \end{longtable}}
 
-    \clearpage
-    \vspace{2em}
+    \vspace{1em}
     \noindent \textbf{الفحص في \textenglish{Main}:} \\
     أنشئ كائناً من الفئة \textenglish{Supervisor} في \textenglish{Main}، وأضف إلى فريقه موظفاً عادياً (\textenglish{Employee})، وتقنياً (\textenglish{Technician})، وعضو لجنة (\textenglish{UnionMember})، ثم جرّب العملية \\
      \textenglish{TransferBonusSeniority} واطبع بيانات المسؤول وأعضاء فريقه.
+    \filbreak
 
 \end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
 
 \end{document}

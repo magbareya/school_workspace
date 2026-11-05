@@ -13,20 +13,18 @@
 في هذا الكراس، سنبني النظام \textbf{خطوة بخطوة}: سنبدأ ببناء فئات منفصلة بدون وراثة، ثم نكتشف التكرار ونعالجه عبر بناء فئة أساسية وتطبيق \textbf{الوراثة}، وبعدها نوسّع النظام ليشمل إدارة الشركة وتطبيق \textbf{تعدد الأشكال} و\textbf{إعادة تعريف العمليات}.
 \end{boxDef}
 
-\clearpage
 % ==============================================================
 \section*{المرحلة الأولى: بناء الفئات (مقدمة للوراثة)}
 % ==============================================================
 
-\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, leftmargin=*, itemsep=2.2em]
+\begin{enumerate}[label=\textbf{تمرين \arabic*:}, wide=0pt, itemsep=2.2em]
 
     \item \textbf{بناء فئة تقني الحواسيب (\textenglish{Technician}) بدون وراثة} \\
     ابنِ فئة باسم \textenglish{Technician} لإدارة بيانات تقني الحواسيب في الشركة:
 
-    {\centering
-    \renewcommand{\arraystretch}{1.2}
+    {\renewcommand{\arraystretch}{1.2}
     \small
-    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
     \hline
     \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{Technician}}} \\
     \hline
@@ -34,7 +32,7 @@
     \hline
     عملية بنائية أولى تتلقى رقم الهوية، الاسم، سنوات الأقدمية، وعدد الحواسيب، وتهيئ جميع الصفات. & \textenglish{public Technician(string id, string name, int seniority, int computers)} \\
     \hline
-    عملية بنائية ثانية (لتقني جديد) تتلقى رقم الهوية، الاسم، وعدد الحواسيب فقط، وتهيئ الأقدمية (\textenglish{seniority}) إلى \textenglish{0}. & \textenglish{public Technician(string id, string name, int computers)} \\
+    عملية بنائية ثانية (لتقني جديد) تتلقى رقم الهوية، الاسم، وعدد الحواسيب فقط، وتهيئ الأقدمية (\textenglish{seniority}) إلى $0$. & \textenglish{public Technician(string id, string name, int computers)} \\
     \hline
     عمليات \textenglish{Get} لجميع الصفات. & \textenglish{GetId(), GetName(), GetSeniority(), GetComputers()} \\
     \hline
@@ -44,21 +42,19 @@
     \hline
     عملية تعيد نصاً يصف بيانات التقني. & \textenglish{ToString()} \\
     \hline
-    \end{tabular}
-    \par} %
+    \end{longtable}}
 
-    \vspace{2em}
+    \vspace{1em}
     \noindent \textbf{الفحص في \textenglish{Main}:} \\
     اكتب في \textenglish{Main} مقطع برنامج ينشئ كائنين من الفئة \textenglish{Technician} (أحدهما بالعملية البنائية الأولى والآخر بالثانية)، يستدعي \textenglish{AddSeniorityYear()} و \textenglish{SetComputers}، ويطبع وصفهما باستخدام \textenglish{ToString()}.
+    \filbreak
 
-    \clearpage
     \item \textbf{بناء فئة عضو لجنة العمال (\textenglish{UnionMember}) بدون وراثة} \\
     ابنِ فئة باسم \textenglish{UnionMember} لإدارة بيانات موظف يشغل عضوية في لجنة عمال الشركة:
 
-    {\centering
-    \renewcommand{\arraystretch}{1.2}
+    {\renewcommand{\arraystretch}{1.2}
     \small
-    \begin{tabular}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
+    \begin{longtable}{|>{\raggedleft\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.5\textwidth}|}
     \hline
     \multicolumn{2}{|c|}{\textbf{الفئة: \textenglish{UnionMember}}} \\
     \hline
@@ -74,22 +70,21 @@
     \hline
     عملية تعيد نصاً يصف بيانات عضو اللجنة. & \textenglish{ToString()} \\
     \hline
-    \end{tabular}
-    \par} %
+    \end{longtable}}
 
-    \vspace{2em}
+    \vspace{1em}
     \noindent \textbf{الفحص في \textenglish{Main}:} \\
     أضف إلى \textenglish{Main} إنشاء كائن من الفئة \textenglish{UnionMember}، وجرّب استدعاء عملياته \\
      (\textenglish{AddSeniorityYear} , \textenglish{SetUnionYears} , \textenglish{ToString}) وطباعة النتائج.
+    \filbreak
 
-     \clearpage
     \item \textbf{استخلاص المشترك وبناء فئة الموظف الأساسي (\textenglish{Employee})} \\
-    راجع الفئتين اللتين بنيتهما في التمرين 1 والتمرين 2. جد جميع الصفات والعمليات \textbf{المتطابقة (المشتركة فقط)} بين الفئتين، وأنشئ فئة جديدة باسم \textenglish{Employee} تتضمن فقط هذه الصفات والعمليات المشتركة. \\
+    راجع الفئتين اللتين بنيتهما في التمرين $1$ والتمرين $2$. جد جميع الصفات والعمليات \textbf{المتطابقة (المشتركة فقط)} بين الفئتين، وأنشئ فئة جديدة باسم \textenglish{Employee} تتضمن فقط هذه الصفات والعمليات المشتركة. \\
 
-    \vspace{2em}
-
+    \vspace{1em}
     \textbf{الفحص في \textenglish{Main}:} \\
     أنشئ كائناً من الفئة \textenglish{Employee} في \textenglish{Main}، وافحص عملياته واطبع بياناته.
+    \filbreak
 
 \end{enumerate}
 
