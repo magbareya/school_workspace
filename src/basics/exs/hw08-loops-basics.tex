@@ -1,0 +1,411 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\ifwithsols
+\title{حل وظيفة بيتية $8$ للصف العاشر: حلقات التكرار (\textenglish{while} و \textenglish{for})}
+\else
+\title{وظيفة بيتية $8$ للصف العاشر: حلقات التكرار (\textenglish{while} و \textenglish{for})}
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[itemsep=2em]
+
+% --- من القسم الثالث: حلقات سهلة، مقدار الخطوة، ومعالجة مباشرة ---
+\item اكتب برنامجًا يطبع جميع الأعداد الفردية من $99$ نزولًا إلى $33$ تنازليًّا، وبجانب كل عدد يطبع مضاعفه الثلاثي (أي العدد مضروبًا بـ $3$).
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+99 297
+97 291
+95 285
+...
+33 99
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+for (int i = 99; i >= 33; i -= 2)
+{
+    Console.WriteLine(i + " " + (i * 3));
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل من المستخدم أسعار منتجات (أعدادًا حقيقية موجبة) في متجر خلال فترة تنزيلات، ويتوقف عند إدخال العدد $0$. \\
+لكل سعر يُدخله المستخدم: إذا كان السعر أكبر من $200$ شيكل، يطبع البرنامج السعر بعد خصم $25\%$ منه (أي السعر مضروبًا بـ $0.75$)، وإلّا يطبع السعر كما هو بدون خصم.
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter price (0 to stop):
+120
+Final price: 120
+Enter price (0 to stop):
+400
+Final price: 300
+Enter price (0 to stop):
+0
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter price (0 to stop):");
+double price = double.Parse(Console.ReadLine());
+while (price != 0)
+{
+    if (price > 200)
+    {
+        Console.WriteLine("Final price: " + (price * 0.75));
+    }
+    else
+    {
+        Console.WriteLine("Final price: " + price);
+    }
+    Console.WriteLine("Enter price (0 to stop):");
+    price = double.Parse(Console.ReadLine());
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- من القسم الرابع: أسئلة المجموع ---
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$ يمثّل عدد الأيام، ثم يستقبل عدد الساعات التي تدرّب فيها رياضي في كل يوم من الأيام الـ $n$ (أعدادًا صحيحة). \\
+يحسب البرنامج ويطبع مجموع ساعات التدريب في \textbf{الأيام المكثّفة فقط} (اليوم المكثّف هو اليوم الذي تدرّب فيه الرياضي $3$ ساعات أو أكثر).
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter number of days:
+5
+Enter training hours for 5 days:
+2
+4
+1
+3
+5
+Total intensive hours: 12
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter number of days:");
+int n = int.Parse(Console.ReadLine());
+int sum = 0;
+
+Console.WriteLine("Enter training hours for " + n + " days:");
+for (int i = 1; i <= n; i++)
+{
+    int hours = int.Parse(Console.ReadLine());
+    if (hours >= 3)
+    {
+        sum += hours;
+    }
+}
+Console.WriteLine("Total intensive hours: " + sum);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item يريد طالب توفير مبلغ لشراء حاسوب محمول ثمنه $2500$ شيكل. اكتب برنامجًا يستقبل من الطالب المبالغ التي يوفّرها أسبوعيًّا (أعدادًا صحيحة موجبة) ويجمعها، ويتوقف فور وصول المجموع المتراكم إلى $2500$ شيكل أو تجاوزه. \\
+بعد انتهاء الحلقة، يطبع البرنامج المبلغ الكلّي الذي تجمّع لدى الطالب، والمبلغ الفائض فوق ثمن الحاسوب.
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter weekly savings:
+800
+700
+600
+550
+Total saved: 2650
+Extra amount: 150
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+Console.WriteLine("Enter weekly savings:");
+while (sum < 2500)
+{
+    int amount = int.Parse(Console.ReadLine());
+    sum += amount;
+}
+Console.WriteLine("Total saved: " + sum);
+Console.WriteLine("Extra amount: " + (sum - 2500));
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- من القسم الخامس: أسئلة العدّ ---
+\item اكتب برنامجًا يستقبل من المستخدم $15$ عددًا صحيحًا ثلاثي المنزلة (بين $100$ و $999$)، ويحسب ويطبع كم عددًا منها رقم آحاده يساوي $5$ ويقبل القسمة على $3$ بدون باقٍ.
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+(For example, 105 and 225 are counted, while 115 and 123 are not)
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int count = 0;
+for (int i = 1; i <= 15; i++)
+{
+    int num = int.Parse(Console.ReadLine());
+    if (num % 10 == 5 && num % 3 == 0)
+    {
+        count++;
+    }
+}
+Console.WriteLine("Count: " + count);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل درجات حرارة يومية (أعدادًا صحيحة) ويتوقف عند إدخال القيمة $-100$ (قيمة التوقف لا تُحسب ضمن الأيام). \\
+يحسب البرنامج ويطبع:
+\begin{itemize}[nosep]
+    \item عدد الأيام الكلّي التي أُدخلت درجات حرارتها.
+    \item عدد الأيام الحارّة التي زادت فيها درجة الحرارة عن $30$ درجة.
+\end{itemize}
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter temperatures (-100 to stop):
+25
+33
+29
+36
+31
+-100
+Total days: 5
+Hot days: 3
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int totalDays = 0;
+int hotDays = 0;
+
+Console.WriteLine("Enter temperatures (-100 to stop):");
+int temp = int.Parse(Console.ReadLine());
+while (temp != -100)
+{
+    totalDays++;
+    if (temp > 30)
+    {
+        hotDays++;
+    }
+    temp = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Total days: " + totalDays);
+Console.WriteLine("Hot days: " + hotDays);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- من القسم السادس: أسئلة القيمة القصوى والدنيا ---
+\item اكتب برنامجًا يستقبل أزمنة $12$ متسابقًا في سباق جري (بالثواني، أعدادًا حقيقية موجبة)، ويجد ويطبع:
+\begin{itemize}[nosep]
+    \item زمن المتسابق الفائز بالمركز الأول (أي الزمن \textbf{الأصغر} من بين جميع المتسابقين).
+    \item زمن المتسابق الأخير (أي الزمن \textbf{الأكبر} من بين جميع المتسابقين).
+    \item الفرق الزمني بين المتسابق الأخير والفائز بالمركز الأول.
+\end{itemize}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+double firstTime = double.Parse(Console.ReadLine());
+double minTime = firstTime;
+double maxTime = firstTime;
+
+for (int i = 2; i <= 12; i++)
+{
+    double time = double.Parse(Console.ReadLine());
+    if (time < minTime)
+    {
+        minTime = time;
+    }
+    if (time > maxTime)
+    {
+        maxTime = time;
+    }
+}
+Console.WriteLine("Winner time (Min): " + minTime);
+Console.WriteLine("Last place time (Max): " + maxTime);
+Console.WriteLine("Difference: " + (maxTime - minTime));
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item اكتب برنامجًا يستقبل أعدادًا صحيحة موجبة من المستخدم حتى إدخال العدد $-1$. \\
+يجد البرنامج ويطبع \textbf{أكبر عدد يقبل القسمة على $10$} من بين الأعداد التي أُدخلت (افترض أنّ المستخدم سيدخل عددًا واحدًا على الأقل يقبل القسمة على $10$).
+\ifdetailed
+\begin{boxExample}
+\begin{english}
+\begin{minted}{text}
+Enter positive numbers (-1 to stop):
+45
+120
+95
+80
+150
+63
+-1
+Max divisible by 10: 150
+\end{minted}
+\end{english}
+\end{boxExample}
+\fi
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int maxDiv10 = int.MinValue;
+Console.WriteLine("Enter positive numbers (-1 to stop):");
+int num = int.Parse(Console.ReadLine());
+
+while (num != -1)
+{
+    if (num % 10 == 0 && num > maxDiv10)
+    {
+        maxDiv10 = num;
+    }
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Max divisible by 10: " + maxDiv10);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% --- من القسم السابع: أسئلة متنوعة بمستوى متقدم قليلًا ---
+% \item اكتب برنامجًا يستقبل من المستخدم وزن شخص على مدار $10$ أشهر متتالية (أعدادًا حقيقية موجبة)، ويحسب ويطبع في كم شهرًا \textbf{انخفض} وزن الشخص مقارنةً بالشهر الذي سبقه مباشرةً.
+% \ifdetailed
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{text}
+% (If the weights in the first 5 months are: 85, 83.5, 84, 82, 81
+% then it decreased in month 2 (83.5 < 85), month 4 (82 < 84), and month 5 (81 < 82))
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \fi
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% double prevWeight = double.Parse(Console.ReadLine());
+% int decreaseCount = 0;
+
+% for (int i = 2; i <= 10; i++)
+% {
+%     double currWeight = double.Parse(Console.ReadLine());
+%     if (currWeight < prevWeight)
+%     {
+%         decreaseCount++;
+%     }
+%     prevWeight = currWeight;
+% }
+% Console.WriteLine("Months with weight decrease: " + decreaseCount);
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \fi
+% \filbreak
+
+% \item بطارية هاتف مشحونة بنسبة $100\%$. في كل ساعة يشغّل المستخدم تطبيقًا يستهلك نسبة معيّنة من البطارية. \\
+% اكتب برنامجًا يستقبل في كل مرّة نسبة الاستهلاك بالساعة (عددًا صحيحًا موجبًا) ويطرحها من نسبة البطارية المتبقية. يستمرّ البرنامج طالما أنّ البطارية المتبقية أكبر من $15\%$ وطالما لم يتجاوز عدد ساعات الاستخدام $8$ ساعات. \\
+% في النهاية يطبع البرنامج نسبة البطارية المتبقية وعدد ساعات الاستخدام الفعلية.
+% \ifdetailed
+% \begin{boxExample}
+% \begin{english}
+% \begin{minted}{text}
+% Enter hourly battery usage:
+% 20
+% 25
+% 30
+% 15
+% Remaining battery: 10%
+% Hours used: 4
+% \end{minted}
+% \end{english}
+% \end{boxExample}
+% \fi
+% \ifwithsols
+% \begin{boxSolution}
+% \begin{english}
+% \begin{minted}{csharp}
+% int battery = 100;
+% int hours = 0;
+
+% Console.WriteLine("Enter hourly battery usage:");
+% while (battery > 15 && hours < 8)
+% {
+%     int usage = int.Parse(Console.ReadLine());
+%     battery -= usage;
+%     hours++;
+% }
+% Console.WriteLine("Remaining battery: " + battery + "%");
+% Console.WriteLine("Hours used: " + hours);
+% \end{minted}
+% \end{english}
+% \end{boxSolution}
+% \fi
+% \filbreak
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
