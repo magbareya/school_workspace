@@ -17,7 +17,7 @@
 \else
 \begin{boxCode}
     \begin{itemize}
-        \item يحتوي الاختبار على 7 أسئلة، عليك حل جميع الأسئلة.
+        \item يحتوي الاختبار على 6 أسئلة، عليك حل جميع الأسئلة.
         \item الوقت المخصص: ساعة ونصف.
         \item يسمح باستخدام كل مادة مساعدة، عدا الآلة التي يمكن برمجتها.
         \item اكتب بقلم حبر فقط، وبخط واضح.
@@ -26,27 +26,30 @@
 \end{boxCode}
 
 \vspace{1cm}
+\textbf{الاسم:} \rule{5cm}{0.4pt}
+
+\vspace{1cm}
 \begin{center}
   \includegraphics[width=0.4\textwidth]{../../../images/logoTasamoh.png}
 \end{center}
-\fi
 
 \vspace{1cm}
 \begin{flushleft}
-نرجو لكم النجاح والتفوق.
+    نرجو لكم النجاح والتفوق.
 
-معلمو الموضوع.
+    معلمو الموضوع.
 \end{flushleft}
 
 \clearpage
+\fi
 
 \begin{enumerate}[label=\textbf{السؤال \arabic*:}, wide=0pt, itemsep=2.2em]
 
 % ---------------------------------------------------------------
-\item ($12$ علامة، $3$ علامات لكل بند) أمامكم جدول فيه أربعة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
+\item ($16$ علامة، $4$ علامات لكل بند) أمامكم جدول فيه أربعة مقاطع برنامج بلغة بايثون. لكل مقطع برنامج في الجدول، اكتبوا ما هو المُخرج الناتج في العمود الفارغ.
 
 {\renewcommand{\arraystretch}{1.4}
-\begin{longtable}{|C{1.5cm}|p{9cm}|C{4cm}|}
+\begin{longtable}{|C{1cm}|p{8cm}|C{5cm}|}
 \hline
 \textbf{البند} & \centering\textbf{كود بلغة بايثون} & \textbf{المُخرج الناتج} \\
 \hline
@@ -57,11 +60,12 @@ $1$ &
 a = 7
 b = a + 3
 a = b - 5
-print("a = ", a, " b = ", b)
+print("a = ", a)
+print("b = ", b)
 \end{minted}
 \end{english}
 \end{pycell}
-& \ifwithsols \begin{english}\small\texttt{a = 5 b = 10}\end{english} \fi \\
+& \ifwithsols \textenglish{\small\texttt{a = 5}}\newline\textenglish{\small\texttt{b = 10}} \fi \\
 \hline
 $2$ &
 \begin{pycell}
@@ -70,11 +74,12 @@ $2$ &
 value = 15
 result = value // 2
 value = result + 3
-print("value = ", value, " result = ", result)
+print("value = ", value, end=" ")
+print("result = ", result)
 \end{minted}
 \end{english}
 \end{pycell}
-& \ifwithsols \begin{english}\small\texttt{value = 10 result = 7}\end{english} \fi \\
+& \ifwithsols \textenglish{\small\texttt{value = 10 result = 7}} \fi \\
 \hline
 $3$ &
 \begin{pycell}
@@ -83,11 +88,12 @@ $3$ &
 num = 7890
 num1 = (num // 100) % 10
 num2 = num % 100
-print("num1 = ", num1, " num2 = ", num2)
+print("num1 = ", num1, end=",")
+print("num2 = ", num2)
 \end{minted}
 \end{english}
 \end{pycell}
-& \ifwithsols \begin{english}\small\texttt{num1 = 8 num2 = 90}\end{english} \fi \\
+& \ifwithsols \textenglish{\small\texttt{num1 = 8,num2 = 90}} \fi \\
 \hline
 $4$ &
 \begin{pycell}
@@ -95,17 +101,19 @@ $4$ &
 \begin{minted}{python}
 num = 47
 x = num // 10 + 10 * (num % 10)
-print("num = ", num, " x = ", x)
+print("num = ", num)
+print("x = ", x)
 \end{minted}
 \end{english}
 \end{pycell}
-& \ifwithsols \begin{english}\small\texttt{num = 47 x = 74}\end{english} \fi \\
+& \ifwithsols \textenglish{\small\texttt{num = 47}}\newline\textenglish{\small\texttt{x = 74}} \fi \\
 \hline
 \end{longtable}}
-\filbreak
+
+\clearpage
 
 % ---------------------------------------------------------------
-\item ($12$ علامة، $3$ علامات لكل بند) في الجدول الذي أمامكم أربعة مقاطع برنامج جزئية والمُخرج الذي سينتج من تشغيل مقطع البرنامج الكامل. كل مقطع برنامج يحتوي على حلقة.
+\item ($16$ علامة، $4$ علامات لكل بند) في الجدول الذي أمامكم أربعة مقاطع برنامج جزئية والمُخرج الذي سينتج من تشغيل مقطع البرنامج الكامل. كل مقطع برنامج يحتوي على حلقة.
 أكملوا التعليمات الناقصة في كل مقطع برنامج للحصول على المُخرج المعطى. استعينوا بالمثال في أعلى الجدول.
 
 {\renewcommand{\arraystretch}{1.4}
@@ -122,56 +130,56 @@ for item in range(2, 7, 2):
 \end{minted}
 \end{english}
 \end{pycell}
-& \begin{english}\texttt{2 4 6}\end{english} \\
+& \textenglish{\texttt{2 4 6}} \\
 \hline
 $1$ &
 \begin{pycell}
 \begin{english}
 \begin{minted}{python}
-for item in range(2, _____):
+for item in range(2, ________):
     print(item, end=" ")
 \end{minted}
 \end{english}
 \end{pycell}
-& \begin{english}\texttt{2 3}\end{english} \\
+& \textenglish{\texttt{2 3}} \\
 \hline
 $2$ &
 \begin{pycell}
 \begin{english}
 \begin{minted}{python}
 for item in range(10):
-    if item % 3 == _________:
+    if item % 3 == ________________:
         print(item, end=" ")
 \end{minted}
 \end{english}
 \end{pycell}
-& \begin{english}\texttt{1 4 7}\end{english} \\
+& \textenglish{\texttt{1 4 7}} \\
 \hline
 $3$ &
 \begin{pycell}
 \begin{english}
 \begin{minted}{python}
-item = __________
+item = _________________
 while item < 10:
     print(item, end=" ")
-    item = ___________
+    item = __________________
 \end{minted}
 \end{english}
 \end{pycell}
-& \begin{english}\texttt{2 5 8}\end{english} \\
+& \textenglish{\texttt{2 5 8}} \\
 \hline
 $4$ &
 \begin{pycell}
 \begin{english}
 \begin{minted}{python}
 item = 3
-while ______ > ______:
+while __________ > __________:
     print(item * 5)
     item = item - 1
 \end{minted}
 \end{english}
 \end{pycell}
-& \begin{english}\texttt{15}\newline\texttt{10}\newline\texttt{5}\end{english} \\
+& \textenglish{\texttt{15}}\newline\textenglish{\texttt{10}}\newline\textenglish{\texttt{5}} \\
 \hline
 \end{longtable}}
 
@@ -188,7 +196,7 @@ while ______ > ______:
 \filbreak
 
 % ---------------------------------------------------------------
-\item ($12$ علامة) أمامكم عمودان من مقاطع البرنامج التي تُنفَّذ فيها حلقة. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في مقطعي الحلقة نفس المُخرج تمامًا) وكتابتها في الجدول أدناه.
+\item ($16$ علامة) أمامكم عمودان من مقاطع البرنامج التي تُنفَّذ فيها حلقة. يجب الملاءمة بين أزواج الحلقات المتكافئة (بحيث ينتج في مقطعي الحلقة نفس المُخرج تمامًا) وكتابتها في الجدول أدناه.
 
 {\renewcommand{\arraystretch}{1.3}
 \begin{longtable}{|C{0.9cm}|p{5.8cm}|C{0.9cm}|p{6cm}|}
@@ -296,7 +304,7 @@ $4$ & \ifwithsols $\mathbf{A}$ (الأعداد $16, 13, 10, 7, 4$) \fi \\ \hline
 \filbreak
 
 % ---------------------------------------------------------------
-\item ($12$ علامة) في لعبة \textbf{"التنين الذهبي"}، يحصل اللاعب على رتبة قوّة وفقًا للنقاط التي جمعها في اللعبة. رتب القوّة الممكنة هي:
+\item ($16$ علامة) في لعبة \textbf{"التنين الذهبي"}، يحصل اللاعب على رتبة قوّة وفقًا للنقاط التي جمعها في اللعبة. رتب القوّة الممكنة هي:
 محارب مبتدئ (\textenglish{Beginner Warrior})، فارس فضّي (\textenglish{Silver Knight})، فارس ذهبي (\textenglish{Gold Knight})، وساحر خارق (\textenglish{Super Wizard}).
 اللاعب الذي لديه أقل من $50$ نقطة يُعرَّف برتبة "مبتدئ" (\textenglish{Beginner}).
 تُحدَّد رتبة القوّة وفقًا للسيناريو الذي أمامكم:
@@ -320,7 +328,7 @@ else:
 \end{boxCode}
 
 \begin{enumerate}[label=\alph*.]
-\item ($4$ علامات) معطى الجدول التالي. اكتبوا ما هي رتبة القوّة للاعب لكل واحدة من قيم النقاط في الجدول:
+\item ($6$ علامات) معطى الجدول التالي. اكتبوا ما هي رتبة القوّة للاعب لكل واحدة من قيم النقاط في الجدول:
 
 {\renewcommand{\arraystretch}{1.4}
 \begin{longtable}{|C{3cm}|C{6cm}|}
@@ -328,38 +336,41 @@ else:
 \textbf{النقاط} & \textbf{رتبة القوّة} \\
 \hline
 $25$ & \ifwithsols مبتدئ (\textenglish{Beginner}) \fi \\ \hline
+$120$ & \ifwithsols محارب مبتدئ (\textenglish{Beginner Warrior}) \fi \\ \hline
 $200$ & \ifwithsols فارس فضّي (\textenglish{Silver Knight}) \fi \\ \hline
+$500$ & \ifwithsols فارس ذهبي (\textenglish{Gold Knight}) \fi \\ \hline
 $555$ & \ifwithsols فارس ذهبي (\textenglish{Gold Knight}) \fi \\ \hline
 $1050$ & \ifwithsols ساحر خارق (\textenglish{Super Wizard}) \fi \\ \hline
 \end{longtable}}
 \filbreak
 
-\item ($8$ علامات) معطى الجدول التالي. أكملوا "رتبة القوّة" وفقًا للبرنامج (رتب القوّة الممكنة: مبتدئ، محارب مبتدئ، فارس فضّي، فارس ذهبي، ساحر خارق):
+\item ($10$ علامات) معطى الجدول التالي. أكملوا "رتبة القوّة" وفقًا للبرنامج (رتب القوّة الممكنة: مبتدئ، محارب مبتدئ، فارس فضّي، فارس ذهبي، ساحر خارق):
 
 {\renewcommand{\arraystretch}{1.4}
-\begin{longtable}{|C{1.5cm}|>{\raggedright\arraybackslash}p{7cm}|C{5cm}|}
+\begin{longtable}{|C{1cm}|>{\raggedright\arraybackslash}p{9cm}|C{4.5cm}|}
 \hline
 \textbf{البند} & \centering\textbf{مجال النقاط} & \textbf{رتبة القوّة} \\
 \hline
-مثال & \textenglish{\texttt{points < 50}} & مبتدئ (\textenglish{Beginner}) \\ \hline
+مثال & \textenglish{\texttt{points == 10}} & مبتدئ (\textenglish{Beginner}) \\ \hline
 $1$ & \textenglish{\texttt{points < 1000 and points >= 500}} & \ifwithsols فارس ذهبي (\textenglish{Gold Knight}) \fi \\ \hline
 $2$ & \textenglish{\texttt{points >= 200 and points < 500}} & \ifwithsols فارس فضّي (\textenglish{Silver Knight}) \fi \\ \hline
 $3$ & \textenglish{\texttt{points < 200 and points >= 50}} & \ifwithsols محارب مبتدئ (\textenglish{Beginner Warrior}) \fi \\ \hline
 $4$ & \textenglish{\texttt{points >= 1000}} & \ifwithsols ساحر خارق (\textenglish{Super Wizard}) \fi \\ \hline
+$5$ & \textenglish{\texttt{points < 50 and points >= 0}} & \ifwithsols مبتدئ (\textenglish{Beginner}) \fi \\ \hline
 \end{longtable}}
 \filbreak
 \end{enumerate}
 \filbreak
 
 % ---------------------------------------------------------------
-\item ($12$ علامة) في لعبة \textbf{"صائد الكنوز"}، تُعتبر النقاط "جيدة" إذا كانت \textbf{فوق $100$ وحتى $300$ (يشمل $300$)}.
+\item ($15$ علامة) في لعبة \textbf{"صائد الكنوز"}، تُعتبر النقاط "جيدة" إذا كانت \textbf{فوق $100$ وحتى $300$ (يشمل $300$)}.
 ينفّذ اللاعب $10$ مهام مختلفة، وفي كل مهمة يحصل على نقاط وفقًا لنجاحه.
 يجب على اللعبة أن تعدّ وتطبع كم مرة حقّق اللاعب نقاطًا "جيدة".
 أمامكم ثلاثة مقاطع برنامج. حدّدوا لكل مقطع برنامج هل ينفّذ المطلوب في السؤال. إذا لا، اشرحوا كيف يمكن تصحيح الكود لكي ينفّذ المطلوب.
 
 \begin{enumerate}[label=\textbf{مقطع \alph*:}, wide=0pt, itemsep=1.5em]
 
-\item .
+\item \mbox{}
 \begin{boxCode}
 \begin{english}
 \begin{minted}{python}
@@ -384,7 +395,7 @@ print(count)
 \fi
 \filbreak
 
-\item .
+\item \mbox{}
 \begin{boxCode}
 \begin{english}
 \begin{minted}{python}
@@ -410,7 +421,7 @@ print(count)
 \fi
 \filbreak
 
-\item .
+\item \mbox{}
 \begin{boxCode}
 \begin{english}
 \begin{minted}{python}
@@ -442,56 +453,56 @@ print(count)
 \clearpage
 
 % ---------------------------------------------------------------
-\item ($20$ علامة) أمامكم مقطع برنامج يستقبل عددين صحيحين موجبين وينفّذ حسابًا معيّنًا:
+% \item ($20$ علامة) أمامكم مقطع برنامج يستقبل عددين صحيحين موجبين وينفّذ حسابًا معيّنًا:
 
-\begin{boxCode}
-\begin{english}
-\begin{minted}{python}
-num1 = int(input('Please enter number '))
-num2 = int(input('Please enter number '))
-while num1 >= num2:
-    num1 = num1 - num2
-print(num1)
-\end{minted}
-\end{english}
-\end{boxCode}
+% \begin{boxCode}
+% \begin{english}
+% \begin{minted}{python}
+% num1 = int(input('Please enter number '))
+% num2 = int(input('Please enter number '))
+% while num1 >= num2:
+%     num1 = num1 - num2
+% print(num1)
+% \end{minted}
+% \end{english}
+% \end{boxCode}
 
-\begin{enumerate}[label=\alph*.]
-\item أكملوا الجدول التالي لقيم \textenglish{num1} و \textenglish{num2} المعطاة:
+% \begin{enumerate}[label=\alph*.]
+% \item أكملوا الجدول التالي لقيم \textenglish{num1} و \textenglish{num2} المعطاة:
 
-{\begin{english}
-\renewcommand{\arraystretch}{1.4}
-\begin{longtable}{|C{3cm}|C{3cm}|C{3.5cm}|}
-\hline
-\textbf{num1} & \textbf{num2} & \textarabic{\textbf{المُخرج}} \\
-\hline
-$11$ & $4$ & \ifwithsols $\mathbf{3}$ \fi \\ \hline
-$9$ & $3$ & \ifwithsols $\mathbf{0}$ \fi \\ \hline
-$5$ & $2$ & \ifwithsols $\mathbf{1}$ \fi \\ \hline
-$2$ & $5$ & \ifwithsols $\mathbf{2}$ \fi \\ \hline
-\end{longtable}
-\end{english}}
-\filbreak
+% {\begin{english}
+% \renewcommand{\arraystretch}{1.4}
+% \begin{longtable}{|C{3cm}|C{3cm}|C{3.5cm}|}
+% \hline
+% \textbf{num1} & \textbf{num2} & \textarabic{\textbf{المُخرج}} \\
+% \hline
+% $11$ & $4$ & \ifwithsols $\mathbf{3}$ \fi \\ \hline
+% $9$ & $3$ & \ifwithsols $\mathbf{0}$ \fi \\ \hline
+% $5$ & $2$ & \ifwithsols $\mathbf{1}$ \fi \\ \hline
+% $2$ & $5$ & \ifwithsols $\mathbf{2}$ \fi \\ \hline
+% \end{longtable}
+% \end{english}}
+% \filbreak
 
-\item ماذا ينفّذ مقطع البرنامج؟ أحيطوا بدائرة الإجابة الصحيحة:
-\begin{enumerate}[label=\arabic*.]
-\item يحسب ويطبع حاصل ضرب \textenglish{num1} بـ \textenglish{num2}.
-\item يحسب ويطبع الفرق بين \textenglish{num1} و \textenglish{num2}.
-\item يحسب ويطبع باقي القسمة (المودولو) من قسمة \textenglish{num1} على \textenglish{num2}.
-\item يحسب ويطبع \textenglish{num1} مرفوع للقوة \textenglish{num2}.
-\end{enumerate}
+% \item ماذا ينفّذ مقطع البرنامج؟ أحيطوا بدائرة الإجابة الصحيحة:
+% \begin{enumerate}[label=\arabic*.]
+% \item يحسب ويطبع حاصل ضرب \textenglish{num1} بـ \textenglish{num2}.
+% \item يحسب ويطبع الفرق بين \textenglish{num1} و \textenglish{num2}.
+% \item يحسب ويطبع باقي القسمة (المودولو) من قسمة \textenglish{num1} على \textenglish{num2}.
+% \item يحسب ويطبع \textenglish{num1} مرفوع للقوة \textenglish{num2}.
+% \end{enumerate}
 
-\ifwithsols
-\begin{boxSolution}
-الإجابة الصحيحة هي \textbf{$3$}: يحسب ويطبع باقي القسمة (المودولو) من قسمة \textenglish{num1} على \textenglish{num2} عن طريق الطرح المتكرّر لـ \textenglish{num2} من \textenglish{num1} طالما أنّ $\text{num1} \geq \text{num2}$.
-\end{boxSolution}
-\fi
-\filbreak
-\end{enumerate}
-\filbreak
+% \ifwithsols
+% \begin{boxSolution}
+% الإجابة الصحيحة هي \textbf{$3$}: يحسب ويطبع باقي القسمة (المودولو) من قسمة \textenglish{num1} على \textenglish{num2} عن طريق الطرح المتكرّر لـ \textenglish{num2} من \textenglish{num1} طالما أنّ $\text{num1} \geq \text{num2}$.
+% \end{boxSolution}
+% \fi
+% \end{enumerate}
+
+% \filbreak
 
 % ---------------------------------------------------------------
-\item ($20$ علامة) \textbf{العدد "الموقِظ"} هو عدد صحيح موجب يكون فيه مجموع جميع منازله \textbf{أكبر بـ $3$ أضعاف أو أكثر} من عدد المنازل في العدد.
+\item ($21$ علامة) \textbf{العدد "الموقِظ"} هو عدد صحيح موجب يكون فيه مجموع جميع منازله \textbf{أكبر بـ $3$ أضعاف أو أكثر} من عدد المنازل في العدد.
 \begin{itemize}
 \item \textbf{مثال $1$:} العدد $129$ هو عدد "موقِظ" لأنّ مجموع منازله ($1 + 2 + 9 = 12$) أكبر بـ $3$ أضعاف أو أكثر من عدد منازله ($3$). الحساب: $12 / 3 \geq 3$.
 \item \textbf{مثال $2$:} العدد $5$ هو عدد "موقِظ" لأنّ مجموع منازله ($5$) أكبر بـ $3$ أضعاف أو أكثر من عدد منازله ($1$). الحساب: $5 / 1 \geq 3$.
@@ -499,30 +510,43 @@ $2$ & $5$ & \ifwithsols $\mathbf{2}$ \fi \\ \hline
 \end{itemize}
 
 \begin{enumerate}[label=\alph*., itemsep=1.5em]
-\item ($4$ علامات) حسب التعريف أعلاه، هل $4158$ هو عدد "موقِظ"؟ إذا نعم، اعرضوا حسابًا رياضيًا (كما في المثال) يُظهر ذلك؛ وإلّا اشرحوا.
+\item ($6$ علامات — $3$ علامات لكل بند) حسب التعريف أعلاه، حدّدوا لكل واحد من العددين التاليين هل هو عدد "موقِظ". إذا نعم، اعرضوا حسابًا رياضيًا (كما في المثال) يُظهر ذلك؛ وإلّا اشرحوا:
+\begin{enumerate}[label=\arabic*., itemsep=1em]
+\item العدد $4158$:
 \ifwithsols
 \begin{boxSolution}
 \textbf{نعم}، العدد $4158$ هو عدد "موقِظ" لأنّ مجموع منازله هو $4 + 1 + 5 + 8 = 18$، وعدد منازله هو $4$، ويتحقّق:
 $$18 / 4 = 4.5 \geq 3 \quad (\text{أو } 18 \geq 3 \cdot 4 = 12)$$
 \end{boxSolution}
 \else
-\\ \underline{\hspace{14cm}}
+\hrulefill
 \fi
+
+\item العدد $3124$:
+\ifwithsols
+\begin{boxSolution}
+\textbf{لا}، العدد $3124$ ليس عددًا "موقِظًا" لأنّ مجموع منازله هو $3 + 1 + 2 + 4 = 10$، وعدد منازله هو $4$، ولا يتحقّق الشرط:
+$$10 / 4 = 2.5 < 3 \quad (\text{أو } 10 < 3 \cdot 4 = 12)$$
+\end{boxSolution}
+\else
+\hrulefill
+\fi
+\end{enumerate}
 \filbreak
 
-\item ($16$ علامة) أمامكم مقطع برنامج يستقبل عددًا من المستخدم ويفحص هل العدد "موقِظ". أكملوا الفراغات $(1)$–$(5)$ في المقطع:
+\item ($15$ علامة) أمامكم مقطع برنامج يستقبل عددًا من المستخدم ويفحص هل العدد "موقِظ". أكملوا الفراغات $(1)$–$(5)$ في المقطع:
 
 \begin{boxCode}
 \begin{english}
 \begin{minted}{python}
-sum = (1)________
+sum = (1)______________
 count = 0
 num = int(input("Please enter a number:"))
 while num > 0:
-    sum = (2)_________ + num % 10
-    count = count + (3)___________
+    sum = (2)________________ + num % 10
+    count = count + (3)______________
     num = num // 10
-if (4)________ >= 3 * (5)__________:
+if (4)_____________ >= 3 * (5)_________________:
     print("The number is awakening")
 else:
     print("The number is not awakening")

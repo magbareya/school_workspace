@@ -145,7 +145,9 @@
 
 % Code cell used inside tables (keeps code left-to-right inside RTL tables).
 % Use inside a fixed-width p{...} column: \begin{pycell}\begin{minted}...\end{minted}\end{pycell}
-\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth}
+\makeatletter
+\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth,before=\noindent,after=,baseline={\tcb@height-\ht\strutbox},fontupper=\setstretch{0.95}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatother
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
