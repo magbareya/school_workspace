@@ -1,36 +1,211 @@
-% Fonts and languages
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\usepackage{bidi}
-\usepackage{listings}
-\usepackage{xcolor}
+% =============================================================================
+% Shared Beamer Preamble for High School CS Presentations (XeLaTeX + RTL Arabic)
+% (scripts/beamer_preamble.tex)
+% =============================================================================
 
-\setmainlanguage[numerals=western]{arabic}
-\setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
-\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
-\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
+\usepackage{setspace}
 
-% RTL support and nicer bullets for Arabic beamer
+% Shared common packages, fonts, polyglossia, callout boxes, code helpers, date & header macros
+\IfFileExists{scripts/common_preamble.tex}{%
+  \input{scripts/common_preamble.tex}%
+}{%
+  \IfFileExists{../../../scripts/common_preamble.tex}{%
+    \input{../../../scripts/common_preamble.tex}%
+  }{%
+    \input{../../scripts/common_preamble.tex}%
+  }%
+}
+
+% -----------------------------------------------------------------------------
+% Modern High-School Slide Color Palette & Beamer Theme
+% -----------------------------------------------------------------------------
+\definecolor{SlidePrimary}{HTML}{1E3A8A}   % Deep royal navy
+\definecolor{SlideAccent}{HTML}{0284C7}    % Vibrant sky/cyan accent
+\definecolor{SlideDark}{HTML}{0F172A}      % Dark slate text
+\definecolor{SlideLightBg}{HTML}{F8FAFC}   % Soft off-white background
+\definecolor{SlideCodeBg}{HTML}{F1F5F9}    % Crisp code background
+\definecolor{SlideCodeFrame}{HTML}{CBD5E1} % Subtle code border
+
+% Remove cluttered bottom-right navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Compact slide margins to maximize usable space without crowding
+\setbeamersize{text margin left=0.7cm, text margin right=0.7cm}
+
+% Colors for Beamer elements
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{normal text}{fg=SlideDark, bg=white}
+\setbeamercolor{structure}{fg=SlidePrimary}
+\setbeamercolor{frametitle}{fg=white, bg=SlidePrimary}
+\setbeamercolor{title}{fg=white, bg=SlidePrimary}
+\setbeamercolor{footline}{fg=SlideDark!80!white, bg=SlideLightBg}
+\setbeamercolor{itemize item}{fg=SlideAccent}
+\setbeamercolor{itemize subitem}{fg=SlidePrimary}
+\setbeamercolor{enumerate item}{fg=SlidePrimary}
+\setbeamercolor{block title}{fg=white, bg=SlidePrimary}
+\setbeamercolor{block body}{fg=SlideDark, bg=SlideCodeBg}
+\setbeamercolor{block title alerted}{fg=white, bg=red!75!black}
+\setbeamercolor{block body alerted}{fg=SlideDark, bg=red!4!white}
+\setbeamercolor{block title example}{fg=white, bg=teal!70!black}
+\setbeamercolor{block body example}{fg=SlideDark, bg=teal!4!white}
+
+% Fonts for Beamer elements
+\setbeamerfont{title}{size=\LARGE, series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{author}{size=\normalsize, series=\bfseries}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamerfont{footline}{size=\scriptsize}
+\setbeamerfont{block title}{size=\normalsize, series=\bfseries}
+\setbeamerfont{enumerate item}{series=\bfseries}
+
+% Clean bullet and numbered item styles with comfortable spacing
 \setbeamertemplate{itemize items}[circle]
 \setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{enumerate items}[default]
+\AtBeginEnvironment{itemize}{\setlength{\itemsep}{3pt}\setlength{\parskip}{1pt}}
+\AtBeginEnvironment{enumerate}{\setlength{\itemsep}{3pt}\setlength{\parskip}{1pt}}
 
-% Listings for C# code blocks
+% Slide footer counter (overrides default \thepage from common_preamble.tex)
+\renewcommand{\footercenter}{\insertframenumber\ / \inserttotalframenumber}
+
+% -----------------------------------------------------------------------------
+% Modern Title Page, Frame Title Banner & Compact Footline
+% -----------------------------------------------------------------------------
+\makeatletter
+% Suppress hyperref PDF string warnings when \textenglish is used in \title
+\pdfstringdefDisableCommands{%
+  \let\textenglish\@firstofone
+  \let\textarabic\@firstofone
+}
+
+\setbeamertemplate{title page}{%
+  \vbox{}%
+  \vfill
+  \begin{centering}
+    \begin{tcolorbox}[
+      enhanced,
+      arc=6pt, outer arc=6pt,
+      colback=SlidePrimary,
+      colframe=SlidePrimary,
+      boxrule=0.5pt,
+      borderline south={3.5pt}{0pt}{SlideAccent},
+      left=12pt, right=12pt, top=14pt, bottom=16pt,
+      halign=center
+    ]
+      {\usebeamerfont{title}\color{white}\inserttitle\par}
+      \ifx\insertsubtitle\@empty\else
+        \vskip 0.45em
+        {\usebeamerfont{subtitle}\color{SlideLightBg}\insertsubtitle\par}
+      \fi
+    \end{tcolorbox}
+    \vskip 0.9em
+    \begin{tcolorbox}[
+      enhanced,
+      hbox,
+      arc=10pt, outer arc=10pt,
+      colback=SlideLightBg,
+      colframe=SlideCodeFrame,
+      boxrule=0.6pt,
+      left=12pt, right=12pt, top=4pt, bottom=4pt
+    ]
+      {\usebeamerfont{author}\color{SlideDark}\textarabic{\headerleft}\quad{\color{SlideAccent}$\bullet$}\quad
+       \ifx\insertauthor\@empty\textarabic{\headerright}\else\insertauthor\fi}
+    \end{tcolorbox}
+    \ifx\insertdate\@empty\else
+      \vskip 0.4em
+      {\usebeamerfont{date}\color{SlideDark!70!white}\insertdate\par}
+    \fi
+  \end{centering}
+  \vfill
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth, ht=2.45ex, dp=0.95ex, rightskip=0.6cm, leftskip=0.6cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle
+    \ifx\insertframesubtitle\@empty\else
+      \quad{\small\normalfont(\insertframesubtitle)}%
+    \fi
+  \end{beamercolorbox}%
+  \nointerlineskip
+  {\color{SlideAccent}\hrule height 1.5pt}%
+  \vspace{-0.2em}%
+}
+
+\setbeamertemplate{footline}{%
+  \ifnum\c@framenumber>1\relax
+    \nointerlineskip
+    {\color{SlideCodeFrame}\hrule height 0.4pt}%
+    \hbox{%
+      \begin{beamercolorbox}[wd=\paperwidth, ht=2.1ex, dp=0.9ex, leftskip=0.6cm, rightskip=0.6cm]{footline}%
+        \textarabic{\headerright}%
+        \hfill
+        \textarabic{\inserttitle}%
+        \hfill
+        \textarabic{\headerleft}\quad{\color{SlidePrimary}\bfseries\textenglish{\footercenter}}%
+      \end{beamercolorbox}%
+    }%
+  \fi
+}
+\makeatother
+
+% -----------------------------------------------------------------------------
+% Slide-Specific Code & Callout Box Overrides
+% -----------------------------------------------------------------------------
+\AtBeginEnvironment{minted}{\setstretch{0.92}}
+\setminted{fontsize=\small, breaklines=true, vspace=1pt}
 
 \lstdefinelanguage{CSharp}{
   language={[Sharp]C},
-  morekeywords={string,bool,void}
+  morekeywords={string,bool,void,var}
 }
 
 \lstset{
   language=CSharp,
   basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue},
-  stringstyle=\color{red},
-  commentstyle=\color{green!50!black},
+  lineskip=-1.3pt,
+  columns=fullflexible,
+  keepspaces=true,
   showstringspaces=false,
   numbers=none,
   frame=single,
-  breaklines=true
+  framesep=3pt,
+  xleftmargin=4pt,
+  xrightmargin=4pt,
+  aboveskip=2pt,
+  belowskip=2pt,
+  breaklines=true,
+  backgroundcolor=\color{SlideCodeBg},
+  rulecolor=\color{SlideCodeFrame},
+  keywordstyle=\color{blue!80!black}\bfseries,
+  stringstyle=\color{red!75!black},
+  commentstyle=\color{green!45!black}\itshape
 }
 
+\tcbset{
+  left=5pt, right=5pt, top=2.5pt, bottom=2.5pt,
+  toptitle=1pt, bottomtitle=1pt,
+  before skip=4pt, after skip=4pt,
+  fonttitle=\bfseries\small,
+  fontupper=\setstretch{1.05}\setlength{\parskip}{1.5pt},
+  simplecode/.style={
+    arc=2.5pt, outer arc=2.5pt,
+    left=4pt, right=4pt, top=3pt, bottom=3pt,
+    fontupper=\setstretch{0.95},
+    before skip=4pt, after skip=4pt,
+    colback=SlideCodeBg, colframe=SlideCodeFrame, boxrule=0.5pt
+  }
+}
+
+\newcommand{\importpdfpage}[2]{%
+  \begin{center}
+    \includegraphics[page=#2, width=0.9\textwidth, height=0.78\textheight, keepaspectratio]{#1}
+  \end{center}
+}
+
+\newcommand{\insertFullImg}[1]{%
+  \begin{center}
+    \includegraphics[width=0.9\textwidth, height=0.78\textheight, keepaspectratio]{#1}%
+  \end{center}%
+}

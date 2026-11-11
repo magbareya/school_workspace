@@ -1,0 +1,122 @@
+% =============================================================================
+% Shared Common Preamble (scripts/common_preamble.tex)
+% Included by:
+%   - scripts/tex_preamble.tex    (worksheets, homeworks, exams, lesson notes)
+%   - scripts/book_preamble.tex   (two-sided Arabic book)
+%   - scripts/beamer_preamble.tex (Beamer presentation slides)
+% =============================================================================
+
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{pifont}
+\usepackage{minted}
+\usepackage{etoolbox}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{datetime2}
+
+\usetikzlibrary{automata, positioning, arrows.meta, arrows, shapes.geometric, calc}
+
+% Beamer already loads hyperref internally; load it here for article/book classes
+% right before polyglossia (bidi).
+\makeatletter
+\@ifclassloaded{beamer}{}{%
+  \usepackage{hyperref}%
+  \hypersetup{hidelinks}%
+  \providecommand{\LTcaptype}{table}%
+}
+\makeatother
+
+% Load polyglossia (and bidi) AFTER graphics, tables, boxes, code, and hyperref
+\usepackage{polyglossia}
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic]{Calibri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Calibri}
+\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
+\newfontfamily\emoji[BoldFont=*,ItalicFont=*]{Segoe UI Emoji}
+
+% Allow slight inter-word stretch to avoid Overfull \hbox with inline \textenglish
+\emergencystretch=1.5em
+
+% -----------------------------------------------------------------------------
+% Default Minted & Callout Box Definitions
+% -----------------------------------------------------------------------------
+\AtBeginEnvironment{minted}{\setstretch{0.95}}
+\setminted{fontsize=\small, breaklines=true, vspace=2pt}
+
+\tcbset{
+  arc=2.5pt, outer arc=2.5pt,
+  boxsep=1pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+  toptitle=1.5pt, bottomtitle=1.5pt,
+  before skip=6pt, after skip=6pt,
+  fonttitle=\bfseries,
+  fontupper=\setstretch{1.1}\setlength{\parskip}{2pt},
+  colback=white, colframe=black, boxrule=0.6pt,
+  boxcolor/.style 2 args={colback=#1, colframe=#2}
+}
+
+\newtcolorbox{boxDef}[1][]{boxcolor={blue!4!white}{blue!75!black},
+  title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExercise}[1][]{boxcolor={cyan!4!white}{cyan!70!black},
+  title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxExample}[1][]{boxcolor={yellow!6!white}{orange!85!black},
+  title={{\emoji📝} مثال\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxNote}[1][]{boxcolor={gray!7!white}{black!75},
+  title={{\emoji✨} ملاحظة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxAttention}[1][]{boxcolor={magenta!5!white}{magenta!75!black},
+  title={{\emoji🔔} تنبيه\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxWarning}[1][]{boxcolor={red!4!white}{red!75!black},
+  title={{\emoji⚡} ملاحظة هامة\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSolution}[1][]{boxcolor={green!4!white}{green!60!black},
+  title={{\emoji✅} حل\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxSymbol}[1][]{boxcolor={purple!4!white}{purple!70!black},
+  title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
+\newtcolorbox{boxHint}[1][]{boxcolor={teal!4!white}{teal!65!black},
+  title={{\emoji💡} تلميح\ifx\\#1\\\else ~#1\fi :}}
+
+% Compact code boxes: tighter line spacing and small vertical gaps
+\tcbset{
+  simplecode/.style={
+    arc=2pt, outer arc=2pt,
+    left=4pt, right=4pt, top=4pt, bottom=4pt,
+    fontupper=\setstretch{0.95},
+    before skip=6pt, after skip=6pt,
+    colback=gray!5, colframe=black!50, boxrule=0.4pt
+  }
+}
+\newenvironment{boxCode}{\begin{tcolorbox}[simplecode]}{\end{tcolorbox}}
+
+% Code cell used inside tables (keeps code left-to-right inside RTL tables)
+% Use inside a fixed-width p{...} column: \begin{pycell}\begin{minted}...\end{minted}\end{pycell}
+\makeatletter
+\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth,before=\noindent,after=,baseline={\tcb@height-\ht\strutbox},fontupper=\setstretch{0.95}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatother
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Dotted date style (DD.MM.YYYY)
+\makeatletter
+\DTMnewdatestyle{dotted}{%
+  \renewcommand{\DTMdisplaydate}[4]{\two@digits{##3}.\two@digits{##2}.##1}%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\makeatother
+\DTMsetdatestyle{dotted}
+
+% -----------------------------------------------------------------------------
+% Customizable Header / Footer Metadata
+% -----------------------------------------------------------------------------
+\newcommand{\headerleft}{مدرسة التسامح الشاملة}
+\newcommand{\headerright}{الأستاذ محمود اغبارية}
+\newcommand{\footercenter}{\thepage}
+
+\newcommand{\setheaderleft}[1]{\renewcommand{\headerleft}{#1}}
+\newcommand{\setheaderright}[1]{\renewcommand{\headerright}{#1}}
+\newcommand{\setfootercenter}[1]{\renewcommand{\footercenter}{#1}}

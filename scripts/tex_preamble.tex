@@ -1,79 +1,7 @@
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage[most]{tcolorbox}
-% \usepackage{setspace}
-\usepackage{pifont}
-\usepackage{enumitem}
-\usepackage{titlesec}
-\usepackage[bottom]{footmisc}
-\usepackage{titling}
-\usepackage{minted}
-\usepackage{etoolbox}
-\usepackage{array}
-\usepackage{longtable} % page-breakable tables (must load before polyglossia/bidi RTL setup)
-\usepackage{extsizes}
-\usepackage{float}
-\usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage[onehalfspacing]{setspace}
-\newif\ifwhiteblack
-\ifdefined\setwhiteblack
-  \setwhiteblack
-\fi
-
-\ifwhiteblack
-  \usepackage[a4paper, landscape, top=1.25cm, bottom=1.25cm, left=1.25cm, right=1.25cm, headheight=1.5cm, headsep=0.5cm]{geometry}
-\else
-  \usepackage[a4paper, top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm, headheight=1.5cm, headsep=0.5cm]{geometry}
-\fi
-\usepackage{tikz}
-\usepackage{datetime2}
-
-\usetikzlibrary{automata, positioning, arrows.meta, arrows}
-\providecommand{\LTcaptype}{table}
-
-\newfontfamily\emoji{Segoe UI Emoji}
-
-\pagestyle{fancy}
-
-\setmainlanguage[numerals=western]{arabic}
-\setotherlanguage{english}
-\newfontfamily\arabicfont[Script=Arabic]{Calibri}
-\newfontfamily\arabicfonttt[Script=Arabic]{Courier New}
-
-
-
-\ifwhiteblack
-\lstset{
-  language=[Sharp]C,
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  frame=single,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\bfseries,
-  stringstyle=\ttfamily,
-  commentstyle=\itshape
-}
-\else
-\lstset{
-  language=[Sharp]C,
-  numbers=left,
-  stepnumber=1,
-  numbersep=8pt,
-  frame=single,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue},
-  stringstyle=\color{red},
-  commentstyle=\color{green!50!black}
-}
-\fi
+% =============================================================================
+% Shared Preamble for Worksheets, Homeworks, Exams & Lesson Notes
+% (scripts/tex_preamble.tex)
+% =============================================================================
 
 \newif\ifdetailed
 \ifdefined\setdetailed
@@ -85,112 +13,125 @@
   \setwithsols
 \fi
 
+\newif\ifwhiteblack
+\ifdefined\setwhiteblack
+  \setwhiteblack
+\fi
+
+% Document-class specific packages (loaded before common_preamble.tex / polyglossia)
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[bottom]{footmisc}
+\usepackage{titling}
+\usepackage{longtable} % page-breakable tables
+\usepackage{float}
+\usepackage[onehalfspacing]{setspace}
+
+\ifwhiteblack
+  \usepackage[a4paper, landscape, top=1.25cm, bottom=1.25cm, left=1.25cm, right=1.25cm, headheight=1.5cm, headsep=0.5cm]{geometry}
+\else
+  \usepackage[a4paper, top=2.4cm, bottom=2.4cm, left=2.2cm, right=2.2cm, headheight=1.4cm, headsep=0.4cm, footskip=1.0cm]{geometry}
+\fi
+
+% Shared common packages, fonts, polyglossia, callout boxes, code helpers, date & header macros
+\IfFileExists{scripts/common_preamble.tex}{%
+  \input{scripts/common_preamble.tex}%
+}{%
+  \IfFileExists{../../../scripts/common_preamble.tex}{%
+    \input{../../../scripts/common_preamble.tex}%
+  }{%
+    \input{../../scripts/common_preamble.tex}%
+  }%
+}
+
+\pagestyle{fancy}
+
+% Prevent widow/orphan lines
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Compact section headings and default list spacing so pages do not waste vertical space
+\titlespacing*{\section}{0pt}{1.4ex plus 0.4ex minus 0.2ex}{0.7ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1.1ex plus 0.3ex minus 0.2ex}{0.5ex plus 0.1ex}
+\titlespacing*{\subsubsection}{0pt}{0.9ex plus 0.2ex minus 0.1ex}{0.4ex plus 0.1ex}
+\setlist{topsep=4pt, partopsep=0pt, parsep=2pt, itemsep=4pt}
+
+\gappto\captionsarabic{\renewcommand{\contentsname}{جدول المحتويات}}
+
+% Legacy listings settings
+\lstset{
+  language=[Sharp]C,
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  basicstyle=\ttfamily\small
+}
+\ifwhiteblack
+  \lstset{
+    keywordstyle=\bfseries,
+    stringstyle=\ttfamily,
+    commentstyle=\itshape
+  }
+\else
+  \lstset{
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black}
+  }
+\fi
+
+% White-and-black landscape presentation mode overrides
 \ifwhiteblack
   \AtBeginDocument{
     \LARGE
     \usemintedstyle{bw}
   }
+  \setminted{vspace=2pt}
+  \tcbset{
+    colback=white, colframe=black, boxrule=1pt,
+    boxcolor/.style 2 args={colback=white, colframe=black},
+    simplecode/.append style={colback=white, colframe=black, boxrule=1pt}
+  }
 \fi
 
-% Default minted look: compact code that wraps long lines.
-% Not applied in black-and-white landscape mode, which already uses \LARGE.
-\ifwhiteblack\else
-  \setminted{fontsize=\small, breaklines=true}
-\fi
+% Default to empty author to avoid "LaTeX Warning: No \author given" when omitted
+\author{}
 
-% unified tcolorboxes for articles
-\ifwhiteblack
-\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=1pt}
-\newtcolorbox{boxDef}[1][]{title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxExercise}[1][]{title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxExample}[1][]{title={{\emoji📝} مثال\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxNote}[1][]{title={{\emoji✨} ملاحظة\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxAttention}[1][]{title={{\emoji🔔} تنبيه\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxWarning}[1][]{title={{\emoji⚡} ملاحظة هامة\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxSolution}[1][]{title={{\emoji✅} حل\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxSymbol}[1][]{title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxHint}[1][]{title={{\emoji💡} تلميح\ifx\\#1\\\else ~#1\fi :}}
-\else
-\tcbset{colback=white, colframe=black, fonttitle=\bfseries, boxrule=0.8pt}
-\newtcolorbox{boxDef}[1][]{colback=blue!5!white,colframe=blue!75!black,
-  title={{\emoji📘} تعريف\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxExercise}[1][]{colback=cyan!5!white,colframe=cyan!70!black,
-  title={{\emoji🧩} تمرين\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxExample}[1][]{colback=yellow!5!white,colframe=orange!90!black,
-  title={{\emoji📝} مثال\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxNote}[1][]{colback=gray!10!white,colframe=black,
-  title={{\emoji✨} ملاحظة\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxAttention}[1][]{colback=magenta!10!white,colframe=magenta!80!black,
-  title={{\emoji🔔} تنبيه\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxWarning}[1][]{colback=red!5!white,colframe=red!75!black,
-  title={{\emoji⚡} ملاحظة هامة\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxSolution}[1][]{colback=green!5!white,colframe=green!60!black,
-  title={{\emoji✅} حل\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxSymbol}[1][]{colback=purple!5!white,colframe=purple!70!black,
-  title={{\emoji🔣} رمز\ifx\\#1\\\else ~#1\fi :}}
-\newtcolorbox{boxHint}[1][]{colback=teal!5!white,colframe=teal!60!black,
-  title={{\emoji💡} تلميح\ifx\\#1\\\else ~#1\fi :}}
-\fi
-
-
-\ifwhiteblack
-\tcbset{simplecode/.style={ colback=white, colframe=black, boxrule=1pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
-\else
-\tcbset{simplecode/.style={ colback=gray!5, colframe=black!50, boxrule=0.4pt, arc=2pt, left=4pt,right=4pt,top=4pt,bottom=4pt}}
-\fi
-% Compact code boxes: tighter line spacing (the preamble uses onehalfspacing) and small vertical gaps.
-% Must come AFTER the simplecode definition above.
-\tcbset{simplecode/.append style={fontupper=\setstretch{0.95}, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}}
-\newenvironment{boxCode}{\begin{tcolorbox}[simplecode]}{\end{tcolorbox}}
-
-% Code cell used inside tables (keeps code left-to-right inside RTL tables).
-% Use inside a fixed-width p{...} column: \begin{pycell}\begin{minted}...\end{minted}\end{pycell}
-\makeatletter
-\newtcolorbox{pycell}{frame empty,colback=white,boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,width=\linewidth,before=\noindent,after=,baseline={\tcb@height-\ht\strutbox},fontupper=\setstretch{0.95}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parskip}{0pt}}
-\makeatother
-
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
-
-\makeatletter
-\DTMnewdatestyle{dotted}{%
-  \renewcommand{\DTMdisplaydate}[4]{\two@digits{##3}.\two@digits{##2}.##1}%
-  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
-}
-\makeatother
-\DTMsetdatestyle{dotted}
-
-% redefine spaces after titles
+% Compact title block
 \makeatletter
 \renewcommand{\@maketitle}{%
-  \begin{center}
-    {\huge \bfseries \@title \par}%
-    \vskip 0.2em % space between title and author
-    {\large \@author \par}%
-    % \vskip 0.2em % space between author and date
-    % {\normalsize \@date \par}%
-    {\small \hfill \begin{english}\DTMtoday\end{english} \par}%
-  \end{center}
+  \begin{center}%
+    {\ifwhiteblack\Huge\else\LARGE\fi \bfseries \@title \par}%
+    \ifdefempty{\@author}{}{%
+      \vskip 0.15em%
+      {\large \@author \par}%
+    }%
+    {\small \hfill \textenglish{\DTMtoday} \par}%
+  \end{center}%
+  \vspace{-0.3cm}%
 }
 \makeatother
 
-\fancyhf{} % clear default
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyhead[L]{مدرسة التسامح الشاملة}
-  % \fancyhead[L]{\includegraphics[height=1cm]{../../../images/logoTasamoh.png}}
-  \fancyhead[R]{الأستاذ محمود اغبارية}
-  \fancyfoot[C]{\thepage}
+\apptocmd{\maketitle}{\thispagestyle{fancy}}{}{}
+
+% Apply page headers and footer (using \headerleft, \headerright, \footercenter from common_preamble.tex)
+\newcommand{\applyfancyheaders}{%
+  \fancyhf{}%
+  \fancyhead[L]{\textarabic{\headerleft}}%
+  \fancyhead[R]{\textarabic{\headerright}}%
+  \fancyfoot[C]{\textarabic{\footercenter}}%
 }
 
-\fancyhead[L]{مدرسة التسامح الشاملة}
-\fancyhead[R]{الأستاذ محمود اغبارية}
-\fancyfoot[C]{\thepage}
+\fancypagestyle{plain}{\applyfancyheaders}
+\applyfancyheaders
 
-\setcounter{tocdepth}{3} % only section subsection and subsubsection in TOC
+\setcounter{tocdepth}{3} % only section, subsection, and subsubsection in TOC
 
 \newcommand{\importpdfpage}[2]{%
-    \thispagestyle{empty}
     \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \thispagestyle{empty}
     \includegraphics[page=#2,width=0.95\paperwidth,height=0.95\paperheight,keepaspectratio]{#1}
     \restoregeometry
 }

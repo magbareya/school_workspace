@@ -1,0 +1,178 @@
+% =============================================================================
+% Preamble for the BOOK only (right-bound Arabic book, two-sided printing).
+% Worksheets, exams and lesson notes use tex_preamble.tex instead.
+%
+% Usage:
+%   \documentclass[14pt]{extbook}            % chapters open on odd pages (classic)
+%   \documentclass[14pt,openany]{extbook}    % chapters open on the next page (no blank pages)
+%   \input{<path>/scripts/book_preamble.tex}
+% =============================================================================
+
+% Build flags, so material reused from the worksheets (\ifdetailed / \ifwithsols blocks) compiles unchanged.
+\newif\ifdetailed
+\ifdefined\setdetailed
+  \setdetailed
+\fi
+
+\newif\ifwithsols
+\ifdefined\setwithsols
+  \setwithsols
+\fi
+
+% The book has no black-and-white mode. The flag exists (always false) only because some
+% worksheets contain \ifwhiteblack ... \fi blocks, which must still parse when reused here.
+\newif\ifwhiteblack
+
+% Book-specific packages (loaded before common_preamble.tex / polyglossia)
+\usepackage{fancyhdr}
+\usepackage{emptypage} % blank pages before a chapter carry no header/footer
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[bottom]{footmisc}
+\usepackage{longtable} % page-breakable tables
+\usepackage{float}
+\usepackage[onehalfspacing]{setspace}
+
+% Two-sided layout for a book bound on the RIGHT (Arabic): odd pages sit on the left of a spread
+% and their binding edge is the right one. bidi mirrors the odd/even side margins of an RTL
+% document, so "inner" really is the binding margin here (measured: odd pages get it on the right,
+% even pages on the left). Do not swap inner/outer.
+\usepackage[a4paper, twoside, top=2.3cm, bottom=2.3cm, inner=2.5cm, outer=2.0cm, headheight=20pt, headsep=0.45cm, footskip=1.0cm]{geometry}
+
+% Shared common packages, fonts, polyglossia, callout boxes, code helpers, date & header macros
+\IfFileExists{scripts/common_preamble.tex}{%
+  \input{scripts/common_preamble.tex}%
+}{%
+  \IfFileExists{../../../scripts/common_preamble.tex}{%
+    \input{../../../scripts/common_preamble.tex}%
+  }{%
+    \input{../../scripts/common_preamble.tex}%
+  }%
+}
+
+\hypersetup{bookmarksnumbered=true, bookmarksopen=true, bookmarksopenlevel=0}
+
+\gappto\captionsarabic{%
+  \renewcommand{\contentsname}{جدول المحتويات}%
+  \renewcommand{\chaptername}{الفصل}%
+  \renewcommand{\appendixname}{ملحق}%
+}
+\setcounter{tocdepth}{1}     % chapters and sections in the table of contents
+\setcounter{secnumdepth}{2}  % number chapters, sections and subsections
+
+% ---------- Page breaking ----------
+% Pages are full of boxes, code and tables, so never stretch a page to fill it;
+% forbid widow/orphan lines.
+\raggedbottom
+\widowpenalty=10000
+\clubpenalty=10000
+
+% ---------- Colours ----------
+\definecolor{bookaccent}{RGB}{20,82,140}  % headings, rules, running heads
+\colorlet{bookmuted}{black!55}
+
+% ---------- Headings ----------
+% Chapter opener: small coloured label, large title, thin rule; no empty band at the top of the page.
+\titleformat{\chapter}[display]
+  {\bfseries}
+  {\Large\color{bookaccent}\chaptertitlename\ \thechapter}
+  {0.2ex}
+  {\Huge}
+  [\vspace{0.6ex}{\color{bookaccent}\titlerule[1.2pt]}]
+\titleformat{name=\chapter,numberless}[block]
+  {\bfseries}{}{0pt}{\Huge}
+  [\vspace{0.6ex}{\color{bookaccent}\titlerule[1.2pt]}]
+\titlespacing*{\chapter}{0pt}{-4ex}{3ex plus 0.5ex}
+
+% Compound numbers read left to right (chapter.section): section 2 of chapter 1 is "1.2".
+% Inside Arabic text the parts are laid out right to left, so the same section would print
+% as "2.1"; \booknum sets the number as left-to-right English text in the body font.
+\newfontfamily\booknumfont{Calibri}
+\DeclareRobustCommand{\booknum}[1]{\texorpdfstring{\textenglish{\booknumfont #1}}{#1}}
+\makeatletter
+\AfterEndPreamble{% after bidi/polyglossia have installed their own definitions
+  \renewcommand{\thesection}{\booknum{\thechapter.\arabic{section}}}%
+  \renewcommand{\thesubsection}{\booknum{\thechapter.\arabic{section}.\arabic{subsection}}}%
+  \renewcommand{\thesubsubsection}{\booknum{\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}%
+  \renewcommand{\theequation}{\booknum{\ifnum\value{chapter}>0 \thechapter.\fi\arabic{equation}}}%
+  \renewcommand{\thefigure}{\booknum{\ifnum\value{chapter}>0 \thechapter.\fi\arabic{figure}}}%
+  \renewcommand{\thetable}{\booknum{\ifnum\value{chapter}>0 \thechapter.\fi\arabic{table}}}%
+  % Appendices are lettered A, B, C ... everywhere (heading, contents, running heads, references).
+  \gappto\appendix{%
+    \renewcommand{\thechapter}{\ifcase\value{chapter}\or A\or B\or C\or D\or E\or F\or G\or H\or I\or J\fi}}%
+  % Room in the contents for section numbers such as 12.12.
+  \renewcommand*{\l@section}{\@dottedtocline{1}{1.5em}{3.2em}}%
+  \renewcommand*{\l@subsection}{\@dottedtocline{2}{4.7em}{4.0em}}%
+}
+\makeatother
+
+\titleformat{\section}{\Large\bfseries\color{bookaccent}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus 0.6ex minus 0.2ex}{0.8ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1.6ex plus 0.4ex minus 0.2ex}{0.5ex plus 0.1ex}
+\titlespacing*{\subsubsection}{0pt}{1.2ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+% ---------- Lists ----------
+\setlist{topsep=4pt, partopsep=0pt, parsep=2pt, itemsep=4pt}
+
+% ---------- Running heads ----------
+% Outer edge: page number. Inner edge: chapter title on even pages, section title on odd pages.
+% bidi mirrors fancyhdr's L/R on RTL pages, so R is the visual left.
+\makeatletter
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\if@mainmatter\ifnum\value{secnumdepth}>-1 \@chapapp\ \thechapter: \fi\fi#1}{}}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\ifnum\value{secnumdepth}>0 \thesection\ \ \fi#1}}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{bookaccent}\hrule width\headwidth height\headrulewidth}}
+\fancyhead[RO,LE]{\textarabic{\small\bfseries\thepage}}
+\fancyhead[RE]{\textarabic{\small\color{bookmuted}\leftmark}}
+\fancyhead[LO]{\textarabic{\small\color{bookmuted}\rightmark}}
+% Chapter opening pages: page number only, centred in the footer.
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\textarabic{\small\thepage}}%
+}
+
+% ---------- Callout boxes (book style overrides) ----------
+% Flat tinted panel with a coloured bar on the reading-start (right) side and a coloured title.
+% Unlike the worksheet boxes these are breakable across pages.
+\tcbset{
+  boxcolor/.style 2 args={
+    enhanced, breakable,
+    colback=#1, colframe=#1, coltitle=#2, colbacktitle=#1,
+    boxrule=0pt, frame hidden, sharp corners,
+    borderline east={2.5pt}{0pt}{#2},
+    boxsep=1pt, left=6pt, right=9pt, top=2pt, bottom=4pt,
+    toptitle=3pt, bottomtitle=0pt,
+    before skip=7pt, after skip=7pt,
+    fonttitle=\bfseries,
+    fontupper=\setstretch{1.1}
+  },
+  simplecode/.style={
+    enhanced, breakable,
+    colback=gray!5, colframe=black!30, boxrule=0.4pt, arc=2pt,
+    boxsep=1pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+    before skip=6pt, after skip=6pt,
+    fontupper=\setstretch{0.95}
+  }
+}
+
+\newcommand{\importpdfpage}[2]{%
+    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \thispagestyle{empty}
+    \includegraphics[page=#2,width=0.95\paperwidth,height=0.95\paperheight,keepaspectratio]{#1}
+    \restoregeometry
+}
+
+\newcommand{\insertFullImg}[1]{%
+    \noindent
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\paperwidth,keepaspectratio]{#1}%
+    }%
+}%
