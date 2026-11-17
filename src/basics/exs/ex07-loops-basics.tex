@@ -13,11 +13,39 @@
 \thispagestyle{fancy}
 
 % ==============================================================
-% القسم الأول: أسئلة تأسيسية على حلقة while
+% القسم الأول: تمهيد وتتبّع وإكمال كود في حلقة while
 % ==============================================================
-\section*{القسم الأوّل: أسئلة تأسيسية على حلقة \textenglish{while}}
+\section*{القسم الأوّل: تمهيد وتتبّع وإكمال كود في حلقة \textenglish{while}}
 
-\begin{enumerate}[itemsep=1em]
+\begin{enumerate}[itemsep=2em]
+
+\item تَتبَّع مقطع البرنامج التالي وأجب عن الأسئلة التي تليه:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = 2;
+while (x <= 10)
+{
+    Console.WriteLine(x);
+    x = x + 3;
+}
+Console.WriteLine("End: " + x);
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{enumerate}
+    \item ما هي الأعداد التي يطبعها البرنامج داخل الحلقة؟
+    \item ما هي قيمة $x$ النهائية التي جعلت شرط الحلقة يصبح \textenglish{false} وتتوقف الحلقة؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item يطبع داخل الحلقة الأعداد: $2$، ثم $5$، ثم $8$.
+    \item قيمة $x$ عند التوقف هي $11$ (لأنّ $11 \le 10$ غير متحقّق)، فيطبع في النهاية: \textenglish{End: 11}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
 
 \item تَتبَّع مقطع البرنامج التالي بواسطة جدول متابعة واكتب مخرجاته:
 \begin{boxCode}
@@ -51,15 +79,346 @@ while (num >= 61)
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويطبع كل عدد يدخله المستخدم. إذا أدخل المستخدم العدد $0$ يتوقف البرنامج.
-\ifwithsols
-\begin{boxSolution}
+\item تَتبَّع مقطع البرنامج التالي:
+\begin{boxCode}
 \begin{english}
 \begin{minted}{csharp}
 int n = int.Parse(Console.ReadLine());
 while (n != 0)
 {
+    Console.WriteLine(n * 2);
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Finished");
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{enumerate}
+    \item إذا أدخل المستخدم الأعداد: $4$ ثم $7$ ثم $-3$ ثم $0$، ماذا يطبع البرنامج؟
+    \item إذا كان أوّل عدد يُدخله المستخدم هو $0$، ماذا يطبع البرنامج؟
+    \item لماذا نحتاج السطر \textenglish{n = int.Parse(Console.ReadLine());} في نهاية جسم الحلقة؟ ماذا سيحدث لو حذفناه؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item يطبع: $8$، ثم $14$، ثم $-6$، ثم \textenglish{Finished} (لاحظ أنّ الـ $0$ لا يُضرب بـ $2$ لأنّ الحلقة تتوقف عنده).
+    \item يطبع \textenglish{Finished} فقط، لأنّ الشرط \textenglish{n != 0} يكون \textenglish{false} منذ البداية فلا يدخل إلى جسم الحلقة أبدًا.
+    \item نحتاجه لقراءة العدد التالي في كل دورة؛ لو حذفناه ستبقى قيمة $n$ الأولى ثابتة إلى الأبد ويدخل البرنامج في حلقة لا نهائية.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item تَتبَّع مقطع البرنامج التالي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int sum = 0;
+int num = int.Parse(Console.ReadLine());
+while (num != -1)
+{
+    sum = sum + num;
+    num = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Sum = " + sum);
+\end{minted}
+\end{english}
+\end{boxCode}
+إذا أدخل المستخدم الأعداد: $10$ ثم $5$ ثم $20$ ثم $-1$:
+\begin{enumerate}
+    \item أكمل جدول المتابعة التالي:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|C{2.5cm}|C{3.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{num} & \textbf{num != -1} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+    \hline
+     & & $0$ & \\ \hline
+    $10$ & \textenglish{true} & & \\ \hline
+    $5$ & & & \\ \hline
+    $20$ & & & \\ \hline
+    $-1$ & & & \\ \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item هل جُمِع العدد $-1$ مع المتغير \textenglish{sum}؟ لماذا؟
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}
+    \item جدول المتابعة:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|C{2.5cm}|C{3.5cm}|C{2.5cm}|C{3.5cm}|}
+    \hline
+    \textbf{num} & \textbf{num != -1} & \textbf{sum} & \textarabic{\textbf{المخرجات}} \\
+    \hline
+     & & $0$ & \\ \hline
+    $10$ & \textenglish{true} & $10$ & \\ \hline
+    $5$ & \textenglish{true} & $15$ & \\ \hline
+    $20$ & \textenglish{true} & $35$ & \\ \hline
+    $-1$ & \textenglish{false} & $35$ & \textenglish{Sum = 35} \\ \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \item كلا، لم يُجمع العدد $-1$ لأنّنا قرأناه في نهاية الدورة الثالثة، وعندما فُحص الشرط \textenglish{num != -1} أعاد \textenglish{false} فخرجت الحلقة فورًا قبل تنفيذ \textenglish{sum = sum + num}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{تدريب على كتابة شرط \textenglish{while}:} \\
+تذكّر أنّنا نكتب داخل \textenglish{while (...)} \textbf{شرط الاستمرار} (متى تستمرّ الحلقة؟)، وهو \textbf{عكس شرط التوقف}. \\
+لكل حالة في الجدول التالي، اكتب الشرط المناسب داخل \textenglish{while (...)}:
+
+{\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{0.62\textwidth}|>{\centering\arraybackslash}p{0.32\textwidth}|}
+\hline
+\textbf{المطلوب في السؤال (متى تتوقف الحلقة؟)} & \textbf{شرط الاستمرار في \textenglish{while}} \\
+\hline
+$1$. تتوقف الحلقة عندما يُدخل المستخدم العدد $0$ في المتغير $n$. & \textenglish{while (n != 0)} \\
+\hline
+$2$. تتوقف الحلقة عندما يُدخل المستخدم العدد $-1$ في المتغير $x$. & \textenglish{while (............)} \\
+\hline
+$3$. تتوقف الحلقة عندما يُدخل المستخدم عددًا \textbf{سالبًا} في المتغير \textenglish{num} (أي تستمر طالما العدد غير سالب). & \textenglish{while (............)} \\
+\hline
+$4$. تتوقف الحلقة عندما يُدخل المستخدم كلمة المرور الصحيحة $1234$ في المتغير \textenglish{pass}. & \textenglish{while (............)} \\
+\hline
+$5$. تتوقف الحلقة عندما يصبح المجموع \textenglish{sum} أكبر تمامًا من $100$. & \textenglish{while (............)} \\
+\hline
+$6$. تتوقف الحلقة عندما يُدخل المستخدم في $n$ عددًا يقبل القسمة على $7$ بدون باقٍ. & \textenglish{while (............)} \\
+\hline
+\end{tabular}
+\par}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[nosep]
+    \item \textenglish{while (n != 0)}
+    \item \textenglish{while (x != -1)}
+    \item \textenglish{while (num >= 0)}
+    \item \textenglish{while (pass != 1234)}
+    \item \textenglish{while (sum <= 100)}
+    \item \textenglish{while (n \% 7 != 0)}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $1$ — أكمل شرط الحلقة فقط:}
+\begin{enumerate}
+    \item البرنامج التالي يستقبل أعدادًا صحيحة ويطبع كل عدد يدخله المستخدم، ويتوقف عندما يُدخل المستخدم العدد $0$. أكمل الشرط الناقص:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
     Console.WriteLine(n);
+    n = int.Parse(Console.ReadLine());
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يطلب من المستخدم إدخال عدد موجب (أكبر من $0$). طالما أدخل المستخدم عددًا أصغر أو يساوي $0$، يطبع البرنامج رسالة خطأ ويطلب عددًا جديدًا:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    Console.WriteLine("Error! Enter a positive number:");
+    x = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Thank you! You entered: " + x);
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{enumerate}[nosep]
+    \item الشرط هو: \textenglish{n != 0}
+    \item الشرط هو: \textenglish{x <= 0}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $2$ — أكمل الشرط وسطْر التحديث داخل الحلقة:}
+\begin{enumerate}
+    \item البرنامج التالي يطلب من المستخدم إدخال عدد يقبل القسمة على $7$ بدون باقٍ، ويكرّر الطلب حتى يُدخل المستخدم عددًا يقبل القسمة على $7$ ثم يطبعه:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    n = ____________________________;
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل كلمة المرور (عدد صحيح)، وطالما كانت غير مطابقة لكلمة المرور الصحيحة $8264$ يطلب إدخالها من جديد، وفي النهاية يطبع \textenglish{"Welcome"}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int pass = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    Console.WriteLine("Wrong password, try again:");
+    ____________________________________;
+}
+Console.WriteLine("Welcome");
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+int n = int.Parse(Console.ReadLine());
+while (n % 7 != 0)
+{
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(n);
+
+// b
+int pass = int.Parse(Console.ReadLine());
+while (pass != 8264)
+{
+    Console.WriteLine("Wrong password, try again:");
+    pass = int.Parse(Console.ReadLine());
+}
+Console.WriteLine("Welcome");
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\item \textbf{المستوى $3$ — أكمل حلقات تحتوي على عدّاد (\textenglish{count}) أو مجموع (\textenglish{sum}):}
+\begin{enumerate}
+    \item البرنامج التالي يستقبل أعدادًا صحيحة حتى يُدخل المستخدم العدد $0$، وفي النهاية يطبع \textbf{عدد} الأعداد التي أُدخلت (بدون حساب الـ $0$):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int count = ____;
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    count = ____________;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل أسعار كتب (أعدادًا صحيحة) ويجمعها، ويتوقف عندما يُدخل المستخدم السعر $0$، ثم يطبع المجموع النهائي:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int sum = ____;
+int price = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    sum = ____________;
+    price = int.Parse(Console.ReadLine());
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item البرنامج التالي يستقبل أعدادًا صحيحة حتى يُدخل المستخدم $-1$، ويعدّ ويطبع في النهاية كم عددًا من بينها كان \textbf{موجبًا} (أكبر من $0$):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int posCount = 0;
+int n = int.Parse(Console.ReadLine());
+while ( ____________ )
+{
+    if ( ____________ )
+    {
+        posCount++;
+    }
+    n = ________________________________;
+}
+Console.WriteLine( ________________ );
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+// a
+int count = 0;
+int n = int.Parse(Console.ReadLine());
+while (n != 0)
+{
+    count = count + 1; // or count++;
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(count);
+
+// b
+int sum = 0;
+int price = int.Parse(Console.ReadLine());
+while (price != 0)
+{
+    sum = sum + price; // or sum += price;
+    price = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(sum);
+
+// c
+int posCount = 0;
+int n = int.Parse(Console.ReadLine());
+while (n != -1)
+{
+    if (n > 0)
+    {
+        posCount++;
+    }
+    n = int.Parse(Console.ReadLine());
+}
+Console.WriteLine(posCount);
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: أسئلة تأسيسية على حلقة while
+% ==============================================================
+\section*{القسم الثاني: أسئلة تأسيسية على حلقة \textenglish{while}}
+
+\begin{enumerate}[resume, itemsep=1em]
+
+\item اكتب برنامجًا يستقبل من المستخدم أعدادًا صحيحة، ويطبع تربيع كل عدد يُدخله المستخدم ($n \times n$). إذا أدخل المستخدم العدد $-1$ يتوقف البرنامج (دون طباعة تربيع الـ $-1$).
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+int n = int.Parse(Console.ReadLine());
+while (n != -1)
+{
+    Console.WriteLine(n * n);
     n = int.Parse(Console.ReadLine());
 }
 \end{minted}
@@ -88,14 +447,15 @@ while (n != -999)
 \fi
 \filbreak
 
-\item اكتب برنامجًا يطلب من المستخدم إدخال عدد صحيح يقبل القسمة على $7$ بدون باقٍ، فإذا أدخل عددًا لا يقبل القسمة على $7$ يكرّر البرنامج الطلب حتى يُدخل المستخدم عددًا يقبل القسمة على $7$، ثم يطبعه.
+\item اكتب برنامجًا يطلب من المستخدم إدخال عدد صحيح زوجي. طالما يُدخل المستخدم عددًا فرديًا، يطبع البرنامج الرسالة \textenglish{"Odd! Try again"} ويطلب إدخال عدد جديد، وعندما يُدخل المستخدم عددًا زوجيًا يطبعه ويتوقف.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
 int n = int.Parse(Console.ReadLine());
-while (n % 7 != 0)
+while (n % 2 != 0)
 {
+    Console.WriteLine("Odd! Try again");
     n = int.Parse(Console.ReadLine());
 }
 Console.WriteLine(n);
@@ -105,18 +465,18 @@ Console.WriteLine(n);
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل من المستخدم كلمة مرور سرية (عدد صحيح). طالما أنّ كلمة المرور المدخلة غير مطابقة لكلمة المرور الصحيحة $8264$، يطبع البرنامج \textenglish{"Wrong password"} ويطلب إدخالها من جديد. عندما يُدخل المستخدم $8264$ يطبع البرنامج \textenglish{"Welcome"}.
+\item اكتب برنامجًا يطلب من المستخدم إدخال عدد صحيح موجب مكوّن من منزلتين (بين $10$ و $99$). طالما أنّ العدد المدخل خارج هذا المجال، يطبع البرنامج \textenglish{"Invalid"} ويطلب إدخال عدد جديد. عندما يُدخل المستخدم عددًا قانونيًا يطبع البرنامج \textenglish{"Valid: "} متبوعًا بالعدد.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
 \begin{minted}{csharp}
-int pass = int.Parse(Console.ReadLine());
-while (pass != 8264)
+int num = int.Parse(Console.ReadLine());
+while (num < 10 || num > 99)
 {
-    Console.WriteLine("Wrong password");
-    pass = int.Parse(Console.ReadLine());
+    Console.WriteLine("Invalid");
+    num = int.Parse(Console.ReadLine());
 }
-Console.WriteLine("Welcome");
+Console.WriteLine("Valid: " + num);
 \end{minted}
 \end{english}
 \end{boxSolution}
@@ -175,10 +535,10 @@ while (x != y)
 \end{english}
 \end{boxCode}
 \begin{enumerate}
-    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة $3$ مرّات بالضبط.
-    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة مرّة واحدة فقط.
-    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث لا تتكرّر الحلقة أبدًا ($0$ مرّات).
-    \item أعطِ مثالاً لعددين \textenglish{x} و \textenglish{y} بحيث تتكرّر الحلقة إلى ما لا نهاية من المرّات.
+    \item أعطِ مثالاً لعددين $x$ و $y$ بحيث تتكرّر الحلقة $3$ مرّات بالضبط.
+    \item أعطِ مثالاً لعددين $x$ و $y$ بحيث تتكرّر الحلقة مرّة واحدة فقط.
+    \item أعطِ مثالاً لعددين $x$ و $y$ بحيث لا تتكرّر الحلقة أبدًا ($0$ مرّات).
+    \item أعطِ مثالاً لعددين $x$ و $y$ بحيث تتكرّر الحلقة إلى ما لا نهاية من المرّات.
 \end{enumerate}
 \ifwithsols
 \begin{boxSolution}
@@ -196,9 +556,9 @@ while (x != y)
 
 \clearpage
 % ==============================================================
-% القسم الثاني: أسئلة تأسيسية على حلقة for
+% القسم الثالث: أسئلة تأسيسية على حلقة for
 % ==============================================================
-\section*{القسم الثاني: أسئلة تأسيسية على حلقة \textenglish{for}}
+\section*{القسم الثالث: أسئلة تأسيسية على حلقة \textenglish{for}}
 
 \begin{enumerate}[resume, itemsep=1em]
 
@@ -386,9 +746,9 @@ for (int i = 1; i <= n; i++)
 
 \clearpage
 % ==============================================================
-% القسم الثالث: أسئلة حلقات سهلة لتذويت كتابة الحلقات وشروطها ومقدار الخطوة
+% القسم الرابع: أسئلة حلقات سهلة لتذويت كتابة الحلقات وشروطها ومقدار الخطوة
 % ==============================================================
-\section*{القسم الثالث: تذويت كتابة الحلقات، شروطها، ومقدار الخطوة}
+\section*{القسم الرابع: تذويت كتابة الحلقات، شروطها، ومقدار الخطوة}
 
 \begin{enumerate}[resume, itemsep=1em]
 
@@ -499,7 +859,7 @@ for (int i = 1; i <= 10; i++)
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ويطبع الأعداد من $1$ حتى $n$، ولكن بدلاً من كل عدد يقبل القسمة على $4$ بدون باقٍ يطبع الكلمة \textenglish{"FOUR"}.
+\item اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا $n$، ويطبع الأعداد من $1$ حتى $n$، ولكن بدلاً من كل عدد يقبل القسمة على $4$ بدون باقٍ يطبع الكلمة \textenglish{"FOUR"} (مثلاً: $1, 2, 3, \text{\textenglish{FOUR}}, 5, \dots$).
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -539,7 +899,7 @@ for (int i = 0; i < 20; i++)
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا موجبًا ثلاثي المنزلة (بين $100$ و $999$)، ويطبع فقط الأعداد التي تكون فيها خانة الآحاد مساوية لخانة المئات (مثل $141$ و $727$).
+\item اكتب برنامجًا يستقبل من المستخدم $30$ عددًا صحيحًا موجبًا ثلاثي المنزلة (بين $100$ و $999$)، ويطبع فقط الأعداد التي تتساوى فيها منزلة الآحاد مع منزلة المئات (مثل $141$ و $727$).
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -560,7 +920,7 @@ for (int i = 0; i < 30; i++)
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل أعدادًا صحيحة موجبة ثنائية المنزلة (بين $10$ و $99$)، ويطبع لكل عدد مجموع خانتيه (الآحاد والعشرات). ينتهي الاستقبال عندما يُدخل المستخدم عددًا ليس ثنائي المنزلة.
+\item اكتب برنامجًا يستقبل أعدادًا صحيحة موجبة ثنائية المنزلة (بين $10$ و $99$)، ويطبع لكل عدد مجموع منزلتيه (الآحاد والعشرات). ينتهي الاستقبال عندما يُدخل المستخدم عددًا ليس ثنائي المنزلة.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -582,9 +942,9 @@ while (num >= 10 && num <= 99)
 
 \clearpage
 % ==============================================================
-% القسم الرابع: أسئلة المجموع (قالب المجموع)
+% القسم الخامس: أسئلة المجموع (قالب المجموع)
 % ==============================================================
-\section*{القسم الرابع: أسئلة المجموع (قالب المجموع)}
+\section*{القسم الخامس: أسئلة المجموع (قالب المجموع)}
 
 \begin{boxNote}[- قالب المجموع]
 لحساب مجموع قيم في حلقة:
@@ -652,7 +1012,7 @@ Console.WriteLine(sum);
 \fi
 \filbreak
 
-\item يقوم تاجر دكّان صغير بحساب مدخوله اليومي؛ اكتب برنامجًا يستقبل المبلغ الذي يدفعه كل زبون عند شرائه من الدكّان، ويحسب ويطبع في النهاية مدخول التاجر الكلي في ذلك اليوم. ينتهي الاستقبال عندما يتم إدخال العدد $-1$.
+\item يريد صاحب دكّان صغير حساب مدخوله اليومي؛ اكتب برنامجًا يستقبل المبلغ الذي يدفعه كل زبون عند شرائه من الدكّان، ويحسب ويطبع في النهاية مدخول الدكّان الكلي في ذلك اليوم. ينتهي الاستقبال عند إدخال العدد $-1$.
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -671,7 +1031,7 @@ Console.WriteLine(sum);
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا، ويحسب ويطبع \textbf{مجموع} الأعداد الزوجية الموجبة المكوّنة من منزلتين فقط (أي الزوجية التي بين $10$ و $99$).
+\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا، ويحسب ويطبع \textbf{مجموع} الأعداد الزوجية الموجبة المكوّنة من منزلتين فقط (أي الأعداد الزوجية التي بين $10$ و $99$).
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -733,9 +1093,9 @@ Console.WriteLine(fact);
 
 \clearpage
 % ==============================================================
-% القسم الخامس: أسئلة العدّ (قالب العدّاد)
+% القسم السادس: أسئلة العدّ (قالب العدّاد)
 % ==============================================================
-\section*{القسم الخامس: أسئلة العدّ (قالب العدّاد)}
+\section*{القسم السادس: أسئلة العدّ (قالب العدّاد)}
 
 \begin{boxNote}[- قالب العدّاد]
 لعدّ المرّات التي يتحقّق فيها شرط معيّن داخل حلقة:
@@ -951,9 +1311,9 @@ Console.WriteLine("Average: " + avg);
 
 \clearpage
 % ==============================================================
-% القسم السادس: أسئلة القيمة القصوى والدنيا (max و min)
+% القسم السابع: أسئلة القيمة القصوى والدنيا (max و min)
 % ==============================================================
-\section*{القسم السادس: أسئلة القيمة القصوى والدنيا (\textenglish{max} و \textenglish{min})}
+\section*{القسم السابع: أسئلة القيمة القصوى والدنيا (\textenglish{max} و \textenglish{min})}
 
 \begin{boxNote}[- قالب إيجاد القيمة القصوى والدنيا]
 \begin{itemize}[nosep]
@@ -1090,9 +1450,9 @@ Console.WriteLine(avg);
 
 \clearpage
 % ==============================================================
-% القسم السابع: أسئلة حلقات متنوّعة بمستوى متقدّم
+% القسم الثامن: أسئلة حلقات متنوّعة بمستوى متقدّم
 % ==============================================================
-\section*{القسم السابع: أسئلة حلقات متنوّعة بمستوى متقدّم}
+\section*{القسم الثامن: أسئلة حلقات متنوّعة بمستوى متقدّم}
 
 \begin{enumerate}[resume, itemsep=2em]
 
@@ -1145,7 +1505,8 @@ Console.WriteLine(sum);
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل عددًا صحيحًا موجبًا $n$، ويحسب ويطبع عدد القيم $i$ من $1$ حتى $n$ التي يكون فيها التعبير $i^2 - i$ قابلاً للقسمة على $3$ بدون باقٍ.
+\item اكتب برنامجًا يستقبل عددًا صحيحًا موجبًا $n$، ويحسب ويطبع كم عددًا $i$ في المجال من $1$ حتى $n$ يحقّق أنّ قيمة التعبير $i^2 - i$ تقبل القسمة على $3$ بدون باقٍ. \\
+(مثلاً: عندما $i = 2$ فإنّ $2^2 - 2 = 2$ لا يقبل القسمة على $3$، أمّا عندما $i = 3$ فإنّ $3^2 - 3 = 6$ يقبل القسمة على $3$ فنعدّه.)
 \ifwithsols
 \begin{boxSolution}
 \begin{english}
@@ -1221,7 +1582,7 @@ Console.WriteLine(cnt);
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل $25$ عددًا صحيحًا ويطبع عدد الأعداد التي كانت أصغر من المتوسط الجزئي للأعداد المدخلة حتى تلك اللحظة (أي في الخطوة $i$، نحسب متوسط أوّل $i$ أعداد، ونفحص هل العدد الـ $i$ أصغر من هذا المتوسط).
+\item اكتب برنامجًا يستقبل $25$ عددًا صحيحًا، ويعدّ ويطبع كم عددًا منها كان أصغر من معدّل الأعداد التي أُدخلت منذ البداية وحتى تلك اللحظة (أي في الخطوة $i$، نحسب معدّل أوّل $i$ أعداد، ونفحص هل العدد الـ $i$ أصغر من هذا المعدّل).
 \ifdetailed
 \begin{boxExample}
 إذا كانت أوّل $5$ أعداد مدخلة هي: $12, 8, 20, 4, 6$ فإنّ البرنامج يحسب كالتالي:
@@ -1411,7 +1772,8 @@ Console.WriteLine(count);
 \fi
 \filbreak
 
-\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا ويحسب ويطبع أكبر فرق بين عددين متتاليين (بالقيمة المطلقة).
+\item اكتب برنامجًا يستقبل $30$ عددًا صحيحًا، ويحسب ويطبع أكبر فرق (بالقيمة المطلقة) بين عددين متتاليين. \\
+(مثلاً: لو كانت الأعداد الخمسة الأولى هي $10, 18, 15, 3, 9$، فإنّ الفروق المتتالية هي $|18 - 10| = 8$، ثم $|15 - 18| = 3$، ثم $|3 - 15| = 12$، ثم $|9 - 3| = 6$، وأكبر فرق بينها هو $12$.)
 \ifwithsols
 \begin{boxSolution}
 \begin{english}

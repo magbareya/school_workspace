@@ -12,10 +12,425 @@
 \maketitle
 \thispagestyle{fancy}
 
+% ==============================================================
+% القسم الأول: أسئلة تتبّع في جملة الشرط if
+% ==============================================================
+\section*{القسم الأوّل: أسئلة تتبّع في جملة الشرط \textenglish{if}}
+
 \begin{enumerate}[itemsep=2.2em]
 
 % ==============================================================
-% السؤال 4: حذف المنزلة الوسطى وفحص القسمة
+% السؤال 1: تتبّع مع Math وجملة if - else وشروط مركّبة
+% ==============================================================
+\item
+أمامك مقطع البرنامج التالي الذي يستقبل عددين صحيحين $a$ و $b$:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int max = Math.Max(a, b);
+int sum = a + b;
+
+if (max >= 10 && (sum % 2 == 0 || a < 0))
+{
+    Console.WriteLine("A");
+}
+else
+{
+    Console.WriteLine("B");
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[itemsep=1.8em]
+    \filbreak
+    \item \textbf{ما هو المُخرج؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل زوج من المدخلات في الجدول التالي، واكتب قيمتَي المتغيرين \textenglish{max} و \textenglish{sum} والمُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2cm}|C{2cm}|C{2cm}|C{2cm}|C{2.8cm}|}
+    \hline
+    \textbf{a} & \textbf{b} & \textbf{max} & \textbf{sum} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    12 & 4 & & & \\
+    \hline
+    -5 & 10 & & & \\
+    \hline
+    10 & 3 & & & \\
+    \hline
+    -4 & 8 & & & \\
+    \hline
+    -12 & -3 & & & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح زوجًا من الأعداد الصحيحة $a$ و $b$ (\textbf{مختلفًا} عن أزواج الفرع أ) يجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2.4cm}|p{5.5cm}|C{1.9cm}|C{1.9cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{قيمة $a$} & \textbf{قيمة $b$} \\
+    \hline
+    $A$ & بحيث يكون العددان موجبَين ($a > 0$ و $b > 0$) & & \\
+    \hline
+    $A$ & بحيث يكون \textenglish{sum} عددًا فرديًا & & \\
+    \hline
+    $B$ & بحيث يكون $\text{max} \ge 10$ & & \\
+    \hline
+    $B$ & بحيث يكون $a < 0$ ويكون \textenglish{sum} عددًا زوجيًا & & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|C{2cm}|C{2cm}|C{2cm}|C{2cm}|C{2.8cm}|}
+\hline
+\textbf{a} & \textbf{b} & \textbf{max} & \textbf{sum} & \textarabic{\textbf{المُخرج}} \\
+\hline
+12 & 4 & 12 & 16 & A \\
+\hline
+-5 & 10 & 10 & 5 & A \\
+\hline
+10 & 3 & 10 & 13 & B \\
+\hline
+-4 & 8 & 8 & 4 & B \\
+\hline
+-12 & -3 & -3 & -15 & B \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة $A$ بعددين موجبين: يجب أن يكون $\text{max} \ge 10$ والمجموع زوجيًا، مثل: $a = 10,\ b = 6$.
+    \item لطباعة $A$ مع كون \textenglish{sum} فرديًا: يجب أن يكون $a < 0$ و $b \ge 10$ ومجموعهما فرديًا، مثل: $a = -3,\ b = 12$.
+    \item لطباعة $B$ مع $\text{max} \ge 10$: يجب أن يكون $a \ge 0$ والمجموع فرديًا، مثل: $a = 2,\ b = 11$.
+    \item لطباعة $B$ مع $a < 0$ و \textenglish{sum} زوجي: يجب إخلال الشرط $\text{max} \ge 10$ (أي $\text{max} < 10$)، مثل: $a = -2,\ b = 6$.
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 2: تتبّع مع Math وجملة if - else if - else وشروط مركّبة
+% ==============================================================
+\item
+أمامك مقطع البرنامج التالي الذي يستقبل عددين صحيحين $x$ و $y$:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int x = int.Parse(Console.ReadLine());
+int y = int.Parse(Console.ReadLine());
+int p = (int)Math.Pow(x, 2) - y;
+
+if (p < 0)
+{
+    Console.WriteLine("A");
+}
+else if (p == 0 || x == y)
+{
+    Console.WriteLine("B");
+}
+else if (!(x > 0 && y > 0))
+{
+    Console.WriteLine("C");
+}
+else
+{
+    Console.WriteLine("D");
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[itemsep=1.8em]
+    \filbreak
+    \item \textbf{ما هو المُخرج؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل زوج من المدخلات في الجدول التالي، واكتب قيمة المتغير $p$ والمُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2.4cm}|C{2.4cm}|C{2.4cm}|C{3.2cm}|}
+    \hline
+    \textbf{x} & \textbf{y} & \textbf{p} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    2 & 7 & & \\
+    \hline
+    3 & 9 & & \\
+    \hline
+    4 & 4 & & \\
+    \hline
+    -2 & 1 & & \\
+    \hline
+    3 & 5 & & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح زوجًا من الأعداد الصحيحة $x$ و $y$ (\textbf{مختلفًا} عن أزواج الفرع أ) يجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2.4cm}|p{5.5cm}|C{1.9cm}|C{1.9cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{قيمة $x$} & \textbf{قيمة $y$} \\
+    \hline
+    $A$ & بحيث يكون $x < 0$ & & \\
+    \hline
+    $B$ & بحيث يكون $x \ne y$ & & \\
+    \hline
+    $B$ & بحيث يكون $p > 0$ & & \\
+    \hline
+    $C$ & بحيث يكون $x > 0$ & & \\
+    \hline
+    $D$ & بحيث يكون $x < y$ & & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|C{2.4cm}|C{2.4cm}|C{2.4cm}|C{3.2cm}|}
+\hline
+\textbf{x} & \textbf{y} & \textbf{p} & \textarabic{\textbf{المُخرج}} \\
+\hline
+2 & 7 & -3 & A \\
+\hline
+3 & 9 & 0 & B \\
+\hline
+4 & 4 & 12 & B \\
+\hline
+-2 & 1 & 3 & C \\
+\hline
+3 & 5 & 4 & D \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة $A$ مع $x < 0$: يجب أن يكون $x^2 < y$، مثل: $x = -2,\ y = 10$ (حيث $p = -6$).
+    \item لطباعة $B$ مع $x \ne y$: يجب أن يكون $p = 0$ (أي $y = x^2$)، مثل: $x = 2,\ y = 4$ (أو $x = 5,\ y = 25$).
+    \item لطباعة $B$ مع $p > 0$: يجب أن يكون $x = y$ و $x^2 - x > 0$، مثل: $x = 3,\ y = 3$ (حيث $p = 6$).
+    \item لطباعة $C$ مع $x > 0$: يجب أن يكون $y \le 0$، مثل: $x = 2,\ y = -3$.
+    \item لطباعة $D$ مع $x < y$: يجب أن يكون $x > 0$ و $y > 0$ و $x < y < x^2$، مثل: $x = 3,\ y = 6$ (حيث $p = 3$).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 3: تتبّع مع Math وجمل شرط متداخلة (Nested if)
+% ==============================================================
+\item
+أمامك مقطع البرنامج التالي الذي يستقبل عددين صحيحين $a$ و $b$:
+
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+int a = int.Parse(Console.ReadLine());
+int b = int.Parse(Console.ReadLine());
+int min = Math.Min(a, b);
+int max = Math.Max(a, b);
+
+if (min <= 0)
+{
+    if (max > 0 && Math.Abs(min) > max)
+    {
+        Console.WriteLine("A");
+    }
+    else
+    {
+        Console.WriteLine("B");
+    }
+}
+else
+{
+    if (max % min == 0 && a != b)
+    {
+        Console.WriteLine("C");
+    }
+    else
+    {
+        Console.WriteLine("D");
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\begin{enumerate}[itemsep=1.8em]
+    \filbreak
+    \item \textbf{ما هو المُخرج؟} \\
+    تتبّع تنفيذ المقطع البرمجي أعلاه لكل زوج من المدخلات في الجدول التالي، واكتب قيمتَي المتغيرين \textenglish{min} و \textenglish{max} والمُخرج الذي يطبعه البرنامج:
+    \begin{center}
+    \begin{english}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2cm}|C{2cm}|C{2cm}|C{2cm}|C{2.8cm}|}
+    \hline
+    \textbf{a} & \textbf{b} & \textbf{min} & \textbf{max} & \textarabic{\textbf{المُخرج}} \\
+    \hline
+    -8 & 5 & & & \\
+    \hline
+    -3 & 7 & & & \\
+    \hline
+    0 & -4 & & & \\
+    \hline
+    4 & 12 & & & \\
+    \hline
+    6 & 6 & & & \\
+    \hline
+    \end{tabular}
+    \end{english}
+    \end{center}
+    \filbreak
+
+    \item \textbf{أعطِ مُدخلاً يطبع كلّ واحد من هذه المخرجات:} \\
+    لكل مُخرج في الجدول التالي، اقترح زوجًا من الأعداد الصحيحة $a$ و $b$ (\textbf{مختلفًا} عن أزواج الفرع أ) يجعل البرنامج يطبع هذا المُخرج، مع تحقيق الشرط الإضافي المذكور:
+    \begin{center}
+    \renewcommand{\arraystretch}{1.45}
+    \begin{tabular}{|C{2.4cm}|p{5.5cm}|C{1.9cm}|C{1.9cm}|}
+    \hline
+    \textbf{المُخرج المطلوب} & \textbf{شرط إضافي على المُدخلات} & \textbf{قيمة $a$} & \textbf{قيمة $b$} \\
+    \hline
+    $A$ & بحيث يكون $a > 0$ & & \\
+    \hline
+    $B$ & بحيث يكون $\text{max} > 0$ وكلا العددين غير صفري & & \\
+    \hline
+    $C$ & بحيث يكون $a > b$ & & \\
+    \hline
+    $D$ & بحيث يقبل \textenglish{max} القسمة على \textenglish{min} بدون باقٍ & & \\
+    \hline
+    $D$ & بحيث يكون $a \ne b$ & & \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \filbreak
+\end{enumerate}
+
+\ifwithsols
+\begin{boxSolution}[الفرع أ والفرع ب]
+\textbf{حل الفرع أ:}
+\begin{center}
+\begin{english}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|C{2cm}|C{2cm}|C{2cm}|C{2cm}|C{2.8cm}|}
+\hline
+\textbf{a} & \textbf{b} & \textbf{min} & \textbf{max} & \textarabic{\textbf{المُخرج}} \\
+\hline
+-8 & 5 & -8 & 5 & A \\
+\hline
+-3 & 7 & -3 & 7 & B \\
+\hline
+0 & -4 & -4 & 0 & B \\
+\hline
+4 & 12 & 4 & 12 & C \\
+\hline
+6 & 6 & 6 & 6 & D \\
+\hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{حل الفرع ب (أمثلة لإجابات صحيحة):}
+\begin{itemize}[nosep]
+    \item لطباعة $A$ مع $a > 0$: يجب أن يكون $b < 0$ و $|b| > a$، مثل: $a = 4,\ b = -7$.
+    \item لطباعة $B$ مع $\text{max} > 0$ وعددين غير صفريين: يجب أن يكون أحدهما سالبًا والآخر موجبًا مع $|\text{min}| \le \text{max}$، مثل: $a = -2,\ b = 5$.
+    \item لطباعة $C$ مع $a > b$: يجب أن يكون كلاهما موجبًا و $a$ من مضاعفات $b$، مثل: $a = 15,\ b = 5$.
+    \item لطباعة $D$ مع قابلية قسمة \textenglish{max} على \textenglish{min}: يجب أن يكون العددان موجبين ومتساويين ($a = b$)، مثل: $a = 5,\ b = 5$.
+    \item لطباعة $D$ مع $a \ne b$: يجب أن يكون كلاهما موجبًا ولا يقبل الأكبر القسمة على الأصغر، مثل: $a = 7,\ b = 4$.
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak
+
+\end{enumerate}
+
+\clearpage
+% ==============================================================
+% القسم الثاني: كتابة برامج شاملة في جملة الشرط if
+% ==============================================================
+\section*{القسم الثاني: كتابة برامج شاملة في جملة الشرط \textenglish{if}}
+
+\begin{enumerate}[resume, itemsep=2.2em]
+
+% ==============================================================
+% السؤال 4: حافلات الرحلة المدرسية (قسمة وباقي مع شروط)
+% ==============================================================
+\item
+تنظّم المدرسة رحلة تعليمية، وتريد حجز حافلات لنقل الطلاب. تتسع كل \textbf{حافلة كبيرة} لـ $45$ طالبًا بالضبط. \\
+اكتب برنامجًا يستقبل من المستخدم العدد الكلي للطلاب المسجلين للرحلة (عدد صحيح موجب). \\
+يطبع البرنامج أولاً عدد \textbf{الحافلات الكبيرة الممتلئة بالكامل}، ثم عدد \textbf{الطلاب المتبقين} الذين لا يكفون لملء حافلة كبيرة كاملة. \\
+بعد ذلك، يطبع البرنامج توصية بخصوص الطلاب المتبقين حسب القواعد التالية:
+\begin{itemize}[nosep]
+    \item إذا لم يتبقَّ أي طالب (الباقي يساوي $0$)، يطبع: \textenglish{"No extra transport needed"}.
+    \item إذا كان عدد الطلاب المتبقين بين $1$ و $15$ طالبًا (شاملاً $1$ و $15$)، يطبع: \textenglish{"Need 1 minibus"}.
+    \item إذا كان عدد الطلاب المتبقين أكثر من $15$ طالبًا، يطبع: \textenglish{"Need 1 extra large bus"}.
+\end{itemize}
+
+\textbf{مثال $1$:} إذا أدخل المستخدم عدد الطلاب $100$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $10$، ثم يطبع \textenglish{Need 1 minibus}.
+
+\textbf{مثال $2$:} إذا أدخل المستخدم عدد الطلاب $115$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $25$، ثم يطبع \textenglish{Need 1 extra large bus}.
+
+\ifwithsols
+\begin{boxSolution}
+\begin{english}
+\begin{minted}{csharp}
+Console.WriteLine("Enter total students:");
+int students = int.Parse(Console.ReadLine());
+
+int fullBuses = students / 45;
+int remaining = students % 45;
+
+Console.WriteLine("Full large buses: " + fullBuses);
+Console.WriteLine("Remaining students: " + remaining);
+
+if (remaining == 0)
+{
+    Console.WriteLine("No extra transport needed");
+}
+else if (remaining <= 15)
+{
+    Console.WriteLine("Need 1 minibus");
+}
+else
+{
+    Console.WriteLine("Need 1 extra large bus");
+}
+\end{minted}
+\end{english}
+\end{boxSolution}
+\fi
+\filbreak
+
+% ==============================================================
+% السؤال 5: حذف المنزلة الوسطى وفحص القسمة
 % ==============================================================
 \item
 اكتب برنامجًا يستقبل من المستخدم عددًا صحيحًا موجبًا مكوّنًا من \textbf{$3$ منازل} (بين $100$ و $999$). \\
@@ -64,7 +479,7 @@ else
 \filbreak
 
 % ==============================================================
-% السؤال 5: تعريف وفحص خاصية على عدد من 4 منازل - العدد المتكافئ
+% السؤال 6: تعريف وفحص خاصية على عدد من 4 منازل - العدد المتكافئ
 % ==============================================================
 \item
 نسمّي العدد الصحيح الموجب المكوّن من $4$ منازل (بين $1000$ و $9999$) \textbf{«عددًا متكافئًا»} إذا تحقّق فيه الشرطان التاليان معًا:
@@ -111,7 +526,7 @@ else
 \filbreak
 
 % ==============================================================
-% السؤال 6: تعريف وفحص المتوالية الحسابية لثلاثة أعداد
+% السؤال 7: تعريف وفحص المتوالية الحسابية لثلاثة أعداد
 % ==============================================================
 \item
 نسمّي ثلاثة أعداد صحيحة $(a, b, c)$ \textbf{«متوالية حسابية»} إذا كان الفرق بين العدد الثاني والأول مساويًا للفرق بين العدد الثالث والثاني (أي $b - a = c - b$). \\
@@ -157,55 +572,6 @@ if (diff1 == diff2)
 else
 {
     Console.WriteLine("Not Arithmetic");
-}
-\end{minted}
-\end{english}
-\end{boxSolution}
-\fi
-\filbreak
-
-% ==============================================================
-% السؤال 7: حافلات الرحلة المدرسية (قسمة وباقي مع شروط)
-% ==============================================================
-\item
-تنظّم المدرسة رحلة تعليمية، وتريد حجز حافلات لنقل الطلاب. تتسع كل \textbf{حافلة كبيرة} لـ $45$ طالبًا بالضبط. \\
-اكتب برنامجًا يستقبل من المستخدم العدد الكلي للطلاب المسجلين للرحلة (عدد صحيح موجب). \\
-يطبع البرنامج أولاً عدد \textbf{الحافلات الكبيرة الممتلئة بالكامل}، ثم عدد \textbf{الطلاب المتبقين} الذين لا يكفون لملء حافلة كبيرة كاملة. \\
-بعد ذلك، يطبع البرنامج توصية بخصوص الطلاب المتبقين حسب القواعد التالية:
-\begin{itemize}[nosep]
-    \item إذا لم يتبقَّ أي طالب (الباقي يساوي $0$)، يطبع: \textenglish{"No extra transport needed"}.
-    \item إذا كان عدد الطلاب المتبقين بين $1$ و $15$ طالبًا (شاملاً $1$ و $15$)، يطبع: \textenglish{"Need 1 minibus"}.
-    \item إذا كان عدد الطلاب المتبقين أكثر من $15$ طالبًا، يطبع: \textenglish{"Need 1 extra large bus"}.
-\end{itemize}
-
-\textbf{مثال $1$:} إذا أدخل المستخدم عدد الطلاب $100$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $10$، ثم يطبع \textenglish{Need 1 minibus}.
-
-\textbf{مثال $2$:} إذا أدخل المستخدم عدد الطلاب $115$، يطبع البرنامج أنّ عدد الحافلات الكبيرة الممتلئة هو $2$، وأنّ عدد الطلاب المتبقين هو $25$، ثم يطبع \textenglish{Need 1 extra large bus}.
-
-\ifwithsols
-\begin{boxSolution}
-\begin{english}
-\begin{minted}{csharp}
-Console.WriteLine("Enter total students:");
-int students = int.Parse(Console.ReadLine());
-
-int fullBuses = students / 45;
-int remaining = students % 45;
-
-Console.WriteLine("Full large buses: " + fullBuses);
-Console.WriteLine("Remaining students: " + remaining);
-
-if (remaining == 0)
-{
-    Console.WriteLine("No extra transport needed");
-}
-else if (remaining <= 15)
-{
-    Console.WriteLine("Need 1 minibus");
-}
-else
-{
-    Console.WriteLine("Need 1 extra large bus");
 }
 \end{minted}
 \end{english}
