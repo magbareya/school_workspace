@@ -7,198 +7,87 @@
 \maketitle
 \thispagestyle{fancy}
 
-\section*{مقدمة}
-العمليات الخارجية هي وسيلة لتقسيم البرنامج إلى مقاطع صغيرة ومستقلة تؤدي مهام محددة.
-تساعد العمليات على:
-\begin{itemize}
-    \item تنظيم الكود وجعله أسهل للقراءة والفهم والصيانة.
-    \item إعادة استخدام نفس الكود أكثر من مرة دون تكرار كتابته.
-\end{itemize}
+\section*{مقدمة ومصطلحات أساسية}
+العمليات الخارجية تقسّم البرنامج إلى مقاطع صغيرة ومستقلة تؤدي مهام محددة، مما يسهّل قراءة الكود وصيانته ويمنع تكراره.
 
-في هذا الدرس سنتعرّف على مبنى العملية الخارجية، والفرق بين تلقي المعطيات واستقبال المدخلات، وأقسام العمليات المختلفة وكيفية تعريفها واستدعائها داخل الفئة.
-
-\begin{boxAttention}[- مصطلحات أساسية مهمة جدًّا]
-\begin{itemize}
-    \item \textbf{تستقبل:} تقرأ قيمة يُدخلها المستخدم عبر لوحة المفاتيح باستخدام \textenglish{Console.ReadLine()}.
+\begin{boxAttention}[- مصطلحات أساسية]
+\begin{itemize}[nosep]
+    \item \textbf{تستقبل:} تقرأ قيمة من المستخدم عبر لوحة المفاتيح باستخدام \textenglish{Console.ReadLine()}.
     \item \textbf{تتلقى:} تأخذ معطيات (بارامترات) تُمرَّر إليها بين القوسين في تعريف العملية وعند استدعائها.
     \item \textbf{تطبع:} تعرض مخرجات على الشاشة باستخدام \textenglish{Console.WriteLine(...)}.
     \item \textbf{تعيد:} تُرجع قيمة إلى المكان الذي استُدعيت منه باستخدام الأمر \textenglish{return}.
 \end{itemize}
 \end{boxAttention}
 
-\clearpage
-% ==============================================================
-% 1. مبنى تعريف العملية واستدعاؤها
-% ==============================================================
-\section{مبنى تعريف العملية واستدعاؤها}
+\subsection*{ما هي الفئة (\textenglish{class}) وأين تعيش العمليات؟}
+\textbf{الفئة (\textenglish{class})} في لغة \textenglish{C\#} هي الإطار (أو الحاوية) الذي يضمّ الكود البرمجي. جميع العمليات الخارجية — بما فيها العملية الرئيسية \textenglish{Main} — \textbf{تعيش داخل فئة} (مثل \textenglish{class Program})، وتُكتب الواحدة تلو الأخرى داخل قوسي الفئة (وليس عملية داخل قوسي عملية أخرى).
 
-كل عملية خارجية في لغة \textenglish{C\#} تتكوّن من قسمين رئيسيين:
-
-\begin{enumerate}
-    \item \textbf{تعريف العملية:}
-    وهو السطر الأوّل الذي يحتوي على:
-    \begin{itemize}
-        \item الكلمتين الثابتتين في هذه المرحلة: \textenglish{public static}
-        \item نمط القيمة التي تعيدها العملية (\textenglish{int, double, bool, string, char})، أو \textenglish{void} إذا كانت لا تعيد أي قيمة.
-        \item اسم العملية، ومن المتّبع أن يبدأ دائمًا بحرف كبير (\textenglish{PascalCase}).
-        \item المعطيات (البارامترات) التي تتلقاها العملية بين القوسين، مثل \textenglish{(int x, int y)}، أو قوسين فارغين \textenglish{()} إذا كانت لا تتلقى معطيات.
-    \end{itemize}
-
-    \item \textbf{جسم العملية:}
-    وهو الكود الموجود بين القوسين المتعرجين \textenglish{\{ \}}، ويحتوي على التعليمات التي تُنفّذ عند استدعاء العملية.
-\end{enumerate}
-
-\filbreak
-\begin{boxExample}[1: عملية لا تتلقى ولا تعيد]
+\subsection*{المبنى العام لتعريف العملية الخارجية داخل الفئة}
+\begin{boxCode}
 \begin{english}
 \begin{minted}{csharp}
-public static void PrintHello()
+class Program
 {
-    Console.WriteLine("Hello");
+    public static returnType MethodName(parameters)
+    {
+        // Method body (statements)
+    }
+
+    public static void Main(string[] args)
+    {
+        // Calling the method here
+    }
 }
 \end{minted}
 \end{english}
-\hrule
-\vspace{0.4em}
+\end{boxCode}
+
 \begin{itemize}[nosep]
-    \item \textenglish{public static} $\leftarrow$ جزء ثابت في تعريف العملية الخارجية.
-    \item \textenglish{void} $\leftarrow$ العملية لا تعيد أي قيمة.
-    \item \textenglish{PrintHello} $\leftarrow$ اسم العملية.
-    \item \textenglish{()} $\leftarrow$ الأقواس الفارغة بعد اسم العملية تعني أنّ العملية لا تتلقى معطيات (بارامترات).
-    \item ما بين القوسين \textenglish{\{ \}} هو جسم العملية، وفي هذه الحالة يطبع الرسالة \textenglish{Hello}.
-\end{itemize}
-\end{boxExample}
-
-\filbreak
-\begin{boxExample}[2: عملية تتلقى وتعيد]
-\begin{english}
-\begin{minted}{csharp}
-public static int AddNumbers(int a, int b)
-{
-    int sum = a + b;
-    return sum;
-}
-\end{minted}
-\end{english}
-\hrule
-\vspace{0.4em}
-\begin{itemize}[nosep]
-    \item \textenglish{public static} $\leftarrow$ جزء ثابت.
-    \item \textenglish{int} $\leftarrow$ نمط القيمة المعادة.
-    \item \textenglish{AddNumbers} $\leftarrow$ اسم العملية.
-    \item \textenglish{(int a, int b)} $\leftarrow$ المعطيات (البارامترات) التي تتلقاها العملية، وفي هذه الحالة تتلقى متغيرين كلاهما من نمط \textenglish{int}.
-    \item نستخدم الأمر \textenglish{return} لإنهاء العملية وإعادة القيمة المطلوبة. \\
-    \textbf{ملاحظة:} نمط القيمة التي تعيدها العملية في تعريفها يجب أن يطابق نمط القيمة المكتوبة بعد كلمة \textenglish{return}.
-\end{itemize}
-\end{boxExample}
-
-\filbreak
-\subsection*{كيفية استدعاء العملية في \textenglish{Main}}
-عندما تكون العملية معرّفة داخل نفس الفئة (\textenglish{Program})، نستدعيها بكتابة اسمها مباشرة:
-
-\begin{boxExample}[استدعاء العمليات في \textenglish{Main}]
-\begin{english}
-\begin{minted}{csharp}
-public static void Main(string[] args)
-{
-    PrintHello();
-    int sum1 = AddNumbers(5, 10);
-    int a = 5;
-    int b = 10;
-    int sum2 = AddNumbers(a, b);
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-
-\begin{itemize}
-    \item العملية \textenglish{PrintHello()} لا تعيد أي قيمة (\textenglish{void})، لذلك نكتب اسمها فقط ولا نحفظها في متغير.
-    \item العملية \textenglish{AddNumbers(int a, int b)} تعيد قيمة من نمط \textenglish{int}، لذلك نحفظ القيمة التي تعيدها في متغير من نفس النمط (\textenglish{sum1} أو \textenglish{sum2})، أو نطبعها مباشرة.
-    \item المعطيات التي نمرّرها للعملية عند استدعائها يجب أن تطابق المعطيات في تعريف العملية من حيث العدد والنمط والترتيب.
+    \item \textenglish{public static}: كلمتان ثابتتان في بداية تعريف كل عملية خارجية في هذه المرحلة.
+    \item \textenglish{returnType}: نمط القيمة التي تعيدها العملية (\textenglish{int, double, string, char, bool})، أو \textenglish{void} إذا كانت لا تعيد قيمة.
+    \item \textenglish{MethodName}: اسم العملية (يبدأ بحرف كبير \textenglish{PascalCase}).
+    \item \textenglish{parameters}: المعطيات التي تتلقاها العملية مع أنماطها، أو قوسان فارغان \textenglish{()} إذا كانت لا تتلقى معطيات.
 \end{itemize}
 
-\filbreak
-\subsection*{استدعاء عملية خارجية من فئة أخرى}
-لكي نستدعي عملية معرّفة في فئة أخرى، نكتب اسم الفئة ثم نقطة \textenglish{.} ثم اسم العملية. نحن نعرف ونستخدم الكثير من هذه العمليات الجاهزة:
-\begin{itemize}[nosep]
-    \item \textenglish{Console.WriteLine("Hello");} $\leftarrow$ استدعاء للعملية \textenglish{WriteLine} من الفئة \textenglish{Console} (تتلقى نصًّا من نمط \textenglish{string} ولا تعيد قيمة).
-    \item \textenglish{Console.ReadLine();} $\leftarrow$ استدعاء للعملية \textenglish{ReadLine} من الفئة \textenglish{Console} (لا تتلقى معطيات وتعيد قيمة من نمط \textenglish{string}).
-    \item \textenglish{int.Parse(str);} و \textenglish{double.Parse(str);} $\leftarrow$ تتلقى كل منهما نصًّا من نمط \textenglish{string} وتعيد العدد المقابل (\textenglish{int} أو \textenglish{double}).
-    \item عمليات الفئة \textenglish{Math}: مثل \textenglish{Math.Max(5, 10)}، \textenglish{Math.Min(5, 10)}، \textenglish{Math.Abs(-5)}، \textenglish{Math.Pow(2, 3)}، \textenglish{Math.Sqrt(25)}، و \textenglish{Math.Round(2.5)}.
-\end{itemize}
-
-\clearpage
 % ==============================================================
-% 2. أقسام العمليات الخارجية (حسب تقسيم الأسئلة)
+% القسم الأول: عمليات لا تتلقى ولا تعيد
 % ==============================================================
-\section{أقسام العمليات الخارجية}
-
-تُقسّم العمليات الخارجية بحسب تلقي المعطيات ونمط القيمة المعادة إلى الأقسام التالية:
-
-% --------------------------------------------------------------
-% القسم الأول
-% --------------------------------------------------------------
 \filbreak
-\subsection{القسم الأوّل: عمليات لا تتلقى ولا تعيد (تستقبل وتطبع فقط)}
-في هذا القسم يكون نمط الإرجاع \textenglish{void} والأقواس بعد اسم العملية فارغة \textenglish{()}. تقوم العملية باستقبال المدخلات من المستخدم عبر \textenglish{Console.ReadLine()} وطباعة المطلوب مباشرة.
+\section{عمليات لا تتلقى ولا تعيد}
+نمط الإرجاع فيها \textenglish{void} وأقواسها فارغة \textenglish{()}. عند استدعائها في \textenglish{Main} نكتب اسمها فقط دون حفظها في متغير.
 
-\begin{boxExample}[عملية لا تتلقى ولا تعيد - تستقبل عددين وتطبع حاصل ضربهما]
+\begin{boxExample}[عملية تستقبل عددًا $n$ وتطبع $n$ نجوم باستخدام حلقة]
 \begin{english}
 \begin{minted}{csharp}
-public static void ReadAndPrintProduct()
+public static void ReadAndPrintStars()
 {
-    Console.WriteLine("Enter two integers:");
-    int a = int.Parse(Console.ReadLine());
-    int b = int.Parse(Console.ReadLine());
-    Console.WriteLine("Product = " + (a * b));
+    int n = int.Parse(Console.ReadLine());
+    for (int i = 0; i < n; i++)
+    {
+        Console.WriteLine("*");
+    }
 }
 
 public static void Main()
 {
-    ReadAndPrintProduct();
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-\begin{itemize}[nosep]
-    \item لا تتلقى $\leftarrow$ نستدعيها بدون معطيات بين القوسين: \textenglish{ReadAndPrintProduct();}.
-    \item لا تعيد (\textenglish{void}) $\leftarrow$ لا يوجد فيها \textenglish{return}، ولا نحفظ استدعاءها في متغير.
-\end{itemize}
-
-% --------------------------------------------------------------
-% القسم الثاني
-% --------------------------------------------------------------
-\filbreak
-\subsection{القسم الثاني: عمليات تتلقى ولا تعيد (قسم منها يستقبل أيضًا)}
-تتلقى العملية معطى واحدًا أو أكثر بين القوسين، وتنفّذ مهمتها وتطبع الناتج دون إرجاع قيمة (\textenglish{void}). ويمكن للعملية أن تستقبل مدخلات إضافية من المستخدم إلى جانب المعطيات التي تلقتها.
-
-\begin{boxExample}[1: عملية تتلقى عددين وتطبع مجموعهما]
-\begin{english}
-\begin{minted}{csharp}
-public static void PrintSum(int a, int b)
-{
-    int sum = a + b;
-    Console.WriteLine("Sum = " + sum);
-}
-
-public static void Main()
-{
-    PrintSum(5, 3);
-    int x = 10;
-    int y = 20;
-    PrintSum(x, y);
+    ReadAndPrintStars();
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 
+% ==============================================================
+% القسم الثاني: عمليات تتلقى ولا تعيد
+% ==============================================================
 \filbreak
-\begin{boxExample}[2: عملية تتلقى أجر الساعة وتستقبل عدد ساعات العمل ثم تطبع الراتب]
+\section{عمليات تتلقى ولا تعيد}
+نمط الإرجاع فيها \textenglish{void}، وتأخذ معطيات بين القوسين. عند استدعائها نمرّر لها قيمًا تطابق المعطيات في النمط والعدد والترتيب (ويمكن أن تستقبل مدخلات إضافية داخلها).
+
+\begin{boxExample}[عملية تتلقى أجر الساعة وتستقبل عدد الساعات ثم تطبع الراتب]
 \begin{english}
 \begin{minted}{csharp}
 public static void PrintSalary(double hourlyRate)
 {
-    Console.WriteLine("Enter hours worked:");
     int hours = int.Parse(Console.ReadLine());
     double salary = hourlyRate * hours;
     Console.WriteLine("Salary = " + salary);
@@ -211,133 +100,84 @@ public static void Main()
 \end{minted}
 \end{english}
 \end{boxExample}
-\begin{itemize}[nosep]
-    \item تتلقى $\leftarrow$ نمرّر لها عند الاستدعاء معطيات من نفس النمط المحدد في تعريفها.
-    \item لا تعيد (\textenglish{void}) $\leftarrow$ تطبع النتيجة داخلها ولا تعيد قيمة إلى \textenglish{Main}.
-\end{itemize}
 
-% --------------------------------------------------------------
-% القسم الثالث
-% --------------------------------------------------------------
+% ==============================================================
+% القسم الثالث: عمليات لا تتلقى وتعيد أعدادًا صحيحة أو عشرية
+% ==============================================================
 \filbreak
-\subsection{القسم الثالث: عمليات لا تتلقى وتعيد أعدادًا صحيحة أو عشرية}
-أقواس العملية فارغة \textenglish{()} لأنّها لا تتلقى معطيات، لكنّها تعيد عددًا (\textenglish{int} أو \textenglish{double}) باستخدام \textenglish{return}. غالبًا تستقبل هذه العملية قيمًا من المستخدم، وقد تطبع معلومات إضافية قبل إرجاع النتيجة.
+\section{عمليات لا تتلقى وتعيد أعدادًا (\textenglish{int} أو \textenglish{double})}
+أقواسها فارغة \textenglish{()}، وتعيد نتيجة عددية بالأمر \textenglish{return}. عند استدعائها في \textenglish{Main} نحفظ القيمة المعادة في متغير من نفس النمط أو نطبعها مباشرة.
 
-\begin{boxExample}[1: عملية تستقبل عددًا من المستخدم وتعيده]
+\begin{boxExample}[عملية تستقبل $5$ أسعار بحلقة \textenglish{for} وتعيد مجموعها]
 \begin{english}
 \begin{minted}{csharp}
-public static int ReadNumber()
+public static double ReadFivePricesSum()
 {
-    Console.WriteLine("Enter an integer:");
-    int num = int.Parse(Console.ReadLine());
-    return num;
+    double sum = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        double price = double.Parse(Console.ReadLine());
+        sum += price;
+    }
+    return sum;
 }
 
 public static void Main()
 {
-    int x = ReadNumber();
-    Console.WriteLine("The number is: " + x);
+    double total = ReadFivePricesSum();
+    Console.WriteLine("Total = " + total);
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 
+% ==============================================================
+% القسم الرابع: عمليات تتلقى وتعيد أعدادًا صحيحة أو عشرية
+% ==============================================================
 \filbreak
-\begin{boxExample}[2: عملية تستقبل سعرين، تطبع مجموعهما، وتعيد قيمة الضريبة ($17\%$)]
+\section{عمليات تتلقى وتعيد أعدادًا (\textenglish{int} أو \textenglish{double})}
+تتلقى معطيات بين القوسين، وتُجري حسابات عليها (بما في ذلك الشروط أو الحلقات)، ثم تعيد الناتج بالأمر \textenglish{return}.
+
+\begin{boxExample}[عملية تتلقى عددًا $n$ وتعيد مجموع مضاعفات الـ $3$ من $1$ حتى $n$]
 \begin{english}
 \begin{minted}{csharp}
-public static double ReadPricesPrintSumGetTax()
+public static int SumMultiplesOf3(int n)
 {
-    double p1 = double.Parse(Console.ReadLine());
-    double p2 = double.Parse(Console.ReadLine());
-    double sum = p1 + p2;
-    Console.WriteLine("Sum before tax = " + sum);
-    return sum * 0.17;
+    int sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (i % 3 == 0)
+        {
+            sum += i;
+        }
+    }
+    return sum;
 }
 
 public static void Main()
 {
-    double tax = ReadPricesPrintSumGetTax();
-    Console.WriteLine("Tax = " + tax);
+    int res = SumMultiplesOf3(15);
+    Console.WriteLine(res);
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 
-% --------------------------------------------------------------
-% القسم الرابع
-% --------------------------------------------------------------
+% ==============================================================
+% القسم الخامس: عمليات تعيد string أو char
+% ==============================================================
 \filbreak
-\subsection{القسم الرابع: عمليات تتلقى وتعيد أعدادًا صحيحة أو عشرية}
-تتلقى العملية معطيات بين القوسين، وتجري حسابات عليها (وقد تستقبل مدخلات إضافية أو تطبع رسائل)، ثم تعيد الناتج العددي (\textenglish{int} أو \textenglish{double}) باستخدام \textenglish{return}.
+\section{عمليات تعيد \textenglish{string} أو \textenglish{char}}
+تعيد نصًّا (\textenglish{string}) بين علامتي اقتباس مزدوجتين \textenglish{"..."} أو حرفًا واحدًا (\textenglish{char}) بين علامتي اقتباس مفردتين \textenglish{'...'}.
 
-\begin{boxExample}[1: عملية تتلقى طول مستطيل وعرضه وتعيد مساحته]
-\begin{english}
-\begin{minted}{csharp}
-public static double GetRectangleArea(double length, double width)
-{
-    double area = length * width;
-    return area;
-}
-
-public static void Main()
-{
-    double result = GetRectangleArea(6.5, 4.0);
-    Console.WriteLine("Area = " + result);
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-
-\filbreak
-\begin{boxExample}[2: عملية تتلقى الرصيد الحالي، وتستقبل مبلغ الإيداع، وتطبع رسالة وتعيد الرصيد الجديد]
-\begin{english}
-\begin{minted}{csharp}
-public static double DepositMoney(double balance)
-{
-    Console.WriteLine("Enter deposit amount:");
-    double amount = double.Parse(Console.ReadLine());
-    Console.WriteLine("Deposit completed");
-    return balance + amount;
-}
-
-public static void Main()
-{
-    double newBalance = DepositMoney(500.0);
-    Console.WriteLine("New balance = " + newBalance);
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-
-% --------------------------------------------------------------
-% القسم الخامس
-% --------------------------------------------------------------
-\filbreak
-\subsection{القسم الخامس: عمليات تعيد \textenglish{string} أو \textenglish{char}}
-يمكن للعملية أن تعيد نصًّا (\textenglish{string}) أو حرفًا واحدًا (\textenglish{char})، سواء كانت تتلقى معطيات، أو تستقبل مدخلات من المستخدم، أو لا تتلقى ولا تستقبل.
-
-\begin{boxExample}[1: عملية تتلقى اسمًا وتعيد نصًّا ترحيبيًّا (\textenglish{string})]
+\begin{boxExample}[عملية تعيد نصًّا (\textenglish{string}) وأخرى تعيد رمز الإشارة (\textenglish{char})]
 \begin{english}
 \begin{minted}{csharp}
 public static string Greet(string name)
 {
-    return "Hello " + name + "!";
+    return "Hello " + name;
 }
 
-public static void Main()
-{
-    string msg = Greet("Ali");
-    Console.WriteLine(msg);
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-
-\filbreak
-\begin{boxExample}[2: عملية تتلقى عددًا صحيحًا وتعيد رمز إشارته (\textenglish{char})]
-\begin{english}
-\begin{minted}{csharp}
 public static char GetSignSymbol(int num)
 {
     if (num >= 0)
@@ -352,24 +192,25 @@ public static char GetSignSymbol(int num)
 
 public static void Main()
 {
-    char symbol = GetSignSymbol(-12);
-    Console.WriteLine("Sign: " + symbol);
+    Console.WriteLine(Greet("Ali"));
+    char sym = GetSignSymbol(-12);
+    Console.WriteLine(sym);
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 
-% --------------------------------------------------------------
-% القسم السادس
-% --------------------------------------------------------------
-\clearpage
-\subsection{القسم السادس: عمليات تعيد \textenglish{bool} وكيفية استخدامها داخل جملة \textenglish{if}}
-العمليات التي تعيد قيمة منطقية (\textenglish{bool}) تفحص شرطًا معيّنًا وتعيد \textenglish{true} إذا تحقّق الشرط، أو \textenglish{false} إذا لم يتحقّق. \\
-بما أنّ جملة \textenglish{if} تتوقّع بين قوسيها تعبيرًا منطقيًّا قيمته \textenglish{true} أو \textenglish{false}، يمكننا \textbf{استدعاء العملية التي تعيد \textenglish{bool} مباشرة داخل قوسي \textenglish{if}}.
+% ==============================================================
+% القسم السادس: عمليات تعيد bool وكيفية استدعائها
+% ==============================================================
+\filbreak
+\section{عمليات تعيد \textenglish{bool} واستدعاؤها داخل \textenglish{if}}
+تعيد \textenglish{true} أو \textenglish{false}، ويمكن استدعاؤها مباشرة داخل قوسي جملة \textenglish{if (...)}.
 
-\begin{boxExample}[1: تعريف عملية تعيد \textenglish{bool} واستدعاؤها مباشرة داخل \textenglish{if}]
+\begin{boxExample}[تعريف عملية تعيد \textenglish{bool} بطريقتين واستدعاؤها في \textenglish{if}]
 \begin{english}
 \begin{minted}{csharp}
+// Way 1: using if - else
 public static bool IsPositive(int num)
 {
     if (num > 0)
@@ -382,12 +223,18 @@ public static bool IsPositive(int num)
     }
 }
 
+// Way 2: returning the condition directly
+public static bool IsAdult(int age)
+{
+    return (age >= 18);
+}
+
 public static void Main()
 {
     int n = int.Parse(Console.ReadLine());
     if (IsPositive(n))
     {
-        Console.WriteLine("Positive number");
+        Console.WriteLine("Positive");
     }
     else
     {
@@ -398,44 +245,14 @@ public static void Main()
 \end{english}
 \end{boxExample}
 
+% ==============================================================
+% القسم السابع: عمليات تستدعي عمليات أخرى
+% ==============================================================
 \filbreak
-\begin{boxExample}[2: كتابة عملية تعيد \textenglish{bool} باختصار واستخدامها في \textenglish{if}]
-\begin{english}
-\begin{minted}{csharp}
-public static bool IsAdult(int age)
-{
-    return (age >= 18);
-}
+\section{عمليات تستدعي عمليات أخرى}
+يمكن لأي عملية خارجية أن تستدعي عملية أخرى لمساعدتها في حساب النتيجة.
 
-public static void Main()
-{
-    int userAge = int.Parse(Console.ReadLine());
-    if (IsAdult(userAge))
-    {
-        Console.WriteLine("Allowed");
-    }
-    else
-    {
-        Console.WriteLine("Under 18");
-    }
-}
-\end{minted}
-\end{english}
-\end{boxExample}
-
-\begin{itemize}[nosep]
-    \item عند تنفيذ \textenglish{if (IsPositive(n))}، يتم أولاً استدعاء العملية \textenglish{IsPositive(n)}؛ فإذا أعادت \textenglish{true} يُنفَّذ كود \textenglish{if}، وإذا أعادت \textenglish{false} يُنفَّذ كود \textenglish{else}.
-    \item يمكن أيضًا حفظ النتيجة في متغير منطقي أولاً ثم فحصه: \textenglish{bool res = IsPositive(n); if (res) \{ ... \}}.
-\end{itemize}
-
-% --------------------------------------------------------------
-% القسم السابع
-% --------------------------------------------------------------
-\filbreak
-\subsection{القسم السابع: عمليات تستدعي عمليات أخرى}
-تمامًا كما نستدعي العمليات الخارجية من داخل \textenglish{Main}، يمكن لأي عملية خارجية أن تستدعي عملية خارجية أخرى لمساعدتها في أداء مهمتها.
-
-\begin{boxExample}[عملية تحسب تكعيب عدد باستدعاء عملية تضرب عددين]
+\begin{boxExample}[عملية تحسب تكعيب عدد باستدعاء عملية الضرب]
 \begin{english}
 \begin{minted}{csharp}
 public static int Multiply(int a, int b)
@@ -451,20 +268,22 @@ public static int Cube(int x)
 
 public static void Main()
 {
-    int res = Cube(4);
-    Console.WriteLine("Result = " + res);
+    Console.WriteLine(Cube(4));
 }
 \end{minted}
 \end{english}
 \end{boxExample}
 
+% ==============================================================
+% القسم الثامن: ملاحظات واستخدام عمليات جاهزة
+% ==============================================================
 \filbreak
-\section{ملاحظات هامة}
-\begin{itemize}
-    \item يُفضّل أن يبدأ اسم العملية بحرف كبير وأن يصف وظيفتها بوضوح، وإذا كان مكوّنًا من أكثر من كلمة فكل كلمة تبدأ بحرف كبير (\textenglish{CalculateSum}، \textenglish{GetMaxValue}، \textenglish{PrintResult}).
-    \item اجعل كل عملية تقوم بمهمة واحدة واضحة، واستخدم العمليات بدلاً من تكرار الكود.
-    \item داخل كل عملية يمكنك كتابة جميع الأوامر التي تعلمتها (تعريف متغيرات، استقبال، طباعة، جمل شرطية \textenglish{if - else}، واستدعاء عمليات أخرى).
-    \item يمكن تمرير القيمة التي تعيدها عملية كمعطى لعملية أخرى مباشرة، مثل: \textenglish{Math.Max(a, Math.Max(b, c))}.
+\section{استدعاء عمليات جاهزة وملاحظات عامة}
+\begin{itemize}[nosep]
+    \item \textbf{استدعاء عملية معطى تعريفها فقط:} في بعض الأسئلة يُعطى تعريف العملية ووظيفتها فقط دون كودها الداخلي؛ عندها نستدعيها مباشرة حسب تعريفها دون إعادة كتابتها.
+    \item \textbf{استدعاء عملية من فئة أخرى:} نكتب اسم الفئة ثم نقطة ثم اسم العملية، مثل: \\
+    \textenglish{Console.WriteLine(...)}، \textenglish{int.Parse(...)}، وعمليات الفئة \textenglish{Math} (\textenglish{Math.Max}، \textenglish{Math.Abs}، \textenglish{Math.Sqrt}).
+    \item \textbf{دمج الاستدعاء في تعبير أو حلقة:} يمكن استدعاء العملية التي تعيد قيمة داخل تعبير حسابي أو شرط أو داخل حلقة \textenglish{for} / \textenglish{while}، أو تمرير نتيجتها كمعطى لعملية أخرى مثل \textenglish{Math.Max(a, Math.Max(b, c))}.
 \end{itemize}
 
 \vspace{1cm}
