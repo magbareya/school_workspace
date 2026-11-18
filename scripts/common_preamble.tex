@@ -27,6 +27,9 @@
 % right before polyglossia (bidi).
 \makeatletter
 \@ifclassloaded{beamer}{}{%
+  \usepackage{pdfpages}%
+  % Requires LaTeX 2023-06 or newer.
+  \NewCommandCopy{\schoolIncludePdf}{\includepdf}%
   \usepackage{hyperref}%
   \hypersetup{hidelinks}%
   \providecommand{\LTcaptype}{table}%
@@ -35,8 +38,21 @@
 
 % Load polyglossia (and bidi) AFTER graphics, tables, boxes, code, and hyperref
 \usepackage{polyglossia}
+
 \setmainlanguage[numerals=western]{arabic}
 \setotherlanguage{english}
+% bidi's legacy pdfpages replacement omits initialization required by current
+% pdfpages. Keep the installed implementation and scope its layout to LTR.
+\makeatletter
+\ifdefined\schoolIncludePdf
+  \RenewDocumentCommand{\includepdf}{O{} m}{%
+    \begingroup
+    \@RTLfalse
+    \schoolIncludePdf[#1]{#2}%
+    \endgroup
+  }
+\fi
+\makeatother
 \newfontfamily\arabicfont[Script=Arabic]{Calibri}
 \newfontfamily\arabicfontsf[Script=Arabic]{Calibri}
 \newfontfamily\arabicfonttt[Script=Arabic]{Courier New}

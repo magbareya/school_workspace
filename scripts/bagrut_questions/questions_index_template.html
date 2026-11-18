@@ -1,270 +1,1245 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فهرس أسئلة البجروت</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>بنك أسئلة البجروت — [[SUBJECT_TITLE]]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5.3.2 is embedded from scripts/bagrut_questions/vendor/ so the index works offline. -->
+    <style>[[BOOTSTRAP_CSS]]</style>
     <style>
-        body {{ background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }}
-        .container-fluid {{ max-width: 98%; margin-top: 20px; }}
+        :root {
+            --bg-body: #f1f5f9;
+            --bg-surface: #ffffff;
+            --bg-surface-alt: #f8fafc;
+            --bg-header: #0f172a;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-soft: rgba(37, 99, 235, 0.1);
+            --row-hover: #f8fafc;
+            --row-selected: #eff6ff;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.15);
+        }
 
-        /* Table Styling */
-        .table-responsive {{ border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }}
-        .table thead {{ background-color: #34495e; color: white; position: sticky; top: 0; z-index: 100; }}
-        .table tbody tr:hover {{ background-color: #f1f1f1; }}
+        [data-theme="dark"] {
+            --bg-body: #0b1120;
+            --bg-surface: #1e293b;
+            --bg-surface-alt: #0f172a;
+            --bg-header: #020617;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-soft: rgba(59, 130, 246, 0.18);
+            --row-hover: #263449;
+            --row-selected: #1e3a5f;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.6);
+        }
 
-        /* Badges */
-        .status-yes {{ background-color: #d1e7dd; color: #0f5132; font-weight: bold; padding: 4px 10px; border-radius: 12px; font-size: 0.85em; }}
-        .status-no {{ background-color: #f8d7da; color: #842029; font-weight: bold; padding: 4px 10px; border-radius: 12px; font-size: 0.85em; }}
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+            padding-bottom: 90px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
 
-        /* Filter Section */
-        .filter-section {{ background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }}
-        .filter-label {{ font-weight: 700; margin-bottom: 5px; color: #495057; font-size: 0.9em; }}
+        .mono {
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            direction: ltr;
+            display: inline-block;
+        }
 
-        /* Custom Dropdown for Checkboxes */
-        .dropdown-menu-custom {{
-            max-height: 300px;
+        /* Table cells must keep their table layout; inline-block breaks the row. */
+        td.mono {
+            display: table-cell;
+        }
+
+        /* Top Navbar */
+        .app-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #fff;
+            padding: 1.1rem 1.5rem;
+            border-radius: 14px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.25rem;
+        }
+
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.4rem 0.85rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.15s ease;
+        }
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            color: #fff;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+            gap: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.95rem 1.1rem;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+        .kpi-card.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+        .kpi-label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-top: 0.25rem;
+        }
+        .kpi-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* Filter Panel */
+        .filter-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.1rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1rem;
+        }
+        .filter-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+        .search-wrapper {
+            position: relative;
+        }
+        .search-shortcut {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 1px 8px;
+            font-size: 0.78rem;
+            font-family: monospace;
+            pointer-events: none;
+        }
+
+        .form-control, .form-select, .dropdown-toggle-filter {
+            background-color: var(--bg-surface-alt);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+            border-radius: 9px;
+            font-size: 0.92rem;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: var(--bg-surface);
+            color: var(--text-primary);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .dropdown-menu-custom {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            max-height: 320px;
             overflow-y: auto;
             width: 100%;
-            padding: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }}
-        .form-check {{ margin-bottom: 5px; cursor: pointer; }}
-        .form-check:hover {{ background-color: #f8f9fa; }}
-        .form-check-label {{ cursor: pointer; user-select: none; }}
+            padding: 0.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .form-check-item {
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+        }
+        .form-check-item:hover {
+            background-color: var(--row-hover);
+        }
+        .count-pill {
+            background: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 999px;
+            padding: 0 0.45rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
 
-        /* Image Modal */
-        #imgModal .modal-body {{ text-align: center; background: #222; padding: 0; }}
-        #imgModal img {{ max-width: 100%; max-height: 90vh; border: none; }}
-        .btn-preview {{ color: #0d6efd; cursor: pointer; border: none; background: none; font-weight: 600; font-size: 0.9rem; }}
-        .btn-preview:hover {{ text-decoration: underline; color: #0a58ca; }}
+        /* Active Filter Chips */
+        .active-filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            align-items: center;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border-color);
+        }
+        .filter-chip {
+            background: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            border-radius: 999px;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .filter-chip button {
+            border: none;
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-size: 0.95rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        /* Table Container */
+        .table-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .table-scroll {
+            max-height: 72vh;
+            overflow-y: auto;
+        }
+        .table {
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+        .table thead th {
+            background-color: var(--bg-header);
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            padding: 0.8rem 0.75rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-bottom: none;
+            white-space: nowrap;
+        }
+        .table thead th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s;
+        }
+        .table thead th.sortable:hover {
+            background-color: #1e293b;
+        }
+        .sort-indicator {
+            display: inline-block;
+            margin-right: 4px;
+            opacity: 0.45;
+            font-size: 0.8rem;
+        }
+        th.sorted-asc .sort-indicator,
+        th.sorted-desc .sort-indicator {
+            opacity: 1;
+            color: #60a5fa;
+        }
+
+        .table tbody td {
+            padding: 0.65rem 0.75rem;
+            border-color: var(--border-color);
+            vertical-align: middle;
+        }
+        .table tbody tr:hover {
+            background-color: var(--row-hover);
+        }
+        .table tbody tr.row-selected {
+            background-color: var(--row-selected);
+        }
+
+        /* Status Badges */
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.28rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-solved {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .badge-stub {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .badge-notex {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+        .badge-used-yes {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-used-no {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .used-file-tag {
+            display: inline-block;
+            background: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 5px;
+            padding: 1px 6px;
+            font-size: 0.72rem;
+            margin-top: 3px;
+        }
+        .topic-ar-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Action Buttons */
+        .action-group {
+            display: inline-flex;
+            gap: 0.35rem;
+            flex-wrap: nowrap;
+        }
+        .btn-action {
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface-alt);
+            color: var(--text-primary);
+            border-radius: 7px;
+            padding: 0.28rem 0.55rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .btn-action:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .btn-action-primary {
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-color: rgba(37, 99, 235, 0.25);
+        }
+
+        /* Floating Selection Basket */
+        .selection-bar {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            background: #0f172a;
+            color: #fff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 14px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1040;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 95vw;
+            flex-wrap: wrap;
+        }
+        .selection-bar.visible {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Preview Modal */
+        #previewModal .modal-dialog {
+            max-width: 92vw;
+            margin: 1.25rem auto;
+        }
+        #previewModal .modal-content {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            height: 92vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #previewModal .modal-body {
+            flex: 1;
+            padding: 0;
+            background: #1e293b;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        #previewModal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+        }
+        #previewModal img.zoomed {
+            max-width: none;
+            max-height: none;
+            width: 135%;
+            cursor: grab;
+        }
+        #previewModal iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        /* Toast Notification */
+        .copy-toast {
+            position: fixed;
+            bottom: 85px;
+            left: 24px;
+            background: #10b981;
+            color: #fff;
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-md);
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
 
-<div class="container-fluid">
-    <h3 class="mb-4 text-center fw-bold text-dark">📚 بنك أسئلة البجروت</h3>
+<div class="container-fluid px-3 px-md-4 mt-3">
 
-    <!-- Summary Statistics -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <h5 class="card-title">إحصائيات عامة</h5>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="fw-bold text-primary">إجمالي الأسئلة</div>
-                            <div class="h4">{total_questions}</div>
+    <!-- Top Header -->
+    <div class="app-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h4 class="mb-1 fw-bold">📚 بنك أسئلة البجروت — [[SUBJECT_TITLE]]</h4>
+            <div class="small opacity-75">
+                تصفح، معاينة فورية للصور وملفات PDF، فلترة ذكية، ونسخ سريع لأوامر <span class="mono">\input</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button type="button" class="theme-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                🌙 الوضع الليلي
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactive KPI Cards (Click to Filter) -->
+    <div class="kpi-grid">
+        <div class="kpi-card active" id="kpi-all" onclick="applyKpiFilter('all')">
+            <div class="kpi-label">
+                <span>إجمالي الأسئلة</span>
+                <span>🗂️</span>
+            </div>
+            <div class="kpi-value text-primary">[[TOTAL_QUESTIONS]]</div>
+            <div class="kpi-sub">انقر لعرض الكل</div>
+        </div>
+
+        <div class="kpi-card" id="kpi-hastex" onclick="applyKpiFilter('hastex')">
+            <div class="kpi-label">
+                <span>لها ملف <span class="mono">.tex</span></span>
+                <span>📄</span>
+            </div>
+            <div class="kpi-value text-info">[[HAS_TEX_COUNT]]</div>
+            <div class="kpi-sub">جاهزة للتضمين في أوراق العمل</div>
+        </div>
+
+        <div class="kpi-card" id="kpi-solved" onclick="applyKpiFilter('solved')">
+            <div class="kpi-label">
+                <span>محلولة بالكامل</span>
+                <span>✅</span>
+            </div>
+            <div class="kpi-value text-success">[[SOLVED_COUNT]] <span class="fs-6 fw-normal text-muted">([[SOLVED_PERCENT]]%)</span></div>
+            <div class="progress mt-2" style="height: 5px;">
+                <div class="progress-bar bg-success" style="width: [[SOLVED_PERCENT]]%"></div>
+            </div>
+        </div>
+
+        <div class="kpi-card" id="kpi-used" onclick="applyKpiFilter('used')">
+            <div class="kpi-label">
+                <span>مستخدمة في أوراق عمل</span>
+                <span>📌</span>
+            </div>
+            <div class="kpi-value" style="color: #6366f1;">[[USED_COUNT]]</div>
+            <div class="kpi-sub">مضمّنة داخل مجلد <span class="mono">src/</span></div>
+        </div>
+
+        <div class="kpi-card" id="kpi-unused" onclick="applyKpiFilter('unused')">
+            <div class="kpi-label">
+                <span>غير مستخدمة</span>
+                <span>✨</span>
+            </div>
+            <div class="kpi-value text-warning">[[UNUSED_COUNT]]</div>
+            <div class="kpi-sub">متاحة للامتحانات والوظائف الجديدة</div>
+        </div>
+    </div>
+
+    <!-- Filter Panel -->
+    <div class="filter-panel">
+        <div class="row g-2 align-items-end">
+            <!-- Free Search -->
+            <div class="col-12 col-lg-3">
+                <div class="filter-label">🔍 بحث سريع</div>
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="form-control" placeholder="ابحث بالموضوع، السنة، النموذج، اسم الملف...">
+                    <span class="search-shortcut" title="اضغط / للبحث السريع">/</span>
+                </div>
+            </div>
+
+            <!-- Topic Multi-Select -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <div class="filter-label">📖 الموضوع</div>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle dropdown-toggle-filter w-100 text-start text-truncate d-flex justify-content-between align-items-center" type="button" id="topicBtn" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        <span>كل المواضيع</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-custom">
+                        <div class="d-flex justify-content-between px-2 pb-1 mb-1 border-bottom">
+                            <button class="btn btn-sm btn-link text-decoration-none p-0" onclick="setAllChecks('topic-checkbox', true)">تحديد الكل</button>
+                            <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" onclick="setAllChecks('topic-checkbox', false)">إلغاء الكل</button>
                         </div>
-                        <div class="col-md-3">
-                            <div class="fw-bold text-success">محلولة</div>
-                            <div class="h4">{solved_count}</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="fw-bold text-info">مستخدمة</div>
-                            <div class="h4">{used_count}</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="fw-bold text-warning">غير مستخدمة</div>
-                            <div class="h4">{unused_count}</div>
-                        </div>
+                        [[TOPICS_HTML]]
                     </div>
                 </div>
             </div>
+
+            <!-- Year Multi-Select -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <div class="filter-label">📅 السنة</div>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle dropdown-toggle-filter w-100 text-start text-truncate d-flex justify-content-between align-items-center" type="button" id="yearBtn" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        <span>كل السنوات</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-custom">
+                        <div class="d-flex justify-content-between px-2 pb-1 mb-1 border-bottom">
+                            <button class="btn btn-sm btn-link text-decoration-none p-0" onclick="setAllChecks('year-checkbox', true)">تحديد الكل</button>
+                            <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" onclick="setAllChecks('year-checkbox', false)">إلغاء الكل</button>
+                        </div>
+                        [[YEARS_HTML]]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Multi-Select -->
+            <div class="col-6 col-md-2 col-lg-1">
+                <div class="filter-label">🔢 النموذج</div>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle dropdown-toggle-filter w-100 text-start text-truncate d-flex justify-content-between align-items-center" type="button" id="modelBtn" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        <span>الكل</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-custom">
+                        <div class="d-flex justify-content-between px-2 pb-1 mb-1 border-bottom">
+                            <button class="btn btn-sm btn-link text-decoration-none p-0" onclick="setAllChecks('model-checkbox', true)">تحديد الكل</button>
+                            <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" onclick="setAllChecks('model-checkbox', false)">إلغاء الكل</button>
+                        </div>
+                        [[MODELS_HTML]]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Used Filter -->
+            <div class="col-6 col-md-2 col-lg-2">
+                <div class="filter-label">📌 حالة الاستخدام</div>
+                <select id="usedFilter" class="form-select">
+                    <option value="">الكل</option>
+                    <option value="yes">مستخدمة فقط</option>
+                    <option value="no">غير مستخدمة فقط</option>
+                </select>
+            </div>
+
+            <!-- Solution Status Filter -->
+            <div class="col-12 col-md-2 col-lg-2">
+                <div class="filter-label">✅ حالة الحل</div>
+                <select id="solFilter" class="form-select">
+                    <option value="">الكل</option>
+                    <option value="solved">محلولة بالكامل</option>
+                    <option value="unsolved">غير محلولة</option>
+                    <option value="hastex">لها ملف .tex</option>
+                    <option value="notex">بدون ملف .tex</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Active Filter Chips Bar -->
+        <div class="active-filters-bar d-none" id="activeFiltersBar">
+            <span class="small fw-bold text-muted">الفلاتر النشطة:</span>
+            <div id="filterChipsContainer" class="d-flex flex-wrap gap-1"></div>
+            <button type="button" class="btn btn-sm btn-outline-danger ms-auto py-0 px-2" onclick="resetAllFilters()">
+                ✕ مسح كل الفلاتر
+            </button>
         </div>
     </div>
 
-    <div class="filter-section">
-
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="🔍 بحث حر في اسم الملف، الرقم، أو أي نص...">
-            </div>
+    <!-- Results Toolbar -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 px-1 gap-2">
+        <div class="small text-secondary fw-semibold">
+            عرض <span class="text-primary fw-bold fs-6" id="rowCount">0</span> من أصل <span class="fw-bold">[[TOTAL_QUESTIONS]]</span> سؤال
+            <span class="text-muted ms-2 d-none d-md-inline">(انقر على عنوان أي عمود للترتيب، أو حدّد أسئلة لنسخها دفعة واحدة)</span>
         </div>
-
-        <div class="row g-2">
-
-            <div class="col-md-3">
-                 <div class="filter-label">📖 الموضوع</div>
-                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-end text-truncate" type="button" id="topicBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        كل المواضيع
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="topicBtn">
-                        <li><button class="btn btn-sm btn-link text-decoration-none w-100 text-end" onclick="clearChecks('topic-checkbox')">❌ إلغاء الكل</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        {topics_html}
-                    </ul>
-                 </div>
-            </div>
-
-            <div class="col-md-2">
-                 <div class="filter-label">📅 السنة</div>
-                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-end text-truncate" type="button" id="yearBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        كل السنوات
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="yearBtn">
-                        <li><button class="btn btn-sm btn-link text-decoration-none w-100 text-end" onclick="clearChecks('year-checkbox')">❌ إلغاء الكل</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        {years_html}
-                    </ul>
-                 </div>
-            </div>
-
-            <div class="col-md-2">
-                 <div class="filter-label">🔢 النموذج</div>
-                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-end text-truncate" type="button" id="modelBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        كل النماذج
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="modelBtn">
-                        <li><button class="btn btn-sm btn-link text-decoration-none w-100 text-end" onclick="clearChecks('model-checkbox')">❌ إلغاء الكل</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        {models_html}
-                    </ul>
-                 </div>
-            </div>
-
-            <div class="col-md-3">
-                 <div class="filter-label">✅ حالة الاستخدام</div>
-                 <select id="usedFilter" class="form-select">
-                    <option value="">الكل (مستخدم وغير مستخدم)</option>
-                    <option value="نعم">نعم (تم استخدامه)</option>
-                    <option value="لا">لا (لم يتم استخدامه)</option>
-                 </select>
-            </div>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="copyVisibleInputs()">
+                📋 نسخ <span class="mono">\input</span> لكل النتائج المعروضة
+            </button>
         </div>
     </div>
 
-    <div class="table-responsive bg-white" style="max-height: 70vh; overflow-y: auto;">
-        <table class="table table-bordered mb-0 align-middle" id="questionsTable">
-            <thead>
-                <tr>
-                    <th style="width: 15%">المجلد</th>
-                    <th style="width: 25%">الموضوع</th>
-                    <th style="width: 10%">السنة</th>
-                    <th style="width: 10%">النموذج</th>
-                    <th style="width: 10%">السؤال</th>
-                    <th style="width: 10%">مستخدم</th>
-                    <th style="width: 10%">الحل</th>
-                    <th style="width: 10%">معاينة</th>
-                </tr>
-            </thead>
-            <tbody>
-{table_rows}
-            </tbody>
-        </table>
-    </div>
-    <div class="d-flex justify-content-between mt-2 px-2">
-         <div class="text-muted small">تم إنشاء الفهرس تلقائياً</div>
-         <div class="text-primary fw-bold">النتائج: <span id="rowCount">0</span> سؤال</div>
+    <!-- Questions Table -->
+    <div class="table-card">
+        <div class="table-scroll">
+            <table class="table table-hover align-middle" id="questionsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 42px;" class="text-center">
+                            <input type="checkbox" class="form-check-input" id="selectAllCheckbox" title="تحديد / إلغاء تحديد كل المعروض" onchange="toggleSelectAllVisible(this.checked)">
+                        </th>
+                        <th class="sortable" data-sort-col="topic" style="width: 18%;" onclick="sortTableBy('topic')">
+                            الموضوع <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th class="sortable" data-sort-col="year" style="width: 9%;" onclick="sortTableBy('year')">
+                            السنة <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th class="sortable" data-sort-col="model" style="width: 10%;" onclick="sortTableBy('model')">
+                            النموذج <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th class="sortable" data-sort-col="qnum" style="width: 8%;" onclick="sortTableBy('qnum')">
+                            السؤال <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th class="sortable" data-sort-col="used" style="width: 18%;" onclick="sortTableBy('used')">
+                            الاستخدام <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th class="sortable" data-sort-col="sol" style="width: 14%;" onclick="sortTableBy('sol')">
+                            حالة الحل <span class="sort-indicator">⇅</span>
+                        </th>
+                        <th style="width: 20%;" class="text-center">معاينة وإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="questionsTbody">
+[[TABLE_ROWS]]
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header py-2">
-        <h6 class="modal-title" id="imgModalLabel">معاينة</h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img id="modalImage" src="" alt="Preview">
-      </div>
+<!-- Floating Multi-Selection Basket -->
+<div class="selection-bar" id="selectionBar">
+    <div class="fw-bold">
+        ☑️ تم تحديد <span class="badge bg-primary fs-6 mx-1" id="selectedCountBadge">0</span> سؤال
     </div>
-  </div>
+    <div class="d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-sm btn-primary fw-bold" onclick="copySelectedInputs()">
+            📋 نسخ أوامر <span class="mono">\input{...}</span>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-light" onclick="copySelectedYaml()">
+            📄 نسخ كقائمة YAML
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-warning" onclick="copySelectedCreateSolCmd()">
+            ⚡ نسخ أمر <span class="mono">create_empty_sol.py</span>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearSelection()">
+            إلغاء التحديد
+        </button>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Preview Modal (Supports both Images and PDFs + Next/Prev Navigation) -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2 px-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prevQuestionBtn" onclick="navigateModal(-1)" title="السؤال السابق (سهم يمين)">
+                        ➡️ السابق
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="nextQuestionBtn" onclick="navigateModal(1)" title="السؤال التالي (سهم يسار)">
+                        التالي ⬅️
+                    </button>
+                    <span class="badge bg-secondary" id="modalPositionBadge">1 / 1</span>
+                    <h6 class="modal-title fw-bold mb-0 ms-2" id="previewModalTitle">معاينة السؤال</h6>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="modalSelectBtn" onclick="toggleCurrentModalSelection()">
+                        ☑️ تحديد السؤال
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-success" id="modalCopyInputBtn" onclick="copyModalInput()">
+                        📋 نسخ <span class="mono">\input</span>
+                    </button>
+                    <a href="#" target="_blank" class="btn btn-sm btn-outline-secondary" id="modalOpenTabBtn">
+                        ↗️ فتح في علامة تبويب
+                    </a>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body" id="previewModalBody">
+                <!-- Populated dynamically with <img> or <iframe> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Copy Toast -->
+<div class="copy-toast" id="copyToast">✅ تم النسخ إلى الحافظة!</div>
+
+<script>[[BOOTSTRAP_JS]]</script>
 <script>
-    // DOM Elements
     const searchInput = document.getElementById('searchInput');
     const usedFilter = document.getElementById('usedFilter');
-
-    const table = document.getElementById('questionsTable');
-    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    const solFilter = document.getElementById('solFilter');
+    const tbody = document.getElementById('questionsTbody');
     const rowCountDisplay = document.getElementById('rowCount');
+    const activeFiltersBar = document.getElementById('activeFiltersBar');
+    const filterChipsContainer = document.getElementById('filterChipsContainer');
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    const selectionBar = document.getElementById('selectionBar');
+    const selectedCountBadge = document.getElementById('selectedCountBadge');
 
-    function getCheckedValues(className) {{
-        const checkboxes = document.querySelectorAll('.' + className + ':checked');
-        return Array.from(checkboxes).map(cb => cb.value);
-    }}
+    let currentSortCol = null;
+    let currentSortAsc = true;
+    let currentModalRowIndex = -1;
+    let previewModalInstance = null;
 
-    function updateButtonText(btnId, checkedCount, defaultText) {{
+    // --- Theme Management ---
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggleBtn');
+        btn.innerText = theme === 'dark' ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
+        try { localStorage.setItem('bagrut_index_theme', theme); } catch (_) { /* Storage may be disabled. */ }
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    let savedTheme = null;
+    try { savedTheme = localStorage.getItem('bagrut_index_theme'); } catch (_) { /* Use the default theme. */ }
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    }
+
+    // --- Toast Helper ---
+    let toastTimer = null;
+    function showToast(msg) {
+        const toast = document.getElementById('copyToast');
+        toast.innerText = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    async function copyText(text, label) {
+        try {
+            await navigator.clipboard.writeText(text);
+            showToast(label || '✅ تم النسخ إلى الحافظة!');
+        } catch (_) {
+            try {
+                const fallback = document.createElement('textarea');
+                fallback.value = text;
+                fallback.style.position = 'fixed';
+                fallback.style.opacity = '0';
+                document.body.appendChild(fallback);
+                fallback.select();
+                const copied = document.execCommand('copy');
+                fallback.remove();
+                showToast(copied ? (label || 'Copied to clipboard.') :
+                    'Clipboard unavailable. Allow clipboard access and try again.');
+            } catch (_) {
+                showToast('Clipboard unavailable. Allow clipboard access and try again.');
+            }
+        }
+    }
+
+    // --- Filtering Logic ---
+    function getAllRows() {
+        return Array.from(tbody.querySelectorAll('tr'));
+    }
+
+    function getVisibleRows() {
+        return getAllRows().filter(r => r.style.display !== 'none');
+    }
+
+    function getCheckedValues(className) {
+        return Array.from(document.querySelectorAll('.' + className + ':checked')).map(cb => cb.value);
+    }
+
+    function updateDropdownButton(btnId, count, defaultLabel) {
         const btn = document.getElementById(btnId);
-        if (checkedCount === 0) {{
-            btn.innerText = defaultText;
-            btn.classList.remove('btn-secondary');
-            btn.classList.add('btn-outline-secondary');
-        }} else {{
-            btn.innerText = checkedCount + " محدد";
-            btn.classList.remove('btn-outline-secondary');
-            btn.classList.add('btn-secondary');
-        }}
-    }}
+        if (count === 0) {
+            btn.innerHTML = `<span>${defaultLabel}</span>`;
+        } else {
+            btn.innerHTML = `<span class="fw-bold text-primary">${count} محدد</span>`;
+        }
+    }
 
-    function filterTable() {{
-        const searchText = searchInput.value.toLowerCase();
+    function updateKpiHighlight() {
+        document.querySelectorAll('.kpi-card').forEach(c => c.classList.remove('active'));
+        const u = usedFilter.value;
+        const s = solFilter.value;
+        if (!u && !s) {
+            document.getElementById('kpi-all').classList.add('active');
+        } else if (!u && s === 'hastex') {
+            document.getElementById('kpi-hastex').classList.add('active');
+        } else if (!u && s === 'solved') {
+            document.getElementById('kpi-solved').classList.add('active');
+        } else if (u === 'yes' && !s) {
+            document.getElementById('kpi-used').classList.add('active');
+        } else if (u === 'no' && !s) {
+            document.getElementById('kpi-unused').classList.add('active');
+        }
+    }
+
+    function applyKpiFilter(mode) {
+        if (mode === 'all') {
+            usedFilter.value = '';
+            solFilter.value = '';
+        } else if (mode === 'hastex') {
+            usedFilter.value = '';
+            solFilter.value = (solFilter.value === 'hastex') ? '' : 'hastex';
+        } else if (mode === 'solved') {
+            usedFilter.value = '';
+            solFilter.value = (solFilter.value === 'solved') ? '' : 'solved';
+        } else if (mode === 'used') {
+            solFilter.value = '';
+            usedFilter.value = (usedFilter.value === 'yes') ? '' : 'yes';
+        } else if (mode === 'unused') {
+            solFilter.value = '';
+            usedFilter.value = (usedFilter.value === 'no') ? '' : 'no';
+        }
+        filterTable();
+    }
+
+    function renderActiveFilterChips(searchText, topics, years, models, usedVal, solVal) {
+        filterChipsContainer.innerHTML = '';
+        const chips = [];
+
+        if (searchText) {
+            chips.push({ label: `بحث: "${searchText}"`, clear: () => { searchInput.value = ''; } });
+        }
+        topics.forEach(t => chips.push({
+            label: `الموضوع: ${t}`,
+            clear: () => { document.querySelectorAll('.topic-checkbox').forEach(c => { if (c.value === t) c.checked = false; }); }
+        }));
+        years.forEach(y => chips.push({
+            label: `السنة: ${y}`,
+            clear: () => { document.querySelectorAll('.year-checkbox').forEach(c => { if (c.value === y) c.checked = false; }); }
+        }));
+        models.forEach(m => chips.push({
+            label: `النموذج: ${m}`,
+            clear: () => { document.querySelectorAll('.model-checkbox').forEach(c => { if (c.value === m) c.checked = false; }); }
+        }));
+        if (usedVal) {
+            const txt = usedVal === 'yes' ? 'مستخدمة فقط' : 'غير مستخدمة فقط';
+            chips.push({ label: txt, clear: () => { usedFilter.value = ''; } });
+        }
+        if (solVal) {
+            const map = { solved: 'محلولة بالكامل', unsolved: 'غير محلولة', hastex: 'لها ملف .tex', notex: 'بدون ملف .tex' };
+            chips.push({ label: map[solVal], clear: () => { solFilter.value = ''; } });
+        }
+
+        if (chips.length === 0) {
+            activeFiltersBar.classList.add('d-none');
+            return;
+        }
+
+        activeFiltersBar.classList.remove('d-none');
+        chips.forEach(chip => {
+            const span = document.createElement('span');
+            span.className = 'filter-chip';
+            span.innerHTML = '<span></span><button type="button" title="إزالة">✕</button>';
+            span.querySelector('span').textContent = chip.label;
+            span.querySelector('button').addEventListener('click', () => {
+                chip.clear();
+                filterTable();
+            });
+            filterChipsContainer.appendChild(span);
+        });
+    }
+
+    function filterTable() {
+        const searchText = searchInput.value.trim().toLowerCase();
         const selectedUsed = usedFilter.value;
+        const selectedSol = solFilter.value;
 
         const checkedTopics = getCheckedValues('topic-checkbox');
-        const checkedModels = getCheckedValues('model-checkbox');
         const checkedYears = getCheckedValues('year-checkbox');
+        const checkedModels = getCheckedValues('model-checkbox');
 
-        updateButtonText('topicBtn', checkedTopics.length, 'كل المواضيع');
-        updateButtonText('modelBtn', checkedModels.length, 'كل النماذج');
-        updateButtonText('yearBtn', checkedYears.length, 'كل السنوات');
+        updateDropdownButton('topicBtn', checkedTopics.length, 'كل المواضيع');
+        updateDropdownButton('yearBtn', checkedYears.length, 'كل السنوات');
+        updateDropdownButton('modelBtn', checkedModels.length, 'الكل');
+        updateKpiHighlight();
+        renderActiveFilterChips(searchText, checkedTopics, checkedYears, checkedModels, selectedUsed, selectedSol);
 
         let visibleCount = 0;
+        getAllRows().forEach(row => {
+            const dTopic = row.getAttribute('data-topic');
+            const dYear = row.getAttribute('data-year');
+            const dModel = row.getAttribute('data-model');
+            const dUsed = row.getAttribute('data-used');     // 'yes' | 'no'
+            const dSolved = row.getAttribute('data-solved'); // 'yes' | 'no'
+            const dHasTex = row.getAttribute('data-hastex'); // 'yes' | 'no'
+            const rowText = row.textContent.toLowerCase() + ' ' + (row.getAttribute('data-stem') || '').toLowerCase();
 
-        for (let i = 0; i < rows.length; i++) {{
-            let row = rows[i];
-            let text = row.innerText.toLowerCase();
+            const matchTopic = checkedTopics.length === 0 || checkedTopics.includes(dTopic);
+            const matchYear = checkedYears.length === 0 || checkedYears.includes(dYear);
+            const matchModel = checkedModels.length === 0 || checkedModels.includes(dModel);
+            const matchUsed = !selectedUsed || dUsed === selectedUsed;
 
-            let dTopic = row.getAttribute('data-topic');
-            let dModel = row.getAttribute('data-model');
-            let dYear = row.getAttribute('data-year');
-            let dUsed = row.getAttribute('data-used');
+            let matchSol = true;
+            if (selectedSol === 'solved') matchSol = dSolved === 'yes';
+            else if (selectedSol === 'unsolved') matchSol = dSolved === 'no';
+            else if (selectedSol === 'hastex') matchSol = dHasTex === 'yes';
+            else if (selectedSol === 'notex') matchSol = dHasTex === 'no';
 
-            let matchTopic = (checkedTopics.length === 0) || checkedTopics.includes(dTopic);
-            let matchModel = (checkedModels.length === 0) || checkedModels.includes(dModel);
-            let matchYear = (checkedYears.length === 0) || checkedYears.includes(dYear);
+            const matchSearch = !searchText || rowText.includes(searchText);
 
-            let matchUsed = (selectedUsed === "") || (dUsed === selectedUsed);
-            let matchSearch = text.includes(searchText);
-
-            if (matchSearch && matchUsed && matchTopic && matchModel && matchYear) {{
-                row.style.display = "";
+            if (matchTopic && matchYear && matchModel && matchUsed && matchSol && matchSearch) {
+                row.style.display = '';
                 visibleCount++;
-            }} else {{
-                row.style.display = "none";
-            }}
-        }}
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
         rowCountDisplay.innerText = visibleCount;
-    }}
+        updateSelectionUI();
+    }
 
-    function clearChecks(className) {{
-        document.querySelectorAll('.' + className).forEach(cb => cb.checked = false);
+    function setAllChecks(className, checked) {
+        document.querySelectorAll('.' + className).forEach(cb => cb.checked = checked);
         filterTable();
-    }}
+    }
 
-    searchInput.addEventListener('keyup', filterTable);
+    function resetAllFilters() {
+        searchInput.value = '';
+        usedFilter.value = '';
+        solFilter.value = '';
+        document.querySelectorAll('.topic-checkbox, .year-checkbox, .model-checkbox').forEach(cb => cb.checked = false);
+        filterTable();
+    }
+
+    // --- Natural Column Sorting ---
+    const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+    function sortTableBy(col) {
+        if (currentSortCol === col) {
+            currentSortAsc = !currentSortAsc;
+        } else {
+            currentSortCol = col;
+            currentSortAsc = true;
+        }
+
+        document.querySelectorAll('#questionsTable thead th.sortable').forEach(th => {
+            th.classList.remove('sorted-asc', 'sorted-desc');
+            const ind = th.querySelector('.sort-indicator');
+            if (th.getAttribute('data-sort-col') === col) {
+                th.classList.add(currentSortAsc ? 'sorted-asc' : 'sorted-desc');
+                ind.innerText = currentSortAsc ? '↑' : '↓';
+            } else {
+                ind.innerText = '⇅';
+            }
+        });
+
+        const allRows = getAllRows();
+        allRows.sort((a, b) => {
+            let valA = a.getAttribute('data-' + col) || '';
+            let valB = b.getAttribute('data-' + col) || '';
+            let cmp = collator.compare(valA, valB);
+            if (cmp === 0) {
+                cmp = collator.compare(a.getAttribute('data-stem') || '', b.getAttribute('data-stem') || '');
+            }
+            return currentSortAsc ? cmp : -cmp;
+        });
+
+        allRows.forEach(r => tbody.appendChild(r));
+    }
+
+    // --- Selection & Bulk Copy ---
+    function getSelectedRows() {
+        return getAllRows().filter(r => {
+            const cb = r.querySelector('.row-select-cb');
+            return cb && cb.checked;
+        });
+    }
+
+    function updateSelectionUI() {
+        const allRows = getAllRows();
+        allRows.forEach(r => {
+            const cb = r.querySelector('.row-select-cb');
+            r.classList.toggle('row-selected', cb && cb.checked);
+        });
+
+        const selected = getSelectedRows();
+        selectedCountBadge.innerText = selected.length;
+        selectionBar.classList.toggle('visible', selected.length > 0);
+
+        const visible = getVisibleRows();
+        if (visible.length === 0) {
+            selectAllCheckbox.checked = false;
+            selectAllCheckbox.indeterminate = false;
+        } else {
+            const visibleChecked = visible.filter(r => r.querySelector('.row-select-cb').checked).length;
+            selectAllCheckbox.checked = visibleChecked === visible.length;
+            selectAllCheckbox.indeterminate = visibleChecked > 0 && visibleChecked < visible.length;
+        }
+    }
+
+    function toggleSelectAllVisible(checked) {
+        getVisibleRows().forEach(r => {
+            const cb = r.querySelector('.row-select-cb');
+            if (cb) cb.checked = checked;
+        });
+        updateSelectionUI();
+    }
+
+    function clearSelection() {
+        getAllRows().forEach(r => {
+            const cb = r.querySelector('.row-select-cb');
+            if (cb) cb.checked = false;
+        });
+        updateSelectionUI();
+    }
+
+    function worksheetRows(rows) {
+        const missing = rows.filter(row => row.dataset.hastex !== 'yes');
+        if (missing.length) {
+            window.alert('أنشئ ملفات الحل أولًا:\n' + missing.map(row => row.dataset.fragment).join('\n'));
+            return [];
+        }
+        return rows;
+    }
+
+    function copySelectedInputs() {
+        const lines = worksheetRows(getSelectedRows()).map(r => r.getAttribute('data-latex-input'));
+        if (lines.length) {
+            copyText(lines.join('\n'), `✅ تم نسخ ${lines.length} أمر \\input!`);
+        }
+    }
+
+    function copyVisibleInputs() {
+        const lines = worksheetRows(getVisibleRows()).map(r => r.getAttribute('data-latex-input'));
+        if (lines.length) {
+            copyText(lines.join('\n'), `✅ تم نسخ ${lines.length} أمر \\input للنتائج المعروضة!`);
+        }
+    }
+
+    function copySelectedYaml() {
+        const rows = worksheetRows(getSelectedRows());
+        if (rows.length) {
+            const subject = rows[0].getAttribute('data-subject');
+            const files = rows.map(r => `        - ${JSON.stringify(r.dataset.fragment)}`);
+            const config = `documents:\n  - filename: selected_questions\n    title: Selected questions\n    subject: ${JSON.stringify(subject)}\n    filters:\n      files:\n${files.join('\n')}\n`;
+            copyText(config, `Copied YAML for ${rows.length} questions.`);
+        }
+    }
+
+    function copySelectedCreateSolCmd() {
+        const paths = getSelectedRows().map(r => JSON.stringify(r.getAttribute('data-repo-path')));
+        if (paths.length) {
+            copyText("python scripts/bagrut_questions/create_empty_sol.py " + paths.join(' '), "✅ تم نسخ أمر إنشاء ملفات الحل!");
+        }
+    }
+
+    // --- Modal Preview (Images & PDFs + Next/Prev) ---
+    function openPreviewForRow(row) {
+        const visible = getVisibleRows();
+        currentModalRowIndex = visible.indexOf(row);
+        if (currentModalRowIndex === -1) {
+            currentModalRowIndex = 0;
+        }
+        renderModalContent();
+        if (!previewModalInstance) {
+            previewModalInstance = new bootstrap.Modal(document.getElementById('previewModal'));
+        }
+        previewModalInstance.show();
+    }
+
+    function renderModalContent() {
+        const visible = getVisibleRows();
+        if (visible.length === 0 || currentModalRowIndex < 0 || currentModalRowIndex >= visible.length) return;
+
+        const row = visible[currentModalRowIndex];
+        const src = row.getAttribute('data-rel-path');
+        const ext = row.getAttribute('data-ext');
+        const topic = row.getAttribute('data-topic');
+        const year = row.getAttribute('data-year');
+        const model = row.getAttribute('data-model');
+        const qnum = row.getAttribute('data-qnum');
+        const cb = row.querySelector('.row-select-cb');
+
+        document.getElementById('previewModalTitle').innerText = `سؤال ${qnum} — نموذج ${model} — سنة ${year} (${topic})`;
+        document.getElementById('modalPositionBadge').innerText = `${currentModalRowIndex + 1} / ${visible.length}`;
+        document.getElementById('prevQuestionBtn').disabled = currentModalRowIndex <= 0;
+        document.getElementById('nextQuestionBtn').disabled = currentModalRowIndex >= visible.length - 1;
+        document.getElementById('modalOpenTabBtn').href = src;
+        document.getElementById('modalCopyInputBtn').disabled = row.dataset.hastex !== 'yes';
+
+        const selectBtn = document.getElementById('modalSelectBtn');
+        if (cb && cb.checked) {
+            selectBtn.className = 'btn btn-sm btn-primary';
+            selectBtn.innerText = '✅ محدّد';
+        } else {
+            selectBtn.className = 'btn btn-sm btn-outline-primary';
+            selectBtn.innerText = '☑️ تحديد السؤال';
+        }
+
+        const body = document.getElementById('previewModalBody');
+        const preview = document.createElement(ext === '.pdf' ? 'iframe' : 'img');
+        preview.src = ext === '.pdf' ? `${src}#view=FitH` : src;
+        preview.title = 'Preview';
+        if (ext !== '.pdf') {
+            preview.alt = 'Preview';
+            preview.addEventListener('click', () => preview.classList.toggle('zoomed'));
+        }
+        body.replaceChildren(preview);
+    }
+
+    function navigateModal(delta) {
+        const visible = getVisibleRows();
+        const nextIdx = currentModalRowIndex + delta;
+        if (nextIdx >= 0 && nextIdx < visible.length) {
+            currentModalRowIndex = nextIdx;
+            renderModalContent();
+        }
+    }
+
+    function toggleCurrentModalSelection() {
+        const visible = getVisibleRows();
+        if (currentModalRowIndex >= 0 && currentModalRowIndex < visible.length) {
+            const row = visible[currentModalRowIndex];
+            const cb = row.querySelector('.row-select-cb');
+            if (cb) {
+                cb.checked = !cb.checked;
+                updateSelectionUI();
+                renderModalContent();
+            }
+        }
+    }
+
+    function copyModalInput() {
+        const visible = getVisibleRows();
+        if (currentModalRowIndex >= 0 && currentModalRowIndex < visible.length) {
+            const row = visible[currentModalRowIndex];
+            copyText(row.getAttribute('data-latex-input'), '✅ تم نسخ أمر \\input!');
+        }
+    }
+
+    // --- Event Listeners & Keyboard Shortcuts ---
+    searchInput.addEventListener('input', filterTable);
     usedFilter.addEventListener('change', filterTable);
+    solFilter.addEventListener('change', filterTable);
 
-    document.querySelectorAll('.form-check-input').forEach(cb => {{
+    document.querySelectorAll('.topic-checkbox, .year-checkbox, .model-checkbox').forEach(cb => {
         cb.addEventListener('change', filterTable);
-    }});
+    });
 
-    rowCountDisplay.innerText = rows.length;
+    document.querySelectorAll('.row-select-cb').forEach(cb => {
+        cb.addEventListener('change', updateSelectionUI);
+    });
 
-    function showImage(src, title) {{
-        document.getElementById('modalImage').src = src;
-        document.getElementById('imgModalLabel').innerText = title;
-        var myModal = new bootstrap.Modal(document.getElementById('imgModal'));
-        myModal.show();
-    }}
+    document.addEventListener('keydown', e => {
+        const modalEl = document.getElementById('previewModal');
+        const isModalOpen = modalEl.classList.contains('show');
+
+        if (isModalOpen) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateModal(1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                navigateModal(-1);
+            }
+            return;
+        }
+
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+        }
+    });
+
+    // Initialize counts
+    filterTable();
 </script>
 </body>
 </html>

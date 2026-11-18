@@ -1,30 +1,68 @@
+"""Export code cells from a Jupyter notebook to a C# source file."""
+
+import argparse
+import json
+import os
 import sys
-from nbconvert.exporters import ScriptExporter
+from typing import List
 
-"""
-Exports code from Jupyter notebooks to C# script files with cell separators.
+SEPARATOR = "\n\n/* ********************** */\n\n"
 
-Usage: python scripts/export_cs.py <notebook.ipynb> <output.cs>
-"""
 
-SEPARATOR = '\n\n/* ********************** */\n\n'
+def extract_code_cells(notebook_path: str) -> List[str]:
+    """Read a .ipynb file and return non-empty code cell contents without magic commands."""
+    with open(notebook_path, "r", encoding="utf-8") as f:
+        nb_data = json.load(f)
 
-notebook = sys.argv[1]
-outfile = sys.argv[2]
+    cells: List[str] = []
+    for cell in nb_data.get("cells", []):
+        if cell.get("cell_type") != "code":
+            continue
 
-exporter = ScriptExporter()
-exporter.exclude_markdown = True
+        raw_source = cell.get("source", [])
+        source = "".join(raw_source) if isinstance(raw_source, list) else str(raw_source)
+        lines = source.splitlines(keepends=True)
 
-# Get the raw code
-body, _ = exporter.from_filename(notebook)
+        # Strip leading notebook directives, including .NET Interactive references.
+        while lines and (
+            not lines[0].strip()
+            or lines[0].lstrip().startswith(("#!", "%"))
+            or lines[0].lstrip().startswith("#r ")
+        ):
+            lines.pop(0)
+        filtered_lines = lines
+        code_text = "".join(filtered_lines).strip()
+        if code_text:
+            cells.append(code_text)
 
-# Split the code into cells (nbconvert uses "# coding: utf-8" + cell markers)
-# We'll split by double newlines, which is what ScriptExporter usually uses
-cells = body.strip().split('\n\n')
+    return cells
 
-# Prepare the final output with separators
-final_body = SEPARATOR.join(cells)
 
-# Write to file
-with open(outfile, "w", encoding="utf-8") as f:
-    f.write(final_body)
+def export_notebook_to_cs(notebook_path: str, output_path: str) -> None:
+    if not os.path.isfile(notebook_path):
+        print(f"Error: Notebook not found: {notebook_path}", file=sys.stderr)
+        sys.exit(1)
+
+    cells = extract_code_cells(notebook_path)
+    final_body = SEPARATOR.join(cells)
+    if final_body:
+        final_body += "\n"
+
+    os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(final_body)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Export C# code cells from a Jupyter notebook to a .cs file."
+    )
+    parser.add_argument("notebook", help="Path to input .ipynb notebook file.")
+    parser.add_argument("outfile", help="Path to output .cs file.")
+    args = parser.parse_args()
+
+    export_notebook_to_cs(args.notebook, args.outfile)
+
+
+if __name__ == "__main__":
+    main()

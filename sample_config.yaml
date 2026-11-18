@@ -5,6 +5,7 @@
 # - title: The title that will appear in the document
 # - subject: The subject folder (e.g., "computational_models", "basics")
 # - sort: "year" (default), "question", "model", "exam", or "random"
+# - seed: Optional integer for reproducible random ordering
 # - group_by: Create sections grouped by "year", "model", or "topic"
 # - limit: Maximum number of questions to include (useful with random)
 #

@@ -1,0 +1,40 @@
+<tr data-topic="{topic}"
+                data-subject="{subject}"
+                data-year="{year}"
+                data-model="{model}"
+                data-qnum="{qnum}"
+                data-used="{used}"
+                data-solved="{solved}"
+                data-hastex="{has_tex}"
+                data-used-sort="{used_sort_val}"
+                data-sol="{sol_sort_val}"
+                data-stem="{escaped_stem}"
+                data-fragment="{fragment}"
+                data-rel-path="{escaped_rel_path}"
+                data-repo-path="{escaped_repo_path}"
+                data-ext="{ext}"
+                data-latex-input="{escaped_input}">
+                <td class="text-center">
+                    <input type="checkbox" class="form-check-input row-select-cb" value="{escaped_stem}">
+                </td>
+                <td>{topic_cell_html}</td>
+                <td class="fw-semibold mono">{year}</td>
+                <td class="mono">{model}</td>
+                <td class="fw-bold mono">{qnum}</td>
+                <td>{used_cell_html}</td>
+                <td>{sol_cell_html}</td>
+                <td class="text-center">
+                    <div class="action-group justify-content-center">
+                        <button type="button" class="btn-action btn-action-primary" onclick="openPreviewForRow(this.closest('tr'))" title="معاينة فورية للسؤال">
+                            👁️ معاينة
+                        </button>
+                        <button type="button" class="btn-action" {copy_disabled} onclick="copyText(this.closest('tr').getAttribute('data-latex-input'), '✅ تم نسخ أمر \\input!')" title="نسخ أمر \input للورقة">
+                            📋 <span class="mono">\input</span>
+                        </button>
+                        <a href="{escaped_rel_path}" target="_blank" class="btn-action" title="فتح الملف في علامة تبويب جديدة">
+                            ↗️
+                        </a>
+                        {create_sol_btn}
+                    </div>
+                </td>
+            </tr>

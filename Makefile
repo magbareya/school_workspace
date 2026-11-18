@@ -103,10 +103,7 @@ empty_sols: ## Create empty solution files for Bagrut questions
 	python scripts/bagrut_questions/create_empty_sol.py
 
 index: ## Create the Bagrut questions index and build its PDFs
-	python scripts/bagrut_questions/create_questions_index.py
-	@make \
-		$$(find src/*/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#.pdf#') \
-		$$(find src/*/bagrut_questions -name "*.tex" | sed -e 's#^src/#out/#' -e 's#\.tex$$#_sols.pdf#')
+	python scripts/bagrut_questions/create_questions_index.py --build
 
 # Jupyter notebooks → printable pdf (only markdown cells)
 out/%_printable.pdf: src/%.ipynb

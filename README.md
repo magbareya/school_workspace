@@ -20,29 +20,34 @@ This repository contains educational materials for a Computer Science Basics cou
 
 ### Bagrut Questions Scripts (`scripts/bagrut_questions/`)
 
-- `create_empty_sol.py`: Generates empty LaTeX solution files for bagrut question images/PDFs. Selects the appropriate template based on the folder (C# template for `basics`, default for others).
-  - Usage: `python scripts/bagrut_questions/create_empty_sol.py [file_path]`
+- `create_empty_sol.py`: Generates empty LaTeX solution files for bagrut question images/PDFs. Selects the appropriate template based on the folder (`basics`, `oop`, or default for others).
+  - Usage: `python scripts/bagrut_questions/create_empty_sol.py [file_or_dir ...] [--force]`
+  - `--force` regenerates only stubs that exactly match the current template; edited files and stubs from older templates are kept.
   - Example: `python scripts/bagrut_questions/create_empty_sol.py bagrut_questions/basics/if_2011_899222_3.pdf`
 
 - `create_questions_index.py`: Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
   - Usage: `python scripts/bagrut_questions/create_questions_index.py`
-  - Outputs: `out/bagrut_questions/questions_index.csv` and `out/bagrut_questions/questions_index.html`
+  - Outputs: `out/<subject>/bagrut_questions/questions_index.csv` and `out/<subject>/bagrut_questions/questions_index.html`
 
 - `split_pdf_to_pages.py`: Splits PDF files into individual pages or converts PDFs to cropped images.
   - Usage: `python scripts/bagrut_questions/split_pdf_to_pages.py`
 
 - Templates:
   - `empty_sol_template.tex`: Default template for solution files
-  - `empty_sol_template_csharp.tex`: C# template for basics folder
+  - `empty_sol_template_basics.tex`: C# template for basics folder
+  - `empty_sol_template_oop.tex`: C# template for oop folder (lines prefixed `%PDF ` / `%IMAGE ` are kept only for that media type)
   - `bagrut_questions_by_topic_template.tex`: Template for topic files
   - `questions_index_template.html`: HTML template for the questions index
+  - `question_row.html`: HTML template for one row of the questions index
+  - `index_labels.json`: Arabic topic titles and UI labels used by the index generator
+  - `vendor/`: Bootstrap 5.3.2 (MIT), embedded into the generated index so it works offline
 
 ### Other Scripts (`scripts/`)
 
 - `clean.py`: Cleaning script for output directories
 - `export_cs.py`: Exports C# code from Jupyter notebooks
 - `rename_file.py`: File renaming utility
-- LaTeX templates: `beamer_preamble.tex`, `simple_beamer.tex`, `tex_preamble.tex`, `usefule_tex_things.tex`
+- LaTeX templates: `common_preamble.tex`, `tex_preamble.tex`, `book_preamble.tex`, `beamer_preamble.tex`, `simple_beamer.tex`
 - `first_cell_to_handle_arabic.html`: HTML for handling Arabic text
 
 ## Makefile Targets
