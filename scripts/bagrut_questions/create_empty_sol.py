@@ -1,53 +1,25 @@
 """Generate Bagrut solution stubs from question images or PDFs."""
 
 import argparse
-from dataclasses import dataclass
+from functools import lru_cache
 import os
 from pathlib import Path
-from functools import lru_cache
 import sys
-from typing import Dict, List
+from typing import List
 
 sys.path.insert(0, os.path.dirname(__file__))
 from utils import SUPPORTED_EXTENSIONS, parse_filename
 
 
-@dataclass(frozen=True)
-class FolderTemplateConfig:
-    template_path: str
-    pdf_command_template: str
-
-
-DEFAULT_PDF_COMMAND = "\\importpdfpage{ {filepath} }{1}"
 # \includepdf starts a new page, so the contents entry (\bagrutTocEntry, defined by the
-# %PDF lines of the OOP template) is placed on the first imported page.
-OOP_PDF_COMMAND = "\\includepdf[pages=-,pagecommand={\\thispagestyle{empty}\\bagrutTocEntry}]{{filepath}}"
+# %PDF lines of the template) is placed on the first imported page.
+PDF_COMMAND_TEMPLATE = "\\includepdf[pages=-,pagecommand={\\thispagestyle{empty}\\bagrutTocEntry}]{{filepath}}"
 
 IMAGE_COMMAND_TEMPLATE = """\\noindent
 \\makebox[\\textwidth][c]{\\includegraphics[width=0.9\\paperwidth,keepaspectratio]{ {filepath} }%
 }%"""
 
-TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE_BASICS = os.path.join(TEMPLATE_DIR, "empty_sol_template_basics.tex")
-TEMPLATE_OOP = os.path.join(TEMPLATE_DIR, "empty_sol_template_oop.tex")
-TEMPLATE_DEFAULT = os.path.join(TEMPLATE_DIR, "empty_sol_template.tex")
-
-DEFAULT_FOLDER_CONFIG = FolderTemplateConfig(
-    template_path=TEMPLATE_DEFAULT,
-    pdf_command_template=DEFAULT_PDF_COMMAND,
-)
-
-FOLDER_CONFIGS: Dict[str, FolderTemplateConfig] = {
-    "basics": FolderTemplateConfig(
-        template_path=TEMPLATE_BASICS,
-        pdf_command_template=DEFAULT_PDF_COMMAND,
-    ),
-    "oop": FolderTemplateConfig(
-        template_path=TEMPLATE_OOP,
-        pdf_command_template=OOP_PDF_COMMAND,
-    ),
-    "computational_models": DEFAULT_FOLDER_CONFIG,
-}
+TEMPLATE_PATH = Path(__file__).resolve().with_name("empty_sol_template.tex")
 
 # Default folders processed in batch mode
 FOLDERS: List[str] = [
@@ -57,17 +29,15 @@ FOLDERS: List[str] = [
 ]
 
 
-def build_image_command(folder_name: str, extension: str, latex_relative_path: str) -> str:
+@lru_cache(maxsize=1)
+def load_template() -> str:
+    return TEMPLATE_PATH.read_text(encoding="utf-8")
+
+
+def build_image_command(extension: str, latex_relative_path: str) -> str:
     """Return the LaTeX inclusion command for a question PDF or image."""
-    config = FOLDER_CONFIGS.get(folder_name, DEFAULT_FOLDER_CONFIG)
-    if extension == "pdf":
-        return config.pdf_command_template.replace("{filepath}", latex_relative_path)
-    return IMAGE_COMMAND_TEMPLATE.replace("{filepath}", latex_relative_path)
-
-
-@lru_cache(maxsize=None)
-def template_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+    template = PDF_COMMAND_TEMPLATE if extension == "pdf" else IMAGE_COMMAND_TEMPLATE
+    return template.replace("{filepath}", latex_relative_path)
 
 
 def select_variant(template: str, extension: str) -> str:
@@ -82,10 +52,10 @@ def select_variant(template: str, extension: str) -> str:
     return "".join(lines)
 
 
-def render(template: str, media: Path, subject: str, folder: str) -> str:
+def render(template: str, media: Path, folder: str) -> str:
     _, year, model, number, extension = parse_filename(media.name)
     path = f"../../../bagrut_questions/{folder}/{media.name}"
-    command = build_image_command(subject, extension, path)
+    command = build_image_command(extension, path)
     return (select_variant(template, extension).replace("[[IMAGE_COMMAND]]", command)
             .replace("[[YEAR]]", year).replace("[[MODEL]]", model).replace("[[NUMBER]]", number))
 
@@ -107,10 +77,8 @@ def process_group(siblings, force: bool) -> None:
     except ValueError:
         print(f"Skipping (not under bagrut_questions/; run from the repository root): {media}")
         return
-    subject = folder.split("/")[0]
-    config = FOLDER_CONFIGS.get(subject, DEFAULT_FOLDER_CONFIG)
-    template = template_text(Path(config.template_path))
-    result = render(template, media, subject, folder)
+    template = load_template()
+    result = render(template, media, folder)
     target = media.with_suffix(".tex")
     if target.exists():
         if not force:
@@ -120,7 +88,7 @@ def process_group(siblings, force: bool) -> None:
         if existing == result:
             return
         # Only an exact, unedited render of the current template may be overwritten.
-        if not any(existing == render(template, sibling, subject, folder) for sibling in siblings):
+        if not any(existing == render(template, sibling, folder) for sibling in siblings):
             print(f"Preserving (edited, or generated from an older template): {target}")
             return
     target.write_text(result, encoding="utf-8")
