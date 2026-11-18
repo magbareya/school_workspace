@@ -11,14 +11,6 @@ sys.path.insert(0, os.path.dirname(__file__))
 from utils import SUPPORTED_EXTENSIONS, parse_filename
 
 
-# \includepdf starts a new page, so the contents entry (\bagrutTocEntry, defined by the
-# %PDF lines of the template) is placed on the first imported page.
-PDF_COMMAND_TEMPLATE = "\\includepdf[pages=-,pagecommand={\\thispagestyle{empty}\\bagrutTocEntry}]{{filepath}}"
-
-IMAGE_COMMAND_TEMPLATE = """\\noindent
-\\makebox[\\textwidth][c]{\\includegraphics[width=0.9\\paperwidth,keepaspectratio]{ {filepath} }%
-}%"""
-
 TEMPLATE_PATH = Path(__file__).resolve().with_name("empty_sol_template.tex")
 
 # Default folders processed in batch mode
@@ -32,12 +24,6 @@ FOLDERS: List[str] = [
 @lru_cache(maxsize=1)
 def load_template() -> str:
     return TEMPLATE_PATH.read_text(encoding="utf-8")
-
-
-def build_image_command(extension: str, latex_relative_path: str) -> str:
-    """Return the LaTeX inclusion command for a question PDF or image."""
-    template = PDF_COMMAND_TEMPLATE if extension == "pdf" else IMAGE_COMMAND_TEMPLATE
-    return template.replace("{filepath}", latex_relative_path)
 
 
 def select_variant(template: str, extension: str) -> str:
@@ -55,8 +41,7 @@ def select_variant(template: str, extension: str) -> str:
 def render(template: str, media: Path, folder: str) -> str:
     _, year, model, number, extension = parse_filename(media.name)
     path = f"../../../bagrut_questions/{folder}/{media.name}"
-    command = build_image_command(extension, path)
-    return (select_variant(template, extension).replace("[[IMAGE_COMMAND]]", command)
+    return (select_variant(template, extension).replace("[[MEDIA_PATH]]", path)
             .replace("[[YEAR]]", year).replace("[[MODEL]]", model).replace("[[NUMBER]]", number))
 
 
@@ -87,9 +72,8 @@ def process_group(siblings, force: bool) -> None:
         existing = target.read_text(encoding="utf-8")
         if existing == result:
             return
-        # Only an exact, unedited render of the current template may be overwritten.
         if not any(existing == render(template, sibling, folder) for sibling in siblings):
-            print(f"Preserving (edited, or generated from an older template): {target}")
+            print(f"Preserving unrecognized or edited fragment: {target}")
             return
     target.write_text(result, encoding="utf-8")
     print(f"Created: {target}")
@@ -128,7 +112,7 @@ def main() -> None:
         "-f",
         "--force",
         action="store_true",
-        help="Regenerate only unedited solution templates; preserve partial and completed solutions.",
+        help="Refresh existing stubs only if they exactly match the current template for this question.",
     )
     args = parser.parse_args()
 

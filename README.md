@@ -20,9 +20,9 @@ This repository contains educational materials for a Computer Science Basics cou
 
 ### Bagrut Questions Scripts (`scripts/bagrut_questions/`)
 
-- `create_empty_sol.py`: Generates empty LaTeX solution files for bagrut question images/PDFs. Selects the appropriate template based on the folder (`basics`, `oop`, or default for others).
+- `create_empty_sol.py`: Generates empty LaTeX solution files for bagrut question images/PDFs. All subjects share one template. Images appear below a question heading. PDFs include every page, with a contents entry on the first imported page.
   - Usage: `python scripts/bagrut_questions/create_empty_sol.py [file_or_dir ...] [--force]`
-  - `--force` regenerates only stubs that exactly match the current template; edited files and stubs from older templates are kept.
+  - `--force` refreshes a stub only if it exactly matches the current template for one of the question’s media files. Older or edited stubs are preserved.
   - Example: `python scripts/bagrut_questions/create_empty_sol.py bagrut_questions/basics/if_2011_899222_3.pdf`
 
 - `create_questions_index.py`: Generates CSV and HTML indexes of bagrut questions, including solution status and usage tracking.
@@ -33,9 +33,7 @@ This repository contains educational materials for a Computer Science Basics cou
   - Usage: `python scripts/bagrut_questions/split_pdf_to_pages.py`
 
 - Templates:
-  - `empty_sol_template.tex`: Default template for solution files
-  - `empty_sol_template_basics.tex`: C# template for basics folder
-  - `empty_sol_template_oop.tex`: C# template for oop folder (lines prefixed `%PDF ` / `%IMAGE ` are kept only for that media type)
+  - `empty_sol_template.tex`: Shared solution template with media-specific lines marked `%PDF` or `%IMAGE`.
   - `bagrut_questions_by_topic_template.tex`: Template for topic files
   - `questions_index_template.html`: HTML template for the questions index
   - `question_row.html`: HTML template for one row of the questions index

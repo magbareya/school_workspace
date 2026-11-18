@@ -2,9 +2,9 @@
 %IMAGE \subsection*{\texorpdfstring{سؤال $[[NUMBER]]$ امتحان $\mathrm{[[MODEL]]}$ سنة $[[YEAR]]$}{سؤال [[NUMBER]] امتحان [[MODEL]] سنة [[YEAR]]}}
 %IMAGE \phantomsection
 %IMAGE \addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $[[NUMBER]]$ امتحان $\mathrm{[[MODEL]]}$ سنة $[[YEAR]]$}{سؤال [[NUMBER]] امتحان [[MODEL]] سنة [[YEAR]]}}
-%PDF \def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $[[NUMBER]]$ امتحان $\mathrm{[[MODEL]]}$ سنة $[[YEAR]]$}{سؤال [[NUMBER]] امتحان [[MODEL]] سنة [[YEAR]]}}\global\let\bagrutTocEntry\relax}%
-[[IMAGE_COMMAND]]
-
+%PDF \includepdf[pages=-,pagecommand={\thispagestyle{empty}},pagecommand*={\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $[[NUMBER]]$ امتحان $\mathrm{[[MODEL]]}$ سنة $[[YEAR]]$}{سؤال [[NUMBER]] امتحان [[MODEL]] سنة [[YEAR]]}}}]{[[MEDIA_PATH]]}
+%IMAGE \noindent
+%IMAGE \makebox[\textwidth][c]{\includegraphics[width=0.9\paperwidth,keepaspectratio]{[[MEDIA_PATH]]}}
 
 % \ifwithsols
 % \begin{boxSolution}[\texorpdfstring{سؤال $[[NUMBER]]$ امتحان $\mathrm{[[MODEL]]}$ سنة $[[YEAR]]$}{سؤال [[NUMBER]] امتحان [[MODEL]] سنة [[YEAR]]}]
