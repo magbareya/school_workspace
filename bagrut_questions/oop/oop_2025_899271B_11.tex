@@ -1,0 +1,145 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2025$}{سؤال 11 امتحان 899271B سنة 2025}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2025_899271B_11.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2025$ - فرع أ (1)}{سؤال 11 امتحان 899271B سنة 2025 - فرع أ (1)}]
+\textbf{أ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item المخطّط الهرميّ للعلاقة بين الفئات:
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.4cm, minimum height=0.7cm, font=\ttfamily\bfseries\small},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt},
+    contain/.style={-{Diamond[length=3.2mm, width=2.2mm]}, thick}
+]
+    \node[classbox] (chair) at (0, 0) {Chair};
+    \node[classbox] (date) at (4.0, 0) {Date};
+    \node[classbox] (order) at (-4.0, 0) {Order};
+    \node[classbox] (comp) at (-3.1, -1.6) {ComputerChair};
+    \node[classbox] (garden) at (0, -1.6) {GardenChair};
+    \node[classbox] (bar) at (3.1, -1.6) {BarStool};
+
+    \draw[contain] (date.west) -- (chair.east);
+    \draw[contain] (chair.west) -- (order.east);
+    \draw[inherit] (comp.north) -- ([xshift=-0.5cm]chair.south);
+    \draw[inherit] (garden.north) -- (chair.south);
+    \draw[inherit] (bar.north) -- ([xshift=0.5cm]chair.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2025$ - فرع أ (2) و(3)}{سؤال 11 امتحان 899271B سنة 2025 - فرع أ (2) و(3)}]
+\begin{enumerate}[label=\textbf{(\arabic*)}, start=2, itemsep=0.5em]
+    \item عناوين الفئات وصفاتها:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Date
+{
+    private int month;
+    private int year;
+}
+
+public class Chair
+{
+    private int price;
+    private Date createDate;
+}
+
+public class ComputerChair : Chair
+{
+    private int wheels;
+    private int adjustHeight;
+}
+
+public class GardenChair : Chair
+{
+    private bool isFoldable;
+}
+
+public class BarStool : Chair
+{
+    private int adjustHeight;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item العملية البنائية للفئة \textenglish{ComputerChair}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public ComputerChair(int price, int wheels, int height, Date date)
+    : base(price, date)
+{
+    this.wheels = wheels;
+    this.adjustHeight = height;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2025$ - فرع ب}{سؤال 11 امتحان 899271B سنة 2025 - فرع ب}]
+\textbf{ب.} العملية \textenglish{TotalPrice} في الفئة \textenglish{Order}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public double TotalPrice()
+{
+    int compCount = 0, gardenCount = 0;
+    for (int i = 0; i < this.current; i++)
+    {
+        if (this.chairs[i] is ComputerChair)
+        {
+            compCount++;
+        }
+        else if (this.chairs[i] is GardenChair)
+        {
+            gardenCount++;
+        }
+    }
+
+    double total = 0;
+    for (int i = 0; i < this.current; i++)
+    {
+        Chair c = this.chairs[i];
+        Console.WriteLine("Price: " + c.GetPrice() +
+            ", Date: " + c.GetCreateDate().GetMonth() + "/" + c.GetCreateDate().GetYear());
+
+        if (c is ComputerChair)
+        {
+            ComputerChair cc = (ComputerChair)c;
+            Console.WriteLine("Wheels: " + cc.GetWheels() + ", Height: " + cc.GetAdjustHeight());
+            total += (compCount > 10) ? c.GetPrice() * 0.8 : c.GetPrice();
+        }
+        else if (c is GardenChair)
+        {
+            GardenChair gc = (GardenChair)c;
+            Console.WriteLine("Foldable: " + gc.GetIsFoldable());
+            total += (gardenCount > 15) ? c.GetPrice() * 0.75 : c.GetPrice();
+        }
+        else if (c is BarStool)
+        {
+            BarStool bs = (BarStool)c;
+            Console.WriteLine("Height: " + bs.GetAdjustHeight());
+            total += c.GetPrice();
+        }
+    }
+    return total;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

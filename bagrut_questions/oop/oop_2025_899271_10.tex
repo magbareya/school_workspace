@@ -1,0 +1,151 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2025$}{سؤال 10 امتحان 899271 سنة 2025}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2025_899271_10.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2025$ - فرع أ}{سؤال 10 امتحان 899271 سنة 2025 - فرع أ}]
+\textbf{أ.} المخطّط الهرميّ للعلاقة بين الفئات:
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.2cm, minimum height=0.7cm, font=\ttfamily\bfseries},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt}
+]
+    \node[classbox] (animal) at (0, 0) {Animal};
+    \node[classbox] (bird) at (-3.0, -1.4) {Bird};
+    \node[classbox] (fish) at (0, -1.4) {Fish};
+    \node[classbox] (snake) at (3.0, -1.4) {Snake};
+    \node[classbox] (parrot) at (-3.0, -2.8) {Parrot};
+
+    \draw[inherit] (bird.north) -- ([xshift=-0.5cm]animal.south);
+    \draw[inherit] (fish.north) -- (animal.south);
+    \draw[inherit] (snake.north) -- ([xshift=0.5cm]animal.south);
+    \draw[inherit] (parrot.north) -- (bird.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+
+الفئات بعد تطبيق الوراثة:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Bird : Animal
+{
+    private bool isFlying;
+    public void Zoo() { Console.WriteLine("Hello"); }
+}
+
+public class Parrot : Bird
+{
+    private bool isTalking;
+}
+
+public class Fish : Animal
+{
+    private string waterType;
+}
+
+public class Snake : Animal
+{
+    private int length;
+    private bool isVenomous;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2025$ - فرع ب}{سؤال 10 امتحان 899271 سنة 2025 - فرع ب}]
+\textbf{ب.} العمليات البنائية المطلوبة في الفئات الأربع:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class Bird:
+public Bird(string color, int weight, bool isFlying) : base(color, weight)
+{
+    this.isFlying = isFlying;
+}
+
+// In class Parrot:
+public Parrot(string color, int weight, bool isFlying, bool isTalking)
+    : base(color, weight, isFlying)
+{
+    this.isTalking = isTalking;
+}
+
+// In class Fish:
+public Fish(string color, int weight, string waterType) : base(color, weight)
+{
+    this.waterType = waterType;
+}
+
+// In class Snake:
+public Snake(string color, int weight, int length, bool isVenomous)
+    : base(color, weight)
+{
+    this.length = length;
+    this.isVenomous = isVenomous;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2025$ - فرع جـ}{سؤال 10 امتحان 899271 سنة 2025 - فرع جـ}]
+\textbf{جـ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.5em]
+    \item نضيف \textenglish{ToString} في الفئات \textenglish{Bird} و \textenglish{Parrot} و \textenglish{Snake} فقط (الفئة \textenglish{Fish} ترث \textenglish{Animal.ToString()} كما هي):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class Bird:
+public override string ToString()
+{
+    return "I'm a bird! " + base.ToString();
+}
+
+// In class Parrot:
+public override string ToString()
+{
+    return "I'm a parrot! My color is " + this.GetColor() + "!";
+}
+
+// In class Snake:
+public override string ToString()
+{
+    if (this.isVenomous)
+    {
+        return "I'm a snake! I'm venomous, be careful! " + base.ToString();
+    }
+    return "I'm a snake! I'm not venomous! " + base.ToString();
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item العملية \textenglish{Hello} غير سليمة (خطأ ترجمة)، لأنّ النمط الساكن لـ \textenglish{arr[i]} هو \textenglish{Animal} ولا توجد عملية \textenglish{Zoo()} في الفئة \textenglish{Animal}. التصحيح:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static void Hello(Animal[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] is Bird)
+        {
+            ((Bird)arr[i]).Zoo();
+        }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+    المُخرج بالنسبة للمصفوفة \textenglish{animals}: تطبع \textenglish{Hello} سطرين (مرّة لـ \textenglish{Bird} ومرّة لـ \textenglish{Parrot}).
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak

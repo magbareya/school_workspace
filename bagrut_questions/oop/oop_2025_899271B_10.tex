@@ -1,0 +1,30 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2025$}{سؤال 10 امتحان 899271B سنة 2025}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2025_899271B_10.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2025$ - الأوامر $1$–$6$}{سؤال 10 امتحان 899271B سنة 2025 - الأوامر 1-6}]
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.35em]
+    \item \textbf{سليم.} المُخرج: \textenglish{ctor Y} ثمّ \textenglish{Y Do1 int 2}.
+    \item \textbf{سليم.} العملية \textenglish{Do1(string)} موروثة من \textenglish{Y}. المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Y Do1 String str}.
+    \item \textbf{سليم.} النمط الساكن لـ \textenglish{y} هو \textenglish{Y} وفيه \textenglish{Do1(string)}. المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Y Do1 String str}.
+    \item \textbf{غير سليم (خطأ ترجمة).} لا يمكن إسناد متغيّر من الفئة الأساسية \textenglish{Y} إلى متغيّر من الفئة الفرعية \textenglish{Z} دون تحويل صريح لأسفل.
+    \item \textbf{غير سليم (خطأ في زمن التشغيل).} الكائن الفعلي الذي يشير إليه \textenglish{y} هو من نمط \textenglish{Y} وليس \textenglish{Z}، لذا يفشل التحويل \textenglish{(Z)y}.
+    \item \textbf{سليم.} النمط الساكن لـ \textenglish{yz} هو \textenglish{Y} وفيه \textenglish{Do1(string)}. المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Y Do1 String str}.
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2025$ - الأوامر $7$–$12$}{سؤال 10 امتحان 899271B سنة 2025 - الأوامر 7-12}]
+\begin{enumerate}[label=\textbf{\arabic*.}, start=7, itemsep=0.35em]
+    \item \textbf{غير سليم (خطأ ترجمة).} النمط الساكن لـ \textenglish{yz} هو \textenglish{Y}، والعملية \textenglish{Do3(int)} غير معرّفة في \textenglish{Y}.
+    \item \textbf{سليم.} المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Z Do2}، ثمّ \textenglish{Z Do1 int 2}.
+    \item \textbf{غير سليم (خطأ ترجمة).} لا يمكن جعل مؤشر من نمط الابن \textenglish{Z} يشير إلى كائن من نمط الأب \textenglish{Y}.
+    \item \textbf{غير سليم (خطأ ترجمة).} النمط الساكن لـ \textenglish{yz} هو \textenglish{Y}، وفي \textenglish{Y} لا توجد عملية \textenglish{Do2()} دون معطيات.
+    \item \textbf{سليم.} التحويل \textenglish{(Z)yz} سليم لأنّ الكائن الفعلي هو \textenglish{Z}. المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Z Do2}، ثمّ \textenglish{Z Do1 int 2}.
+    \item \textbf{سليم.} التحويل سليم والعملية \textenglish{Do1(string)} موروثة من \textenglish{Y}. المُخرج: \textenglish{ctor Y}، ثمّ \textenglish{ctor Z}، ثمّ \textenglish{Y Do1 String hh}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak

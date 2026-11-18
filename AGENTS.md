@@ -306,6 +306,7 @@ Progressive booklets (`كراس تمارين متدرج`) in `src/oop/exs/` teac
 
 ### 5.6. Bagrut Question Fragments (`bagrut_questions/`)
 - **Architecture:** Each Bagrut question file `bagrut_questions/<subject>/<topic>_<year>_<examId>_<qNum>.tex` is a **document fragment** (no `\documentclass`, no `\begin{document}`) that is `\input{...}` into topic compilations or full exam booklets (e.g. [src/oop/review_basics/bagrut371-2026.tex](file:///c:/dev/workspace/school_workspace/src/oop/review_basics/bagrut371-2026.tex)). Verify a fragment by building the document that includes it.
+- **Splitting Long `boxSolution` Blocks:** A `boxSolution` does NOT split across pages on its own; if its content is too tall for a single page, it overflows into the invisible bottom area of the page and gets clipped. Whenever a Bagrut solution is long or has multiple branches (`أ`, `ب`, `ج`), split it into several consecutive `boxSolution` blocks separated by `\filbreak` so it continues cleanly on the next page (see Sections 4.1 and 7).
 - **Bullet Alignment Inside `boxSolution`:** When an `\item` inside `\begin{enumerate}` is immediately followed by a `\begin{boxCode}` or a table, write `\item .` (with a period) so `polyglossia`/`bidi` does not misalign the bullet vertically.
 - **Reference Example:** [bagrut_questions/basics/classes2_2026_899371_5.tex](file:///c:/dev/workspace/school_workspace/bagrut_questions/basics/classes2_2026_899371_5.tex).
 

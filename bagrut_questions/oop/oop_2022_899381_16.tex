@@ -1,0 +1,148 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $16$ امتحان $\mathrm{899381}$ سنة $2022$}{سؤال 16 امتحان 899381 سنة 2022}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2022_899381_16.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899381}$ سنة $2022$ - فرع أ}{سؤال 16 امتحان 899381 سنة 2022 - فرع أ}]
+\textbf{أ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.8em]
+    \item المصفوفة \textenglish{arr} تحوي قمصانًا وبنطلونات، وبما أنّ الفئتين \textenglish{Shirt} و \textenglish{Pants} ترثان من الفئة \textenglish{Clothing}، يكون نمط المصفوفة \textenglish{Clothing[]}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Cart
+{
+    private string name;
+    private Clothing[] arr;
+    private int current;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item المخطّط الهرميّ للعلاقة بين الفئات (الفئتان \textenglish{Shirt} و \textenglish{Pants} ترثان من الفئة \textenglish{Clothing}، والفئة \textenglish{Cart} تحوي مصفوفة من نمط \textenglish{Clothing}):
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.4cm, minimum height=0.75cm, font=\ttfamily\bfseries},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt},
+    contain/.style={-{Diamond[length=3.2mm, width=2.2mm]}, thick}
+]
+    \node[classbox] (clothing) at (0, 0) {Clothing};
+    \node[classbox] (cart) at (-4.2, 0) {Cart};
+    \node[classbox] (shirt) at (-1.8, -1.5) {Shirt};
+    \node[classbox] (pants) at (1.8, -1.5) {Pants};
+
+    \draw[contain] (clothing.west) -- (cart.east);
+    \draw[inherit] (shirt.north) -- ([xshift=-0.4cm]clothing.south);
+    \draw[inherit] (pants.north) -- ([xshift=0.4cm]clothing.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899381}$ سنة $2022$ - فرع ب (1) و(2)}{سؤال 16 امتحان 899381 سنة 2022 - فرع ب (1) و(2)}]
+\textbf{ب.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.8em]
+    \item المخطّط الهرميّ المعدّل بعد إضافة الفئتين \textenglish{Product} و \textenglish{Book}:
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.4cm, minimum height=0.75cm, font=\ttfamily\bfseries},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt},
+    contain/.style={-{Diamond[length=3.2mm, width=2.2mm]}, thick}
+]
+    \node[classbox] (product) at (0, 0) {Product};
+    \node[classbox] (cart) at (-4.2, 0) {Cart};
+    \node[classbox] (clothing) at (-1.8, -1.5) {Clothing};
+    \node[classbox] (book) at (1.8, -1.5) {Book};
+    \node[classbox] (shirt) at (-3.3, -3.0) {Shirt};
+    \node[classbox] (pants) at (-0.3, -3.0) {Pants};
+
+    \draw[contain] (product.west) -- (cart.east);
+    \draw[inherit] (clothing.north) -- ([xshift=-0.4cm]product.south);
+    \draw[inherit] (book.north) -- ([xshift=0.4cm]product.south);
+    \draw[inherit] (shirt.north) -- ([xshift=-0.4cm]clothing.south);
+    \draw[inherit] (pants.north) -- ([xshift=0.4cm]clothing.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+
+    \item الصفتان المشتركتان لجميع المنتجات (الملابس والكتب) هما رقم التشخيص \textenglish{id} والسعر \textenglish{price}، وتُنقلان إلى الفئة الأساسية \textenglish{Product}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Product
+{
+    private int id;
+    private double price;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899381}$ سنة $2022$ - فرع ب (3)}{سؤال 16 امتحان 899381 سنة 2022 - فرع ب (3)}]
+\begin{enumerate}[label=\textbf{(\arabic*)}, start=3]
+    \item الفئات التي طرأ فيها تغيير هي \textenglish{Clothing} و \textenglish{Book} (ترثان من \textenglish{Product} وتُحذف منهما الصفتان \textenglish{id} و \textenglish{price})، والفئة \textenglish{Cart} (يتغيّر نمط المصفوفة \textenglish{arr} إلى \textenglish{Product[]}):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Clothing : Product
+{
+    private string fabric;
+    private string color;
+}
+
+public class Book : Product
+{
+    private string bookName;
+    private string author;
+}
+
+public class Cart
+{
+    private string name;
+    private Product[] arr;
+    private int current;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899381}$ سنة $2022$ - فرع جـ}{سؤال 16 امتحان 899381 سنة 2022 - فرع جـ}]
+\textbf{جـ.}
+\begin{itemize}[itemsep=0.4em]
+    \item في الفئة \textenglish{Product}: نطبّق العملية \textenglish{GetDiscountPrice} لتعيد السعر بعد تخفيض $10\%$ (أي ضرب السعر بـ $0.9$).
+    \item في الفئة \textenglish{Clothing}: نعيد تعريف العملية (\textenglish{override}) بحيث تستدعي عملية الفئة الأساسية وتطرح من السعر $10$ شواكل إضافية (وبذلك ترث الفئتان \textenglish{Shirt} و \textenglish{Pants} هذا التطبيق تلقائيًّا).
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class Product:
+public virtual double GetDiscountPrice()
+{
+    return this.price * 0.9;
+}
+
+// In class Clothing:
+public override double GetDiscountPrice()
+{
+    return base.GetDiscountPrice() - 10;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

@@ -1,0 +1,109 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2026$}{سؤال 11 امتحان 899271B سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271B_11.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع أ (1)}{سؤال 11 امتحان 899271B سنة 2026 - فرع أ (1)}]
+\textbf{أ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item المخطّط الهرميّ للعلاقة بين الفئات:
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.6cm, minimum height=0.7cm, font=\ttfamily\bfseries\small},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt}
+]
+    \node[classbox] (game) at (0, 0) {Game};
+    \node[classbox] (comp) at (-2.1, -1.4) {ComputerGame};
+    \node[classbox] (board) at (2.1, -1.4) {BoardGame};
+    \node[classbox] (vr) at (-2.1, -2.8) {VRGame};
+
+    \draw[inherit] (comp.north) -- ([xshift=-0.4cm]game.south);
+    \draw[inherit] (board.north) -- ([xshift=0.4cm]game.south);
+    \draw[inherit] (vr.north) -- (comp.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع أ (2) و(3)}{سؤال 11 امتحان 899271B سنة 2026 - فرع أ (2) و(3)}]
+\begin{enumerate}[label=\textbf{(\arabic*)}, start=2, itemsep=0.5em]
+    \item عناوين الفئات وصفاتها:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Game
+{
+    private int rate;
+    private int code;
+    private int price;
+}
+
+public class ComputerGame : Game
+{
+    private int memory;
+}
+
+public class VRGame : ComputerGame
+{
+    private bool needVR;
+    private int age;
+}
+
+public class BoardGame : Game
+{
+    private int players;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item العملية البنائية للفئة \textenglish{ComputerGame}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public ComputerGame(int price, int code, int memory) : base(price, code)
+{
+    this.memory = memory;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع ب}{سؤال 11 امتحان 899271B سنة 2026 - فرع ب}]
+\textbf{ب.} العملية \textenglish{AvgRate} في الفئة \textenglish{Store}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public double AvgRate(int type)
+{
+    int sum = 0;
+    int cnt = 0;
+    for (int i = 0; i < this.count; i++)
+    {
+        if (type == 1 && this.games[i] is VRGame)
+        {
+            sum += this.games[i].GetRate();
+            cnt++;
+        }
+        else if (type == 2 && this.games[i] is ComputerGame && !(this.games[i] is VRGame))
+        {
+            sum += this.games[i].GetRate();
+            cnt++;
+        }
+    }
+    return (double)sum / cnt;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

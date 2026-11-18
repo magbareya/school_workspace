@@ -1,0 +1,38 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271}$ سنة $2025$}{سؤال 11 امتحان 899271 سنة 2025}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2025_899271_11.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271}$ سنة $2025$}{سؤال 11 امتحان 899271 سنة 2025}]
+\begin{enumerate}[label=\textbf{\alph*.}, itemsep=0.8em]
+    \item إكمال الأسطر $(1)$–$(6)$ في \textenglish{Main}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+arr[0] = new Two();            // (1)
+arr[1] = new Three("Car");     // (2)
+arr[2] = new Three("Horse");   // (3)
+arr[3] = new Two("Small");     // (4)
+arr[4] = new Two("Tall");      // (5)
+arr[5] = new One();            // (6)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item التغيير \textenglish{public class Three : One} \textbf{لا يؤدّي إلى خطأ}؛ لأنّ العملية البنائية \textenglish{Three(string s)} تستدعي \textenglish{One()} الافتراضية، و\textenglish{base.ToString()} تستدعي \textenglish{One.ToString()}. وبما أنّ \textenglish{Three} لم تعد ترث من \textenglish{Two}، فلن تُضاف كلمة \textenglish{Fast} في السطرين $(2)$ و$(3)$، وسيكون المُخرج:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+4, 1 Fast
+4, 2 Car
+4, 3 Horse
+4, 15 Small
+4, 15 Tall
+4, 4
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak

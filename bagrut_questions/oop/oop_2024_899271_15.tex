@@ -1,0 +1,145 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $15$ امتحان $\mathrm{899271}$ سنة $2024$}{سؤال 15 امتحان 899271 سنة 2024}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2024_899271_15.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $15$ امتحان $\mathrm{899271}$ سنة $2024$ - فرع أ (1)}{سؤال 15 امتحان 899271 سنة 2024 - فرع أ (1)}]
+\textbf{أ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item المخطّط الهرميّ للعلاقة بين الفئات (الفئات \textenglish{Car} و \textenglish{Truck} و \textenglish{Motorcycle} ترث من الفئة \textenglish{Vehicle}، والفئة \textenglish{Vehicle} تحوي كائنًا من نمط \textenglish{Contract}):
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.4cm, minimum height=0.75cm, font=\ttfamily\bfseries},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt},
+    contain/.style={-{Diamond[length=3.2mm, width=2.2mm]}, thick}
+]
+    \node[classbox] (vehicle) at (0, 0) {Vehicle};
+    \node[classbox] (contract) at (4.2, 0) {Contract};
+    \node[classbox] (car) at (-3.2, -1.6) {Car};
+    \node[classbox] (truck) at (0, -1.6) {Truck};
+    \node[classbox] (moto) at (3.2, -1.6) {Motorcycle};
+
+    \draw[contain] (contract.west) -- (vehicle.east);
+    \draw[inherit] (car.north) -- ([xshift=-0.5cm]vehicle.south);
+    \draw[inherit] (truck.north) -- (vehicle.south);
+    \draw[inherit] (moto.north) -- ([xshift=0.5cm]vehicle.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $15$ امتحان $\mathrm{899271}$ سنة $2024$ - فرع أ (2)}{سؤال 15 امتحان 899271 سنة 2024 - فرع أ (2)}]
+\begin{enumerate}[label=\textbf{(\arabic*)}, start=2]
+    \item عناوين الفئات وصفاتها:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Contract
+{
+    private string name;
+    private int days;
+    private int kilo;
+}
+
+public class Vehicle
+{
+    private string id;
+    private Contract contract;
+}
+
+public class Car : Vehicle
+{
+    private int seats;
+}
+
+public class Truck : Vehicle
+{
+    private int max;
+}
+
+public class Motorcycle : Vehicle
+{
+    private bool offRoad;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $15$ امتحان $\mathrm{899271}$ سنة $2024$ - فرع ب}{سؤال 15 امتحان 899271 سنة 2024 - فرع ب}]
+\textbf{ب.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.6em]
+    \item العملية البنائية للفئة \textenglish{Vehicle}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public Vehicle(string name, int days, int kilo, string id)
+{
+    this.id = id;
+    this.contract = new Contract(name, days, kilo);
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item العملية البنائية للفئة \textenglish{Car}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public Car(string name, int days, int kilo, string id, int seats)
+    : base(name, days, kilo, id)
+{
+    this.seats = seats;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $15$ امتحان $\mathrm{899271}$ سنة $2024$ - فرع جـ}{سؤال 15 امتحان 899271 سنة 2024 - فرع جـ}]
+\textbf{جـ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.6em]
+    \item العملية \textenglish{Payment} في الفئة \textenglish{Vehicle} (معرّفة كـ \textenglish{virtual} لإمكانية إعادة تعريفها في الفئات الفرعية):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public virtual double Payment()
+{
+    return 60 * this.contract.GetDays() + 2 * this.contract.GetKilo();
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+    \item نضيف العملية فقط في الفئتين \textenglish{Truck} و \textenglish{Motorcycle} (الفئة \textenglish{Car} ترث التسعيرة الأساسية من \textenglish{Vehicle} دون تغيير):
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class Truck:
+public override double Payment()
+{
+    return base.Payment() + 500;
+}
+
+// In class Motorcycle:
+public override double Payment()
+{
+    return base.Payment() / 2.0;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak

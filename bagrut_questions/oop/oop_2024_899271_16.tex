@@ -1,0 +1,69 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $16$ امتحان $\mathrm{899271}$ سنة $2024$}{سؤال 16 امتحان 899271 سنة 2024}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2024_899271_16.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899271}$ سنة $2024$ - العمليات البنائية}{سؤال 16 امتحان 899271 سنة 2024 - العمليات البنائية}]
+العمليات البنائية المطلوبة في الفئتين \textenglish{AA} و \textenglish{BB}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class AA
+{
+    private int x;
+
+    public AA()
+    {
+        this.x = 2;
+    }
+
+    public AA(int x)
+    {
+        this.x = x;
+    }
+
+    public AA(AA other)
+    {
+        this.x = other.x;
+    }
+}
+
+public class BB : AA
+{
+    private AA f;
+
+    public BB() : base(1)
+    {
+        this.f = null;
+    }
+
+    public BB(int x, AA f) : base(x)
+    {
+        this.f = f;
+    }
+
+    public BB(AA other) : base(0)
+    {
+        this.f = new AA(other);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $16$ امتحان $\mathrm{899271}$ سنة $2024$ - العملية البنائية لكلّ كائن}{سؤال 16 امتحان 899271 سنة 2024 - العملية البنائية لكل كائن}]
+العملية البنائية الملائمة لكلّ واحد من الكائنات التي تكوّنت:
+\begin{itemize}[itemsep=0.35em]
+    \item \textenglish{a1}: \textenglish{public AA()} (تهيّئ $x = 2$).
+    \item \textenglish{a2, a3}: \textenglish{public AA(int x)} (تهيّئ $x$ بالقيمة المُعطاة: $8$ و $3$).
+    \item \textenglish{a4, a5}: \textenglish{public AA(AA other)} (تنسخ قيمة $x$ من \textenglish{a1} و \textenglish{a2}).
+    \item \textenglish{b1}: \textenglish{public BB()} (تستدعي \textenglish{base(1)} وتضع \textenglish{f = null}).
+    \item \textenglish{b2, b3}: \textenglish{public BB(int x, AA f)} (تستدعي \textenglish{base(x)} وتجعل \textenglish{f} يشير مباشرة إلى \textenglish{a4} و \textenglish{a2}).
+    \item \textenglish{b4, b5}: \textenglish{public BB(AA other)} (تستدعي \textenglish{base(0)} وتنشئ كائنًا جديدًا من \textenglish{AA} منسوخًا عن \textenglish{a4} و \textenglish{a2} ليشير إليه \textenglish{f}).
+\end{itemize}
+\end{boxSolution}
+\fi
+\filbreak

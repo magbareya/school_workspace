@@ -1,0 +1,81 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271}$ سنة $2026$}{سؤال 11 امتحان 899271 سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271_11.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع أ}{سؤال 11 امتحان 899271 سنة 2026 - فرع أ}]
+\textbf{أ.}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class Father:
+public Father()
+{
+    st++;
+    this.num = 9;
+}
+
+public Father(int num)
+{
+    this.num = num;
+}
+
+// In class Son:
+public Son(int num, char ch) : base()
+{
+    this.num = num;
+    this.ch = ch;
+}
+
+public Son(int num) : base(num)
+{
+    this.ch = 'Z';
+}
+
+public override string ToString()
+{
+    return base.ToString() + ", ch=" + this.ch;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $11$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع ب و جـ}{سؤال 11 امتحان 899271 سنة 2026 - فرع ب و ج}]
+\textbf{ب.}
+\begin{enumerate}[label=\textbf{(\arabic*)}, itemsep=0.35em]
+    \item فحص المخطّطات الهرميّة $1$–$6$:
+    \begin{itemize}[itemsep=0.25em]
+        \item \textbf{مخطّط $1$ — لا يمكن:} الفئة \textenglish{A} ترث من \textenglish{B} و\textenglish{C}، لذا لا يمكن إسناد \textenglish{new C()} أو \textenglish{new B()} إلى متغيّر من نمط \textenglish{A}.
+        \item \textbf{مخطّط $2$ — يمكن.}
+        \item \textbf{مخطّط $3$ — لا يمكن:} الفئة \textenglish{B} لا ترث من \textenglish{C} (\textenglish{C c1 = new B()} غير سليم)، و\textenglish{D} لا ترث من \textenglish{C}، و\textenglish{C} لا ترث من \textenglish{A}.
+        \item \textbf{مخطّط $4$ — يمكن.}
+        \item \textbf{مخطّط $5$ — لا يمكن:} الفئة \textenglish{B} فوق \textenglish{A} و\textenglish{C}، لذا لا يصحّ \textenglish{C c1 = new B()} ولا \textenglish{A a2 = new B()}.
+        \item \textbf{مخطّط $6$ — يمكن.}
+    \end{itemize}
+
+    \item \textbf{نعم، تتغيّر الإجابة:} لكي يعمل التحويل \textenglish{D d1 = (D)a3;} (حيث الكائن الفعلي من نمط \textenglish{B}) دون خطأ في زمن التشغيل، يجب أن تكون \textenglish{B} وريثة لـ \textenglish{D}. وبذلك يصبح \textbf{المخطّط $6$ فقط} هو الممكن (المخطّطان $2$ و$4$ غير ممكنين).
+\end{enumerate}
+
+\textbf{جـ.} الصفات وعناوين العمليات المطلوبة في الفئة \textenglish{AAA}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class AAA
+{
+    public static int c;
+    protected int num;
+
+    public AAA() { ... }
+    public AAA(int num) { ... }
+    public virtual int GG(int val) { ... }
+    public bool MM(int x) { ... }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

@@ -1,0 +1,63 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $12$ امتحان $\mathrm{899271B}$ سنة $2026$}{سؤال 12 امتحان 899271B سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271B_12.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $12$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع أ}{سؤال 12 امتحان 899271B سنة 2026 - فرع أ}]
+\textbf{أ.} الكائنات التي تكوّنت في \textenglish{Main} (علماً أنّ \textenglish{F.count = 4}):
+\begin{center}
+\begin{english}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{\textarabic{المتغيّر}} & \textbf{\textarabic{نوع التوجيه (النمط الساكن)}} & \textbf{\textarabic{نوع الكائن (النمط الفعلي)}} & \textbf{\textarabic{قيمة} \texttt{x}} \\
+\hline
+\texttt{e1} & \texttt{E} & \texttt{E} & $5$ \\ \hline
+\texttt{e2} & \texttt{E} & \texttt{F} & $8$ \\ \hline
+\texttt{f1} & \texttt{F} & \texttt{G} & $6$ \\ \hline
+\texttt{e3} & \texttt{E} & \texttt{H} & $10$ \\ \hline
+\texttt{a} & \texttt{E} & \texttt{G} & $6$ \\ \hline
+\texttt{b} & \texttt{E} & \texttt{H} & $10$ \\ \hline
+\texttt{c} & \texttt{F} & \texttt{G} & $6$ \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+
+مُخرج العملية \textenglish{Main}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+E x = 5
+F count = 2
+G x = 6
+E x = 5
+H x = 10
+F count = 3
+G x = 6
+E x = 5
+H x = 10
+F count = 4
+G x = 6
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $12$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع ب}{سؤال 12 امتحان 899271B سنة 2026 - فرع ب}]
+\textbf{ب.} فحص الأوامر $1$–$10$:
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.25em]
+    \item \textbf{غير سليم (خطأ ترجمة).} لا يمكن جعل مؤشر من نمط الابن \textenglish{F} يشير إلى كائن من نمط الأب \textenglish{E}.
+    \item \textbf{غير سليم (خطأ ترجمة).} لا يمكن جعل مؤشر من نمط الابن \textenglish{G} يشير إلى كائن من نمط الأب \textenglish{F}.
+    \item \textbf{سليم.} الكائن الفعلي لـ \textenglish{a} هو \textenglish{G} وهو وريث لـ \textenglish{F}. (لا يطبع شيئًا).
+    \item \textbf{سليم.} الكائن الفعلي لـ \textenglish{c} هو \textenglish{G}. (لا يطبع شيئًا).
+    \item \textbf{غير سليم (خطأ في زمن التشغيل).} الكائن الفعلي لـ \textenglish{b} هو \textenglish{H} وليس \textenglish{F}، لذا يفشل التحويل لأسفل \textenglish{(F)b}.
+    \item \textbf{سليم.} \textenglish{a} يشير إلى \textenglish{G} ($x = 6$). المُخرج: \textenglish{36}
+    \item \textbf{غير سليم (خطأ ترجمة).} النمط الساكن لـ \textenglish{a} هو \textenglish{E}، والعملية \textenglish{Squre()} غير معرّفة في \textenglish{E}.
+    \item \textbf{سليم.} بعد التحويل لـ \textenglish{H} تُستدعى \textenglish{H.Calc()} ($10 / 2 = 5$). المُخرج: \textenglish{5}
+    \item \textbf{غير سليم (خطأ في زمن التشغيل).} الكائن الفعلي لـ \textenglish{b} هو \textenglish{H} وليس \textenglish{G}، لذا يفشل التحويل لأسفل \textenglish{(G)b}.
+    \item \textbf{غير سليم (خطأ ترجمة).} النمط الساكن لـ \textenglish{f1} هو \textenglish{F}، والعملية \textenglish{Squre()} غير معرّفة في \textenglish{F}.
+\end{enumerate}
+\end{boxSolution}
+\fi
+\filbreak

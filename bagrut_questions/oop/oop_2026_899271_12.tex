@@ -1,0 +1,43 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $12$ امتحان $\mathrm{899271}$ سنة $2026$}{سؤال 12 امتحان 899271 سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271_12.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $12$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع أ و ب}{سؤال 12 امتحان 899271 سنة 2026 - فرع أ و ب}]
+\textbf{أ.} الكائنات التي تكوّنت في الذاكرة:
+\begin{center}
+\begin{english}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{\textarabic{المتغيّر}} & \textbf{\textarabic{نوع التوجيه (النمط الساكن)}} & \textbf{\textarabic{نوع الكائن (النمط الفعلي)}} & \textbf{\textarabic{قيمة} \texttt{num}} \\
+\hline
+\texttt{a} & \texttt{A} & \texttt{A} & $1$ \\ \hline
+\texttt{ab} & \texttt{A} & \texttt{B} & $2$ \\ \hline
+\texttt{ac} & \texttt{A} & \texttt{C} & $2$ \\ \hline
+\texttt{b} & \texttt{B} & \texttt{B} & $3$ \\ \hline
+\texttt{bc} & \texttt{B} & \texttt{C} & $1$ \\ \hline
+\texttt{c} & \texttt{C} & \texttt{C} & $1$ \\ \hline
+\end{tabular}
+\end{english}
+\end{center}
+
+\textbf{ب.} مُخرجات أسطر الطباعة $1$–$10$:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{text}
+1. -2   // A.Func(B): 1 - 3
+2. 0    // A.Func(B): 1 - 1
+3. 4    // B.Func(B): 2 + 2
+4. 22   // B.Func(A): 2 + 2 * 10
+5. 20   // A.Func(int): 10 * 2
+6. 8    // a.Func(2) = 4, a.Func(4) = 8
+7. 2    // C.Func(B): 2 * 1
+8. 21   // B.Func(A): 1 + 2 * 10
+9. 11   // B.Func(A): 1 + 1 * 10
+10. 4   // C.Func(C): 1 * 4
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

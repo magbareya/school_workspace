@@ -1,0 +1,89 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2026$}{سؤال 10 امتحان 899271B سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271B_10.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع أ}{سؤال 10 امتحان 899271B سنة 2026 - فرع أ}]
+\textbf{أ.} العمليات البنائية المطلوبة في الفئتين \textenglish{BB} و \textenglish{CC}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class BB
+{
+    private int a;
+    protected int b;
+
+    public BB()
+    {
+        this.a = 10;
+        this.b = 1;
+    }
+
+    public BB(int b)
+    {
+        this.a = 10;
+        this.b = b;
+    }
+
+    public BB(BB other)
+    {
+        this.a = other.a;
+        this.b = other.b;
+    }
+}
+
+public class CC : BB
+{
+    private int c;
+
+    public CC(int b) : base(b)
+    {
+        this.c = 7;
+    }
+
+    public CC(BB other) : base(other)
+    {
+        this.c = 19;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+العملية البنائية لكلّ كائن في المصفوفة \textenglish{b}:
+\begin{itemize}[itemsep=0.2em]
+    \item \textenglish{b[0]}: \textenglish{BB()} \quad | \quad \textenglish{b[1]}: \textenglish{BB(int b)} \quad | \quad \textenglish{b[2], b[3]}: \textenglish{BB(BB other)}
+    \item \textenglish{b[4], b[5]}: \textenglish{CC(int b)} \quad | \quad \textenglish{b[6], b[7]}: \textenglish{CC(BB other)}
+\end{itemize}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271B}$ سنة $2026$ - فرع ب}{سؤال 10 امتحان 899271B سنة 2026 - فرع ب}]
+\textbf{ب.} تطبيق العمليتين \textenglish{Foo} و \textenglish{Goo} الضروريتين في الفئتين \textenglish{BB} و \textenglish{CC}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// In class BB:
+public void Foo(int x)
+{
+    Console.WriteLine("BB Foo: " + (this.a + this.b + x));
+}
+
+// In class CC:
+public void Foo()
+{
+    Console.WriteLine("CC Foo: " + this.c);
+    base.Foo(this.c);
+}
+
+public void Goo()
+{
+    Console.WriteLine("CC Goo");
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak

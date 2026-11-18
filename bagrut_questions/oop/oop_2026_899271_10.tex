@@ -1,0 +1,144 @@
+\def\bagrutTocEntry{\phantomsection\addcontentsline{toc}{subsection}{\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2026$}{سؤال 10 امتحان 899271 سنة 2026}}\global\let\bagrutTocEntry\relax}%
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}\bagrutTocEntry}]{../../../bagrut_questions/oop/oop_2026_899271_10.pdf}
+
+
+\ifwithsols
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع أ (1)}{سؤال 10 امتحان 899271 سنة 2026 - فرع أ (1)}]
+\textbf{أ.}
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+    \item المخطّط الهرميّ بين جميع الفئات:
+\begin{center}
+\begin{english}
+\begin{tikzpicture}[
+    classbox/.style={rectangle, draw, thick, minimum width=2.1cm, minimum height=0.7cm, font=\ttfamily\bfseries\small},
+    inherit/.style={-{Triangle[open, length=2.6mm, width=2.6mm]}, thick, shorten >=1pt},
+    contain/.style={-{Diamond[length=3.2mm, width=2.2mm]}, thick}
+]
+    \node[classbox] (instrum) at (0, 0) {Instrum};
+    \node[classbox] (musician) at (-3.4, 0) {Musician};
+    \node[classbox] (orchestra) at (-6.8, 0) {Orchestra};
+    \node[classbox] (bow) at (-2.6, -1.6) {Bow};
+    \node[classbox] (wind) at (0, -1.6) {Wind};
+    \node[classbox] (perc) at (2.6, -1.6) {Perc};
+
+    \draw[contain] (instrum.west) -- (musician.east);
+    \draw[contain] (musician.west) -- (orchestra.east);
+    \draw[inherit] (bow.north) -- ([xshift=-0.4cm]instrum.south);
+    \draw[inherit] (wind.north) -- (instrum.south);
+    \draw[inherit] (perc.north) -- ([xshift=0.4cm]instrum.south);
+\end{tikzpicture}
+\end{english}
+\end{center}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع أ (2)}{سؤال 10 امتحان 899271 سنة 2026 - فرع أ (2)}]
+\begin{enumerate}[label=\textbf{(\arabic*)}, start=2]
+    \item عناوين الفئات وصفاتها:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Instrum
+{
+    private string name;
+    private string material;
+}
+
+public class Bow : Instrum
+{
+    private int bowLength;
+}
+
+public class Wind : Instrum
+{
+    private int numberOfValves;
+}
+
+public class Perc : Instrum
+{
+    private bool hasSticks;
+}
+
+public class Musician
+{
+    private string name;
+    private Instrum instrum;
+}
+
+public class Orchestra
+{
+    private Musician[] arrM;
+    private int count;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{enumerate}
+\end{boxSolution}
+
+\filbreak
+
+\begin{boxSolution}[\texorpdfstring{سؤال $10$ امتحان $\mathrm{899271}$ سنة $2026$ - فرع ب و جـ}{سؤال 10 امتحان 899271 سنة 2026 - فرع ب و ج}]
+\textbf{ب.} العملية \textenglish{WithSticks} في الفئة \textenglish{Orchestra}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public int WithSticks()
+{
+    int res = 0;
+    for (int i = 0; i < this.count; i++)
+    {
+        Instrum ins = this.arrM[i].GetInstrum();
+        if (ins is Perc && ((Perc)ins).GetHasSticks())
+        {
+            res++;
+        }
+    }
+    return res;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\textbf{جـ.} العملية \textenglish{Insert} في الفئة \textenglish{Orchestra}:
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public bool Insert(Musician musician)
+{
+    if (this.count == this.arrM.Length)
+    {
+        return false;
+    }
+
+    int pos = this.count;
+    Instrum ins = musician.GetInstrum();
+    if (ins is Bow)
+    {
+        pos = 0;
+    }
+    else if (ins is Wind)
+    {
+        pos = 0;
+        while (pos < this.count && !(this.arrM[pos].GetInstrum() is Perc))
+        {
+            pos++;
+        }
+    }
+
+    for (int i = this.count; i > pos; i--)
+    {
+        this.arrM[i] = this.arrM[i - 1];
+    }
+    this.arrM[pos] = musician;
+    this.count++;
+    return true;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\end{boxSolution}
+\fi
+\filbreak
