@@ -1,0 +1,577 @@
+\documentclass[14pt]{extarticle}
+\input{../../../scripts/tex_preamble.tex}
+
+\title{الدليل الشامل للأستاذ: خطة تدريس البرمجة الموجّهة كائنات في \textenglish{C\#} (وفق المنهاج وأسئلة البجروت)}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{boxDef}[- كيفية استخدام هذا الدليل]
+صُمّم هذا الدليل ليكون المرجع الأوّلي لتحضير دروس البرمجة الموجّهة كائنات بلغة \textenglish{C\#}. يغطّي كلّ بند: \textbf{الأفكار الواجب تدريسها}، \textbf{مثالًا جاهزًا للشرح على اللوح} (مُعدّلًا ومستوحىً من نمط أسئلة البجروت $2015$--$2026$ دون نسخها حرفيًا)، و\textbf{فخاخ البجروت والأخطاء الشائعة} مع الإشارة إلى تكرار الفكرة في امتحانات البجروت (من أصل $53$ سؤالًا).
+\end{boxDef}
+
+% ==============================================================
+\section*{الجزء الأوّل: الفئات، المؤشّرات، والصفات الساكنة (تمهيد للتوريث)}
+% ==============================================================
+
+\subsection*{$1$. الفئة، التغليف (\textenglish{Get}/\textenglish{Set})، العمليات البنائية، و\textenglish{ToString()}}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{الأفكار الواجب تدريسها:}
+    \begin{itemize}
+        \item الفئة كقالب (\textbf{صفات} \textenglish{private} + \textbf{عمليات} \textenglish{public})، والفصل بين الواجهة والتطبيق.
+        \item المؤشّر \textenglish{this} للتمييز بين الصفة والمُعطى، والعمليات المساعدة \textenglish{private} لمنع التكرار.
+        \item العمليات البنائية، التحميل الزائد، استدعاء \textenglish{: this(...)}، واختفاء البنائية الافتراضية الفارغة بمجرّد كتابة أيّ بنائية.
+        \item مبدأ الذرّية في العمليات التي تعيد \textenglish{bool} (فحص جميع الشروط قبل تعديل أيّ صفة)، و\textenglish{override ToString()} التي \textbf{تعيد} نصًّا ولا تطبع.
+    \end{itemize}
+    \item \textbf{مثال للشرح على اللوح (الفئة \textenglish{BankAccount}):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class BankAccount
+{
+    private string owner;
+    private double balance;
+    public BankAccount(string owner, double balance)
+    {
+        this.owner = owner;
+        if (balance >= 0) { this.balance = balance; }
+        else { this.balance = 0; }
+    }
+    public BankAccount(string owner) : this(owner, 0) { }
+    public bool Withdraw(double amount)
+    {
+        if (amount <= 0 || amount > this.balance) { return false; }
+        this.balance -= amount;
+        return true;
+    }
+    public override string ToString()
+    {
+        return $"Owner:{this.owner}, Balance:{this.balance}";
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ وتنبيهات]
+\begin{itemize}
+    \item في البجروت نلتزم بعمليات \textenglish{GetX()}/\textenglish{SetX(val)} الصريحة لا بخصائص \textenglish{\{ get; set; \}}.
+    \item التعيين العكسي \textenglish{owner = this.owner;}، أو تعريف متغيّر محلّي بنفس اسم الصفة داخل البنائية (\textenglish{double balance = b;}).
+    \item كتابة \textenglish{Console.WriteLine} داخل \textenglish{ToString()} أو نسيان كلمة \textenglish{override}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$2$. المؤشّرات في الذاكرة، المرجعية المشتركة، والعملية البنائية الناسخة}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{الأفكار الواجب تدريسها:} المتغيّر من نمط فئة يحمل \textbf{مؤشّرًا} لا الكائن نفسه؛ \textenglish{b = a} ينسخ المؤشّر (مرجعية مشتركة)؛ \textenglish{a == b} يقارن المؤشّرين؛ النسخ الدفاعي عبر العملية البنائية الناسخة في الكائنات المركّبة (في البنائية و\textenglish{Get}/\textenglish{Set}).
+    \item \textbf{مثال للشرح على اللوح (مُعدّل على نمط أسئلة الكائن المركّب):} ارسم الذاكرة عند تنفيذ السطرين الأخيرين واسأل الطلاب: ما قيمة \textenglish{r1.GetSensor().GetTemp()}؟
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Sensor
+{
+    private int temp;
+    public Sensor(int temp) { this.temp = temp; }
+    public Sensor(Sensor other) { this.temp = other.temp; } // Copy ctor
+    public int GetTemp() { return this.temp; }
+    public void SetTemp(int t) { this.temp = t; }
+}
+public class Room
+{
+    private Sensor s;
+    public Room(Sensor s) { this.s = new Sensor(s); } // Defensive copy!
+    public Sensor GetSensor() { return new Sensor(this.s); }
+}
+// Board demo:
+Sensor s1 = new Sensor(22);
+Room r1 = new Room(s1);
+s1.SetTemp(40); // Does NOT change r1's sensor because of defensive copy!
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ وتنبيهات]
+\begin{itemize}
+    \item ظنّ الطلاب أنّ \textenglish{new Sensor[5]} ينشئ $5$ كائنات (بينما هو ينشئ $5$ مؤشّرات قيمتها \textenglish{null}).
+    \item عند تمرير كائن كمُعطى لعملية، أيّ تعديل عليه يغيّر الكائن الأصلي؛ يجب فحص \textenglish{target != null} أوّلًا.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$3$. الصفات والعمليات الساكنة والثوابت (\textenglish{static} و \textenglish{const}) في الوراثة}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$13$ سؤال بجروت} ($2016$--$2026$)، خاصةً كعدّاد مشترك في الفئة الأب أو الابن.
+    \item \textbf{الأفكار الواجب تدريسها:} الفرق بين صفة كائن وصفة \textenglish{static} (نسخة واحدة مشتركة بين جميع الكائنات والفئات الوارثة)، استخدام \textenglish{const} للقيم الثابتة، واستدعاء العمليات الساكنة عبر اسم الفئة.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2025$/$2026$):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Device
+{
+    public const int WARRANTY_YEARS = 2;
+    protected static int totalDevices = 0;
+    private int id;
+    public Device()
+    {
+        totalDevices++;
+        this.id = totalDevices;
+    }
+    public static int GetTotal() { return totalDevices; }
+}
+public class Phone : Device
+{
+    public Phone() : base() { }
+}
+// Board trace:
+Device d1 = new Device(); // totalDevices = 1, d1.id = 1
+Phone p1  = new Phone();  // Calls base() -> totalDevices = 2, p1.id = 2!
+Console.WriteLine(Device.GetTotal()); // Prints: 2
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item ينسى الطلاب أنّ \textenglish{new Phone()} يستدعي بنائية الأب \textenglish{Device()} فيزيد العدّاد الساكن المشترك!
+    \item محاولة استخدام \textenglish{this} داخل عملية \textenglish{static} تسبّب \textbf{خطأ في التجميع}.
+\end{itemize}
+\end{boxWarning}
+
+% ==============================================================
+\clearpage
+\section*{الجزء الثاني: التوريث، مخطّط الفئات، والعمليات البنائية}
+% ==============================================================
+
+\subsection*{$4$. تصميم الهرمية: التوريث مقابل الاحتواء ومخطّط الفئات}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} بناء وتوسيع الهرمية تكرّر في \textbf{$36$ سؤالًا}، والتركيب/الاحتواء مع التوريث في \textbf{$17$ سؤالًا}.
+    \item \textbf{الأفكار الواجب تدريسها:} استخلاص الصفات والعمليات المتطابقة فقط في فئة أب؛ التمييز بين علاقة «هو نوع من» (توريث، سهم مثلّث فارغ) وعلاقة «يحتوي على» (احتواء، سهم معيّن ممتلئ عند الفئة الحاوية)؛ التوريث المفرد في \textenglish{C\#} (أب واحد فقط).
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2024$ س$15$ و$2025$ س$10$):}
+    لدينا منظومة اشتراكات مكتبة فيها: \textenglish{Plan} (خطة دفع: السعر الشهري، عدد الأشهر)، و\textenglish{Member} (عضو: رقم هوية، وخطة دفع \textenglish{Plan})، و\textenglish{StudentMember} (تخفيض جامعي)، و\textenglish{VipMember} (عدد الكتب الإضافية). اطلب من الطلاب رسم المخطّط الهرميّ وتحديد أين نضع سهم التوريث وأين نضع المعيّن، ثمّ كتابة تعريفات الفئات وصفاتها دون تكرار.
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Plan { private double monthlyFee; private int months; }
+public class Member
+{
+    protected string id;
+    protected Plan plan; // Composition (has-a)
+}
+public class StudentMember : Member { private double discount; }
+public class VipMember : Member     { private int extraBooks; }
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item قلب اتجاه سهم التوريث في المخطّط (السهم يتّجه دائمًا من \textbf{الابن إلى الأب}).
+    \item جعل \textenglish{Member} يرث من \textenglish{Plan} بدل أن يحتوي عليه! اسأل الطلاب دائمًا: «هل العضو هو خطة دفع؟ لا، العضو \textbf{يمتلك} خطة دفع $\leftarrow$ احتواء».
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$5$. أذونات الوصول (\textenglish{private}، \textenglish{protected}، \textenglish{public}) وتظليل الصفات}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$24$ سؤال بجروت}.
+    \item \textbf{الأفكار الواجب تدريسها:} الصفات \textenglish{private} في الأب \textbf{تُورَّث فعليًا في الذاكرة} وتُهيّأ عبر \textenglish{base(...)}، لكن لا يمكن للابن الوصول إليها بالاسم مباشرةً (إلّا عبر \textenglish{Get}/\textenglish{Set})؛ أمّا \textenglish{protected} فمتاح للأبناء ومخفيّ عن الخارج.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2016$ \textenglish{899381a} س$16$):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Box
+{
+    private int x;
+    public Box(int x) { this.x = x; }
+    public int GetParentX() { return this.x; }
+}
+public class SpecialBox : Box
+{
+    private int x; // SHADOWING! Separate field from Box.x!
+    public SpecialBox(int a, int b) : base(a) { this.x = b; }
+    public int GetChildX() { return this.x; }
+}
+// Board demo:
+SpecialBox sb = new SpecialBox(10, 99);
+Console.WriteLine(sb.GetParentX() + ", " + sb.GetChildX()); // Prints: 10, 99!
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item الخطأ الأكثر شيوعًا في التصميم: إعادة كتابة صفات الأب داخل الابن (مما يُنشئ نسختين منفصلتين كما في المثال أعلاه).
+    \item محاولة كتابة \textenglish{this.x} في الابن بينما \textenglish{x} في الأب \textenglish{private} $\leftarrow$ \textbf{خطأ في التجميع}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$6$. العمليات البنائية في الوراثة (\textenglish{: base(...)}) والاستنتاج من مخطّط الكائنات}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$37$ سؤال بجروت}؛ وفي سنوات $2024$ و$2026$ ظهر نمط جديد يُعطى فيه \textbf{مخطّط كائنات} ويُطلب استنتاج العمليات البنائية (الافتراضية، بالمعطيات، والناسخة)!
+    \item \textbf{الأفكار الواجب تدريسها:} العمليات البنائية لا تُورَّث؛ ترتيب التنفيذ دائمًا من أعلى الهرمية إلى أسفلها؛ الاستدعاء الضمني \textenglish{: base()}؛ وتمرير كائن ابن إلى بنائية الأب الناسخة \textenglish{: base(other)}.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2026$ موعد بديل س$10$):} اعرض الكود والمُخرَجات واطلب من الطلاب كتابة البنائيات الناقصة في \textenglish{Parent} و\textenglish{Child}:
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Parent
+{
+    protected int a;
+    public Parent()              { this.a = 5; }
+    public Parent(int a)         { this.a = a; }
+    public Parent(Parent other)  { this.a = other.a + 1; }
+}
+public class Child : Parent
+{
+    private int b;
+    public Child(int x) : base(x * 2)      { this.b = this.a + 3; }
+    public Child(Parent p) : base(p)       { this.b = 10; }
+}
+// Board trace:
+Parent p1 = new Parent(4);   // a = 4
+Child c1  = new Child(3);    // base(6) -> a = 6, b = 9
+Child c2  = new Child(p1);   // base(p1) calls Copy ctor -> a = 5, b = 10
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item \textbf{فخّ غياب البنائية الافتراضية في الأب:} إذا كان في الأب بنائية بمعطيات فقط وكتب الطالب في الابن \textenglish{public Child() \{ \}} دون \textenglish{: base(...)} $\leftarrow$ \textbf{خطأ في التجميع}.
+    \item في \textenglish{Child(Parent p) : base(p)} نلاحظ أنّ \textenglish{base(p)} يستدعي البنائية الناسخة في الأب، ويمكن تمرير كائن \textenglish{Child} أيضًا (بالتحويل لأعلى).
+\end{itemize}
+\end{boxWarning}
+
+% ==============================================================
+\clearpage
+\section*{الجزء الثالث: تعدّد الأشكال، تحديد العملية المُستدعاة، والتحويل، والأخطاء}
+% ==============================================================
+
+\subsection*{$7$. التحويل لأعلى، المصفوفة متعدّدة الأشكال، والفئة \textenglish{Object}}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} الفكرة رقم ($1$) في البجروت (\textbf{$43$ سؤالًا} للتحويل لأعلى والمصفوفات، و\textbf{$15$ سؤالًا} للفئة \textenglish{Object}).
+    \item \textbf{الأفكار الواجب تدريسها:} متغيّر الأب أو \textenglish{Object} يشير إلى أيّ ابن بأمان؛ مصفوفة واحدة \textenglish{Media[]} أو \textenglish{Object[]} تجمع أنماطًا فرعية مختلفة؛ المسح الآمن مع \textenglish{!= null}؛ خوارزمية المسح المزدوج لإرجاع مصفوفة مُصفّاة بحجم دقيق.
+    \item \textbf{مثال للشرح على اللوح:}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public static Media[] GetLongItems(Media[] arr, int minMinutes)
+{
+    int count = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] != null && arr[i].GetDuration() >= minMinutes) { count++; }
+    }
+    Media[] res = new Media[count];
+    int k = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] != null && arr[i].GetDuration() >= minMinutes)
+        {
+            res[k] = arr[i];
+            k++;
+        }
+    }
+    return res;
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item التوقّف بـ \textenglish{break} عند أوّل \textenglish{null} بدل تخطّيه بـ \textenglish{if (arr[i] != null)}.
+    \item كتابة \textenglish{res[i] = arr[i];} بدل استخدام مؤشّر مستقلّ \textenglish{res[k++] = arr[i];} $\leftarrow$ \textenglish{IndexOutOfRangeException}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$8$. إعادة تعريف العمليات (\textenglish{virtual}، \textenglish{override}، و\textenglish{base})}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} الفكرة رقم ($2$) في البجروت (\textbf{$40$ سؤالًا})، والاستدعاء عبر \textenglish{base.Method()} (\textbf{$5$ أسئلة}، و\textenglish{ToString} في \textbf{$13$ سؤالًا}).
+    \item \textbf{الأفكار الواجب تدريسها:} متى نستخدم \textenglish{virtual}/\textenglish{override} بدل \textenglish{is}/\textenglish{as} (في البجروت كثيرًا ما يُمنع استخدام \textenglish{is}/\textenglish{as} صراحةً!)؛ توسيع سلوك الأب عبر \textenglish{base.GetCost()} أو \textenglish{base.ToString()}؛ قابلية التوسّع عند إضافة فئات مستقبلية.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2024$ س$15$):} «احسب تكلفة التوصيل في \textenglish{Delivery} و\textenglish{ExpressDelivery} و\textenglish{DroneDelivery} \textbf{دون استعمال \textenglish{is} أو \textenglish{as}}»:
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Delivery
+{
+    protected double km;
+    public Delivery(double km) { this.km = km; }
+    public virtual double GetCost() { return 20 + this.km * 2.5; }
+}
+public class ExpressDelivery : Delivery
+{
+    public ExpressDelivery(double km) : base(km) { }
+    public override double GetCost() { return base.GetCost() + 35; }
+}
+public class DroneDelivery : Delivery
+{
+    public DroneDelivery(double km) : base(km) { }
+    public override double GetCost() { return base.GetCost() * 0.8; }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item نسيان \textenglish{base.} داخل \textenglish{override} (كتابة \textenglish{return GetCost() + 35;} بدل \textenglish{base.GetCost()}) $\leftarrow$ استدعاء تراجعي لا نهائي (\textenglish{StackOverflowException})!
+    \item تغيير المعطيات في الابن بالخطأ مع كتابة \textenglish{override} $\leftarrow$ \textbf{خطأ في التجميع}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$9$. القاعدة الذهبية لتحديد العملية المُستدعاة (زمن التجميع مقابل زمن التشغيل)}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$25$ سؤالًا} (مع \textbf{$29$ سؤال تتبّع ومخرجات})، وهي جوهر السؤال الأخير في بجروت $2019$، $2025$، $2026$!
+    \item \textbf{القاعدة الواجب ترسيخها على اللوح:}
+    \begin{enumerate}
+        \item \textbf{زمن التجميع:} يفحص المُجمّع \textbf{النمط الساكن للمتغيّر قبل النقطة + النمط الساكن للمُعطيات داخل الأقواس} ويختار التوقيع الأنسب (وإلّا $\leftarrow$ \textbf{خطأ في التجميع}).
+        \item \textbf{زمن التشغيل:} إذا كانت العملية المختارة \textenglish{virtual} أو \textenglish{override} أو \textenglish{abstract} $\leftarrow$ ينفّذ \textbf{آخر \textenglish{override}} في النمط الفعلي للكائن قبل النقطة؛ وإلّا ينفّذ نفس العملية المختارة في الخطوة ($1$) مباشرةً.
+    \end{enumerate}
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2026$ س$12$):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class P
+{
+    public virtual void Calc(Q x) { Console.WriteLine("P.Calc(Q)"); }
+}
+public class Q : P
+{
+    public override void Calc(Q x) { Console.WriteLine("Q.Calc(Q)"); }
+    public void Calc(P x)          { Console.WriteLine("Q.Calc(P)"); }
+}
+public class R : Q
+{
+    public override void Calc(Q x) { Console.WriteLine("R.Calc(Q)"); }
+    public void Calc(R x)          { Console.WriteLine("R.Calc(R)"); }
+}
+// Board trace: P pq = new Q();  P pr = new R();  Q qr = new R();  R r = new R();
+// 1. pr.Calc(qr);       -> Compile: P.Calc(Q) (virtual) -> Run: R.Calc(Q)
+// 2. r.Calc(pr);        -> Compile: Q.Calc(P) (NOT virtual!) -> Run: Q.Calc(P)
+// 3. ((Q)pq).Calc(pq);  -> Compile: Q.Calc(P) -> Run: Q.Calc(P)
+// 4. pq.Calc(pr);       -> COMPILE ERROR! (P only has Calc(Q), static of pr is P)
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- الفخّ رقم ($1$) في أسئلة التتبّع]
+السطر \textenglish{r.Calc(pr);} هو الفخّ الأشهر: يظنّ الطالب أنّ \textenglish{R.Calc(R)} ستُستدعى لأنّ الكائن الفعلي لـ \textenglish{pr} هو $R$. أكّد مرارًا: \textbf{المُعطى داخل الأقواس يُحسَم دائمًا حسب نمطه الساكن في زمن التجميع!} ولا تنسَ الإشارة السريعة إلى أنّ \textenglish{override} في $Q$ تبقى \textenglish{virtual} تلقائيًا للابن $R$.
+\end{boxWarning}
+
+\filbreak
+\subsection*{$10$. التحويل لأسفل وفحص النمط (\textenglish{is} و \textenglish{as}) والعمليات الخارجية}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} الفكرة رقم ($3$) في البجروت (\textbf{$38$ سؤالًا}، و\textbf{$6$ أسئلة} عمليات خارجية على مصفوفات متعدّدة الأشكال).
+    \item \textbf{الأفكار الواجب تدريسها:} متى نلجأ للتحويل لأسفل (فقط لعملية خاصّة بالابن غير موجودة في الأب)؛ المقارنة بين \textenglish{is} + \textenglish{(Sub)x}، و\textenglish{x as Sub} + \textenglish{!= null}، والتحويل المباشر الخطر.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2025$ س$10$ج):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+// Suppose Parrot : Bird : Animal, and Bird has Fly(), Parrot has Talk()
+public static void ShowAbilities(Animal[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] is Parrot)      { ((Parrot)arr[i]).Talk(); } // Specific FIRST!
+        else if (arr[i] is Bird)   { ((Bird)arr[i]).Fly(); }
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item \textbf{فخّ ترتيب \textenglish{if / else if} مع \textenglish{is}:} لأنّ \textenglish{Parrot} يرث من \textenglish{Bird}، فإنّ \textenglish{p is Bird} يعيد \textenglish{true}! يجب فحص \textbf{الفئة الأخصّ (الابن/الحفيد) أوّلًا}.
+    \item \textbf{فخّ أولوية الأقواس:} \textenglish{(Bird)arr[i].Fly()} خطأ تجميع؛ الصحيح \textenglish{((Bird)arr[i]).Fly()}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$11$. سؤال البجروت الكلاسيكي: فحص سلامة قطع الكود (تجميع مقابل تشغيل)}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّر في \textbf{$27$ سؤال بجروت} (سؤال كامل بـ $10$--$15$ قطعة كود في $2021$، $2022$، $2025$ب، $2026$ب).
+    \item \textbf{مثال جاهز لتمرين صفّي (مُعدّل من نمط بجروت $2025$ب س$10$ و$2026$ب س$12$):}
+    افترض أنّ \textenglish{Y} فيها \textenglish{virtual void F1()}، و\textenglish{Z : Y} فيها \textenglish{override void F1()} و\textenglish{void F2()}، وفي \textenglish{Main} لدينا \textenglish{Y a = new Y(); Y b = new Z();}:
+\end{itemize}
+
+{\renewcommand{\arraystretch}{1.15}
+\small
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.28\textwidth}|C{0.20\textwidth}|>{\raggedleft\arraybackslash}p{0.38\textwidth}|}
+\hline
+\textbf{قطعة الكود} & \textbf{الحكم} & \textbf{التفسير للطلاب على اللوح} \\
+\hline
+\endfirsthead
+\hline
+\textbf{قطعة الكود} & \textbf{الحكم} & \textbf{التفسير للطلاب على اللوح} \\
+\hline
+\endhead
+\textenglish{Z z = new Y();} & \textbf{خطأ تجميع} & لا يمكن تعيين أب في متغيّر ابن بدون تحويل. \\
+\hline
+\textenglish{Z z = (Z)a;} & \textbf{خطأ زمن تشغيل} & التحويل يرضي المُجمّع، لكن الكائن الفعلي \textenglish{Y} ليس \textenglish{Z}. \\
+\hline
+\textenglish{b.F2();} & \textbf{خطأ تجميع} & النمط الساكن لـ \textenglish{b} هو \textenglish{Y} ولا يعرف \textenglish{F2()}. \\
+\hline
+\textenglish{((Z)b).F2();} & \textbf{سليم} & التحويل سليم (الفعلي \textenglish{Z}) ثم تُستدعى \textenglish{Z.F2()}. \\
+\hline
+\textenglish{Object o = b; ((Y)o).F1();} & \textbf{سليم} & الفعلي \textenglish{Z} هو أيضًا \textenglish{Y}، وبسبب \textenglish{virtual} تنفّذ \textenglish{Z.F1()}. \\
+\hline
+\end{longtable}}
+
+\filbreak
+\subsection*{$12$. رسم الكائنات والمؤشّرات في الذاكرة (مخطّط الكائنات)}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} ظهر بقوّة في بجروت $2021$ب و$2024$ س$16$--$17$ و$2026$ س$12$ («اعرضوا الكائنات التي تكوّنت: نوع الكائن، نوع التوجيه، وقيم الصفات»).
+    \item \textbf{الأفكار الواجب تدريسها:} تدريب الطلاب على التمييز البصري بين \textbf{المتغيّر (النمط الساكن / نوع التوجيه)} وبين \textbf{صندوق الكائن في الذاكرة (النمط الفعلي وقيم جميع صفاته الموروثة والخاصّة)}، خاصةً عندما يشير مؤشّران لنفس الكائن داخل مصفوفة.
+    \item \textbf{مثال للشرح على اللوح:}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+A[] arr = new A[3];
+arr[0] = new B(5);   // Static: A, Runtime: B (fields of A + B)
+arr[1] = arr[0];     // Points to the SAME B object as arr[0]!
+arr[2] = new A(1);   // Static: A, Runtime: A (fields of A only)
+\end{minted}
+\end{english}
+\end{boxCode}
+
+\filbreak
+\subsection*{$13$. إعادة تعريف العملية \textenglish{Equals} ومقارنة الكائنات}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$3$ أسئلة بجروت} ($2016$ب، $2019$ س$15$).
+    \item \textbf{مثال للشرح على اللوح:} اعرض على اللوح الفرق بين \textenglish{public override bool Equals(object obj)} وبين الفخّ \textenglish{public bool Equals(Product other)} (تحميل زائد لا يُستدعى عبر متغيّر \textenglish{Object}!).
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Product
+{
+    private string code;
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is Product)) { return false; }
+        Product other = (Product)obj;
+        return this.code.Equals(other.code);
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+
+% ==============================================================
+\clearpage
+\section*{الجزء الرابع: الفئات المجرّدة، واجهات التطبيق، والدمج الشامل}
+% ==============================================================
+
+\subsection*{$14$. الفئة المجرّدة والعمليات المجرّدة (\textenglish{abstract}) والمُعطى العام \textenglish{object}}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{الأفكار الواجب تدريسها:} لماذا نعرّف فئة كـ \textenglish{abstract} (مفهوم عامّ لا يُنشأ منه كائن مباشر، ويُجبر الأبناء غير المجرّدين على تطبيق العمليات المجرّدة بـ \textenglish{override})؛ الفرق بين \textenglish{new Notification()} الممنوع و\textenglish{new Notification[10]} المسموح؛ استخدام مُعطى \textenglish{object} لتوحيد تعريف عملية تتلقّى أنماطًا مختلفة في الأبناء.
+    \item \textbf{مثال للشرح على اللوح:}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public abstract class Notification
+{
+    protected string target;
+    public Notification(string target) { this.target = target; }
+    public abstract bool Send(object payload);
+}
+public class SmsNotif : Notification
+{
+    public SmsNotif(string phone) : base(phone) { }
+    public override bool Send(object payload)
+    {
+        if (payload is string)
+        {
+            Console.WriteLine("SMS to " + this.target + ": " + (string)payload);
+            return true;
+        }
+        return false;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ وتنبيهات]
+\begin{itemize}
+    \item \textbf{سؤال امتحانات متكرّر:} \textenglish{Notification[] arr = new Notification[5];} \textbf{سليم تمامًا} لأنّه ينشئ مصفوفة مؤشّرات فارغة لا كائنات!
+    \item \textbf{فخّ تغليف الأعداد في \textenglish{object}:} تمرير \textenglish{20} (عدد صحيح) إلى \textenglish{object o} يجعل \textenglish{o is double} يعيد \textenglish{false}! يجب تمرير \textenglish{20.0} أو فحص \textenglish{int} و\textenglish{double}.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$15$. واجهات التطبيق (\textenglish{interface}) وقواعد الترتيب والدمج مع التوريث}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{أهمية البجروت:} تكرّرت في \textbf{$10$ أسئلة بجروت} ($2015$--$2023$).
+    \item \textbf{الأفكار الواجب تدريسها:} الواجهة كعقد سلوكي خالص (عناوين عمليات فقط بلا صفات ولا بنائيات)؛ تطبيق عدّة واجهات معًا؛ التمييز بين الفئة المجرّدة والواجهة؛ \textbf{ترتيب التعريف الإلزامي} في \textenglish{C\#}.
+    \item \textbf{مثال للشرح على اللوح (مُعدّل من نمط بجروت $2017$ \textenglish{899381} س$15$ و$2018$ س$16$):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public interface ITaxable   { double GetTax(); }
+public interface IPrintable { void PrintReport(); }
+public class Asset          { protected double value; }
+
+// CORRECT: base class Asset FIRST, then interfaces!
+public class Apartment : Asset, ITaxable, IPrintable
+{
+    public double GetTax()     { return this.value * 0.02; } // No 'override'!
+    public void PrintReport()  { Console.WriteLine("Tax: " + this.GetTax()); }
+}
+// WRONG (Compile Error): public class Apartment : ITaxable, Asset { ... }
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخاخ البجروت]
+\begin{itemize}
+    \item كتابة الواجهة قبل الفئة الأب في تعريف الفئة $\leftarrow$ \textbf{خطأ في التجميع} (اختُبر نصًّا في بجروت $2017$ س$15$ب!).
+    \item إنشاء كائن من واجهة \textenglish{new ITaxable()} $\leftarrow$ \textbf{خطأ في التجميع} (بينما \textenglish{ITaxable x = new Apartment();} سليم تمامًا).
+    \item نسيان إذن الوصول \textenglish{public} عند تطبيق عملية الواجهة، أو كتابة \textenglish{override} معها بالخطأ.
+\end{itemize}
+\end{boxWarning}
+
+\filbreak
+\subsection*{$16$. الواجهة \textenglish{IComparable}، الفرز العام، والدمج الشامل (تصفية + فرز)}
+\begin{itemize}[itemsep=0.25em]
+    \item \textbf{الأفكار الواجب تدريسها:} عقد \textenglish{CompareTo(object obj)} (سالب / صفر / موجب)؛ تفويض المقارنة لكائن مُحتوى (\textenglish{this.date.CompareTo(other.date)})؛ كتابة عملية فرز عامّة لـ \textenglish{IComparable[]}؛ ودمج التصفية بـ \textenglish{is} مع الفرز دون المساس بترتيب المصفوفة الأصلية.
+    \item \textbf{مثال للشرح على اللوح (يركّز على فخّ \textenglish{double} في \textenglish{CompareTo}):}
+\end{itemize}
+\begin{boxCode}
+\begin{english}
+\begin{minted}{csharp}
+public class Course : IComparable
+{
+    private double credits;
+    public int CompareTo(object obj)
+    {
+        if (obj == null || !(obj is Course)) { return 1; }
+        Course other = (Course)obj;
+        if (this.credits < other.credits) { return -1; }
+        if (this.credits > other.credits) { return 1; }
+        return 0;
+    }
+}
+\end{minted}
+\end{english}
+\end{boxCode}
+\begin{boxWarning}[- فخّ فادح مع الأعداد العشرية]
+مع \textenglish{int} يصحّ \textenglish{return this.x - other.x;}، أمّا مع \textenglish{double} فكتابة \textenglish{return (int)(this.credits - other.credits);} \textbf{خطأ فادح} لأنّ الفرق $0.5$ يتحوّل إلى $0$ فتُعدّ القيمتان متساويتين! يجب استخدام \textenglish{if} وإرجاع $-1$ أو $1$ أو $0$.
+\end{boxWarning}
+
+\vspace{0.8cm}
+\begin{flushleft}
+أرجو لكم وقتًا ممتعًا.
+
+الأستاذ محمود اغبارية.
+\end{flushleft}
+
+\end{document}
